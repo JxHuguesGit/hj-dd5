@@ -33,15 +33,15 @@ class RpgMonster extends Utilities
         $queryExecutor = new QueryExecutor();
         $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
         $objsMonstre = $objDaoMonstre->findAll();
-		$paginate = [
-        	Constant::PAGE_OBJS      => $objsMonstre,
-            Constant::CST_CURPAGE    => $arrParams[Constant::CST_CURPAGE] ?? 1,
-            Constant::PAGE_NBPERPAGE => $arrParams[Constant::PAGE_NBPERPAGE] ?? 20
+        $paginate = [
+            Constant::PAGE_OBJS      => $objsMonstre,
+            Constant::CST_CURPAGE    => $params[Constant::CST_CURPAGE] ?? 1,
+            Constant::PAGE_NBPERPAGE => $params[Constant::PAGE_NBPERPAGE] ?? 20
         ];
         
         $objTable = new Table();
         $objTable->setTable([Constant::CST_CLASS=>'table-sm table-striped mt-5'])
-	        ->setPaginate($paginate)
+            ->setPaginate($paginate)
             ->addHeader([Constant::CST_CLASS=>'table-dark text-center'])
             ->addHeaderRow()
             ->addHeaderCell([Constant::CST_CONTENT=>'Monstres'])
@@ -119,18 +119,18 @@ class RpgMonster extends Utilities
             //->addBodyCell([Constant::CST_CONTENT=>$strLegendaire])
             //->addBodyCell([Constant::CST_CONTENT=>$strHabitat])
             ->addBodyCell([Constant::CST_CONTENT=>$strReference])
-            ;                
+            ;
     }
     
     public function getMonsterCard(): string
     {
     
-    	$attributes = [
-        	$this->rpgMonster->getField(Field::NAME),
+        $attributes = [
+            $this->rpgMonster->getField(Field::NAME),
             $this->rpgMonster->getSizeTypeAndAlignement(),
-        	$this->rpgMonster->getStrExtra(Field::SCORECA),
+            $this->rpgMonster->getStrExtra(Field::SCORECA),
             $this->rpgMonster->getStrInitiative(),
-        	$this->rpgMonster->getStrExtra(Field::SCOREHP),
+            $this->rpgMonster->getStrExtra(Field::SCOREHP),
             $this->rpgMonster->getStrVitesse(),
             '', // Force
             '', // Dextérité
@@ -143,10 +143,10 @@ class RpgMonster extends Utilities
             $this->getTraitsList(), // Liste des traits
             '', // d-none si pas d'Actions
             $this->getActionsList(), // Liste des actions
-        	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
         $content = $this->getRender(Template::MONSTER_CARD, $attributes);
-    	return $content;
+        return $content;
     }
 
     private function getActionsList(): string
@@ -154,19 +154,19 @@ class RpgMonster extends Utilities
         $str  = "<p><strong><em>Multiattack</em></strong>. The spirit makes a number of attacks equal to half this spell's level (round down).</p>";
         $str .= "<p><strong><em>Claw (Slaad Only)</em></strong>. <em>Melee Attack Roll</em>: Bonus equals your spell attack modifier, reach 5 ft. <em>Hit</em>: 1d10 + 3 + the spell's level Slashing damage, and the target can't regain Hit Points until the start of the spirit's next turn.</p>";
         $str .= "<p><strong><em>Eye Ray (Beholderkin Only)</em></strong>. <em>Ranged Attack Roll</em>: Bonus equals your spell attack modifier, range 150 ft. <em>Hit</em>: 1d8 + 3 + the spell's level Psychic damage.</p><p><strong><em>Psychic Slam (Mind Flayer Only)</em></strong>. <em>Melee Attack Roll</em>: Bonus equals your spell attack modifier, reach 5 ft. <em>Hit</em>: 1d8 + 3 + the spell's level Psychic damage.</p>";
-    	return $str;
-	}
+        return $str;
+    }
     
     private function getTraitsList(): string
     {
-    	$str  = "<p><strong><em>Regeneration (Slaad Only)</em></strong>. The spirit regains 5 Hit Points at the start of its turn if it has at least 1 Hit Point.</p>";
+        $str  = "<p><strong><em>Regeneration (Slaad Only)</em></strong>. The spirit regains 5 Hit Points at the start of its turn if it has at least 1 Hit Point.</p>";
         $str .= "<p><strong><em>Whispering Aura (Mind Flayer Only)</em></strong>. At the start of each of the spirit's turns, the spirit emits psionic energy if it doesn't have the Incapacitated condition. <em>Wisdom Saving Throw</em>: DC equals your spell save DC, each creature (other than you) within 5 feet of the spirit. <em>Failure</em>: 2d6 Psychic damage.</p>";
         return $str;
 
     }
     private function getSkillsToCR(): string
     {
-    	$str  = '<div class="col-12"><strong>Immunités</strong> TODO</div>';
+        $str  = '<div class="col-12"><strong>Immunités</strong> TODO</div>';
         $str .= '<div class="col-12"><strong>Sens</strong> TODO, Passive Perception ??</div>';
         $str .= '<div class="col-12"><strong>Langues</strong> TODO</div>';
         $str .= '<div class="col-12"><strong>CR</strong> ?? (XP ??; PB ??)</div>';

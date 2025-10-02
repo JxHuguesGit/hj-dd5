@@ -25,45 +25,45 @@ class RpgFeat extends Utilities
     
     public static function getTable(array $params): Table
     {
-    	/*
+        /*
         $tri = $params['tri']??Field::NAME;
         //
         $ordre = $params['ordre']??Constant::CST_ASC;
         if ($ordre!=Constant::CST_DESC) {
-        	$ordre = Constant::CST_ASC;
+            $ordre = Constant::CST_ASC;
         }
-    	$sortAttributes = [$tri=>$ordre];
+        $sortAttributes = [$tri=>$ordre];
         */
-    	$sortAttributes = [Field::NAME=>Constant::CST_ASC];
+        $sortAttributes = [Field::NAME=>Constant::CST_ASC];
         
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgFeat($queryBuilder, $queryExecutor);
         $rpgFeats = $objDao->findAll($sortAttributes);
-		$paginate = [
-        	Constant::PAGE_OBJS      => $rpgFeats,
+        $paginate = [
+            Constant::PAGE_OBJS      => $rpgFeats,
             Constant::CST_CURPAGE    => $params[Constant::CST_CURPAGE] ?? 1
         ];
 
         $objTable = new Table();
         $objTable->setTable([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_SM, Bootstrap::CSS_TABLE_STRIPED, Bootstrap::CSS_MT5])])
-	        ->setPaginate($paginate)
+            ->setPaginate($paginate)
             ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
             ->addHeaderRow()
             ->addHeaderCell([
                 Constant::CST_CONTENT=>Language::LG_FEATS,
                 /*
                 Constant::CST_ATTRIBUTES=>[
-                	Constant::CST_CLASS=>'dt-orderable-asc dt-orderable-desc dt-ordering-asc',
+                    Constant::CST_CLASS=>'dt-orderable-asc dt-orderable-desc dt-ordering-asc',
                     'data-sortable' => Field::NAME
                 ]
                 */
             ])
             ->addHeaderCell([
-            	Constant::CST_CONTENT=>Language::LG_CATEGORY,
+                Constant::CST_CONTENT=>Language::LG_CATEGORY,
                 /*
                 Constant::CST_ATTRIBUTES=>[
-                	Constant::CST_CLASS=>'dt-orderable-asc dt-orderable-desc dt-ordering-desc',
+                    Constant::CST_CLASS=>'dt-orderable-asc dt-orderable-desc dt-ordering-desc',
                     'data-sortable' => Field::FEATTYPEID
                 ]
                 */
@@ -72,12 +72,12 @@ class RpgFeat extends Utilities
         if ($rpgFeats->valid()) {
             $objTable->addBodyRows($rpgFeats, 2);
         }
-        return $objTable; 
+        return $objTable;
     }
 
     public function addBodyRow(Table &$objTable): void
     {
-    	$strFeatType = $this->rpgFeat->getFeatType()->getField(Field::NAME);
+        $strFeatType = $this->rpgFeat->getFeatType()->getField(Field::NAME);
         
         $objTable->addBodyRow()
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgFeat->getField(Field::NAME)])

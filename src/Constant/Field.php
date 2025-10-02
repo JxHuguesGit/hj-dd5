@@ -3,7 +3,7 @@ namespace src\Constant;
 
 class Field
 {
-    public const CASTEID     = 'casteId';    
+    public const CASTEID     = 'casteId';
     public const CLEF        = 'clef';
     public const CODE        = 'code';
     public const CREATESTEP  = 'createStep';

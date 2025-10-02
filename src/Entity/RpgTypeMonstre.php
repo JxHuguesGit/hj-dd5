@@ -75,5 +75,3 @@ class RpgTypeMonstre extends Entity
         return $returned;
     }
 }
-
-

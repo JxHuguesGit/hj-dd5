@@ -14,6 +14,7 @@ use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgAlignement;
+use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgReference;
 use src\Repository\RpgSousTypeMonstre;
 use src\Repository\RpgTypeMonstre;
@@ -21,7 +22,7 @@ use src\Utils\Table;
 
 class AdminCompendiumPage extends AdminPage
 {
-	private string $bgColor = '';
+    private string $bgColor = '';
     private string $fontColor = '';
     private array $defaultColor = [];
     
@@ -29,24 +30,24 @@ class AdminCompendiumPage extends AdminPage
     {
         $currentId = $this->getArrParams('id');
 
-		switch ($currentId) {
-        	case Constant::ARMORS :
-	            $objTable = RpgArmor::getTable();
+        switch ($currentId) {
+            case Constant::ARMORS :
+                $objTable = RpgArmor::getTable();
             break;
             case Constant::WEAPONS :
-	            $objTable = RpgWeapon::getTable($this->arrParams);
+                $objTable = RpgWeapon::getTable($this->arrParams);
             break;
             case Constant::SKILLS :
-	            $objTable = RpgSkill::getTable($this->arrParams);
+                $objTable = RpgSkill::getTable($this->arrParams);
             break;
             case Constant::MONSTERS :
-	            $objTable = RpgMonster::getTable($this->arrParams);
+                $objTable = RpgMonster::getTable($this->arrParams);
             break;
             case Constant::FEATS :
-	            $objTable = RpgFeat::getTable($this->arrParams);
-           	break;
+                $objTable = RpgFeat::getTable($this->arrParams);
+               break;
             default :
-	            $objTable = null;
+                $objTable = null;
             break;
         }
         
@@ -56,14 +57,14 @@ class AdminCompendiumPage extends AdminPage
         $mockHero = new MockHero();
         $hero = $mockHero->getHero();
 
-		$scheme = 'ct-scheme-lightblue';
+        $scheme = 'ct-scheme-lightblue';
         $this->bgColor = '#FEFEFE';
         $this->fontColor = '#53a5c5';
         $this->defaultColor = [
             $this->bgColor, // Couleur de fond
             $this->fontColor, // Couleur de contour
         ];
-        */        
+        */
         // Dans cette méthode, on gère l'entête, le cadre noir : Image, couleurs, nom, espèce, classe, niveau
         // Tout le reste sera géré via d'autres méthodes afin de ne pas être perdu dans le nombre de paramètres du template
         $attributes = [
@@ -99,7 +100,7 @@ class AdminCompendiumPage extends AdminPage
         $objDaoTypeMonstre = new RpgTypeMonstre($queryBuilder, $queryExecutor);
         $objDaoSubTypeMonstre = new RpgSousTypeMonstre($queryBuilder, $queryExecutor);
         // Gestion des monstres
-        $objDaoMonstre = new RpgMonster($queryBuilder, $queryExecutor);
+        $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
         //////////
         while (true) {
             $line = fgets($handle, 2048);

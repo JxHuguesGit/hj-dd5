@@ -29,7 +29,7 @@ class Repository
 
     public function getLastQuery(): string
     {
-        return $this->query;        
+        return $this->query;
     }
 
     public function reset(): self

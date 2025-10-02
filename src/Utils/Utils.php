@@ -5,7 +5,7 @@ use src\Constant\Language;
 
 class Utils
 {
-	public static function formatStringAbility(int $value): string
+    public static function formatStringAbility(int $value): string
     {
         $strReturned = $value < 0 ? 'moins ' : 'plus ';
         return $strReturned . abs($value);
@@ -13,28 +13,28 @@ class Utils
     
     public static function formatStringModAbility(int $value): string
     {
-    	return ($value >= 0 ? '+' : '').$value;
+        return ($value >= 0 ? '+' : '').$value;
     }
     
     public static function getModAbility(int $value): int
     {
-    	return floor($value/2)-5;
+        return floor($value/2)-5;
     }
     
     public static function getStrWeight(float $value): string
     {
-    	switch ($value) {
-        	case 0 :
-	            $strPoids = '-';
+        switch ($value) {
+            case 0 :
+                $strPoids = '-';
             break;
             case 0.125 :
-	            $strPoids = '125 g';
+                $strPoids = '125 g';
             break;
             case 0.25 :
-	            $strPoids = '250 g';
+                $strPoids = '250 g';
             break;
             default :
-	            $strPoids = $value.Language::LG_KG;
+                $strPoids = $value.Language::LG_KG;
             break;
         }
         return $strPoids;

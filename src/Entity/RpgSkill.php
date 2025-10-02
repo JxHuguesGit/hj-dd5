@@ -41,5 +41,5 @@ class RpgSkill extends Entity
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgSubSkill($queryBuilder, $queryExecutor);
         return $objDao->findBy([Field::SKILLID=>$this->id], [Field::NAME=>'ASC']);
-    } 
+    }
 }

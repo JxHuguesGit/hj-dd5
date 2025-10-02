@@ -46,9 +46,9 @@ class Table
             foreach ($row['cells'] as $cell) {
                 $cellType = $cell[Constant::CST_TYPE];
                 if ($cellType = 'th') {
-	                $cellContent = '<div class="dt-column-header"><span>'.$cell[Constant::CST_CONTENT].'</span><span class="dt-column-order"></span></div>';
+                    $cellContent = '<div class="dt-column-header"><span>'.$cell[Constant::CST_CONTENT].'</span><span class="dt-column-order"></span></div>';
                 } else {
-    	            $cellContent = $cell[Constant::CST_CONTENT];
+                    $cellContent = $cell[Constant::CST_CONTENT];
                 }
                 $cellAttributes = $cell['attributes'];
                 $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
@@ -156,7 +156,7 @@ class Table
                 $arrParams[Constant::CST_CLASS] = 'row-striped-even';
             } elseif (isset($arrParams[Constant::CST_CLASS])) {
                 unset($arrParams[Constant::CST_CLASS]);
-            } 
+            }
 
             $obj->getController()->addBodyRow($this, $arrParams, $oldId);
             $objs->next();

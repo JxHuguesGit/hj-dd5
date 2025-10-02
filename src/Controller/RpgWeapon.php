@@ -34,15 +34,15 @@ class RpgWeapon extends Utilities
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgWeapon($queryBuilder, $queryExecutor);
         $rpgWeapons = $objDao->findAll([Field::MARTIAL=>Constant::CST_ASC, Field::MELEE=>'DESC', Field::NAME=>Constant::CST_ASC]);
-		$paginate = [
-        	Constant::PAGE_OBJS      => $rpgWeapons,
+        $paginate = [
+            Constant::PAGE_OBJS      => $rpgWeapons,
             Constant::CST_CURPAGE    => $params[Constant::CST_CURPAGE] ?? 1,
             Constant::PAGE_NBPERPAGE => $params[Constant::PAGE_NBPERPAGE] ?? 20
         ];
 
         $objTable = new Table();
         $objTable->setTable([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_SM, Bootstrap::CSS_TABLE_STRIPED, Bootstrap::CSS_MT5])])
-	        ->setPaginate($paginate)
+            ->setPaginate($paginate)
             ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
             ->addHeaderRow()
             ->addHeaderCell([Constant::CST_CONTENT=>Language::LG_WEAPONS])

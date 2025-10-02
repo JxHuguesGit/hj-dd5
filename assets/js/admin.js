@@ -86,6 +86,6 @@ $(document).ready(function(e) {
         }
 
         // Recharge la page avec les nouveaux paramètres
-        window.location.href = baseUrl + '?' + searchParams.toString();
+        globalThis.location.href = baseUrl + '?' + searchParams.toString();
     });
 });

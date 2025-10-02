@@ -7,7 +7,7 @@ class Ajax{
 
     public static function dealWithAjax()
     {
-        $ajaxAction	= Session::fromPost('ajaxAction');
+        $ajaxAction    = Session::fromPost('ajaxAction');
         switch ($ajaxAction) {
             case 'loadCasteDetail':
                 $returnedValue = LoadCasteDetail::build();
@@ -16,7 +16,7 @@ class Ajax{
                 $returnedValue = DownloadFile::start();
             break;
             case 'modalMonsterCard':
-            	$returnedValue = MonsterCard::build();
+                $returnedValue = MonsterCard::build();
             break;
             default:
                 $returnedValue = 'default';

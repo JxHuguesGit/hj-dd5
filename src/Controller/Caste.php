@@ -37,7 +37,6 @@ class Caste extends Utilities
         // Si oui, il faut le gérer.
         if (Session::isPostSubmitted()) {
             $formName = Session::fromPost('formName');
-            var_dump($_POST);
             if ($formName=='classSelection') {
                 $hero->setCasteId(Session::fromPost('classSelectionValue'));
                 $repositoryHero->update($hero);

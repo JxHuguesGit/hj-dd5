@@ -24,11 +24,11 @@ class Hero extends Utilities
 {
     private int $heroSelection;
     public EntityHero $entityHero;
-	private string $bgColor = '';
+    private string $bgColor = '';
     private string $fontColor = '';
     private array $defaultColor = [];
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -118,7 +118,7 @@ class Hero extends Utilities
     
     public function getNameBlock(): array
     {
-    	$urlImg = '/wp-content/plugins/hj-dd5/assets/images/PJ1avatar.jpeg';
+        $urlImg = '/wp-content/plugins/hj-dd5/assets/images/PJ1avatar.jpeg';
         $scheme = $this->entityHero->getSchemeColor();
         if ($scheme=='ct-scheme-lightblue') {
             $this->bgColor = '#FEFEFE';
@@ -150,14 +150,14 @@ class Hero extends Utilities
         while (!empty($abilities)) {
             $ability = array_shift($abilities);
             
-        	$label = $ability->label();
+            $label = $ability->label();
             $value = $this->entityHero->getAbility($ability->value);
             $modAbility = Utils::getModAbility($value);
             $ariaLabel = Utils::formatStringAbility($modAbility);
             $mod = Utils::formatStringModAbility($modAbility);
             $attributes = [$label, $mod, $ariaLabel, $value];
             
-	        $strQuickInfos .= $this->getRender(Template::ADMINCHARABILITY, array_merge($this->defaultColor, $attributes));
+            $strQuickInfos .= $this->getRender(Template::ADMINCHARABILITY, array_merge($this->defaultColor, $attributes));
         }
         
         $proficiencyBonus = $this->entityHero->getProficiencyBonus();
@@ -185,10 +185,10 @@ class Hero extends Utilities
 
     public function getSubsectionsBlock(): string
     {
-    	$attributes = [
-        	$this->getSubSectionAbilitiesBlock(),
-        	$this->getSubSectionPassiveBlock(),
-        	$this->getSubSectionMaterielLanguesBlock(),
+        $attributes = [
+            $this->getSubSectionAbilitiesBlock(),
+            $this->getSubSectionPassiveBlock(),
+            $this->getSubSectionMaterielLanguesBlock(),
             $this->getSubSectionSkillsBlock(),
             $this->getSubSectionCombatBlock(),
             '',
@@ -201,46 +201,46 @@ class Hero extends Utilities
     private function getSubSectionMaterielLanguesBlock(): string
     {
         $attributesMerged = array_merge(
-        	$this->defaultColor,
-        	[
-            	'A',
-        		'B',
+            $this->defaultColor,
+            [
+                'A',
+                'B',
                 'C',
-        	]
+            ]
         );
-    	return $this->getRender(Template::ADMINCHARSUBSECMLG, $attributesMerged);
+        return $this->getRender(Template::ADMINCHARSUBSECMLG, $attributesMerged);
     }
     
     private function getSubSectionPassiveBlock(): string
     {
         $attributesMerged = array_merge(
-        	$this->defaultColor,
-        	[
-            	'A',
-        		'B',
+            $this->defaultColor,
+            [
+                'A',
+                'B',
                 'C',
-        	]
+            ]
         );
-    	return $this->getRender(Template::ADMINCHARSUBSECPSV, $attributesMerged);
+        return $this->getRender(Template::ADMINCHARSUBSECPSV, $attributesMerged);
     }
     
     private function getSubSectionCombatBlock(): string
     {
         $attributesMerged = array_merge(
-        	$this->defaultColor,
-        	[
-            	'plus 2',
-        		'+2',
+            $this->defaultColor,
+            [
+                'plus 2',
+                '+2',
                 '13',
-        	]
+            ]
         );
-    	return $this->getRender(Template::ADMINCHARSUBSECCBT, $attributesMerged);
+        return $this->getRender(Template::ADMINCHARSUBSECCBT, $attributesMerged);
     }
     
     private function getSubSectionSkillsBlock(): string
     {
-		$skills = SkillEnum::cases();
-	    $proficiencyBonus = $this->entityHero->getProficiencyBonus();
+        $skills = SkillEnum::cases();
+        $proficiencyBonus = $this->entityHero->getProficiencyBonus();
         
         $strSkills = '';
         while (!empty($skills)) {
@@ -257,10 +257,10 @@ class Hero extends Utilities
             $ariaLabel = Utils::formatStringAbility($modAbility);
             $mod = Utils::formatStringModAbility($modAbility);
         
-        	$attributesMerged = array_merge(
-            	$this->defaultColor,
+            $attributesMerged = array_merge(
+                $this->defaultColor,
                 [
-                	$abilityKey,
+                    $abilityKey,
                     $skillLabel,
                     ($blnProf ? '' : 'Not ').'Proficient',
                     $blnProf ? 'hasProficiency' : '',
@@ -268,23 +268,23 @@ class Hero extends Utilities
                     $mod,
                 ]
             );
-        	$strSkills .= $this->getRender(Template::ADMINCHARSUBSECSKL, $attributesMerged);
+            $strSkills .= $this->getRender(Template::ADMINCHARSUBSECSKL, $attributesMerged);
         }
         
-    	return $this->getRender(Template::ADMINCHARSUBSECSKLS, array_merge($this->defaultColor, [$strSkills]));
+        return $this->getRender(Template::ADMINCHARSUBSECSKLS, array_merge($this->defaultColor, [$strSkills]));
     }
     
     private function getSubSectionAbilitiesBlock(): string
     {
-	    $proficiencyBonus = $this->entityHero->getProficiencyBonus();
+        $proficiencyBonus = $this->entityHero->getProficiencyBonus();
         $abilities = AbilityEnum::cases();
             
         $strAbilities = '';
         while (!empty($abilities)) {
             $ability = array_shift($abilities);
 
-        	$label = $ability->label();
-			$blnProf = $this->entityHero->hasProficiencyAbility($ability->value);
+            $label = $ability->label();
+            $blnProf = $this->entityHero->hasProficiencyAbility($ability->value);
             // A priori, un bool n'est pas la solution, puisqu'on peut être "standard", "proficient" ou "expert"
             
             $value = $this->entityHero->getAbility($ability->value);
@@ -292,10 +292,10 @@ class Hero extends Utilities
             $ariaLabel = Utils::formatStringAbility($modAbility);
             $mod = Utils::formatStringModAbility($modAbility);
             
-        	$attributesMerged = array_merge(
-            	$this->defaultColor,
+            $attributesMerged = array_merge(
+                $this->defaultColor,
                 [
-                	substr(strtoupper($label), 0, 3),
+                    substr(strtoupper($label), 0, 3),
                     $label,
                     ($blnProf ? '' : 'Not ').'Proficient',
                     $blnProf ? 'hasProficiency' : '',
@@ -303,12 +303,12 @@ class Hero extends Utilities
                     $mod
                 ]
             );
-        	$strAbilities .= $this->getRender(Template::ADMINCHARSUBSECABY, $attributesMerged);
+            $strAbilities .= $this->getRender(Template::ADMINCHARSUBSECABY, $attributesMerged);
         }
         
-    	$attributes = [
-        	$strAbilities
+        $attributes = [
+            $strAbilities
         ];
-    	return $this->getRender(Template::ADMINCHARSUBSECABIL, array_merge($this->defaultColor, $attributes));
+        return $this->getRender(Template::ADMINCHARSUBSECABIL, array_merge($this->defaultColor, $attributes));
     }
 }

@@ -23,7 +23,7 @@ enum SkillEnum: string
     case Dec = 'dec';
     case End = 'end';
 
-	public function label(): string
+    public function label(): string
     {
         return match($this) {
             static::Acr   => 'Acrobaties',

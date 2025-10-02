@@ -91,9 +91,8 @@ p {
 
 abbr[title],
 abbr[data-original-title] {
-  text-decoration: underline;
-  -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
+  -webkit-text-decoration: underline dotted;
   cursor: help;
   border-bottom: 0;
   -webkit-text-decoration-skip-ink: none;
@@ -35464,8 +35463,8 @@ body.iframe-mode-fullscreen .content-wrapper.iframe-mode {
 .fc-button {
   background: #f8f9fa;
   background-image: none;
-  border-bottom-color: #ddd;
   border-color: #ddd;
+  border-bottom-color: #ddd;
   color: #495057;
 }
 
@@ -40057,7 +40056,6 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
   max-width: 200px;
   padding: 0.25rem 0.5rem;
   position: absolute;
-  text-align: center;
   word-wrap: break-word;
   z-index: 1070;
 }

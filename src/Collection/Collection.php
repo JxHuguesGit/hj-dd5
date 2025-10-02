@@ -153,7 +153,7 @@ class Collection implements \Iterator
      *
      * @param callable $callback La fonction de rappel utilisée pour comparer les éléments.
      * @return self La collection triée.
-     * 
+     *
      * Exemple :
      * $sortedCollection = $collection->sort(function($a, $b) {
      *      return $a->getWeight() <=> $b->getWeight(); // Trie par poids

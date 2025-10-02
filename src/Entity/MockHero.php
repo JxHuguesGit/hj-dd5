@@ -5,23 +5,23 @@ use src\Controller\Hero as ControllerHero;
 
 class MockHero
 {
-	private Hero $hero;
+    private Hero $hero;
     
     public function __construct()
     {
-		//$this->_initSheila();
+        //$this->_initSheila();
         $this->_initDhommot();
     }
     
     public function getHero(): Hero
     {
-    	return $this->hero;
+        return $this->hero;
     }
 
-	private function _initDhommot(): void
+    private function _initDhommot(): void
     {
-    	$this->hero = new Hero(
-        	2,
+        $this->hero = new Hero(
+            2,
             'Dhommot Bronzebeard',
             1,
             5,
@@ -37,10 +37,10 @@ class MockHero
             ->setProficiencyBonus(3);
     }
     
-	private function _initSheila(): void
+    private function _initSheila(): void
     {
-    	$this->hero = new Hero(
-        	1,
+        $this->hero = new Hero(
+            1,
             'Sheila',
             3,
             1,

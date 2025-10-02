@@ -8,8 +8,8 @@ class Language
     public const LG_WEIGHT          = 'Poids';
     public const LG_PRICE           = 'Prix';
 
-	public const LG_FORCE           = 'Force';
-	public const LG_FORCE_SHORT     = 'For';
+    public const LG_FORCE           = 'Force';
+    public const LG_FORCE_SHORT     = 'For';
     
     public const LG_ARMORS          = 'Armures';
     public const LG_CA              = 'Classe d\'armure (CA)';

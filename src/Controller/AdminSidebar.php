@@ -6,42 +6,42 @@ use src\Constant\Template;
 
 class AdminSidebar extends Utilities
 {
-	private array $allowedTabs;
-	private string $currentTab;
-	private string $currentId;
+    private array $allowedTabs;
+    private string $currentTab;
+    private string $currentId;
     
-	public function setAttributes(array $allowedTabs, string $currentTab='', string $currentId='')
+    public function setAttributes(array $allowedTabs, string $currentTab='', string $currentId='')
     {
-    	$this->allowedTabs = $allowedTabs;
-    	$this->currentTab = $currentTab;
-    	$this->currentId = $currentId;
+        $this->allowedTabs = $allowedTabs;
+        $this->currentTab = $currentTab;
+        $this->currentId = $currentId;
     }
     
     public function getContent(): string
     {
-    	$strSidebarMenuItems = '';
+        $strSidebarMenuItems = '';
         // On ajoute le menu "Character";
-    	$strSidebarMenuItems .= $this->getCharacterItem();
+        $strSidebarMenuItems .= $this->getCharacterItem();
         // On ajoute le menu "Initiative";
-    	$strSidebarMenuItems .= $this->getTimelineItem();
+        $strSidebarMenuItems .= $this->getTimelineItem();
         // On ajoute le menu "Compendium";
         $strSidebarMenuItems .= $this->getCompendiumItem();
         
-    	$attributes = [
-        	!in_array($this->currentTab, $this->allowedTabs)||$this->currentTab=='home' ? 'active' : '',
+        $attributes = [
+            !in_array($this->currentTab, $this->allowedTabs)||$this->currentTab=='home' ? 'active' : '',
             $strSidebarMenuItems
         ];
-    	return $this->getRender(Template::ADMINSIDEBAR, $attributes);
+        return $this->getRender(Template::ADMINSIDEBAR, $attributes);
     }
     
     private function getCharacterItem(): string
     {
-    	$strChildren = '<ul class="nav nav-treeview">';
+        $strChildren = '<ul class="nav nav-treeview">';
         
-    	$attributes = [
-        	'',
+        $attributes = [
+            '',
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=1',
-        	$this->currentTab=='character' && $this->currentId==1 ? 'active' : '',
+            $this->currentTab=='character' && $this->currentId==1 ? 'active' : '',
             'circle',
             'Sheila',
             'd-none',
@@ -49,10 +49,10 @@ class AdminSidebar extends Utilities
         ];
         $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         
-    	$attributes = [
-        	'',
+        $attributes = [
+            '',
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=2',
-        	$this->currentTab=='character' && $this->currentId==2 ? 'active' : '',
+            $this->currentTab=='character' && $this->currentId==2 ? 'active' : '',
             'circle',
             'PJ2',
             'd-none',
@@ -60,10 +60,10 @@ class AdminSidebar extends Utilities
         ];
         $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         
-    	$attributes = [
-        	'',
+        $attributes = [
+            '',
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=3',
-        	$this->currentTab=='character' && $this->currentId==3 ? 'active' : '',
+            $this->currentTab=='character' && $this->currentId==3 ? 'active' : '',
             'circle',
             'PJ3',
             'd-none',
@@ -71,13 +71,13 @@ class AdminSidebar extends Utilities
         ];
         $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
 
-		$strChildren .= '</ul>';
+        $strChildren .= '</ul>';
         
         
-    	$attributes = [
-        	$this->currentTab=='character' ? 'menu-open' : '',
+        $attributes = [
+            $this->currentTab=='character' ? 'menu-open' : '',
             '#',
-        	$this->currentTab=='character' ? 'active' : '',
+            $this->currentTab=='character' ? 'active' : '',
             'users',
             'Personnages',
             '',
@@ -89,10 +89,10 @@ class AdminSidebar extends Utilities
     
     private function getTimelineItem(): string
     {
-    	$attributes = [
-        	'',// la classe ne sera jamais menu-open puisque pas d'enfants.
+        $attributes = [
+            '',// la classe ne sera jamais menu-open puisque pas d'enfants.
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=timeline',
-        	$this->currentTab=='timeline' ? 'active' : '',
+            $this->currentTab=='timeline' ? 'active' : '',
             'timeline',
             'Initiative',
             'd-none',
@@ -115,7 +115,7 @@ class AdminSidebar extends Utilities
         ];
 
         // Construction du menu
-    	$strChildren = '<ul class="nav nav-treeview">';
+        $strChildren = '<ul class="nav nav-treeview">';
         foreach ($children as $child) {
             $attributes = [
                 '',
@@ -128,13 +128,13 @@ class AdminSidebar extends Utilities
             ];
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         }
-		$strChildren .= '</ul>';
+        $strChildren .= '</ul>';
         
         // Attribution au template
-    	$attributes = [
-        	$this->currentTab=='compendium' ? 'menu-open' : '',
+        $attributes = [
+            $this->currentTab=='compendium' ? 'menu-open' : '',
             '#',
-        	$this->currentTab=='compendium' ? 'active' : '',
+            $this->currentTab=='compendium' ? 'active' : '',
             Icon::IBOOK,
             'Compendium',
             '',

@@ -14,7 +14,7 @@ use src\Repository\RpgTypeMonstre as RepositoryRpgTypeMonstre;
 
 class RpgMonster extends Entity
 {
-	public string $msgErreur;
+    public string $msgErreur;
 
     public function __construct(
         protected int $id,
@@ -49,8 +49,8 @@ class RpgMonster extends Entity
     
     public function getExtra($field): string
     {
-    	if ($this->extra==null) {
-        	return '';
+        if ($this->extra==null) {
+            return '';
         }
         $tabExtra = json_decode($this->extra, true);
         return $tabExtra[$field]??'';
@@ -58,11 +58,11 @@ class RpgMonster extends Entity
     
     public function getStrExtra(string $field): string
     {
-    	$value = $this->{$field};
+        $value = $this->{$field};
         $extra = $this->getExtra($field);
         if ($extra!='') {
-        	$value .= ' ' . $extra;
-        }        
+            $value .= ' ' . $extra;
+        }
         return $value;
     }
 
@@ -139,37 +139,37 @@ class RpgMonster extends Entity
         $strSTAA  = $this->getStrType() . ' de taille ';
         $strSTAA .= SizeHelper::toLabelFr($this->monsterSize);
         $obj = $this->getAlignement();
-    	return $strSTAA.', '.$obj->getStrAlignement(); 
+        return $strSTAA.', '.$obj->getStrAlignement();
     }
     
     public function getStrModifier(int $value): string
     {
-    	return ($value>=0 ? '+' : '').$value;
+        return ($value>=0 ? '+' : '').$value;
     }
     
     public function getStrInitiative(): string
     {
-    	if ($this->initiative>=0) {
-        	return '+'.$this->initiative;
+        if ($this->initiative>=0) {
+            return '+'.$this->initiative;
         } else {
-        	return $this->initiative;
+            return $this->initiative;
         }
     }
 
     public function getStrVitesse(): string
     {
-    	$value = $this->vitesse.'m';
+        $value = $this->vitesse.'m';
         $extra = $this->getExtra('vitesse');
         if ($extra!='') {
-        	$value .= ', ' . $extra;
-        }      
+            $value .= ', ' . $extra;
+        }
         return $value;
     }
     
     public function parseFile(string $urlSource, bool $blnFr=false): bool
     {
-    	$data = [];
-    	$handle = fopen('https://dd5.jhugues.fr/wp-content/plugins/hj-dd5/assets/aidedd/'.$this->ukTag.'.html', 'r');  
+        $data = [];
+        $handle = fopen('https://dd5.jhugues.fr/wp-content/plugins/hj-dd5/assets/aidedd/'.$this->ukTag.'.html', 'r');
         while (true) {
             $line = fgets($handle, 2048);
             if ($line===false) {
@@ -183,10 +183,10 @@ class RpgMonster extends Entity
                 . "(?:<div class=['\"]init['\"]><strong>Initiative</strong>\s*([^<]+)</div>.*?)?"
                 . "<strong>(?:AC|CA)</strong>\s*([^<]+)<br>.*?"
                 . "<strong>(?:HP|PV)</strong>\s*([^<]+)<br>.*?"
-                . "<strong>(?:Speed|Vitesse)</strong>\s*([^<]+)<br>~is";            
+                . "<strong>(?:Speed|Vitesse)</strong>\s*([^<]+)<br>~is";
             
             if (preg_match($pattern, $line, $matches)) {
-            	$data = array_merge($data, [
+                $data = array_merge($data, [
                     'name'       => $matches[1],
                     'type'       => $matches[2],
                     'initiative' => isset($matches[3]) ? trim($matches[3]) : null,
@@ -237,7 +237,7 @@ class RpgMonster extends Entity
             if (preg_match($pattern, $line, $matches)) {
                 $key = $matches[1];
                 $values = $matches[2];
-				$result = [$key => $values];
+                $result = [$key => $values];
                 $data = array_merge($data, $result);
             }
             ///////////////////////////////////
@@ -246,8 +246,8 @@ class RpgMonster extends Entity
             //
             $pattern = "/<div class='rub'>(Traits|Actions|Reactions|Bonus actions)<\/div>(.*?)(?=<div class='rub'>|<\/div><div class='description'>|$)/si";
             if (preg_match_all($pattern, $line, $blocks, PREG_SET_ORDER)) {
-            	$subPattern = "/<p>\s*<strong><em>(.*?)<\/em><\/strong>(.*?)<\/p>/si";
-				$result = [];
+                $subPattern = "/<p>\s*<strong><em>(.*?)<\/em><\/strong>(.*?)<\/p>/si";
+                $result = [];
                 foreach ($blocks as $block) {
                     $section = $block[1];
                     $content = $block[2];
@@ -261,7 +261,7 @@ class RpgMonster extends Entity
                 }
                 $data = array_merge($data, $result);
             }
-		}
+        }
         fclose($handle);
         
         return $this->analyseParsedFile($data, $blnFr);
@@ -269,25 +269,25 @@ class RpgMonster extends Entity
     
     private function analyseParsedFile(array $data, bool $blnFr): bool
     {
-    	$hasError = false;
+        $hasError = false;
         $this->msgErreur = '';
         
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
 
-		$blnUpdate = false;
-    	//var_dump($data);
+        $blnUpdate = false;
+        //var_dump($data);
         
         // Vérification du nom
         /*
         $name = $data['name'];
         $storedName = $blnFr ? $this->frName : $this->name;
         if ($storedName!=$name) {
-        	if ($blnFr) {
-            	$this->frName = $name;
+            if ($blnFr) {
+                $this->frName = $name;
             } else {
-            	$this->name = $name;
+                $this->name = $name;
             }
         }
         */
@@ -295,7 +295,7 @@ class RpgMonster extends Entity
         // type
         // initiative
         if (preg_match("/[+-](\d+)/", $data['initiative'], $matches)) {
-	        $value = $matches[1];
+            $value = $matches[1];
             if ($this->getField(Field::INITIATIVE)!=$value) {
                 $this->initiative = $value;
                 $blnUpdate = true;
@@ -308,7 +308,7 @@ class RpgMonster extends Entity
         //
         
         if (!$hasError && $blnUpdate) {
-        	$objDao->update($this);
+            $objDao->update($this);
         }
         
         return $hasError;
@@ -316,15 +316,15 @@ class RpgMonster extends Entity
     
     private function analyserVitesse(string $strSpeed): bool
     {
-    	$blnHasError = false;
-    	$pattern = "/(?:(?:^|,\s*)(?:(Fly|Climb|Swim)\s*)?(\d+)\s*(ft\.|m\.))/i";
+        $blnHasError = false;
+        $pattern = "/(?:(?:^|,\s*)(?:(Fly|Climb|Swim)\s*)?(\d+)\s*(ft\.|m\.))/i";
         if (preg_match_all($pattern, $strSpeed, $matches, PREG_SET_ORDER)) {
-        	// Il faudrait supprimer toutes les vitesses attachées à ce monstre
-        	$result = [];
+            // Il faudrait supprimer toutes les vitesses attachées à ce monstre
+            $result = [];
             foreach ($matches as $index => $match) {
-            	$mult = $match[3]=='m' ? 1 : 0.3;
-            	switch ($match[1]) {
-                	case 'Fly' :
+                $mult = $match[3]=='m' ? 1 : 0.3;
+                switch ($match[1]) {
+                    case 'Fly' :
                     case 'Vol' :
                     // rpgTypeSpeed : id = 1
                     // Ajouter la vitesse au monstre
@@ -332,7 +332,7 @@ class RpgMonster extends Entity
                         $blnHasError = true;
                     break;
                     case '' :
-                    	$this->speed = $match[2] * $mult;
+                        $this->vitesse = $match[2] * $mult;
                     break;
                     default :
                         $this->msgErreur .= "Type de vitesse non géré : ".$match[1];
@@ -341,8 +341,8 @@ class RpgMonster extends Entity
                 }
             }
         } else {
-	        $this->msgErreur .= "Erreur Vitesse : ".$data['speed'];
-        	$blnHasError = true;
+            $this->msgErreur .= "Erreur Vitesse : ".$strSpeed;
+            $blnHasError = true;
         }
         return $blnHasError;
     }

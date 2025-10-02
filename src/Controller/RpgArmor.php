@@ -50,7 +50,7 @@ class RpgArmor extends Utilities
             $objTable->addBodyRows($rpgArmors);
         }
 
-        return $objTable; 
+        return $objTable;
     }
 
     public function addBodyRow(Table &$objTable, array $arrParams, int &$oldTypeArmorId): void

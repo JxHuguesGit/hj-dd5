@@ -23,16 +23,16 @@ $(document).ready(function() {
 
 function ajaxActionClick(obj, e) {
     e.preventDefault();
-	let actions = obj.data('action').split(',');
-	for (let oneAction of actions) {
-	    switch (oneAction) {
+    let actions = obj.data('action').split(',');
+    for (let oneAction of actions) {
+        switch (oneAction) {
             case 'loadCasteDetail' :
                 let key = obj.data('key');
                 let lang = obj.data('lang');
                 loadCasteDetail(oneAction, key, lang);
             break;
-		}
-	}
+        }
+    }
     return false;
 }
 
@@ -43,7 +43,7 @@ function loadCasteDetail(ajaxAction, key, lang) {
         data,
         function(response) {
             try {
-                obj = JSON.parse(response.data);
+                let obj = JSON.parse(response.data);
                 console.log(obj);
                 console.log(obj[ajaxAction]);
                 $('#'+ajaxAction).html(obj[ajaxAction]);

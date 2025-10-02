@@ -142,7 +142,7 @@ class Paginate
     {
         $addClass = '';
         if ($isDisabled) {
-        	$addClass = ' '.Constant::CST_DISABLED;
+            $addClass = ' '.Constant::CST_DISABLED;
             $strLink = Html::getLink($label, '#', $this->cssPageLink);
         } else {
             $href = add_query_arg(Constant::CST_CURPAGE, $curpage, $this->url);
@@ -154,11 +154,11 @@ class Paginate
     
     public function getStartSlice(): int
     {
-    	return ($this->curPage-1)*$this->nbPerPage;
+        return ($this->curPage-1)*$this->nbPerPage;
     }
     
     public function getNbPerPage(): int
     {
-    	return $this->nbPerPage;
+        return $this->nbPerPage;
     }
 }

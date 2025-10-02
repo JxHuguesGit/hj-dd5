@@ -5,12 +5,12 @@ use src\Controller\Hero as ControllerHero;
 
 class Hero extends Entity
 {
-	private int $ablstr;
-	private int $abldex;
-	private int $ablcon;
-	private int $ablint;
-	private int $ablwis;
-	private int $ablcha;
+    private int $ablstr;
+    private int $abldex;
+    private int $ablcon;
+    private int $ablint;
+    private int $ablwis;
+    private int $ablcha;
     private int $proficiencyBonus;
 
     public function __construct(
@@ -50,33 +50,33 @@ class Hero extends Entity
     
     public function getSchemeColor(): string
     {
-    	return 'ct-scheme-lightblue';
+        return 'ct-scheme-lightblue';
     }
     
     public function getAbility(string $ability): int
     {
-    	return $this->{'abl'.$ability};
+        return $this->{'abl'.$ability};
     }
     
     public function setAbility(string $ability, int $value): self
     {
-    	$this->{'abl'.$ability} = $value;
-    	return $this;
+        $this->{'abl'.$ability} = $value;
+        return $this;
     }
 
-	public function getProficiencyBonus(): int
+    public function getProficiencyBonus(): int
     {
-    	return $this->proficiencyBonus;
+        return $this->proficiencyBonus;
     }
     
-	public function setProficiencyBonus(int $value): self
+    public function setProficiencyBonus(int $value): self
     {
-    	$this->proficiencyBonus = $value;
+        $this->proficiencyBonus = $value;
         return $this;
     }
     
     public function hasProficiencyAbility(string $ability): bool
     {
-    	return in_array($ability, ['dex', 'int']);
+        return in_array($ability, ['dex', 'int']);
     }
 }

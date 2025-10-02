@@ -17,7 +17,7 @@ final class Template
     public const LOCAL_CSS           = self::TEMPLATE_PATH.'localCss.tpl';
     public const LOCAL_JS            = self::TEMPLATE_PATH.'localJs.tpl';
     public const WWW_CSS             = self::TEMPLATE_PATH.'wwwCss.tpl';
-    public const WWW_JS              = self::TEMPLATE_PATH.'wwwJs.tpl';    
+    public const WWW_JS              = self::TEMPLATE_PATH.'wwwJs.tpl';
 
     public const ADMIN_PATH          = self::TEMPLATE_PATH.'admin/';
     public const ADMINBASE           = self::ADMIN_PATH.'adminBase.tpl';
@@ -29,7 +29,7 @@ final class Template
     public const ADMINCHARABILITY    = self::ADMIN_PATH.'adminCharacterAbility.tpl';
     public const ADMINCHARPROFBONUS  = self::ADMIN_PATH.'adminCharacterQuickInfoProfBonus.tpl';
     public const ADMINCHARSPEED      = self::ADMIN_PATH.'adminCharacterQuickInfoSpeed.tpl';
-    public const ADMINCHARHEROICINS  = self::ADMIN_PATH.'adminCharacterQuickInfoHeroicInspiration.tpl';    
+    public const ADMINCHARHEROICINS  = self::ADMIN_PATH.'adminCharacterQuickInfoHeroicInspiration.tpl';
     public const ADMINCHARSUBSECTION = self::ADMIN_PATH.'adminCharacterSubsections.tpl';
     public const ADMINCHARSUBSECABIL = self::ADMIN_PATH.'adminCharacterSubsectionAbilities.tpl';
     public const ADMINCHARSUBSECABY  = self::ADMIN_PATH.'adminCharacterSubsectionAbility.tpl';

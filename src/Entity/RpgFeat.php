@@ -30,5 +30,5 @@ class RpgFeat extends Entity
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgFeatType($queryBuilder, $queryExecutor);
         return $objDao->find($this->featTypeId);
-    }    
+    }
 }

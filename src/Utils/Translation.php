@@ -35,7 +35,7 @@ class Translation
                     $fallbackValue = $objTranslate->getValue();
                 }
                 $collection->next();
-            }    
+            }
         }
 
         if ($returnedValue==$key && $fallbackValue!=$key)  {

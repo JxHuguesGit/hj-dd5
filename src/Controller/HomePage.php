@@ -59,7 +59,6 @@ class HomePage extends Utilities
                     $controller = Caste::getCreationContentForCaste();
                 } else {
                     echo 'Formname non couvert ['.Session::fromPost(Constant::FORMNAME).']<br>';
-                    var_dump($_POST);
                     $controller = new self();
                 }
             } else {

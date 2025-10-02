@@ -13,16 +13,16 @@ class AdminCharacterPage extends AdminPage
         // On va utiliser des personnages Mock.
         $mockHero = new MockHero();
 
-		$hero = $mockHero->getHero();
+        $hero = $mockHero->getHero();
         $controller = $hero->getController();
         $attributes = $controller->getNameBlock();
         
-		$completeAttributes = array_merge(
-        	$attributes,
+        $completeAttributes = array_merge(
+            $attributes,
             [
                 $controller->getQuickInfoBlock(), // bloc des données chiffrées
                 $controller->getSubsectionsBlock(), // bloc des données chiffrées
-			]
+            ]
         );
 
         $content .= $this->getRender(Template::ADMINCHARACTER,$completeAttributes);

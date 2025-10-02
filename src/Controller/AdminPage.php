@@ -6,8 +6,8 @@ use src\Constant\Template;
 
 class AdminPage extends Utilities
 {
-	private array $allowedOnglets = [
-    	'home',
+    private array $allowedOnglets = [
+        'home',
         'character',
         'timeline',
         'compendium',
@@ -16,7 +16,7 @@ class AdminPage extends Utilities
     public function getAdminContentPage(string $content): string
     {
         $attributes = [
-        	'Hugues Joneaux',// WPUser username
+            'Hugues Joneaux',// WPUser username
             $this->getSidebar(),// Menu de la sidebar
             $content
         ];
@@ -27,13 +27,13 @@ class AdminPage extends Utilities
     {
         $currentTab = $this->getArrParams(Constant::ONGLET, 'home');
         $currentId = $this->getArrParams('id', '');
-    	$sidebar = new AdminSidebar();
+        $sidebar = new AdminSidebar();
         $sidebar->setAttributes(
-        	$this->allowedOnglets,
+            $this->allowedOnglets,
             $currentTab,
             $currentId
         );
-    	return $sidebar->getContent();
+        return $sidebar->getContent();
     }
 
     public static function getAdminController(array $arrUri): mixed
@@ -41,16 +41,16 @@ class AdminPage extends Utilities
         $controller = new AdminPage($arrUri);
         $currentTab = $controller->getArrParams(Constant::ONGLET, 'home');
         switch ($currentTab) {
-        	case 'character' :
+            case 'character' :
                 $controller = new AdminCharacterPage($arrUri);
-			break;
-        	case 'compendium' :
+            break;
+            case 'compendium' :
                 $controller = new AdminCompendiumPage($arrUri);
-			break;
-			case 'home' :
+            break;
+            case 'home' :
             default :
                 $controller = new AdminHomePage($arrUri);
-			break;
+            break;
         }
         return $controller;
     }

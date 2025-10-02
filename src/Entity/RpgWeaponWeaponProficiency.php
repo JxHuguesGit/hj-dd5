@@ -36,7 +36,7 @@ class RpgWeaponWeaponProficiency extends Entity
         $returned = $objWeaponProficiency->getField(Field::NAME);
         switch ($this->weaponProficiencyId) {
             case '1' :
-            	$objTypeAmmunition = $this->getTypeAmmunition();
+                $objTypeAmmunition = $this->getTypeAmmunition();
                 $returned .= ' (portée '.$this->minRange.'/'.$this->maxRange.' ; '.$objTypeAmmunition->getField(Field::NAME).')';
             break;
             case '8' :

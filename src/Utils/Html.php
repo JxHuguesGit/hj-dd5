@@ -62,13 +62,13 @@ class Html
         return static::getBalise('span', $content, $extraAttributes);
     }
     
-    public static function getIcon(string $icon, string $prefix='solid', array $attributes): string
+    public static function getIcon(string $icon, string $prefix='solid', array $extraAttributes=[]): string
     {
         $strClass = 'fa-'.$prefix.' fa-'.$icon;
         $attributes = array_merge(
-            [ConstantConstant::CST_CLASS=>$strClass],
+            [Constant::CST_CLASS=>$strClass],
             $extraAttributes
         );
         return self::getBalise('i', '', $attributes);
-    }    
+    }
 }

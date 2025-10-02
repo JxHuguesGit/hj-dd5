@@ -36,14 +36,14 @@ class RpgSkill extends Utilities
         $objDao = new RepositoryRpgSkill($queryBuilder, $queryExecutor);
         $rpgSkills = $objDao->findAll([Field::NAME=>Constant::CST_ASC]);
 
-		$paginate = [
-        	Constant::PAGE_OBJS      => $rpgSkills,
-            Constant::CST_CURPAGE    => $arrParams[Constant::CST_CURPAGE] ?? 1,
+        $paginate = [
+            Constant::PAGE_OBJS      => $rpgSkills,
+            Constant::CST_CURPAGE    => $params[Constant::CST_CURPAGE] ?? 1,
         ];
 
         $objTable = new Table();
         $objTable->setTable([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_SM, Bootstrap::CSS_MT5])])
-	        ->setPaginate($paginate)
+            ->setPaginate($paginate)
             ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
             ->addHeaderRow()
             ->addHeaderCell([Constant::CST_CONTENT=>Language::LG_SKILLS, Constant::CST_ATTRIBUTES=>[Constant::CST_COLSPAN=>2, Constant::CST_CLASS=>Bootstrap::CSS_COL_MD_3]])
