@@ -120,6 +120,7 @@ function dealWithAjaxCallback()
 add_action('wp_ajax_dealWithAjax', 'dealWithAjaxCallback');
 add_action('wp_ajax_nopriv_dealWithAjax', 'dealWithAjaxCallback');
 /*
+Test
 function redirect_if_not_logged_in() {
     if (!is_user_logged_in()) {
         // Redirige l'utilisateur vers la page de connexion
