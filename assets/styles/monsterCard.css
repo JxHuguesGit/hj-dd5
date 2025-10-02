@@ -1,0 +1,133 @@
+@media (min-width: 576px) {
+	.modal-dialog { max-width: 600px !important; }
+}
+.modal-body {
+    padding: 0;
+}
+
+#monsterCard {
+    background: white url('/wp-content/plugins/hj-dd5/assets/images/bg-monster-card.jpg') repeat;
+}
+
+#monsterCard .innerCard {
+    display: inline-block;
+    padding: 20px;
+    vertical-align: top;
+}
+
+.jaune {
+  background-color: #f1eee7;
+  padding: 10px 8px 5px 8px;
+  margin: 0 2px 0 2px;
+  border: 3px #bebdb8 solid;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+h1 {
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  color: #6D0000;
+  line-height: 1;
+  break-after: avoid;
+}
+
+.jaune h1 {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Open Sans", arial, sans-serif;
+  margin-bottom: 0px;
+}
+
+.sansSerif {
+  font-family: "Open Sans", arial, sans-serif;
+}
+
+.red {
+  color: #6D0000;
+}
+
+.rub {
+  color: #6D0000;
+  margin: 6px 0 4px 0;
+  border-bottom: 1px solid #6D0000;
+  font-size: 18px;
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+div.rub ~ p {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.type {
+  padding: 2px 0 0px 0;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.type {
+  color: #666666;
+}
+
+.car {
+  display: inline-block;
+  margin: 0 1px;
+  padding: 0px 2px;
+  font-size: 10px;
+  color: #666666;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.car1, .car4 {
+  display: inline-block;
+  margin: 1px;
+  padding: 2px 4px;
+  text-align: left;
+  vertical-align: top;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
+.car2, .car5 {
+  display: inline-block;
+  margin: 1px;
+  padding: 2px 4px;
+  text-align: center;
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.car3, .car6 {
+  display: inline-block;
+  margin: 1px;
+  padding: 2px 4px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.car1, .car2 {
+  background-color: #e8e6da;
+}
+
+.car3 {
+  background-color: #dad1ca;
+}
+
+.car4, .car5 {
+  background-color: #dddad5;
+}
+
+.car6 {
+  background-color: #cecac9;
+  margin-bottom: 8px;
+}

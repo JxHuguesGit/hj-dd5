@@ -1,0 +1,357 @@
+main {max-width: 100%;}
+main::before { background-color: #2b2b2a; content: ""; display: block; height: 175px; left: 0; position: absolute; right: 0; top: 1px;}
+
+.ddbc-proficiency-level-icon.hasProficiency {
+	background-color: #383838;
+}
+
+.ct-character-sheet--dark-mode, .ct-sidebar--is-dark-mode {
+    color-scheme: dark;
+  }
+#character-app .container {max-width: 1200px;}
+/* -----------------------------------------------------------------
+ * Entête de la feuille de personnage
+ * ----------------------------------------------------------------- */
+#character-app .ct-character-sheet {max-width: 100%;}
+#character-app .ct-character-sheet::before {content: ""; display: block; height: 115px; left: 0; position: absolute; right: 0; top: 1px;}
+#character-app .ct-character-header-desktop {min-height: 100px; padding: 10px 10px 15px;}
+#character-app .ddbc-character-tidbits {align-items: center; display: flex;}
+#character-app .ddbc-character-avatar {width: 60px; height: 60px; margin-right: 15px;}
+#character-app .ddbc-character-avatar__portrait {background-size: auto; background-size: cover; border-radius: 3px; cursor: pointer; object-fit: cover; width: 58px; height: 58px;}
+#character-app .ddbc-character-tidbits__body {flex: 1 1; min-width: 0; z-index: 1;}
+#character-app .ddbc-character-tidbits__heading {align-items: center; display: flex; color:#ffffff;}
+#character-app .ddbc-character-tidbits__heading h1 {margin-bottom: 0; font-size: 24px;}
+#character-app .ddbc-character-summary {color: #75838b; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+#character-app .ddbc-character-tidbits .ddbc-character-summary {font-size: 12px;}
+#character-app .ddbc-character-summary__race {margin-right: 5px;}
+#character-app .ddbc-character-progression-summary__level {font-size: 10px; color:#ffffff;}
+
+/* Définition de couleur spécifique */
+.ct-scheme-lightblue {
+    border: 2px solid #53a5c5;
+    color: #212529;
+    background-color: #ffffff;
+}
+.ct-scheme-lightblue .ddbc-character-avatar__portrait {
+    border: 2px solid #53a5c5;
+}
+
+#character-app .ddbc-character-avatar__portrait.color_rouge {
+    border: 2px solid #c53131;
+}
+#character-app .ddbc-character-avatar__portrait.color_ocre {
+    border: 2px solid #b59e54;
+}
+#character-app .ddbc-character-avatar__portrait.color_jaune {
+    border: 2px solid #FFC85A;
+}
+#character-app .ddbc-character-avatar__portrait.color_kaki {
+    border: 2px solid #4f7e61;
+}
+#character-app .ddbc-character-avatar__portrait.color_marron {
+    border: 2px solid #7e4f3d;
+}
+#character-app .ddbc-character-avatar__portrait.color_gris {
+    border: 2px solid #555752;
+}
+/*
+#92a2b3
+#0045b7
+#725281
+#e5623e
+*/
+
+
+.ct-character-sheet--dice-enabled .integrated-dice__container {align-items: center; background-color: transparent; border: 1px solid #bfccd6; border-radius: 4px; box-sizing: border-box; color: #394b59; cursor: pointer; display: inline-flex; justify-content: center;}
+
+
+
+/* -----------------------------------------------------------------
+ * Fin Entête de la feuille de personnage
+ * ----------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------
+ * Caractéristiques de la feuille de personnage
+ * ----------------------------------------------------------------- */
+#character-app .ct-quick-info {margin: -8px 0 10px; position: relative; text-align: center;}
+#character-app .ct-quick-info__abilities {width: 564px;}
+#character-app .ct-quick-info, .ct-quick-info__abilities {display: flex;justify-content: space-between;}
+#character-app .ddbc-ability-summary {height: 95px; position: relative; text-align: center; width: 81px;}
+
+.ddbc-ability-summary__heading {padding-top: 8px; position: relative; line-height: 18px;}
+.ddbc-ability-summary__abbr, .ddbc-ability-summary__label {color: #75838b; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase;}
+.ddbc-ability-summary__primary {color: #242528; font-size: 26px; font-weight: 500; position: relative; top: -.125rem; line-height: 36px;}
+.ct-character-sheet--dice-enabled .ddbc-ability-summary .integrated-dice__container {height: 34px; position: relative; width: 60px;}
+.ddbc-ability-summary__secondary { bottom: 0; font-size: 16px; font-weight: 700; left: 0; position: absolute; right: 0; line-height: 22px;}
+#character-app .ddbc-box-background {bottom: 0; left: 0; overflow: hidden; position: absolute; right: 0; top: 0;}
+
+.ddbc-saving-throws-summary__ability--DEX {left: -121px; top: 39px;}
+.ddbc-saving-throws-summary__ability--CON {top: 39px;}
+.ddbc-saving-throws-summary__ability--INT {top: -39px;}
+.ddbc-saving-throws-summary__ability--SAG {left: 121px; top: -39px;}
+
+/* -----------------------------------------------------------------
+ * Fin Caractéristiques de la feuille de personnage
+ * ----------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------
+ * Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+ #character-app .ct-proficiency-bonus-box {cursor: pointer; height: 89px; position: relative; text-align: center; width: 94px;}
+ .ct-proficiency-bonus-box__heading {
+    color: #000;
+    font-family: Roboto Condensed,Roboto,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding-bottom: 1px;
+    padding-top: 9px;
+    position: relative;
+    text-transform: uppercase;
+    line-height:16px;
+  }
+  .ct-proficiency-bonus-box__value {
+    color: #242528;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 36px;
+  }
+  .styles_signed__scf97 {
+    align-items: center;
+    display: inline-flex;
+    vertical-align: top;
+    line-height: 36px;
+  }
+  .styles_large__3C8uq {
+    position: relative;
+  }
+  .ct-proficiency-bonus-box__label {
+    bottom: 6px;
+    font-family: Roboto Condensed,Roboto,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-transform: uppercase;
+    line-height: 18px;
+  }
+  .ct-combat__summary-group--initiative .ddbc-box-background {
+    height: 58px;
+  }
+  .ct-combat__summary-group--ac .ddbc-box-background {
+    height: 105px;
+  }
+/* -----------------------------------------------------------------
+ * Fin Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------
+ * Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+ #character-app .ct-speed-box {cursor: pointer; height: 89px; position: relative; text-align: center; width: 94px;}
+ .ct-speed-box__heading {
+    color: #75838b;
+    font-family: Roboto Condensed,Roboto,Helvetica,sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    padding-bottom: 1px;
+    padding-top: 11px;
+    position: relative;
+    text-transform: uppercase;
+  }
+  .styles_largeDistance__YVw96 {
+    font-size: 1.625rem;
+    font-weight: 500;
+  }
+  .styles_large__3C8uq {
+    position: relative;
+  }
+  .styles_label__L8mZK {
+    font-size: .625rem;
+    margin-left: .188rem;
+  }
+  .styles_labelSignColor__Klmbs {
+    color: color-mix(in srgb,var(--theme-contrast) 60%,transparent);
+  }
+  .styles_largeLabel__E3v8Y {
+    bottom: .125rem;
+    font-size: 1rem;
+    position: absolute;
+  }
+  .ct-speed-box__label {
+    bottom: 6px;
+    font-family: Roboto Condensed,Roboto,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-transform: uppercase;
+  }
+
+/* -----------------------------------------------------------------
+ * Fin Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------
+ * Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+ #character-app .ct-heroic-inspiration {align-items: center; display: flex; height: 3.3125rem; justify-content: center; position: relative; width: 4.5rem;}
+/* -----------------------------------------------------------------
+ * Fin Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------
+ * Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+ #character-app .ct-hitPointsBox {cursor: pointer; height: 5.563rem; position: relative; text-align: center; width: 19.813rem;}
+/* -----------------------------------------------------------------
+ * Fin Bonus Proficiency de la feuille de personnage
+ * ----------------------------------------------------------------- */
+
+ #character-app .ct-character-sheet-desktop .ct-subsections {height: 770px; position: relative;}
+
+ #character-app .ct-character-sheet-desktop .ct-subsection {position: absolute;}
+ #character-app .ct-subsection__footer {bottom: 5px; display: flex; font-weight: 700; justify-content: center; left: 0; position: absolute; right: 0; text-transform: uppercase;}
+ #character-app .ct-character-sheet-desktop .ct-subsection--senses {left: 0; top: 214px;}
+ .ct-character-sheet-desktop .ct-subsection--proficiency-groups {
+    left: 0;
+    top: 427px;
+  }
+  .ct-subsection__footer, .ct-subsection__header-content {
+    font-family: Roboto Condensed,Roboto,Helvetica,sans-serif;
+    font-size: 13px;
+  }
+  .ct-character-sheet-desktop .ct-subsection--skills {
+    left: 286px;
+    top: -1px;
+  }
+  .ct-character-sheet-desktop .ct-subsection--combat {
+    right: 0;
+    top: 0;
+  }
+
+
+
+ #character-app .ct-saving-throws-box {height: 200px; padding: 13px 20px; position: relative; width: 281px;}
+ #character-app .ct-saving-throws-box__abilities {position: relative;}
+ #character-app .ddbc-saving-throws-summary {display: flex; flex-wrap: wrap; justify-content: space-around;}
+ #character-app .ddbc-saving-throws-summary__ability {align-items: center; cursor: pointer; display: flex; height: 34px; margin-bottom: 5px; position: relative; width: 107px;}
+ #character-app .ddbc-saving-throws-summary__ability-proficiency {position: relative; width: 5px;}
+ .ddbc-proficiency-level-icon {display: inline-flex; height: 10px; width: 10px;}
+ .ddbc-no-proficiency-icon {background-color: #fff; border: 1px dotted #75838b; border-radius: 50%;}
+ .ddbc-saving-throws-summary__ability .ddbc-proficiency-level-icon { left: -3px; position: absolute; top: -50%; transform: translateY(-50%);}
+ #character-app .ddbc-saving-throws-summary__ability-name {flex: 1 1; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 12px; font-weight: 700; text-align: center; text-transform: uppercase;}
+ #character-app .ddbc-saving-throws-summary__ability-modifier {font-size: 14px; font-weight: 700; text-align: center; width: 40px;}
+
+ .ct-character-sheet--dice-enabled .integrated-dice__container {align-items: center; background-color: transparent; border: 1px solid #bfccd6; border-radius: 4px; box-sizing: border-box; color: #394b59; cursor: pointer; display: inline-flex; justify-content: center;}
+ .ct-character-sheet--dice-enabled .ddbc-saving-throws-summary__ability-modifier .integrated-dice__container {background: transparent; border: 0;}
+ .ct-character-sheet--dice-enabled .ddbc-saving-throws-summary__ability-modifier .integrated-dice__container {height: 36px; width: 42px;}
+ .ct-character-sheet--dice-enabled .ddbc-saving-throws-summary__ability-modifier-background {display: block;}
+ .ct-character-sheet--dice-enabled .ddbc-saving-throw-selection-box-svg {fill: transparent; height: 36px; left: 70px; position: absolute; top: 0; width: 36px; z-index: -1;}
+  
+ #character-app .ct-character-sheet--dice-enabled .ddbc-saving-throws-summary__ability-modifier {z-index: 1;}
+ .ct-saving-throws-box__modifiers {display: flex; flex-direction: column; font-size: 11px; height: calc(3.6em + 6px); justify-content: center; line-height: 1.2; overflow: hidden; position: relative;}  
+ .ct-saving-throws-box__modifiers--empty {color: #75838b; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 12px; text-align: center;}
+
+.ct-senses-box {height: 200px; padding: 13px 20px; width: 281px;}
+.ct-senses-box, .ct-senses-box .ct-senses {position: relative; }
+.ct-senses__summary {align-items: center; display: flex; flex-wrap: wrap; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; justify-content: center; margin-top: 10px;}
+  .ct-senses__summary--empty {color: #75838b; justify-content: center; text-align: center;}
+  .ct-senses-box .ct-senses__summary, .ct-senses-desktop .ct-senses__summary {font-size: 12px; height: 3.6em; line-height: 1.2; margin-top: 6px; overflow: hidden;}
+  .ct-senses__callout {height: 34px; margin: 0 auto 5px; position: relative; width: 241px;}
+  .ct-senses__callout-value {font-size: 14px; font-weight: 700; left: 3px; position: absolute; text-align: center; top: 8px; width: 35px;}
+  .ct-senses__callout-label {font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 10px; font-weight: 700; left: 51px; position: absolute; text-transform: uppercase; top: 11px;}
+
+  .ct-proficiency-groups-box {height: 338px; padding: 13px 20px; position: relative; width: 278px;}
+  .ct-proficiency-groups-box .ct-proficiency-groups {height: 300px; overflow-y: auto; position: relative;}
+  .ct-proficiency-groups__group {font-family: Roboto Condensed,Roboto,Helvetica,sans-serif;}
+  .ct-proficiency-groups__group-label {color: #75838b; font-size: 14px; font-weight: 700; text-transform: uppercase;}
+  .ct-proficiency-groups__group + .ct-proficiency-groups__group {border-top: 1px solid #d8d8d8; margin-top: 10px; padding-top: 10px;}
+.ct-proficiency-groups__group-item {font-size: 13px; line-height: 18px; color:#000000;}
+
+.ct-skills-box {height: 765px; padding: 13px 20px; width: 281px;}
+  .ct-skills-box .ct-skills {position: relative;}
+  .ct-skills__header {display: flex; margin-bottom: 5px;}
+  .ct-skills__list {max-height: 700px; overflow-y: auto;}
+  .ct-skills__col--proficiency {width: 30px;}
+  .ct-skills__col--stat {padding: 0 5px; width: 40px;}
+  .ct-skills__col--skill {flex: 1 1;}
+  .ct-skills__heading {color: #75838b; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase;}
+  .ct-skills__item {align-items: center; cursor: pointer; display: flex; margin-bottom: 5px;}
+  .ct-skills__item .ct-skills__col--proficiency {align-items: center; display: flex; padding-left: 3px;}
+  .ct-skills__col--proficiency {width: 30px;}
+  .ct-skills__item .ct-skills__col--stat {color: #75838b; font-size: 12px; font-weight: 700; text-transform: uppercase;}
+  .ct-skills__col--stat {padding: 0 5px; width: 40px;}
+    .ct-character-sheet--dice-enabled .ct-skills__item .ct-skills__col--skill {padding: 5px 0;}
+  .ct-character-sheet--dice-enabled .ct-skills__item .ct-skills__col--skill {padding: 15px 0;}
+  .ct-skills__item .ct-skills__col--skill {border-bottom:1px solid #d8d8d8; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 14px; padding: 5px 0;}
+    .ct-character-sheet--dice-enabled .ct-skills__item .ct-skills__col--modifier {padding: 2px;}
+  .ct-character-sheet--dice-enabled .ct-skills__item .ct-skills__col--modifier {padding: 5px;}
+  .ct-skills__item .ct-skills__col--modifier {align-self: flex-end; border-bottom: 1px solid #d8d8d8; font-size: 14px; font-weight: 700; padding: 5px; text-align: right;}
+  .ddbc-proficiency-level-icon {display: inline-flex; height: 10px; width: 10px;}
+  .ct-character-sheet--dice-enabled .integrated-dice__container {align-items: center; background-color: transparent; border: 1px solid #bfccd6; border-radius: 4px; box-sizing: border-box; color: #394b59; cursor: pointer; display: inline-flex; justify-content: center;}
+  .ct-character-sheet--dice-enabled .ct-skills__item .integrated-dice__container {font-size: 20px; height: 40px; width: 40px;}
+  .ct-character-sheet--dice-enabled .ct-skills__item .integrated-dice__container {height: 24px;}
+  .ct-character-sheet--dice-enabled .ct-skills__item .ct-skills__col--skill {padding: 5px 0; line-height: 19px;}
+  .ct-character-sheet--dice-enabled .ct-skills__item .ct-skills__col--modifier {padding: 2px;}
+  .ct-skills__additional--empty {color: #75838b; justify-content: center; margin-top: 33px; text-align: center;}
+
+  .ct-combat {width: 623px;}
+  .ct-combat__summary {display: flex;}
+  .ct-combat__summary-group--initiative {padding-top: 2px;}
+  .ct-combat__summary-group--ac, .ct-combat__summary-group--initiative {width: 105px;}
+  .ct-combat__summary-group--ac {padding-top: 0;}
+  .ct-combat__summary-group--ac, .ct-combat__summary-group--initiative {width: 105px;}  
+  .ct-combat__summary-group--statuses {flex: 1 1; min-width: 0; padding-left: 5px;}
+  .ct-combat__statuses {display: flex; height: 95px; padding: 10px; position: relative;}
+  .ct-combat__statuses-group {flex: 1 1; min-width: 0; overflow: hidden; padding: 0 10px; position: relative;}
+  .ct-combat__summary-label {font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase;}
+  .ct-combat .ct-defenses-summary {max-height: 57px; overflow: hidden;}
+  .ct-defenses-summary__default {color: #75838b; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 13px; line-height:18px;}
+  .ct-combat__statuses-group + .ct-combat__statuses-group {border-left: 1px solid #d8d8d8;}
+  .ct-conditions-summary__default {color: #75838b; font-family: Roboto Condensed,Roboto,Helvetica,sans-serif; font-size: 13px; line-height:18px;}
+  .ddbc-armor-class-box {display: flex; flex-direction: column; font-weight: 700; height: 90px; justify-content: center; line-height: 1; position: relative; text-align: center; text-transform: uppercase; width: 79px;}
+  .ct-combat .ddbc-armor-class-box {margin: 0 auto;}
+  .ct-combat .ddbc-armor-class-box {height: 95px; width: 90px;}
+  .ddbc-armor-class-box__label {color: #75838b; font-size: 10px; position: relative;}
+  .ddbc-armor-class-box__value {font-size: 26px; letter-spacing: -1px; position: relative;}
+  .styles_box__PLQui {cursor: pointer; margin: 0 auto; position: relative; width: 4.375rem;}
+  .styles_box__PLQui {width: 5.625rem;}
+  .styles_label__6xv1b {color: var(--ttui_common-1000); font-family: var(--font-condensed); font-size: .8125rem; font-weight: 700; margin-bottom: .1875rem; text-align: center; text-shadow: var(--text-shadow-light); text-transform: uppercase;}
+  .styles_value__hqDak {align-items: center; display: flex; font-size: 1.625rem; font-weight: 700; height: 2.8125rem; justify-content: center; letter-spacing: -.0625rem; position: relative; text-align: center; text-transform: uppercase; width: 4.375rem;}
+  .styles_value__hqDak {height: 3.4375rem; width: 5.625rem;}
+  .ct-character-sheet--dice-enabled .integrated-dice__container {align-items: center; background-color: transparent; border: 1px solid #bfccd6; border-radius: 4px; box-sizing: border-box; color: #394b59; cursor: pointer; display: inline-flex; justify-content: center;}
+  .styles_value__hqDak .integrated-dice__container {height: 2.125rem; position: relative; width: 3.25rem;}
+
+
+
+
+
+
+
+
+
+  .styles_sidebar__RrEHr {
+    bottom: auto;
+    box-shadow: none;
+    height: 60.375rem;
+    position: absolute;
+    top: 7.5rem;
+    z-index: 1;
+  }
+  .ct-sidebar__inner {
+    bottom: 0;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 340px;
+  }
+  .styles_border__jHreB {
+    display: block;
+    height: 1.125rem;
+  }

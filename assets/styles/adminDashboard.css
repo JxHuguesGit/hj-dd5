@@ -1,0 +1,78 @@
+/*
+Il faudrait que je rapatrie ici tous les style d'adminBase.Css que j'utilise pour pouvoir supprimer adminBase.css
+*/
+.sidebar-collapse .main-sidebar {
+    margin-left: 0;
+    width: 4.6rem;
+}
+
+body.sidebar-collapse #wpbody-content > nav {
+  margin-left: 73px;
+}
+
+body.sidebar-collapse .brand-text,
+body.sidebar-collapse .info,
+body.sidebar-collapse .main-sidebar .nav-link > p {
+	display: none;
+}
+
+.table .row-striped-even > td {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.table .row-primary-striped-odd > td {
+  background-color: rgba(184, 218, 255, 0.25) !important;
+}
+
+.table .row-primary-striped-even > td {
+  background-color: rgba(184, 218, 255, 0.5) !important;
+}
+
+table.dataTable thead > tr > th div.dt-column-header, table.dataTable thead > tr > th div.dt-column-footer, table.dataTable thead > tr > td div.dt-column-header, table.dataTable thead > tr > td div.dt-column-footer, table.dataTable tfoot > tr > th div.dt-column-header, table.dataTable tfoot > tr > th div.dt-column-footer, table.dataTable tfoot > tr > td div.dt-column-header, table.dataTable tfoot > tr > td div.dt-column-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: var(--dt-header-align-items);
+  gap: 4px;
+  cursor: pointer;
+}
+
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order, table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order, table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order, table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order, table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order, table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order {
+  position: relative;
+  width: 12px;
+  height: 24px;
+  }
+
+table.dataTable thead > tr > th div.dt-column-header, table.dataTable thead > tr > th div.dt-column-footer, table.dataTable thead > tr > td div.dt-column-header, table.dataTable thead > tr > td div.dt-column-footer, table.dataTable tfoot > tr > th div.dt-column-header, table.dataTable tfoot > tr > th div.dt-column-footer, table.dataTable tfoot > tr > td div.dt-column-header, table.dataTable tfoot > tr > td div.dt-column-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: var(--dt-header-align-items);
+  gap: 4px;
+}
+
+table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order::after, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order::after, table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order::after, table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order::after {
+  position: absolute;
+  display: block;
+  top: 50%;
+  content: "\25BC"/"";
+}
+
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order::before, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order::before, table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order::before, table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order::before {
+  position: absolute;
+  display: block;
+  bottom: 50%;
+  content: "\25B2";
+  content: "\25B2"/"";
+}
+
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order::before, table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order::after, table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order::before, table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order::after, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order::before, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order::after, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order::before, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order::after, table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order::before, table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order::after, table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order::before, table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order::after, table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order::before, table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order::after, table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order::before, table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order::after {
+  left: 0;
+  opacity: 0.6;
+  line-height: 9px;
+  font-size: 0.8em;
+}
+
+
+table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order::before, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order::after, table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order::before, table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order::after {
+  opacity: 1;
+
+}
