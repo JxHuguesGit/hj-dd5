@@ -82,8 +82,7 @@ class Repository
     public function getEntityClass(): string
     {
         $repositoryClass = get_class($this);
-        $entityClass = str_replace('Repository', 'Entity', $repositoryClass);
-        return $entityClass;
+        return str_replace('Repository', 'Entity', $repositoryClass);
     }
 
     public function insert(Entity &$entity): void

@@ -94,7 +94,7 @@ class RpgWeapon extends Utilities
                 ->addBodyCell([Constant::CST_CONTENT=>$libelle, 'attributes'=>['colspan'=>6, Constant::CST_CLASS=>Bootstrap::CSS_FONT_ITALIC]]);
         }
         
-        $objTable->addBodyRow()
+        $objTable->addBodyRow($arrParams)
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgWeapon->getField(Field::NAME)])
             ->addBodyCell([Constant::CST_CONTENT=>$strDegats])
             ->addBodyCell([Constant::CST_CONTENT=>$strProprietes])

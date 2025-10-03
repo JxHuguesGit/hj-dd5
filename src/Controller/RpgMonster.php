@@ -145,8 +145,7 @@ class RpgMonster extends Utilities
             $this->getActionsList(), // Liste des actions
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
-        $content = $this->getRender(Template::MONSTER_CARD, $attributes);
-        return $content;
+        return $this->getRender(Template::MONSTER_CARD, $attributes);
     }
 
     private function getActionsList(): string

@@ -51,6 +51,7 @@ class Caste extends Utilities
         $caste = $repositoryCaste->find($hero->getCasteId());
         switch ($caste->getField(Field::CODE)) {
             case 'CLE' :
+                // TODO ClericCaste
                 $content = 'CLE TODO';
                 break;
             case 'FIG' :
@@ -59,10 +60,12 @@ class Caste extends Utilities
                 $content = $casteController->getContentPage();
                 break;
             case 'ROG' :
-                $content = 'CLE TODO';
+                // TODO RogueCaste
+                $content = 'ROG TODO';
                 break;
             case 'WIZ' :
-                $content = 'CLE TODO';
+                // TODO WizardCaste
+                $content = 'WIZ TODO';
                 break;
             default :
                 // Sonar

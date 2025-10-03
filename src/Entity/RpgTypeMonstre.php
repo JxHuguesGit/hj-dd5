@@ -23,6 +23,7 @@ class RpgTypeMonstre extends Entity
             break;
             case 'Aberration' :
                 $gender = 'f';
+            continue;
             case 'Dragon' :
                 $returned = $this->name;
             break;

@@ -4,7 +4,6 @@ html, html.wp-toolbar {padding-top: 0;}
 #wpfooter {display: none;}
 #wpcontent {margin-left: 0; padding-left:0;}
 
-/*#wpbody-content > nav {margin-left: 80px;}*/
 body.sidebar-collapse #wpbody-content > nav {margin-left: 250px;}
 .ml-auto {margin-left: auto !important;}
 .main-header .navbar-nav .nav-item {margin: 0;}

@@ -25,12 +25,8 @@ function ajaxActionClick(obj, e) {
     e.preventDefault();
     let actions = obj.data('action').split(',');
     for (let oneAction of actions) {
-        switch (oneAction) {
-            case 'loadCasteDetail' :
-                let key = obj.data('key');
-                let lang = obj.data('lang');
-                loadCasteDetail(oneAction, key, lang);
-            break;
+        if (oneAction=='loadCasteDetail') {
+            loadCasteDetail(oneAction, obj.data('key'), obj.data('lang'));
         }
     }
     return false;

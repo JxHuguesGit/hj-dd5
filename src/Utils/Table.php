@@ -35,26 +35,59 @@ class Table
         return $this;
     }
 
-    public function display(): string
+    private function getHeadContent(): string
     {
         $headContent = '';
-        $bodyContent = '';
+        
+        if (!empty($this->header['rows'])) {
+            foreach ($this->header['rows'] as $row) {
+                $rowContent = '';
+                foreach ($row['cells'] as $cell) {
+                    $cellType = $cell[Constant::CST_TYPE];
+                    /*
+                    // Tentative d'ajouter des div pour le tri. A traiter plus tard.
+                    if ($cellType = 'th') {
+                        $cellContent = '<div class="dt-column-header"><span>'.$cell[Constant::CST_CONTENT].'</span><span class="dt-column-order"></span></div>';
+                    } else {
+                        */
+                        $cellContent = $cell[Constant::CST_CONTENT];
+                        /*
+                    }
+                        */
+                    $cellAttributes = $cell['attributes'];
+                    $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
+                }
+                $headContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
+            }
+        }
+        return $headContent;
+    }
+
+    private function getFootContent(): string
+    {
         $footContent = '';
 
-        foreach ($this->header['rows'] as $row) {
-            $rowContent = '';
-            foreach ($row['cells'] as $cell) {
-                $cellType = $cell[Constant::CST_TYPE];
-                if ($cellType = 'th') {
-                    $cellContent = '<div class="dt-column-header"><span>'.$cell[Constant::CST_CONTENT].'</span><span class="dt-column-order"></span></div>';
-                } else {
+        if (!empty($this->foot['rows'])) {
+            foreach ($this->foot['rows'] as $row) {
+                $rowContent = '';
+                foreach ($row['cells'] as $cell) {
                     $cellContent = $cell[Constant::CST_CONTENT];
+                    $cellType = $cell[Constant::CST_TYPE];
+                    $cellAttributes = $cell['attributes'];
+                    $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $cellAttributes = $cell['attributes'];
-                $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
+                $footContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
             }
-            $headContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
         }
+    
+        return $footContent;
+    }
+
+    public function display(): string
+    {
+        $headContent = $this->getHeadContent();
+        $bodyContent = '';
+
 
         if (!empty($this->body['rows'])) {
             foreach ($this->body['rows'] as $row) {
@@ -69,18 +102,7 @@ class Table
             }
         }
 
-        if (!empty($this->foot['rows'])) {
-            foreach ($this->foot['rows'] as $row) {
-                $rowContent = '';
-                foreach ($row['cells'] as $cell) {
-                    $cellContent = $cell[Constant::CST_CONTENT];
-                    $cellType = $cell[Constant::CST_TYPE];
-                    $cellAttributes = $cell['attributes'];
-                    $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
-                }
-                $footContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
-            }
-        }
+        $footContent = $this->getFootContent();
 
         return Html::getBalise(
             'table',

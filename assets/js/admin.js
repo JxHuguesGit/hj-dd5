@@ -74,10 +74,10 @@ $(document).ready(function(e) {
         };
 
         // Récupère l'URL actuelle sans les paramètres
-        let baseUrl = window.location.origin + window.location.pathname;
+        let baseUrl = globalThis.location.origin + globalThis.location.pathname;
 
         // Récupère les paramètres existants
-        let searchParams = new URLSearchParams(window.location.search);
+        let searchParams = new URLSearchParams(globalThis.location.search);
         searchParams.set('_', Date.now());
 
         // Ajoute / remplace les nouveaux paramètres

@@ -106,7 +106,7 @@ class RpgArmor extends Utilities
                 ->addBodyCell([Constant::CST_CONTENT=>$libelle, 'attributes'=>[Constant::CST_COLSPAN=>6, Constant::CST_CLASS=>Bootstrap::CSS_FONT_ITALIC]]);
         }
 
-        $objTable->addBodyRow()
+        $objTable->addBodyRow($arrParams)
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgArmor->getField(Field::NAME)])
             ->addBodyCell([Constant::CST_CONTENT=>$strClasseDArmure])
             ->addBodyCell([Constant::CST_CONTENT=>$strMalusStrength])
