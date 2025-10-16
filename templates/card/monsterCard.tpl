@@ -6,10 +6,10 @@
                 <div class='red'>
                     <div class='type'>%2$s</div>
                     <div class="row mb-2">
-                    	<div class="col-6"><strong>CA</strong> %3$s</div>
-                    	<div class="col-6"><strong>Initiative</strong> %4$s</div>
-                    	<div class="col-12"><strong>PV</strong> %5$s</div>
-                    	<div class="col-12"><strong>Vitesse</strong> %6$s</div>
+                        <div class="col-6"><strong>CA</strong> %3$s</div>
+                        <div class="col-6"><strong>Initiative</strong> %4$s</div>
+                        <div class="col-12"><strong>PV</strong> %5$s</div>
+                        <div class="col-12"><strong>Vitesse</strong> %6$s</div>
                     </div>
                     <div class="row">
                         <div class="row col">
@@ -44,22 +44,22 @@
                       </div>
                     <div class="row mb-2">
                         <div class="row col">
-                          <div class="col car1">Int</div>%10$s
+                          <div class="col car4">Int</div>%10$s
                         </div>
                         <div class="row col">
-                          <div class="col car1">Sag</div>%11$s
+                          <div class="col car4">Sag</div>%11$s
                         </div>
                         <div class="row col">
-                          <div class="col car1">Cha</div>%12$s
+                          <div class="col car4">Cha</div>%12$s
                         </div>
                       </div>
                       <div class="row mb-2">
-	                      %13$s
+                          %13$s
                     </div>
                 </div>
                 <div class='rub%14$s'>Traits</div>
                 %15$s
-                <div class='rub'%16$s>Actions</div>
+                <div class='rub%16$s'>Actions</div>
                 %17$s
             </div>
         </div>

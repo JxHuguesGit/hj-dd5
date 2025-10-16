@@ -20,6 +20,11 @@ body.sidebar-collapse .main-sidebar .nav-link > p {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
+.table .row-dark-striped > td {
+  background-color: rgb(0, 0, 0) !important;
+  color: #ffffff;
+}
+
 .table .row-primary-striped-odd > td {
   background-color: rgba(184, 218, 255, 0.25) !important;
 }

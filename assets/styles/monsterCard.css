@@ -125,9 +125,20 @@ div.rub ~ p {
 
 .car4, .car5 {
   background-color: #dddad5;
+  margin-bottom: 8px;
 }
 
 .car6 {
   background-color: #cecac9;
   margin-bottom: 8px;
+}
+
+.modal-tooltip {
+  cursor: pointer;
+  display: inline;
+}
+
+.modal-tooltip .fa-search {
+  font-size: 0.5em;
+  vertical-align: top;
 }

@@ -1,11 +1,36 @@
 $(document).ready(function(e) {
-    $('i[data-modal="monster"]').on('click', function(e) {
+    $('[data-modal="feat"]').on('click', function(e) {
         e.preventDefault();
-        const uktag = $(this).data('uktag');
-		const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalMonsterCard', 'uktag': uktag};
+        const postId = $(this).data('postid');
+        const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalFeatCard', 'postId': postId};
+        const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
         
         $.post({
-        	url: 'http://localhost/wp-admin/admin-ajax.php',
+            url: ajaxUrl,
+            data: data,
+            success: function (response) {
+                const parsedData = JSON.parse(response.data);
+                $('.modal-header').hide()
+                $('.modal-footer').hide()
+                $('#modalBody').html(parsedData.modalFeatCard);
+                $('#infoModal').modal('show');
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+    
+    $('[data-modal="monster"]').on('click', function(e) {
+        e.preventDefault();
+        const uktag = $(this).data('uktag');
+        const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalMonsterCard', 'uktag': uktag};
+        const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+        
+        $.post({
+            url: ajaxUrl,
             data: data,
             success: function (response) {
                 const parsedData = JSON.parse(response.data);
@@ -25,10 +50,12 @@ $(document).ready(function(e) {
         const source = $(this).data('source');
         const uktag = $(this).data('uktag');
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'downloadFile', 'source': source, 'uktag': uktag}
-        const filePath = 'http://localhost/wp-content/plugins/hj-dd5/assets/aidedd/'+uktag+'.html';
+        const filePath = globalThis.location.origin + '/wp-content/plugins/hj-dd5/assets/aidedd/'+uktag+'.html';
+        const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
 
         $.post({
-            url: 'http://localhost/wp-admin/admin-ajax.php',
+            url: ajaxUrl,
             data: data,
             success: function (response) {
                 $.get(filePath, function(html) {
@@ -63,9 +90,9 @@ $(document).ready(function(e) {
     });
     
     $('th[data-sortable]').on('click', function(){
-    	let ordre = 'asc';
-    	if ($(this).hasClass('dt-ordering-asc')) {
-        	ordre = 'desc';
+        let ordre = 'asc';
+        if ($(this).hasClass('dt-ordering-asc')) {
+            ordre = 'desc';
         }
         // Nouveaux paramètres à ajouter
         let newParams = {
@@ -88,4 +115,32 @@ $(document).ready(function(e) {
         // Recharge la page avec les nouveaux paramètres
         globalThis.location.href = baseUrl + '?' + searchParams.toString();
     });
+
+    $('.ajaxAction[data-trigger="change"]').on('change', function(e) {
+        ajaxActionChange($(this), e);
+    })
 });
+
+
+function ajaxActionChange(obj, e) {
+    e.preventDefault();
+    let actions = obj.data('action').split(',');
+    for (let oneAction of actions) {
+        if (oneAction=='loadMonsterPage') {
+            loadMonsterPage(obj.val());
+        }
+    }
+    return false;
+}
+
+function loadMonsterPage(newNbPerPage) {
+    const newParams = {
+        nbPerPage: newNbPerPage,
+        refElementId: $('#refElementId').val()
+    };
+    const url = new URL(globalThis.location.href);  
+    for (const key in newParams) {
+        url.searchParams.set(key, newParams[key]);
+    }
+    globalThis.location.href = url.toString();
+}

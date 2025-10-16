@@ -15,6 +15,9 @@ class Ajax{
             case 'downloadFile':
                 $returnedValue = DownloadFile::start();
             break;
+            case 'modalFeatCard':
+                $returnedValue = FeatCard::build();
+            break;
             case 'modalMonsterCard':
                 $returnedValue = MonsterCard::build();
             break;

@@ -23,9 +23,10 @@ class RpgTypeMonstre extends Entity
             break;
             case 'Aberration' :
                 $gender = 'f';
-            continue;
+                $returned = 'Aberration';
+            break;
             case 'Dragon' :
-                $returned = $this->name;
+                $returned = 'Dragon';
             break;
             case 'Monstrosity' :
                 $gender = 'f';

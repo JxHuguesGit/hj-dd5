@@ -88,13 +88,13 @@ class RpgWeapon extends Utilities
         $typeWeaponId = 10*$this->rpgWeapon->getField(Field::MELEE)+$this->rpgWeapon->getField(Field::MARTIAL);
         if ($oldTypeWeaponId!=$typeWeaponId) {
             $libelle = Language::LG_WEAPONS
-                .($this->rpgWeapon->getField(Field::MARTIAL)==1 ? Language::LG_DAMAGES : Language::LG_WEAPON_SIMPLE)
+                .($this->rpgWeapon->getField(Field::MARTIAL)==1 ? Language::LG_WEAPON_MARTIAL : Language::LG_WEAPON_SIMPLE)
                 .($this->rpgWeapon->getField(Field::MELEE)==1 ? Language::LG_WEAPON_MELEE : Language::LG_WEAPON_RANGED);
-            $objTable->addBodyRow()
+            $objTable->addBodyRow([Constant::CST_CLASS=>'row-dark-striped'])
                 ->addBodyCell([Constant::CST_CONTENT=>$libelle, 'attributes'=>['colspan'=>6, Constant::CST_CLASS=>Bootstrap::CSS_FONT_ITALIC]]);
         }
         
-        $objTable->addBodyRow($arrParams)
+        $objTable->addBodyRow()
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgWeapon->getField(Field::NAME)])
             ->addBodyCell([Constant::CST_CONTENT=>$strDegats])
             ->addBodyCell([Constant::CST_CONTENT=>$strProprietes])

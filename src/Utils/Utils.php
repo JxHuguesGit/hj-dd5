@@ -51,5 +51,21 @@ class Utils
         }
         return $strPrix;
     }
+
+    public static function formatBBCode(string $str): string
+    {
+        $pattern = '/\[etat\](.*?)\[\/etat\]/i';
+        $str = preg_replace($pattern, '<span class="modal-tooltip" data-modal="etat" data-id="$1">$1 <span class="fa fa-search"></span></span>', $str);
+
+        $pattern = '/\[feat\](.*?)\[\/feat\]/i';
+        $str = preg_replace($pattern, '<span class="modal-tooltip" data-modal="feat" data-postid="">$1 <span class="fa fa-search"></span></span>', $str);
+
+        $pattern = '/\[monster\](.*?)\[\/monster\]/i';
+        $str = preg_replace($pattern, '<span class="modal-tooltip" data-modal="monster" data-postid="">$1 <span class="fa fa-search"></span></span>', $str);
+
+        $search = ['[b]', '[/b]', '[i]', '[/i]', '[u]', '[/u]', '[br]', "\n"];
+        $replace = ['<strong>', '</strong>', '<em>', '</em>', '<u>', '</u>', '<br/>', '<br/>'];
+        return str_ireplace($search, $replace, $str);
+    }
     
 }

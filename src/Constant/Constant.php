@@ -29,6 +29,9 @@ class Constant
     public const CST_DATA       = 'data';
     public const CST_PARENT     = 'parent';
     public const CST_TARGET     = 'target';
+    public const CST_VALUE      = 'value';
+    public const CST_NAME       = 'name';
+    public const CST_ID         = 'id';
     
     /////////////////////////////////////////////////
     // Pagination

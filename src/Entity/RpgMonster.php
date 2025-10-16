@@ -1,16 +1,21 @@
 <?php
 namespace src\Entity;
 
+use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgMonster as ControllerRpgMonster;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
+use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
+use src\Repository\RpgMonsterResistance as RepositoryRpgMonsterResistance;
+use src\Repository\RpgJoinMonsterTypeSpeed as RepositoryRpgJoinMonsterTypeSpeed;
 use src\Repository\RpgAlignement as RepositoryRpgAlignement;
 use src\Repository\RpgReference as RepositoryRpgReference;
 use src\Repository\RpgSousTypeMonstre as RepositoryRpgSousTypeMonstre;
 use src\Repository\RpgTypeMonstre as RepositoryRpgTypeMonstre;
+use src\Utils\Utils;
 
 class RpgMonster extends Entity
 {
@@ -18,6 +23,7 @@ class RpgMonster extends Entity
 
     public function __construct(
         protected int $id,
+        protected string $frName,
         protected string $name,
         protected string $frTag,
         protected string $ukTag,
@@ -35,6 +41,12 @@ class RpgMonster extends Entity
         protected int $legendary,
         protected string $habitat,
         protected int $referenceId,
+        protected int $strScore,
+        protected int $dexScore,
+        protected int $conScore,
+        protected int $intScore,
+        protected int $wisScore,
+        protected int $chaScore,
         protected ?string $extra
     ) {
 
@@ -45,6 +57,24 @@ class RpgMonster extends Entity
         $controller = new ControllerRpgMonster;
         $controller->setField('rpgMonster', $this);
         return $controller;
+    }
+    
+    public function getTraits(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
+        $params = [Field::TYPEID=>'T', Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+    }
+    
+    public function getActions(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
+        $params = [Field::TYPEID=>'A', Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params, [Field::NAME=>'ASC']);
     }
     
     public function getExtra($field): string
@@ -70,7 +100,7 @@ class RpgMonster extends Entity
     {
         switch ($this->cr) {
             case -1 :
-                $returned = '-';
+                $returned = 'aucun';
             break;
             case 0.125 :
                 $returned = '1/8';
@@ -87,6 +117,37 @@ class RpgMonster extends Entity
         }
         return $returned;
     }
+    
+    public function getTotalXp(): string
+    {
+        switch ($this->cr) {
+            case -1 :
+                $returned = '0';
+            break;
+            case 0.125 :
+                $returned = '?? a';
+            break;
+            case 0.25 :
+                $returned = '?? b';
+            break;
+            case 0.5 :
+                $returned = '?? c';
+            break;
+            default :
+                $returned = '?? d';
+            break;
+        }
+        return $returned;
+    }
+
+    public function getResistances(string $typeResistanceId): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterResistance($queryBuilder, $queryExecutor);
+        $params = [Field::TYPERESID=>$typeResistanceId, Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params);
+    }
 
     public function getAlignement(): ?RpgAlignement
     {
@@ -102,6 +163,11 @@ class RpgMonster extends Entity
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgReference($queryBuilder, $queryExecutor);
         return $objDao->find($this->referenceId);
+    }
+
+    public function getStrName(): string
+    {
+        return $this->frName=='' ? $this->name : $this->frName;
     }
 
     public function getStrType(): string
@@ -141,10 +207,30 @@ class RpgMonster extends Entity
         $obj = $this->getAlignement();
         return $strSTAA.', '.$obj->getStrAlignement();
     }
-    
-    public function getStrModifier(int $value): string
+
+    public function getScoreModifier(int $value): string
     {
         return ($value>=0 ? '+' : '').$value;
+    }
+
+    public function getStrModifier(int $value): string
+    {
+        return $this->getScoreModifier($value);
+    }
+    
+    public function getStringScore(string $carac): string
+    {
+        if (in_array($carac, ['str', 'dex', 'con'])) {
+            $score = $this->{$carac.'Score'};
+            $modC = $this->getScoreModifier(Utils::getModAbility($score));
+            $modJdS = $this->getScoreModifier(Utils::getModAbility($score));
+            return "<div class='col car2'>$score</div><div class='col car3'>$modC</div><div class='col car3'>$modJdS</div>";
+        } else {
+            $score = $this->{$carac.'Score'};
+            $modC = $this->getScoreModifier(Utils::getModAbility($score));
+            $modJdS = $this->getScoreModifier(Utils::getModAbility($score));
+            return "<div class='col car5'>$score</div><div class='col car6'>$modC</div><div class='col car6'>$modJdS</div>";
+        }
     }
     
     public function getStrInitiative(): string
@@ -159,9 +245,23 @@ class RpgMonster extends Entity
     public function getStrVitesse(): string
     {
         $value = $this->vitesse.'m';
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+
+        $objDao = new RepositoryRpgJoinMonsterTypeSpeed($queryBuilder, $queryExecutor);
+        /** @var RpgJoinMonsterTypeSpeed $objRpgJoinMonsterTypeSpeed */
+        $objs = $objDao->findBy([Field::MONSTERID=>$this->id]);
+        $objs->rewind();
+        while ($objs->valid()) {
+            $value .= ', ';
+            $obj = $objs->current();
+            $value .= $obj->getController()->getFormatString();
+            $objs->next();
+        }
+
         $extra = $this->getExtra('vitesse');
         if ($extra!='') {
-            $value .= ', ' . $extra;
+            $value .= $extra;
         }
         return $value;
     }

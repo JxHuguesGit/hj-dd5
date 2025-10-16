@@ -71,4 +71,32 @@ class Html
         );
         return self::getBalise('i', '', $attributes);
     }
+    
+	public static function shortcodes($content = '')
+    {
+    	$pattern = "/\[(feat)]([^\[]*)\[\/feat]/";
+        if (preg_match_all($pattern, $content, $matches)) {
+        	$nb = count($matches[0]);
+            for ($i=0; $i<$nb; $i++) {
+            	$content = str_replace($matches[0][$i], sprintf(
+        '<span class="mr-2 modal-link" data-modal="%s" data-key="%s">%s </span>', esc_attr($matches[1][$i]), sanitize_title($matches[2][$i]), esc_html($matches[2][$i])), $content);
+            }
+        	//var_dump($matches);
+            //$content .= 'Preg Ok : '.$matches[1];
+        } else {
+        	//$content .= 'Preg Ko';
+        }
+        return $content;
+        /*
+    	// Nettoyage du contenu entre les balises
+    	$label = trim($content);
+    	$slug = sanitize_title($label); // Pour générer data-key
+
+    return sprintf(
+        '<span>%s <i class="fa-solid fa-info-circle float-end" data-modal="feat" data-key="%s"></i></span>',
+        esc_html($label),
+        esc_attr($slug)
+    );
+    */
+	}
 }

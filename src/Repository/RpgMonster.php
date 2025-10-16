@@ -15,9 +15,9 @@ class RpgMonster extends Repository
             $builder,
             $executor,
             'rpgMonster',
-            [Field::ID, Field::NAME, Field::FRTAG, Field::UKTAG, Field::INCOMPLET, Field::SCORECR, Field::MSTTYPEID, Field::MSTSSTYPID, Field::SWARMSIZE
-            , Field::MSTSIZE, Field::SCORECA, Field::SCOREHP, Field::ALGNID, Field::LEGENDARY, Field::HABITAT, Field::REFID, Field::EXTRA
-            , Field::VITESSE, Field::INITIATIVE]
+            [Field::ID, Field::FRNAME, Field::NAME, Field::FRTAG, Field::UKTAG, Field::INCOMPLET, Field::SCORECR, Field::MSTTYPEID, Field::MSTSSTYPID
+            , Field::SWARMSIZE, Field::MSTSIZE, Field::SCORECA, Field::SCOREHP, Field::ALGNID, Field::LEGENDARY, Field::HABITAT, Field::REFID, Field::EXTRA
+            , Field::VITESSE, Field::INITIATIVE, Field::STRSCORE, Field::DEXSCORE, Field::CONSCORE, Field::INTSCORE, Field::WISSCORE, Field::CHASCORE]
         );
     }
 

@@ -145,7 +145,8 @@ class Paginate
             $addClass = ' '.Constant::CST_DISABLED;
             $strLink = Html::getLink($label, '#', $this->cssPageLink);
         } else {
-            $href = add_query_arg(Constant::CST_CURPAGE, $curpage, $this->url);
+            $href = remove_query_arg('refElementId', $this->url);
+            $href = add_query_arg(Constant::CST_CURPAGE, $curpage, $href);
             $strLink = Html::getLink($label, $href, $this->cssPageLink);
         }
 

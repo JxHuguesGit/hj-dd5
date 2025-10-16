@@ -102,11 +102,11 @@ class RpgArmor extends Utilities
                     $libelle = Language::LG_ARM_SHD_DONDOFF;
                 break;
             }
-            $objTable->addBodyRow()
+            $objTable->addBodyRow([Constant::CST_CLASS=>'row-dark-striped'])
                 ->addBodyCell([Constant::CST_CONTENT=>$libelle, 'attributes'=>[Constant::CST_COLSPAN=>6, Constant::CST_CLASS=>Bootstrap::CSS_FONT_ITALIC]]);
         }
 
-        $objTable->addBodyRow($arrParams)
+        $objTable->addBodyRow()
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgArmor->getField(Field::NAME)])
             ->addBodyCell([Constant::CST_CONTENT=>$strClasseDArmure])
             ->addBodyCell([Constant::CST_CONTENT=>$strMalusStrength])

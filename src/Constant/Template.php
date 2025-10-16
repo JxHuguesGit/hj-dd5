@@ -42,6 +42,7 @@ final class Template
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
+    public const FEAT_CARD           = self::CARD_PATH.'featCard.tpl';
     public const HERO_SELECTION      = self::CARD_PATH.'heroSelection.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
 

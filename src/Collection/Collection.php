@@ -79,6 +79,11 @@ class Collection implements \Iterator
     {
         return count($this->items);
     }
+    
+    public function isEmpty(): bool
+    {
+    	return $this->length()==0;
+    }
 
     /**
      * Retourne une nouvelle collection contenant une portion de la collection initiale.

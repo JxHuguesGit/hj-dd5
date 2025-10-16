@@ -38,6 +38,7 @@ class Field
  
     public const MSTTYPEID   = 'monstreTypeId';
  
+    public const FRNAME      = 'frName';
     public const FRTAG       = 'frTag';
     public const UKTAG       = 'ukTag';
     public const INCOMPLET   = 'incomplet';
@@ -53,6 +54,12 @@ class Field
     public const LEGENDARY   = 'legendary';
     public const HABITAT     = 'habitat';
     public const REFID       = 'referenceId';
+    public const STRSCORE    = 'strScore';
+    public const DEXSCORE    = 'dexScore';
+    public const CONSCORE    = 'conScore';
+    public const INTSCORE    = 'intScore';
+    public const WISSCORE    = 'wisScore';
+    public const CHASCORE    = 'chaScore';
      
     public const EXTRA       = 'extra';
     
@@ -60,4 +67,10 @@ class Field
     public const DESCRIPTION = 'description';
     
     public const FEATTYPEID  = 'featTypeId';
+    public const POSTID      = 'postId';
+    
+    public const TYPEID      = 'typeId';
+    public const MONSTERID   = 'monsterId';
+    public const TYPERESID   = 'typeResistanceId';
+    public const TYPESPEEDID = 'typeSpeedId';
 }

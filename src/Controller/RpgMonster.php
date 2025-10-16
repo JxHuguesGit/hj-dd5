@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller;
 
+use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
@@ -33,16 +34,25 @@ class RpgMonster extends Utilities
         $queryExecutor = new QueryExecutor();
         $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
         $objsMonstre = $objDaoMonstre->findAll();
+        $curPage      = $params[Constant::CST_CURPAGE] ?? 1;
+        $nbPerPage    = $params[Constant::PAGE_NBPERPAGE] ?? 10;
+        $refElementId = $params['refElementId'] ?? ($curPage-1)*$nbPerPage+1;
+        
+        if (($curPage-1)*$nbPerPage>$refElementId || $curPage*$nbPerPage<$refElementId) {
+            $curPage = floor(($refElementId-1)/$nbPerPage)+1;
+        }
+        
         $paginate = [
             Constant::PAGE_OBJS      => $objsMonstre,
-            Constant::CST_CURPAGE    => $params[Constant::CST_CURPAGE] ?? 1,
-            Constant::PAGE_NBPERPAGE => $params[Constant::PAGE_NBPERPAGE] ?? 20
+            Constant::CST_CURPAGE    => $curPage ?? 1,
+            Constant::PAGE_NBPERPAGE => $nbPerPage
         ];
-        
+        $refElementId = ($curPage-1)*$nbPerPage + 1;
         $objTable = new Table();
         $objTable->setTable([Constant::CST_CLASS=>'table-sm table-striped mt-5'])
             ->setPaginate($paginate)
             ->addHeader([Constant::CST_CLASS=>'table-dark text-center'])
+            ->setNbPerPage($refElementId, $nbPerPage)
             ->addHeaderRow()
             ->addHeaderCell([Constant::CST_CONTENT=>'Monstres'])
             ->addHeaderCell([Constant::CST_CONTENT=>'CR'])
@@ -68,15 +78,33 @@ class RpgMonster extends Utilities
         // Le nom
         // On pourrait envisager de mettre un lien ou une popup pour afficher le monstre.
         $strName = $this->rpgMonster->getField(Field::NAME);
+          $strName = '<span class="modal-tooltip" data-modal="monster" data-uktag="id-'.$this->rpgMonster->getField(Field::ID).'">'.$strName.' <span class="fa fa-search"></span></span>';
+        
         // Le monstre est-il complet ? Et a-t-il une traduction française ?
         // On pourrait rajouter : et est-il complet en français ?
-        if ($this->rpgMonster->getField(Field::INCOMPLET)==0 && $this->rpgMonster->getField(Field::FRTAG)!='non') {
-            $handle = fopen('http://localhost/wp-content/plugins/hj-dd5/assets/aidedd/'.$this->rpgMonster->getField(Field::UKTAG).'.html', 'r');
-            if ($handle===false) {
-                $strName .= ' <i class="fa-solid fa-download float-end" data-source="aidedd" data-uktag="'.$this->rpgMonster->getField(Field::UKTAG).'"></i>';
+        $urlDistante = 'https://www.aidedd.org/monster/';
+        $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/';
+        $ukTag = $this->rpgMonster->getField(Field::UKTAG);
+        $handleUk = fopen($urlLocale.$ukTag.'.html', 'r');
+        if ($handleUk===false) {
+            $content = file_get_contents($urlDistante.$ukTag);
+            $urlDestination = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$ukTag.'.html';
+            file_put_contents($urlDestination, $content);
+        }
+
+        $strName .= '<i class="float-end" data-modal="monster" data-uktag="'.$ukTag.'">🇬🇧</i>';
+
+        $frTag = $this->rpgMonster->getField(Field::FRTAG);
+        if ($frTag!='non') {
+            $handleFr = fopen($urlLocale.$ukTag.'.html', 'r');
+            if ($handleFr===false) {
+                $content = file_get_contents($urlDistante.$frTag);
+                $urlDestination = '../wp-content/plugins/hj-dd5/assets/aidedd/fr-'.$frTag.'.html';
+                file_put_contents($urlDestination, $content);
+            } else {
+                $strName .= '<i class="float-end" data-modal="monster" data-uktag="fr-'.$frTag.'">🇫🇷</i>';
             }
         }
-        $strName .= ' <i class="fa-solid fa-info-circle float-end" data-modal="monster" data-uktag="'.$this->rpgMonster->getField(Field::UKTAG).'"></i>';
 
         // Le CR
         $strCr = $this->rpgMonster->getFormatCr();
@@ -124,51 +152,79 @@ class RpgMonster extends Utilities
     
     public function getMonsterCard(): string
     {
+        $objsTrait = $this->rpgMonster->getTraits();
+        $objsActions = $this->rpgMonster->getActions();
     
         $attributes = [
-            $this->rpgMonster->getField(Field::NAME),
+            $this->rpgMonster->getStrName(),
             $this->rpgMonster->getSizeTypeAndAlignement(),
             $this->rpgMonster->getStrExtra(Field::SCORECA),
             $this->rpgMonster->getStrInitiative(),
             $this->rpgMonster->getStrExtra(Field::SCOREHP),
             $this->rpgMonster->getStrVitesse(),
-            '', // Force
-            '', // Dextérité
-            '', // Constitution
-            '', // Intelligence
-            '', // Sagesse
-            '', // Charisme
+            $this->rpgMonster->getStringScore('str'),
+            $this->rpgMonster->getStringScore('dex'),
+            $this->rpgMonster->getStringScore('con'),
+            $this->rpgMonster->getStringScore('int'),
+            $this->rpgMonster->getStringScore('wis'),
+            $this->rpgMonster->getStringScore('cha'),
             $this->getSkillsToCR(),
-            '', // d-none si pas de Traits
-            $this->getTraitsList(), // Liste des traits
-            '', // d-none si pas d'Actions
-            $this->getActionsList(), // Liste des actions
+            $objsTrait->isEmpty() ? ' d-none' : '', // d-none si pas de Traits
+            $this->getSpecialAbilitiesList($objsTrait), // Liste des traits
+            $objsActions->isEmpty() ? ' d-none' : '', // d-none si pas d'Actions
+            $this->getSpecialAbilitiesList($objsActions), // Liste des actions
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
         return $this->getRender(Template::MONSTER_CARD, $attributes);
     }
-
-    private function getActionsList(): string
+    
+    private function getSkillsToCR(): string
     {
-        $str  = "<p><strong><em>Multiattack</em></strong>. The spirit makes a number of attacks equal to half this spell's level (round down).</p>";
-        $str .= "<p><strong><em>Claw (Slaad Only)</em></strong>. <em>Melee Attack Roll</em>: Bonus equals your spell attack modifier, reach 5 ft. <em>Hit</em>: 1d10 + 3 + the spell's level Slashing damage, and the target can't regain Hit Points until the start of the spirit's next turn.</p>";
-        $str .= "<p><strong><em>Eye Ray (Beholderkin Only)</em></strong>. <em>Ranged Attack Roll</em>: Bonus equals your spell attack modifier, range 150 ft. <em>Hit</em>: 1d8 + 3 + the spell's level Psychic damage.</p><p><strong><em>Psychic Slam (Mind Flayer Only)</em></strong>. <em>Melee Attack Roll</em>: Bonus equals your spell attack modifier, reach 5 ft. <em>Hit</em>: 1d8 + 3 + the spell's level Psychic damage.</p>";
+        $str  = '';
+        // Gestion des immunités du monstre
+        $objs = $this->rpgMonster->getResistances('I');
+        $immunities = $this->rpgMonster->getExtra('immunities');
+        if (!$objs->isEmpty() && $immunities!='') {
+            $str .= '<div class="col-12"><strong>Immunités</strong> ';
+            $comma = false;
+            $objs->rewind();
+            while ($objs->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objs->current();
+                $str .= $obj->getTypeDamage()->getField(Field::NAME);
+                $comma = true;
+                $objs->next();
+            }
+            if ($immunities!='') {
+                $str .= ($comma ? ', ' : '').$immunities;
+            }
+            $str .= '</div>';
+        }
+        // Fin gestion des immunités du monstre
+
+        $senses = $this->rpgMonster->getExtra('senses');
+        if ($senses!='') {
+            $str  .= '<div class="col-12"><strong>Sens</strong> '.$senses.'</div>';
+        }
+        $languages = $this->rpgMonster->getExtra('languages');
+        if ($languages!='') {
+            $str  .= '<div class="col-12"><strong>Langues</strong> '.$languages.'</div>';
+        }
+        $str .= '<div class="col-12"><strong>FP</strong> '.$this->rpgMonster->getFormatCr().' (PX '.$this->rpgMonster->getTotalXp().' ; PB '.$this->rpgMonster->getExtra('pb').')</div>';
         return $str;
     }
     
-    private function getTraitsList(): string
+    private function getSpecialAbilitiesList(Collection $objs): string
     {
-        $str  = "<p><strong><em>Regeneration (Slaad Only)</em></strong>. The spirit regains 5 Hit Points at the start of its turn if it has at least 1 Hit Point.</p>";
-        $str .= "<p><strong><em>Whispering Aura (Mind Flayer Only)</em></strong>. At the start of each of the spirit's turns, the spirit emits psionic energy if it doesn't have the Incapacitated condition. <em>Wisdom Saving Throw</em>: DC equals your spell save DC, each creature (other than you) within 5 feet of the spirit. <em>Failure</em>: 2d6 Psychic damage.</p>";
-        return $str;
-
-    }
-    private function getSkillsToCR(): string
-    {
-        $str  = '<div class="col-12"><strong>Immunités</strong> TODO</div>';
-        $str .= '<div class="col-12"><strong>Sens</strong> TODO, Passive Perception ??</div>';
-        $str .= '<div class="col-12"><strong>Langues</strong> TODO</div>';
-        $str .= '<div class="col-12"><strong>CR</strong> ?? (XP ??; PB ??)</div>';
+        $str = '';
+        $objs->rewind();
+        while ($objs->valid()) {
+            $obj = $objs->current();
+            $str .= $obj->getController()->getFormatString();
+            $objs->next();
+        }
         return $str;
     }
 }
