@@ -314,6 +314,7 @@ class RpgMonster extends Entity
         return $value;
     }
     
+    /*
     public function parseFile(string $urlSource, bool $blnFr=false): bool
     {
         $data = [];
@@ -414,6 +415,7 @@ class RpgMonster extends Entity
         
         return $this->analyseParsedFile($data, $blnFr);
     }
+    */
     
     private function analyseParsedFile(array $data, bool $blnFr): bool
     {

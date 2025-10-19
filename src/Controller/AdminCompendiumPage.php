@@ -88,6 +88,7 @@ class AdminCompendiumPage extends AdminPage
         return parent::getAdminContentPage($content);
     }
 
+    /*
     private function parseFileSource(Table &$objTable): void
     {
         // On ouvre le fichier monstres.html pour mettre à jour de façon automatique les différentes tables associées aux monstres
@@ -277,5 +278,6 @@ class AdminCompendiumPage extends AdminPage
         }
         ///////////////////////////////////////////
     }
+    */
 
 }

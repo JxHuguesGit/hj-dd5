@@ -19,6 +19,7 @@ class Constant
     public const MONSTERS = 'monsters';
     public const FEATS    = 'feats';
 
+    public const CST_EXTRA = '-extra';
     public const CST_ASC = 'ASC';
     public const CST_CLASS = 'class';
     public const CST_CONTENT = 'content';

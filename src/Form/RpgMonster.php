@@ -27,7 +27,7 @@ class RpgMonster extends Form
         $this->addRow()
         	->addInput(Field::SCORECA, Field::SCORECA, 'CA', $this->rpgMonster->getField(Field::SCORECA))
             ->addFiller(['class'=>'col-1'])
-			->addInput(Field::SCORECA.'-extra', Field::SCORECA.'-extra', '', $this->rpgMonster->getExtra(Field::SCORECA), ['class'=>'col-3'])
+			->addInput(Field::SCORECA.Constant::CST_EXTRA, Field::SCORECA.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCORECA), ['class'=>'col-3'])
             ->addFiller(['class'=>'col-1'])
         	->addInput(Field::INITIATIVE, Field::INITIATIVE, 'Initiative', $this->rpgMonster->getField(Field::INITIATIVE));
 
@@ -35,7 +35,7 @@ class RpgMonster extends Form
         $this->addRow()
         	->addInput(Field::SCOREHP, Field::SCOREHP, 'PV', $this->rpgMonster->getField(Field::SCOREHP))
             ->addFiller(['class'=>'col-1'])
-			->addInput(Field::SCOREHP.'-extra', Field::SCOREHP.'-extra', '', $this->rpgMonster->getExtra(Field::SCOREHP), ['class'=>'col-5'])
+			->addInput(Field::SCOREHP.Constant::CST_EXTRA, Field::SCOREHP.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCOREHP), ['class'=>'col-5'])
             ->addFiller(['class'=>'col-3']);
 
         // Vitesses
