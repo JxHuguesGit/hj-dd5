@@ -9,8 +9,12 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
+use src\Repository\RpgMonsterCondition as RepositoryRpgMonsterCondition;
 use src\Repository\RpgMonsterResistance as RepositoryRpgMonsterResistance;
+use src\Repository\RpgMonsterSkill as RepositoryRpgMonsterSkill;
+use src\Repository\RpgJoinMonsterLanguage as RepositoryRpgJoinMonsterLanguage;
 use src\Repository\RpgJoinMonsterTypeSpeed as RepositoryRpgJoinMonsterTypeSpeed;
+use src\Repository\RpgJoinMonsterTypeVision as RepositoryRpgJoinMonsterTypeVision;
 use src\Repository\RpgAlignement as RepositoryRpgAlignement;
 use src\Repository\RpgReference as RepositoryRpgReference;
 use src\Repository\RpgSousTypeMonstre as RepositoryRpgSousTypeMonstre;
@@ -47,6 +51,8 @@ class RpgMonster extends Entity
         protected int $intScore,
         protected int $wisScore,
         protected int $chaScore,
+        protected int $profBonus,
+        protected int $percPassive,
         protected ?string $extra
     ) {
 
@@ -133,6 +139,12 @@ class RpgMonster extends Entity
             case 0.5 :
                 $returned = '?? c';
             break;
+            case 2 :
+                $returned = '450';
+            break;
+            case 5 :
+                $returned = '1 800';
+            break;
             default :
                 $returned = '?? d';
             break;
@@ -146,6 +158,42 @@ class RpgMonster extends Entity
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgMonsterResistance($queryBuilder, $queryExecutor);
         $params = [Field::TYPERESID=>$typeResistanceId, Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params);
+    }
+    
+    public function getSenses(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgJoinMonsterTypeVision($queryBuilder, $queryExecutor);
+        $params = [Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params);
+    }
+    
+    public function getSkills(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterSkill($queryBuilder, $queryExecutor);
+        $params = [Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params);
+    }
+    
+    public function getLanguages(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgJoinMonsterLanguage($queryBuilder, $queryExecutor);
+        $params = [Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params);
+    }
+    
+    public function getConditions(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterCondition($queryBuilder, $queryExecutor);
+        $params = [Field::MONSTERID=>$this->id];
         return $objDao->findBy($params);
     }
 

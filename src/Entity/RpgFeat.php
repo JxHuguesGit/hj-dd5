@@ -36,6 +36,6 @@ class RpgFeat extends Entity
     
     public function getWpPost(): ?WP_Post
     {
-    	return get_post($this->postId);
+        return get_post($this->postId);
     }
 }

@@ -82,7 +82,7 @@ class Collection implements \Iterator
     
     public function isEmpty(): bool
     {
-    	return $this->length()==0;
+        return $this->length()==0;
     }
 
     /**

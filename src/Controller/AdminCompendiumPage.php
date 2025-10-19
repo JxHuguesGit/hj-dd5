@@ -33,21 +33,26 @@ class AdminCompendiumPage extends AdminPage
         switch ($currentId) {
             case Constant::ARMORS :
                 $objTable = RpgArmor::getTable();
+                $pageContent = $objTable?->display();
             break;
             case Constant::WEAPONS :
                 $objTable = RpgWeapon::getTable($this->arrParams);
+                $pageContent = $objTable?->display();
             break;
             case Constant::SKILLS :
                 $objTable = RpgSkill::getTable($this->arrParams);
+                $pageContent = $objTable?->display();
             break;
             case Constant::MONSTERS :
-                $objTable = RpgMonster::getTable($this->arrParams);
+                $pageContent = RpgMonster::getAdminContentPage($this->arrParams);
             break;
             case Constant::FEATS :
                 $objTable = RpgFeat::getTable($this->arrParams);
+                $pageContent = $objTable?->display();
                break;
             default :
                 $objTable = null;
+                $pageContent = '';
             break;
         }
         
@@ -68,7 +73,7 @@ class AdminCompendiumPage extends AdminPage
         // Dans cette méthode, on gère l'entête, le cadre noir : Image, couleurs, nom, espèce, classe, niveau
         // Tout le reste sera géré via d'autres méthodes afin de ne pas être perdu dans le nombre de paramètres du template
         $attributes = [
-            $objTable?->display(),//$this->getBlockQuickInfo(), // bloc des données chiffrées
+            $pageContent,//$this->getBlockQuickInfo(), // bloc des données chiffrées
             '-large',//$hero->getId(), // id du personnage
             '',//$scheme, // style couleur (qui va définir les contours et fonds des svg mais aussi la couleur du texte)
             '',//'/wp-cotent/plugins/hj-dd5/assets/images/PJ1avatar.jpeg', // image du personnage

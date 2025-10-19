@@ -6,6 +6,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
 use src\Entity\RpgMonster as EntityRpgMonster;
+use src\Form\RpgMonster as FormRpgMonster;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
@@ -23,9 +24,26 @@ class RpgMonster extends Utilities
         $this->title = 'Monstres';
     }
 
-    public function getContentPage(): string
+    public static function getAdminContentPage(array $params): string
     {
-        return 'WIP RpgMonster::getContentPage';
+    	$formAction = $params['formAction'] ?? 'table';
+        if ($formAction=='table') {
+	    	$objTable = self::getTable($params);
+            $pageContent = $objTable?->display();
+        } elseif ($formAction=='edit') {
+        	$monsterId = $params['entityId'];
+            $queryBuilder  = new QueryBuilder();
+            $queryExecutor = new QueryExecutor();
+            $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
+        	$rpgMonstre = $objDaoMonstre->find($monsterId);
+            
+        	$objForm = new FormRpgMonster($rpgMonstre);
+            $objForm->buildForm();
+            $pageContent = $objForm->getFormContent();
+        } else {
+        	$pageContent = 'formAction non prévu.';
+        }
+        return $pageContent;
     }
     
     public static function getTable(array $params): Table
@@ -75,36 +93,48 @@ class RpgMonster extends Utilities
 
     public function addBodyRow(Table &$objTable): void
     {
+    	$blnComplet = $this->rpgMonster->getField(Field::INCOMPLET)==0;
+        /////////////////////////////////////////////////////////////////////
         // Le nom
-        // On pourrait envisager de mettre un lien ou une popup pour afficher le monstre.
-        $strName = $this->rpgMonster->getField(Field::NAME);
-          $strName = '<span class="modal-tooltip" data-modal="monster" data-uktag="id-'.$this->rpgMonster->getField(Field::ID).'">'.$strName.' <span class="fa fa-search"></span></span>';
-        
-        // Le monstre est-il complet ? Et a-t-il une traduction française ?
-        // On pourrait rajouter : et est-il complet en français ?
-        $urlDistante = 'https://www.aidedd.org/monster/';
-        $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/';
-        $ukTag = $this->rpgMonster->getField(Field::UKTAG);
-        $handleUk = fopen($urlLocale.$ukTag.'.html', 'r');
-        if ($handleUk===false) {
-            $content = file_get_contents($urlDistante.$ukTag);
-            $urlDestination = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$ukTag.'.html';
-            file_put_contents($urlDestination, $content);
+        if ($blnComplet && $this->rpgMonster->getField(Field::FRNAME)!='') {
+	        $strName = $this->rpgMonster->getField(Field::FRNAME);
+        } else {
+	        $strName = $this->rpgMonster->getField(Field::NAME);
         }
+        $strName = '<span class="modal-tooltip" data-modal="monster" data-uktag="id-'.$this->rpgMonster->getField(Field::ID).'">'.$strName.' <span class="fa fa-search"></span></span>';
 
-        $strName .= '<i class="float-end" data-modal="monster" data-uktag="'.$ukTag.'">🇬🇧</i>';
-
-        $frTag = $this->rpgMonster->getField(Field::FRTAG);
-        if ($frTag!='non') {
-            $handleFr = fopen($urlLocale.$ukTag.'.html', 'r');
-            if ($handleFr===false) {
-                $content = file_get_contents($urlDistante.$frTag);
-                $urlDestination = '../wp-content/plugins/hj-dd5/assets/aidedd/fr-'.$frTag.'.html';
+		//////////////////
+        if (!$blnComplet) {
+            // On va récupérer les fichiers du monstre sur aidedd.org
+            $urlDistante = 'https://www.aidedd.org/monster/';
+            $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/';
+            //////////////////
+            // La version anglaise
+            $ukTag = $this->rpgMonster->getField(Field::UKTAG);
+            $handleUk = fopen($urlLocale.$ukTag.'.html', 'r');
+            if ($handleUk===false) {
+                $content = file_get_contents($urlDistante.$ukTag);
+                $urlDestination = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$ukTag.'.html';
                 file_put_contents($urlDestination, $content);
-            } else {
-                $strName .= '<i class="float-end" data-modal="monster" data-uktag="fr-'.$frTag.'">🇫🇷</i>';
             }
-        }
+
+                $strName .= '<i class="float-end" data-modal="monster" data-uktag="'.$ukTag.'">🇬🇧</i>';
+
+            //////////////////
+            // La version française
+            $frTag = $this->rpgMonster->getField(Field::FRTAG);
+            if ($frTag!='non') {
+                $handleFr = fopen($urlLocale.$ukTag.'.html', 'r');
+                if ($handleFr===false) {
+                    $content = file_get_contents($urlDistante.$frTag);
+                    $urlDestination = '../wp-content/plugins/hj-dd5/assets/aidedd/fr-'.$frTag.'.html';
+                    file_put_contents($urlDestination, $content);
+                } else {
+                    $strName .= '<i class="float-end" data-modal="monster" data-uktag="fr-'.$frTag.'">🇫🇷</i>';
+                }
+            }
+		}
+        /////////////////////////////////////////////////////////////////////
 
         // Le CR
         $strCr = $this->rpgMonster->getFormatCr();
@@ -181,10 +211,61 @@ class RpgMonster extends Utilities
     private function getSkillsToCR(): string
     {
         $str  = '';
+
+        //////////////////////////////////////////////////////////////
+        // Gestion des compétences du monstre
+        $objs = $this->rpgMonster->getSkills();
+        $skills = $this->rpgMonster->getExtra('skills');
+        if (!$objs->isEmpty() || $skills!='') {
+            $str .= '<div class="col-12"><strong>Compétences</strong> ';
+            $comma = false;
+            $objs->rewind();
+            while ($objs->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objs->current();
+                $str .= $obj->getController()->getFormatString();
+                $comma = true;
+                $objs->next();
+            }
+            if ($skills!='') {
+                $str .= ($comma ? ', ' : '').$skills;
+            }
+            $str .= '</div>';
+        }
+        //////////////////////////////////////////////////////////////
+        
+        //////////////////////////////////////////////////////////////
+        // Gestion des résistances du monstre
+        $objs = $this->rpgMonster->getResistances('R');
+        $resistances = $this->rpgMonster->getExtra('resistances');
+        if (!$objs->isEmpty() || $resistances!='') {
+            $str .= '<div class="col-12"><strong>Résistances</strong> ';
+            $comma = false;
+            $objs->rewind();
+            while ($objs->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objs->current();
+                $str .= $obj->getTypeDamage()->getField(Field::NAME);
+                $comma = true;
+                $objs->next();
+            }
+            if ($resistances!='') {
+                $str .= ($comma ? ', ' : '').$resistances;
+            }
+            $str .= '</div>';
+        }
+        //////////////////////////////////////////////////////////////
+        
+        //////////////////////////////////////////////////////////////
         // Gestion des immunités du monstre
         $objs = $this->rpgMonster->getResistances('I');
+        $objsCondition = $this->rpgMonster->getConditions();
         $immunities = $this->rpgMonster->getExtra('immunities');
-        if (!$objs->isEmpty() && $immunities!='') {
+        if (!$objs->isEmpty() || !$objsCondition->isEmpty() || $immunities!='') {
             $str .= '<div class="col-12"><strong>Immunités</strong> ';
             $comma = false;
             $objs->rewind();
@@ -197,22 +278,87 @@ class RpgMonster extends Utilities
                 $comma = true;
                 $objs->next();
             }
+            $objsCondition->rewind();
+            while ($objsCondition->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objsCondition->current();
+                $str .= $obj->getCondition()->getField(Field::NAME);
+                $comma = true;
+                $objsCondition->next();
+            }
             if ($immunities!='') {
                 $str .= ($comma ? ', ' : '').$immunities;
             }
             $str .= '</div>';
         }
-        // Fin gestion des immunités du monstre
+        //////////////////////////////////////////////////////////////
 
+        //////////////////////////////////////////////////////////////
+        // Gestion des sens du monstre
+        $objs = $this->rpgMonster->getSenses();
+        $percPassive = $this->rpgMonster->getField(Field::PERCPASSIVE);
         $senses = $this->rpgMonster->getExtra('senses');
-        if ($senses!='') {
-            $str  .= '<div class="col-12"><strong>Sens</strong> '.$senses.'</div>';
+        if (!$objs->isEmpty() || $senses!='' || $percPassive!=0) {
+            $str .= '<div class="col-12"><strong>Sens</strong> ';
+            $comma = false;
+            $objs->rewind();
+            while ($objs->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objs->current();
+                $str .= $obj->getController()->getFormatString();
+                $comma = true;
+                $objs->next();
+            }
+            if ($percPassive!=0) {
+            	$str .= ($comma ? ', ' : '').'Perception passive ' . $percPassive;
+                $comma = true;
+            }
+            if ($senses!='') {
+                $str .= ($comma ? ', ' : '').$senses;
+            }
+            $str .= '</div>';
         }
-        $languages = $this->rpgMonster->getExtra('languages');
-        if ($languages!='') {
-            $str  .= '<div class="col-12"><strong>Langues</strong> '.$languages.'</div>';
+        //////////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////////
+        // Gestion des langues du monstre
+        $objs = $this->rpgMonster->getLanguages();
+		$languages = $this->rpgMonster->getExtra('languages');
+        $str .= '<div class="col-12"><strong>Langues</strong> ';
+        if (!$objs->isEmpty() || $languages!='') {
+            $comma = false;
+            $objs->rewind();
+            while ($objs->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objs->current();
+                $str .= $obj->getLanguage()->getField(Field::NAME);
+                $comma = true;
+                $objs->next();
+            }
+            if ($languages!='') {
+                $str .= ($comma ? ', ' : '').$languages;
+            }
+        } else {
+            $str .= 'Aucune';
         }
-        $str .= '<div class="col-12"><strong>FP</strong> '.$this->rpgMonster->getFormatCr().' (PX '.$this->rpgMonster->getTotalXp().' ; PB '.$this->rpgMonster->getExtra('pb').')</div>';
+        $str .= '</div>';
+        //////////////////////////////////////////////////////////////
+        
+        //////////////////////////////////////////////////////////////
+        $bm = $this->rpgMonster->getField(Field::PROFBONUS);
+        $extra = $this->rpgMonster->getExtra('pb');
+        
+        $str .= '<div class="col-12"><strong>FP</strong> '.$this->rpgMonster->getFormatCr();
+        $str .= ' (PX '.$this->rpgMonster->getTotalXp().' ;';
+        $str .= ' BM ' . ($bm==0 ? '' : $bm) . $this->rpgMonster->getExtra('pb').')</div>';
+        //////////////////////////////////////////////////////////////
+        
         return $str;
     }
     
@@ -227,4 +373,5 @@ class RpgMonster extends Utilities
         }
         return $str;
     }
+    
 }

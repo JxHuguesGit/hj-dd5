@@ -60,6 +60,8 @@ class Field
     public const INTSCORE    = 'intScore';
     public const WISSCORE    = 'wisScore';
     public const CHASCORE    = 'chaScore';
+    public const PROFBONUS   = 'profBonus';
+    public const PERCPASSIVE = 'percPassive';
      
     public const EXTRA       = 'extra';
     
@@ -73,4 +75,9 @@ class Field
     public const MONSTERID   = 'monsterId';
     public const TYPERESID   = 'typeResistanceId';
     public const TYPESPEEDID = 'typeSpeedId';
+    public const TYPEVISIONID = 'typeVisionId';
+    public const LANGUAGEID   = 'languageId';
+    public const CONDITIONID  = 'conditionId';
+    
+    
 }

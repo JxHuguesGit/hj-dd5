@@ -39,9 +39,9 @@ class Table
     
     public function setNbPerPage(int $refElementId=1, int $selNbPerPage=10, array $arrNbPerPage=[]): self
     {
-    	$this->blnNbPerPage = true;
-    	if (empty($arrNbPerPage)) {
-        	$arrNbPerPage = [10, 25, 50, 100];
+        $this->blnNbPerPage = true;
+        if (empty($arrNbPerPage)) {
+            $arrNbPerPage = [10, 25, 50, 100];
         }
         // On modifie le margin-top pour pouvoir inclure cette ligne dans le header
         $this->attributes[Constant::CST_CLASS] = str_replace('mt-5', 'mt-2', $this->attributes[Constant::CST_CLASS]);
@@ -49,7 +49,7 @@ class Table
         // On construit le contenu de la sélection
         $selectContent = '';
         foreach ($arrNbPerPage as $nbPerPage) {
-        	$selectContent .= Html::getOption($nbPerPage, array_merge(['value'=>$nbPerPage], $nbPerPage==$selNbPerPage ? ['selected'=>'selected'] : []));
+            $selectContent .= Html::getOption($nbPerPage, array_merge(['value'=>$nbPerPage], $nbPerPage==$selNbPerPage ? ['selected'=>'selected'] : []));
         }
         $strDivDivContent  = Html::getBalise('label', 'Afficher', ['for'=>Constant::PAGE_NBPERPAGE, Constant::CST_CLASS=>'col-1 me-2 mb-0 text-end"'])
                            . Html::getBalise('select', $selectContent, [Constant::CST_CLASS=>'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger'=>'change', 'data-action'=>'loadMonsterPage'])

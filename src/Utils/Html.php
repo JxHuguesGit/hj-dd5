@@ -35,6 +35,29 @@ class Html
         return $extraAttributes;
     }
 
+
+
+
+    public static function getButton(string $label, array $extraAttributes=[]): string
+    {
+        // Les attributs par défaut d'un bouton.
+        $defaultAttributes = [
+            Constant::CST_TYPE => 'button',
+            Constant::CST_CLASS => 'btn btn-default btn-sm'
+        ];
+        if (isset($extraAttributes[Constant::CST_CLASS])) {
+            $defaultAttributes[Constant::CST_CLASS] .= ' '.$extraAttributes[Constant::CST_CLASS];
+            unset($extraAttributes[Constant::CST_CLASS]);
+        }
+        $attributes = array_merge($defaultAttributes, $extraAttributes);
+        return static::getBalise('button', $label, $attributes);
+    }
+    
+    public static function getDiv(string $content, array $extraAttributes=[]): string
+    {
+        return static::getBalise('div', $content, $extraAttributes);
+    }
+
     public static function getOption(string $label, array $attributes, bool $isSelected=false): string
     {
         if ($isSelected) {
@@ -72,25 +95,25 @@ class Html
         return self::getBalise('i', '', $attributes);
     }
     
-	public static function shortcodes($content = '')
+    public static function shortcodes($content = '')
     {
-    	$pattern = "/\[(feat)]([^\[]*)\[\/feat]/";
+        $pattern = "/\[(feat)]([^\[]*)\[\/feat]/";
         if (preg_match_all($pattern, $content, $matches)) {
-        	$nb = count($matches[0]);
+            $nb = count($matches[0]);
             for ($i=0; $i<$nb; $i++) {
-            	$content = str_replace($matches[0][$i], sprintf(
+                $content = str_replace($matches[0][$i], sprintf(
         '<span class="mr-2 modal-link" data-modal="%s" data-key="%s">%s </span>', esc_attr($matches[1][$i]), sanitize_title($matches[2][$i]), esc_html($matches[2][$i])), $content);
             }
-        	//var_dump($matches);
+            //var_dump($matches);
             //$content .= 'Preg Ok : '.$matches[1];
         } else {
-        	//$content .= 'Preg Ko';
+            //$content .= 'Preg Ko';
         }
         return $content;
         /*
-    	// Nettoyage du contenu entre les balises
-    	$label = trim($content);
-    	$slug = sanitize_title($label); // Pour générer data-key
+        // Nettoyage du contenu entre les balises
+        $label = trim($content);
+        $slug = sanitize_title($label); // Pour générer data-key
 
     return sprintf(
         '<span>%s <i class="fa-solid fa-info-circle float-end" data-modal="feat" data-key="%s"></i></span>',
@@ -98,5 +121,5 @@ class Html
         esc_attr($slug)
     );
     */
-	}
+    }
 }
