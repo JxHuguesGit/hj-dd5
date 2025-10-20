@@ -14,7 +14,7 @@ class RpgJoinMonsterTypeSpeed extends Entity
         protected int $id,
         protected int $monsterId,
         protected string $typeSpeedId,
-        protected int $value,
+        protected float $value,
         protected string $extra
     ) {
 

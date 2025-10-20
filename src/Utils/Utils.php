@@ -16,9 +16,9 @@ class Utils
         return ($value >= 0 ? '+' : '').$value;
     }
     
-    public static function getModAbility(int $value): int
+    public static function getModAbility(int $value, $bonus=0): int
     {
-        return floor($value/2)-5;
+        return floor($value/2)-5+$bonus;
     }
     
     public static function getStrWeight(float $value): string

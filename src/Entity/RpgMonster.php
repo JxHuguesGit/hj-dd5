@@ -83,73 +83,13 @@ class RpgMonster extends Entity
         return $objDao->findBy($params, [Field::NAME=>'ASC']);
     }
     
-    public function getExtra($field): string
+    public function getBonusActions(): Collection
     {
-        if ($this->extra==null) {
-            return '';
-        }
-        $tabExtra = json_decode($this->extra, true);
-        return $tabExtra[$field]??'';
-    }
-    
-    public function getStrExtra(string $field): string
-    {
-        $value = $this->{$field};
-        $extra = $this->getExtra($field);
-        if ($extra!='') {
-            $value .= ' ' . $extra;
-        }
-        return $value;
-    }
-
-    public function getFormatCr(): string
-    {
-        switch ($this->cr) {
-            case -1 :
-                $returned = 'aucun';
-            break;
-            case 0.125 :
-                $returned = '1/8';
-            break;
-            case 0.25 :
-                $returned = '1/4';
-            break;
-            case 0.5 :
-                $returned = '1/2';
-            break;
-            default :
-                $returned = $this->cr;
-            break;
-        }
-        return $returned;
-    }
-    
-    public function getTotalXp(): string
-    {
-        switch ($this->cr) {
-            case -1 :
-                $returned = '0';
-            break;
-            case 0.125 :
-                $returned = '?? a';
-            break;
-            case 0.25 :
-                $returned = '?? b';
-            break;
-            case 0.5 :
-                $returned = '?? c';
-            break;
-            case 2 :
-                $returned = '450';
-            break;
-            case 5 :
-                $returned = '1 800';
-            break;
-            default :
-                $returned = '?? d';
-            break;
-        }
-        return $returned;
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
+        $params = [Field::TYPEID=>'B', Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params, [Field::NAME=>'ASC']);
     }
 
     public function getResistances(string $typeResistanceId): Collection
@@ -178,7 +118,7 @@ class RpgMonster extends Entity
         $params = [Field::MONSTERID=>$this->id];
         return $objDao->findBy($params);
     }
-    
+
     public function getLanguages(): Collection
     {
         $queryBuilder  = new QueryBuilder();
@@ -212,6 +152,60 @@ class RpgMonster extends Entity
         $objDao = new RepositoryRpgReference($queryBuilder, $queryExecutor);
         return $objDao->find($this->referenceId);
     }
+    
+    
+    
+    
+    public function getExtra($field=''): mixed
+    {
+        if ($this->extra==null || $field=='') {
+            return [];
+        }
+        $tabExtra = json_decode($this->extra, true);
+	    return $tabExtra[$field]??'';
+    }
+    
+    public function getStrExtra(string $field): string
+    {
+        $value = $this->{$field};
+        $extra = $this->getExtra($field);
+        if ($extra!='') {
+            $value .= ' ' . $extra;
+        }
+        return $value;
+    }
+
+    public function getFormatCr(): string
+    {
+        $crMap = [
+            -1     => 'aucun',
+            0.125  => '1/8',
+            0.25   => '1/4',
+            0.5    => '1/2',
+        ];
+        return $crMap[$this->cr] ?? $this->cr;
+    }
+    
+    public function getTotalXp(): string
+    {
+        $xpMap = [
+            -1     => 0,
+            0      => 10,
+            0.125  => 25,
+            0.25   => 50,
+            0.5    => 100,
+            1      => 200,
+            2      => 450,
+            3      => 700,
+            4      => 1100,
+            5      => 1800,
+            6      => 2300,
+            8      => 3900,
+        ];
+        $xp = $xpMap[$this->cr] ?? null;
+        return $xp ? number_format($xp, 0, ',', ' ') : '??';
+    }
+
 
     public function getStrName(): string
     {
@@ -271,23 +265,27 @@ class RpgMonster extends Entity
         if (in_array($carac, ['str', 'dex', 'con'])) {
             $score = $this->{$carac.'Score'};
             $modC = $this->getScoreModifier(Utils::getModAbility($score));
-            $modJdS = $this->getScoreModifier(Utils::getModAbility($score));
+            $bonus = $this->getExtra('js'.$carac);
+            if ($bonus=='') {
+                $bonus = 0;
+            }
+            $modJdS = $this->getScoreModifier(Utils::getModAbility($score, $bonus));
             return "<div class='col car2'>$score</div><div class='col car3'>$modC</div><div class='col car3'>$modJdS</div>";
         } else {
             $score = $this->{$carac.'Score'};
             $modC = $this->getScoreModifier(Utils::getModAbility($score));
-            $modJdS = $this->getScoreModifier(Utils::getModAbility($score));
+            $bonus = $this->getExtra('js'.$carac);
+            if ($bonus=='') {
+                $bonus = 0;
+            }
+            $modJdS = $this->getScoreModifier(Utils::getModAbility($score, $bonus));
             return "<div class='col car5'>$score</div><div class='col car6'>$modC</div><div class='col car6'>$modJdS</div>";
         }
     }
     
     public function getStrInitiative(): string
     {
-        if ($this->initiative>=0) {
-            return '+'.$this->initiative;
-        } else {
-            return $this->initiative;
-        }
+        return ($this->initiative>=0 ? '+' : '').$this->initiative;
     }
 
     public function getStrVitesse(): string
@@ -313,189 +311,5 @@ class RpgMonster extends Entity
         }
         return $value;
     }
-    
-    /*
-    public function parseFile(string $urlSource, bool $blnFr=false): bool
-    {
-        $data = [];
-        $handle = fopen('https://dd5.jhugues.fr/wp-content/plugins/hj-dd5/assets/aidedd/'.$this->ukTag.'.html', 'r');
-        while (true) {
-            $line = fgets($handle, 2048);
-            if ($line===false) {
-                break;
-            }
-            
-            ///////////////////////////////////
-            //
-            $pattern = "~<h1>([^<]+)</h1>.*?"
-                . "<div class=['\"]type['\"]>([^<]+)</div>.*?"
-                . "(?:<div class=['\"]init['\"]><strong>Initiative</strong>\s*([^<]+)</div>.*?)?"
-                . "<strong>(?:AC|CA)</strong>\s*([^<]+)<br>.*?"
-                . "<strong>(?:HP|PV)</strong>\s*([^<]+)<br>.*?"
-                . "<strong>(?:Speed|Vitesse)</strong>\s*([^<]+)<br>~is";
-            
-            if (preg_match($pattern, $line, $matches)) {
-                $data = array_merge($data, [
-                    'name'       => $matches[1],
-                    'type'       => $matches[2],
-                    'initiative' => isset($matches[3]) ? trim($matches[3]) : null,
-                    'ac'         => trim($matches[4]),
-                    'hp'         => trim($matches[5]),
-                    'speed'      => trim($matches[6]),
-                ]);
-            }
-            ///////////////////////////////////
-            
-            ///////////////////////////////////
-            //
-            $pattern = "/<div class='car1'>(\w+)<\/div><div class='car2'>(\d+)<\/div><div class='car3'>([+-]?\d+)<\/div><div class='car3'>([+-]?\d+)<\/div>/";
-            if (preg_match_all($pattern, $line, $matches, PREG_SET_ORDER)) {
-                $caracs = [];
-                foreach ($matches as $match) {
-                    $attr = $match[1];
-                    $caracs[$attr] = [
-                        'val' => (int)$match[2],
-                        'mod1' => (int)$match[3],
-                        'mod2' => (int)$match[4],
-                    ];
-                }
-                $data = array_merge($data, $caracs);
-            }
-            ///////////////////////////////////
-            
-            ///////////////////////////////////
-            //
-            $pattern = "/<div class='car4'>(\w+)<\/div><div class='car5'>(\d+)<\/div><div class='car6'>([+-]?\d+)<\/div><div class='car6'>([+-]?\d+)<\/div>/";
-            if (preg_match_all($pattern, $line, $matches, PREG_SET_ORDER)) {
-                $caracs = [];
-                foreach ($matches as $match) {
-                    $attr = $match[1];
-                    $caracs[$attr] = [
-                        'val' => (int)$match[2],
-                        'mod1' => (int)$match[3],
-                        'mod2' => (int)$match[4],
-                    ];
-                }
-                $data = array_merge($data, $caracs);
-            }
-            ///////////////////////////////////
-            
-            ///////////////////////////////////
-            //
-            $pattern = "/>(Skills|Compétences|Senses|Sens|Languages|Langages|Immunities|Immunités|Resistances|Résistances|Vulnerabilities|Vulnérabilités|CR|FP|Gear|Equipement)<\/strong>\s*([^\r\n<]+)/i";
-            if (preg_match($pattern, $line, $matches)) {
-                $key = $matches[1];
-                $values = $matches[2];
-                $result = [$key => $values];
-                $data = array_merge($data, $result);
-            }
-            ///////////////////////////////////
-            
-            ///////////////////////////////////
-            //
-            $pattern = "/<div class='rub'>(Traits|Actions|Reactions|Bonus actions)<\/div>(.*?)(?=<div class='rub'>|<\/div><div class='description'>|$)/si";
-            if (preg_match_all($pattern, $line, $blocks, PREG_SET_ORDER)) {
-                $subPattern = "/<p>\s*<strong><em>(.*?)<\/em><\/strong>(.*?)<\/p>/si";
-                $result = [];
-                foreach ($blocks as $block) {
-                    $section = $block[1];
-                    $content = $block[2];
-                    if (preg_match_all($subPattern, $content, $entries, PREG_SET_ORDER)) {
-                        foreach ($entries as $entry) {
-                            $title = trim(strip_tags($entry[1]));
-                            $body = trim(strip_tags($entry[2]));
-                            $result[$section][$title] = $body;
-                        }
-                    }
-                }
-                $data = array_merge($data, $result);
-            }
-        }
-        fclose($handle);
-        
-        return $this->analyseParsedFile($data, $blnFr);
-    }
-    */
-    
-    private function analyseParsedFile(array $data, bool $blnFr): bool
-    {
-        $hasError = false;
-        $this->msgErreur = '';
-        
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
-
-        $blnUpdate = false;
-        //var_dump($data);
-        
-        // Vérification du nom
-        /*
-        $name = $data['name'];
-        $storedName = $blnFr ? $this->frName : $this->name;
-        if ($storedName!=$name) {
-            if ($blnFr) {
-                $this->frName = $name;
-            } else {
-                $this->name = $name;
-            }
-        }
-        */
-        
-        // type
-        // initiative
-        if (preg_match("/[+-](\d+)/", $data['initiative'], $matches)) {
-            $value = $matches[1];
-            if ($this->getField(Field::INITIATIVE)!=$value) {
-                $this->initiative = $value;
-                $blnUpdate = true;
-            }
-        }
-        // ac
-        // hp
-        // speed
-        $hasError = $this->analyserVitesse($data['speed']) || $hasError;
-        //
-        
-        if (!$hasError && $blnUpdate) {
-            $objDao->update($this);
-        }
-        
-        return $hasError;
-    }
-    
-    private function analyserVitesse(string $strSpeed): bool
-    {
-        $blnHasError = false;
-        $pattern = "/(?:(?:^|,\s*)(?:(Fly|Climb|Swim)\s*)?(\d+)\s*(ft\.|m\.))/i";
-        if (preg_match_all($pattern, $strSpeed, $matches, PREG_SET_ORDER)) {
-            // Il faudrait supprimer toutes les vitesses attachées à ce monstre
-            $result = [];
-            foreach ($matches as $index => $match) {
-                $mult = $match[3]=='m' ? 1 : 0.3;
-                switch ($match[1]) {
-                    case 'Fly' :
-                    case 'Vol' :
-                    // rpgTypeSpeed : id = 1
-                    // Ajouter la vitesse au monstre
-                        $this->msgErreur .= "Vitesse de vol : ".$match[2] * $mult;
-                        $blnHasError = true;
-                    break;
-                    case '' :
-                        $this->vitesse = $match[2] * $mult;
-                    break;
-                    default :
-                        $this->msgErreur .= "Type de vitesse non géré : ".$match[1];
-                        $blnHasError = true;
-                    break;
-                }
-            }
-        } else {
-            $this->msgErreur .= "Erreur Vitesse : ".$strSpeed;
-            $blnHasError = true;
-        }
-        return $blnHasError;
-    }
-    
     
 }

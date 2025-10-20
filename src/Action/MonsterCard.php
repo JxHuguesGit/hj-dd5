@@ -3,6 +3,7 @@ namespace src\Action;
 
 use src\Constant\Field;
 use src\Entity\RpgMonster as EntityRpgMonster;
+use src\Helper\RpgMonsterParser;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgMonster;
@@ -50,6 +51,9 @@ class MonsterCard
                     $dom->loadHTML($content);
                     $body = $dom->getElementsByTagName('body')->item(0);
                     $returned = $dom->saveHTML($body);
+                    
+                    $parser = new RpgMonsterParser($rpgMonster, $dom);
+                    $parser->parseDom();
                 }
             }
         } else {

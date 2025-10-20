@@ -185,6 +185,7 @@ class RpgMonster extends Utilities
     {
         $objsTrait = $this->rpgMonster->getTraits();
         $objsActions = $this->rpgMonster->getActions();
+        $objsBonusActions = $this->rpgMonster->getBonusActions();
     
         $attributes = [
             $this->rpgMonster->getStrName(),
@@ -204,6 +205,8 @@ class RpgMonster extends Utilities
             $this->getSpecialAbilitiesList($objsTrait), // Liste des traits
             $objsActions->isEmpty() ? ' d-none' : '', // d-none si pas d'Actions
             $this->getSpecialAbilitiesList($objsActions), // Liste des actions
+            $objsBonusActions->isEmpty() ? ' d-none' : '', // d-none si pas de Bonus actions
+            $this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
         return $this->getRender(Template::MONSTER_CARD, $attributes);
@@ -272,11 +275,9 @@ class RpgMonster extends Utilities
         $str = '';
         //////////////////////////////////////////////////////////////
         // Gestion des sens du monstre
+        $str .= '<div class="col-12"><strong>Sens</strong> ';
         $objs = $this->rpgMonster->getSenses();
-        $percPassive = $this->rpgMonster->getField(Field::PERCPASSIVE);
-        $senses = $this->rpgMonster->getExtra('senses');
-        if (!$objs->isEmpty() || $senses!='' || $percPassive!=0) {
-            $str .= '<div class="col-12"><strong>Sens</strong> ';
+        if (!$objs->isEmpty()) {
             $comma = false;
             $objs->rewind();
             while ($objs->valid()) {
@@ -288,15 +289,15 @@ class RpgMonster extends Utilities
                 $comma = true;
                 $objs->next();
             }
-            if ($percPassive!=0) {
-            	$str .= ($comma ? ', ' : '').'Perception passive ' . $percPassive;
-                $comma = true;
-            }
-            if ($senses!='') {
-                $str .= ($comma ? ', ' : '').$senses;
-            }
-            $str .= '</div>';
         }
+        $senses = $this->rpgMonster->getExtra('senses');
+        if ($senses!='') {
+            $str .= ($comma ? ', ' : '').$senses;
+            $comma = true;
+        }
+        $percPassive = $this->rpgMonster->getField(Field::PERCPASSIVE);
+        $str .= ($comma ? ', ' : '') . 'Perception passive ' . $percPassive;
+        $str .= '</div>';
         //////////////////////////////////////////////////////////////
         return $str;
     }
@@ -346,7 +347,7 @@ class RpgMonster extends Utilities
         
         $str .= '<div class="col-12"><strong>FP</strong> '.$this->rpgMonster->getFormatCr();
         $str .= ' (PX '.$this->rpgMonster->getTotalXp().' ;';
-        $str .= ' BM ' . ($bm==0 ? '' : $bm) . $extra.')</div>';
+        $str .= ' BM ' . ($bm==0 ? '' : '+'.$bm) . $extra.')</div>';
         //////////////////////////////////////////////////////////////
         
         return $str;

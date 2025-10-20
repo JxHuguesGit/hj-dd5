@@ -73,4 +73,30 @@ enum SkillEnum: string
             self::Sur => AbilityEnum::Wis,
         };
     }
+    
+    public static function fromEnglish(string $english): ?self
+    {
+        return match(strtolower(trim($english))) {
+            'acrobatics'     => self::Acr,
+            'animal handling'=> self::Ani,
+            'arcana'         => self::Arc,
+            'athletics'      => self::Ath,
+            'deception'      => self::Dec,
+            'endurance'      => self::End,
+            'history'        => self::His,
+            'insight'        => self::Ins,
+            'intimidation'   => self::Int,
+            'investigation'  => self::Inv,
+            'medicine'       => self::Med,
+            'nature'         => self::Nat,
+            'perception'     => self::Pec,
+            'performance'    => self::Pef,
+            'persuasion'     => self::Pes,
+            'religion'       => self::Rel,
+            'sleight of hand'=> self::Soh,
+            'stealth'        => self::Ste,
+            'survival'       => self::Sur,
+            default          => null,
+        };
+    }
 }
