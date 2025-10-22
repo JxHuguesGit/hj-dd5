@@ -35,6 +35,8 @@ use \DomDocument;
 
 class RpgMonsterParser
 {
+    const PATTERN_SEPARATOR = "/[,;]/";
+
     private RpgMonster $rpgMonster;
     private DOMDocument $dom;
     private QueryBuilder $queryBuilder;
@@ -57,8 +59,6 @@ class RpgMonsterParser
         $daoSenses = new RepositoryRpgTypeVision($this->queryBuilder, $this->queryExecutor);
         $daoJoinSenses = new RepositoryRpgJoinMonsterTypeVision($this->queryBuilder, $this->queryExecutor);
         $daoAbilities = new RepositoryRpgMonsterAbility($this->queryBuilder, $this->queryExecutor);
-
-        $xpath = new \DOMXPath($this->dom);
 
         $blnHasChanged |= $this->parseHitDice();
         $blnHasChanged |= $this->parseSpeed();
@@ -122,7 +122,8 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-            return;        }
+            return;
+        }
 
         $this->parseTraitAction('B', $node, $objDao);
     }
@@ -134,7 +135,8 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-            return;        }
+            return;
+        }
 
         $this->parseTraitAction('R', $node, $objDao);
     }
@@ -154,12 +156,9 @@ class RpgMonsterParser
     
     private function parseTraitAction($typeId, $node, $objDao): void
     {
-        $actionPs = [];
         $current  = $node->nextSibling;
         $pattern = "/<p><strong><em>([^<]+)<\/em><\/strong>\. (.+)<\/p>/s";
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
-
-        //echo "On recherche $typeId<br><br>";
         
         while ($current) {
             // Ignorer les textes vides et les espaces
@@ -167,9 +166,6 @@ class RpgMonsterParser
                 $current = $current->nextSibling;
                 continue;
             }
-
-            //var_dump($current);
-            //echo '<br><br>';
 
             // Si on tombe sur un autre <div class="rub">, on arrête
             if (
@@ -204,8 +200,9 @@ class RpgMonsterParser
             }
 
             // Si c’est un <p>, on le garde
-            if ($current->nodeType === XML_ELEMENT_NODE && $current->nodeName === 'p') {
-                if (preg_match($pattern, trim($this->dom->saveHTML($current)), $matches)) {
+            if ($current->nodeType === XML_ELEMENT_NODE
+                && $current->nodeName === 'p'
+                && preg_match($pattern, trim($this->dom->saveHTML($current)), $matches)) {
                     $params = [
                         Field::TYPEID=>$typeId,
                         Field::MONSTERID=>$rpgMonsterId,
@@ -219,7 +216,6 @@ class RpgMonsterParser
                         $obj = new EntityRpgMonsterAbility(...$params);
                         $objDao->insert($obj);
                     }
-                }
             }
             
             // ?? Cas 2 : Texte brut + <br> (ex: Detect Life.<br>)
@@ -324,7 +320,7 @@ class RpgMonsterParser
         $nextNode = $crNode->nextSibling;
         $crValue = trim($nextNode->textContent);
         
-        if (preg_match('/(.*) \(.*PB \+([0-9]*)/', $crValue, $matches)) {
+        if (preg_match('/(.*) \(.*PB \+(\d*)/', $crValue, $matches)) {
             $cr = Utils::getUnformatCr($matches[1]);
             $stored = $this->rpgMonster->getField(Field::SCORECR);
             if ($stored!=$cr) {
@@ -746,7 +742,7 @@ class RpgMonsterParser
         $objDaoJoin = new RepositoryRpgMonsterResistance($this->queryBuilder, $this->queryExecutor);
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
         
-        $elements = preg_split("/[,;]/", $content);
+        $elements = preg_split(self::PATTERN_SEPARATOR, $content);
         foreach ($elements as $element) {
             $enum = DamageEnum::fromEnglish($element);
             
@@ -764,8 +760,6 @@ class RpgMonsterParser
                     $obj = new EntityRpgMonsterResistance(...$params);
                     $objDaoJoin->insert($obj);
                 }
-            } else {
-                //$enum = DamageEnum::fromEnglish($element);
             }
         }
     }
@@ -788,7 +782,7 @@ class RpgMonsterParser
         $objDaoJoinCond = new RepositoryRpgMonsterCondition($this->queryBuilder, $this->queryExecutor);
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
         
-        $elements = preg_split("/[,;]/", $content);
+        $elements = preg_split(self::PATTERN_SEPARATOR, $content);
         foreach ($elements as $element) {
             $enum = DamageEnum::fromEnglish($element);
             if ($enum!=null) {
@@ -843,7 +837,7 @@ class RpgMonsterParser
         $objDaoJoin = new RepositoryRpgJoinMonsterLanguage($this->queryBuilder, $this->queryExecutor);
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
 
-        $elements = preg_split("/[,;]/", $content);
+        $elements = preg_split(self::PATTERN_SEPARATOR, $content);
         foreach ($elements as $element) {
             list($ability, $value, $test) = explode(' ', trim($element));
             if ($test=='ft.') {

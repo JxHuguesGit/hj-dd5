@@ -2,6 +2,7 @@
 namespace src\Controller;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
@@ -84,8 +85,6 @@ class RpgMonster extends Utilities
             //->addHeaderCell([Constant::CST_CONTENT=>'Légendaire'])
             //->addHeaderCell([Constant::CST_CONTENT=>'Habitat'])
             ->addHeaderCell([Constant::CST_CONTENT=>'Référence']);
-
-        //$this->parseFileSource($objTable);
 
         $objTable->addBodyRows($objsMonstre, 6);
 
@@ -204,15 +203,15 @@ class RpgMonster extends Utilities
             $this->rpgMonster->getStringScore('wis'),
             $this->rpgMonster->getStringScore('cha'),
             $this->getSkillsToCR(),
-            $objsTrait->isEmpty() ? ' d-none' : '', // d-none si pas de Traits
+            $objsTrait->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Traits
             $this->getSpecialAbilitiesList($objsTrait), // Liste des traits
-            $objsActions->isEmpty() ? ' d-none' : '', // d-none si pas d'Actions
+            $objsActions->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas d'Actions
             $this->getSpecialAbilitiesList($objsActions), // Liste des actions
-            $objsBonusActions->isEmpty() ? ' d-none' : '', // d-none si pas de Bonus actions
+            $objsBonusActions->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Bonus actions
             $this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
-            $objsReactions->isEmpty() ? ' d-none' : '', // d-none si pas de Réactions
+            $objsReactions->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Réactions
             $this->getSpecialAbilitiesList($objsReactions), // Liste des Réactions
-            $objsActionsLegendaires->isEmpty() ? ' d-none' : '', // d-none si pas de Legendary Actions
+            $objsActionsLegendaires->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Legendary Actions
             $this->getSpecialAbilitiesList($objsActionsLegendaires), // Liste des Actions Légendaires
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];

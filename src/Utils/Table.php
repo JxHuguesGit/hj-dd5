@@ -268,12 +268,5 @@ class Table
         $this->paginate = new Paginate($paginate);
         return $this;
     }
-    
-    public function setFilter(array $filter=[]): self
-    {
-        $this->blnFilter = true;
-        //$this->filters[$filter[ConstantConstant::CST_COL]] = new FilterUtils($filter);
-        return $this;
-    }
 
 }

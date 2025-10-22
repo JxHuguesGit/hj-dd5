@@ -11,6 +11,8 @@ use src\Utils\Session;
 
 class MonsterCard
 {
+    const HTML_EXTENSION = '.html';
+
     public static function build(): string
     {
         $uktag = Session::fromPost('uktag');
@@ -23,7 +25,7 @@ class MonsterCard
             /** @var EntityRpgMonster $rpgMonster */
             $rpgMonster = $objDao->find(substr($uktag, 3));
             if ($rpgMonster->getField(Field::INCOMPLET)==1) {
-                $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$rpgMonster->getField(Field::UKTAG).'.html';
+                $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$rpgMonster->getField(Field::UKTAG).self::HTML_EXTENSION;
                 $content = file_get_contents($urlLocale);
                 
                 $dom = new \DOMDocument();
@@ -38,11 +40,11 @@ class MonsterCard
             $uktag = substr($uktag, 3);
             $rpgMonsters = $objDao->findBy([Field::FRTAG=>$uktag]);
             $urlDistant = 'https://www.aidedd.org/monster/fr/' . $uktag;
-            $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/fr-'.$uktag.'.html';
+            $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/fr-'.$uktag.self::HTML_EXTENSION;
         } else {
             $rpgMonsters = $objDao->findBy([Field::UKTAG=>$uktag]);
             $urlDistant = 'https://www.aidedd.org/monster/' . $uktag;
-            $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$uktag.'.html';
+            $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$uktag.self::HTML_EXTENSION;
         }
         $content = file_get_contents($urlDistant);
         file_put_contents($urlLocale, $content);

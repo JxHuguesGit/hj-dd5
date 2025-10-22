@@ -46,21 +46,4 @@ class QueryExecutor
         $wpdb->query($prepared);
         return (int) $wpdb->rows_affected;
     }
-
-/*
-
-    public function fetchColumn(string $sql, array $params = [], string $column): array
-    {
-        $results = $this->fetchAll($sql, $params);
-        return array_column($results, $column);
-    }
-
-    public function execute(string $sql, array $params = []): int
-    {
-        global $wpdb;
-        $prepared = $wpdb->prepare($sql, $params);
-        $wpdb->query($prepared);
-        return $wpdb->rows_affected;
-    }
-        */
 }
