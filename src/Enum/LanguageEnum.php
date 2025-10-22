@@ -25,7 +25,7 @@ enum LanguageEnum: string
             static::Pro   => 'Profond',
 
             static::Tel   => 'Télépathie',
-			default       => 'Langue inconnue.',
+            default       => 'Langue inconnue.',
         };
     }
     

@@ -22,7 +22,7 @@ class Utils
     }
     
 
-	public static function getUnformatCr(mixed $cr): mixed
+    public static function getUnformatCr(mixed $cr): mixed
     {
         $crMap = [
             'aucun' => -1,

@@ -27,22 +27,22 @@ class RpgMonster extends Utilities
 
     public static function getAdminContentPage(array $params): string
     {
-    	$formAction = $params['formAction'] ?? 'table';
+        $formAction = $params['formAction'] ?? 'table';
         if ($formAction=='table') {
-	    	$objTable = self::getTable($params);
+            $objTable = self::getTable($params);
             $pageContent = $objTable?->display();
         } elseif ($formAction=='edit') {
-        	$monsterId = $params['entityId'];
+            $monsterId = $params['entityId'];
             $queryBuilder  = new QueryBuilder();
             $queryExecutor = new QueryExecutor();
             $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
-        	$rpgMonstre = $objDaoMonstre->find($monsterId);
+            $rpgMonstre = $objDaoMonstre->find($monsterId);
             
-        	$objForm = new FormRpgMonster($rpgMonstre);
+            $objForm = new FormRpgMonster($rpgMonstre);
             $objForm->buildForm();
             $pageContent = $objForm->getFormContent();
         } else {
-        	$pageContent = 'formAction non prévu.';
+            $pageContent = 'formAction non prévu.';
         }
         return $pageContent;
     }
@@ -95,17 +95,17 @@ class RpgMonster extends Utilities
     public function addBodyRow(Table &$objTable): void
     {
         $htmlExtenion = '.html';
-    	$blnComplet = $this->rpgMonster->getField(Field::INCOMPLET)==0;
+        $blnComplet = $this->rpgMonster->getField(Field::INCOMPLET)==0;
         /////////////////////////////////////////////////////////////////////
         // Le nom
         if ($blnComplet && $this->rpgMonster->getField(Field::FRNAME)!='') {
-	        $strName = $this->rpgMonster->getField(Field::FRNAME);
+            $strName = $this->rpgMonster->getField(Field::FRNAME);
         } else {
-	        $strName = $this->rpgMonster->getField(Field::NAME);
+            $strName = $this->rpgMonster->getField(Field::NAME);
         }
         $strName = '<span class="modal-tooltip" data-modal="monster" data-uktag="id-'.$this->rpgMonster->getField(Field::ID).'">'.$strName.' <span class="fa fa-search"></span></span>';
 
-		//////////////////
+        //////////////////
         if (!$blnComplet) {
             // On va récupérer les fichiers du monstre sur aidedd.org
             $urlDistante = 'https://www.aidedd.org/monster/';
@@ -135,7 +135,7 @@ class RpgMonster extends Utilities
                     $strName .= '<i class="float-end" data-modal="monster" data-uktag="fr-'.$frTag.'">🇫🇷</i>';
                 }
             }
-		}
+        }
         /////////////////////////////////////////////////////////////////////
 
         // Le CR
@@ -267,11 +267,11 @@ class RpgMonster extends Utilities
                 $obj = $objs->current();
                 
                 if ($obj instanceof EntityRpgMonsterResistance) {
-	                $objDmgOrCond = $obj->getTypeDamage();
+                    $objDmgOrCond = $obj->getTypeDamage();
                 } else {
                     $objDmgOrCond = $obj->getCondition();
                     if ($firstCond && $comma) {
-                    	$str = substr($str, 0, -2).' ; ';
+                        $str = substr($str, 0, -2).' ; ';
                     }
                     $firstCond = false;
                 }
@@ -336,7 +336,7 @@ class RpgMonster extends Utilities
         //////////////////////////////////////////////////////////////
         // Gestion des langues du monstre
         $objs = $this->rpgMonster->getLanguages();
-		$languages = $this->rpgMonster->getExtra('languages');
+        $languages = $this->rpgMonster->getExtra('languages');
         $str .= '<div class="col-12"><strong>Langues</strong> ';
         if (!$objs->isEmpty() || $languages!='') {
             $comma = false;

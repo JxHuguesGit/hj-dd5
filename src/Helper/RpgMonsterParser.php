@@ -35,20 +35,20 @@ use \DomDocument;
 
 class RpgMonsterParser
 {
-	private RpgMonster $rpgMonster;
+    private RpgMonster $rpgMonster;
     private DOMDocument $dom;
     private QueryBuilder $queryBuilder;
     private QueryExecutor $queryExecutor;
     
-	public function __construct($rpgMonster, $dom)
+    public function __construct($rpgMonster, $dom)
     {
-    	$this->rpgMonster = $rpgMonster;
+        $this->rpgMonster = $rpgMonster;
         $this->dom = $dom;
     }
     
-	public function parseDom(): void
+    public function parseDom(): void
     {
-		$blnHasChanged = false;
+        $blnHasChanged = false;
 
         $this->queryBuilder  = new QueryBuilder();
         $this->queryExecutor = new QueryExecutor();
@@ -60,7 +60,7 @@ class RpgMonsterParser
 
         $xpath = new \DOMXPath($this->dom);
 
-		$blnHasChanged |= $this->parseHitDice();
+        $blnHasChanged |= $this->parseHitDice();
         $blnHasChanged |= $this->parseSpeed();
         $blnHasChanged |= $this->parseCaracsPhysiques();
         $blnHasChanged |= $this->parseCaracsMentales();
@@ -79,13 +79,13 @@ class RpgMonsterParser
         $this->parseLegendaryActions($daoAbilities);
 
         if ($this->rpgMonster->getField(Field::EXTRA) === '') {
-        	$this->rpgMonster->setField(Field::EXTRA, json_encode([], JSON_UNESCAPED_UNICODE));
+            $this->rpgMonster->setField(Field::EXTRA, json_encode([], JSON_UNESCAPED_UNICODE));
             $blnHasChanged = true;
         }
         
         if ($blnHasChanged) {
             $objDao = new RepositoryRpgMonster($this->queryBuilder, $this->queryExecutor);
-        	$objDao->update($this->rpgMonster);
+            $objDao->update($this->rpgMonster);
         }
     }
     
@@ -96,7 +96,7 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-        	return;
+            return;
         }
 
         $this->parseTraitAction('A', $node, $objDao);
@@ -109,7 +109,7 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-        	return;
+            return;
         }
 
         $this->parseTraitAction('T', $node, $objDao);
@@ -122,7 +122,7 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-        	return;        }
+            return;        }
 
         $this->parseTraitAction('B', $node, $objDao);
     }
@@ -134,7 +134,7 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-        	return;        }
+            return;        }
 
         $this->parseTraitAction('R', $node, $objDao);
     }
@@ -146,7 +146,7 @@ class RpgMonsterParser
         $node = $nodes->item(0);
 
         if ($node=='') {
-        	return;
+            return;
         }
 
         $this->parseTraitAction('L', $node, $objDao);
@@ -154,7 +154,7 @@ class RpgMonsterParser
     
     private function parseTraitAction($typeId, $node, $objDao): void
     {
-    	$actionPs = [];
+        $actionPs = [];
         $current  = $node->nextSibling;
         $pattern = "/<p><strong><em>([^<]+)<\/em><\/strong>\. (.+)<\/p>/s";
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
@@ -206,15 +206,15 @@ class RpgMonsterParser
             // Si c’est un <p>, on le garde
             if ($current->nodeType === XML_ELEMENT_NODE && $current->nodeName === 'p') {
                 if (preg_match($pattern, trim($this->dom->saveHTML($current)), $matches)) {
-			        $params = [
-                    	Field::TYPEID=>$typeId,
+                    $params = [
+                        Field::TYPEID=>$typeId,
                         Field::MONSTERID=>$rpgMonsterId,
                         Field::NAME => $matches[1],
                     ];
                     $objs = $objDao->findBy($params);
                     
                     if ($objs->isEmpty()) {
-                    	$params[Field::ID] = 0;
+                        $params[Field::ID] = 0;
                         $params[Field::DESCRIPTION] = $matches[2];
                         $obj = new EntityRpgMonsterAbility(...$params);
                         $objDao->insert($obj);
@@ -222,58 +222,57 @@ class RpgMonsterParser
                 }
             }
             
-        	// ?? Cas 2 : Texte brut + <br> (ex: Detect Life.<br>)
-        	if (
-            	$current->nodeType === XML_ELEMENT_NODE &&
-            	in_array($current->nodeName, ['br', 'text']) || $current->nodeType === XML_TEXT_NODE
-        	) {
-            	// On récupère le HTML brut de tous les fragments jusqu'au prochain <div class="rub">
-            	$raw = '';
-            	$scan = $current;
-            	while ($scan && !(
-                	$scan->nodeType === XML_ELEMENT_NODE &&
-                	$scan->nodeName === 'div' &&
-                	$scan->getAttribute('class') === 'rub'
-            	)) {
-                	$raw .= $this->dom->saveHTML($scan);
-                	$scan = $scan->nextSibling;
-            	}
+            // ?? Cas 2 : Texte brut + <br> (ex: Detect Life.<br>)
+            if (
+                $current->nodeType === XML_ELEMENT_NODE &&
+                in_array($current->nodeName, ['br', 'text']) || $current->nodeType === XML_TEXT_NODE
+            ) {
+                // On récupère le HTML brut de tous les fragments jusqu'au prochain <div class="rub">
+                $raw = '';
+                $scan = $current;
+                while ($scan && !(
+                    $scan->nodeType === XML_ELEMENT_NODE &&
+                    $scan->nodeName === 'div' &&
+                    $scan->getAttribute('class') === 'rub'
+                )) {
+                    $raw .= $this->dom->saveHTML($scan);
+                    $scan = $scan->nextSibling;
+                }
 
-            	// Parser les lignes séparées par <br>
-            	$lines = preg_split('/<br\s*\/?>/i', $raw);
-            	foreach ($lines as $line) {
-                	$line = trim(strip_tags($line));
-                	if ($line === '') {
-                 	   continue;
-               		}
+                // Parser les lignes séparées par <br>
+                $lines = preg_split('/<br\s*\/?>/i', $raw);
+                foreach ($lines as $line) {
+                    $line = trim(strip_tags($line));
+                    if ($line === '') {
+                        continue;
+                       }
 
-                	// Nettoyer le nom
-                	$name = rtrim($line, '.');
+                    // Nettoyer le nom
+                    $name = rtrim($line, '.');
 
-                	// Vérifier si ce trait existe déjà
-                	$params = [
-                    	Field::TYPEID => $typeId,
-                    	Field::MONSTERID => $rpgMonsterId,
-                    	Field::NAME => $name,
-                	];
-                	$objs = $objDao->findBy($params);
+                    // Vérifier si ce trait existe déjà
+                    $params = [
+                        Field::TYPEID => $typeId,
+                        Field::MONSTERID => $rpgMonsterId,
+                        Field::NAME => $name,
+                    ];
+                    $objs = $objDao->findBy($params);
 
-                	if ($objs->isEmpty()) {
-                    	$params[Field::ID] = 0;
-                    	$params[Field::DESCRIPTION] = ''; // Pas de description dans ce format
-                    	$obj = new EntityRpgMonsterAbility(...$params);
-                    	$objDao->insert($obj);
-                	}
-            	}            
+                    if ($objs->isEmpty()) {
+                        $params[Field::ID] = 0;
+                        $params[Field::DESCRIPTION] = ''; // Pas de description dans ce format
+                        $obj = new EntityRpgMonsterAbility(...$params);
+                        $objDao->insert($obj);
+                    }
+                }
 
-        		// On saute tous les nœuds déjà lus
-        		$current = $scan;
-        		continue;
-    		}
+                // On saute tous les nœuds déjà lus
+                $current = $scan;
+                continue;
+            }
             
             $current  = $current ->nextSibling;
         }
-        return;
     }
     
     
@@ -286,9 +285,9 @@ class RpgMonsterParser
 
 
 
-	private function parseInitiative(): bool
+    private function parseInitiative(): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='Initiative']");
@@ -299,13 +298,13 @@ class RpgMonsterParser
         $node = $nodes->item(0);
         $next = $node->nextSibling;
         $value = trim($next->textContent);
-		list($score,) = explode(' ', $value);
+        list($score,) = explode(' ', $value);
         $score = str_replace('+', '', $score);
         
         $stored = $this->rpgMonster->getField(Field::INITIATIVE);
         if ($stored!=$score) {
-	        $this->rpgMonster->setField(Field::INITIATIVE, $score);
-    	    $blnHasChanged = true;
+            $this->rpgMonster->setField(Field::INITIATIVE, $score);
+            $blnHasChanged = true;
         }
                 
         return $blnHasChanged;
@@ -313,7 +312,7 @@ class RpgMonsterParser
 
     private function parseCrBm(): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='CR']");
@@ -326,14 +325,14 @@ class RpgMonsterParser
         $crValue = trim($nextNode->textContent);
         
         if (preg_match('/(.*) \(.*PB \+([0-9]*)/', $crValue, $matches)) {
-	        $cr = Utils::getUnformatCr($matches[1]);
+            $cr = Utils::getUnformatCr($matches[1]);
             $stored = $this->rpgMonster->getField(Field::SCORECR);
             if ($stored!=$cr) {
                 $this->rpgMonster->setField(Field::SCORECR, $cr);
                 $blnHasChanged = true;
             }
         
-	        $pb = $matches[2];
+            $pb = $matches[2];
             $stored = $this->rpgMonster->getField(Field::PROFBONUS);
             if ($stored!=$pb) {
                 $this->rpgMonster->setField(Field::PROFBONUS, $pb);
@@ -346,7 +345,7 @@ class RpgMonsterParser
     
     private function parseHitDice(): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='HP']");
@@ -359,9 +358,9 @@ class RpgMonsterParser
         $hpValue = trim($nextNode->textContent);
         
         if (preg_match('/\(([^)]+)\)/', $hpValue, $matches)) {
-	        $value = '('.$matches[1].')';
-    	    $tabExtra = json_decode($this->rpgMonster->getField(Field::EXTRA), true) ?: [];
-        	$stored = $tabExtra['hp'] ?? null;
+            $value = '('.$matches[1].')';
+            $tabExtra = json_decode($this->rpgMonster->getField(Field::EXTRA), true) ?: [];
+            $stored = $tabExtra['hp'] ?? null;
         
             if ($stored!==$value) {
                 $tabExtra['hp'] = $value;
@@ -376,7 +375,7 @@ class RpgMonsterParser
     
     private function parseSpeed(): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='Speed']");
@@ -401,7 +400,7 @@ class RpgMonsterParser
         $objDaoJMTS = new RepositoryRpgJoinMonsterTypeSpeed($this->queryBuilder, $this->queryExecutor);
         
         for ($i=1; $i<count($tabSpeed); $i++) {
-        	$tab = explode(' ', trim($tabSpeed[$i]));
+            $tab = explode(' ', trim($tabSpeed[$i]));
             // $tab[0] : Burrow
             // $tab[1] : 5
             // $tab[3] : (hover)
@@ -412,28 +411,28 @@ class RpgMonsterParser
             $obj = $objs->current();
             $typeSpeedId = $obj->getField(Field::ID);
 
-			// Deuxième étape, interroger rpgMonsterSpeed pour vérifier si l'info est présente
+            // Deuxième étape, interroger rpgMonsterSpeed pour vérifier si l'info est présente
             $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
             $objs = $objDaoJMTS->findBy([Field::MONSTERID=>$rpgMonsterId, Field::TYPESPEEDID=>$typeSpeedId]);
             $value = $tab[1]*3/10;
             
             // Troisième étape, a : si elle est présente est identique, on ne fait rien
-            // 					b : si elle est présente est différente, on la met à jour
-            // 					c : si elle n'est pas présente on l'insère
+            //                     b : si elle est présente est différente, on la met à jour
+            //                     c : si elle n'est pas présente on l'insère
             if ($objs->isEmpty()) {
-            	$params = [0, $rpgMonsterId, $typeSpeedId, $value, $extra];
-            	$obj = new EntityRpgJoinMonsterTypeSpeed(...$params);
+                $params = [0, $rpgMonsterId, $typeSpeedId, $value, $extra];
+                $obj = new EntityRpgJoinMonsterTypeSpeed(...$params);
                 $objDaoJMTS->insert($obj);
             } else {
-	            $obj = $objs->current();
-	            $stored = $obj->getField(Field::VALUE);
+                $obj = $objs->current();
+                $stored = $obj->getField(Field::VALUE);
                 if ($stored!=$value) {
-                	$obj->setField(Field::VALUE, $value);
+                    $obj->setField(Field::VALUE, $value);
                     $objDaoJMTS->update($obj);
                 }
-	            $stored = $obj->getField(Field::EXTRA);
+                $stored = $obj->getField(Field::EXTRA);
                 if ($stored!=$extra) {
-                	$obj->setField(Field::EXTRA, $extra);
+                    $obj->setField(Field::EXTRA, $extra);
                     $objDaoJMTS->update($obj);
                 }
                 
@@ -445,21 +444,21 @@ class RpgMonsterParser
 
     private function parseCaracsPhysiques(): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//div[contains(@class, 'car2') or contains(@class, 'car3')]");
         $values = [];
         foreach ($nodes as $node) {
-	        $values[] = trim($node->textContent);
+            $values[] = trim($node->textContent);
         }
         // Normalement, il y a 9 valeurs
         if (count($values)!=9) {
-	        return $blnHasChanged;
+            return $blnHasChanged;
         }
         
         $extra = $this->rpgMonster->getField(Field::EXTRA);
-        $json = json_decode($extra, true); 
+        $json = json_decode($extra, true);
         
         // 0 : score de force
         // 1 : bonus aux jets de carac de force
@@ -473,7 +472,7 @@ class RpgMonsterParser
         $score = $this->rpgMonster->getField(Field::STRSCORE);
         $value = $values[0];
         if ($score!=$value) {
-        	$this->rpgMonster->setField(Field::STRSCORE, $value);
+            $this->rpgMonster->setField(Field::STRSCORE, $value);
             $blnHasChanged = true;
         }
         $mod = Utils::getModAbility($value);
@@ -489,11 +488,11 @@ class RpgMonsterParser
             $blnHasChanged = true;
         }
         
-        // Score de Dextérité        
+        // Score de Dextérité
         $score = $this->rpgMonster->getField(Field::DEXSCORE);
         $value = $values[3];
         if ($score!=$value) {
-        	$this->rpgMonster->setField(Field::DEXSCORE, $value);
+            $this->rpgMonster->setField(Field::DEXSCORE, $value);
             $blnHasChanged = true;
         }
         $mod = Utils::getModAbility($value);
@@ -509,11 +508,11 @@ class RpgMonsterParser
             $blnHasChanged = true;
         }
         
-        // Score de Constitution        
+        // Score de Constitution
         $score = $this->rpgMonster->getField(Field::CONSCORE);
         $value = $values[6];
         if ($score!=$value) {
-        	$this->rpgMonster->setField(Field::CONSCORE, $value);
+            $this->rpgMonster->setField(Field::CONSCORE, $value);
             $blnHasChanged = true;
         }
         $mod = Utils::getModAbility($value);
@@ -537,21 +536,21 @@ class RpgMonsterParser
 
     private function parseCaracsMentales(): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//div[contains(@class, 'car5') or contains(@class, 'car6')]");
         $values = [];
         foreach ($nodes as $node) {
-	        $values[] = trim($node->textContent);
+            $values[] = trim($node->textContent);
         }
         // Normalement, il y a 9 valeurs
         if (count($values)!=9) {
-	        return $blnHasChanged;
+            return $blnHasChanged;
         }
         
         $extra = $this->rpgMonster->getField(Field::EXTRA);
-        $json = json_decode($extra, true); 
+        $json = json_decode($extra, true);
                 
         // 0 : score de intelligence
         // 1 : bonus aux jets de carac de intelligence
@@ -565,13 +564,13 @@ class RpgMonsterParser
         $score = $this->rpgMonster->getField(Field::INTSCORE);
         $value = $values[0];
         if ($score!=$value) {
-        	$this->rpgMonster->setField(Field::INTSCORE, $value);
+            $this->rpgMonster->setField(Field::INTSCORE, $value);
             $blnHasChanged = true;
         }
         $mod = Utils::getModAbility($value);
         /*
         if ($mod!=$values[1]) {
-        	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[1]
+            // TODO : Modifier Extra en fonction de $mod vis à vis de $values[1]
             //echo "Intelligence Mod TODO : $mod - $values[1]<br>";
         }
         */
@@ -581,17 +580,17 @@ class RpgMonsterParser
             $blnHasChanged = true;
         }
         
-        // Score de Sagesse        
+        // Score de Sagesse
         $score = $this->rpgMonster->getField(Field::WISSCORE);
         $value = $values[3];
         if ($score!=$value) {
-        	$this->rpgMonster->setField(Field::WISSCORE, $value);
+            $this->rpgMonster->setField(Field::WISSCORE, $value);
             $blnHasChanged = true;
         }
         $mod = Utils::getModAbility($value);
         /*
         if ($mod!=$values[4]) {
-        	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[4]
+            // TODO : Modifier Extra en fonction de $mod vis à vis de $values[4]
             //echo "Sagesse Mod TODO<br>";
         }
         */
@@ -601,17 +600,17 @@ class RpgMonsterParser
             $blnHasChanged = true;
         }
         
-        // Score de Charisme        
+        // Score de Charisme
         $score = $this->rpgMonster->getField(Field::CHASCORE);
         $value = $values[6];
         if ($score!=$value) {
-        	$this->rpgMonster->setField(Field::CHASCORE, $value);
+            $this->rpgMonster->setField(Field::CHASCORE, $value);
             $blnHasChanged = true;
         }
         $mod = Utils::getModAbility($value);
         /*
         if ($mod!=$values[7]) {
-        	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[7]
+            // TODO : Modifier Extra en fonction de $mod vis à vis de $values[7]
             //echo "Charisme Mod TODO<br>";
         }
         */
@@ -633,7 +632,7 @@ class RpgMonsterParser
         $nodes = $xpath->query("//strong[normalize-space(text())='Skills']");
         $skillsNode = $nodes->item(0);
         $nextNode = $skillsNode->nextSibling;
-		$skillsList = trim($nextNode->textContent);
+        $skillsList = trim($nextNode->textContent);
         $tabSkills = explode(',', $skillsList);
         
         $objDao = new RepositoryRpgSkill($this->queryBuilder, $this->queryExecutor);
@@ -649,7 +648,7 @@ class RpgMonsterParser
 
                 $enum = SkillEnum::fromEnglish($skill);
                 if ($enum==null) {
-                	continue;
+                    continue;
                 }
                 $objs = $objDao->findBy([Field::NAME=>$enum->label()]);
                 $obj = $objs->current();
@@ -677,33 +676,33 @@ class RpgMonsterParser
 
     private function parseSenses($objDao, $objDaoJoin): bool
     {
-    	$blnHasChanged = false;
+        $blnHasChanged = false;
         
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='Senses']");
         $node = $nodes->item(0);
         $nextNode = $node->nextSibling;
-		$content = trim($nextNode->textContent);
+        $content = trim($nextNode->textContent);
 
         if ($content=='') {
-        	return $blnHasChanged;
+            return $blnHasChanged;
         }
 
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
 
         $elements = explode(',', $content);
         foreach ($elements as $element) {
-        	$tab = explode(' ', trim($element));
+            $tab = explode(' ', trim($element));
             
             if ($tab[2]!='ft.') {
-            	if ($this->rpgMonster->getField(Field::PERCPASSIVE)!=$tab[2]) {
-                	$this->rpgMonster->setField(Field::PERCPASSIVE, $tab[2]);
+                if ($this->rpgMonster->getField(Field::PERCPASSIVE)!=$tab[2]) {
+                    $this->rpgMonster->setField(Field::PERCPASSIVE, $tab[2]);
                     $blnHasChanged = true;
                 }
             } else {
-            	$value = $tab[1]*3/10;
+                $value = $tab[1]*3/10;
                 $sens = $tab[0];
-	            $objs = $objDao->findBy([Field::UKTAG=>$sens]);
+                $objs = $objDao->findBy([Field::UKTAG=>$sens]);
                 $obj = $objs->current();
                 $sensId = $obj->getField(Field::ID);
                 
@@ -737,10 +736,10 @@ class RpgMonsterParser
         $nodes = $xpath->query("//strong[normalize-space(text())='Resistances']");
         $node = $nodes->item(0);
         $nextNode = $node->nextSibling;
-		$content = trim($nextNode->textContent);
+        $content = trim($nextNode->textContent);
         
         if ($content=='') {
-        	return;
+            return;
         }
         
         $objDao = new RepositoryRpgTypeDamage($this->queryBuilder, $this->queryExecutor);
@@ -766,7 +765,7 @@ class RpgMonsterParser
                     $objDaoJoin->insert($obj);
                 }
             } else {
-	            //$enum = DamageEnum::fromEnglish($element);
+                //$enum = DamageEnum::fromEnglish($element);
             }
         }
     }
@@ -777,10 +776,10 @@ class RpgMonsterParser
         $nodes = $xpath->query("//strong[normalize-space(text())='Immunities']");
         $node = $nodes->item(0);
         $nextNode = $node->nextSibling;
-		$content = trim($nextNode->textContent);
+        $content = trim($nextNode->textContent);
         
         if ($content=='') {
-        	return;
+            return;
         }
         
         $objDao = new RepositoryRpgTypeDamage($this->queryBuilder, $this->queryExecutor);
@@ -807,7 +806,7 @@ class RpgMonsterParser
                     $objDaoJoin->insert($obj);
                 }
             } else {
-	            $enum = ConditionEnum::fromEnglish($element);
+                $enum = ConditionEnum::fromEnglish($element);
                 if ($enum!=null) {
                     $objs = $objDaoCond->findBy([Field::NAME=>$enum->label()]);
                     $obj = $objs->current();
@@ -822,7 +821,7 @@ class RpgMonsterParser
                         $objDaoJoinCond->insert($obj);
                     }
                 } else {
-                	echo "[$element]";
+                    echo "[$element]";
                 }
             }
         }
@@ -834,10 +833,10 @@ class RpgMonsterParser
         $nodes = $xpath->query("//strong[normalize-space(text())='Languages']");
         $node = $nodes->item(0);
         $nextNode = $node->nextSibling;
-		$content = trim($nextNode->textContent);
+        $content = trim($nextNode->textContent);
 
         if ($content=='') {
-        	return;
+            return;
         }
 
         $objDao = new RepositoryRpgLanguage($this->queryBuilder, $this->queryExecutor);
@@ -846,8 +845,8 @@ class RpgMonsterParser
 
         $elements = preg_split("/[,;]/", $content);
         foreach ($elements as $element) {
-        	list($ability, $value, $test) = explode(' ', trim($element));
-            if ($test=='ft.') { 
+            list($ability, $value, $test) = explode(' ', trim($element));
+            if ($test=='ft.') {
                 // Dans ce cas, value est une distance en pieds, on la convertit en mètres.
                 $value = isset($value) ? 3*$value/10 : 0;
             } else {

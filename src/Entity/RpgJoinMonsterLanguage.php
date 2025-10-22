@@ -21,7 +21,7 @@ class RpgJoinMonsterLanguage extends Entity
     
     public function getController(): ControllerRpgMonsterLanguage
     {
-    	$obj = new ControllerRpgMonsterLanguage();
+        $obj = new ControllerRpgMonsterLanguage();
         $obj->setField('rpgJoinMonsterLanguage', $this);
         return $obj;
     }

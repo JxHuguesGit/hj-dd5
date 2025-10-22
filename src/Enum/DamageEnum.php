@@ -55,5 +55,5 @@ enum DamageEnum: string
             'radiant'        => self::Rad,
             default          => null,
         };
-    }    
+    }
 }

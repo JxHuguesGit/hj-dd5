@@ -15,7 +15,7 @@ class RpgJoinMonsterTypeVision extends Utilities
         $str .= ' ' . $this->rpgJoinMonsterTypeVision->getField(Field::VALUE) . 'm';
         $extra = $this->rpgJoinMonsterTypeVision->getField(Field::EXTRA);
         if ($extra!='') {
-	        $str .= ' ' . $extra;
+            $str .= ' ' . $extra;
         }
         return $str;
     }

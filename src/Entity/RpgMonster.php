@@ -116,11 +116,11 @@ class RpgMonster extends Entity
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgMonsterResistance($queryBuilder, $queryExecutor);
         $params = [Field::TYPERESID=>$typeResistanceId, Field::MONSTERID=>$this->id];
-        $collection = $objDao->findBy($params); 
+        $collection = $objDao->findBy($params);
         if ($typeResistanceId=='I') {
             $objDao = new RepositoryRpgMonsterCondition($queryBuilder, $queryExecutor);
             $params = [Field::MONSTERID=>$this->id];
-	        $collection->concat($objDao->findBy($params)); 
+            $collection->concat($objDao->findBy($params));
         }
         return $collection;
     }
@@ -186,7 +186,7 @@ class RpgMonster extends Entity
             return [];
         }
         $tabExtra = json_decode($this->extra, true);
-	    return $tabExtra[$field]??'';
+        return $tabExtra[$field]??'';
     }
     
     public function getStrExtra(string $field): string
@@ -201,21 +201,21 @@ class RpgMonster extends Entity
     
     public function getFormatCr(): string
     {
-    	switch ($this->cr) {
-        	case -1 :
-            	$returned = 'aucun';
+        switch ($this->cr) {
+            case -1 :
+                $returned = 'aucun';
             break;
-        	case 0.125 :
-            	$returned = '1/8';
+            case 0.125 :
+                $returned = '1/8';
             break;
-        	case 0.25 :
-            	$returned = '1/4';
+            case 0.25 :
+                $returned = '1/4';
             break;
-        	case 0.5 :
-            	$returned = '1/2';
+            case 0.5 :
+                $returned = '1/2';
             break;
-        	default :
-            	$returned = $this->cr;
+            default :
+                $returned = $this->cr;
             break;
         }
         return $returned;

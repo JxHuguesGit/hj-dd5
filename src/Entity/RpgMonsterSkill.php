@@ -1,7 +1,7 @@
 <?php
 namespace src\Entity;
 
-use src\Controller\RpgMonsterSkill as ControllerRpgMonsterSkill; 
+use src\Controller\RpgMonsterSkill as ControllerRpgMonsterSkill;
 use src\Entity\RpgSkill as EntityRpgSkill;
 use src\Repository\RpgSkill;
 use src\Query\QueryBuilder;

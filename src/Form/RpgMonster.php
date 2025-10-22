@@ -19,28 +19,28 @@ class RpgMonster extends Form
     {
         // Nom français + Nom anglais
         $this->addRow()
-        	->addInput(Field::FRNAME, Field::FRNAME, 'Nom français', $this->rpgMonster->getField(Field::FRNAME))
+            ->addInput(Field::FRNAME, Field::FRNAME, 'Nom français', $this->rpgMonster->getField(Field::FRNAME))
             ->addFiller(['class'=>'col-2'])
-			->addInput(Field::NAME, Field::NAME, 'Nom anglais', $this->rpgMonster->getField(Field::NAME));
+            ->addInput(Field::NAME, Field::NAME, 'Nom anglais', $this->rpgMonster->getField(Field::NAME));
 
-		// CA et remarques + Initiative
+        // CA et remarques + Initiative
         $this->addRow()
-        	->addInput(Field::SCORECA, Field::SCORECA, 'CA', $this->rpgMonster->getField(Field::SCORECA))
+            ->addInput(Field::SCORECA, Field::SCORECA, 'CA', $this->rpgMonster->getField(Field::SCORECA))
             ->addFiller(['class'=>'col-1'])
-			->addInput(Field::SCORECA.Constant::CST_EXTRA, Field::SCORECA.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCORECA), ['class'=>'col-3'])
+            ->addInput(Field::SCORECA.Constant::CST_EXTRA, Field::SCORECA.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCORECA), ['class'=>'col-3'])
             ->addFiller(['class'=>'col-1'])
-        	->addInput(Field::INITIATIVE, Field::INITIATIVE, 'Initiative', $this->rpgMonster->getField(Field::INITIATIVE));
+            ->addInput(Field::INITIATIVE, Field::INITIATIVE, 'Initiative', $this->rpgMonster->getField(Field::INITIATIVE));
 
-		// PV et remarques
+        // PV et remarques
         $this->addRow()
-        	->addInput(Field::SCOREHP, Field::SCOREHP, 'PV', $this->rpgMonster->getField(Field::SCOREHP))
+            ->addInput(Field::SCOREHP, Field::SCOREHP, 'PV', $this->rpgMonster->getField(Field::SCOREHP))
             ->addFiller(['class'=>'col-1'])
-			->addInput(Field::SCOREHP.Constant::CST_EXTRA, Field::SCOREHP.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCOREHP), ['class'=>'col-5'])
+            ->addInput(Field::SCOREHP.Constant::CST_EXTRA, Field::SCOREHP.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCOREHP), ['class'=>'col-5'])
             ->addFiller(['class'=>'col-3']);
 
         // Vitesses
         $this->addRow()
-        	->addInput(Field::VITESSE, Field::VITESSE, 'Vitesse au sol', $this->rpgMonster->getField(Field::VITESSE))
+            ->addInput(Field::VITESSE, Field::VITESSE, 'Vitesse au sol', $this->rpgMonster->getField(Field::VITESSE))
             ->addFiller(['class'=>'col-1']);
 
         /*
@@ -52,7 +52,7 @@ class RpgMonster extends Form
     <div class="mb-3">
       <label for="name-fr" class="form-label">Nom (FR) <span class="text-danger">*</span></label>
       <input type="text" class="form-control" id="name-fr" name="name-fr" required>
-    </div>        
+    </div>
         */
 
         // Lastname, firstname et surname

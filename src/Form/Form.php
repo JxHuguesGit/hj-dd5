@@ -31,7 +31,7 @@ class Form
             $attributes['class'] .= ' '.$attributes['class'];
         }
         $attributes['type'] = $extraAttributes['type'] ?? 'text';
-		/*
+        /*
         if (isset($extraAttributes[ConstantConstant::CST_READONLY])) {
             $attributes[ConstantConstant::CST_READONLY] = ConstantConstant::CST_READONLY;
         }
@@ -46,13 +46,13 @@ class Form
             $spanAttributes['class'] = 'd-none';
         }
 
-		if ($label!='') {
-	        $this->formRows[$this->nbRows]['content'] .= $this->getSpan($id, $label, $spanAttributes);
+        if ($label!='') {
+            $this->formRows[$this->nbRows]['content'] .= $this->getSpan($id, $label, $spanAttributes);
         }
         $this->formRows[$this->nbRows]['content'] .= Html::getBalise('input', '', $attributes);
 
         return $this;
-    }    
+    }
 
     public function getFormContent(): string
     {

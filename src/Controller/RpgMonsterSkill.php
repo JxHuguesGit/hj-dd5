@@ -11,9 +11,9 @@ class RpgMonsterSkill extends Utilities
 
     public function getFormatString(): string
     {
-    	$str  = $this->rpgMonsterSkill->getSkill()->getField(Field::NAME);
+        $str  = $this->rpgMonsterSkill->getSkill()->getField(Field::NAME);
         $str .= ' +'.$this->rpgMonsterSkill->getField(Field::VALUE);
-	    return $str;
+        return $str;
     }
 
 }

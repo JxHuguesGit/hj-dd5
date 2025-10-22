@@ -15,11 +15,11 @@ class RpgMonsterLanguage extends Utilities
     
     public function getStrLanguage(): string
     {
-    	$objLanguage = $this->rpgJoinMonsterLanguage->getLanguage();
-    	$str = $objLanguage->getField(Field::NAME);
+        $objLanguage = $this->rpgJoinMonsterLanguage->getLanguage();
+        $str = $objLanguage->getField(Field::NAME);
         $value = $this->rpgJoinMonsterLanguage->getField(Field::VALUE);
         if ($value!=0) {
-        	$str .= ' '.$value.'m';
+            $str .= ' '.$value.'m';
         }
         return $str;
     }
