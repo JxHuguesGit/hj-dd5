@@ -22,6 +22,17 @@ class MonsterCard
         if (substr($uktag, 0, 3)=='id-') {
             /** @var EntityRpgMonster $rpgMonster */
             $rpgMonster = $objDao->find(substr($uktag, 3));
+            if ($rpgMonster->getField(Field::INCOMPLET)==1) {
+	            $urlLocale = '../wp-content/plugins/hj-dd5/assets/aidedd/'.$rpgMonster->getField(Field::UKTAG).'.html';
+                $content = file_get_contents($urlLocale);
+                
+                $dom = new \DOMDocument();
+                libxml_use_internal_errors(true);
+                $dom->loadHTML($content);
+            
+                $parser = new RpgMonsterParser($rpgMonster, $dom);
+                $parser->parseDom();
+            }
             return $rpgMonster->getController()->getMonsterCard();
         } elseif (substr($uktag, 0, 3)=='fr-') {
             $uktag = substr($uktag, 3);

@@ -6,6 +6,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
 use src\Entity\RpgMonster as EntityRpgMonster;
+use src\Entity\RpgMonsterResistance as EntityRpgMonsterResistance;
 use src\Form\RpgMonster as FormRpgMonster;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Helper\SizeHelper;
@@ -186,7 +187,9 @@ class RpgMonster extends Utilities
         $objsTrait = $this->rpgMonster->getTraits();
         $objsActions = $this->rpgMonster->getActions();
         $objsBonusActions = $this->rpgMonster->getBonusActions();
-    
+        $objsReactions = $this->rpgMonster->getReactions();
+        $objsActionsLegendaires = $this->rpgMonster->getLegendaryActions();
+
         $attributes = [
             $this->rpgMonster->getStrName(),
             $this->rpgMonster->getSizeTypeAndAlignement(),
@@ -207,6 +210,10 @@ class RpgMonster extends Utilities
             $this->getSpecialAbilitiesList($objsActions), // Liste des actions
             $objsBonusActions->isEmpty() ? ' d-none' : '', // d-none si pas de Bonus actions
             $this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
+            $objsReactions->isEmpty() ? ' d-none' : '', // d-none si pas de Réactions
+            $this->getSpecialAbilitiesList($objsReactions), // Liste des Réactions
+            $objsActionsLegendaires->isEmpty() ? ' d-none' : '', // d-none si pas de Legendary Actions
+            $this->getSpecialAbilitiesList($objsActionsLegendaires), // Liste des Actions Légendaires
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
         return $this->getRender(Template::MONSTER_CARD, $attributes);
@@ -252,12 +259,23 @@ class RpgMonster extends Utilities
             $str .= '<div class="col-12"><strong>'.$label.'</strong> ';
             $comma = false;
             $objs->rewind();
+            $firstCond = true;
             while ($objs->valid()) {
                 if ($comma) {
                     $str .= ', ';
                 }
                 $obj = $objs->current();
-                $str .= $obj->getTypeDamage()->getField(Field::NAME);
+                
+                if ($obj instanceof EntityRpgMonsterResistance) {
+	                $objDmgOrCond = $obj->getTypeDamage();
+                } else {
+                    $objDmgOrCond = $obj->getCondition();
+                    if ($firstCond && $comma) {
+                    	$str = substr($str, 0, -2).' ; ';
+                    }
+                    $firstCond = false;
+                }
+                $str .= $objDmgOrCond->getField(Field::NAME);
                 $comma = true;
                 $objs->next();
             }
@@ -328,7 +346,7 @@ class RpgMonster extends Utilities
                     $str .= ', ';
                 }
                 $obj = $objs->current();
-                $str .= $obj->getLanguage()->getField(Field::NAME);
+                $str .= $obj->getController()->getStrLanguage();
                 $comma = true;
                 $objs->next();
             }

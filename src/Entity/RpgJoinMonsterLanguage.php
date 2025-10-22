@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Controller\RpgMonsterLanguage as ControllerRpgMonsterLanguage;
 use src\Entity\RpgLanguage as EntityRpgLanguage;
 use src\Repository\RpgLanguage;
 use src\Query\QueryBuilder;
@@ -12,9 +13,17 @@ class RpgJoinMonsterLanguage extends Entity
     public function __construct(
         protected int $id,
         protected int $monsterId,
-        protected string $languageId
+        protected string $languageId,
+        protected float $value,
     ) {
 
+    }
+    
+    public function getController(): ControllerRpgMonsterLanguage
+    {
+    	$obj = new ControllerRpgMonsterLanguage();
+        $obj->setField('rpgJoinMonsterLanguage', $this);
+        return $obj;
     }
 
     public function getLanguage(): ?EntityRpgLanguage

@@ -124,7 +124,16 @@ class Collection implements \Iterator
 
         return $this;
     }
+    
+    public function concat(Collection $collection, ): self
+    {
+        foreach ($collection->items as $obj) {
+            $this->addItem($obj);
+        }
 
+        return $this;
+    }
+    
     /**
      * Convertit la collection en un tableau.
      *

@@ -21,6 +21,18 @@ class Utils
         return floor($value/2)-5+$bonus;
     }
     
+
+	public static function getUnformatCr(mixed $cr): mixed
+    {
+        $crMap = [
+            'aucun' => -1,
+            '1/8'   => 0.125,
+            '1/4'   => 0.25,
+            '1/2'   => 0.5,
+        ];
+        return $crMap[$cr] ?? $cr;
+    }
+    
     public static function getStrWeight(float $value): string
     {
         switch ($value) {

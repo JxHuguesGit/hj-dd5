@@ -15,7 +15,7 @@ class RpgJoinMonsterLanguage extends Repository
             $builder,
             $executor,
             'rpgJoinMonsterLanguage',
-            [Field::ID, Field::MONSTERID, Field::LANGUAGEID]
+            [Field::ID, Field::MONSTERID, Field::LANGUAGEID, Field::VALUE]
         );
     }
 

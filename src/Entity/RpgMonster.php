@@ -40,7 +40,7 @@ class RpgMonster extends Entity
         protected int $alignmentId,
         protected int $ca,
         protected int $hp,
-        protected int $vitesse,
+        protected float $vitesse,
         protected int $initiative,
         protected int $legendary,
         protected string $habitat,
@@ -92,13 +92,37 @@ class RpgMonster extends Entity
         return $objDao->findBy($params, [Field::NAME=>'ASC']);
     }
 
+    public function getReactions(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
+        $params = [Field::TYPEID=>'R', Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+    }
+
+    public function getLegendaryActions(): Collection
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
+        $params = [Field::TYPEID=>'L', Field::MONSTERID=>$this->id];
+        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+    }
+
     public function getResistances(string $typeResistanceId): Collection
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgMonsterResistance($queryBuilder, $queryExecutor);
         $params = [Field::TYPERESID=>$typeResistanceId, Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params);
+        $collection = $objDao->findBy($params); 
+        if ($typeResistanceId=='I') {
+            $objDao = new RepositoryRpgMonsterCondition($queryBuilder, $queryExecutor);
+            $params = [Field::MONSTERID=>$this->id];
+	        $collection->concat($objDao->findBy($params)); 
+        }
+        return $collection;
     }
     
     public function getSenses(): Collection
@@ -174,16 +198,27 @@ class RpgMonster extends Entity
         }
         return $value;
     }
-
+    
     public function getFormatCr(): string
     {
-        $crMap = [
-            -1     => 'aucun',
-            0.125  => '1/8',
-            0.25   => '1/4',
-            0.5    => '1/2',
-        ];
-        return $crMap[$this->cr] ?? $this->cr;
+    	switch ($this->cr) {
+        	case -1 :
+            	$returned = 'aucun';
+            break;
+        	case 0.125 :
+            	$returned = '1/8';
+            break;
+        	case 0.25 :
+            	$returned = '1/4';
+            break;
+        	case 0.5 :
+            	$returned = '1/2';
+            break;
+        	default :
+            	$returned = $this->cr;
+            break;
+        }
+        return $returned;
     }
     
     public function getTotalXp(): string

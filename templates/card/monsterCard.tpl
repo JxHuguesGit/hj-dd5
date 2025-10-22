@@ -61,6 +61,12 @@
                 %15$s
                 <div class='rub%16$s'>Actions</div>
                 %17$s
+                <div class='rub%18$s'>Actions Bonus</div>
+                %19$s
+                <div class='rub%20$s'>Réactions</div>
+                %21$s
+                <div class='rub%22$s'>Actions Légendaires</div>
+                %23$s
             </div>
         </div>
     </div>

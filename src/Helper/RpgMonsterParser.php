@@ -7,19 +7,23 @@ use src\Entity\RpgJoinMonsterTypeSpeed as EntityRpgJoinMonsterTypeSpeed;
 use src\Entity\RpgJoinMonsterTypeVision as EntityRpgJoinMonsterTypeVision;
 use src\Entity\RpgMonster;
 use src\Entity\RpgMonsterAbility as EntityRpgMonsterAbility;
+use src\Entity\RpgMonsterCondition as EntityRpgMonsterCondition;
 use src\Entity\RpgMonsterResistance as EntityRpgMonsterResistance;
 use src\Entity\RpgMonsterSkill as EntityRpgMonsterSkill;
+use src\Enum\ConditionEnum;
 use src\Enum\DamageEnum;
 use src\Enum\LanguageEnum;
 use src\Enum\SkillEnum;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Repository\RpgCondition as RepositoryRpgCondition;
 use src\Repository\RpgJoinMonsterLanguage as RepositoryRpgJoinMonsterLanguage;
 use src\Repository\RpgJoinMonsterTypeSpeed as RepositoryRpgJoinMonsterTypeSpeed;
 use src\Repository\RpgJoinMonsterTypeVision as RepositoryRpgJoinMonsterTypeVision;
 use src\Repository\RpgLanguage as RepositoryRpgLanguage;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
+use src\Repository\RpgMonsterCondition as RepositoryRpgMonsterCondition;
 use src\Repository\RpgMonsterResistance as RepositoryRpgMonsterResistance;
 use src\Repository\RpgMonsterSkill as RepositoryRpgMonsterSkill;
 use src\Repository\RpgSkill as RepositoryRpgSkill;
@@ -61,14 +65,18 @@ class RpgMonsterParser
         $blnHasChanged |= $this->parseCaracsPhysiques();
         $blnHasChanged |= $this->parseCaracsMentales();
         $blnHasChanged |= $this->parseCrBm();
+        $blnHasChanged |= $this->parseInitiative();
         $blnHasChanged |= $this->parseSenses($daoSenses, $daoJoinSenses);
 
         $this->parseLanguages();
         $this->parseSkills();
         $this->parseResistances();
+        $this->parseImmunities();
         $this->parseTraits($daoAbilities);
         $this->parseActions($daoAbilities);
         $this->parseBonusActions($daoAbilities);
+        $this->parseReactions($daoAbilities);
+        $this->parseLegendaryActions($daoAbilities);
 
         if ($this->rpgMonster->getField(Field::EXTRA) === '') {
         	$this->rpgMonster->setField(Field::EXTRA, json_encode([], JSON_UNESCAPED_UNICODE));
@@ -119,12 +127,39 @@ class RpgMonsterParser
         $this->parseTraitAction('B', $node, $objDao);
     }
     
+    private function parseReactions($objDao): void
+    {
+        $xpath = new \DOMXPath($this->dom);
+        $nodes = $xpath->query("//div[@class='rub' and normalize-space()='Reactions']");
+        $node = $nodes->item(0);
+
+        if ($node=='') {
+        	return;        }
+
+        $this->parseTraitAction('R', $node, $objDao);
+    }
+
+    private function parseLegendaryActions($objDao): void
+    {
+        $xpath = new \DOMXPath($this->dom);
+        $nodes = $xpath->query("//div[@class='rub' and normalize-space()='Legendary actions']");
+        $node = $nodes->item(0);
+
+        if ($node=='') {
+        	return;
+        }
+
+        $this->parseTraitAction('L', $node, $objDao);
+    }
+    
     private function parseTraitAction($typeId, $node, $objDao): void
     {
     	$actionPs = [];
         $current  = $node->nextSibling;
         $pattern = "/<p><strong><em>([^<]+)<\/em><\/strong>\. (.+)<\/p>/s";
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
+
+        //echo "On recherche $typeId<br><br>";
         
         while ($current) {
             // Ignorer les textes vides et les espaces
@@ -133,6 +168,9 @@ class RpgMonsterParser
                 continue;
             }
 
+            //var_dump($current);
+            //echo '<br><br>';
+
             // Si on tombe sur un autre <div class="rub">, on arrête
             if (
                 $current->nodeType === XML_ELEMENT_NODE &&
@@ -140,6 +178,29 @@ class RpgMonsterParser
                 $current->getAttribute('class') === 'rub'
             ) {
                 break;
+            }
+
+            if (
+                $current->nodeType === XML_ELEMENT_NODE &&
+                $current->nodeName === 'div' &&
+                $current->getAttribute('class') === 'legend'
+            ) {
+                $legendText = trim($current->textContent);
+
+                // Enregistrer un "header" spécial (optionnel)
+                $params = [
+                    Field::ID => 0,
+                    Field::TYPEID => $typeId,
+                    Field::MONSTERID => $rpgMonsterId,
+                    Field::NAME => 'legend',
+                    Field::DESCRIPTION => $legendText,
+                ];
+                $obj = new EntityRpgMonsterAbility(...$params);
+                $objDao->insert($obj);
+
+                // Puis continuer vers les <p> d’actions
+                $current = $current->nextSibling;
+                continue;
             }
 
             // Si c’est un <p>, on le garde
@@ -157,10 +218,59 @@ class RpgMonsterParser
                         $params[Field::DESCRIPTION] = $matches[2];
                         $obj = new EntityRpgMonsterAbility(...$params);
                         $objDao->insert($obj);
-                    }                    
+                    }
                 }
             }
+            
+        	// ?? Cas 2 : Texte brut + <br> (ex: Detect Life.<br>)
+        	if (
+            	$current->nodeType === XML_ELEMENT_NODE &&
+            	in_array($current->nodeName, ['br', 'text']) || $current->nodeType === XML_TEXT_NODE
+        	) {
+            	// On récupère le HTML brut de tous les fragments jusqu'au prochain <div class="rub">
+            	$raw = '';
+            	$scan = $current;
+            	while ($scan && !(
+                	$scan->nodeType === XML_ELEMENT_NODE &&
+                	$scan->nodeName === 'div' &&
+                	$scan->getAttribute('class') === 'rub'
+            	)) {
+                	$raw .= $this->dom->saveHTML($scan);
+                	$scan = $scan->nextSibling;
+            	}
 
+            	// Parser les lignes séparées par <br>
+            	$lines = preg_split('/<br\s*\/?>/i', $raw);
+            	foreach ($lines as $line) {
+                	$line = trim(strip_tags($line));
+                	if ($line === '') {
+                 	   continue;
+               		}
+
+                	// Nettoyer le nom
+                	$name = rtrim($line, '.');
+
+                	// Vérifier si ce trait existe déjà
+                	$params = [
+                    	Field::TYPEID => $typeId,
+                    	Field::MONSTERID => $rpgMonsterId,
+                    	Field::NAME => $name,
+                	];
+                	$objs = $objDao->findBy($params);
+
+                	if ($objs->isEmpty()) {
+                    	$params[Field::ID] = 0;
+                    	$params[Field::DESCRIPTION] = ''; // Pas de description dans ce format
+                    	$obj = new EntityRpgMonsterAbility(...$params);
+                    	$objDao->insert($obj);
+                	}
+            	}            
+
+        		// On saute tous les nœuds déjà lus
+        		$current = $scan;
+        		continue;
+    		}
+            
             $current  = $current ->nextSibling;
         }
         return;
@@ -176,7 +286,30 @@ class RpgMonsterParser
 
 
 
+	private function parseInitiative(): bool
+    {
+    	$blnHasChanged = false;
+        
+        $xpath = new \DOMXPath($this->dom);
+        $nodes = $xpath->query("//strong[normalize-space(text())='Initiative']");
+        if ($nodes->length === 0) {
+            return false;
+        }
 
+        $node = $nodes->item(0);
+        $next = $node->nextSibling;
+        $value = trim($next->textContent);
+		list($score,) = explode(' ', $value);
+        $score = str_replace('+', '', $score);
+        
+        $stored = $this->rpgMonster->getField(Field::INITIATIVE);
+        if ($stored!=$score) {
+	        $this->rpgMonster->setField(Field::INITIATIVE, $score);
+    	    $blnHasChanged = true;
+        }
+                
+        return $blnHasChanged;
+    }
 
     private function parseCrBm(): bool
     {
@@ -192,12 +325,18 @@ class RpgMonsterParser
         $nextNode = $crNode->nextSibling;
         $crValue = trim($nextNode->textContent);
         
-        if (preg_match('/PB \+([0-9]*)/', $crValue, $matches)) {
-	        $value = $matches[1];
+        if (preg_match('/(.*) \(.*PB \+([0-9]*)/', $crValue, $matches)) {
+	        $cr = Utils::getUnformatCr($matches[1]);
+            $stored = $this->rpgMonster->getField(Field::SCORECR);
+            if ($stored!=$cr) {
+                $this->rpgMonster->setField(Field::SCORECR, $cr);
+                $blnHasChanged = true;
+            }
         
+	        $pb = $matches[2];
             $stored = $this->rpgMonster->getField(Field::PROFBONUS);
-            if ($stored!=$value) {
-                $this->rpgMonster->setField(Field::PROFBONUS, $value);
+            if ($stored!=$pb) {
+                $this->rpgMonster->setField(Field::PROFBONUS, $pb);
                 $blnHasChanged = true;
             }
         }
@@ -265,6 +404,8 @@ class RpgMonsterParser
         	$tab = explode(' ', trim($tabSpeed[$i]));
             // $tab[0] : Burrow
             // $tab[1] : 5
+            // $tab[3] : (hover)
+            $extra = trim($tab[3]);
             
             // Première étape, interroger rpgTypeSpeed pour récupérer l'id
             $objs = $objDaoTS->findBy([Field::UKTAG=>strtolower($tab[0])]);
@@ -280,7 +421,6 @@ class RpgMonsterParser
             // 					b : si elle est présente est différente, on la met à jour
             // 					c : si elle n'est pas présente on l'insère
             if ($objs->isEmpty()) {
-            	$extra = json_encode('', JSON_UNESCAPED_UNICODE);
             	$params = [0, $rpgMonsterId, $typeSpeedId, $value, $extra];
             	$obj = new EntityRpgJoinMonsterTypeSpeed(...$params);
                 $objDaoJMTS->insert($obj);
@@ -291,6 +431,12 @@ class RpgMonsterParser
                 	$obj->setField(Field::VALUE, $value);
                     $objDaoJMTS->update($obj);
                 }
+	            $stored = $obj->getField(Field::EXTRA);
+                if ($stored!=$extra) {
+                	$obj->setField(Field::EXTRA, $extra);
+                    $objDaoJMTS->update($obj);
+                }
+                
             }
         }
                 
@@ -325,33 +471,39 @@ class RpgMonsterParser
         
         // Score de Force
         $score = $this->rpgMonster->getField(Field::STRSCORE);
-        if ($score!=$values[0]) {
-        	$this->rpgMonster->setField(Field::STRSCORE, $values[0]);
+        $value = $values[0];
+        if ($score!=$value) {
+        	$this->rpgMonster->setField(Field::STRSCORE, $value);
             $blnHasChanged = true;
-            
-            $mod = Utils::getModAbility($score);
-            if ($mod!=$values[1]) {
-                // TODO : Modifier Extra en fonction de $mod vis à vis de $values[1]
-                //echo "Force Mod TODO<br>";
-            }
-            if ($mod!=$values[2]) {
-                // TODO : Modifier Extra en fonction de $mod vis à vis de $values[2]
-                //echo "Force JS TODO<br>";
-            }
+        }
+        $mod = Utils::getModAbility($value);
+        /*
+        if ($mod!=$values[1]) {
+            // TODO : Modifier Extra en fonction de $mod vis à vis de $values[1]
+            //echo "Force Mod TODO<br>";
+        }
+        */
+        $value = str_replace(['+', '–'], ['', '-'], $values[2]);
+        if ($mod!=$value) {
+            $json['jsstr'] = $value-$mod;
+            $blnHasChanged = true;
         }
         
         // Score de Dextérité        
         $score = $this->rpgMonster->getField(Field::DEXSCORE);
-        if ($score!=$values[3]) {
-        	$this->rpgMonster->setField(Field::DEXSCORE, $values[3]);
+        $value = $values[3];
+        if ($score!=$value) {
+        	$this->rpgMonster->setField(Field::DEXSCORE, $value);
             $blnHasChanged = true;
         }
-        $mod = Utils::getModAbility($score);
+        $mod = Utils::getModAbility($value);
+        /*
         if ($mod!=$values[4]) {
             // TODO : Modifier Extra en fonction de $mod vis à vis de $values[4]
             //echo "Dextérité Mod TODO<br>";
         }
-        $value = strpos($values[5], '+')=== false ? $values[5] : substr($values[5], 1);
+        */
+        $value = str_replace(['+', '–'], ['', '-'], $values[5]);
         if ($mod!=$value) {
             $json['jsdex'] = $value-$mod;
             $blnHasChanged = true;
@@ -359,19 +511,22 @@ class RpgMonsterParser
         
         // Score de Constitution        
         $score = $this->rpgMonster->getField(Field::CONSCORE);
-        if ($score!=$values[6]) {
-        	$this->rpgMonster->setField(Field::CONSCORE, $values[6]);
+        $value = $values[6];
+        if ($score!=$value) {
+        	$this->rpgMonster->setField(Field::CONSCORE, $value);
             $blnHasChanged = true;
-            
-            $mod = Utils::getModAbility($score);
-            if ($mod!=$values[7]) {
-                // TODO : Modifier Extra en fonction de $mod vis à vis de $values[7]
-                //echo "Constitution Mod TODO<br>";
-            }
-            if ($mod!=$values[8]) {
-                // TODO : Modifier Extra en fonction de $mod vis à vis de $values[8]
-                //echo "Constitution JS TODO<br>";
-            }
+        }
+        $mod = Utils::getModAbility($value);
+        /*
+        if ($mod!=$values[7]) {
+            // TODO : Modifier Extra en fonction de $mod vis à vis de $values[7]
+            //echo "Constitution Mod TODO<br>";
+        }
+        */
+        $value = str_replace(['+', '–'], ['', '-'], $values[8]);
+        if ($mod!=$value) {
+            $json['jscon'] = $value-$mod;
+            $blnHasChanged = true;
         }
         
         $extra = json_encode($json, JSON_UNESCAPED_UNICODE);
@@ -408,16 +563,19 @@ class RpgMonsterParser
         
         // Score de Intelligence
         $score = $this->rpgMonster->getField(Field::INTSCORE);
-        if ($score!=$values[0]) {
-        	$this->rpgMonster->setField(Field::INTSCORE, $values[0]);
+        $value = $values[0];
+        if ($score!=$value) {
+        	$this->rpgMonster->setField(Field::INTSCORE, $value);
             $blnHasChanged = true;
         }
-        $mod = Utils::getModAbility($score);
+        $mod = Utils::getModAbility($value);
+        /*
         if ($mod!=$values[1]) {
         	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[1]
             //echo "Intelligence Mod TODO : $mod - $values[1]<br>";
         }
-        $value = strpos($values[2], '+')=== false ? $values[2] : substr($values[2], 1);
+        */
+        $value = str_replace(['+', '–'], ['', '-'], $values[2]);
         if ($mod!=$value) {
             $json['jsint'] = $value-$mod;
             $blnHasChanged = true;
@@ -425,34 +583,42 @@ class RpgMonsterParser
         
         // Score de Sagesse        
         $score = $this->rpgMonster->getField(Field::WISSCORE);
-        if ($score!=$values[3]) {
-        	$this->rpgMonster->setField(Field::WISSCORE, $values[3]);
+        $value = $values[3];
+        if ($score!=$value) {
+        	$this->rpgMonster->setField(Field::WISSCORE, $value);
             $blnHasChanged = true;
         }
-        $mod = Utils::getModAbility($score);
+        $mod = Utils::getModAbility($value);
+        /*
         if ($mod!=$values[4]) {
         	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[4]
             //echo "Sagesse Mod TODO<br>";
         }
-        if ($mod!=$values[5]) {
-        	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[5]
-            //echo "Sagesse JS TODO<br>";
+        */
+        $value = str_replace(['+', '–'], ['', '-'], $values[5]);
+        if ($mod!=$value) {
+            $json['jswis'] = $value-$mod;
+            $blnHasChanged = true;
         }
         
         // Score de Charisme        
         $score = $this->rpgMonster->getField(Field::CHASCORE);
-        if ($score!=$values[6]) {
-        	$this->rpgMonster->setField(Field::CHASCORE, $values[6]);
+        $value = $values[6];
+        if ($score!=$value) {
+        	$this->rpgMonster->setField(Field::CHASCORE, $value);
             $blnHasChanged = true;
         }
-        $mod = Utils::getModAbility($score);
+        $mod = Utils::getModAbility($value);
+        /*
         if ($mod!=$values[7]) {
         	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[7]
             //echo "Charisme Mod TODO<br>";
         }
-        if ($mod!=$values[8]) {
-        	// TODO : Modifier Extra en fonction de $mod vis à vis de $values[8]
-            //echo "Charisme JS TODO<br>";
+        */
+        $value = str_replace(['+', '–'], ['', '-'], $values[8]);
+        if ($mod!=$value) {
+            $json['jscha'] = $value-$mod;
+            $blnHasChanged = true;
         }
         
         $extra = json_encode($json, JSON_UNESCAPED_UNICODE);
@@ -547,7 +713,7 @@ class RpgMonsterParser
                 if ($objs->isEmpty()) {
                     $params[Field::ID] = 0;
                     $params[Field::VALUE] = $value;
-                    $params[Field::EXTRA] = json_encode([], JSON_UNESCAPED_UNICODE);
+                    $params[Field::EXTRA] = '';
                     $obj = new EntityRpgJoinMonsterTypeVision(...$params);
                     $objDaoJoin->insert($obj);
                 } else {
@@ -604,7 +770,64 @@ class RpgMonsterParser
             }
         }
     }
-    
+
+    private function parseImmunities(): void
+    {
+        $xpath = new \DOMXPath($this->dom);
+        $nodes = $xpath->query("//strong[normalize-space(text())='Immunities']");
+        $node = $nodes->item(0);
+        $nextNode = $node->nextSibling;
+		$content = trim($nextNode->textContent);
+        
+        if ($content=='') {
+        	return;
+        }
+        
+        $objDao = new RepositoryRpgTypeDamage($this->queryBuilder, $this->queryExecutor);
+        $objDaoJoin = new RepositoryRpgMonsterResistance($this->queryBuilder, $this->queryExecutor);
+        $objDaoCond = new RepositoryRpgCondition($this->queryBuilder, $this->queryExecutor);
+        $objDaoJoinCond = new RepositoryRpgMonsterCondition($this->queryBuilder, $this->queryExecutor);
+        $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
+        
+        $elements = preg_split("/[,;]/", $content);
+        foreach ($elements as $element) {
+            $enum = DamageEnum::fromEnglish($element);
+            if ($enum!=null) {
+                // On va faire la recherche dans les dégâts.
+                $objs = $objDao->findBy([Field::NAME=>$enum->label()]);
+                $obj = $objs->current();
+                $typeDamageId = $obj->getField(Field::ID);
+
+                $params = [Field::MONSTERID=>$rpgMonsterId, Field::TYPEDMGID=>$typeDamageId, Field::TYPERESID=>'I'];
+                $objs = $objDaoJoin->findBy($params);
+
+                if ($objs->isEmpty()) {
+                    $params[Field::ID] = 0;
+                    $obj = new EntityRpgMonsterResistance(...$params);
+                    $objDaoJoin->insert($obj);
+                }
+            } else {
+	            $enum = ConditionEnum::fromEnglish($element);
+                if ($enum!=null) {
+                    $objs = $objDaoCond->findBy([Field::NAME=>$enum->label()]);
+                    $obj = $objs->current();
+
+                    $typeConditionId = $obj->getField(Field::ID);
+                    $params = [Field::MONSTERID=>$rpgMonsterId, Field::CONDITIONID=>$typeConditionId];
+                    $objs = $objDaoJoinCond->findBy($params);
+
+                    if ($objs->isEmpty()) {
+                        $params[Field::ID] = 0;
+                        $obj = new EntityRpgMonsterCondition(...$params);
+                        $objDaoJoinCond->insert($obj);
+                    }
+                } else {
+                	echo "[$element]";
+                }
+            }
+        }
+    }
+
     private function parseLanguages(): void
     {
         $xpath = new \DOMXPath($this->dom);
@@ -621,27 +844,40 @@ class RpgMonsterParser
         $objDaoJoin = new RepositoryRpgJoinMonsterLanguage($this->queryBuilder, $this->queryExecutor);
         $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
 
-        $elements = explode(',', $content);
+        $elements = preg_split("/[,;]/", $content);
         foreach ($elements as $element) {
-            $enum = LanguageEnum::fromEnglish($element);
-            // Si on $enum vaut null, la donnée ne doit pas exister en base.
-            // A traiter.
-            if ($enum==null) {
-            	return;
+        	list($ability, $value, $test) = explode(' ', trim($element));
+            if ($test=='ft.') { 
+                // Dans ce cas, value est une distance en pieds, on la convertit en mètres.
+                $value = isset($value) ? 3*$value/10 : 0;
+            } else {
+                // Dans ce cas, on est sans doute dans un sous type de langues. Par exemple : Primordial (aérien).
+                $ability .= ' ' . $value;
+                $value = 0;
             }
-        
-            $objs = $objDao->findBy([Field::NAME=>$enum->label()]);
-            $obj = $objs->current();
-            $languageId = $obj->getField(Field::ID);
-        
-			$params = [Field::MONSTERID=>$rpgMonsterId, Field::LANGUAGEID=>$languageId];
-			$objs = $objDaoJoin->findBy($params);
-            
-			if ($objs->isEmpty()) {
-				$params[Field::ID] = 0;
-				$obj = new EntityRpgJoinMonsterLanguage(...$params);
-				$objDaoJoin->insert($obj);
-			}
+            $enum = LanguageEnum::fromEnglish($ability);
+
+            // Si on $enum vaut null, la donnée ne doit pas exister en base.
+            // Ca peut être aussi parce qu'on a quelque chose comme : telepathy 120 ft.
+            // A traiter.
+            if ($enum!=null) {
+                $objs = $objDao->findBy([Field::NAME=>$enum->label()]);
+                $obj = $objs->current();
+                if ($obj==null) {
+                    echo "[".$enum->label()."]";
+                }
+                $languageId = $obj->getField(Field::ID);
+
+                $params = [Field::MONSTERID=>$rpgMonsterId, Field::LANGUAGEID=>$languageId];
+                $objs = $objDaoJoin->findBy($params);
+
+                if ($objs->isEmpty()) {
+                    $params[Field::ID] = 0;
+                    $params[Field::VALUE] = $value;
+                    $obj = new EntityRpgJoinMonsterLanguage(...$params);
+                    $objDaoJoin->insert($obj);
+                }
+            }
         }
     }
     
