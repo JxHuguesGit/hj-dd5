@@ -5,26 +5,9 @@ use src\Entity\RpgMonster;
 use src\Constant\Field;
 use src\Utils\Utils;
 
-class MonsterCaracsParser
+class MonsterCaracsParser extends AbstractMonsterParser
 {
-    private RpgMonster $rpgMonster;
-    private \DOMDocument $dom;
-
-    public function __construct(
-        RpgMonster $rpgMonster,
-        \DOMDocument $dom
-    ) {
-        $this->rpgMonster    = $rpgMonster;
-        $this->dom           = $dom;
-    }
-
-    public static function parse(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
-    {
-        $parser = new self($rpgMonster, $dom);
-        return $parser->doParse();
-    }
-
-    public function doParse(): bool
+    protected function doParse(): bool
     {
         $blnHasChanged = false;
         

@@ -2,43 +2,16 @@
 namespace src\Parser;
 
 use src\Constant\Field;
-use src\Entity\RpgMonster;
 use src\Entity\RpgMonsterLanguage as EntityRpgMonsterLanguage;
 use src\Enum\LanguageEnum;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgMonsterLanguage as RepositoryRpgMonsterLanguage;
 use src\Repository\RpgLanguage as RepositoryRpgLanguage;
 
-class MonsterLanguageParser
+class MonsterLanguageParser extends AbstractMonsterParser
 {
     private const PATTERN_SEPARATOR = "/[,;]/";
-    private const FEET_TO_METERS = 0.3;
 
-    private QueryBuilder $queryBuilder;
-    private QueryExecutor $queryExecutor;
-    private RpgMonster $rpgMonster;
-    private \DOMDocument $dom;
-
-    public function __construct(
-        QueryBuilder $queryBuilder,
-        QueryExecutor $queryExecutor,
-        RpgMonster $rpgMonster,
-        \DOMDocument $dom
-    ) {
-        $this->queryBuilder  = $queryBuilder;
-        $this->queryExecutor = $queryExecutor;
-        $this->rpgMonster    = $rpgMonster;
-        $this->dom           = $dom;
-    }
-
-    public static function parse(RpgMonster $rpgMonster, \DOMDocument $dom): bool
-    {
-        $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
-        return $parser->doParse();
-    }
-
-    private function doParse(): bool
+    protected function doParse(): bool
     {
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='Languages']");

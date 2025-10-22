@@ -9,34 +9,10 @@ use src\Query\QueryExecutor;
 use src\Repository\RpgMonsterTypeVision as RepositoryRpgMonsterTypeVision;
 use src\Repository\RpgTypeVision as RepositoryRpgTypeVision;
 
-class MonsterSensesParser
+class MonsterSensesParser extends AbstractMonsterParser
 {
-    private const FEET_TO_METERS = 0.3;
-
-    private QueryBuilder $queryBuilder;
-    private QueryExecutor $queryExecutor;
-    private RpgMonster $rpgMonster;
-    private \DOMDocument $dom;
-
-    public function __construct(
-        QueryBuilder $queryBuilder,
-        QueryExecutor $queryExecutor,
-        RpgMonster $rpgMonster,
-        \DOMDocument $dom
-    ) {
-        $this->queryBuilder  = $queryBuilder;
-        $this->queryExecutor = $queryExecutor;
-        $this->rpgMonster    = $rpgMonster;
-        $this->dom           = $dom;
-    }
-
-    public static function parse(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
-    {
-        $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
-        return $parser->doParse();
-    }
-      
-    private function doParse(): bool
+    
+    protected function doParse(): bool
     {
         $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='Senses']");

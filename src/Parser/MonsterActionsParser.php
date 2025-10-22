@@ -2,13 +2,10 @@
 namespace src\Parser;
 
 use src\Constant\Field;
-use src\Entity\RpgMonster;
 use src\Entity\RpgMonsterAbility as EntityRpgMonsterAbility;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
 
-class MonsterActionsParser
+class MonsterActionsParser extends AbstractMonsterParser
 {
     private const PATTERN_ACTION = "/<p><strong><em>([^<]+)<\/em><\/strong>\. (.+)<\/p>/s";
     private const TYPE_ACTIONS = [
@@ -19,31 +16,9 @@ class MonsterActionsParser
         'L' => 'Legendary actions',
     ];
 
-    private QueryBuilder $queryBuilder;
-    private QueryExecutor $queryExecutor;
-    private RpgMonster $rpgMonster;
-    private \DOMDocument $dom;
     private RepositoryRpgMonsterAbility $abilityRepo;
 
-    public function __construct(
-        QueryBuilder $queryBuilder,
-        QueryExecutor $queryExecutor,
-        RpgMonster $rpgMonster,
-        \DOMDocument $dom
-    ) {
-        $this->queryBuilder  = $queryBuilder;
-        $this->queryExecutor = $queryExecutor;
-        $this->rpgMonster    = $rpgMonster;
-        $this->dom           = $dom;
-    }
-
-    public static function parse(RpgMonster $rpgMonster, \DOMDocument $dom): bool
-    {
-        $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
-        return $parser->doParse();
-    }
-
-    private function doParse(): bool
+    protected function doParse(): bool
     {
         $xpath = new \DOMXPath($this->dom);
         $hasChanged = false;

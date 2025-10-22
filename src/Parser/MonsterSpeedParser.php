@@ -2,41 +2,13 @@
 namespace src\Parser;
 
 use src\Constant\Field;
-use src\Entity\RpgMonster;
 use src\Entity\RpgMonsterTypeSpeed as EntityRpgMonsterTypeSpeed;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgMonsterTypeSpeed as RepositoryRpgMonsterTypeSpeed;
 use src\Repository\RpgTypeSpeed as RepositoryRpgTypeSpeed;
 
-class MonsterSpeedParser
+class MonsterSpeedParser extends AbstractMonsterParser
 {
-    private const FEET_TO_METERS = 0.3;
-
-    protected QueryBuilder $queryBuilder;
-    protected QueryExecutor $queryExecutor;
-    protected RpgMonster $rpgMonster;
-    protected \DOMDocument $dom;
-    
-    public function __construct(
-        QueryBuilder $queryBuilder,
-        QueryExecutor $queryExecutor,
-        RpgMonster $rpgMonster,
-        \DOMDocument $dom
-    ) {
-        $this->queryBuilder  = $queryBuilder;
-        $this->queryExecutor = $queryExecutor;
-        $this->rpgMonster    = $rpgMonster;
-        $this->dom           = $dom;
-    }
-
-    public static function parse(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
-    {
-        $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
-        return $parser->doParse();
-    }
-
-    public function doParse(): bool
+    protected function doParse(): bool
     {
         $nodes = (new \DOMXPath($this->dom))->query("//strong[normalize-space(text())='Speed']");
         $canProceed = $nodes->length > 0;
