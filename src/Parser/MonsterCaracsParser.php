@@ -1,7 +1,6 @@
 <?php
 namespace src\Parser;
 
-use src\Entity\RpgMonster;
 use src\Constant\Field;
 use src\Utils\Utils;
 
@@ -9,193 +8,107 @@ class MonsterCaracsParser extends AbstractMonsterParser
 {
     protected function doParse(): bool
     {
-        $blnHasChanged = false;
-        
-        if ($this->parseCaracsPhysiques()) {
-            $blnHasChanged = true;
+        $hasChanged = false;
+
+        $sections = [
+            'physiques' => [
+                'xpath' => "//div[contains(@class, 'car2') or contains(@class, 'car3')]",
+                'abilities' => [
+                    ['score' => Field::STRSCORE, 'jsonCar' => 'carstr', 'jsonSave' => 'jsstr'],
+                    ['score' => Field::DEXSCORE, 'jsonCar' => 'cardex', 'jsonSave' => 'jsdex'],
+                    ['score' => Field::CONSCORE, 'jsonCar' => 'carcon', 'jsonSave' => 'jscon'],
+                ],
+            ],
+            'mentales' => [
+                'xpath' => "//div[contains(@class, 'car5') or contains(@class, 'car6')]",
+                'abilities' => [
+                    ['score' => Field::INTSCORE, 'jsonCar' => 'carint', 'jsonSave' => 'jsint'],
+                    ['score' => Field::WISSCORE, 'jsonCar' => 'carwis', 'jsonSave' => 'jswis'],
+                    ['score' => Field::CHASCORE, 'jsonCar' => 'carcha', 'jsonSave' => 'jscha'],
+                ],
+            ],
+        ];
+
+        foreach ($sections as $config) {
+            if ($this->parseCaracSection($config['xpath'], $config['abilities'])) {
+                $hasChanged = true;
+            }
         }
-        if ($this->parseCaracsMentales()) {
-            $blnHasChanged = true;
+
+        return $hasChanged;
+    }
+    
+    /**
+     * Parse une section de caractéristiques (physiques ou mentales)
+     */
+    private function parseCaracSection(string $xpathQuery, array $abilities): bool
+    {
+        $xpath = new \DOMXPath($this->dom);
+        $nodes = $xpath->query($xpathQuery);
+
+        $values = array_map(fn($n) => trim($n->textContent), iterator_to_array($nodes));
+        if (count($values) !== 9) {
+            return false;
         }
-        
-        return $blnHasChanged;
+
+        $extra = json_decode($this->rpgMonster->getField(Field::EXTRA), true) ?: [];
+        $hasChanged = false;
+
+        foreach ($abilities as $i => $ability) {
+            $offset = $i * 3;
+            $score   = (int)$values[$offset];
+            $carMod  = $this->normalizeValue($values[$offset + 1]);
+            $saveMod = $this->normalizeValue($values[$offset + 2]);
+
+            $hasChanged |= $this->updateAbility($ability['score'], $score);
+            $hasChanged |= $this->updateJsonMods($extra, $ability, $score, $carMod, $saveMod);
+        }
+
+        if ($hasChanged) {
+            $this->rpgMonster->setField(Field::EXTRA, json_encode($extra, JSON_UNESCAPED_UNICODE));
+        }
+
+        return $hasChanged;
     }
 
-    private function parseCaracsPhysiques(): bool
+    /**
+     * Nettoie les symboles + et – et convertit en int
+     */
+    private function normalizeValue(string $value): int
     {
-        $blnHasChanged = false;
-        
-        $xpath = new \DOMXPath($this->dom);
-        $nodes = $xpath->query("//div[contains(@class, 'car2') or contains(@class, 'car3')]");
-        $values = [];
-        foreach ($nodes as $node) {
-            $values[] = trim($node->textContent);
+        return (int)str_replace(['+', '–'], ['', '-'], $value);
+    }
+    
+    /**
+     * Met à jour un score principal si besoin
+     */
+    private function updateAbility(string $field, int $value): bool
+    {
+        if ($this->rpgMonster->getField($field) !== $value) {
+            $this->rpgMonster->setField($field, $value);
+            return true;
         }
-        // Normalement, il y a 9 valeurs
-        if (count($values)!=9) {
-            return $blnHasChanged;
-        }
-        
-        $extra = $this->rpgMonster->getField(Field::EXTRA);
-        $json = json_decode($extra, true);
-        
-        // 0 : score de force
-        // 1 : bonus aux jets de carac de force
-        // 2 : bonus aux jets de sauvegarde de force
-        // 3 : score de dextérité
-        // 4 & 5 : idem 1 & 2 pour la dextérité
-        // 6 : score de constitution
-        // 7 & 8 : idem 1 & 2 pour la constitution
-
-        // Score de Force
-        $score = $this->rpgMonster->getField(Field::STRSCORE);
-        $value = $values[0];
-        if ($score!=$value) {
-            $this->rpgMonster->setField(Field::STRSCORE, $value);
-            $blnHasChanged = true;
-        }
-        $mod = Utils::getModAbility($value);
-        $value = str_replace(['+', '–'], ['', '-'], $values[1]);
-        if ($mod!=$value) {
-            $json['carstr'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        $value = str_replace(['+', '–'], ['', '-'], $values[2]);
-        if ($mod!=$value) {
-            $json['jsstr'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        
-        // Score de Dextérité
-        $score = $this->rpgMonster->getField(Field::DEXSCORE);
-        $value = $values[3];
-        if ($score!=$value) {
-            $this->rpgMonster->setField(Field::DEXSCORE, $value);
-            $blnHasChanged = true;
-        }
-        $mod = Utils::getModAbility($value);
-        $value = str_replace(['+', '–'], ['', '-'], $values[4]);
-        if ($mod!=$value) {
-            $json['cardex'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        $value = str_replace(['+', '–'], ['', '-'], $values[5]);
-        if ($mod!=$value) {
-            $json['jsdex'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        
-        // Score de Constitution
-        $score = $this->rpgMonster->getField(Field::CONSCORE);
-        $value = $values[6];
-        if ($score!=$value) {
-            $this->rpgMonster->setField(Field::CONSCORE, $value);
-            $blnHasChanged = true;
-        }
-        $mod = Utils::getModAbility($value);
-        $value = str_replace(['+', '–'], ['', '-'], $values[7]);
-        if ($mod!=$value) {
-            $json['carcon'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        $value = str_replace(['+', '–'], ['', '-'], $values[8]);
-        if ($mod!=$value) {
-            $json['jscon'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        
-        $extra = json_encode($json, JSON_UNESCAPED_UNICODE);
-        $this->rpgMonster->setField(Field::EXTRA, $extra);
-                
-        return $blnHasChanged;
+        return false;
     }
 
-    private function parseCaracsMentales(): bool
+    /**
+     * Met à jour les bonus/malus enregistrés dans le JSON
+     */
+    private function updateJsonMods(array &$json, array $ability, int $score, int $carMod, int $saveMod): bool
     {
-        $blnHasChanged = false;
-        
-        $xpath = new \DOMXPath($this->dom);
-        $nodes = $xpath->query("//div[contains(@class, 'car5') or contains(@class, 'car6')]");
-        $values = [];
-        foreach ($nodes as $node) {
-            $values[] = trim($node->textContent);
+        $hasChanged = false;
+        $baseMod = Utils::getModAbility($score);
+
+        if ($baseMod !== $carMod) {
+            $json[$ability['jsonCar']] = $carMod - $baseMod;
+            $hasChanged = true;
         }
-        // Normalement, il y a 9 valeurs
-        if (count($values)!=9) {
-            return $blnHasChanged;
+
+        if ($baseMod !== $saveMod) {
+            $json[$ability['jsonSave']] = $saveMod - $baseMod;
+            $hasChanged = true;
         }
-        
-        $extra = $this->rpgMonster->getField(Field::EXTRA);
-        $json = json_decode($extra, true);
-                
-        // 0 : score de intelligence
-        // 1 : bonus aux jets de carac de intelligence
-        // 2 : bonus aux jets de sauvegarde de intelligence
-        // 3 : score de sagesse
-        // 4 & 5 : idem 1 & 2 pour la sagesse
-        // 6 : score de charisme
-        // 7 & 8 : idem 1 & 2 pour la charisme
-        
-        // Score de Intelligence
-        $score = $this->rpgMonster->getField(Field::INTSCORE);
-        $value = $values[0];
-        if ($score!=$value) {
-            $this->rpgMonster->setField(Field::INTSCORE, $value);
-            $blnHasChanged = true;
-        }
-        $mod = Utils::getModAbility($value);
-        $value = str_replace(['+', '–'], ['', '-'], $values[1]);
-        if ($mod!=$value) {
-            $json['carint'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        $value = str_replace(['+', '–'], ['', '-'], $values[2]);
-        if ($mod!=$value) {
-            $json['jsint'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        
-        // Score de Sagesse
-        $score = $this->rpgMonster->getField(Field::WISSCORE);
-        $value = $values[3];
-        if ($score!=$value) {
-            $this->rpgMonster->setField(Field::WISSCORE, $value);
-            $blnHasChanged = true;
-        }
-        $mod = Utils::getModAbility($value);
-        $value = str_replace(['+', '–'], ['', '-'], $values[4]);
-        if ($mod!=$value) {
-            $json['carwis'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        $value = str_replace(['+', '–'], ['', '-'], $values[5]);
-        if ($mod!=$value) {
-            $json['jswis'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        
-        // Score de Charisme
-        $score = $this->rpgMonster->getField(Field::CHASCORE);
-        $value = $values[6];
-        if ($score!=$value) {
-            $this->rpgMonster->setField(Field::CHASCORE, $value);
-            $blnHasChanged = true;
-        }
-        $mod = Utils::getModAbility($value);
-        $value = str_replace(['+', '–'], ['', '-'], $values[7]);
-        if ($mod!=$value) {
-            $json['carcha'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        $value = str_replace(['+', '–'], ['', '-'], $values[8]);
-        if ($mod!=$value) {
-            $json['jscha'] = $value-$mod;
-            $blnHasChanged = true;
-        }
-        
-        $extra = json_encode($json, JSON_UNESCAPED_UNICODE);
-        $this->rpgMonster->setField(Field::EXTRA, $extra);
-                
-        return $blnHasChanged;
+
+        return $hasChanged;
     }
 }
