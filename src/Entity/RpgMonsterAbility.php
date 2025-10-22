@@ -9,9 +9,10 @@ class RpgMonsterAbility extends Entity
     public function __construct(
         protected int $id,
         protected string $typeId,
+        protected int $monsterId,
         protected string $name,
         protected string $description,
-        protected int $monsterId
+        protected int $rank
     ) {
 
     }

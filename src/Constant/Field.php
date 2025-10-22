@@ -64,7 +64,8 @@ class Field
     public const PERCPASSIVE = 'percPassive';
      
     public const EXTRA       = 'extra';
-    
+    public const RANK        = 'rank';
+
     public const SKILLID     = 'skillId';
     public const DESCRIPTION = 'description';
     

@@ -30,7 +30,7 @@ class RpgMonster extends Utilities
     {
         $formAction = $params['formAction'] ?? 'table';
         if ($formAction=='table') {
-            $objTable = self::getTable($params);
+            $objTable = static::getTable($params);
             $pageContent = $objTable?->display();
         } elseif ($formAction=='edit') {
             $monsterId = $params['entityId'];
@@ -53,7 +53,7 @@ class RpgMonster extends Utilities
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
-        $objsMonstre = $objDaoMonstre->findAll();
+        $objsMonstre = $objDaoMonstre->findAll(["COALESCE(NULLIF(".Field::FRNAME.", ''), ".Field::NAME.")"=>Constant::CST_ASC]);
         $curPage      = $params[Constant::CST_CURPAGE] ?? 1;
         $nbPerPage    = $params[Constant::PAGE_NBPERPAGE] ?? 10;
         $refElementId = $params['refElementId'] ?? ($curPage-1)*$nbPerPage+1;
@@ -360,11 +360,12 @@ class RpgMonster extends Utilities
         
         //////////////////////////////////////////////////////////////
         $bm = $this->rpgMonster->getField(Field::PROFBONUS);
-        $extra = $this->rpgMonster->getExtra('pb');
+        $extraPx = $this->rpgMonster->getExtra('xp');
+        $extraPb = $this->rpgMonster->getExtra('pb');
         
         $str .= '<div class="col-12"><strong>FP</strong> '.$this->rpgMonster->getFormatCr();
-        $str .= ' (PX '.$this->rpgMonster->getTotalXp().' ;';
-        $str .= ' BM ' . ($bm==0 ? '' : '+'.$bm) . $extra.')</div>';
+        $str .= ' (PX '.$this->rpgMonster->getTotalXp().$extraPx;
+        $str .= ' ; BM ' . ($bm==0 ? '' : '+'.$bm) . $extraPb.')</div>';
         //////////////////////////////////////////////////////////////
         
         return $str;

@@ -18,15 +18,19 @@ class MonsterSpeedParser
     protected RpgMonster $rpgMonster;
     protected \DOMDocument $dom;
     
-    public function __construct(QueryBuilder $queryBuilder, QueryExecutor $queryExecutor, RpgMonster $rpgMonster, \DOMDocument $dom)
-    {
+    public function __construct(
+        QueryBuilder $queryBuilder,
+        QueryExecutor $queryExecutor,
+        RpgMonster $rpgMonster,
+        \DOMDocument $dom
+    ) {
         $this->queryBuilder  = $queryBuilder;
         $this->queryExecutor = $queryExecutor;
         $this->rpgMonster    = $rpgMonster;
         $this->dom           = $dom;
     }
 
-    public static function parseSpeed(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
+    public static function parse(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
     {
         $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
         return $parser->doParse();
@@ -99,7 +103,7 @@ class MonsterSpeedParser
         }
     }
 
-    private function updateIfChanged(RepositoryRpgMonsterTypeSpeed $repo, $entity, string $field, $newValue): void
+    private function updateIfChanged(RepositoryRpgMonsterTypeSpeed $repo, EntityRpgMonsterTypeSpeed $entity, string $field, $newValue): void
     {
         if ($entity->getField($field) !== $newValue) {
             $entity->setField($field, $newValue);

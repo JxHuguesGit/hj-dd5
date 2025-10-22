@@ -12,61 +12,109 @@ use src\Repository\RpgLanguage as RepositoryRpgLanguage;
 
 class MonsterLanguageParser
 {
-    const PATTERN_SEPARATOR = "/[,;]/";
+    private const PATTERN_SEPARATOR = "/[,;]/";
+    private const FEET_TO_METERS = 0.3;
 
-    public static function parseLanguages(RpgMonster $rpgMonster, \DOMDocument $dom): void
-    {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
+    private QueryBuilder $queryBuilder;
+    private QueryExecutor $queryExecutor;
+    private RpgMonster $rpgMonster;
+    private \DOMDocument $dom;
 
-        $xpath = new \DOMXPath($dom);
-        $nodes = $xpath->query("//strong[normalize-space(text())='Languages']");
-        $node = $nodes->item(0);
-        $nextNode = $node->nextSibling;
-        $content = trim($nextNode->textContent);
-
-        if ($content=='') {
-            return;
-        }
-
-        $objDao = new RepositoryRpgLanguage($queryBuilder, $queryExecutor);
-        $objDaoJoin = new RepositoryRpgMonsterLanguage($queryBuilder, $queryExecutor);
-        $rpgMonsterId = $rpgMonster->getField(Field::ID);
-
-        $elements = preg_split(self::PATTERN_SEPARATOR, $content);
-        foreach ($elements as $element) {
-            list($ability, $value, $test) = explode(' ', trim($element));
-            if ($test=='ft.') {
-                // Dans ce cas, value est une distance en pieds, on la convertit en mètres.
-                $value = isset($value) ? 3*$value/10 : 0;
-            } else {
-                // Dans ce cas, on est sans doute dans un sous type de langues. Par exemple : Primordial (aérien).
-                $ability .= ' ' . $value;
-                $value = 0;
-            }
-            $enum = LanguageEnum::fromEnglish($ability);
-
-            // Si on $enum vaut null, la donnée ne doit pas exister en base.
-            if ($enum===null) {
-                return;
-            }
-
-            $objs = $objDao->findBy([Field::NAME=>$enum->label()]);
-            $obj = $objs->current();
-            if ($obj==null) {
-                echo "[".$enum->label()."]";
-            }
-            $languageId = $obj->getField(Field::ID);
-
-            $params = [Field::MONSTERID=>$rpgMonsterId, Field::LANGUAGEID=>$languageId];
-            $objs = $objDaoJoin->findBy($params);
-
-            if ($objs->isEmpty()) {
-                $params[Field::ID] = 0;
-                $params[Field::VALUE] = $value;
-                $obj = new EntityRpgMonsterLanguage(...$params);
-                $objDaoJoin->insert($obj);
-            }
-        }
+    public function __construct(
+        QueryBuilder $queryBuilder,
+        QueryExecutor $queryExecutor,
+        RpgMonster $rpgMonster,
+        \DOMDocument $dom
+    ) {
+        $this->queryBuilder  = $queryBuilder;
+        $this->queryExecutor = $queryExecutor;
+        $this->rpgMonster    = $rpgMonster;
+        $this->dom           = $dom;
     }
+
+    public static function parse(RpgMonster $rpgMonster, \DOMDocument $dom): bool
+    {
+        $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
+        return $parser->doParse();
+    }
+
+    private function doParse(): bool
+    {
+        $xpath = new \DOMXPath($this->dom);
+        $nodes = $xpath->query("//strong[normalize-space(text())='Languages']");
+        if ($nodes->length === 0) {
+            return false;
+        }
+
+        $node = $nodes->item(0);
+        $content = trim($node->nextSibling->textContent ?? '');
+        if ($content === '') {
+            return false;
+        }
+
+        $hasChanged = false;
+        $elements = preg_split(self::PATTERN_SEPARATOR, $content);
+
+        foreach ($elements as $element) {
+            $element = trim($element);
+            if ($element === '') {
+                continue;
+            }
+
+            if ($this->handleLanguage($element)) {
+                $hasChanged = true;
+            }
+        }
+
+        return $hasChanged;
+    }
+
+    private function handleLanguage(string $element): bool
+    {
+        $hasChanged = false;
+        $monsterId = $this->rpgMonster->getField(Field::ID);
+        $parts = preg_split('/\s+/', trim($element));
+
+        // Format : "Primordial (aérien)" ou "Telepathy 120 ft."
+        [$ability, $value, $unit] = array_pad($parts, 3, null);
+
+        if ($unit === 'ft.') {
+            $value = isset($value) ? (float)$value * self::FEET_TO_METERS : 0;
+        } else {
+            $ability = trim($ability.' '.$value);
+            $value = 0;
+        }
+
+        $enum = LanguageEnum::fromEnglish($ability);
+        if ($enum === null) {
+            // Donnée non reconnue → on ne stocke rien
+            return false;
+        }
+
+        $langRepo = new RepositoryRpgLanguage($this->queryBuilder, $this->queryExecutor);
+        $linkRepo = new RepositoryRpgMonsterLanguage($this->queryBuilder, $this->queryExecutor);
+
+        $objs = $langRepo->findBy([Field::NAME => $enum->label()]);
+        $langObj = $objs->current();
+        if ($langObj === null) {
+            // Tu pourrais ici logger ou lever une alerte plutôt que d’afficher
+            echo "[" . $enum->label() . "]";
+            return false;
+        }
+
+        $languageId = $langObj->getField(Field::ID);
+        $params = [Field::MONSTERID => $monsterId, Field::LANGUAGEID => $languageId];
+        $existing = $linkRepo->findBy($params);
+
+        if ($existing->isEmpty()) {
+            $params[Field::ID] = 0;
+            $params[Field::VALUE] = $value;
+            $entity = new EntityRpgMonsterLanguage(...$params);
+            $linkRepo->insert($entity);
+            $hasChanged = true;
+        }
+
+        return $hasChanged;
+    }
+
 }

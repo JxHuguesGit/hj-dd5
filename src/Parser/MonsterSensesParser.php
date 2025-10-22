@@ -11,29 +11,50 @@ use src\Repository\RpgTypeVision as RepositoryRpgTypeVision;
 
 class MonsterSensesParser
 {
+    private const FEET_TO_METERS = 0.3;
 
-    public static function parseSenses(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
+    private QueryBuilder $queryBuilder;
+    private QueryExecutor $queryExecutor;
+    private RpgMonster $rpgMonster;
+    private \DOMDocument $dom;
+
+    public function __construct(
+        QueryBuilder $queryBuilder,
+        QueryExecutor $queryExecutor,
+        RpgMonster $rpgMonster,
+        \DOMDocument $dom
+    ) {
+        $this->queryBuilder  = $queryBuilder;
+        $this->queryExecutor = $queryExecutor;
+        $this->rpgMonster    = $rpgMonster;
+        $this->dom           = $dom;
+    }
+
+    public static function parse(RpgMonster &$rpgMonster, \DOMDocument $dom): bool
     {
-        $hasChanged = false;
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgTypeVision($queryBuilder, $queryExecutor);
-        $objDaoJoin = new RepositoryRpgMonsterTypeVision($queryBuilder, $queryExecutor);
-        
-        $xpath = new \DOMXPath($dom);
+        $parser = new self(new QueryBuilder(), new QueryExecutor(), $rpgMonster, $dom);
+        return $parser->doParse();
+    }
+      
+    private function doParse(): bool
+    {
+        $xpath = new \DOMXPath($this->dom);
         $nodes = $xpath->query("//strong[normalize-space(text())='Senses']");
-        $node = $nodes->item(0);
-        $nextNode = $node->nextSibling;
-        $content = trim($nextNode->textContent);
 
-        if ($content=='') {
-            return $hasChanged;
+        if ($nodes->length === 0) {
+            return false;
         }
 
-        $elements = explode(',', $content);
+        $content = trim($nodes->item(0)->nextSibling?->textContent ?? '');
+        if ($content === '') {
+            return false;
+        }
+
+        $elements = array_filter(array_map('trim', explode(',', $content)));
+        $hasChanged = false;
+
         foreach ($elements as $element) {
-            $changed = static::parseSens($element, $rpgMonster, $objDao, $objDaoJoin);
-            if ($changed) {
+            if ($this->parseSense($element)) {
                 $hasChanged = true;
             }
         }
@@ -41,44 +62,75 @@ class MonsterSensesParser
         return $hasChanged;
     }
 
-    public static function parseSens(string $element, RpgMonster &$rpgMonster, RepositoryRpgTypeVision $objDao, RepositoryRpgMonsterTypeVision $objDaoJoin): bool
+    private function parseSense(string $element): bool
+    {
+        $result = false;
+
+        $parts = preg_split('/\s+/', trim($element));
+        if (count($parts) < 2) {
+            return $result;
+        }
+
+        // Exemple : "Darkvision 60 ft." ou "Passive Perception 11"
+        if (isset($parts[2]) && $parts[2] === 'ft.') {
+            $result = $this->handleVision($parts[0], $parts[1]);
+        } elseif (
+            strtolower($parts[0]) === 'passive' &&
+            strtolower($parts[1]) === 'perception'
+        ) {
+            $result = $this->handlePassivePerception((int)($parts[2] ?? 0));
+        } else {
+            // Sonar
+        }
+
+        return $result;
+    }
+
+    private function handlePassivePerception(int $value): bool
+    {
+        $current = $this->rpgMonster->getField(Field::PERCPASSIVE);
+        if ($current === $value) {
+            return false;
+        }
+
+        $this->rpgMonster->setField(Field::PERCPASSIVE, $value);
+        return true;
+    }
+
+    private function handleVision(string $type, string $distance): bool
     {
         $hasChanged = false;
-        $rpgMonsterId = $rpgMonster->getField(Field::ID);
+        $type = strtolower($type);
+        $value = (float)$distance * self::FEET_TO_METERS;
 
-            $tab = explode(' ', trim($element));
-            
-            if ($tab[2]!='ft.') {
-                if ($rpgMonster->getField(Field::PERCPASSIVE)!=$tab[2]) {
-                    $rpgMonster->setField(Field::PERCPASSIVE, $tab[2]);
+        $typeRepo = new RepositoryRpgTypeVision($this->queryBuilder, $this->queryExecutor);
+        $linkRepo = new RepositoryRpgMonsterTypeVision($this->queryBuilder, $this->queryExecutor);
+
+        $typeObj = $typeRepo->findBy([Field::UKTAG => $type])->current();
+        if ($typeObj) {
+            $typeId = $typeObj->getField(Field::ID);
+            $monsterId = $this->rpgMonster->getField(Field::ID);
+            $existing = $linkRepo->findBy([
+                Field::MONSTERID => $monsterId,
+                Field::TYPEVISIONID => $typeId
+            ]);
+
+            if ($existing->isEmpty()) {
+                $entity = new EntityRpgMonsterTypeVision(0, $monsterId, $typeId, $value, '');
+                $linkRepo->insert($entity);
+                $hasChanged = true;
+            } else {
+                $entity = $existing->current();
+                $storedValue = $entity->getField(Field::VALUE);
+
+                if ($storedValue !== $value) {
+                    $entity->setField(Field::VALUE, $value);
+                    $linkRepo->update($entity);
                     $hasChanged = true;
                 }
-            } else {
-                $value = $tab[1]*3/10;
-                $sens = $tab[0];
-                $objs = $objDao->findBy([Field::UKTAG=>$sens]);
-                $obj = $objs->current();
-                $sensId = $obj->getField(Field::ID);
-                
-                $params = [Field::MONSTERID=>$rpgMonsterId, Field::TYPEVISIONID=>$sensId];
-                $objs = $objDaoJoin->findBy($params);
-
-                if ($objs->isEmpty()) {
-                    $params[Field::ID] = 0;
-                    $params[Field::VALUE] = $value;
-                    $params[Field::EXTRA] = '';
-                    $obj = new EntityRpgMonsterTypeVision(...$params);
-                    $objDaoJoin->insert($obj);
-                } else {
-                    $obj = $objs->current();
-                    $stored = $obj->getField(Field::VALUE);
-                    if ($stored!=$value) {
-                        $obj->setField(Field::VALUE, $value);
-                        $objDaoJoin->update($obj);
-                    }
-                }
             }
+        }
+
         return $hasChanged;
     }
-        
 }

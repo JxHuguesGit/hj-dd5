@@ -65,49 +65,37 @@ class RpgMonster extends Entity
         return $controller;
     }
     
-    public function getTraits(): Collection
+    private function getAbilities(array $params): Collection
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        $params = [Field::TYPEID=>'T', Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+        return $objDao->findBy($params, [Field::RANK=>'ASC']);
+    }
+
+    public function getTraits(): Collection
+    {
+        return $this->getAbilities([Field::TYPEID=>'T', Field::MONSTERID=>$this->id]);
     }
     
     public function getActions(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        $params = [Field::TYPEID=>'A', Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+        return $this->getAbilities([Field::TYPEID=>'A', Field::MONSTERID=>$this->id]);
     }
     
     public function getBonusActions(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        $params = [Field::TYPEID=>'B', Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+        return $this->getAbilities([Field::TYPEID=>'B', Field::MONSTERID=>$this->id]);
     }
 
     public function getReactions(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        $params = [Field::TYPEID=>'R', Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+        return $this->getAbilities([Field::TYPEID=>'R', Field::MONSTERID=>$this->id]);
     }
 
     public function getLegendaryActions(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        $params = [Field::TYPEID=>'L', Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params, [Field::NAME=>'ASC']);
+        return $this->getAbilities([Field::TYPEID=>'L', Field::MONSTERID=>$this->id]);
     }
 
     public function getResistances(string $typeResistanceId): Collection
@@ -236,6 +224,10 @@ class RpgMonster extends Entity
             5      => 1800,
             6      => 2300,
             8      => 3900,
+            9      => 5000,
+            10     => 5900,
+            14     => 11500,
+            16     => 15000,
         ];
         $xp = $xpMap[$this->cr] ?? null;
         return $xp ? number_format($xp, 0, ',', ' ') : '??';

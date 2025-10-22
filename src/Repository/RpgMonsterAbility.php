@@ -15,7 +15,7 @@ class RpgMonsterAbility extends Repository
             $builder,
             $executor,
             'rpgMonsterAbility',
-            [Field::ID, Field::TYPEID, Field::NAME, Field::DESCRIPTION, Field::MONSTERID]
+            [Field::ID, Field::TYPEID, Field::MONSTERID, Field::NAME, Field::DESCRIPTION, Field::RANK]
         );
     }
 }

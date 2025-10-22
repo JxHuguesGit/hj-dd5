@@ -15,7 +15,10 @@ class RpgMonsterAbility extends Utilities
         $strContent = $this->rpgMonsterAbility->getField(Field::DESCRIPTION);
         $strContent = Utils::formatBBCode($strContent);
 
-
-        return sprintf('<p><strong><em>%s</em></strong>. %s</p>', $strTitle, $strContent);
+        if ($strTitle=='legend') {
+            return sprintf('<p>%s</p>', $strContent);
+        } else {
+            return sprintf('<p><strong><em>%s</em></strong>. %s</p>', $strTitle, $strContent);
+        }
     }
 }
