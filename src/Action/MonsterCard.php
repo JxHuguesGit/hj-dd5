@@ -3,7 +3,7 @@ namespace src\Action;
 
 use src\Constant\Field;
 use src\Entity\RpgMonster as EntityRpgMonster;
-use src\Helper\RpgMonsterParser;
+use src\Parser\RpgMonster as ParserRpgMonster;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgMonster;
@@ -32,7 +32,7 @@ class MonsterCard
                 libxml_use_internal_errors(true);
                 $dom->loadHTML($content);
             
-                $parser = new RpgMonsterParser($rpgMonster, $dom);
+                $parser = new ParserRpgMonster($rpgMonster, $dom);
                 $parser->parseDom();
             }
             return $rpgMonster->getController()->getMonsterCard();
@@ -65,7 +65,7 @@ class MonsterCard
                     $body = $dom->getElementsByTagName('body')->item(0);
                     $returned = $dom->saveHTML($body);
                     
-                    $parser = new RpgMonsterParser($rpgMonster, $dom);
+                    $parser = new ParserRpgMonster($rpgMonster, $dom);
                     $parser->parseDom();
                 }
             }

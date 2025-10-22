@@ -5,7 +5,7 @@ use src\Constant\Field;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
-class RpgJoinMonsterTypeSpeed extends Repository
+class RpgMonsterTypeVision extends Repository
 {
     public function __construct(
         protected QueryBuilder $builder,
@@ -14,8 +14,8 @@ class RpgJoinMonsterTypeSpeed extends Repository
         parent::__construct(
             $builder,
             $executor,
-            'rpgJoinMonsterTypeSpeed',
-            [Field::ID, Field::MONSTERID, Field::TYPESPEEDID, Field::VALUE, Field::EXTRA]
+            'rpgMonsterTypeVision',
+            [Field::ID, Field::MONSTERID, Field::TYPEVISIONID, Field::VALUE, Field::EXTRA]
         );
     }
 

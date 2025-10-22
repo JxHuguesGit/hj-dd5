@@ -12,9 +12,9 @@ use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
 use src\Repository\RpgMonsterCondition as RepositoryRpgMonsterCondition;
 use src\Repository\RpgMonsterResistance as RepositoryRpgMonsterResistance;
 use src\Repository\RpgMonsterSkill as RepositoryRpgMonsterSkill;
-use src\Repository\RpgJoinMonsterLanguage as RepositoryRpgJoinMonsterLanguage;
-use src\Repository\RpgJoinMonsterTypeSpeed as RepositoryRpgJoinMonsterTypeSpeed;
-use src\Repository\RpgJoinMonsterTypeVision as RepositoryRpgJoinMonsterTypeVision;
+use src\Repository\RpgMonsterLanguage as RepositoryRpgMonsterLanguage;
+use src\Repository\RpgMonsterTypeSpeed as RepositoryRpgMonsterTypeSpeed;
+use src\Repository\RpgMonsterTypeVision as RepositoryRpgMonsterTypeVision;
 use src\Repository\RpgAlignement as RepositoryRpgAlignement;
 use src\Repository\RpgReference as RepositoryRpgReference;
 use src\Repository\RpgSousTypeMonstre as RepositoryRpgSousTypeMonstre;
@@ -129,7 +129,7 @@ class RpgMonster extends Entity
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgJoinMonsterTypeVision($queryBuilder, $queryExecutor);
+        $objDao = new RepositoryRpgMonsterTypeVision($queryBuilder, $queryExecutor);
         $params = [Field::MONSTERID=>$this->id];
         return $objDao->findBy($params);
     }
@@ -147,7 +147,7 @@ class RpgMonster extends Entity
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgJoinMonsterLanguage($queryBuilder, $queryExecutor);
+        $objDao = new RepositoryRpgMonsterLanguage($queryBuilder, $queryExecutor);
         $params = [Field::MONSTERID=>$this->id];
         return $objDao->findBy($params);
     }
@@ -329,8 +329,8 @@ class RpgMonster extends Entity
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
 
-        $objDao = new RepositoryRpgJoinMonsterTypeSpeed($queryBuilder, $queryExecutor);
-        /** @var RpgJoinMonsterTypeSpeed $objRpgJoinMonsterTypeSpeed */
+        $objDao = new RepositoryRpgMonsterTypeSpeed($queryBuilder, $queryExecutor);
+        /** @var RpgMonsterTypeSpeed $objRpgMonsterTypeSpeed */
         $objs = $objDao->findBy([Field::MONSTERID=>$this->id]);
         $objs->rewind();
         while ($objs->valid()) {

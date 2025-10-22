@@ -1,13 +1,13 @@
 <?php
 namespace src\Entity;
 
-use src\Controller\RpgJoinMonsterTypeSpeed as ControllerRpgJoinMonsterTypeSpeed;
+use src\Controller\RpgMonsterTypeSpeed as ControllerRpgMonsterTypeSpeed;
 use src\Entity\RpgTypeSpeed as EntityRpgTypeSpeed;
 use src\Repository\RpgTypeSpeed;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
-class RpgJoinMonsterTypeSpeed extends Entity
+class RpgMonsterTypeSpeed extends Entity
 {
 
     public function __construct(
@@ -20,10 +20,10 @@ class RpgJoinMonsterTypeSpeed extends Entity
 
     }
 
-    public function getController(): ControllerRpgJoinMonsterTypeSpeed
+    public function getController(): ControllerRpgMonsterTypeSpeed
     {
-        $controller = new ControllerRpgJoinMonsterTypeSpeed();
-        $controller->setField('rpgJoinMonsterTypeSpeed', $this);
+        $controller = new ControllerRpgMonsterTypeSpeed();
+        $controller->setField('rpgMonsterTypeSpeed', $this);
         return $controller;
     }
 

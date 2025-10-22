@@ -7,7 +7,7 @@ use src\Repository\RpgLanguage;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
-class RpgJoinMonsterLanguage extends Entity
+class RpgMonsterLanguage extends Entity
 {
 
     public function __construct(
@@ -22,7 +22,7 @@ class RpgJoinMonsterLanguage extends Entity
     public function getController(): ControllerRpgMonsterLanguage
     {
         $obj = new ControllerRpgMonsterLanguage();
-        $obj->setField('rpgJoinMonsterLanguage', $this);
+        $obj->setField('rpgMonsterLanguage', $this);
         return $obj;
     }
 

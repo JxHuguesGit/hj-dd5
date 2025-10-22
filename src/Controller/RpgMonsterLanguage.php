@@ -2,11 +2,11 @@
 namespace src\Controller;
 
 use src\Constant\Field;
-use src\Entity\RpgJoinMonsterLanguage as EntityRpgJoinMonsterLanguage;
+use src\Entity\RpgMonsterLanguage as EntityRpgMonsterLanguage;
 
 class RpgMonsterLanguage extends Utilities
 {
-    protected EntityRpgJoinMonsterLanguage $rpgJoinMonsterLanguage;
+    protected EntityRpgMonsterLanguage $rpgMonsterLanguage;
 
     public function __construct()
     {
@@ -15,9 +15,9 @@ class RpgMonsterLanguage extends Utilities
     
     public function getStrLanguage(): string
     {
-        $objLanguage = $this->rpgJoinMonsterLanguage->getLanguage();
+        $objLanguage = $this->rpgMonsterLanguage->getLanguage();
         $str = $objLanguage->getField(Field::NAME);
-        $value = $this->rpgJoinMonsterLanguage->getField(Field::VALUE);
+        $value = $this->rpgMonsterLanguage->getField(Field::VALUE);
         if ($value!=0) {
             $str .= ' '.$value.'m';
         }
