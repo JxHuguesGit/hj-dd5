@@ -9,6 +9,15 @@ class Session
     {
         return isset($_POST) && !empty($_POST);
     }
+    
+    public static function getPost(): array
+    {
+    	$result = [];
+        foreach ($_POST as $key => $value) {
+        	$result[$key] = static::fromPost($key);
+        }
+        return $result;
+    }
 
     public static function fromPost(string $field, $default = '', bool $sanitize=false): string
     {

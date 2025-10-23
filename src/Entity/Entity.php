@@ -55,7 +55,7 @@ class Entity
         throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
     }
 
-    public function setField(string $field, $value): void
+    public function setField(string $field, $value): self
     {
         if (property_exists($this, $field)) {
             // Logique de validation de la valeur si nécessaire
@@ -63,6 +63,7 @@ class Entity
         } else {
             throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
         }
+        return $this;
     }
 
     public static function getFields(): array

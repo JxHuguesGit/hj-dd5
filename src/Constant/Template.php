@@ -52,6 +52,9 @@ final class Template
     public const CASTE_DETAIL_FIG    = self::CASTE_PATH.'casteDetailFIG.tpl';
     public const CASTE_DETAIL_ROG    = self::CASTE_PATH.'casteDetailROG.tpl';
     public const CASTE_DETAIL_WIZ    = self::CASTE_PATH.'casteDetailWIZ.tpl';
+    
+    public const FORM_PATH           = self::TEMPLATE_PATH.'form/';
+    public const FORM_MONSTERABILITY = self::FORM_PATH.'RpgMonster.tpl';
 
     public const HERO_PATH           = self::TEMPLATE_PATH.'hero/';
     public const HERO_CREATE_HEADER  = self::HERO_PATH.'createHeader.tpl';

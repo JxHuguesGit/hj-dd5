@@ -61,7 +61,7 @@ class Table
         
         $strContent = Html::getBalise('div', $strDivContent, [Constant::CST_CLASS=>'row mx-2 d-flex justify-content-between align-items-center']);
         $this->addHeaderRow()
-             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>6]]);
+             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>7]]);
         return $this;
     }
 
@@ -168,6 +168,31 @@ class Table
         if (!isset($cell[Constant::CST_TYPE])) {
             $cell[Constant::CST_TYPE] = 'th';
         }
+        array_push($this->header['rows'][$this->nbHeaderRows]['cells'], $cell);
+        return $this;
+    }
+    
+    public function addFilteredHeaderCell(array $cell): self
+    {
+        if (!isset($cell['attributes'])) {
+            $cell['attributes'] = [];
+        }
+        if (!isset($cell[Constant::CST_TYPE])) {
+            $cell[Constant::CST_TYPE] = 'th';
+        }
+        
+        $strTitle = $cell[Constant::CST_CONTENT];
+        $button = Html::getButton($strTitle, ['replaceclass'=>"btn btn-sm btn-secondary dropdown-toggle", 'data-bs-toggle'=>"dropdown", 'aria-expanded'=>"false"]);
+        $dropdown = '  <ul class="dropdown-menu" style="">
+    <li><a class="dropdown-item" href="#">Aberration</a></li>
+    <li><a class="dropdown-item" href="#">Bête</a></li>
+    <li><a class="dropdown-item" href="#">Humanoïde</a></li>
+  </ul>';
+  
+        $filterTitle = Html::getDiv($button.$dropdown, ['class'=>'dropdown']);
+        
+        $cell[Constant::CST_CONTENT] = $filterTitle;
+        
         array_push($this->header['rows'][$this->nbHeaderRows]['cells'], $cell);
         return $this;
     }

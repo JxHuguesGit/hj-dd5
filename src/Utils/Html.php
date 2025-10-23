@@ -49,6 +49,10 @@ class Html
             $defaultAttributes[Constant::CST_CLASS] .= ' '.$extraAttributes[Constant::CST_CLASS];
             unset($extraAttributes[Constant::CST_CLASS]);
         }
+        if (isset($extraAttributes['replaceclass'])) {
+            $defaultAttributes[Constant::CST_CLASS] = $extraAttributes['replaceclass'];
+            unset($extraAttributes['replaceclass']);
+        }
         $attributes = array_merge($defaultAttributes, $extraAttributes);
         return static::getBalise('button', $label, $attributes);
     }

@@ -5,6 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Constant\Icon;
 use src\Constant\Template;
 use src\Entity\RpgMonster as EntityRpgMonster;
 use src\Entity\RpgMonsterResistance as EntityRpgMonsterResistance;
@@ -13,6 +14,8 @@ use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Utils\Html;
+use src\Utils\Session;
 use src\Utils\Table;
 
 class RpgMonster extends Utilities
@@ -28,20 +31,25 @@ class RpgMonster extends Utilities
 
     public static function getAdminContentPage(array $params): string
     {
-        $formAction = $params['formAction'] ?? 'table';
+    	
+        $formAction = $params['formAction'] ?? Session::fromPost('formAction', 'table');
         if ($formAction=='table') {
             $objTable = static::getTable($params);
             $pageContent = $objTable?->display();
-        } elseif ($formAction=='edit') {
-            $monsterId = $params['entityId'];
+        } elseif (in_array($formAction, ['edit', 'editConfirm'])) {
+            $monsterId = $params['entityId'] ?? Session::fromPost('entityId', 'table');
             $queryBuilder  = new QueryBuilder();
             $queryExecutor = new QueryExecutor();
             $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
             $rpgMonstre = $objDaoMonstre->find($monsterId);
-            
             $objForm = new FormRpgMonster($rpgMonstre);
-            $objForm->buildForm();
-            $pageContent = $objForm->getFormContent();
+            
+            if ($formAction=='editConfirm') {
+	            $objForm->resolveForm();
+	            $rpgMonstre = $objDaoMonstre->find($monsterId);
+	            $objForm = new FormRpgMonster($rpgMonstre);
+            }
+            $pageContent = $objForm->getTemplate();
         } else {
             $pageContent = 'formAction non prévu.';
         }
@@ -84,9 +92,11 @@ class RpgMonster extends Utilities
             //->addHeaderCell([Constant::CST_CONTENT=>'Alignement'])
             //->addHeaderCell([Constant::CST_CONTENT=>'Légendaire'])
             //->addHeaderCell([Constant::CST_CONTENT=>'Habitat'])
-            ->addHeaderCell([Constant::CST_CONTENT=>'Référence']);
+            ->addHeaderCell([Constant::CST_CONTENT=>'Référence'])
+            ->addHeaderCell([Constant::CST_CONTENT=>'&nbsp;'])
+            ;
 
-        $objTable->addBodyRows($objsMonstre, 6);
+        $objTable->addBodyRows($objsMonstre, 7);
 
         return $objTable;
     }
@@ -165,6 +175,12 @@ class RpgMonster extends Utilities
         // Référence
         $objReference = $this->rpgMonster->getReference();
         $strReference = $objReference->getField(Field::NAME);
+        
+        // Actions
+        $label = Html::getIcon(Icon::IBOOK);
+        $href = add_query_arg('formAction', 'edit');
+        $href = add_query_arg('entityId', $this->rpgMonster->getField(Field::ID), $href);
+        $strActions = Html::getLink($label, $href, '');
 
         $objTable->addBodyRow()
             ->addBodyCell([Constant::CST_CONTENT=>$strName])
@@ -178,6 +194,7 @@ class RpgMonster extends Utilities
             //->addBodyCell([Constant::CST_CONTENT=>$strLegendaire])
             //->addBodyCell([Constant::CST_CONTENT=>$strHabitat])
             ->addBodyCell([Constant::CST_CONTENT=>$strReference])
+            ->addBodyCell([Constant::CST_CONTENT=>$strActions])
             ;
     }
     
