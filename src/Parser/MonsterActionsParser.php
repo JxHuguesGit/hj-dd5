@@ -27,10 +27,8 @@ class MonsterActionsParser extends AbstractMonsterParser
         foreach (self::TYPE_ACTIONS as $typeId => $typeName) {
             $nodes = $xpath->query("//div[@class='rub' and normalize-space()='$typeName']");
             $node = $nodes->item(0);
-            if ($node !== null) {
-                if ($this->parseSection($typeId, $node)) {
-                    $hasChanged = true;
-                }
+            if ($node !== null && $this->parseSection($typeId, $node)) {
+                $hasChanged = true;
             }
         }
 

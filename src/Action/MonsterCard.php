@@ -31,9 +31,8 @@ class MonsterCard
                 $dom = new \DOMDocument();
                 libxml_use_internal_errors(true);
                 $dom->loadHTML($content);
-            
-                $parser = new ParserRpgMonster($rpgMonster, $dom);
-                $parser->parseDom();
+                
+                ParserRpgMonster::parse($rpgMonster, $dom);
             }
             return $rpgMonster->getController()->getMonsterCard();
         } elseif (substr($uktag, 0, 3)=='fr-') {
@@ -65,8 +64,7 @@ class MonsterCard
                     $body = $dom->getElementsByTagName('body')->item(0);
                     $returned = $dom->saveHTML($body);
                     
-                    $parser = new ParserRpgMonster($rpgMonster, $dom);
-                    $parser->parseDom();
+                    ParserRpgMonster::parse($rpgMonster, $dom);
                 }
             }
         } else {
