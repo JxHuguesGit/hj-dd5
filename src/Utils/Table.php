@@ -22,7 +22,7 @@ class Table
     {
         $this->attributes = [
             Constant::CST_CLASS=>'table',
-            'aria-describedby' => '',//'Liste des missions',
+            'aria-describedby' => '',
         ];
 
     }
@@ -232,6 +232,8 @@ class Table
                 $arrParams[Constant::CST_CLASS] = 'row-striped-even';
             } elseif (isset($arrParams[Constant::CST_CLASS])) {
                 unset($arrParams[Constant::CST_CLASS]);
+            } else {
+                //SONAR
             }
 
             $obj->getController()->addBodyRow($this, $arrParams, $oldId);

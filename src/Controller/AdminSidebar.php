@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller;
 
+use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Template;
 
@@ -106,12 +107,13 @@ class AdminSidebar extends Utilities
     {
         // Liste des sous menus existants
         $children = [
-            ['id' => 'armors', 'label' => 'Armures', 'icon' => Icon::ISHIELD],
-            ['id' => 'weapons', 'label' => 'Armes', 'icon' => Icon::IGAVEL],
-            ['id' => 'skills', 'label' => 'Compétences', 'icon' => Icon::IBRAIN],
-            ['id' => 'feats', 'label' => 'Dons', 'icon' => Icon::IMEDAL],
-            ['id' => 'spells', 'label' => 'Sorts', 'icon' => Icon::ISCROLL],
-            ['id' => 'monsters', 'label' => 'Monstres', 'icon' => Icon::IDRAGON],
+            ['id' => Constant::ARMORS, 'label' => 'Armures', 'icon' => Icon::ISHIELD],
+            ['id' => Constant::WEAPONS, 'label' => 'Armes', 'icon' => Icon::IGAVEL],
+            ['id' => Constant::SKILLS, 'label' => 'Compétences', 'icon' => Icon::IBRAIN],
+            ['id' => Constant::FEATS, 'label' => 'Dons', 'icon' => Icon::IMEDAL],
+            ['id' => Constant::MONSTERS, 'label' => 'Monstres', 'icon' => Icon::IDRAGON],
+            ['id' => Constant::ORIGINS, 'label' => 'Origines', 'icon' => Icon::ICOMPASS],
+            ['id' => Constant::SPELLS, 'label' => 'Sorts', 'icon' => Icon::ISCROLL],
         ];
 
         // Construction du menu

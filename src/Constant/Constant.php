@@ -13,11 +13,14 @@ class Constant
     public const FORMNAME = 'formName';
     public const HEROSELECTION = 'heroSelection';
     public const ONGLET = 'onglet';
-    public const ARMORS = 'armors';
-    public const WEAPONS = 'weapons';
-    public const SKILLS = 'skills';
-    public const MONSTERS = 'monsters';
+    
+    public const ARMORS   = 'armors';
+    public const WEAPONS  = 'weapons';
+    public const SKILLS   = 'skills';
     public const FEATS    = 'feats';
+    public const MONSTERS = 'monsters';
+    public const ORIGINS  = 'origins';
+    public const SPELLS   = 'spells';
 
     public const CST_EXTRA = '-extra';
     public const CST_ASC = 'ASC';

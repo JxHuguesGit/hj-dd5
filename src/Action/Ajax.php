@@ -21,6 +21,9 @@ class Ajax{
             case 'modalMonsterCard':
                 $returnedValue = MonsterCard::build();
             break;
+            case 'modalSpellCard':
+                $returnedValue = SpellCard::build();
+            break;
             default:
                 $returnedValue = 'default';
             break;

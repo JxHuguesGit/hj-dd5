@@ -44,7 +44,30 @@ $(document).ready(function(e) {
         });
         return false;
     });
-
+    
+    $('[data-modal="spell"]').on('click', function(e) {
+        e.preventDefault();
+        const id = $(this).data('uktag');
+        const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalSpellCard', 'id': id};
+        const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+        
+        $.post({
+            url: ajaxUrl,
+            data: data,
+            success: function (response) {
+                const parsedData = JSON.parse(response.data);
+                $('.modal-header').hide()
+                $('.modal-footer').hide()
+                $('#modalBody').html(parsedData.modalSpellCard);
+                $('#infoModal').modal('show');
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+    
     $('i[data-source="aidedd"]').on('click', function(e) {
         e.preventDefault();
         const source = $(this).data('source');
@@ -118,9 +141,18 @@ $(document).ready(function(e) {
 
     $('.ajaxAction[data-trigger="change"]').on('change', function(e) {
         ajaxActionChange($(this), e);
-    })
+    });
+
+    $('*[data-action="RmbFocus"]').on('blur', function(e) {
+    	focusRemembered = $(this).attr('id');
+    });
+
+    $('button[data-action="fdmTool"]').on('click', function(e) {
+    	fdmToolsManagment($(this));
+    });
 });
 
+let focusRemembered = '';
 
 function ajaxActionChange(obj, e) {
     e.preventDefault();
@@ -143,4 +175,23 @@ function loadMonsterPage(newNbPerPage) {
         url.searchParams.set(key, newParams[key]);
     }
     globalThis.location.href = url.toString();
+}
+
+function fdmToolsManagment(obj) {
+	let val = obj.data('val');
+    let id = focusRemembered.split('-')[2];
+    
+    if (val==undefined) {
+        let ref = obj.data('ref');
+
+        if ($('#'+ref+'Name').length>0) {
+            $('#mab-name-'+id).val($('#'+ref+'Name').val());
+        }
+        if ($('#'+ref+'Description').length>0) {
+            $('#mab-description-'+id).val($('#mab-description-'+id).val()+$('#'+ref+'Description').val());
+        }
+    } else {
+        $('#mab-description-'+id).val($('#mab-description-'+id).val()+val);
+    }
+    
 }

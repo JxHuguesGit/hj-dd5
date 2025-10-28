@@ -130,3 +130,7 @@ function redirect_if_not_logged_in() {
 }
 add_action('init', 'redirect_if_not_logged_in');
 */
+
+if ( file_exists( __DIR__ . '/acf-stubs.php' ) ) {
+    require_once __DIR__ . '/acf-stubs.php';
+}

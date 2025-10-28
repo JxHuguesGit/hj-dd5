@@ -5,69 +5,25 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
 use src\Controller\Utilities;
-use src\Entity\RpgMonster as EntityRpgMonster;
-use src\Entity\RpgMonsterAbility as EntityRpgMonsterAbility;
-use src\Repository\RpgMonster as RepositoryRpgMonster;
-use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
+use src\Entity\RpgFeat as EntityRpgFeat;
+use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Utils\Html;
 use src\Utils\Session;
 
-class RpgMonster extends Form
+class RpgFeat extends Form
 {
-    public EntityRpgMonster $rpgMonster;
+    public EntityRpgFeat $rpgFeat;
 
-    public function __construct(EntityRpgMonster $rpgMonster)
+    public function __construct(EntityRpgFeat $rpgFeat)
     {
-        $this->rpgMonster = $rpgMonster;
+        $this->rpgFeat = $rpgFeat;
     }
 
-    public function buildForm(): void
-    {
-        // Nom français + Nom anglais
-        $this->addRow()
-            ->addInput(Field::FRNAME, Field::FRNAME, 'Nom français', $this->rpgMonster->getField(Field::FRNAME))
-            ->addFiller(['class'=>'col-2'])
-            ->addInput(Field::NAME, Field::NAME, 'Nom anglais', $this->rpgMonster->getField(Field::NAME));
-
-        // CA et remarques + Initiative
-        $this->addRow()
-            ->addInput(Field::SCORECA, Field::SCORECA, 'CA', $this->rpgMonster->getField(Field::SCORECA))
-            ->addFiller(['class'=>'col-1'])
-            ->addInput(Field::SCORECA.Constant::CST_EXTRA, Field::SCORECA.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCORECA), ['class'=>'col-3'])
-            ->addFiller(['class'=>'col-1'])
-            ->addInput(Field::INITIATIVE, Field::INITIATIVE, 'Initiative', $this->rpgMonster->getField(Field::INITIATIVE));
-
-        // PV et remarques
-        $this->addRow()
-            ->addInput(Field::SCOREHP, Field::SCOREHP, 'PV', $this->rpgMonster->getField(Field::SCOREHP))
-            ->addFiller(['class'=>'col-1'])
-            ->addInput(Field::SCOREHP.Constant::CST_EXTRA, Field::SCOREHP.Constant::CST_EXTRA, '', $this->rpgMonster->getExtra(Field::SCOREHP), ['class'=>'col-5'])
-            ->addFiller(['class'=>'col-3']);
-
-        // Vitesses
-        $this->addRow()
-            ->addInput(Field::VITESSE, Field::VITESSE, 'Vitesse au sol', $this->rpgMonster->getField(Field::VITESSE))
-            ->addFiller(['class'=>'col-1']);
-    }
-
-    public function getFormContent(): string
-    {
-        $formContent = parent::getFormContent();
-
-        return Html::getBalise(
-            'form',
-            $formContent,
-            [
-                'method'=>'post',
-                'class'=>'col-12'
-            ]
-        );
-    }
-    
     public function resolveForm(): void
     {
+    return;
 	    $monsterId = Session::fromPost('entityId');
 	    $name = Session::fromPost('name-fr');
         
@@ -114,6 +70,25 @@ class RpgMonster extends Form
 	    $controller = new Utilities();
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
+        
+        $url = '/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=compendium&id=feats';
+        if (Session::fromGet('curpage', 1)!=1) {
+	        $url = add_query_arg('curpage', Session::fromGet('curpage'), $url);
+        }
+        if (Session::fromGet('nbPerPage', 10)!=10) {
+	        $url = add_query_arg('nbPerPage', Session::fromGet('nbPerPage'), $url);
+        }
+        
+        $attributes = [
+        	'',
+            '',
+            '',
+            '',
+            $url,
+            '', '', '', '', ''];
+        
+        return $controller->getRender(Template::FORM_FEAT, $attributes);
+        
         $dao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
         $objs = $dao->findBy([Field::MONSTERID=>$this->rpgMonster->getField(Field::ID)]);
         
@@ -129,13 +104,6 @@ class RpgMonster extends Form
         	$objs->next();
         }
         
-        $url = '/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=compendium&id=monsters';
-        if (Session::fromGet('curpage', 1)!=1) {
-	        $url = add_query_arg('curpage', Session::fromGet('curpage'), $url);
-        }
-        if (Session::fromGet('nbPerPage', 10)!=10) {
-	        $url = add_query_arg('nbPerPage', Session::fromGet('nbPerPage'), $url);
-        }
         $attributes = [
         	$this->rpgMonster->getField(Field::FRNAME),
         	$this->rpgMonster->getField(Field::NAME),
@@ -144,8 +112,6 @@ class RpgMonster extends Form
             $url
         ];
 
-        $content = $controller->getRender(Template::FORM_MONSTERABILITY, $attributes);
-        return $content;
     }
     
     private function getMonsterAbilityForm(EntityRpgMonsterAbility $rpgMonsterAbility): string

@@ -115,4 +115,14 @@ class Repository
         array_push($values, $entityId);
         $this->queryExecutor->update($this->query, $values);
     }
+
+    public function delete(Entity &$entity): void
+    {
+        $this->reset();
+        $this->query = $this->queryBuilder->reset()
+            ->getDeleteQuery($this->table);
+
+        $values = [$entity->getField(Field::ID)];
+        $this->queryExecutor->update($this->query, $values);
+    }
 }

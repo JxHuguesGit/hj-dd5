@@ -3,14 +3,14 @@ namespace src\Enum;
 
 enum MagicSchoolEnum: string
 {
-    case Abj = 'abj';
-    case Div = 'div';
-    case Enc = 'enc';
-    case Evo = 'evo';
-    case Ill = 'ill';
-    case Inv = 'inv';
-    case Nec = 'nec';
-    case Tra = 'tra';
+    case Abj = 'abjuration';
+    case Div = 'divination';
+    case Enc = 'enchantement';
+    case Evo = 'évocation';
+    case Ill = 'illusion';
+    case Con = 'conjuration';
+    case Nec = 'necromancie';
+    case Tra = 'transmutation';
 
     public function label(): string
     {
@@ -20,14 +20,14 @@ enum MagicSchoolEnum: string
             static::Enc   => 'Enchantement',
             static::Evo   => 'Évocation',
             static::Ill   => 'Illusion',
-            static::Inv   => 'Invocation',
+            static::Con   => 'Conjuration',
             static::Nec   => 'Nécromancie',
             static::Tra   => 'Transmutation',
             default       => 'École de magie inconnue.',
         };
     }
 
-    public static function fromDb(int $i): string
+    public static function fromDb(string $i): string
     {
         foreach (static::cases() as $element) {
             if ($element->value==$i) {

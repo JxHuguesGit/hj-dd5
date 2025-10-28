@@ -43,6 +43,11 @@ class QueryBuilder
         return "UPDATE `{$table}` SET $assignments WHERE `id` = %s";
     }
 
+    public function getDeleteQuery(string $table): string
+    {
+        return "DELETE FROM `{$table}` WHERE `id` = %s";
+    }
+
     public function distinct(string $field, string $table): self
     {
         $this->baseQuery = "SELECT DISTINCT $field FROM $table";

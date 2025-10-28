@@ -32,6 +32,7 @@ class Language
     public const LG_WEAPON_RANGED   = ' à distance';
     
     public const LG_SKILLS          = 'Compétences';
+    public const LG_SPELLS          = 'Sorts';
     public const LG_ABILITIES       = 'Caractéristiques';
     
     public const LG_FEATS           = 'Dons';

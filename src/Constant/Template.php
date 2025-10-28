@@ -45,6 +45,7 @@ final class Template
     public const FEAT_CARD           = self::CARD_PATH.'featCard.tpl';
     public const HERO_SELECTION      = self::CARD_PATH.'heroSelection.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
+    public const SPELL_CARD          = self::CARD_PATH.'spellCard.tpl';
 
     public const CASTE_PATH          = self::TEMPLATE_PATH.'caste/';
     public const CASTE_DETAIL_GEN    = self::CASTE_PATH.'casteDetailGenerique.tpl';
@@ -54,6 +55,7 @@ final class Template
     public const CASTE_DETAIL_WIZ    = self::CASTE_PATH.'casteDetailWIZ.tpl';
     
     public const FORM_PATH           = self::TEMPLATE_PATH.'form/';
+    public const FORM_FEAT           = self::FORM_PATH.'RpgFeat.tpl';
     public const FORM_MONSTERABILITY = self::FORM_PATH.'RpgMonster.tpl';
 
     public const HERO_PATH           = self::TEMPLATE_PATH.'hero/';
