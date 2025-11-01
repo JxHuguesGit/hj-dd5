@@ -37,4 +37,7 @@ class Language
     
     public const LG_FEATS           = 'Dons';
     public const LG_CATEGORY        = 'Catégorie';
+
+    public const LG_ORIGINS         = 'Origines';
+
 }
