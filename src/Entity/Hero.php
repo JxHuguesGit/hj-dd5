@@ -5,12 +5,6 @@ use src\Controller\Hero as ControllerHero;
 
 class Hero extends Entity
 {
-    private int $ablstr;
-    private int $abldex;
-    private int $ablcon;
-    private int $ablint;
-    private int $ablwis;
-    private int $ablcha;
     private int $proficiencyBonus;
 
     public function __construct(

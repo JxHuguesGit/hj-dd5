@@ -42,7 +42,7 @@ class Table
         $this->addHeaderRow()
              ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>$cols]]);
     
-    	return $this;
+        return $this;
     }
     
     public function setNbPerPage(int $refElementId=1, int $selNbPerPage=10, array $arrNbPerPage=[], int $cols=7): self

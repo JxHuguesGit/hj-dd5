@@ -9,7 +9,6 @@ class LoadCasteDetail
     public static function build(): string
     {
         $key = Session::fromPost('key');
-        $lang = Session::fromPost('lang');
     
         $utilities = new Utilities();
         $attributes = [

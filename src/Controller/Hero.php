@@ -12,13 +12,9 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\Caste;
 use src\Repository\Hero as RepositoryHero;
-use src\Repository\Repository;
-use src\Repository\Translation as RepositoryTranslation;
-use src\Utils\Html;
 use src\Utils\Session;
 use src\Utils\Translation;
 use src\Utils\Utils;
-use WP_User;
 
 class Hero extends Utilities
 {
@@ -245,7 +241,6 @@ class Hero extends Utilities
         $strSkills = '';
         while (!empty($skills)) {
             $skill = array_shift($skills);
-            $skillKey = $skill->value;
             $skillLabel = $skill->label();
             $abilityKey = $skill->ability()->value;
             

@@ -25,7 +25,7 @@ class Session
             return $default;
         }
 
-	    $data = $_POST[$field];
+        $data = $_POST[$field];
         
         if (is_array($data)) {
             return array_map(fn($item) =>
@@ -34,8 +34,8 @@ class Session
             );
         }
 
-	    $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
-	    return self::sanitizeValue($data, $sanitize);
+        $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
+        return self::sanitizeValue($data, $sanitize);
     }
 
     public static function fromGet(string $field, array|string $default = '', bool $sanitize=false): array|string
@@ -44,7 +44,7 @@ class Session
             return $default;
         }
 
-	    $data = $_GET[$field];
+        $data = $_GET[$field];
         
         if (is_array($data)) {
             return array_map(fn($item) =>
@@ -53,8 +53,8 @@ class Session
             );
         }
 
-	    $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
-	    return self::sanitizeValue($data, $sanitize);
+        $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
+        return self::sanitizeValue($data, $sanitize);
     }
     
     private static function sanitizeValue(mixed $value, bool $sanitize): string
