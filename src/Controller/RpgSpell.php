@@ -32,25 +32,25 @@ class RpgSpell extends Utilities
 
     public static function getAdminContentPage(array $params): string
     {
-	    $controller = new self();
+        $controller = new self();
 
         $form = Session::fromPost('spellFilter') ?? '';
         if ($form=='Filtrer') {
-        	$params[Constant::PAGE_NBPERPAGE] = Session::fromPost(Constant::PAGE_NBPERPAGE) ?? 10;
-        	$params['selectAllClass'] = Session::fromPost('selectAllClass')==1;
-        	$params['classFilter'] = Session::fromPost('classFilter', []);
-        	$params['selectAllSchool'] = Session::fromPost('selectAllSchool')==1;
-        	$params['schoolFilter'] = Session::fromPost('schoolFilter', []);
-        	$params['levelMinFilter'] = Session::fromPost('levelMinFilter', 0);
-        	$params['levelMaxFilter'] = Session::fromPost('levelMaxFilter', 9);
-        	$params['spellFilter'] = 'Filtrer';
+            $params[Constant::PAGE_NBPERPAGE] = Session::fromPost(Constant::PAGE_NBPERPAGE) ?? 10;
+            $params['selectAllClass'] = Session::fromPost('selectAllClass')==1;
+            $params['classFilter'] = Session::fromPost('classFilter', []);
+            $params['selectAllSchool'] = Session::fromPost('selectAllSchool')==1;
+            $params['schoolFilter'] = Session::fromPost('schoolFilter', []);
+            $params['levelMinFilter'] = Session::fromPost('levelMinFilter', 0);
+            $params['levelMaxFilter'] = Session::fromPost('levelMaxFilter', 9);
+            $params['spellFilter'] = 'Filtrer';
         } else {
-	        $form = Session::fromGet('spellFilter') ?? '';
+            $form = Session::fromGet('spellFilter') ?? '';
             if ($form=='Filtrer') {
                 $params['classFilter'] = Session::fromGet('classFilter', []);
-    	    	$params['selectAllClass'] = !empty($params['classFilter']);
+                $params['selectAllClass'] = !empty($params['classFilter']);
                 $params['schoolFilter'] = Session::fromGet('schoolFilter', []);
-	            $params['selectAllSchool'] = !empty($params['schoolFilter']);
+                $params['selectAllSchool'] = !empty($params['schoolFilter']);
                 $params['levelMinFilter'] = Session::fromGet('levelMinFilter', 0);
                 $params['levelMaxFilter'] = Session::fromGet('levelMaxFilter', 9);
             } else {
@@ -68,32 +68,32 @@ class RpgSpell extends Utilities
     
     public function getFilter(array $params): string
     {
-    	// Liste des options de classes.
+        // Liste des options de classes.
         $classOptions = '';
         foreach (ClassEnum::cases() as $case) {
-        	$value = $case->value;
-        	if (in_array($value, ['barbare', 'guerrier', 'moine', 'roublard'])) {
-            	continue;
+            $value = $case->value;
+            if (in_array($value, ['barbare', 'guerrier', 'moine', 'roublard'])) {
+                continue;
             }
-        	$classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
+            $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
         }
 
         // Liste des options d'écoles
         $schoolOptions = '';
         foreach (MagicSchoolEnum::cases() as $case) {
-        	$schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
+            $schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
         }
         
         // Liste des niveaux
         $minOptions = '';
         $maxOptions = '';
         for ($i=0; $i<=9; $i++) {
-            $minOptions .= '<option value="'.$i.'"'.($params['levelMinFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
-            $maxOptions .= '<option value="'.$i.'"'.($params['levelMaxFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
+            $minOptions .= '<option value="'.$i.'"'.($params['levelMinFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
+            $maxOptions .= '<option value="'.$i.'"'.($params['levelMaxFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
         }
         
-    	$attributes = [
-        	'/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=spells', // Url du formulaire
+        $attributes = [
+            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=spells', // Url du formulaire
             $params['selectAllClass'] ? ' checked' : '',
             count($params['classFilter']),
             $classOptions,
@@ -104,7 +104,7 @@ class RpgSpell extends Utilities
             $maxOptions,
             $params[Constant::PAGE_NBPERPAGE] ?? 10,
         ];
-	    return $this->getRender(Template::FILTER_SPELL, $attributes);
+        return $this->getRender(Template::FILTER_SPELL, $attributes);
     }
         
     public function getTable(array $params): Table

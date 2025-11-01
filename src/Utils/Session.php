@@ -51,7 +51,6 @@ class Session
                 self::sanitizeValue($item, $sanitize),
                 $data
             );
-            return $clean;
         }
 
 	    $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');

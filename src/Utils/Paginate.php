@@ -158,26 +158,28 @@ class Paginate
         return Html::getLi($strLink, [Constant::CST_CLASS=>'page-item'.$addClass]);
     }
     
-	private function dealWithFilterParams(string &$href)
+    private function dealWithFilterParams(string &$href): void
     {
-		if (!empty($this->extraParams)) {
-        	$filterArgs = [];
-        	foreach ($this->extraParams as $key => $value) {
-            	if (strpos($key, 'Filter')===false) {
-                	continue;
-                }
-                if (is_array($key)) {
-                	$nb = count($key);
-                    for ($i=0; $i<=$nb; $i++) {
-		            	$href = remove_query_arg($key[$i], $href);
-                    }
-                } else {
-	                $filterArgs[$key] = $value;
-                }
+        if (empty($this->extraParams)) {
+            return;
+        }
+
+        $filterArgs = [];
+        foreach ($this->extraParams as $key => $value) {
+            if (strpos($key, 'Filter')===false) {
+                continue;
             }
-            if (!empty($filterArgs)) {
-            	$href = add_query_arg($filterArgs, $href);
+            if (is_array($key)) {
+                $nb = count($key);
+                for ($i=0; $i<=$nb; $i++) {
+                    $href = remove_query_arg($key[$i], $href);
+                }
+            } else {
+                $filterArgs[$key] = $value;
             }
+        }
+        if (!empty($filterArgs)) {
+            $href = add_query_arg($filterArgs, $href);
         }
     }
     

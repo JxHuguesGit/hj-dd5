@@ -153,24 +153,11 @@ class RpgMonster extends Utilities
         // Le type de monstre
         $strType = $this->rpgMonster->getStrType();
 
-        // La taille
-        $strSize = SizeHelper::toLabelFr($this->rpgMonster->getField(Field::MSTSIZE));
-
         // La CA
         $strCA = $this->rpgMonster->getField(Field::SCORECA);
 
         // Les HP
         $strHP = $this->rpgMonster->getField(Field::SCOREHP);
-
-        // L'alignement
-        $objAlignement = $this->rpgMonster->getAlignement();
-        $strAlignement = $objAlignement->getStrAlignement();
-
-        // Légendaire ?
-        $strLegendaire = $this->rpgMonster->getField(Field::LEGENDARY)==1 ? 'Légendaire' : '';
-
-        // Habitat
-        $strHabitat = $this->rpgMonster->getField(Field::HABITAT);
 
         // Référence
         $objReference = $this->rpgMonster->getReference();
@@ -186,13 +173,8 @@ class RpgMonster extends Utilities
             ->addBodyCell([Constant::CST_CONTENT=>$strName])
             ->addBodyCell([Constant::CST_CONTENT=>$strCr, 'attributes'=>[Constant::CST_CLASS=>'text-center']])
             ->addBodyCell([Constant::CST_CONTENT=>$strType])
-            //->addBodyCell([Constant::CST_CONTENT=>$strSize])
             ->addBodyCell([Constant::CST_CONTENT=>$strCA, 'attributes'=>[Constant::CST_CLASS=>'text-center']])
             ->addBodyCell([Constant::CST_CONTENT=>$strHP, 'attributes'=>[Constant::CST_CLASS=>'text-end']])
-            //->addBodyCell([Constant::CST_CONTENT=>''])//$matches[8]])
-            //->addBodyCell([Constant::CST_CONTENT=>$strAlignement])
-            //->addBodyCell([Constant::CST_CONTENT=>$strLegendaire])
-            //->addBodyCell([Constant::CST_CONTENT=>$strHabitat])
             ->addBodyCell([Constant::CST_CONTENT=>$strReference])
             ->addBodyCell([Constant::CST_CONTENT=>$strActions])
             ;
@@ -266,42 +248,46 @@ class RpgMonster extends Utilities
 
     private function getResistances(string $type, string $label, string $tag):string
     {
-        $str = '';
         //////////////////////////////////////////////////////////////
         // Gestion des vulnérabilités, des résistances et des immunités du monstre
         $objs = $this->rpgMonster->getResistances($type);
         $resistances = $this->rpgMonster->getExtra($tag);
-        if (!$objs->isEmpty() || $resistances!='') {
-            $str .= '<div class="col-12"><strong>'.$label.'</strong> ';
-            $comma = false;
-            $objs->rewind();
-            $firstCond = true;
-            while ($objs->valid()) {
-                if ($comma) {
-                    $str .= ', ';
-                }
-                $obj = $objs->current();
-                
-                if ($obj instanceof EntityRpgMonsterResistance) {
-                    $objDmgOrCond = $obj->getTypeDamage();
-                } else {
-                    $objDmgOrCond = $obj->getCondition();
-                    if ($firstCond && $comma) {
-                        $str = substr($str, 0, -2).' ; ';
-                    }
-                    $firstCond = false;
-                }
-                $str .= $objDmgOrCond->getField(Field::NAME);
-                $comma = true;
-                $objs->next();
-            }
-            if ($resistances!='') {
-                $str .= ($comma ? ', ' : '').$resistances;
-            }
-            $str .= '</div>';
+        if ($objs->isEmpty() && $resistances==='') {
+            return '';
         }
         //////////////////////////////////////////////////////////////
-        return $str;
+
+        //////////////////////////////////////////////////////////////
+        $labelBalise = Html::getBalise('strong', $label);
+        $objs->rewind();
+        $damageNames = [];
+        $conditionNames = [];
+        while ($objs->valid()) {
+            $obj = $objs->current();
+
+            if ($obj instanceof EntityRpgMonsterResistance) {
+                $objDmgOrCond = $obj->getTypeDamage();
+                $damageNames[] = $objDmgOrCond->getField(Field::NAME);
+            } else {
+                $objDmgOrCond = $obj->getCondition();
+                $conditionNames[] = $objDmgOrCond->getField(Field::NAME);
+            }
+            $objs->next();
+        }
+        
+        $parts = [];
+        if (!empty($damageNames)) {
+            $parts[] = implode(', ', $damageNames);
+        }
+        if (!empty($conditionNames)) {
+            $parts[] = implode(', ', $conditionNames);
+        }
+
+        $resistanceNames[] = implode('; ', $parts);
+        if ($resistances!='') {
+            $resistanceNames[] = $resistances;
+        }
+        return Html::getDiv($labelBalise.implode(', ', $resistanceNames), [Constant::CST_CLASS=>'col-12']);
     }
 
     private function getSenses(): string
