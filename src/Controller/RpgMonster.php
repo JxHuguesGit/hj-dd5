@@ -31,7 +31,7 @@ class RpgMonster extends Utilities
 
     public static function getAdminContentPage(array $params): string
     {
-    	
+        
         $formAction = $params['formAction'] ?? Session::fromPost('formAction', 'table');
         if ($formAction=='table') {
             $objTable = static::getTable($params);
@@ -45,9 +45,9 @@ class RpgMonster extends Utilities
             $objForm = new FormRpgMonster($rpgMonstre);
             
             if ($formAction=='editConfirm') {
-	            $objForm->resolveForm();
-	            $rpgMonstre = $objDaoMonstre->find($monsterId);
-	            $objForm = new FormRpgMonster($rpgMonstre);
+                $objForm->resolveForm();
+                $rpgMonstre = $objDaoMonstre->find($monsterId);
+                $objForm = new FormRpgMonster($rpgMonstre);
             }
             $pageContent = $objForm->getTemplate();
         } else {

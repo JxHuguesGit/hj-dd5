@@ -8,8 +8,8 @@ enum MagicSchoolEnum: string
     case Enc = 'enchantement';
     case Evo = 'évocation';
     case Ill = 'illusion';
-    case Con = 'conjuration';
-    case Nec = 'necromancie';
+    case Inv = 'invocation';
+    case Nec = 'nécromancie';
     case Tra = 'transmutation';
 
     public function label(): string
@@ -20,7 +20,7 @@ enum MagicSchoolEnum: string
             static::Enc   => 'Enchantement',
             static::Evo   => 'Évocation',
             static::Ill   => 'Illusion',
-            static::Con   => 'Conjuration',
+            static::Inv   => 'Invocation',
             static::Nec   => 'Nécromancie',
             static::Tra   => 'Transmutation',
             default       => 'École de magie inconnue.',

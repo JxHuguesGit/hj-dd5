@@ -12,23 +12,58 @@ class Session
     
     public static function getPost(): array
     {
-    	$result = [];
+        $result = [];
         foreach ($_POST as $key => $value) {
-        	$result[$key] = static::fromPost($key);
+            $result[$key] = static::fromPost($key);
         }
         return $result;
     }
 
-    public static function fromPost(string $field, $default = '', bool $sanitize=false): string
+    public static function fromPost(string $field, array|string $default = '', bool $sanitize=false): array|string
     {
-        $strSanitized = isset($_POST[$field]) ? htmlentities((string) $_POST[$field], ENT_QUOTES, 'UTF-8') : $default;
-        return $sanitize ? filter_var($strSanitized, FILTER_SANITIZE_URL) : $strSanitized;
+        if (!isset($_POST[$field])) {
+            return $default;
+        }
+
+	    $data = $_POST[$field];
+        
+        if (is_array($data)) {
+            return array_map(fn($item) =>
+                self::sanitizeValue($item, $sanitize),
+                $data
+            );
+        }
+
+	    $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
+	    return self::sanitizeValue($data, $sanitize);
     }
 
-    public static function fromGet(string $field, $default = '', bool $sanitize=false): string
+    public static function fromGet(string $field, array|string $default = '', bool $sanitize=false): array|string
     {
-        $strSanitized = isset($_GET[$field]) ? htmlentities((string) $_GET[$field], ENT_QUOTES, 'UTF-8') : $default;
-        return $sanitize ? filter_var($strSanitized, FILTER_SANITIZE_URL) : $strSanitized;
+        if (!isset($_GET[$field])) {
+            return $default;
+        }
+
+	    $data = $_GET[$field];
+        
+        if (is_array($data)) {
+            return array_map(fn($item) =>
+                self::sanitizeValue($item, $sanitize),
+                $data
+            );
+            return $clean;
+        }
+
+	    $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
+	    return self::sanitizeValue($data, $sanitize);
+    }
+    
+    private static function sanitizeValue(mixed $value, bool $sanitize): string
+    {
+        if ($sanitize) {
+            $value = filter_var($value, FILTER_SANITIZE_URL);
+        }
+        return $value;
     }
 
     public static function fromServer(string $field): string

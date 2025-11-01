@@ -1,5 +1,5 @@
 @media (min-width: 576px) {
-	.modal-dialog { max-width: 600px !important; }
+    .modal-dialog { max-width: 600px !important; }
 }
 .modal-body {
     padding: 0;
@@ -141,4 +141,24 @@ div.rub ~ p {
 .modal-tooltip .fa-search {
   font-size: 0.5em;
   vertical-align: top;
+}
+
+.innerCard .ecole {
+  padding: 2px 0 6px 0;
+  text-align: left;
+  font-style: italic;
+}
+
+.innerCard .t, .innerCard .r, .innerCard .c, .innerCard .d {
+    font-size: 14px;
+}
+
+.innerCard .description {
+    padding: 6px 0 6px 0;
+    text-align: justify;
+}
+
+.innerCard .description p, .innerCard .description div {
+    font-size: 15px;
+    line-height: 21px;
 }

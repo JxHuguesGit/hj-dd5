@@ -19,6 +19,8 @@ class RpgSpell extends Entity
     public ?string $composanteMaterielle;
     public bool $concentration;
     public bool $rituel;
+    public ?string $typeAmelioration;
+    public ?string $ameliorationDescription;
     
     public function __construct(
         protected \Wp_Post $post
@@ -39,6 +41,9 @@ class RpgSpell extends Entity
         $this->composanteMaterielle = get_field('composante_materielle', $post->ID);
         $this->concentration    = !empty(get_field('concentration', $post->ID));
         $this->rituel           = !empty(get_field('rituel', $post->ID));
+        $arr = get_field('type_damelioration', $post->ID);
+        $this->typeAmelioration = (empty($arr) ? '' : $arr[0]);
+        $this->ameliorationDescription = get_field('amelioration_description', $post->ID);
     }
 
     public function getController(): ControllerRpgSpell
@@ -77,6 +82,16 @@ class RpgSpell extends Entity
     {
         return $this->content;
     }
+    
+    public function getTypeAmelioration(): string
+    {
+        return $this->typeAmelioration;
+    }
+
+    public function getAmelioration(): string
+    {
+        return $this->ameliorationDescription ?? '';
+    }
 
     private function getDureeConvertie(string $value): string
     {
@@ -103,9 +118,11 @@ class RpgSpell extends Entity
                 case 'spec' :
                     $str = 'Spéciale';
                 break;
+                case 'bonus' :
+                    $str = 'Action Bonus';
+                break;
                 case 'action' :
-                case 'action bonus' :
-                    $str = ucwords($this->tempsIncantation);
+                    $str = 'Action';
                 break;
                 case 'reaction' :
                     $str = 'Réaction';

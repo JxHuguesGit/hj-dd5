@@ -57,6 +57,7 @@ final class Template
     public const FORM_PATH           = self::TEMPLATE_PATH.'form/';
     public const FORM_FEAT           = self::FORM_PATH.'RpgFeat.tpl';
     public const FORM_MONSTERABILITY = self::FORM_PATH.'RpgMonster.tpl';
+    public const FILTER_SPELL        = self::FORM_PATH.'spellFilter.tpl';
 
     public const HERO_PATH           = self::TEMPLATE_PATH.'hero/';
     public const HERO_CREATE_HEADER  = self::HERO_PATH.'createHeader.tpl';

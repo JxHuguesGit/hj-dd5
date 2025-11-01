@@ -29,6 +29,7 @@ class AdminCompendiumPage extends AdminPage
     public function getAdminContentPage(string $content=''): string
     {
         $currentId = $this->getArrParams('id');
+        $paddingTop = 'padding-top:2rem;';
 
         switch ($currentId) {
             case Constant::ARMORS :
@@ -54,6 +55,7 @@ class AdminCompendiumPage extends AdminPage
                break;
             case Constant::SPELLS :
                 $pageContent = RpgSpell::getAdminContentPage($this->arrParams);
+		        $paddingTop = '';
                break;
             default :
                 $objTable = null;
@@ -65,6 +67,8 @@ class AdminCompendiumPage extends AdminPage
         // Tout le reste sera géré via d'autres méthodes afin de ne pas être perdu dans le nombre de paramètres du template
         $attributes = [
             $pageContent,//$this->getBlockQuickInfo(), // bloc des données chiffrées
+            $paddingTop,
+            /*
             '-large',//$hero->getId(), // id du personnage
             '',//$scheme, // style couleur (qui va définir les contours et fonds des svg mais aussi la couleur du texte)
             '',//'/wp-cotent/plugins/hj-dd5/assets/images/PJ1avatar.jpeg', // image du personnage
@@ -73,6 +77,7 @@ class AdminCompendiumPage extends AdminPage
             '',//'Roublard 1', // classe du personnage
             '',//'Niveau 1', // niveau du personnage
             '',//$this->getBlockSubsections(), // bloc des données chiffrées
+            */
         ];
 
         $content .= $this->getRender(Template::ADMINCOMPENDIUM, $attributes);

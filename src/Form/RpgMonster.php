@@ -68,15 +68,15 @@ class RpgMonster extends Form
     
     public function resolveForm(): void
     {
-	    $monsterId = Session::fromPost('entityId');
-	    $name = Session::fromPost('name-fr');
+        $monsterId = Session::fromPost('entityId');
+        $name = Session::fromPost('name-fr');
         
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $dao = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
         $obj = $dao->find($monsterId);
 
-		$obj->setField(Field::FRNAME, $name);
+        $obj->setField(Field::FRNAME, $name);
         $dao->update($obj);
 
 
@@ -84,21 +84,21 @@ class RpgMonster extends Form
         $queryExecutor = new QueryExecutor();
         $dao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
 
-		$params = Session::getPost();
+        $params = Session::getPost();
         foreach ($params as $key => $value) {
-        	if (substr($key, 0, 9)!=='mab-rank-') {
-            	continue;
+            if (substr($key, 0, 9)!=='mab-rank-') {
+                continue;
             }
             
             list(, , $monsterAbilityId) = explode('-', $key);
             $obj = $dao->find($monsterAbilityId);
             
-        	$name = $params['mab-name-'.$monsterAbilityId];
-        	$description = $params['mab-description-'.$monsterAbilityId];
-        	$rank = $params['mab-rank-'.$monsterAbilityId];
+            $name = $params['mab-name-'.$monsterAbilityId];
+            $description = $params['mab-description-'.$monsterAbilityId];
+            $rank = $params['mab-rank-'.$monsterAbilityId];
             
             $obj->setField(Field::NAME, $name)
-            	->setField(Field::DESCRIPTION, $description)
+                ->setField(Field::DESCRIPTION, $description)
                 ->setField(Field::RANK, $rank);
 
             if ($rank==0) {
@@ -111,47 +111,46 @@ class RpgMonster extends Form
     
     public function getTemplate(): string
     {
-	    $controller = new Utilities();
+        $controller = new Utilities();
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $dao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
         $objs = $dao->findBy([Field::MONSTERID=>$this->rpgMonster->getField(Field::ID)]);
         
-		$strMonsterAbilities = '';
+        $strMonsterAbilities = '';
         $cpt = 0;
         $objs->rewind();
         while ($objs->valid()) {
-        	$obj = $objs->current();
+            $obj = $objs->current();
 
-			$strMonsterAbilities .= $this->getMonsterAbilityForm($obj);
+            $strMonsterAbilities .= $this->getMonsterAbilityForm($obj);
             ++$cpt;
 
-        	$objs->next();
+            $objs->next();
         }
         
         $url = '/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=compendium&id=monsters';
         if (Session::fromGet('curpage', 1)!=1) {
-	        $url = add_query_arg('curpage', Session::fromGet('curpage'), $url);
+            $url = add_query_arg('curpage', Session::fromGet('curpage'), $url);
         }
         if (Session::fromGet('nbPerPage', 10)!=10) {
-	        $url = add_query_arg('nbPerPage', Session::fromGet('nbPerPage'), $url);
+            $url = add_query_arg('nbPerPage', Session::fromGet('nbPerPage'), $url);
         }
         $attributes = [
-        	$this->rpgMonster->getField(Field::FRNAME),
-        	$this->rpgMonster->getField(Field::NAME),
+            $this->rpgMonster->getField(Field::FRNAME),
+            $this->rpgMonster->getField(Field::NAME),
             $strMonsterAbilities,
-        	$this->rpgMonster->getField(Field::ID),
+            $this->rpgMonster->getField(Field::ID),
             $url
         ];
 
-        $content = $controller->getRender(Template::FORM_MONSTERABILITY, $attributes);
-        return $content;
+        return $controller->getRender(Template::FORM_MONSTERABILITY, $attributes);
     }
     
     private function getMonsterAbilityForm(EntityRpgMonsterAbility $rpgMonsterAbility): string
     {
-	    $cpt = $rpgMonsterAbility->getField(Field::ID);
-		return '<div class="input-group">
+        $cpt = $rpgMonsterAbility->getField(Field::ID);
+        return '<div class="input-group">
               <span class="input-group-text">Nom</span>
               <input type="text" class="form-control" id="mab-name-'.$cpt.'" name="mab-name-'.$cpt.'" value="'.stripslashes($rpgMonsterAbility->getField(Field::NAME)).'" data-action="RmbFocus">
               <span class="input-group-text">Rang</span>
@@ -159,6 +158,6 @@ class RpgMonster extends Form
             </div>
             <div class="input-group mb-3">
               <textarea class="form-control" id="mab-description-'.$cpt.'" name="mab-description-'.$cpt.'" data-action="RmbFocus">'.stripslashes($rpgMonsterAbility->getField(Field::DESCRIPTION)).'</textarea>
-            </div>';    
+            </div>';
     }
 }

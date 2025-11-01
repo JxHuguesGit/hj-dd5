@@ -22,7 +22,7 @@ class Table
     {
         $this->attributes = [
             Constant::CST_CLASS=>'table',
-            'aria-describedby' => '',
+            'aria-describedby' => '',//'Liste des missions',
         ];
 
     }
@@ -37,7 +37,15 @@ class Table
         return $this;
     }
     
-    public function setNbPerPage(int $refElementId=1, int $selNbPerPage=10, array $arrNbPerPage=[]): self
+    public function setFilter(string $strContent, int $cols=7): self
+    {
+        $this->addHeaderRow()
+             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>$cols]]);
+    
+    	return $this;
+    }
+    
+    public function setNbPerPage(int $refElementId=1, int $selNbPerPage=10, array $arrNbPerPage=[], int $cols=7): self
     {
         $this->blnNbPerPage = true;
         if (empty($arrNbPerPage)) {
@@ -61,7 +69,7 @@ class Table
         
         $strContent = Html::getBalise('div', $strDivContent, [Constant::CST_CLASS=>'row mx-2 d-flex justify-content-between align-items-center']);
         $this->addHeaderRow()
-             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>7]]);
+             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>$cols]]);
         return $this;
     }
 
@@ -289,10 +297,10 @@ class Table
         return $this;
     }
     
-    public function setPaginate(array $paginate=[]): self
+    public function setPaginate(array $paginate=[], array $params=[]): self
     {
         $this->blnPaginate = true;
-        $this->paginate = new Paginate($paginate);
+        $this->paginate = new Paginate($paginate, $params);
         return $this;
     }
 

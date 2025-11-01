@@ -6,7 +6,7 @@
 		<div style="position:relative;" class="container">
 			<div class="container-fluid" name="compendium-app">
 
-                <div class="table-responsive" style="padding-top:2rem">
+                <div class="table-responsive" style="%2$s">
                     %1$s
                 </div>
 

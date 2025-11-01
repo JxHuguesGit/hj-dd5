@@ -44,9 +44,9 @@ class RpgFeat extends Utilities
             $objForm = new FormRpgFeat($rpgFeat);
             
             if ($formAction=='editConfirm') {
-	            $objForm->resolveForm();
-	            $rpgFeat = $objDaoFeat->find($featId);
-	            $objForm = new FormRpgFeat($rpgFeat);
+                $objForm->resolveForm();
+                $rpgFeat = $objDaoFeat->find($featId);
+                $objForm = new FormRpgFeat($rpgFeat);
             }
             $pageContent = $objForm->getTemplate();
         } else {

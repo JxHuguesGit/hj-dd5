@@ -15,10 +15,11 @@ class Paginate
     private $url;
     private $pageWidth;
     private $cssPageLink;
+    private array $extraParams;
 
     const PAGE_DEFAULT_WIDTH = 2;
 
-    public function __construct(array $arrData=[])
+    public function __construct(array $arrData=[], array $params=[])
     {
         /////////////////////////////////////////////////
         // Paramètres optionnels
@@ -42,8 +43,12 @@ class Paginate
         $curPage = $arrData[Constant::CST_CURPAGE] ?? 1;
         $this->curPage = max(1, min($curPage, $this->nbPages));
         /////////////////////////////////////////////////
+        
+        $this->extraParams = $params;
 
         $this->url = remove_query_arg(Constant::CST_CURPAGE);
+        $this->dealWithFilterParams($this->url);
+        
     }
 
     public function getPaginationBlock(): string
@@ -151,6 +156,29 @@ class Paginate
         }
 
         return Html::getLi($strLink, [Constant::CST_CLASS=>'page-item'.$addClass]);
+    }
+    
+	private function dealWithFilterParams(string &$href)
+    {
+		if (!empty($this->extraParams)) {
+        	$filterArgs = [];
+        	foreach ($this->extraParams as $key => $value) {
+            	if (strpos($key, 'Filter')===false) {
+                	continue;
+                }
+                if (is_array($key)) {
+                	$nb = count($key);
+                    for ($i=0; $i<=$nb; $i++) {
+		            	$href = remove_query_arg($key[$i], $href);
+                    }
+                } else {
+	                $filterArgs[$key] = $value;
+                }
+            }
+            if (!empty($filterArgs)) {
+            	$href = add_query_arg($filterArgs, $href);
+            }
+        }
     }
     
     public function getStartSlice(): int
