@@ -51,14 +51,12 @@ class HomePage extends Utilities
         //if (!is_user_logged_in()) {
         //    $controller = new self();
         //} else {
-            $currentUser = wp_get_current_user();
             if (Session::isPostSubmitted()) {
                 if (Session::fromPost(Constant::FORMNAME)=='heroSelection') {
                     $controller = new Hero();
                 } elseif (Session::fromPost(Constant::FORMNAME)=='classSelection') {
                     $controller = Caste::getCreationContentForCaste();
                 } else {
-                    echo 'Formname non couvert ['.Session::fromPost(Constant::FORMNAME).']<br>';
                     $controller = new self();
                 }
             } else {

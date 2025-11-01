@@ -40,39 +40,30 @@ class Caste extends Utilities
             if ($formName=='classSelection') {
                 $hero->setCasteId(Session::fromPost('classSelectionValue'));
                 $repositoryHero->update($hero);
-                echo 'WIP getCreationContentForCaste classSelection';
-            } else {
-                echo 'formName inattendu : ['.$formName.']';
             }
         }
-        return new Caste();
 
         // Quelle classe je suis ?
-        $caste = $repositoryCaste->find($hero->getCasteId());
+        $caste = $repositoryCaste->find($hero->getField(Field::ID));
         switch ($caste->getField(Field::CODE)) {
             case 'CLE' :
                 // TODO ClericCaste
-                $content = 'CLE TODO';
                 break;
             case 'FIG' :
                 $casteController = new FighterCaste();
                 $casteController->setHero($hero);
-                $content = $casteController->getContentPage();
                 break;
             case 'ROG' :
                 // TODO RogueCaste
-                $content = 'ROG TODO';
                 break;
             case 'WIZ' :
                 // TODO WizardCaste
-                $content = 'WIZ TODO';
                 break;
             default :
                 // Sonar
-                $content  = "[<strong>".$caste->getField(Field::CODE)."</strong>] n'est pas une classe attendue.";
             break;
         }
-        return $content;
+        return $caste;
 
     }
 }
