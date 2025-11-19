@@ -43,24 +43,18 @@ class RpgSpell extends Utilities
             $params['schoolFilter'] = Session::fromPost('schoolFilter', []);
             $params['levelMinFilter'] = Session::fromPost('levelMinFilter', 0);
             $params['levelMaxFilter'] = Session::fromPost('levelMaxFilter', 9);
+            $params['onlyRituel'] = Session::fromPost('onlyRituel', 0);
+            $params['onlyConcentration'] = Session::fromPost('onlyConcentration', 0);
             $params['spellFilter'] = 'Filtrer';
         } else {
-            $form = Session::fromGet('spellFilter') ?? '';
-            if ($form=='Filtrer') {
-                $params['classFilter'] = Session::fromGet('classFilter', []);
-                $params['selectAllClass'] = !empty($params['classFilter']);
-                $params['schoolFilter'] = Session::fromGet('schoolFilter', []);
-                $params['selectAllSchool'] = !empty($params['schoolFilter']);
-                $params['levelMinFilter'] = Session::fromGet('levelMinFilter', 0);
-                $params['levelMaxFilter'] = Session::fromGet('levelMaxFilter', 9);
-            } else {
-                $params['selectAllClass'] = true;
-                $params['classFilter'] = array_map(fn($case) => $case->value, ClassEnum::cases());
-                $params['selectAllSchool'] = true;
-                $params['schoolFilter'] = array_map(fn($case) => $case->value, MagicSchoolEnum::cases());
-                $params['levelMinFilter'] = 0;
-                $params['levelMaxFilter'] = 9;
-            }
+            $params['selectAllClass'] = true;
+            $params['classFilter'] = array_map(fn($case) => $case->value, array_filter(ClassEnum::cases(), fn($case) => !in_array($case->value, ['barbare', 'guerrier', 'moine', 'roublard'])));
+            $params['selectAllSchool'] = true;
+            $params['schoolFilter'] = array_map(fn($case) => $case->value, MagicSchoolEnum::cases());
+            $params['levelMinFilter'] = 0;
+            $params['levelMaxFilter'] = 9;
+            $params['onlyRituel'] = 0;
+            $params['onlyConcentration'] = 0;
         }
         $objTable = $controller->getTable($params);
         return $objTable?->display();
@@ -75,21 +69,21 @@ class RpgSpell extends Utilities
             if (in_array($value, ['barbare', 'guerrier', 'moine', 'roublard'])) {
                 continue;
             }
-            $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
+            $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
         }
 
         // Liste des options d'écoles
         $schoolOptions = '';
         foreach (MagicSchoolEnum::cases() as $case) {
-            $schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
+            $schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
         }
         
         // Liste des niveaux
         $minOptions = '';
         $maxOptions = '';
         for ($i=0; $i<=9; $i++) {
-            $minOptions .= '<option value="'.$i.'"'.($params['levelMinFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
-            $maxOptions .= '<option value="'.$i.'"'.($params['levelMaxFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
+            $minOptions .= '<option value="'.$i.'"'.($params['levelMinFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
+            $maxOptions .= '<option value="'.$i.'"'.($params['levelMaxFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
         }
         
         $attributes = [
@@ -102,7 +96,10 @@ class RpgSpell extends Utilities
             $schoolOptions,
             $minOptions,
             $maxOptions,
+            $params['onlyRituel'] ? ' checked' : '',
+            $params['onlyConcentration'] ? ' checked' : '',
             $params[Constant::PAGE_NBPERPAGE] ?? 10,
+            $params['refElementId'],
         ];
         return $this->getRender(Template::FILTER_SPELL, $attributes);
     }
@@ -116,6 +113,9 @@ class RpgSpell extends Utilities
         $curPage      = $params[Constant::CST_CURPAGE] ?? 1;
         $nbPerPage    = $params[Constant::PAGE_NBPERPAGE] ?? 10;
         $refElementId = $params['refElementId'] ?? ($curPage-1)*$nbPerPage+1;
+        if (!isset($params['refElementId'])) {
+            $params['refElementId'] = $refElementId;
+        }
         
         if (($curPage-1)*$nbPerPage>$refElementId || $curPage*$nbPerPage<$refElementId) {
             $curPage = floor(($refElementId-1)/$nbPerPage)+1;

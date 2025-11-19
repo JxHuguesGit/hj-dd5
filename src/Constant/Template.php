@@ -55,9 +55,10 @@ final class Template
     public const CASTE_DETAIL_WIZ    = self::CASTE_PATH.'casteDetailWIZ.tpl';
     
     public const FORM_PATH           = self::TEMPLATE_PATH.'form/';
+    public const FILTER_MONSTER      = self::FORM_PATH.'monsterFilter.tpl';
+    public const FILTER_SPELL        = self::FORM_PATH.'spellFilter.tpl';
     public const FORM_FEAT           = self::FORM_PATH.'RpgFeat.tpl';
     public const FORM_MONSTERABILITY = self::FORM_PATH.'RpgMonster.tpl';
-    public const FILTER_SPELL        = self::FORM_PATH.'spellFilter.tpl';
 
     public const HERO_PATH           = self::TEMPLATE_PATH.'hero/';
     public const HERO_CREATE_HEADER  = self::HERO_PATH.'createHeader.tpl';
@@ -66,4 +67,12 @@ final class Template
     public const UTILITIES_PATH      = self::TEMPLATE_PATH.'utilities/';
     public const CASTE_SELECT_BTN    = self::UTILITIES_PATH.'casteSelectionButton.tpl';
     public const HERO_SELECTION_LINE = self::UTILITIES_PATH.'heroSelectionLine.tpl';
+    
+    public const CREATE_PATH         = self::TEMPLATE_PATH.'creation/';
+    public const CREATE_CLASSE       = self::CREATE_PATH.'step-classe.tpl';
+    public const CREATE_NAME         = self::CREATE_PATH.'step-name.tpl';
+    public const CREATE_ORIGIN       = self::CREATE_PATH.'step-origin.tpl';
+    public const CREATE_SPECIES      = self::CREATE_PATH.'step-species.tpl';
+    public const CREATE_FEAT         = self::CREATE_PATH.'step-feat.tpl';
+    public const CREATE_SIDEBAR      = self::CREATE_PATH.'step-sidebar.tpl';
 }

@@ -27,6 +27,7 @@ class AdminCompendiumPage extends AdminPage
             break;
             case Constant::MONSTERS :
                 $pageContent = RpgMonster::getAdminContentPage($this->arrParams);
+                $paddingTop = '';
             break;
             case Constant::FEATS :
                 $pageContent = RpgFeat::getAdminContentPage($this->arrParams);

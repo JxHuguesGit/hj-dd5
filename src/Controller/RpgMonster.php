@@ -9,8 +9,10 @@ use src\Constant\Icon;
 use src\Constant\Template;
 use src\Entity\RpgMonster as EntityRpgMonster;
 use src\Entity\RpgMonsterResistance as EntityRpgMonsterResistance;
+use src\Enum\MonsterTypeEnum;
 use src\Form\RpgMonster as FormRpgMonster;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
+use src\Repository\RpgTypeMonstre as RepositoryRpgTypeMonster;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -31,10 +33,26 @@ class RpgMonster extends Utilities
 
     public static function getAdminContentPage(array $params): string
     {
+        $controller = new self();
+
+        $form = Session::fromPost('monsterFilter') ?? '';
+        if ($form=='Filtrer') {
+            $params[Constant::PAGE_NBPERPAGE] = Session::fromPost(Constant::PAGE_NBPERPAGE) ?? 10;
+            $params['selectAllType'] = Session::fromPost('selectAllType')==1;
+            $params['typeFilter'] = Session::fromPost('typeFilter', []);
+            $params['fpMinFilter'] = Session::fromPost('fpMinFilter', 0);
+            $params['fpMaxFilter'] = Session::fromPost('fpMaxFilter', 30);
+            $params['monsterFilter'] = 'Filtrer';
+        } else {
+            $params['selectAllType'] = true;
+            $params['typeFilter'] = array_map(fn($case) => $case->value, MonsterTypeEnum::cases());
+            $params['fpMinFilter'] = 0;
+            $params['fpMaxFilter'] = 30;
+        }
         
         $formAction = $params['formAction'] ?? Session::fromPost('formAction', 'table');
         if ($formAction=='table') {
-            $objTable = static::getTable($params);
+            $objTable = $controller->getTable($params);
             $pageContent = $objTable?->display();
         } elseif (in_array($formAction, ['edit', 'editConfirm'])) {
             $monsterId = $params['entityId'] ?? Session::fromPost('entityId', 'table');
@@ -56,15 +74,52 @@ class RpgMonster extends Utilities
         return $pageContent;
     }
     
-    public static function getTable(array $params): Table
+    public function getFilter(array $params): string
+    {
+        // Liste des options de types de monstres
+        $typeOptions = '';
+        foreach (MonsterTypeEnum::cases() as $case) {
+            $typeOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['typeFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
+        }
+        
+        // Liste des niveaux
+        $minOptions = '';
+        $maxOptions = '';
+        for ($i=0; $i<=30; $i++) {
+            $minOptions .= '<option value="'.$i.'"'.($params['fpMinFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
+            $maxOptions .= '<option value="'.$i.'"'.($params['fpMaxFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
+        }
+        
+        $attributes = [
+            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=monsters', // Url du formulaire
+            $params['selectAllType'] ? ' checked' : '',
+            count($params['typeFilter']),
+            $typeOptions,
+            '',//$params['selectAllSchool'] ? ' checked' : '',
+            '',//count($params['schoolFilter']),
+            '',//$schoolOptions,
+            $minOptions,
+            $maxOptions,
+            '',//$params['onlyRituel'] ? ' checked' : '',
+            '',//$params['onlyConcentration'] ? ' checked' : '',
+            $params[Constant::PAGE_NBPERPAGE] ?? 10,
+            $params['refElementId'],
+        ];
+        return $this->getRender(Template::FILTER_MONSTER, $attributes);
+    }    
+    
+    public function getTable(array $params): Table
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDaoMonstre = new RepositoryRpgMonster($queryBuilder, $queryExecutor);
-        $objsMonstre = $objDaoMonstre->findAll(["COALESCE(NULLIF(".Field::FRNAME.", ''), ".Field::NAME.")"=>Constant::CST_ASC]);
+        $objsMonstre = $objDaoMonstre->findBy($params, ["COALESCE(NULLIF(".Field::FRNAME.", ''), rpgMonster.".Field::NAME.")"=>Constant::CST_ASC]);
         $curPage      = $params[Constant::CST_CURPAGE] ?? 1;
         $nbPerPage    = $params[Constant::PAGE_NBPERPAGE] ?? 10;
         $refElementId = $params['refElementId'] ?? ($curPage-1)*$nbPerPage+1;
+        if (!isset($params['refElementId'])) {
+            $params['refElementId'] = $refElementId;
+        }
         
         if (($curPage-1)*$nbPerPage>$refElementId || $curPage*$nbPerPage<$refElementId) {
             $curPage = floor(($refElementId-1)/$nbPerPage)+1;
@@ -76,22 +131,19 @@ class RpgMonster extends Utilities
             Constant::PAGE_NBPERPAGE => $nbPerPage
         ];
         $refElementId = ($curPage-1)*$nbPerPage + 1;
+        
         $objTable = new Table();
-        $objTable->setTable([Constant::CST_CLASS=>'table-sm table-striped mt-5'])
-            ->setPaginate($paginate)
-            ->addHeader([Constant::CST_CLASS=>'table-dark text-center'])
+        $objTable->setTable([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_SM]), 'style'=>'margin-top:120px'])
+            ->setPaginate($paginate, $params)
+            ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
             ->setNbPerPage($refElementId, $nbPerPage)
+            ->setFilter($this->getFilter($params), 10)
             ->addHeaderRow()
             ->addHeaderCell([Constant::CST_CONTENT=>'Monstres'])
             ->addHeaderCell([Constant::CST_CONTENT=>'CR'])
             ->addHeaderCell([Constant::CST_CONTENT=>'Type'])
-            //->addHeaderCell([Constant::CST_CONTENT=>'Taille'])
             ->addHeaderCell([Constant::CST_CONTENT=>'CA'])
             ->addHeaderCell([Constant::CST_CONTENT=>'HP'])
-            //->addHeaderCell([Constant::CST_CONTENT=>'Vitesse'])
-            //->addHeaderCell([Constant::CST_CONTENT=>'Alignement'])
-            //->addHeaderCell([Constant::CST_CONTENT=>'Légendaire'])
-            //->addHeaderCell([Constant::CST_CONTENT=>'Habitat'])
             ->addHeaderCell([Constant::CST_CONTENT=>'Référence'])
             ->addHeaderCell([Constant::CST_CONTENT=>'&nbsp;'])
             ;
@@ -101,7 +153,7 @@ class RpgMonster extends Utilities
         return $objTable;
     }
 
-    public function addBodyRow(Table &$objTable): void
+    public function addBodyRow(Table &$objTable, array $arrParams): void
     {
         $htmlExtenion = '.html';
         $blnComplet = $this->rpgMonster->getField(Field::INCOMPLET)==0;
@@ -153,11 +205,24 @@ class RpgMonster extends Utilities
         // Le type de monstre
         $strType = $this->rpgMonster->getStrType();
 
+        // La taille
+        $strSize = SizeHelper::toLabelFr($this->rpgMonster->getField(Field::MSTSIZE));
+
         // La CA
         $strCA = $this->rpgMonster->getField(Field::SCORECA);
 
         // Les HP
         $strHP = $this->rpgMonster->getField(Field::SCOREHP);
+
+        // L'alignement
+        $objAlignement = $this->rpgMonster->getAlignement();
+        $strAlignement = $objAlignement->getStrAlignement();
+
+        // Légendaire ?
+        $strLegendaire = $this->rpgMonster->getField(Field::LEGENDARY)==1 ? 'Légendaire' : '';
+
+        // Habitat
+        $strHabitat = $this->rpgMonster->getField(Field::HABITAT);
 
         // Référence
         $objReference = $this->rpgMonster->getReference();
@@ -169,12 +234,17 @@ class RpgMonster extends Utilities
         $href = add_query_arg('entityId', $this->rpgMonster->getField(Field::ID), $href);
         $strActions = Html::getLink($label, $href, '');
 
-        $objTable->addBodyRow()
+        $objTable->addBodyRow($arrParams)
             ->addBodyCell([Constant::CST_CONTENT=>$strName])
             ->addBodyCell([Constant::CST_CONTENT=>$strCr, 'attributes'=>[Constant::CST_CLASS=>'text-center']])
             ->addBodyCell([Constant::CST_CONTENT=>$strType])
+            //->addBodyCell([Constant::CST_CONTENT=>$strSize])
             ->addBodyCell([Constant::CST_CONTENT=>$strCA, 'attributes'=>[Constant::CST_CLASS=>'text-center']])
             ->addBodyCell([Constant::CST_CONTENT=>$strHP, 'attributes'=>[Constant::CST_CLASS=>'text-end']])
+            //->addBodyCell([Constant::CST_CONTENT=>''])//$matches[8]])
+            //->addBodyCell([Constant::CST_CONTENT=>$strAlignement])
+            //->addBodyCell([Constant::CST_CONTENT=>$strLegendaire])
+            //->addBodyCell([Constant::CST_CONTENT=>$strHabitat])
             ->addBodyCell([Constant::CST_CONTENT=>$strReference])
             ->addBodyCell([Constant::CST_CONTENT=>$strActions])
             ;
@@ -248,46 +318,42 @@ class RpgMonster extends Utilities
 
     private function getResistances(string $type, string $label, string $tag):string
     {
+        $str = '';
         //////////////////////////////////////////////////////////////
         // Gestion des vulnérabilités, des résistances et des immunités du monstre
         $objs = $this->rpgMonster->getResistances($type);
         $resistances = $this->rpgMonster->getExtra($tag);
-        if ($objs->isEmpty() && $resistances==='') {
-            return '';
-        }
-        //////////////////////////////////////////////////////////////
-
-        //////////////////////////////////////////////////////////////
-        $labelBalise = Html::getBalise('strong', $label);
-        $objs->rewind();
-        $damageNames = [];
-        $conditionNames = [];
-        while ($objs->valid()) {
-            $obj = $objs->current();
-
-            if ($obj instanceof EntityRpgMonsterResistance) {
-                $objDmgOrCond = $obj->getTypeDamage();
-                $damageNames[] = $objDmgOrCond->getField(Field::NAME);
-            } else {
-                $objDmgOrCond = $obj->getCondition();
-                $conditionNames[] = $objDmgOrCond->getField(Field::NAME);
+        if (!$objs->isEmpty() || $resistances!='') {
+            $str .= '<div class="col-12"><strong>'.$label.'</strong> ';
+            $comma = false;
+            $objs->rewind();
+            $firstCond = true;
+            while ($objs->valid()) {
+                if ($comma) {
+                    $str .= ', ';
+                }
+                $obj = $objs->current();
+                
+                if ($obj instanceof EntityRpgMonsterResistance) {
+                    $objDmgOrCond = $obj->getTypeDamage();
+                } else {
+                    $objDmgOrCond = $obj->getCondition();
+                    if ($firstCond && $comma) {
+                        $str = substr($str, 0, -2).' ; ';
+                    }
+                    $firstCond = false;
+                }
+                $str .= $objDmgOrCond->getField(Field::NAME);
+                $comma = true;
+                $objs->next();
             }
-            $objs->next();
+            if ($resistances!='') {
+                $str .= ($comma ? ', ' : '').$resistances;
+            }
+            $str .= '</div>';
         }
-        
-        $parts = [];
-        if (!empty($damageNames)) {
-            $parts[] = implode(', ', $damageNames);
-        }
-        if (!empty($conditionNames)) {
-            $parts[] = implode(', ', $conditionNames);
-        }
-
-        $resistanceNames[] = implode('; ', $parts);
-        if ($resistances!='') {
-            $resistanceNames[] = $resistances;
-        }
-        return Html::getDiv($labelBalise.implode(', ', $resistanceNames), [Constant::CST_CLASS=>'col-12']);
+        //////////////////////////////////////////////////////////////
+        return $str;
     }
 
     private function getSenses(): string

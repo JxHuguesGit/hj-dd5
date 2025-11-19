@@ -55,10 +55,15 @@ class RpgOrigin extends Utilities
             ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
             ->setNbPerPage($refElementId, $nbPerPage)
             ->addHeaderRow()
-            ->addHeaderCell([Constant::CST_CONTENT=>Language::LG_ORIGINS]);
+            ->addHeaderCell([Constant::CST_CONTENT=>Language::LG_ORIGINS])
+            ->addHeaderCell([Constant::CST_CONTENT=>'Caractéristiques'])
+            ->addHeaderCell([Constant::CST_CONTENT=>"Don d'origine"])
+            ->addHeaderCell([Constant::CST_CONTENT=>'Compétences'])
+            ->addHeaderCell([Constant::CST_CONTENT=>'Outils'])
+;
         
         if ($rpgFeats->valid()) {
-            $objTable->addBodyRows($rpgFeats, 1);
+            $objTable->addBodyRows($rpgFeats, 5);
         }
         return $objTable;
     }
@@ -68,8 +73,32 @@ class RpgOrigin extends Utilities
         /////////////////////////////////////////////////////////////////////
         // Le nom
         $strName = $this->rpgOrigin->getField(Field::NAME);
+        
+        // La liste des caractéristiques
+        $strAbilities = $this->rpgOrigin->getCaracteristiques();
+        
+        // Le don d'origine rattaché
+        $strOriginFeat = $this->rpgOrigin->getOriginFeat()->getField(Field::NAME);
+        
+        $strSkills = $this->rpgOrigin->getSkills();
+        $strTool = '';
                 
         $objTable->addBodyRow()
-            ->addBodyCell([Constant::CST_CONTENT=>$strName]);
+            ->addBodyCell([Constant::CST_CONTENT=>$strName])
+            ->addBodyCell([Constant::CST_CONTENT=>$strAbilities])
+            ->addBodyCell([Constant::CST_CONTENT=>$strOriginFeat])
+            ->addBodyCell([Constant::CST_CONTENT=>$strSkills])
+            ->addBodyCell([Constant::CST_CONTENT=>$strTool])
+            ;
+    }
+
+    public function getRadioForm(bool $checked=false): string
+    {
+        $id = $this->rpgOrigin->getField(Field::ID);
+        $name = $this->rpgOrigin->getField(Field::NAME);
+        return '<div class="form-check">'
+                . '<input class="" type="radio" name="characterOriginId" value="'.$id.'" id="origin'.$id.'"'.($checked?' checked':'').'>'
+                . '<label class="form-check-label" for="origin'.$id.'">'.$name.'</label>'
+                . '</div>';
     }
 }

@@ -60,9 +60,9 @@ class Table
             $selectContent .= Html::getOption($nbPerPage, array_merge(['value'=>$nbPerPage], $nbPerPage==$selNbPerPage ? ['selected'=>'selected'] : []));
         }
         $strDivDivContent  = Html::getBalise('label', 'Afficher', ['for'=>Constant::PAGE_NBPERPAGE, Constant::CST_CLASS=>'col-1 me-2 mb-0 text-end"'])
-                           . Html::getBalise('select', $selectContent, [Constant::CST_CLASS=>'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger'=>'change', 'data-action'=>'loadMonsterPage'])
+                           . Html::getBalise('select', $selectContent, [Constant::CST_CLASS=>'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger'=>'change', 'data-action'=>'loadTablePage'])
                            . Html::getSpan('entrées', [Constant::CST_CLASS=>'ms-2 col-9 text-start'])
-                           . Html::getBalise('input', '', [Constant::CST_TYPE=>'hidden', Constant::CST_VALUE=>$refElementId, Constant::CST_ID=>'refElementId', Constant::CST_NAME=>'refElementId']);
+                           . Html::getBalise('input', '', [Constant::CST_TYPE=>'hidden', Constant::CST_VALUE=>$refElementId, Constant::CST_ID=>'firstElementId', Constant::CST_NAME=>'firstElementId']);
         
         $strDivContent = '<!-- Choix du nombre d\'entrées -->'
                        . Html::getBalise('div', $strDivDivContent, [Constant::CST_CLASS=>'row col align-items-center']);

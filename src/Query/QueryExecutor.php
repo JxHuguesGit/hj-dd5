@@ -7,18 +7,24 @@ use src\Entity\Entity;
 class QueryExecutor
 {
 
-    public function fetchOne(string $sql, string $entityClass, array $params = []): ?Entity
+    public function fetchOne(string $sql, string $entityClass, array $params = [], bool $display=false): ?Entity
     {
         global $wpdb;
         $prepared = $wpdb->prepare($sql, $params);
+        if ($display) {
+            echo '[['.$prepared.']]';
+        }
         $result = $wpdb->get_row($prepared, 'ARRAY_A');
         return $result ? new $entityClass(...$result) : null;
     }
 
-    public function fetchAll(string $sql, string $entityClass, array $params = []): Collection
+    public function fetchAll(string $sql, string $entityClass, array $params = [], bool $display=false): Collection
     {
         global $wpdb;
         $prepared = $wpdb->prepare($sql, $params);
+        if ($display) {
+            echo '[['.$prepared.']]';
+        }
         $results = $wpdb->get_results($prepared, 'ARRAY_A');
 
         $collection = new Collection();

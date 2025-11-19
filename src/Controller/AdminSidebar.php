@@ -2,8 +2,13 @@
 namespace src\Controller;
 
 use src\Constant\Constant;
+use src\Constant\Field;
 use src\Constant\Icon;
 use src\Constant\Template;
+use src\Repository\RpgHeros as RepositoryRpgHeros;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Utils\Session;
 
 class AdminSidebar extends Utilities
 {
@@ -37,43 +42,41 @@ class AdminSidebar extends Utilities
     
     private function getCharacterItem(): string
     {
+        // On a toujours des enfants. Potentiellement, aucun héros, mais a minima le lien pour en créer un.
         $strChildren = '<ul class="nav nav-treeview">';
-        
         $attributes = [
             '',
-            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=1',
-            $this->currentTab=='character' && $this->currentId==1 ? 'active' : '',
-            'circle',
-            'Sheila',
+            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=0&step=name',
+            $this->currentTab=='character' && $this->currentId==0 ? 'active' : '',
+            'plus',
+            'Nouveau',
             'd-none',
             '',
         ];
         $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
+        // TODO : Gérer un nombre excessif de personnages ?
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $objDaoHeros = new RepositoryRpgHeros($queryBuilder, $queryExecutor);
+        $rpgHeros = $objDaoHeros->findBy([Field::WPUSERID=>Session::getWpUser()->data->ID]);
+        $rpgHeros->rewind();
+        while ($rpgHeros->valid()) {
+            $rpgHero = $rpgHeros->current();
+            $id = $rpgHero->getField(Field::ID);
+            $attributes = [
+                '',
+                '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id='.$id.'&step='.$rpgHero->getField(Field::CREATESTEP),
+                $this->currentTab=='character' && $this->currentId==$id ? 'active' : '',
+                'user',
+                $rpgHero->getField(Field::NAME),
+                'd-none',
+                '',
+            ];
+            $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
+            $rpgHeros->next();
+        }
         
-        $attributes = [
-            '',
-            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=2',
-            $this->currentTab=='character' && $this->currentId==2 ? 'active' : '',
-            'circle',
-            'PJ2',
-            'd-none',
-            '',
-        ];
-        $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
-        
-        $attributes = [
-            '',
-            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=3',
-            $this->currentTab=='character' && $this->currentId==3 ? 'active' : '',
-            'circle',
-            'PJ3',
-            'd-none',
-            '',
-        ];
-        $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
-
         $strChildren .= '</ul>';
-        
         
         $attributes = [
             $this->currentTab=='character' ? 'menu-open' : '',

@@ -99,4 +99,14 @@ enum SkillEnum: string
             default          => null,
         };
     }
+    
+    public static function fromDb(string $i): string
+    {
+        foreach (static::cases() as $element) {
+            if ($element->value==$i) {
+                return $element->label();
+            }
+        }
+        return 'err';
+    }
 }

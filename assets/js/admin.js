@@ -150,9 +150,105 @@ $(document).ready(function(e) {
     $('button[data-action="fdmTool"]').on('click', function(e) {
     	fdmToolsManagment($(this));
     });
+
+    $('#species-list input[name="characterSpeciesId"]').on('change', function () {
+        $('.subspecies-group').hide()
+            .filter('[data-species="' + this.value + '"]').show();
+    });
+
+    if ($('#subspecies-list input:checked').length!=0) {
+        $('#subspecies-list input:checked').closest('.subspecies-group').show();
+    }
+
+    $('#createProcess').on('click', function(e) {
+        e.preventDefault();
+        const step = $('#herosForm').val();
+        const characterId = $('#characterId').val();
+        let blnOk = true;
+        let msgError = '';
+
+        if (characterId==0 && step!='createHeros') {
+            blnOk = false;
+            msgError += "Vous devez forcément commencer par la saisie du nom et le valider.<br>";
+        } else {
+            switch (step) {
+                case 'createHeros' :
+                    if ($('#characterName').val()=='') {
+                        blnOk = false;
+                        msgError += "Vous devez saisir un nom.<br>";
+                    }
+                break;
+                case 'selectOrigin' :
+                    if ($('input[name="characterOriginId"]:checked').length==0) {
+                        blnOk = false;
+                        msgError += "Vous devez sélectionner une origine.<br>";
+                    }
+                break;
+                case 'selectSpecies' :
+                    if ($('input[name="characterSpeciesId"]:checked').length==0) {
+                        blnOk = false;
+                        msgError += "Vous devez sélectionner une espèce.<br>";
+                    }
+                break;
+                case 'selectFeats' :
+                    if ($('input[name="characterFeatId"]:checked').length==0) {
+                        blnOk = false;
+                        msgError += "Vous devez sélectionner un don d'origine.<br>";
+                    }
+                    if ($('input[name="secondFeatId"]').length!=0
+                        && $('input[name="secondFeatId"]:checked').length==0) {
+                        blnOk = false;
+                        msgError += "Vous devez sélectionner un deuxième don d'origine.<br>";
+                    }
+                    if (blnOk
+                        && $('input[name="characterFeatId"]:checked').val()!=5
+                        && $('input[name="characterFeatId"]:checked').val()!=8
+                        && $('input[name="characterFeatId"]:checked').val()==$('input[name="secondFeatId"]:checked').val()) {
+                        blnOk = false;
+                        msgError += "Vous ne pouvez pas sélectionner deux fois le même don.<br>";
+                    }
+                    if ($('input[name="characterFeatId"]:checked').val()==5
+                        && $('input[name="extraCharacterFeatId"]:checked').length==0
+                        || $('input[name="secondFeatId"]:checked').val()==5
+                        && $('input[name="extraSecondFeatId"]:checked').length==0) {
+                        blnOk = false;
+                        msgError += "Vous devez sélectionner une classe pour le don <em>Initié à la Magie</em>.<br>";
+                    }
+                    if ($('input[name="characterFeatId"]:checked').val()==5
+                        && $('input[name="extraCharacterFeatId"]:checked').val()==$('input[name="extraSecondFeatId"]:checked').val()) {
+                        blnOk = false;
+                        msgError += "Vous ne pouvez pas sélectionner deux fois la même classe pour le don <em>Initié à la Magie</em>.<br>";
+                    }
+                break;
+                case 'selectClass' :
+                    if ($('input[name="characterClassId"]:checked').length==0) {
+                        blnOk = false;
+                        msgError += "Vous devez sélectionner une classe.<br>";
+                    }
+                break;
+                default :
+                    // RAS
+                break;
+            }
+        }
+
+        if (!blnOk) {
+            showModal('danger', 'Formulaire invalide', '<p class="p-5 m-0 bg-light">'+msgError+'</p>');
+        } else {
+            $('form').submit();
+        }
+    });
+    
 });
 
 let focusRemembered = '';
+
+function showModal(type, title, content) {
+    $('.modal-content').addClass('bg-'+type);
+    $('#infoModalLabel').html(title);
+    $('#modalBody').html(content);
+    $('#infoModal').modal('show');
+}
 
 function ajaxActionChange(obj, e) {
     e.preventDefault();
@@ -160,6 +256,8 @@ function ajaxActionChange(obj, e) {
     for (let oneAction of actions) {
         if (oneAction=='loadMonsterPage') {
             loadMonsterPage(obj.val());
+        } else if (oneAction=='loadTablePage') {
+            loadTablePage(obj.val());
         }
     }
     return false;
@@ -168,13 +266,18 @@ function ajaxActionChange(obj, e) {
 function loadMonsterPage(newNbPerPage) {
     const newParams = {
         nbPerPage: newNbPerPage,
-        refElementId: $('#refElementId').val()
+        refElementId: $('#firstElementId').val()
     };
     const url = new URL(globalThis.location.href);  
     for (const key in newParams) {
         url.searchParams.set(key, newParams[key]);
     }
     globalThis.location.href = url.toString();
+}
+
+function loadTablePage(newNbPerPage) {
+	$('#nbPerPage').val(newNbPerPage);
+    $('#formFilter').submit();
 }
 
 function fdmToolsManagment(obj) {

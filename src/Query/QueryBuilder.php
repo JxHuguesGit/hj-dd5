@@ -7,13 +7,14 @@ class QueryBuilder
 {
     private string $baseQuery = '';
     private string $strWhere = '';
+    private string $strJoin = '';
     private string $strOrderBy = '';
     private string $strLimit = '';
     private array $params = [];
     
     public function select(array $fields, string $table): self
     {
-        $this->baseQuery = "SELECT `".implode("`, `", $fields)."` FROM $table";
+        $this->baseQuery = "SELECT $table.`".implode("`, $table.`", $fields)."` FROM $table";
         return $this;
     }
 
@@ -73,6 +74,12 @@ class QueryBuilder
         }
         return $this;
     }
+    
+    public function joinTable(string $strJoin): self
+    {
+        $this->strJoin = $strJoin;
+        return $this;
+    }
 
     public function orderBy(array $orderBy): self
     {
@@ -97,7 +104,7 @@ class QueryBuilder
 
     public function getQuery(): string
     {
-        return $this->baseQuery . $this->strWhere . $this->strOrderBy . $this->strLimit;
+        return $this->baseQuery . $this->strJoin . $this->strWhere . $this->strOrderBy . $this->strLimit;
     }
 
     public function getParams(): array

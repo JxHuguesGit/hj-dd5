@@ -156,4 +156,21 @@ class RpgFeat extends Utilities
         }
            return $this->getRender(Template::FEAT_CARD, $attributes);
     }
+
+    public function getRadioForm(string $prefix, bool $checked=false): string
+    {
+        $id = $this->rpgFeat->getField(Field::ID);
+        $name = $this->rpgFeat->getField(Field::NAME);
+        return '<div class="form-check">'
+                . '<input class="" type="radio" name="'.$prefix.'" value="'.$id.'" id="'.$prefix.$id.'"'.($checked?' checked':'').'>'
+                . '<label class="form-check-label" for="'.$prefix.$id.'">'.$name.'</label>'
+                . '</div>';
+    }
+
+    public function getOptionForm(bool $selected=false): string
+    {
+        $id = $this->rpgFeat->getField(Field::ID);
+        $name = $this->rpgFeat->getField(Field::NAME);
+        return '<option value="'.$id.'"'.($selected?' selected':'').'>'.$name.'</option>';
+    }
 }

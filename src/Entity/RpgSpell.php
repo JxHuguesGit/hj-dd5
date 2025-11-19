@@ -161,7 +161,7 @@ class RpgSpell extends Entity
     
     public function getFormattedComposantes(bool $detail=true): string
     {
-        $str = implode(', ', $this->composantes);
+        $str = implode(',', $this->composantes);
         if (in_array('M', $this->composantes) && $detail) {
             $str .= ' ('.$this->composanteMaterielle.')';
         }
@@ -201,13 +201,13 @@ class RpgSpell extends Entity
         return $this->getDureeConvertie($this->tempsIncantation). ($this->rituel ? ' ou Rituel' : '');
     }
     
-    public function getFormattedClasses(): string
+    public function getFormattedClasses(bool $parenthesis=true): string
     {
         $classes = array_map(
             fn(string $value) => ClassEnum::from($value)->label(),
             $this->classes
         );
-        return '(' . implode(', ', $classes) . ')';
+        return $parenthesis ? '(' . implode(', ', $classes) . ')' : implode(', ', $classes);
     }
     
     public function getStrConcentration(): string

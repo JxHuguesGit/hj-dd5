@@ -23,7 +23,7 @@ enum AbilityEnum: string
         };
     }
 
-    public static function fromDb(int $i): string
+    public static function fromDb(string $i): string
     {
         foreach (static::cases() as $element) {
             if ($element->value==$i) {
