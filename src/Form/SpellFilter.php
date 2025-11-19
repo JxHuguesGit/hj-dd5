@@ -24,6 +24,7 @@ class SpellFilter extends Form
     public function resolveForm(): void
     {
     return;
+    /*
         $monsterId = Session::fromPost('entityId');
         $name = Session::fromPost('name-fr');
         
@@ -63,6 +64,7 @@ class SpellFilter extends Form
                 $dao->update($obj);
             }
         }
+            */
     }
     
     public function getTemplate(): string
@@ -88,7 +90,7 @@ class SpellFilter extends Form
             '', '', '', '', ''];
         
         return $controller->getRender(Template::FORM_FEAT, $attributes);
-        
+        /*
         $dao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
         $objs = $dao->findBy([Field::MONSTERID=>$this->rpgMonster->getField(Field::ID)]);
         
@@ -111,9 +113,11 @@ class SpellFilter extends Form
             $this->rpgMonster->getField(Field::ID),
             $url
         ];
+        */
 
     }
     
+    /*
     private function getMonsterAbilityForm(EntityRpgMonsterAbility $rpgMonsterAbility): string
     {
         $cpt = $rpgMonsterAbility->getField(Field::ID);
@@ -127,4 +131,5 @@ class SpellFilter extends Form
               <textarea class="form-control" id="mab-description-'.$cpt.'" name="mab-description-'.$cpt.'" data-action="RmbFocus">'.stripslashes($rpgMonsterAbility->getField(Field::DESCRIPTION)).'</textarea>
             </div>';    
     }
+            */
 }
