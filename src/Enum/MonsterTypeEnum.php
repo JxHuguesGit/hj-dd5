@@ -1,8 +1,12 @@
 <?php
 namespace src\Enum;
 
+use src\Helper\EnumHelper;
+
 enum MonsterTypeEnum: string
 {
+    use EnumHelper;
+
     case Abe = 'abe';
     case Bet = 'bet';
     case Cel = 'cel';
@@ -59,20 +63,5 @@ enum MonsterTypeEnum: string
     public static function fromEnglish(string $english): ?self
     {
         return self::ENGLISH_MAP[strtolower(trim($english))] ?? null;
-    }
-
-    public static function labelFromDb(string $value): ?string
-    {
-        return self::tryFrom($value)?->label();
-    }
-
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-
-    public static function labels(): array
-    {
-        return array_map(fn($case) => $case->label(), self::cases());
     }
 }

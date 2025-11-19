@@ -1,8 +1,12 @@
 <?php
 namespace src\Enum;
 
+use src\Helper\EnumHelper;
+
 enum SizeEnum: int
 {
+    use EnumHelper;
+
     case Tiny = 1;
     case Small = 2;
     case Medium = 4;

@@ -1,8 +1,12 @@
 <?php
 namespace src\Enum;
 
+use src\Helper\EnumHelper;
+
 enum MagicSchoolEnum: string
 {
+    use EnumHelper;
+
     case Abj = 'abjuration';
     case Div = 'divination';
     case Enc = 'enchantement';
@@ -25,20 +29,5 @@ enum MagicSchoolEnum: string
             static::Tra   => 'Transmutation',
             default       => 'École de magie inconnue.',
         };
-    }
-
-    public static function labelFromDb(string $value): ?string
-    {
-        return self::tryFrom($value)?->label();
-    }
-
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-
-    public static function labels(): array
-    {
-        return array_map(fn($case) => $case->label(), self::cases());
     }
 }
