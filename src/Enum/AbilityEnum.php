@@ -19,17 +19,21 @@ enum AbilityEnum: string
             static::Int   => 'Intelligence',
             static::Wis   => 'Sagesse',
             static::Cha   => 'Charisme',
-            default       => 'Caractéristique inconnue.',
         };
     }
 
-    public static function fromDb(string $i): string
+    public static function labelFromDb(string $value): ?string
     {
-        foreach (static::cases() as $element) {
-            if ($element->value==$i) {
-                return $element->label();
-            }
-        }
-        return 'err';
+        return self::tryFrom($value)?->label();
+    }
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    public static function labels(): array
+    {
+        return array_map(fn($case) => $case->label(), self::cases());
     }
 }

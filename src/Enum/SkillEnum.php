@@ -23,6 +23,28 @@ enum SkillEnum: string
     case Dec = 'dec';
     case End = 'end';
 
+    private const ENGLISH_MAP = [
+        'acrobatics'      => self::Acr,
+        'animal handling' => self::Ani,
+        'arcana'          => self::Arc,
+        'athletics'       => self::Ath,
+        'deception'       => self::Dec,
+        'endurance'       => self::End,
+        'history'         => self::His,
+        'insight'         => self::Ins,
+        'intimidation'    => self::Int,
+        'investigation'   => self::Inv,
+        'medicine'        => self::Med,
+        'nature'          => self::Nat,
+        'perception'      => self::Pec,
+        'performance'     => self::Pef,
+        'persuasion'      => self::Pes,
+        'religion'        => self::Rel,
+        'sleight of hand' => self::Soh,
+        'stealth'         => self::Ste,
+        'survival'        => self::Sur,
+    ];
+
     public function label(): string
     {
         return match($this) {
@@ -76,37 +98,21 @@ enum SkillEnum: string
     
     public static function fromEnglish(string $english): ?self
     {
-        return match(strtolower(trim($english))) {
-            'acrobatics'     => self::Acr,
-            'animal handling'=> self::Ani,
-            'arcana'         => self::Arc,
-            'athletics'      => self::Ath,
-            'deception'      => self::Dec,
-            'endurance'      => self::End,
-            'history'        => self::His,
-            'insight'        => self::Ins,
-            'intimidation'   => self::Int,
-            'investigation'  => self::Inv,
-            'medicine'       => self::Med,
-            'nature'         => self::Nat,
-            'perception'     => self::Pec,
-            'performance'    => self::Pef,
-            'persuasion'     => self::Pes,
-            'religion'       => self::Rel,
-            'sleight of hand'=> self::Soh,
-            'stealth'        => self::Ste,
-            'survival'       => self::Sur,
-            default          => null,
-        };
+        return self::ENGLISH_MAP[strtolower(trim($english))] ?? null;
     }
-    
-    public static function fromDb(string $i): string
+
+    public static function labelFromDb(string $value): ?string
     {
-        foreach (static::cases() as $element) {
-            if ($element->value==$i) {
-                return $element->label();
-            }
-        }
-        return 'err';
+        return self::tryFrom($value)?->label();
+    }
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    public static function labels(): array
+    {
+        return array_map(fn($case) => $case->label(), self::cases());
     }
 }

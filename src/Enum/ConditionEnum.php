@@ -18,6 +18,23 @@ enum ConditionEnum: string
     case Gra = 'gra';
     case Exh = 'exh';
 
+    private const ENGLISH_MAP = [
+        'prone'       => self::Pro,
+        'deafened'    => self::Dea,
+        'blinded'     => self::Bli,
+        'charmed'     => self::Cha,
+        'frightened'  => self::Fri,
+        'poisoned'    => self::Poi,
+        'restrained'  => self::Res,
+        'stunned'     => self::Stu,
+        'unconscious' => self::Unc,
+        'neutralized' => self::Neu,
+        'paralyzed'   => self::Par,
+        'petrified'   => self::Pet,
+        'grappled'    => self::Gra,
+        'exhaustion'  => self::Exh,
+    ];
+
     public function label(): string
     {
         return match($this) {
@@ -41,22 +58,21 @@ enum ConditionEnum: string
     
     public static function fromEnglish(string $english): ?self
     {
-        return match(strtolower(trim($english))) {
-            'prone'          => self::Pro,
-            'deafened'       => self::Dea,
-            'blinded'        => self::Bli,
-            'charmed'        => self::Cha,
-            'frightened'     => self::Fri,
-            'poisoned'       => self::Poi,
-            'restrained'     => self::Res,
-            'stunned'        => self::Stu,
-            'unconscious'    => self::Unc,
-            'neutralized'    => self::Neu,
-            'paralyzed'      => self::Par,
-            'petrified'      => self::Pet,
-            'grappled'       => self::Gra,
-            'exhaustion'     => self::Exh,
-            default          => null,
-        };
+        return self::ENGLISH_MAP[strtolower(trim($english))] ?? null;
+    }
+
+    public static function labelFromDb(string $value): ?string
+    {
+        return self::tryFrom($value)?->label();
+    }
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    public static function labels(): array
+    {
+        return array_map(fn($case) => $case->label(), self::cases());
     }
 }

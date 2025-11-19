@@ -17,6 +17,22 @@ enum DamageEnum: string
     case Psy = 'psy';
     case Rad = 'rad';
 
+    private const ENGLISH_MAP = [
+        'bludgeoning' => self::Con,
+        'piercing'    => self::Per,
+        'slashing'    => self::Tra,
+        'acid'        => self::Aci,
+        'fire'        => self::Feu,
+        'cold'        => self::Fro,
+        'lightning'   => self::Fou,
+        'poison'      => self::Poi,
+        'thunder'     => self::Ton,
+        'force'       => self::For,
+        'necrotic'    => self::Nec,
+        'psychic'     => self::Psy,
+        'radiant'     => self::Rad,
+    ];
+
     public function label(): string
     {
         return match($this) {
@@ -36,24 +52,24 @@ enum DamageEnum: string
             default       => 'Dégâts inconnus.',
         };
     }
-    
+
     public static function fromEnglish(string $english): ?self
     {
-        return match(strtolower(trim($english))) {
-            'bludgeoning'    => self::Con,
-            'piercing'       => self::Per,
-            'slashing'       => self::Tra,
-            'acid'           => self::Aci,
-            'fire'           => self::Feu,
-            'cold'           => self::Fro,
-            'lightning'      => self::Fou,
-            'poison'         => self::Poi,
-            'thunder'        => self::Ton,
-            'force'          => self::For,
-            'necrotic'       => self::Nec,
-            'psychic'        => self::Psy,
-            'radiant'        => self::Rad,
-            default          => null,
-        };
+        return self::ENGLISH_MAP[strtolower(trim($english))] ?? null;
+    }
+
+    public static function labelFromDb(string $value): ?string
+    {
+        return self::tryFrom($value)?->label();
+    }
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    public static function labels(): array
+    {
+        return array_map(fn($case) => $case->label(), self::cases());
     }
 }

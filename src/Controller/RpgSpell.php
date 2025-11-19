@@ -48,7 +48,7 @@ class RpgSpell extends Utilities
             $params['spellFilter'] = 'Filtrer';
         } else {
             $params['selectAllClass'] = true;
-            $params['classFilter'] = array_map(fn($case) => $case->value, array_filter(ClassEnum::cases(), fn($case) => !in_array($case->value, ['barbare', 'guerrier', 'moine', 'roublard'])));
+            $params['classFilter'] = array_map(fn($case) => $case->value, array_filter(ClassEnum::cases(), fn($case) => !in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])));
             $params['selectAllSchool'] = true;
             $params['schoolFilter'] = array_map(fn($case) => $case->value, MagicSchoolEnum::cases());
             $params['levelMinFilter'] = 0;
@@ -65,10 +65,10 @@ class RpgSpell extends Utilities
         // Liste des options de classes.
         $classOptions = '';
         foreach (ClassEnum::cases() as $case) {
-            $value = $case->value;
-            if (in_array($value, ['barbare', 'guerrier', 'moine', 'roublard'])) {
+            if (in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])) {
                 continue;
             }
+            $value = $case->value;
             $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
         }
 
@@ -161,7 +161,7 @@ class RpgSpell extends Utilities
         $objTable->addBodyRow($arrParams)
             ->addBodyCell([Constant::CST_CONTENT=>$strName])
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgSpell->getNiveau(), Constant::CST_ATTRIBUTES=>[Constant::CST_CLASS=>'text-center']])
-            ->addBodyCell([Constant::CST_CONTENT=>MagicSchoolEnum::fromDb($strEcole)])
+            ->addBodyCell([Constant::CST_CONTENT=>MagicSchoolEnum::labelFromDb($strEcole)])
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgSpell->getFormattedClasses(false)])
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgSpell->getFormattedIncantation()])
             ->addBodyCell([Constant::CST_CONTENT=>$this->rpgSpell->getFormattedPortee()])
@@ -191,7 +191,7 @@ class RpgSpell extends Utilities
     
     private function getStrEcole(): string
     {
-        $str  = MagicSchoolEnum::fromDb($this->rpgSpell->getEcole());
+        $str  = MagicSchoolEnum::labelFromDb($this->rpgSpell->getEcole());
         $str .= ' de niveau '.$this->rpgSpell->getNiveau();
         $str .= ' '.$this->rpgSpell->getFormattedClasses();
         return $str;

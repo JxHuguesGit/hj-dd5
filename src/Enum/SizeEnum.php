@@ -19,7 +19,6 @@ enum SizeEnum: int
             self::Large       => 'Grand'.($gender=='f'?'e':''),
             self::Huge        => 'Très grand'.($gender=='f'?'e':''),
             self::Gargantuan  => 'Gigantesque',
-            default           => 'Taille inconnue.',
         };
     }
 
