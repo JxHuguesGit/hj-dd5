@@ -111,8 +111,8 @@ class RpgMonster extends Entity
             }
         }
     
-    	throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
-    }    
+        throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
+    }
 
     public function setField(string $field, mixed $value): self
     {
@@ -140,9 +140,9 @@ class RpgMonster extends Entity
         return $controller;
     }
 
-	// Délégation CharacterStats
+    // Délégation CharacterStats
     
-	// Délégation MonsterAbilities
+    // Délégation MonsterAbilities
     public function getTraits(): Collection
     {
         return $this->abilities->getTraits();
@@ -168,7 +168,7 @@ class RpgMonster extends Entity
         return $this->abilities->getLegendaryActions();
     }
 
-	// Délégation MonsterDefenses
+    // Délégation MonsterDefenses
     public function getResistances(string $typeResistanceId): Collection
     {
         return $this->defenses->getResistances($typeResistanceId);
@@ -345,7 +345,7 @@ class RpgMonster extends Entity
     {
         return $this->getScoreModifier($value);
     }
-    	
+        
     public function getStringScore(string $carac): string
     {
         if (in_array($carac, ['str', 'dex', 'con'])) {

@@ -45,9 +45,9 @@ class RpgMonster extends Repository
         }
         
         foreach (['page', 'onglet', 'id', 'selectAllType', 'typeFilter'] as $key) {
-        	if (isset($criteria[$key])) {
-	        	unset($criteria[$key]);
-        	}
+            if (isset($criteria[$key])) {
+                unset($criteria[$key]);
+            }
         }
 
         $this->query = $this->queryBuilder->reset()

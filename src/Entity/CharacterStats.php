@@ -35,7 +35,7 @@ class CharacterStats
             return $this->{$field};
         }
     
-    	throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
+        throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
     }
     
     public function setField(string $field, mixed $value): self
