@@ -36,6 +36,7 @@ class Constant
     public const CST_VALUE      = 'value';
     public const CST_NAME       = 'name';
     public const CST_ID         = 'id';
+    public const CST_CHECKED    = 'checked';
     public const CST_SELECTED   = 'selected';
     
     /////////////////////////////////////////////////

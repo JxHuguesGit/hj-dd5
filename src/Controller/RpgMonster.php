@@ -106,7 +106,7 @@ class RpgMonster extends Utilities
             $params['refElementId'],
         ];
         return $this->getRender(Template::FILTER_MONSTER, $attributes);
-    }    
+    }
     
     public function getTable(array $params): Table
     {
@@ -206,7 +206,7 @@ class RpgMonster extends Utilities
         $strType = $this->rpgMonster->getStrType();
 
         // La taille
-        $strSize = SizeHelper::toLabelFr($this->rpgMonster->getField(Field::MSTSIZE));
+        //$strSize = SizeHelper::toLabelFr($this->rpgMonster->getField(Field::MSTSIZE));
 
         // La CA
         $strCA = $this->rpgMonster->getField(Field::SCORECA);
@@ -215,14 +215,14 @@ class RpgMonster extends Utilities
         $strHP = $this->rpgMonster->getField(Field::SCOREHP);
 
         // L'alignement
-        $objAlignement = $this->rpgMonster->getAlignement();
-        $strAlignement = $objAlignement->getStrAlignement();
+        //$objAlignement = $this->rpgMonster->getAlignement();
+        //$strAlignement = $objAlignement->getStrAlignement();
 
         // Légendaire ?
-        $strLegendaire = $this->rpgMonster->getField(Field::LEGENDARY)==1 ? 'Légendaire' : '';
+        //$strLegendaire = $this->rpgMonster->getField(Field::LEGENDARY)==1 ? 'Légendaire' : '';
 
         // Habitat
-        $strHabitat = $this->rpgMonster->getField(Field::HABITAT);
+        //$strHabitat = $this->rpgMonster->getField(Field::HABITAT);
 
         // Référence
         $objReference = $this->rpgMonster->getReference();

@@ -69,35 +69,35 @@ class RpgSpell extends Utilities
                 continue;
             }
             $value = $case->value;
-            $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
+            $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
         }
 
         // Liste des options d'écoles
         $schoolOptions = '';
         foreach (MagicSchoolEnum::cases() as $case) {
-            $schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
+            $schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
         }
         
         // Liste des niveaux
         $minOptions = '';
         $maxOptions = '';
         for ($i=0; $i<=9; $i++) {
-            $minOptions .= '<option value="'.$i.'"'.($params['levelMinFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
-            $maxOptions .= '<option value="'.$i.'"'.($params['levelMaxFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
+            $minOptions .= '<option value="'.$i.'"'.($params['levelMinFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
+            $maxOptions .= '<option value="'.$i.'"'.($params['levelMaxFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
         }
         
         $attributes = [
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=spells', // Url du formulaire
-            $params['selectAllClass'] ? ' checked' : '',
+            $params['selectAllClass'] ? ' '.Constant::CST_CHECKED : '',
             count($params['classFilter']),
             $classOptions,
-            $params['selectAllSchool'] ? ' checked' : '',
+            $params['selectAllSchool'] ? ' '.Constant::CST_CHECKED : '',
             count($params['schoolFilter']),
             $schoolOptions,
             $minOptions,
             $maxOptions,
-            $params['onlyRituel'] ? ' checked' : '',
-            $params['onlyConcentration'] ? ' checked' : '',
+            $params['onlyRituel'] ? ' '.Constant::CST_CHECKED : '',
+            $params['onlyConcentration'] ? ' '.Constant::CST_CHECKED : '',
             $params[Constant::PAGE_NBPERPAGE] ?? 10,
             $params['refElementId'],
         ];
@@ -182,7 +182,7 @@ class RpgSpell extends Utilities
             $this->rpgSpell->getFormattedComposantes(),
             $this->rpgSpell->getFormattedDuree(),
             $this->rpgSpell->getDescription(),
-            ($typeAmelioration=='spell' ? '' : 'd-none'),
+            ($typeAmelioration=='spell' ? '' : Bootstrap::CSS_DNONE),
             $this->rpgSpell->getAmelioration(),
         ];
         

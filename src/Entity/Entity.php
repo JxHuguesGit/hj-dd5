@@ -77,7 +77,6 @@ class Entity
         }
 
         $this->{$field} = $value;
-//      $this->{$field} = $value === null ? ' ' : $value;
 
         return $this;
     }

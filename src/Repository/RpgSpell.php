@@ -18,7 +18,7 @@ class RpgSpell extends Repository
             $executor,
             '',
             []
-        );    
+        );
     }
     
     public function findBy(array $criteria, array $orderBy=[], int $limit=-1): Collection
