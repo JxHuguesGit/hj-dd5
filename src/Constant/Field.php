@@ -52,6 +52,8 @@ class Field
     public const RANK         = 'rank';
     public const NIVEAU       = 'niveau';
     public const DESCRIPTION  = 'description';
+    public const CARACENUMS   = 'caracEnums';
+    public const SKILLENUMS   = 'skillEnums';
         
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';
@@ -73,6 +75,7 @@ class Field
     public const REFID        = 'referenceId';
     public const SKILLID      = 'skillId';
     public const SPECIESID    = 'speciesId';
+    public const TOOLID       = 'toolId';
     public const TYPEAMMID    = 'typeAmmunitionId';
     public const TYPEDMGID    = 'typeDamageId';
     public const TYPEID       = 'typeId';

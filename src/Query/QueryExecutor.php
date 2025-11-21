@@ -9,13 +9,8 @@ class QueryExecutor
 
     public function fetchOne(string $sql, string $entityClass, array $params = [], bool $display=false): ?Entity
     {
-        global $wpdb;
-        $prepared = $wpdb->prepare($sql, $params);
-        if ($display) {
-            echo '[['.$prepared.']]';
-        }
-        $result = $wpdb->get_row($prepared, 'ARRAY_A');
-        return $result ? new $entityClass(...$result) : null;
+        $collection = $this->fetchAll($sql, $entityClass, $params, $display);
+        return $collection->first() ?: null;
     }
 
     public function fetchAll(string $sql, string $entityClass, array $params = [], bool $display=false): Collection
@@ -25,12 +20,13 @@ class QueryExecutor
         if ($display) {
             echo '[['.$prepared.']]';
         }
-        $results = $wpdb->get_results($prepared, 'ARRAY_A');
 
+        $results = $wpdb->get_results($prepared, 'ARRAY_A');
         $collection = new Collection();
-        while (!empty($results)) {
-            $result = array_shift($results);
-            $entity = new $entityClass(...$result);
+        foreach ($results as $result) {
+            $entity = method_exists($entityClass, 'factory')
+                ? $entityClass::factory($result)
+                : new $entityClass($result);
             $collection->addItem($entity);
         }
 

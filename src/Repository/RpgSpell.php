@@ -3,6 +3,7 @@ namespace src\Repository;
 
 use src\Collection\Collection;
 use src\Entity\RpgSpell as EntityRpgSpell;
+use src\Factory\SpellFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
@@ -53,7 +54,7 @@ class RpgSpell extends Repository
                     'value'   => '"' . $class . '"',  // important : chercher la valeur entre guillemets dans la serialization
                     'compare' => 'LIKE'
                 ];
-            }        
+            }
             $meta_query[] = [
                 'relation'     => 'OR',
                 ...$classes_meta_conditions
@@ -88,19 +89,19 @@ class RpgSpell extends Repository
             'meta_query'     => $meta_query,
         ];
     
-        $query = new \WP_Query($args);      
+        $query = new \WP_Query($args);
         if ($query->have_posts()) :
             while ($query->have_posts()) {
                 $query->the_post();
                 $post = get_post();
-                $rpgSpell = new EntityRpgSpell($post);
+                $rpgSpell = SpellFactory::fromWpPost($post);
                 $collection->addItem($rpgSpell);
             }
             wp_reset_postdata();
         endif;
 
         return $collection;
-    }       
+    }
 
     public function findAll(array $orderBy=[]): Collection
     {
@@ -154,7 +155,7 @@ class RpgSpell extends Repository
             while ($query->have_posts()) {
                 $query->the_post();
                 $post = get_post();
-                $rpgSpell = new EntityRpgSpell($post);
+                $rpgSpell = SpellFactory::fromWpPost($post);
                 $collection->addItem($rpgSpell);
             }
             wp_reset_postdata();

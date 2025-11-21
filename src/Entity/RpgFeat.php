@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
 use src\Controller\RpgFeat as ControllerRpgFeat;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -9,20 +10,22 @@ use WP_Post;
 
 class RpgFeat extends Entity
 {
+    public const TABLE = 'rpgFeat';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::FEATTYPEID,
+        Field::POSTID,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected int $featTypeId,
-        protected int $postId
-    ) {
-
-    }
+    protected string $name;
+    protected int $featTypeId;
+    protected int $postId;
 
     public function getController(): ControllerRpgFeat
     {
         $controller = new ControllerRpgFeat;
-        $controller->setField('rpgFeat', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
     

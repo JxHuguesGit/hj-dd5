@@ -233,4 +233,9 @@ class Collection implements \Iterator
         $this->items = [];
         $this->indexIterator = 0;
     }
+
+    public function first(): ?Entity
+    {
+        return reset($this->items) ?: null;
+    }
 }

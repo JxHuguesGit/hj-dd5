@@ -3,7 +3,7 @@ namespace src\Action;
 
 
 use src\Entity\RpgSpell as EntityRpgSpell;
-
+use src\Factory\SpellFactory;
 use src\Utils\Session;
 
 class SpellCard
@@ -24,7 +24,7 @@ class SpellCard
             return "L'identifiant passé en paramètre ne correspond pas à un article de la catégorie Sort.";
         }
 
-        $rpgSpell = new EntityRpgSpell($post);
+        $rpgSpell = SpellFactory::fromWpPost($post);
         return $rpgSpell->getController()->getSpellCard();
     }
 

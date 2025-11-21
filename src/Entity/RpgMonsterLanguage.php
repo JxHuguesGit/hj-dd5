@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
 use src\Controller\RpgMonsterLanguage as ControllerRpgMonsterLanguage;
 use src\Entity\RpgLanguage as EntityRpgLanguage;
 use src\Repository\RpgLanguage;
@@ -9,20 +10,22 @@ use src\Query\QueryExecutor;
 
 class RpgMonsterLanguage extends Entity
 {
+    public const TABLE = 'rpgMonsterLanguage';
+    public const FIELDS = [
+        Field::ID,
+        Field::MONSTERID,
+        Field::LANGUAGEID,
+        Field::VALUE,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $monsterId,
-        protected string $languageId,
-        protected float $value,
-    ) {
-
-    }
+    protected int $monsterId;
+    protected string $languageId;
+    protected float $value;
     
     public function getController(): ControllerRpgMonsterLanguage
     {
         $obj = new ControllerRpgMonsterLanguage();
-        $obj->setField('rpgMonsterLanguage', $this);
+        $obj->setField(self::TABLE, $this);
         return $obj;
     }
 

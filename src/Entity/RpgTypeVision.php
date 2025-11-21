@@ -1,14 +1,17 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
+
 class RpgTypeVision extends Entity
 {
+    public const TABLE = 'rpgTypeVision';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::UKTAG,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected string $ukTag
-    ) {
-
-    }
+    protected string $name;
+    protected string $ukTag;
 }

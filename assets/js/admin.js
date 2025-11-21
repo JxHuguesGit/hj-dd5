@@ -160,6 +160,21 @@ $(document).ready(function(e) {
         $('#subspecies-list input:checked').closest('.subspecies-group').show();
     }
 
+    $('input[name="firstFeatId"').on('click', function() {
+        if ($(this).val()==5) {
+            $('#subfeats-list div').removeClass('d-none');
+        } else {
+            $('#subfeats-list div').addClass('d-none');
+        }
+    });
+    $('input[name="secondFeatId"').on('click', function() {
+        if ($(this).val()==5) {
+            $('#subextrafeat-list div').removeClass('d-none');
+        } else {
+            $('#subextrafeat-list div').addClass('d-none');
+        }
+    });
+
     $('#createProcess').on('click', function(e) {
         e.preventDefault();
         const step = $('#herosForm').val();
@@ -167,31 +182,31 @@ $(document).ready(function(e) {
         let blnOk = true;
         let msgError = '';
 
-        if (characterId==0 && step!='createHeros') {
+        if (characterId==0 && step!='name') {
             blnOk = false;
             msgError += "Vous devez forcément commencer par la saisie du nom et le valider.<br>";
         } else {
             switch (step) {
-                case 'createHeros' :
+                case 'name' :
                     if ($('#characterName').val()=='') {
                         blnOk = false;
                         msgError += "Vous devez saisir un nom.<br>";
                     }
                 break;
-                case 'selectOrigin' :
+                case 'origin' :
                     if ($('input[name="characterOriginId"]:checked').length==0) {
                         blnOk = false;
                         msgError += "Vous devez sélectionner une origine.<br>";
                     }
                 break;
-                case 'selectSpecies' :
+                case 'species' :
                     if ($('input[name="characterSpeciesId"]:checked').length==0) {
                         blnOk = false;
                         msgError += "Vous devez sélectionner une espèce.<br>";
                     }
                 break;
-                case 'selectFeats' :
-                    if ($('input[name="characterFeatId"]:checked').length==0) {
+                case 'originFeat' :
+                    if ($('input[name="firstFeatId"]:checked').length==0) {
                         blnOk = false;
                         msgError += "Vous devez sélectionner un don d'origine.<br>";
                     }
@@ -201,26 +216,26 @@ $(document).ready(function(e) {
                         msgError += "Vous devez sélectionner un deuxième don d'origine.<br>";
                     }
                     if (blnOk
-                        && $('input[name="characterFeatId"]:checked').val()!=5
-                        && $('input[name="characterFeatId"]:checked').val()!=8
-                        && $('input[name="characterFeatId"]:checked').val()==$('input[name="secondFeatId"]:checked').val()) {
+                        && $('input[name="firstFeatId"]:checked').val()!=5
+                        && $('input[name="firstFeatId"]:checked').val()!=8
+                        && $('input[name="firstFeatId"]:checked').val()==$('input[name="secondFeatId"]:checked').val()) {
                         blnOk = false;
                         msgError += "Vous ne pouvez pas sélectionner deux fois le même don.<br>";
                     }
-                    if ($('input[name="characterFeatId"]:checked').val()==5
-                        && $('input[name="extraCharacterFeatId"]:checked').length==0
+                    if ($('input[name="firstFeatId"]:checked').val()==5
+                        && $('input[name="extraFirstFeatId"]:checked').length==0
                         || $('input[name="secondFeatId"]:checked').val()==5
                         && $('input[name="extraSecondFeatId"]:checked').length==0) {
                         blnOk = false;
                         msgError += "Vous devez sélectionner une classe pour le don <em>Initié à la Magie</em>.<br>";
                     }
-                    if ($('input[name="characterFeatId"]:checked').val()==5
-                        && $('input[name="extraCharacterFeatId"]:checked').val()==$('input[name="extraSecondFeatId"]:checked').val()) {
+                    if ($('input[name="firstFeatId"]:checked').val()==5
+                        && $('input[name="extraFirstFeatId"]:checked').val()==$('input[name="extraSecondFeatId"]:checked').val()) {
                         blnOk = false;
                         msgError += "Vous ne pouvez pas sélectionner deux fois la même classe pour le don <em>Initié à la Magie</em>.<br>";
                     }
                 break;
-                case 'selectClass' :
+                case 'classe' :
                     if ($('input[name="characterClassId"]:checked').length==0) {
                         blnOk = false;
                         msgError += "Vous devez sélectionner une classe.<br>";

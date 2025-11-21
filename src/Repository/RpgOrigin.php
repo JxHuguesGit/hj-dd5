@@ -1,22 +1,12 @@
 <?php
 namespace src\Repository;
 
-use src\Constant\Field;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Entity\RpgOrigin as EntityRpgOrigin;
 
 class RpgOrigin extends Repository
 {
-    public function __construct(
-        protected QueryBuilder $builder,
-        protected QueryExecutor $executor
-    ) {
-        parent::__construct(
-            $builder,
-            $executor,
-            'rpgOrigin',
-            [Field::ID, Field::NAME, 'caracEnums', 'featId', 'skillEnums', 'toolId']
-        );
+    public function getEntityClass(): string
+    {
+        return EntityRpgOrigin::class;
     }
-
 }

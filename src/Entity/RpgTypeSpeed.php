@@ -1,15 +1,19 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
+
 class RpgTypeSpeed extends Entity
 {
+    public const TABLE = 'rpgTypeSpeed';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::UKTAG,
+        Field::FRTAG,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected string $ukTag,
-        protected string $frTag
-    ) {
-
-    }
+    protected string $name;
+    protected string $ukTag;
+    protected string $frTag;
 }

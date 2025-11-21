@@ -22,21 +22,23 @@
                             </div>
                         </div>
                         <div class="mb-3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px;">
-                            <div id="feats-list" class="feats-column">
+                            <div id="subfeats-list" class="feats-column">
                                 <div class="%6$s">
                                 <strong>Classe associée</strong>
                                 %7$s
                                 </div>
                             </div>
-                            <div id="extrafeat-list" class="feats-column%8$s">
+                            <div id="subextrafeat-list" class="feats-column">
+                                <div class="%8$s">
                                 <strong>Classe associée</strong>
                                 %9$s
+                                </div>
                             </div>
                         </div>
 
                         <div class="text-end">
                             <input type="hidden" id="characterId" name="characterId" value="%2$s"/>
-                            <input type="hidden" id="herosForm" name="herosForm" value="selectFeats"/>
+                            <input type="hidden" id="herosForm" name="herosForm" value="originFeat"/>
                             <button class="btn btn-sm btn-dark" id="createProcess">Continuer</button>
                         </div>
                     </form>

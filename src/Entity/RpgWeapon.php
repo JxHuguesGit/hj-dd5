@@ -14,25 +14,32 @@ use src\Repository\RpgWeaponWeaponProficiency;
 
 class RpgWeapon extends Entity
 {
+    public const TABLE = 'rpgWeapon';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::DAMAGE,
+        Field::TYPEDMGID,
+        Field::WEIGHT,
+        Field::GOLDPRICE,
+        Field::MARTIAL,
+        Field::MELEE,
+        Field::MSTPROFID,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected string $damage,
-        protected int $typeDamageId,
-        protected float $weight,
-        protected float $goldPrice,
-        protected bool $martial,
-        protected bool $melee,
-        protected int $masteryProficiencyId
-    ) {
-
-    }
+    protected string $name;
+    protected string $damage;
+    protected int $typeDamageId;
+    protected float $weight;
+    protected float $goldPrice;
+    protected bool $martial;
+    protected bool $melee;
+    protected int $masteryProficiencyId;
 
     public function getController(): ControllerRpgWeapon
     {
         $controller = new ControllerRpgWeapon;
-        $controller->setField('rpgWeapon', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
 

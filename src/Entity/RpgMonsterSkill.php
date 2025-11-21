@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
 use src\Controller\RpgMonsterSkill as ControllerRpgMonsterSkill;
 use src\Entity\RpgSkill as EntityRpgSkill;
 use src\Repository\RpgSkill;
@@ -9,20 +10,22 @@ use src\Query\QueryExecutor;
 
 class RpgMonsterSkill extends Entity
 {
+    public const TABLE = 'rpgMonsterSkill';
+    public const FIELDS = [
+        Field::ID,
+        Field::MONSTERID,
+        Field::SKILLID,
+        Field::VALUE,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $monsterId,
-        protected int $skillId,
-        protected int $value
-    ) {
-
-    }
+    protected int $monsterId;
+    protected int $skillId;
+    protected int $value;
 
     public function getController(): ControllerRpgMonsterSkill
     {
         $controller = new ControllerRpgMonsterSkill();
-        $controller->setField('rpgMonsterSkill', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
     

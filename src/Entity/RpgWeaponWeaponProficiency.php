@@ -9,18 +9,23 @@ use src\Repository\RpgWeaponProficiency as RepositoryRpgWeaponProficiency;
 
 class RpgWeaponWeaponProficiency extends Entity
 {
+    public const TABLE = 'rpgWeaponWeaponProficiency';
+    public const FIELDS = [
+        Field::ID,
+        Field::WEAPONID,
+        Field::WPNPROFID,
+        Field::MINRANGE,
+        Field::MAXRANGE,
+        Field::TYPEAMMID,
+        Field::POLYDMG,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $weaponId,
-        protected int $weaponProficiencyId,
-        protected ?float $minRange,
-        protected ?int $maxRange,
-        protected ?int $typeAmmunitionId,
-        protected ?string $versatileDamage
-    ) {
-
-    }
+    protected int $weaponId;
+    protected int $weaponProficiencyId;
+    protected ?float $minRange;
+    protected ?int $maxRange;
+    protected ?int $typeAmmunitionId;
+    protected ?string $versatileDamage;
 
     public function getWeaponProficiency(): ?RpgWeaponProficiency
     {

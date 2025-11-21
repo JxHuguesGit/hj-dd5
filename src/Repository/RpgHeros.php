@@ -1,22 +1,12 @@
 <?php
 namespace src\Repository;
 
-use src\Constant\Field;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Entity\RpgHeros as EntityRpgHeros;
 
 class RpgHeros extends Repository
 {
-    public function __construct(
-        protected QueryBuilder $builder,
-        protected QueryExecutor $executor
-    ) {
-        parent::__construct(
-            $builder,
-            $executor,
-            'rpgHeros',
-            [Field::ID, Field::NAME, Field::ORIGINID, Field::SPECIESID, Field::WPUSERID, Field::CREATESTEP, Field::LASTUPDATE]
-        );
+    public function getEntityClass(): string
+    {
+        return EntityRpgHeros::class;
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
 use src\Controller\RpgMonsterTypeSpeed as ControllerRpgMonsterTypeSpeed;
 use src\Entity\RpgTypeSpeed as EntityRpgTypeSpeed;
 use src\Repository\RpgTypeSpeed;
@@ -9,21 +10,24 @@ use src\Query\QueryExecutor;
 
 class RpgMonsterTypeSpeed extends Entity
 {
+    public const TABLE = 'rpgMonsterTypeSpeed';
+    public const FIELDS = [
+        Field::ID,
+        Field::MONSTERID,
+        Field::TYPESPEEDID,
+        Field::VALUE,
+        Field::EXTRA,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $monsterId,
-        protected string $typeSpeedId,
-        protected float $value,
-        protected string $extra
-    ) {
-
-    }
+    protected int $monsterId;
+    protected string $typeSpeedId;
+    protected float $value;
+    protected string $extra;
 
     public function getController(): ControllerRpgMonsterTypeSpeed
     {
         $controller = new ControllerRpgMonsterTypeSpeed();
-        $controller->setField('rpgMonsterTypeSpeed', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
 

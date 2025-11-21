@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
 use src\Controller\RpgOrigin as ControllerRpgOrigin;
 use src\Enum\AbilityEnum;
 use src\Enum\SkillEnum;
@@ -10,22 +11,26 @@ use src\Repository\RpgFeat as RepositoryRpgFeat;
 
 class RpgOrigin extends Entity
 {
+    public const TABLE = 'rpgOrigin';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::CARACENUMS,
+        Field::FEATID,
+        Field::SKILLENUMS,
+        Field::TOOLID,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected string $caracEnums,
-        protected int $featId,
-        protected string $skillEnums,
-        protected int $toolId
-    ) {
-
-    }
+    protected string $name;
+    protected string $caracEnums;
+    protected int $featId;
+    protected string $skillEnums;
+    protected int $toolId;
 
     public function getController(): ControllerRpgOrigin
     {
         $controller = new ControllerRpgOrigin();
-        $controller->setField('rpgOrigin', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
     
@@ -34,7 +39,7 @@ class RpgOrigin extends Entity
         $caracs = [];
         $lstEnums = explode(',', $this->caracEnums);
         foreach ($lstEnums as $key) {
-            $caracs[] = AbilityEnum::fromDb($key);
+            $caracs[] = AbilityEnum::labelFromDb($key);
         }
         return implode(', ', $caracs);
     }
@@ -44,7 +49,7 @@ class RpgOrigin extends Entity
         $caracs = [];
         $lstEnums = explode(',', $this->skillEnums);
         foreach ($lstEnums as $key) {
-            $caracs[] = SkillEnum::fromDb($key);
+            $caracs[] = SkillEnum::labelFromDb($key);
         }
         return implode(', ', $caracs);
     }

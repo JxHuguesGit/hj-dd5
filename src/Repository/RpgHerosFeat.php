@@ -8,21 +8,13 @@ use src\Query\QueryExecutor;
 
 class RpgHerosFeat extends Repository
 {
-    public function __construct(
-        protected QueryBuilder $builder,
-        protected QueryExecutor $executor
-    ) {
-        parent::__construct(
-            $builder,
-            $executor,
-            'rpgHerosFeat',
-            [Field::ID, Field::HEROSID, Field::FEATID, Field::EXTRA]
-        );
+    public function getEntityClass(): string
+    {
+        return EntityRpgHerosFeat::class;
     }
-
+    
     public function findOriginFeat(array $criteria, array $orderBy): EntityRpgHerosFeat
     {
-        $this->reset();
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
             ->where($criteria)

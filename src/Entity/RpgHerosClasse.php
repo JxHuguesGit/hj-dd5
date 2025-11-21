@@ -1,16 +1,19 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
+
 class RpgHerosClasse extends Entity
 {
+    public const TABLE = 'rpgHerosClasse';
+    public const FIELDS = [
+        Field::ID,
+        Field::HEROSID,
+        Field::CLASSEID,
+        Field::NIVEAU,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $herosId,
-        protected int $classeId,
-        protected int $niveau
-    ) {
-
-    }
-
+    protected int $herosId;
+    protected int $classeId;
+    protected int $niveau;
 }

@@ -1,15 +1,17 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
+
 class RpgTypeMonstre extends Entity
 {
+    public const TABLE = 'rpgTypeMonstre';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name
-    ) {
-
-    }
+    protected string $name;
 
     public function getStrName(string &$gender): string
     {

@@ -1,14 +1,15 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
+
 class RpgFeatType extends Entity
 {
+    public const TABLE = 'rpgFeatType';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name
-    ) {
-
-    }
-
+    protected string $name;
 }

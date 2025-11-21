@@ -4,6 +4,7 @@ namespace src\Entity;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgMonster as ControllerRpgMonster;
+use src\Factory\MonsterFactory as RpgMonsterFactory;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -23,96 +24,163 @@ use src\Utils\Utils;
 
 class RpgMonster extends Entity
 {
+    public const TABLE = 'rpgMonster';
+    public const FIELDS = [
+        Field::ID,
+        Field::FRNAME,
+        Field::NAME,
+        Field::FRTAG,
+        Field::UKTAG,
+        Field::INCOMPLET,
+        Field::SCORECR,
+        Field::MSTTYPEID,
+        Field::MSTSSTYPID,
+        Field::SWARMSIZE,
+        Field::MSTSIZE,
+        Field::ALGNID,
+        Field::SCORECA,
+        Field::SCOREHP,
+        Field::VITESSE,
+        Field::INITIATIVE,
+        Field::LEGENDARY,
+        Field::HABITAT,
+        Field::REFID,
+        Field::STRSCORE,
+        Field::DEXSCORE,
+        Field::CONSCORE,
+        Field::INTSCORE,
+        Field::WISSCORE,
+        Field::CHASCORE,
+        Field::PROFBONUS,
+        Field::PERCPASSIVE,
+        Field::EXTRA,
+    ];
+
     public string $msgErreur;
+    
+    protected CharacterStats $stats;
+    protected MonsterAbilities $abilities;
+    protected MonsterDefenses $defenses;
 
-    public function __construct(
-        protected int $id,
-        protected string $frName,
-        protected string $name,
-        protected string $frTag,
-        protected string $ukTag,
-        protected int $incomplet,
-        protected float $cr,
-        protected int $monstreTypeId,
-        protected int $monsterSubTypeId,
-        protected int $swarmSize,
-        protected int $monsterSize,
-        protected int $alignmentId,
-        protected int $ca,
-        protected int $hp,
-        protected float $vitesse,
-        protected int $initiative,
-        protected int $legendary,
-        protected string $habitat,
-        protected int $referenceId,
-        protected int $strScore,
-        protected int $dexScore,
-        protected int $conScore,
-        protected int $intScore,
-        protected int $wisScore,
-        protected int $chaScore,
-        protected int $profBonus,
-        protected int $percPassive,
-        protected ?string $extra
-    ) {
+    protected string $frName;
+    protected string $name;
+    protected string $frTag;
+    protected string $ukTag;
+    protected int $incomplet;
+    protected float $cr;
+    protected int $monstreTypeId;
+    protected int $monsterSubTypeId;
+    protected int $swarmSize;
+    protected int $monsterSize;
+    protected int $alignmentId;
+    protected int $ca;
+    protected float $vitesse;
+    protected int $initiative;
+    protected int $legendary;
+    protected string $habitat;
+    protected int $referenceId;
+    protected ?string $extra;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        // Hydratation de stats depuis le même tableau
+        $this->stats = new CharacterStats($attributes);
+        $this->abilities = new MonsterAbilities($this->id);
+        $this->defenses = new MonsterDefenses($this->id);
+    }
+
+    public static function factory(array $attributes): self
+    {
+        return RpgMonsterFactory::create($attributes);
+    }
+    
+    public function getField(string $field)
+    {
+        // Premier niveau : propriétés de l'entité
+        if (property_exists($this, $field)) {
+            return $this->{$field};
+        }
+        
+        if (isset($this->stats) && method_exists($this->stats, 'getField')) {
+            try {
+                return $this->stats->getField($field);
+            } catch (\InvalidArgumentException $e) {
+                // On continue pour lancer l'exception finale
+            }
+        }
+    
+    	throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
+    }    
+
+    public function setField(string $field, mixed $value): self
+    {
+        if (property_exists($this, $field)) {
+            $this->{$field} = $value;
+            return $this;
+        }
+
+        if (isset($this->stats) && method_exists($this->stats, 'setField')) {
+            try {
+                $this->stats->setField($field, $value);
+                return $this;
+            } catch (\InvalidArgumentException $e) {
+                // continuer pour lancer exception finale
+            }
+        }
+
+        throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
     }
 
     public function getController(): ControllerRpgMonster
     {
         $controller = new ControllerRpgMonster;
-        $controller->setField('rpgMonster', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
-    
-    private function getAbilities(array $params): Collection
-    {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        return $objDao->findBy($params, [Field::RANK=>'ASC']);
-    }
 
+	// Délégation CharacterStats
+    
+	// Délégation MonsterAbilities
     public function getTraits(): Collection
     {
-        return $this->getAbilities([Field::TYPEID=>'T', Field::MONSTERID=>$this->id]);
+        return $this->abilities->getTraits();
     }
     
     public function getActions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID=>'A', Field::MONSTERID=>$this->id]);
+        return $this->abilities->getActions();
     }
-    
+
     public function getBonusActions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID=>'B', Field::MONSTERID=>$this->id]);
+        return $this->abilities->getBonusActions();
     }
 
     public function getReactions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID=>'R', Field::MONSTERID=>$this->id]);
+        return $this->abilities->getReactions();
     }
 
     public function getLegendaryActions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID=>'L', Field::MONSTERID=>$this->id]);
+        return $this->abilities->getLegendaryActions();
     }
 
+	// Délégation MonsterDefenses
     public function getResistances(string $typeResistanceId): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterResistance($queryBuilder, $queryExecutor);
-        $params = [Field::TYPERESID=>$typeResistanceId, Field::MONSTERID=>$this->id];
-        $collection = $objDao->findBy($params);
-        if ($typeResistanceId=='I') {
-            $objDao = new RepositoryRpgMonsterCondition($queryBuilder, $queryExecutor);
-            $params = [Field::MONSTERID=>$this->id];
-            $collection->concat($objDao->findBy($params));
-        }
-        return $collection;
+        return $this->defenses->getResistances($typeResistanceId);
     }
-    
+
+    public function getConditions(): Collection
+    {
+        return $this->defenses->getConditions();
+    }
+
+
+
     public function getSenses(): Collection
     {
         $queryBuilder  = new QueryBuilder();
@@ -136,15 +204,6 @@ class RpgMonster extends Entity
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgMonsterLanguage($queryBuilder, $queryExecutor);
-        $params = [Field::MONSTERID=>$this->id];
-        return $objDao->findBy($params);
-    }
-    
-    public function getConditions(): Collection
-    {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgMonsterCondition($queryBuilder, $queryExecutor);
         $params = [Field::MONSTERID=>$this->id];
         return $objDao->findBy($params);
     }
@@ -286,11 +345,11 @@ class RpgMonster extends Entity
     {
         return $this->getScoreModifier($value);
     }
-    
+    	
     public function getStringScore(string $carac): string
     {
         if (in_array($carac, ['str', 'dex', 'con'])) {
-            $score = $this->{$carac.'Score'};
+            $score = $this->getField($carac.'Score');
             $modC = $this->getScoreModifier(Utils::getModAbility($score));
             $bonus = $this->getExtra('js'.$carac);
             if ($bonus=='') {
@@ -299,7 +358,7 @@ class RpgMonster extends Entity
             $modJdS = $this->getScoreModifier(Utils::getModAbility($score, $bonus));
             return "<div class='col car2'>$score</div><div class='col car3'>$modC</div><div class='col car3'>$modJdS</div>";
         } else {
-            $score = $this->{$carac.'Score'};
+            $score = $this->getField($carac.'Score');
             $modC = $this->getScoreModifier(Utils::getModAbility($score));
             $bonus = $this->getExtra('js'.$carac);
             if ($bonus=='') {

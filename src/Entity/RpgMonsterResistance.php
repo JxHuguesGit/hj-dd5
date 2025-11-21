@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
 use src\Controller\RpgMonsterResistance as ControllerRpgMonsterResistance;
 use src\Entity\RpgCondition as EntityRpgCondition;
 use src\Entity\RpgTypeDamage as EntityRpgTypeDamage;
@@ -11,20 +12,22 @@ use src\Query\QueryExecutor;
 
 class RpgMonsterResistance extends Entity
 {
+    public const TABLE = 'rpgMonsterResistance';
+    public const FIELDS = [
+        Field::ID,
+        Field::MONSTERID,
+        Field::TYPEDMGID,
+        Field::TYPERESID,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $monsterId,
-        protected string $typeDamageId,
-        protected string $typeResistanceId
-    ) {
-
-    }
+    protected int $monsterId;
+    protected string $typeDamageId;
+    protected string $typeResistanceId;
 
     public function getController(): ControllerRpgMonsterResistance
     {
         $controller = new ControllerRpgMonsterResistance();
-        $controller->setField('rpgMonsterResistance', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
 

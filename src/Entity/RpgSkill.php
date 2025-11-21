@@ -11,19 +11,20 @@ use src\Repository\RpgSubSkill as RepositoryRpgSubSkill;
 
 class RpgSkill extends Entity
 {
+    public const TABLE = 'rpgSkill';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::ABILITYID,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected int $abilityId
-    ) {
-
-    }
+    protected string $name;
+    protected int $abilityId;
 
     public function getController(): ControllerRpgSkill
     {
         $controller = new ControllerRpgSkill;
-        $controller->setField('rpgSkill', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
 

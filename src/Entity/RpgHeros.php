@@ -13,22 +13,35 @@ use src\Utils\Session;
 
 class RpgHeros extends Entity
 {
+    public const TABLE = 'rpgHeros';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::ORIGINID,
+        Field::SPECIESID,
+        Field::WPUSERID,
+        Field::CREATESTEP,
+        Field::LASTUPDATE,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected int $originId,
-        protected int $speciesId,
-        protected int $wpUserId,
-        protected string $createStep,
-        protected int $lastUpdate
-    ) {
-
-    }
+    protected string $name;
+    protected int $originId;
+    protected int $speciesId;
+    protected int $wpUserId;
+    protected string $createStep;
+    protected int $lastUpdate;
 
     public static function init()
     {
-        return new self(...[0, '', 0, 0, Session::getWpUser()->data->ID, 'name', time()]);
+        return new self([
+            'id' => 0,
+            'name' => '',
+            'originId' => 0,
+            'speciesId' => 0,
+            'wpUserId' => Session::getWpUser()->data->ID,
+            'createStep' => 'name',
+            'lastUpdate' => time(),
+        ]);
     }
 
     public function getOrigin(): ?RpgOrigin

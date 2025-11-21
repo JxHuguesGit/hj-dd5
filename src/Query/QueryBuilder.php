@@ -57,7 +57,9 @@ class QueryBuilder
 
     public function where(array $criteria): self
     {
-        $this->strWhere = " WHERE 1=1";
+        if ($this->strWhere=='') {
+	        $this->strWhere = " WHERE 1=1";
+        }
         foreach ($criteria as $key => $value) {
             $this->strWhere .= " AND `$key` = %s";
             $this->params[] = $value;
@@ -67,7 +69,9 @@ class QueryBuilder
 
     public function whereComplex(array $conditions): self
     {
-        $this->strWhere = " WHERE 1=1";
+        if ($this->strWhere=='') {
+	        $this->strWhere = " WHERE 1=1";
+        }
         foreach ($conditions as $cond) {
             $this->strWhere .= " AND `{$cond['field']}` {$cond['operand']} %s";
             $this->params[] = $cond['value'];

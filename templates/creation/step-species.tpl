@@ -18,7 +18,7 @@
 
                         <div class="text-end">
                             <input type="hidden" id="characterId" name="characterId" value="%2$s"/>
-                            <input type="hidden" id="herosForm" name="herosForm" value="selectSpecies"/>
+                            <input type="hidden" id="herosForm" name="herosForm" value="species"/>
                             <button class="btn btn-sm btn-dark" id="createProcess">Continuer</button>
                         </div>
                     </form>

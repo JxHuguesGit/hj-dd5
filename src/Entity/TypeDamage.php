@@ -1,14 +1,15 @@
 <?php
 namespace src\Entity;
 
+use src\Constant\Field;
+
 class TypeDamage extends Entity
 {
+    public const TABLE = 'TypeDamage';
+    public const FIELDS = [
+        Field::ID,
+        Field::CODE,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $code
-    ) {
-
-    }
-
+    protected string $code;
 }

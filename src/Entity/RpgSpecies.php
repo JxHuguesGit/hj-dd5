@@ -9,19 +9,20 @@ use src\Repository\RpgSpecies as RepositoryRpgSpecies;
 
 class RpgSpecies extends Entity
 {
+    public const TABLE = 'rpgSpecies';
+    public const FIELDS = [
+        Field::ID,
+        Field::NAME,
+        Field::PARENTID,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected string $name,
-        protected int $parentId,
-    ) {
-
-    }
+    protected string $name;
+    protected int $parentId;
 
     public function getController(): ControllerRpgSpecies
     {
         $controller = new ControllerRpgSpecies();
-        $controller->setField('rpgSpecies', $this);
+        $controller->setField(self::TABLE, $this);
         return $controller;
     }
 

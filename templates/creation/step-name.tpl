@@ -26,7 +26,7 @@
                         <!-- Bouton -->
                         <div class="text-end">
                             <input type="hidden" id="characterId" name="characterId" value="%2$s"/>
-                            <input type="hidden" id="herosForm" name="herosForm" value="createHeros"/>
+                            <input type="hidden" id="herosForm" name="herosForm" value="name"/>
                             <button class="btn btn-sm btn-dark" id="createProcess">Continuer</button>
                         </div>
 

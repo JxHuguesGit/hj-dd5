@@ -3,8 +3,9 @@ namespace src\Entity;
 
 class Entity
 {
+    public const TABLE  = null;
+    public const FIELDS = [];
     protected int $id;
-    protected array $fields = [];
 
     public function __construct(array $attributes = [])
     {
@@ -31,54 +32,58 @@ class Entity
     public function __toString(): string
     {
         $fields = static::getFields();
-        $str = '';
+        $parts = [];
+
         foreach ($fields as $field) {
-            $str .= ($this->{$field} ?? 'Non défini') . ' - ';
+            $parts[] = (string) ($this->{$field} ?? 'Non défini');
         }
-        return rtrim($str, ' - ') . '<br>';
-    }
 
-    public function initRepository(array $repositories = []): void
+        return implode(' - ', $parts);
+    }
+    
+    public function toArray(): array
     {
-        foreach ($repositories as $repository) {
-            if (class_exists($repository)) {
-                $this->{$repository} = new $repository;
-            }
-        }
-    }
+        $array = [];
 
+        foreach (static::getFields() as $field) {
+            $array[$field] = $this->$field ?? null;
+        }
+
+        return $array;
+    }
+    
+    public static function getFields(): array
+    {
+        return static::FIELDS ?? [];
+    }
+    
     public function getField(string $field)
     {
-        if (property_exists($this, $field)) {
-            return $this->{$field};
-        }
-        throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
-    }
-
-    public function setField(string $field, $value): self
-    {
-        if (property_exists($this, $field)) {
-            // Logique de validation de la valeur si nécessaire
-            $this->{$field} = $value === null ? ' ' : $value;
-        } else {
+        if (!property_exists($this, $field)) {
             throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
         }
+        return $this->{$field};
+    }
+
+    public function setField(string $field, mixed $value): self
+    {
+        if (!property_exists($this, $field)) {
+            throw new \InvalidArgumentException("Le champ '$field' n'existe pas.");
+        }
+
+        // Hook pour validations personnalisées dans les entités enfants
+        if (method_exists($this, 'validateField')) {
+            $value = $this->validateField($field, $value);
+        }
+
+        $this->{$field} = $value;
+//      $this->{$field} = $value === null ? ' ' : $value;
+
         return $this;
     }
 
-    public static function getFields(): array
+    protected function validateField(string $field, $value)
     {
-        return [];
-    }
-
-    public function getFieldValues(array $fields=[]): array
-    {
-        $values = [];
-        if (!empty($fields)) {
-            foreach ($fields as $field) {
-                $values[] = $this->{$field};
-            }
-        }
-        return $values;
+        return $value;
     }
 }

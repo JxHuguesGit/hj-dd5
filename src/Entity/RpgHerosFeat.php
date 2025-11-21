@@ -9,15 +9,17 @@ use src\Repository\RpgFeat as RepositoryRpgFeat;
 
 class RpgHerosFeat extends Entity
 {
+    public const TABLE = 'rpgHerosFeat';
+    public const FIELDS = [
+        Field::ID,
+        Field::HEROSID,
+        Field::FEATID,
+        Field::EXTRA,
+    ];
 
-    public function __construct(
-        protected int $id,
-        protected int $herosId,
-        protected int $featId,
-        protected int $extra
-    ) {
-
-    }
+    protected int $herosId;
+    protected int $featId;
+    protected int $extra;
 
     public function getFeat(): RpgFeat
     {

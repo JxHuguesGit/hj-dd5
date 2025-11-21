@@ -6,7 +6,9 @@ use src\Enum\ClassEnum;
 
 class RpgSpell extends Entity
 {
-    public int $id;
+    public const TABLE  = null;
+    public const FIELDS = [];
+    
     public string $title;
     public ?string $content;
     public ?string $tempsIncantation;
@@ -21,30 +23,6 @@ class RpgSpell extends Entity
     public bool $rituel;
     public ?string $typeAmelioration;
     public ?string $ameliorationDescription;
-    
-    public function __construct(
-        protected \Wp_Post $post
-    ) {
-        $this->id    = $post->ID;
-        $this->title = $post->post_title;
-        $this->content = $post->post_content;
-        $this->content = apply_filters('the_content', $post->post_content);
-
-        // Champs ACF
-        $this->tempsIncantation = get_field('temps_dincantation', $post->ID);
-        $this->portee           = get_field('portee', $post->ID);
-        $this->duree            = get_field('duree', $post->ID);
-        $this->niveau           = get_field('niveau', $post->ID);
-        $this->ecole            = get_field('ecole', $post->ID);
-        $this->classes          = get_field('classes', $post->ID);
-        $this->composantes           = get_field('composantes', $post->ID);
-        $this->composanteMaterielle = get_field('composante_materielle', $post->ID);
-        $this->concentration    = !empty(get_field('concentration', $post->ID));
-        $this->rituel           = !empty(get_field('rituel', $post->ID));
-        $arr = get_field('type_damelioration', $post->ID);
-        $this->typeAmelioration = (empty($arr) ? '' : $arr[0]);
-        $this->ameliorationDescription = get_field('amelioration_description', $post->ID);
-    }
 
     public function getController(): ControllerRpgSpell
     {
@@ -83,7 +61,7 @@ class RpgSpell extends Entity
         return $this->content;
     }
     
-    public function getTypeAmelioration(): string
+    public function getTypeAmelioration(): ?string
     {
         return $this->typeAmelioration;
     }
@@ -95,68 +73,41 @@ class RpgSpell extends Entity
 
     private function getDureeConvertie(string $value): string
     {
-        if (strpos($value, 'min')) {
-            $quantite = str_replace('min', '', $value);
-            $unite = 'minute';
-        } elseif (strpos($value, 'rd')) {
-            $quantite = str_replace('rd', '', $value);
-            $unite = 'round';
-        } elseif (strpos($value, 'hr')) {
-            $quantite = str_replace('hr', '', $value);
-            $unite = 'heure';
-        } elseif (strpos($value, 'jr')) {
-            $quantite = str_replace('jr', '', $value);
-            $unite = 'jour';
+        if (str_contains($value, 'min')) {
+            $returned = intval($value) . ' minute' . (intval($value) > 1 ? 's' : '');
+        } elseif (str_contains($value, 'rd')) {
+            $returned = intval($value) . ' round' . (intval($value) > 1 ? 's' : '');
+        } elseif (str_contains($value, 'hr')) {
+            $returned = intval($value) . ' heure' . (intval($value) > 1 ? 's' : '');
+        } elseif (str_contains($value, 'jr')) {
+            $returned = intval($value) . ' jour' . (intval($value) > 1 ? 's' : '');
         } else {
-            switch ($value) {
-                case 'diss' :
-                    $str = "Jusqu'à dissipation";
-                break;
-                case 'inst' :
-                    $str = 'Instantanée';
-                break;
-                case 'spec' :
-                    $str = 'Spéciale';
-                break;
-                case 'bonus' :
-                    $str = 'Action Bonus';
-                break;
-                case 'action' :
-                    $str = 'Action';
-                break;
-                case 'reaction' :
-                    $str = 'Réaction';
-                break;
-
-                default :
+            $returned = match ($value) {
+                'diss'   => "Jusqu'à dissipation",
+                'inst'   => 'Instantanée',
+                'spec'   => 'Spéciale',
+                'bonus'  => 'Action Bonus',
+                'action' => 'Action',
+                'reaction' => 'Réaction',
+                default  => $value,
+            };
                 /*
     Jusqu'à 1 minute
     Jusqu'à 1 heure
     Jusqu'à 8 heures
     Dissipation/Déclenchement
                 */
-                    $str = $value;
-                break;
-            }
-            return $str;
         }
-        
-        if ($quantite>1) {
-            $unite .= 's';
-        }
-        
-        return $quantite.' '.$unite;
+        return $returned;
     }
     
     public function getFormattedDuree(bool $detail=true): string
     {
-        if ($this->concentration && $detail) {
-            $str = "Concentration, jusqu'à ";
-        } else {
-            $str = '';
-        }
+        $prefix = ($this->concentration && $detail)
+            ? "Concentration, jusqu'à "
+            : '';
 
-        return $str . $this->getDureeConvertie($this->duree);
+        return $prefix . $this->getDureeConvertie($this->duree);
     }
     
     public function getFormattedComposantes(bool $detail=true): string
@@ -170,30 +121,22 @@ class RpgSpell extends Entity
     
     public function getFormattedPortee(): string
     {
-        switch ($this->portee) {
-            case 'vue' :
-            case 'contact' :
-                $returned = ucwords($this->portee);
-            break;
-            case 'illim' :
-                $returned = 'Illimitée';
-            break;
-            case 'perso' :
-                $returned = 'Personnelle';
-            break;
-            case 'spec' :
-                $returned = 'Spéciale';
-            break;
-            default :
-                if (strpos($this->portee, 'km')!==false) {
-                    $returned = substr($this->portee, 0, -2).' km';
-                } else {
-                    $returned = substr($this->portee, 0, -1).' m';
-                }
-                $returned = str_replace('.', ',', $returned);
-            break;
-        }
-        return $returned;
+        return match ($this->portee) {
+            'vue', 'contact' => ucwords($this->portee),
+            'illim'   => 'Illimitée',
+            'perso'   => 'Personnelle',
+            'spec'    => 'Spéciale',
+            default   => $this->formatPorteeDistance($this->portee),
+        };
+    }
+
+    private function formatPorteeDistance($value): string
+    {
+        $returned = (str_contains($value, 'km'))
+            ? substr($value, 0, -2) . ' km'
+            : substr($value, 0, -1) . ' m';
+
+        return str_replace('.', ',', $returned);
     }
     
     public function getFormattedIncantation(): string

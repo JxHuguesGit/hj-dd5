@@ -10,66 +10,36 @@ use src\Query\QueryExecutor;
 
 class Repository
 {
-    protected $query      = '';
-
-    protected $baseQuery  = '';
-    protected $strWhere   = '';
-    protected $strOrderBy = '';
-    protected $strLimit   = '';
-    protected $params     = [];
-
+    protected string $query = '';
+    protected string $table;
+    protected array $fields;
+    
     public function __construct(
         protected QueryBuilder $queryBuilder,
         protected QueryExecutor $queryExecutor,
-        protected string $table,
-        protected array $fields
+        ?string $table='',
+        ?array $fields=[]
     ){
+        $entityClass = $this->getEntityClass();
+        if ($entityClass!==null) {
+            $this->table = $entityClass::TABLE;
+            $this->fields = $entityClass::FIELDS;
+        } else {
+            $this->table = $table;
+            $this->fields = $fields;
+        }
 
-    }
-
-    public function getLastQuery(): string
-    {
-        return $this->query;
-    }
-
-    public function reset(): self
-    {
-        $this->query = '';
-        $this->baseQuery  = '';
-        $this->strWhere   = '';
-        $this->strOrderBy = '';
-        $this->strLimit   = '';
-        $this->params     = [];
-        return $this;
     }
 
     public function find(mixed $id): ?Entity
     {
-        $this->reset();
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
             ->where([Field::ID=>$id])
             ->getQuery();
         return $this->queryExecutor->fetchOne(
             $this->query,
-            $this->getEntityClass(),
-            $this->queryBuilder->getParams()
-        );
-    }
-
-    public function findBy(array $criteria, array $orderBy=[], int $limit=-1): Collection
-    {
-        $this->reset();
-        $this->query = $this->queryBuilder->reset()
-            ->select($this->fields, $this->table)
-            ->where($criteria)
-            ->orderBy($orderBy)
-            ->limit($limit)
-            ->getQuery();
-
-        return $this->queryExecutor->fetchAll(
-            $this->query,
-            $this->getEntityClass(),
+            $this->resolveEntityClass(),
             $this->queryBuilder->getParams()
         );
     }
@@ -79,50 +49,82 @@ class Repository
         return $this->findBy([], $orderBy);
     }
 
-    public function getEntityClass(): string
+    public function findBy(array $criteria, array $orderBy=[], int $limit=-1): Collection
     {
-        $repositoryClass = get_class($this);
-        return str_replace('Repository', 'Entity', $repositoryClass);
+        $this->query = $this->queryBuilder->reset()
+            ->select($this->fields, $this->table)
+            ->where($criteria)
+            ->orderBy($orderBy)
+            ->limit($limit)
+            ->getQuery();
+
+        return $this->queryExecutor->fetchAll(
+            $this->query,
+            $this->resolveEntityClass(),
+            $this->queryBuilder->getParams()
+        );
     }
 
-    public function insert(Entity &$entity): void
+    protected function resolveEntityClass(): string
     {
-        $this->reset();
+        $entityClass = $this->getEntityClass();
+
+        // Si la classe fille n'a pas encore migré → fallback
+        if (!$entityClass) {
+            // Ancienne règle d’inférence : remplacer Repository par Entity
+            return str_replace('Repository', 'Entity', get_class($this));
+        }
+
+        return $entityClass;
+    }
+
+    public function getEntityClass(): ?string
+    {
+        return null;
+    }
+
+    protected function getEntityValues(Entity $entity, bool $skipId = false): array
+    {
+        $values = [];
+        foreach ($this->fields as $field) {
+            if ($skipId && $field === Field::ID) {
+                continue;
+            }
+            $values[] = $entity->getField($field);
+        }
+        return $values;
+    }
+
+    protected function getEntityId(Entity $entity): mixed
+    {
+        return $entity->getField(Field::ID);
+    }
+
+    public function insert(Entity $entity): void
+    {
         $this->query = $this->queryBuilder->reset()
             ->getInsertQuery($this->fields, $this->table);
 
-        $values = [];
-        foreach ($this->fields as $field) {
-            $values[] = $entity->getField($field);
-        }
-        array_shift($values);
+        $values = $this->getEntityValues($entity, true);
         $insertId = $this->queryExecutor->insert($this->query, $values);
-
         $entity->setId($insertId);
     }
 
-    public function update(Entity &$entity): void
+    public function update(Entity $entity): void
     {
-        $this->reset();
         $this->query = $this->queryBuilder->reset()
             ->getUpdateQuery($this->fields, $this->table);
 
-        $values = [];
-        foreach ($this->fields as $field) {
-            $values[] = $entity->getField($field);
-        }
-        $entityId = array_shift($values);
-        array_push($values, $entityId);
+        $values = $this->getEntityValues($entity, true);
+        $values[] = $this->getEntityId($entity);
         $this->queryExecutor->update($this->query, $values);
     }
 
-    public function delete(Entity &$entity): void
+    public function delete(Entity $entity): void
     {
-        $this->reset();
         $this->query = $this->queryBuilder->reset()
             ->getDeleteQuery($this->table);
 
-        $values = [$entity->getField(Field::ID)];
-        $this->queryExecutor->update($this->query, $values);
+        $this->queryExecutor->update($this->query, [$this->getEntityId($entity)]);
     }
 }
