@@ -25,7 +25,7 @@ class SpeciesStep extends AbstractStep
             return;
         }
 
-        $species = $this->deps['species']->find($speciesId);
+        $species = $this->deps['speciesRepo']->find($speciesId);
         if (!$species) {
             return;
         }
@@ -70,7 +70,7 @@ class SpeciesStep extends AbstractStep
 
     public function getSidebarValue(): string
     {
-        return $this->hero->getSpecies()?->getFullName();
+        return $this->hero->getSpecies()?->getFullName() ?? '';
     }
 
     private function buildSubSpeciesHtml(Collection $subspecies, int $selectedId, string $parentName, int $parentId): string

@@ -17,7 +17,6 @@ class RpgOrigin extends Entity
         Field::NAME,
         Field::CARACENUMS,
         Field::FEATID,
-        Field::SKILLENUMS,
         Field::TOOLID,
     ];
 
@@ -40,16 +39,6 @@ class RpgOrigin extends Entity
         $lstEnums = explode(',', $this->caracEnums);
         foreach ($lstEnums as $key) {
             $caracs[] = AbilityEnum::labelFromDb($key);
-        }
-        return implode(', ', $caracs);
-    }
-    
-    public function getSkills(): string
-    {
-        $caracs = [];
-        $lstEnums = explode(',', $this->skillEnums);
-        foreach ($lstEnums as $key) {
-            $caracs[] = SkillEnum::labelFromDb($key);
         }
         return implode(', ', $caracs);
     }

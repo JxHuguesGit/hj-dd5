@@ -4,6 +4,7 @@ namespace src\CharacterCreation;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
+use src\Entity\RpgHerosSkill;
 use src\Utils\Session;
 
 class OriginStep extends AbstractStep
@@ -24,6 +25,23 @@ class OriginStep extends AbstractStep
         $origin = $this->deps['originRepo']->find($originId);
         if (!$origin) {
             return;
+        }
+
+        // On va récupérer les compétences associées au personnage pour les supprimer.
+        $heroSkills = $this->deps['heroSkillRepo']->findBy([Field::HEROSID=>$this->hero->getField(Field::ID)]);
+        foreach ($heroSkills as $heroSkill) {
+            $this->deps['heroSkillRepo']->delete($heroSkill);
+        }
+
+        // On va récupérer les deux compétences associées à cette origine pour les attacher au personnage.
+        $originSkills = $this->deps['originSkillRepo']->findBy([Field::ORIGINID=>$originId]);
+        foreach ($originSkills as $originSkill) {
+            $heroSkill = new RpgHerosSkill([
+                Field::HEROSID=>$this->hero->getField(Field::ID),
+                Field::SKILLID=>$originSkill->getField(Field::SKILLID),
+                Field::EXPERTISE=>0
+            ]);
+            $this->deps['heroSkillRepo']->insert($heroSkill);
         }
 
         $this->hero->setField(Field::ORIGINID, $originId);

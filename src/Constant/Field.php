@@ -48,6 +48,7 @@ class Field
     public const PROFBONUS   = 'profBonus';
     public const PERCPASSIVE = 'percPassive';
      
+    public const EXPERTISE    = 'expertise';
     public const EXTRA        = 'extra';
     public const RANK         = 'rank';
     public const NIVEAU       = 'niveau';
