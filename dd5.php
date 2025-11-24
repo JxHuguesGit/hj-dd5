@@ -1,6 +1,8 @@
 <?php
 use src\Action\Ajax;
+require_once __DIR__.'/src/Utils/ExceptionRenderer.php'; // si autoload non configuré
 
+use src\Utils\ExceptionRenderer;
 define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
@@ -26,37 +28,9 @@ class DD5
 }
 $objDD5 = new DD5();
 
-function exceptionHandler($objException)
-{
-    $strHandler  = '<div class="card border-danger" style="max-width: 100%;margin-right: 15px;">';
-    $strHandler .= '  <div class="card-header bg-danger text-white"><strong>';
-    $strHandler .= $objException->getMessage().'</strong></div>';
-    $strHandler .= '  <div class="card-body text-danger">';
-    $strHandler .= '    <p>Une erreur est survenue dans le fichier <strong>'.$objException->getFile();
-    $strHandler .= '</strong> à la ligne <strong>'.$objException->getLine().'</strong>.</p>';
-    $strHandler .= '    <ul class="list-group">';
-
-    $arrTraces = $objException->getTrace();
-    foreach ($arrTraces as $trace) {
-        $strHandler .= '<li class="list-group-item">Fichier <strong>'.$trace['file'];
-        $strHandler .= '</strong> ligne <em>'.$trace['line'].'</em> :<br>';
-        if (isset($trace['args'])) {
-            if (!is_array($trace['args'])) {
-                $strHandler .= $trace['class'].$trace['type'].$trace['function'];
-                $strHandler .= '('.implode(', ', $trace['args']).')</li>';
-            }
-            $strHandler .= $trace['function'].'()</li>';
-        }
-    }
-
-    $strHandler .= '    </ul>';
-    $strHandler .= '  </div>';
-    $strHandler .= '  <div class="card-footer"></div>';
-    $strHandler .= '</div>';
-
-    echo $strHandler;
-}
-set_exception_handler('exceptionHandler');
+set_exception_handler(function($e) {
+    ExceptionRenderer::handle($e);
+});
 
 spl_autoload_register(function ($classname) {
     // Définir le répertoire principal du plugin
