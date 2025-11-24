@@ -53,8 +53,7 @@ class Field
     public const RANK         = 'rank';
     public const NIVEAU       = 'niveau';
     public const DESCRIPTION  = 'description';
-    public const CARACENUMS   = 'caracEnums';
-    public const SKILLENUMS   = 'skillEnums';
+    public const SKILLS       = 'skills';
         
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';

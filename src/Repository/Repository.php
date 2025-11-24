@@ -31,7 +31,7 @@ class Repository
 
     }
 
-    public function find(mixed $id): ?Entity
+    public function find(mixed $id, bool $display=false): ?Entity
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
@@ -40,7 +40,8 @@ class Repository
         return $this->queryExecutor->fetchOne(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $this->queryBuilder->getParams(),
+            $display
         );
     }
 

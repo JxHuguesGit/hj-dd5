@@ -10,9 +10,11 @@ class RpgClasse extends Entity
     public const FIELDS = [
         Field::ID,
         Field::NAME,
+        Field::SKILLS,
     ];
 
     protected string $name;
+    protected int $skills;
 
     public function getController(): ControllerRpgClasse
     {

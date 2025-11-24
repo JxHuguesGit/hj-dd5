@@ -13,6 +13,7 @@ class CharacterCreationFlow
         'species' => SpeciesStep::class,
         'originFeat' => OriginFeatStep::class,
         'classe'     => ClasseStep::class,
+        'skillTool'  => SkillStep::class,
     ];
 
     private RpgHeros $hero;

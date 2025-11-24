@@ -5,6 +5,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
+use src\Entity\RpgFeat;
 use src\Entity\RpgHerosFeat;
 use src\Utils\Session;
 
@@ -91,6 +92,7 @@ class OriginFeatStep extends AbstractStep
                 'extraRadioBtns'    => $primaryExtraFeatHtml,
                 'showExtra2nd'      => $isHuman && $secondFeatId==self::SPECIAL_FEAT_ID ? '' : ' '.Bootstrap::CSS_DNONE,
                 'extraRadioBtns2nd' => $secondaryExtraFeatHtml,
+                'description'       => $this->getDescription($firstFeat->getFeat()),
             ],
         ];
     }
@@ -108,5 +110,19 @@ class OriginFeatStep extends AbstractStep
             $names[] = $feat->getFullName();
         }
         return implode(', ', $names);
+    }
+    
+    private function getDescription(?RpgFeat $feat): string
+    {
+        if ($feat===null) {
+            $returned = "<strong>Caractéristiques</strong> : les 3 caractéristiques ajustées par l'origine.<br>";
+            $returned .= "<strong>Don</strong> : le don d'origine associé.<br>";
+            $returned .= "<strong>Compétences</strong> : le 2 compétences associées.<br>";
+            $returned .= "<strong>Outils</strong> : l'outil associé.<br>";
+            $returned .= "<strong>Equipement</strong> : la liste d'équipement standard disponible par l'origine<br>";
+
+            return 'WIP';
+        }
+        return $feat->getController()->getDescription();
     }
 }

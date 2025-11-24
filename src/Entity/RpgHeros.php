@@ -8,6 +8,7 @@ use src\Query\QueryExecutor;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
+use src\Repository\RpgHerosClasse as RepositoryRpgHeroClasse;
 use src\Repository\RpgHerosFeat as RepositoryRpgHeroFeat;
 use src\Utils\Session;
 

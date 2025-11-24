@@ -36,7 +36,7 @@ class ClasseStep extends AbstractStep
         $this->deps['heroClassRepo']->insert($heroClasse);
 
 
-        $this->hero->setField(Field::CREATESTEP, 'classe');
+        $this->hero->setField(Field::CREATESTEP, 'skillTool');
         $this->hero->setField(Field::LASTUPDATE, time());
         $this->deps['heroRepo']->update($this->hero);
     }
@@ -63,6 +63,7 @@ class ClasseStep extends AbstractStep
                 'sidebar'       => $sidebar,
                 'heroId'        => $this->hero->getField(Field::ID),
                 'boutonsRadio'  => $strRadios,
+                'description'   => '',
             ],
         ];
     }

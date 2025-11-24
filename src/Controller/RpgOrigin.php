@@ -80,7 +80,7 @@ class RpgOrigin extends Utilities
         // Le don d'origine rattaché
         $strOriginFeat = $this->rpgOrigin->getOriginFeat()->getField(Field::NAME);
         
-        $strSkills = $this->rpgOrigin->getSkills();
+        $strSkills = $this->rpgOrigin->getOriginSkills();
         $strTool = '';
                 
         $objTable->addBodyRow()
@@ -97,8 +97,32 @@ class RpgOrigin extends Utilities
         $id = $this->rpgOrigin->getField(Field::ID);
         $name = $this->rpgOrigin->getField(Field::NAME);
         return '<div class="form-check">'
-                . '<input class="" type="radio" name="characterOriginId" value="'.$id.'" id="origin'.$id.'"'.($checked?' checked':'').'>'
+                . '<input class="ajaxAction" data-trigger="click" data-type="origin" type="radio" name="characterOriginId" value="'.$id.'" id="origin'.$id.'"'.($checked?' checked':'').'>'
                 . '<label class="form-check-label" for="origin'.$id.'">'.$name.'</label>'
                 . '</div>';
+    }
+    
+    public function getDescription(): string
+    {
+        $originAbilities = $this->rpgOrigin->getOriginAbilities();
+        $partAbilities = [];
+        foreach ($originAbilities as $originAbility) {
+            $partAbilities[] = $originAbility->getAbility()->getField(Field::NAME);
+        }
+        $originName = $this->rpgOrigin->getOriginFeat()->getField(Field::NAME);
+        $originSkills = $this->rpgOrigin->getOriginSkills();
+        $partSkills = [];
+        foreach ($originSkills as $originSkill) {
+            $partSkills[] = $originSkill->getSkill()->getField(Field::NAME);
+        }
+        $toolName = $this->rpgOrigin->getOriginTool()->getField(Field::NAME);
+        
+        $returned = '<strong>Caractéristiques</strong> : '.implode(', ', $partAbilities).'.<br>';
+        $returned .= '<strong>Don</strong> : '.$originName.'<br>';
+        $returned .= '<strong>Compétences</strong> : '.implode(', ', $partSkills).'<br>';
+        $returned .= '<strong>Outils</strong> : '.$toolName.'<br>';
+        $returned .= '<strong>Equipement</strong> : WIP<br>';
+        
+        return $returned;
     }
 }

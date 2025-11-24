@@ -3,9 +3,9 @@
     %1$s
         <!-- Zone principale -->
 
-        <div class="col-md-9">
+        <div class="col-md-6">
             <form method="post" action="https://dd5.jhugues.fr/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=character">
-                <div class="card bg-light shadow-sm p-0">
+                <div class="card bg-light shadow-sm p-0 mw-100">
                     <div class="card-header bg-dark text-white">
                         <h5 class="mb-0">Création du personnage – Choix du nom</h5>
                     </div>

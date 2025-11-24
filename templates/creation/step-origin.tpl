@@ -2,8 +2,8 @@
     <div class="row">
         %1$s
         <!-- Zone principale -->
-        <div class="col-md-9">
-            <div class="card bg-light shadow-sm p-0">
+        <div class="col-md-6">
+            <div class="card bg-light shadow-sm p-0 mw-100">
                 <div class="card-header bg-dark text-white">
                     <h5 class="mb-0">Choisir l'origine</h5>
                 </div>
@@ -21,6 +21,15 @@
                     </form>
 
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-light shadow-sm p-0">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Origine choisie</h5>
+                </div>
+                <div id="creationStepSideBody" class="card-body">%4$s</div>
             </div>
         </div>
 

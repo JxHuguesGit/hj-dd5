@@ -5,6 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
 use src\Entity\RpgHerosSkill;
+use src\Entity\RpgOrigin;
 use src\Utils\Session;
 
 class OriginStep extends AbstractStep
@@ -57,9 +58,14 @@ class OriginStep extends AbstractStep
         // Préparer les variables pour le template
         $selectedId = $this->hero->getField(Field::ORIGINID);
         $origins = $this->deps['originRepo']->findAll([Field::NAME=>Constant::CST_ASC]);
+        $refOrigin = null;
         $strRadios = '';
         foreach ($origins as $origin) {
-            $strRadios .= $origin->getController()->getRadioForm($selectedId == $origin->getField(Field::ID));
+            $matchSelection = $selectedId == $origin->getField(Field::ID);
+            $strRadios .= $origin->getController()->getRadioForm($matchSelection);
+            if ($matchSelection) {
+                $refOrigin = $origin;
+            }
         }
 
         return [
@@ -68,8 +74,24 @@ class OriginStep extends AbstractStep
                 'sidebar'       => $sidebar,
                 'heroId'        => $this->hero->getField(Field::ID),
                 'boutonsRadio'  => $strRadios,
+                'description'   => $this->getDescription($refOrigin),
             ],
         ];
+    }
+    
+    private function getDescription(?RpgOrigin $origin): string
+    {
+        if ($origin===null) {
+            $returned = "<strong>Caractéristiques</strong> : les 3 caractéristiques ajustées par l'origine.<br>";
+            $returned .= "<strong>Don</strong> : le don d'origine associé.<br>";
+            $returned .= "<strong>Compétences</strong> : le 2 compétences associées.<br>";
+            $returned .= "<strong>Outils</strong> : l'outil associé.<br>";
+            $returned .= "<strong>Equipement</strong> : la liste d'équipement standard disponible par l'origine<br>";
+
+            return $returned;
+        }
+        
+        return $origin->getController()->getDescription();
     }
 
     public static function getSidebarLabel(): string

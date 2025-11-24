@@ -143,12 +143,16 @@ $(document).ready(function(e) {
         ajaxActionChange($(this), e);
     });
 
+    $('.ajaxAction[data-trigger="click"]').on('click', function(e) {
+        ajaxActionClick($(this), e);
+    });
+
     $('*[data-action="RmbFocus"]').on('blur', function(e) {
-    	focusRemembered = $(this).attr('id');
+        focusRemembered = $(this).attr('id');
     });
 
     $('button[data-action="fdmTool"]').on('click', function(e) {
-    	fdmToolsManagment($(this));
+        fdmToolsManagment($(this));
     });
 
     $('#species-list input[name="characterSpeciesId"]').on('change', function () {
@@ -265,6 +269,29 @@ function showModal(type, title, content) {
     $('#infoModal').modal('show');
 }
 
+function ajaxActionClick(obj, e) {
+//    e.preventDefault();
+    loadCreationStepSide(obj.data('type'), obj.val());
+    return false;
+}
+
+function loadCreationStepSide(type, id) {
+    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadCreationStepSide', 'type' : type, 'id': id};
+    const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+    const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+
+    $.post({
+        url: ajaxUrl,
+        data: data,
+        success: function (response) {
+            const parsedData = JSON.parse(response.data);
+            $('#creationStepSideBody').html(parsedData.loadCreationStepSide);
+        },
+        error: function () {
+        }
+    });
+}
+
 function ajaxActionChange(obj, e) {
     e.preventDefault();
     let actions = obj.data('action').split(',');
@@ -291,12 +318,12 @@ function loadMonsterPage(newNbPerPage) {
 }
 
 function loadTablePage(newNbPerPage) {
-	$('#nbPerPage').val(newNbPerPage);
+    $('#nbPerPage').val(newNbPerPage);
     $('#formFilter').submit();
 }
 
 function fdmToolsManagment(obj) {
-	let val = obj.data('val');
+    let val = obj.data('val');
     let id = focusRemembered.split('-')[2];
     
     if (val==undefined) {

@@ -74,5 +74,6 @@ final class Template
     public const CREATE_ORIGIN       = self::CREATE_PATH.'step-origin.tpl';
     public const CREATE_SPECIES      = self::CREATE_PATH.'step-species.tpl';
     public const CREATE_FEAT         = self::CREATE_PATH.'step-feat.tpl';
+    public const CREATE_SKILLTOOL    = self::CREATE_PATH.'step-skillTool.tpl';
     public const CREATE_SIDEBAR      = self::CREATE_PATH.'step-sidebar.tpl';
 }

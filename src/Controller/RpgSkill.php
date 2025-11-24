@@ -84,4 +84,18 @@ class RpgSkill extends Utilities
 
 
     }
+    
+    public function getCheckboxForm(bool $checked=false, bool $readonly=false): string
+    {
+        $id = $this->rpgSkill->getField(Field::ID);
+        $name = $this->rpgSkill->getField(Field::NAME);
+        $returned = '<div class="form-check">'
+                . '<input class="" type="checkbox"'.($readonly?'':' name="skillId[]"').' value="'.$id.'" id="skill'.$id.'"'.($checked?' checked':'').($readonly?' disabled':'').'>'
+                . '<label class="form-check-label" for="skill'.$id.'">'.$name.'</label>'
+                . '</div>';
+        if ($readonly) {
+            $returned .= '<input type="hidden" name="skillId[]" value="'.$id.'"/>';
+        }
+        return $returned;
+    }
 }

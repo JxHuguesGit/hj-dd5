@@ -162,7 +162,7 @@ class RpgFeat extends Utilities
         $id = $this->rpgFeat->getField(Field::ID);
         $name = $this->rpgFeat->getField(Field::NAME);
         return '<div class="form-check">'
-                . '<input class="" type="radio" name="'.$prefix.'" value="'.$id.'" id="'.$prefix.$id.'"'.($checked?' checked':'').'>'
+                . '<input class="ajaxAction" data-trigger="click" data-type="feat" type="radio" name="'.$prefix.'" value="'.$id.'" id="'.$prefix.$id.'"'.($checked?' checked':'').'>'
                 . '<label class="form-check-label" for="'.$prefix.$id.'">'.$name.'</label>'
                 . '</div>';
     }
@@ -172,5 +172,10 @@ class RpgFeat extends Utilities
         $id = $this->rpgFeat->getField(Field::ID);
         $name = $this->rpgFeat->getField(Field::NAME);
         return '<option value="'.$id.'"'.($selected?' selected':'').'>'.$name.'</option>';
+    }
+    
+    public function getDescription(): string
+    {
+        return $this->rpgFeat->getWpPost()->post_content;
     }
 }

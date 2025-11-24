@@ -9,6 +9,11 @@ class Ajax{
     {
         $ajaxAction    = Session::fromPost('ajaxAction');
         switch ($ajaxAction) {
+            case 'loadCreationStepSide':
+                $type    = Session::fromPost('type');
+                $id      = Session::fromPost('id');
+                $returnedValue = LoadCreationStepSide::build($type, $id);
+            break;
             case 'loadCasteDetail':
                 $returnedValue = LoadCasteDetail::build();
             break;
@@ -30,4 +35,5 @@ class Ajax{
         }
         return '{"'.$ajaxAction.'": '.json_encode($returnedValue).'}';
     }
+    
 }

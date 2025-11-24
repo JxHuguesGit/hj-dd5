@@ -9,6 +9,7 @@ use src\Entity\RpgHerosClasse as EntityRpgHerosClasse;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgClasse as RepositoryRpgClasse;
+use src\Repository\RpgClasseSkill as RepositoryRpgClasseSkill;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgHeros as RepositoryRpgHeros;
 use src\Repository\RpgHerosClasse as RepositoryRpgHerosClasse;
@@ -16,7 +17,9 @@ use src\Repository\RpgHerosFeat as RepositoryRpgHerosFeat;
 use src\Repository\RpgHerosSkill as RepositoryRpgHerosSkill;
 use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
+use src\Repository\RpgSkill as RepositoryRpgSkill;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
+use src\Repository\RpgTool as RepositoryRpgTool;
 use src\Utils\Session;
 
 class AdminCharacterPage extends AdminPage
@@ -60,15 +63,18 @@ class AdminCharacterPage extends AdminPage
     private function buildDeps(QueryBuilder $qb, QueryExecutor $qe): array
     {
         return [
-            'heroRepo'      => new RepositoryRpgHeros($qb, $qe),
-            'originRepo'    => new RepositoryRpgOrigin($qb, $qe),
+            'classRepo'       => new RepositoryRpgClasse($qb, $qe),
+            'classSkillRepo'  => new RepositoryRpgClasseSkill($qb, $qe),
+            'featRepo'        => new RepositoryRpgFeat($qb, $qe),
+            'heroRepo'        => new RepositoryRpgHeros($qb, $qe),
+            'heroClassRepo'   => new RepositoryRpgHerosClasse($qb, $qe),
+            'heroFeatRepo'    => new RepositoryRpgHerosFeat($qb, $qe),
+            'heroSkillRepo'   => new RepositoryRpgHerosSkill($qb, $qe),
+            'originRepo'      => new RepositoryRpgOrigin($qb, $qe),
             'originSkillRepo' => new RepositoryRpgOriginSkill($qb, $qe),
-            'speciesRepo'   => new RepositoryRpgSpecies($qb, $qe),
-            'featRepo'      => new RepositoryRpgFeat($qb, $qe),
-            'classRepo'     => new RepositoryRpgClasse($qb, $qe),
-            'heroClassRepo' => new RepositoryRpgHerosClasse($qb, $qe),
-            'heroFeatRepo'  => new RepositoryRpgHerosFeat($qb, $qe),
-            'heroSkillRepo' => new RepositoryRpgHerosSkill($qb, $qe),
+            'skillRepo'       => new RepositoryRpgSkill($qb, $qe),
+            'speciesRepo'     => new RepositoryRpgSpecies($qb, $qe),
+            'toolRepo'        => new RepositoryRpgTool($qb, $qe),
         ];
     }
 
