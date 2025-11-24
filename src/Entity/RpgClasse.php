@@ -12,14 +12,28 @@ class RpgClasse extends Entity
         Field::NAME,
         Field::SKILLS,
     ];
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::SKILLS => 'intPositive',
+    ];
 
-    protected string $name;
-    protected int $skills;
+    protected string $name = '';
+    protected int $skills  = 0;
 
     public function getController(): ControllerRpgClasse
     {
         $controller = new ControllerRpgClasse;
         $controller->setField(self::TABLE, $this);
         return $controller;
+    }
+
+    public function stringify(): string
+    {
+        return sprintf(
+            "[%s] %s (%d)",
+            $this->getId(),
+            $this->getName(),
+            $this->getSkills()
+        );
     }
 }

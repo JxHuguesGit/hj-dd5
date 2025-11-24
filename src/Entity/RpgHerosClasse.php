@@ -2,9 +2,8 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgClasse as RepositoryRpgClasse;
+use src\Repository\RpgHeros as RepositoryRpgHeros;
 
 class RpgHerosClasse extends Entity
 {
@@ -16,15 +15,25 @@ class RpgHerosClasse extends Entity
         Field::NIVEAU,
     ];
 
-    protected int $herosId;
-    protected int $classeId;
-    protected int $niveau;
+    public const FIELD_TYPES = [
+        Field::HEROSID => 'intPositive',
+        Field::CLASSEID => 'intPositive',
+        Field::NIVEAU => 'intPositive',
+    ];
 
-    public function getClasse(): RpgClasse
+    protected int $herosId = 0;
+    protected int $classeId = 0;
+    protected int $niveau = 0;
+
+    public function getHeros(): ?RpgHeros
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgClasse($queryBuilder, $queryExecutor);
-        return $objDao->find($this->{Field::CLASSEID});
+        $objDao = new RepositoryRpgHeros($this->qb, $this->qe);
+        return $objDao->find($this->herosId);
+    }
+
+    public function getClasse(): ?RpgClasse
+    {
+        $objDao = new RepositoryRpgClasse($this->qb, $this->qe);
+        return $objDao->find($this->classeId);
     }
 }

@@ -11,7 +11,21 @@ class RpgCondition extends Entity
         Field::NAME,
         Field::DESCRIPTION,
     ];
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::DESCRIPTION => 'string',
+    ];
+    
+    protected string $name        = '';
+    protected string $description = '';
 
-    protected string $name;
-    protected string $description;
+    public function stringify(): string
+    {
+        return sprintf(
+            "[%s] %s - Description : %s",
+            $this->getId(),
+            $this->getName(),
+            $this->getDescription()
+        );
+    }
 }

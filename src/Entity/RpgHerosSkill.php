@@ -2,6 +2,8 @@
 namespace src\Entity;
 
 use src\Constant\Field;
+use src\Repository\RpgHeros as RepositoryRpgHeros;
+use src\Repository\RpgSkill as RepositoryRpgSkill;
 
 class RpgHerosSkill extends Entity
 {
@@ -13,7 +15,25 @@ class RpgHerosSkill extends Entity
         Field::EXPERTISE,
     ];
 
-    protected int $herosId;
-    protected int $skillId;
-    protected int $expertise;
+    public const FIELD_TYPES = [
+        Field::HEROSID => 'intPositive',
+        Field::SKILLID => 'intPositive',
+        Field::EXPERTISE => 'bool',
+    ];
+
+    protected int $herosId = 0;
+    protected int $skillId = 0;
+    protected bool $expertise = false;
+
+    public function getHeros(): ?RpgHeros
+    {
+        $objDao = new RepositoryRpgHeros($this->qb, $this->qe);
+        return $objDao->find($this->herosId);
+    }
+
+    public function getSkill(): ?RpgSkill
+    {
+        $objDao = new RepositoryRpgSkill($this->qb, $this->qe);
+        return $objDao->find($this->skillId);
+    }
 }

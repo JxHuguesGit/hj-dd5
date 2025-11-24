@@ -2,9 +2,8 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Repository\RpgClasseSkill as RepositoryRpgSkill;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgClasse as RepositoryRpgClasse;
+use src\Repository\RpgSkill as RepositoryRpgSkill;
 
 class RpgClasseSkill extends Entity
 {
@@ -14,15 +13,23 @@ class RpgClasseSkill extends Entity
         Field::CLASSEID,
         Field::SKILLID,
     ];
+    public const FIELD_TYPES = [
+        Field::CLASSEID => 'intPositive',
+        Field::SKILLID => 'intPositive',
+    ];
 
     protected int $classeId;
     protected int $skillId;
     
+    public function getClasse(): ?RpgClasse
+    {
+        $objDao = new RepositoryRpgClasse($this->qb, $this->qe);
+        return $objDao->find($this->classeId);
+    }
+    
     public function getSkill(): ?RpgSkill
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgSkill($queryBuilder, $queryExecutor);
+        $objDao = new RepositoryRpgSkill($this->qb, $this->qe);
         return $objDao->find($this->skillId);
     }
 }

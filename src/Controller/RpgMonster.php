@@ -79,15 +79,15 @@ class RpgMonster extends Utilities
         // Liste des options de types de monstres
         $typeOptions = '';
         foreach (MonsterTypeEnum::cases() as $case) {
-            $typeOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['typeFilter']) ? ' selected' : '').'>'.ucfirst($case->label()).'</option>';
+            $typeOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['typeFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
         }
         
         // Liste des niveaux
         $minOptions = '';
         $maxOptions = '';
         for ($i=0; $i<=30; $i++) {
-            $minOptions .= '<option value="'.$i.'"'.($params['fpMinFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
-            $maxOptions .= '<option value="'.$i.'"'.($params['fpMaxFilter']==$i ? ' selected' : '').'>'.$i.'</option>';
+            $minOptions .= '<option value="'.$i.'"'.($params['fpMinFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
+            $maxOptions .= '<option value="'.$i.'"'.($params['fpMaxFilter']==$i ? ' '.Constant::CST_SELECTED : '').'>'.$i.'</option>';
         }
         
         $attributes = [

@@ -31,11 +31,6 @@ class RpgSpell extends Entity
         return $controller;
     }
     
-    public function getId(): int
-    {
-        return $this->id;
-    }
-    
     public function getTitle(): string
     {
         return $this->title;

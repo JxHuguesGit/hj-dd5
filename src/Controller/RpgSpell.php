@@ -3,6 +3,7 @@ namespace src\Controller;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Field;
 use src\Constant\Language;
 use src\Constant\Template;
 use src\Entity\RpgSpell as EntityRpgSpell;
@@ -154,7 +155,7 @@ class RpgSpell extends Utilities
 
     public function addBodyRow(Table &$objTable, array $arrParams): void
     {
-        $strName = '<span class="modal-tooltip" data-modal="spell" data-uktag="'.$this->rpgSpell->getId().'">'.$this->rpgSpell->getTitle().' <span class="fa fa-search"></span></span>';
+        $strName = '<span class="modal-tooltip" data-modal="spell" data-uktag="'.$this->rpgSpell->getField(Field::ID).'">'.$this->rpgSpell->getTitle().' <span class="fa fa-search"></span></span>';
         
         $strEcole = $this->rpgSpell->getEcole();
         

@@ -10,6 +10,10 @@ class RpgAbility extends Entity
         Field::ID,
         Field::NAME,
     ];
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+    ];
     
     protected string $name = '';
+
 }

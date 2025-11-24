@@ -1,8 +1,6 @@
 <?php
 namespace src\Entity;
 
-use src\Utils\Utils;
-
 class CharacterStats
 {
     protected int $hp;

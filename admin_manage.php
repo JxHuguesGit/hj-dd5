@@ -8,6 +8,9 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 <?php
 use src\Controller\AdminPage;
+use src\Entity\Entity;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
 use src\Utils\Session;
 
 if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
@@ -22,6 +25,8 @@ class DD5Admin
 {
     public static function display(): void
     {
+        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
+
         /////////////////////////////////////////
         // Analyse de l'url
         $uri = Session::fromServer('REQUEST_URI');

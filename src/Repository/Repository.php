@@ -108,7 +108,7 @@ class Repository
 
         $values = $this->getEntityValues($entity, true);
         $insertId = $this->queryExecutor->insert($this->query, $values);
-        $entity->setId($insertId);
+        $entity->setField(Field::ID, $insertId);
     }
 
     public function update(Entity $entity): void
