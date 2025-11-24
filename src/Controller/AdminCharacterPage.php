@@ -77,38 +77,4 @@ class AdminCharacterPage extends AdminPage
             'toolRepo'        => new RepositoryRpgTool($qb, $qe),
         ];
     }
-
-
-    private function dealWithHerosForm(string $herosForm): void
-    {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDaoHeros = new RepositoryRpgHeros($queryBuilder, $queryExecutor);
-
-            $objHero = $objDaoHeros->find(Session::fromPost('characterId'));
-            switch ($herosForm) {
-                case 'selectClass' :
-                    $selectedId = Session::fromPost('characterClassId');
-
-                    $objDao = new RepositoryRpgHerosClasse($queryBuilder, $queryExecutor);
-                    // On purge les jointures liées au personnage
-                    $objs = $objDao->findBy([Field::HEROSID=>$objHero->getField(Field::ID)]);
-                    $objs->rewind();
-                    while ($objs->valid()) {
-                        $obj = $objs->current();
-                        $objDao->delete($obj);
-                        $objs->next();
-                    }
-                    // On créé les nouvelles jointures.
-                    $obj = new EntityRpgHerosClasse(...[0, $objHero->getField(Field::ID), $selectedId, 1]);
-                    $objDao->insert($obj);
-                    $objHero->setField(Field::CREATESTEP, 'classe');
-                break;
-                default :
-                    // Sonar
-                break;
-            }
-            $objHero->setField(Field::LASTUPDATE, time());
-            $objDaoHeros->update($objHero);
-    }
 }
