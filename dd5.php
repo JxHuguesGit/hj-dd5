@@ -1,8 +1,7 @@
 <?php
 use src\Action\Ajax;
-require_once __DIR__.'/src/Utils/ExceptionRenderer.php'; // si autoload non configuré
+use src\Exception\ExceptionRenderer;
 
-use src\Utils\ExceptionRenderer;
 define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);

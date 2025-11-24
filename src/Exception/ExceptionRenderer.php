@@ -1,13 +1,13 @@
 <?php
-namespace src\Utils;
+namespace src\Exception;
 
 use Throwable;
 
 class ExceptionRenderer
 {
-    public static function handle(Throwable $e): void
+    public static function handle(Throwable $exception): void
     {
-        echo self::renderExceptionCard($e);
+        echo self::renderExceptionCard($exception);
     }
 
     private static function renderExceptionCard(Throwable $exception): string
@@ -31,7 +31,7 @@ class ExceptionRenderer
         for ($obj = $exception; $obj !== null; $obj = $obj->getPrevious()) {
             $html .= '<p><strong>Message :</strong> ' . htmlspecialchars($obj->getMessage()) . '</p>';
             $html .= '<p>Fichier : <strong>' . $obj->getFile() . '</strong> à la ligne <strong>' . $obj->getLine() . '</strong></p>';
-            $html .= self::renderTrace($obj->getTrace());
+            $html .= self::renderTrace($obj->getTrace(), $exception);
 
             if ($obj->getPrevious()) {
                 $html .= '<hr>';
@@ -40,7 +40,7 @@ class ExceptionRenderer
         return $html;
     }
 
-    private static function renderTrace(array $trace): string
+    private static function renderTrace(array $trace, Throwable $exception): string
     {
         if (empty($trace)) {
             return '';
@@ -56,7 +56,22 @@ class ExceptionRenderer
         }
         $html .= '</ul>';
 
+        // Chaînage des exceptions précédentes
+        if ($exception->getPrevious()) {
+            $html .= '<hr>';
+            $html .= '<p><em>Exception précédente :</em></p>';
+            static::renderPrevious($exception->getPrevious(), $html);
+        }
+
         return $html;
+    }
+    protected static function renderPrevious(\Throwable $prev, string &$html): void
+    {
+        $html .= '<p><strong>' . get_class($prev) . '</strong> : ' . htmlspecialchars($prev->getMessage()) . '</p>';
+        if ($prev->getPrevious()) {
+            $html .= '<hr>';
+            static::renderPrevious($prev->getPrevious(), $html);
+        }
     }
 
     private static function formatArgs(array $args): string
