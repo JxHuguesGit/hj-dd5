@@ -88,7 +88,8 @@ class RpgSpell extends Utilities
         }
         
         $attributes = [
-            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=spells', // Url du formulaire
+            // Url du formulaire
+            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=spells',
             $params['selectAllClass'] ? ' '.Constant::CST_CHECKED : '',
             count($params['classFilter']),
             $classOptions,

@@ -25,15 +25,16 @@ class RpgHerosSkill extends Entity
     protected int $skillId = 0;
     protected bool $expertise = false;
 
+    private ?RpgHeros $herosCache = null;
+    private ?RpgSkill $skillCache = null;
+
     public function getHeros(): ?RpgHeros
     {
-        $objDao = new RepositoryRpgHeros($this->qb, $this->qe);
-        return $objDao->find($this->herosId);
+        return $this->getRelatedEntity('herosCache', RepositoryRpgHeros::class, $this->herosId);
     }
 
     public function getSkill(): ?RpgSkill
     {
-        $objDao = new RepositoryRpgSkill($this->qb, $this->qe);
-        return $objDao->find($this->skillId);
+        return $this->getRelatedEntity('skillCache', RepositoryRpgSkill::class, $this->skillId);
     }
 }

@@ -2,10 +2,8 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Entity\RpgSkill as EntityRpgSkill;
-use src\Repository\RpgSkill;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgOrigin as RepositoryRpgOrigin;
+use src\Repository\RpgSkill as RepositoryRpgSkill;
 
 class RpgOriginSkill extends Entity
 {
@@ -15,15 +13,24 @@ class RpgOriginSkill extends Entity
         Field::ORIGINID,
         Field::SKILLID,
     ];
+    public const FIELD_TYPES = [
+        Field::ORIGINID => 'intPositive',
+        Field::SKILLID => 'intPositive',
+    ];
 
-    protected int $originId;
-    protected int $skillId;
+    protected int $originId = 0;
+    protected int $skillId = 0;
     
-    public function getSkill(): ?EntityRpgSkill
+    private ?RpgOrigin $originCache = null;
+    private ?RpgSkill $skillCache = null;
+
+    public function getOrigin(): ?RpgOrigin
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgSkill($queryBuilder, $queryExecutor);
-        return $objDao->find($this->skillId);
+        return $this->getRelatedEntity('originCache', RepositoryRpgOrigin::class, $this->originId);
+    }
+
+    public function getSkill(): ?RpgSkill
+    {
+        return $this->getRelatedEntity('skillCache', RepositoryRpgSkill::class, $this->skillId);
     }
 }

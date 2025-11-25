@@ -2,63 +2,52 @@
 namespace src\Entity;
 
 use src\Constant\Field;
+use src\Repository\RpgTypeMonstre as RepositoryRpgTypeMonster;
 
 class RpgSousTypeMonstre extends Entity
 {
-    public const TABLE = 'rpgSousTypeMonstre';
+    public const TABLE = 'rpgMonsterSubType';
     public const FIELDS = [
         Field::ID,
         Field::MSTTYPEID,
         Field::NAME,
     ];
 
-    protected int $monstreTypeId;
-    protected string $name;
+    public const FIELD_TYPES = [
+        Field::MSTTYPEID => 'intPositive',
+        Field::NAME => 'string',
+    ];
+
+    private const TRANSLATIONS = [
+        'Chromatic' => 'Chromatique',
+        'Metallic'  => 'Métallique',
+        'Dinosaur'  => 'Dinosaure',
+        'Wizard'    => 'Magicien',
+        'Cleric'    => 'Clerc',
+        'Demon'     => 'Démon',
+        'Devil'     => 'Diable',
+        'Goblinoid' => 'Goblinoïde',
+        'Genie'     => 'Génie',
+        'Angel'     => 'Ange',
+    ];
+
+    protected int $monstreTypeId = 0;
+    protected string $name = '';
+
+    private ?RpgTypeMonstre $monstreTypeCache = null;
+
+    public function stringify(): string
+    {
+        return $this->getStrName();
+    }
+
+    public function getMonsterType(): ?RpgTypeMonstre
+    {
+        return $this->getRelatedEntity('monstreTypeCache', RepositoryRpgTypeMonster::class, $this->monstreTypeId);
+    }
 
     public function getStrName(): string
     {
-        switch ($this->name) {
-            case 'Chromatic' :
-                $returned = 'Chromatique';
-            break;
-            case 'Metallic' :
-                $returned = 'Métallique';
-            break;
-            case 'Dinosaur' :
-                $returned = 'Dinosaure';
-            break;
-            case 'Wizard' :
-                $returned = 'Magicien';
-            break;
-            case 'Cleric' :
-                $returned = 'Clerc';
-            break;
-            case 'Demon' :
-                $returned = 'Démon';
-            break;
-            case 'Devil' :
-                $returned = 'Diable';
-            break;
-            case 'Goblinoid' :
-                $returned = 'Goblinoïde';
-            break;
-            case 'Genie' :
-                $returned = 'Génie';
-            break;
-            case 'Angel' :
-                $returned = 'Ange';
-            break;
-            case 'Yugoloth' :
-            case 'Titan' :
-            case 'Lycanthrope' :
-            case 'Beholder' :
-            case 'Gith' :
-                $returned = $this->name;
-            break;
-            default :
-                $returned = 'Type de monstre non identifié';
-            break;
-        }
-        return $returned;
+        return self::TRANSLATIONS[$this->name] ?? $this->name ?? 'Type de monstre non identifié';
     }
 }

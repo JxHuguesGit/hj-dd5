@@ -56,40 +56,31 @@ class RpgHeros extends Entity
 
     public function stringify(): string
     {
-        return sprintf(
-            "[%s] %s",
-            $this->getId(),
-            $this->getName()
-        );
+        $origin = $this->getOrigin()?->getName() ?? '??';
+        $species = $this->getSpecies()?->getName() ?? '??';
+        return sprintf("%s (%s, %s)", $this->getName(), $origin, $species);
     }
 
-    public function getOrigin(): ?RpgOrigin
-    {
-        if ($this->originCache === null) {
-            $objDao = new RepositoryRpgOrigin($this->qb, $this->qe);
-            $this->originCache = $objDao->find($this->originId);
-        }
-        return $this->originCache;
-    }
-
+    // TODO
     public function getStrClasses(): string
     {
         return '';
     }
+    
+    public function getOrigin(): ?RpgOrigin
+    {
+        return $this->getRelatedEntity('originCache', RepositoryRpgOrigin::class, $this->originId);
+    }
 
     public function getSpecies(): ?RpgSpecies
     {
-        if ($this->speciesCache === null) {
-            $objDao = new RepositoryRpgSpecies($this->qb, $this->qe);
-            $this->speciesCache = $objDao->find($this->speciesId);
-        }
-        return $this->speciesCache;
+        return $this->getRelatedEntity('speciesCache', RepositoryRpgSpecies::class, $this->speciesId);
     }
 
     public function getOriginFeat(bool $extra=false): RpgFeat
     {
         if ($this->originFeatCache === null) {
-            $objDao = new RepositoryRpgHeroFeat($this->qb, $this->qe);
+            $objDao = new RepositoryRpgHeroFeat(static::$qb, static::$qe);
             $objHerosFeat = $objDao->findOriginFeat(
                 [Field::HEROSID => $this->id],
                 [Field::ID => ($extra ? Constant::CST_DESC : Constant::CST_ASC)]

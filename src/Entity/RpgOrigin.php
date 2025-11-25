@@ -4,10 +4,6 @@ namespace src\Entity;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgOrigin as ControllerRpgOrigin;
-use src\Enum\AbilityEnum;
-use src\Enum\SkillEnum;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgOriginAbility as RepositoryRpgOriginAbility;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
@@ -22,48 +18,60 @@ class RpgOrigin extends Entity
         Field::FEATID,
         Field::TOOLID,
     ];
+    
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::FEATID => 'intPositive',
+        Field::TOOLID => 'intPositive',
+    ];
 
-    protected string $name;
-    protected int $featId;
-    protected int $toolId;
+    protected string $name = '';
+    protected int $featId = 0;
+    protected int $toolId = 0;
 
+    private ?RpgFeat $featCache = null;
+    private ?RpgTool $toolCache = null;
+    private ?Collection $skillsCache = null;
+    private ?Collection $abilitiesCache = null;
+
+    // TODO : à externaliser
     public function getController(): ControllerRpgOrigin
     {
         $controller = new ControllerRpgOrigin();
         $controller->setField(self::TABLE, $this);
         return $controller;
     }
-    
+
+    public function stringify(): string
+    {
+        return $this->getName();
+    }
+
     public function getOriginFeat(): ?RpgFeat
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgFeat($queryBuilder, $queryExecutor);
-        return $objDao->find($this->featId);
+        return $this->getRelatedEntity('featCache', RepositoryRpgFeat::class, $this->featId);
+    }
+    
+    public function getOriginTool(): ?RpgTool
+    {
+        return $this->getRelatedEntity('toolCache', RepositoryRpgTool::class, $this->toolId);
     }
     
     public function getOriginSkills(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgOriginSkill($queryBuilder, $queryExecutor);
-        return $objDao->findBy([Field::ORIGINID=>$this->getField(Field::ID)]);
+        if ($this->skillsCache === null) {
+            $objDao = new RepositoryRpgOriginSkill(static::$qb, static::$qe);
+            $this->skillsCache = $objDao->findBy([Field::ORIGINID=>$this->getId()]);
+        }
+        return $this->skillsCache;
     }
-    
+     
     public function getOriginAbilities(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgOriginAbility($queryBuilder, $queryExecutor);
-        return $objDao->findBy([Field::ORIGINID=>$this->getField(Field::ID)]);
+        if ($this->abilitiesCache === null) {
+            $objDao = new RepositoryRpgOriginAbility(static::$qb, static::$qe);
+            $this->abilitiesCache = $objDao->findBy([Field::ORIGINID=>$this->getId()]);
+        }
+        return $this->abilitiesCache;
     }
-    
-    public function getOriginTool(): RpgTool
-    {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgTool($queryBuilder, $queryExecutor);
-        return $objDao->find($this->toolId);
-    }
-    
 }

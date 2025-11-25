@@ -10,6 +10,15 @@ class RpgMasteryProficiency extends Entity
         Field::ID,
         Field::NAME,
     ];
-
-    protected string $name;
+    
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+    ];
+    
+    protected string $name = '';
+    
+    public function stringify(): string
+    {
+        return $this->getName();
+    }
 }

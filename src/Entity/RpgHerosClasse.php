@@ -25,15 +25,16 @@ class RpgHerosClasse extends Entity
     protected int $classeId = 0;
     protected int $niveau = 0;
 
+    private ?RpgHeros $herosCache = null;
+    private ?RpgClasse $classeCache = null;
+
     public function getHeros(): ?RpgHeros
     {
-        $objDao = new RepositoryRpgHeros($this->qb, $this->qe);
-        return $objDao->find($this->herosId);
+        return $this->getRelatedEntity('herosCache', RepositoryRpgHeros::class, $this->herosId);
     }
 
     public function getClasse(): ?RpgClasse
     {
-        $objDao = new RepositoryRpgClasse($this->qb, $this->qe);
-        return $objDao->find($this->classeId);
+        return $this->getRelatedEntity('classeCache', RepositoryRpgClasse::class, $this->classeId);
     }
 }

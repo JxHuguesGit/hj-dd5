@@ -13,7 +13,18 @@ class RpgTypeSpeed extends Entity
         Field::FRTAG,
     ];
 
-    protected string $name;
-    protected string $ukTag;
-    protected string $frTag;
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::UKTAG => 'string',
+        Field::FRTAG => 'string',
+    ];
+    
+    protected string $name = '';
+    protected string $ukTag = '';
+    protected string $frTag = '';
+
+    public function stringify(): string
+    {
+        return $this->getName();
+    }
 }

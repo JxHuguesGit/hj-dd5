@@ -3,10 +3,8 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Controller\RpgMonsterTypeVision as ControllerRpgMonsterTypeVision;
-use src\Entity\RpgTypeVision as EntityRpgTypeVision;
-use src\Repository\RpgTypeVision;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgMonster as RepositoryRpgMonster;
+use src\Repository\RpgTypeVision as RepositoryRpgTypeVision;
 
 class RpgMonsterTypeVision extends Entity
 {
@@ -18,12 +16,22 @@ class RpgMonsterTypeVision extends Entity
         Field::VALUE,
         Field::EXTRA,
     ];
+    public const FIELD_TYPES = [
+        Field::MONSTERID => 'intPositive',
+        Field::TYPEVISIONID => 'intPositive',
+        Field::VALUE => 'float',
+        Field::EXTRA => 'string',
+    ];
+    
+    protected int $monsterId = 0;
+    protected int $typeVisionId = 0;
+    protected float $value = 0;
+    protected string $extra = '';
 
-    protected int $monsterId;
-    protected string $typeVisionId;
-    protected int $value;
-    protected string $extra;
-
+    private ?RpgMonster $monsterCache = null;
+    private ?RpgTypeVision $visionTypeCache = null;
+    
+    // TODO : à externaliser
     public function getController(): ControllerRpgMonsterTypeVision
     {
         $controller = new ControllerRpgMonsterTypeVision();
@@ -31,11 +39,13 @@ class RpgMonsterTypeVision extends Entity
         return $controller;
     }
 
-    public function getTypeVision(): ?EntityRpgTypeVision
+    public function getMonster(): ?RpgMonster
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgTypeVision($queryBuilder, $queryExecutor);
-        return $objDao->find($this->typeVisionId);
+        return $this->getRelatedEntity('monsterCache', RepositoryRpgMonster::class, $this->monsterId);
+    }
+
+    public function getTypeVision(): ?RpgTypeVision
+    {
+        return $this->getRelatedEntity('visionTypeCache', RepositoryRpgTypeVision::class, $this->typeVisionId);
     }
 }

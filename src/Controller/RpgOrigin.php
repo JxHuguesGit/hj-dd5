@@ -75,7 +75,7 @@ class RpgOrigin extends Utilities
         $strName = $this->rpgOrigin->getField(Field::NAME);
         
         // La liste des caractéristiques
-        $strAbilities = $this->rpgOrigin->getCaracteristiques();
+        $strAbilities = '';//$this->rpgOrigin->getCaracteristiques();
         
         // Le don d'origine rattaché
         $strOriginFeat = $this->rpgOrigin->getOriginFeat()->getField(Field::NAME);

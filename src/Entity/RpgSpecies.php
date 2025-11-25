@@ -3,8 +3,6 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Controller\RpgSpecies as ControllerRpgSpecies;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
 
 class RpgSpecies extends Entity
@@ -16,14 +14,27 @@ class RpgSpecies extends Entity
         Field::PARENTID,
     ];
 
-    protected string $name;
-    protected int $parentId;
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::PARENTID => 'intPositive',
+    ];
+    
+    protected string $name = '';
+    protected int $parentId = 0;
 
+    private ?RpgSpecies $speciesCache = null;
+    
+    // TODO : à externaliser
     public function getController(): ControllerRpgSpecies
     {
         $controller = new ControllerRpgSpecies();
         $controller->setField(self::TABLE, $this);
         return $controller;
+    }
+
+    public function stringify(): string
+    {
+        return $this->getFullName();
     }
 
     public function getFullName(): string
@@ -37,9 +48,6 @@ class RpgSpecies extends Entity
 
     public function getSpecies(): ?RpgSpecies
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDaoSpecies = new RepositoryRpgSpecies($queryBuilder, $queryExecutor);
-        return $objDaoSpecies->find($this->{Field::PARENTID});
+        return $this->getRelatedEntity('speciesCache', RepositoryRpgSpecies::class, $this->parentId);
     }
 }

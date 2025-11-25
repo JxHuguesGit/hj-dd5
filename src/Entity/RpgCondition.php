@@ -22,10 +22,16 @@ class RpgCondition extends Entity
     public function stringify(): string
     {
         return sprintf(
-            "[%s] %s - Description : %s",
-            $this->getId(),
+            "%s - Description : %s",
             $this->getName(),
-            $this->getDescription()
+            $this->getExcerpt()
         );
+    }
+    
+    public function getExcerpt(int $max = 80): string
+    {
+        return mb_strlen($this->description) > $max
+            ? mb_substr($this->description, 0, $max) . '...'
+            : $this->description;
     }
 }

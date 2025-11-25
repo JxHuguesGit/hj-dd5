@@ -2,10 +2,8 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Entity\RpgCondition as EntityRpgCondition;
-use src\Repository\RpgCondition;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgMonster as RepositoryRpgMonster;
+use src\Repository\RpgCondition as RepositoryRpgCondition;
 
 class RpgMonsterCondition extends Entity
 {
@@ -16,15 +14,24 @@ class RpgMonsterCondition extends Entity
         Field::CONDITIONID,
     ];
 
-    protected int $monsterId;
-    protected string $conditionId;
+    public const FIELD_TYPES = [
+        Field::MONSTERID => 'intPositive',
+        Field::CONDITIONID => 'intPositive',
+    ];
 
-    public function getCondition(): ?EntityRpgCondition
+    protected int $monsterId = 0;
+    protected int $conditionId = 0;
+
+    private ?RpgMonster $monsterCache = null;
+    private ?RpgCondition $conditionCache = null;
+
+    public function getMonster(): ?RpgMonster
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgCondition($queryBuilder, $queryExecutor);
-        return $objDao->find($this->conditionId);
+        return $this->getRelatedEntity('monsterCache', RepositoryRpgMonster::class, $this->monsterId);
     }
 
+    public function getCondition(): ?RpgCondition
+    {
+        return $this->getRelatedEntity('conditionCache', RepositoryRpgCondition::class, $this->conditionId);
+    }
 }

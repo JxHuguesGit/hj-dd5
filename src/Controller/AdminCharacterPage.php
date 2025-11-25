@@ -4,6 +4,7 @@ namespace src\Controller;
 use src\CharacterCreation\CharacterCreationFlow;
 use src\Constant\Field;
 use src\Constant\Template;
+use src\Entity\Entity;
 use src\Entity\RpgHeros;
 use src\Entity\RpgHerosClasse as EntityRpgHerosClasse;
 use src\Query\QueryBuilder;
@@ -29,6 +30,7 @@ class AdminCharacterPage extends AdminPage
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
+        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
 
         // Dépendances
         $deps = $this->buildDeps($queryBuilder, $queryExecutor);

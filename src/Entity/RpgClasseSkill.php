@@ -13,23 +13,25 @@ class RpgClasseSkill extends Entity
         Field::CLASSEID,
         Field::SKILLID,
     ];
+
     public const FIELD_TYPES = [
         Field::CLASSEID => 'intPositive',
         Field::SKILLID => 'intPositive',
     ];
 
-    protected int $classeId;
-    protected int $skillId;
+    protected int $classeId = 0;
+    protected int $skillId = 0;
+    
+    private ?RpgClasse $classeCache = null;
+    private ?RpgSkill $skillCache = null;
     
     public function getClasse(): ?RpgClasse
     {
-        $objDao = new RepositoryRpgClasse($this->qb, $this->qe);
-        return $objDao->find($this->classeId);
+        return $this->getRelatedEntity('classeCache', RepositoryRpgClasse::class, $this->classeId);
     }
-    
+
     public function getSkill(): ?RpgSkill
     {
-        $objDao = new RepositoryRpgSkill($this->qb, $this->qe);
-        return $objDao->find($this->skillId);
+        return $this->getRelatedEntity('skillCache', RepositoryRpgSkill::class, $this->skillId);
     }
 }

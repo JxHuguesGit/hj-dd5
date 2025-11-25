@@ -17,7 +17,8 @@ class OriginFeatStep extends AbstractStep
     public function validateAndSave(): void
     {
         if (!Session::isPostSubmitted()) {
-            return; // Rien à valider
+            // Rien à valider
+            return;
         }
         
         // On récupère et nettoie la valeur

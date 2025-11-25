@@ -2,9 +2,9 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Repository\RpgClasse as RepositoryRpgClasse;
 use src\Repository\RpgHeros as RepositoryRpgHeros;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
+use src\Repository\RpgClasse as RepositoryRpgClasse;
 
 class RpgHerosFeat extends Entity
 {
@@ -26,16 +26,23 @@ class RpgHerosFeat extends Entity
     protected int $featId = 0;
     protected int $extra = 0;
 
+    private ?RpgHeros $herosCache = null;
+    private ?RpgFeat $featCache = null;
+    private ?RpgClasse $classeCache = null;
+
     public function getHeros(): ?RpgHeros
     {
-        $objDao = new RepositoryRpgHeros($this->qb, $this->qe);
-        return $objDao->find($this->herosId);
+        return $this->getRelatedEntity('herosCache', RepositoryRpgHeros::class, $this->herosId);
     }
 
     public function getFeat(): ?RpgFeat
     {
-        $objDao = new RepositoryRpgFeat($this->qb, $this->qe);
-        return $objDao->find($this->featId);
+        return $this->getRelatedEntity('featCache', RepositoryRpgFeat::class, $this->featId);
+    }
+
+    public function getClasse(): ?RpgClasse
+    {
+        return $this->getRelatedEntity('classeCache', RepositoryRpgClasse::class, $this->extra);
     }
 
     public function getFullName(): string
@@ -46,10 +53,8 @@ class RpgHerosFeat extends Entity
         }
 
         $str = $feat->getField(Field::NAME);
-        if ($this->extra !== 0) {
-            $objDao = new RepositoryRpgClasse($this->qb, $this->qe);
-            $rpgClasse = $objDao->find($this->extra);
-            $str .= $rpgClasse ? ' (' . $rpgClasse->getField(Field::NAME) . ')' : '';
+        if ($this->extra !== 0 && $classe = $this->getClasse()) {
+            $str .= ' (' . $classe->getName() . ')';
         }
 
         return $str;

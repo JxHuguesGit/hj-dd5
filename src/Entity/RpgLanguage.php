@@ -16,4 +16,9 @@ class RpgLanguage extends Entity
     ];
     
     protected string $name = '';
+
+    public function stringify(): string
+    {
+        return $this->getName();
+    }
 }

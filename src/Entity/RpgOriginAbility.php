@@ -2,10 +2,8 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Entity\RpgAbility as EntityRpgAbility;
-use src\Repository\RpgAbility;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgAbility as RepositoryRpgAbility;
+use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 
 class RpgOriginAbility extends Entity
 {
@@ -16,14 +14,25 @@ class RpgOriginAbility extends Entity
         Field::ABILITYID,
     ];
 
-    protected int $originId;
-    protected int $abilityId;
+    public const FIELD_TYPES = [
+        Field::ORIGINID => 'intPositive',
+        Field::ABILITYID => 'intPositive',
+    ];
+
+    protected int $originId = 0;
+    protected int $abilityId = 0;
     
-    public function getAbility(): ?EntityRpgAbility
+    private ?RpgOrigin $originCache = null;
+    private ?RpgAbility $abilityCache = null;
+
+    public function getOrigin(): ?RpgOrigin
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgAbility($queryBuilder, $queryExecutor);
-        return $objDao->find($this->abilityId);
+        return $this->getRelatedEntity('originCache', RepositoryRpgOrigin::class, $this->originId);
+    }
+
+    public function getAbility(): ?RpgAbility
+    {
+        return $this->getRelatedEntity('abilityCache', RepositoryRpgAbility::class, $this->abilityId);
     }
 }
+

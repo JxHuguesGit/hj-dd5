@@ -6,10 +6,6 @@ use src\Controller\RpgArmor as ControllerRpgArmor;
 
 class RpgArmor extends Entity
 {
-    public const DISPLAY_FIELDS = [
-        Field::NAME,
-        Field::ARMORCLASS,
-    ];
     public const TABLE = 'rpgArmor';
     public const FIELDS = [
         Field::ID,
@@ -39,6 +35,7 @@ class RpgArmor extends Entity
     protected float $weight    = 0.0;
     protected float $goldPrice = 0.0;
     
+    // TODO : Déplacer cette logique dans un EntityManager ou Factory plutôt que dans l'entité.
     public function getController(): ControllerRpgArmor
     {
         $controller = new ControllerRpgArmor();
@@ -49,8 +46,7 @@ class RpgArmor extends Entity
     public function stringify(): string
     {
         return sprintf(
-            "[%s] %s - CA : %d",
-            $this->getId(),
+            "%s - CA : %d",
             $this->getName(),
             $this->getArmorClass()
         );

@@ -3,10 +3,8 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Controller\RpgMonsterTypeSpeed as ControllerRpgMonsterTypeSpeed;
-use src\Entity\RpgTypeSpeed as EntityRpgTypeSpeed;
-use src\Repository\RpgTypeSpeed;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgMonster as RepositoryRpgMonster;
+use src\Repository\RpgTypeSpeed as RepositoryRpgTypeSpeed;
 
 class RpgMonsterTypeSpeed extends Entity
 {
@@ -18,12 +16,22 @@ class RpgMonsterTypeSpeed extends Entity
         Field::VALUE,
         Field::EXTRA,
     ];
+    public const FIELD_TYPES = [
+        Field::MONSTERID => 'intPositive',
+        Field::TYPESPEEDID => 'intPositive',
+        Field::VALUE => 'float',
+        Field::EXTRA => 'string',
+    ];
+    
+    protected int $monsterId = 0;
+    protected int $typeSpeedId = 0;
+    protected float $value = 0.0;
+    protected string $extra = '';
 
-    protected int $monsterId;
-    protected string $typeSpeedId;
-    protected float $value;
-    protected string $extra;
+    private ?RpgMonster $monsterCache = null;
+    private ?RpgTypeSpeed $speedTypeCache = null;
 
+    // TODO : à externaliser
     public function getController(): ControllerRpgMonsterTypeSpeed
     {
         $controller = new ControllerRpgMonsterTypeSpeed();
@@ -31,11 +39,13 @@ class RpgMonsterTypeSpeed extends Entity
         return $controller;
     }
 
-    public function getTypeSpeed(): ?EntityRpgTypeSpeed
+    public function getMonster(): ?RpgMonster
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgTypeSpeed($queryBuilder, $queryExecutor);
-        return $objDao->find($this->typeSpeedId);
+        return $this->getRelatedEntity('monsterCache', RepositoryRpgMonster::class, $this->monsterId);
+    }
+
+    public function getTypeSpeed(): ?RpgTypeSpeed
+    {
+        return $this->getRelatedEntity('speedTypeCache', RepositoryRpgTypeSpeed::class, $this->typeSpeedId);
     }
 }

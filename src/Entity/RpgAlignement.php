@@ -33,6 +33,6 @@ class RpgAlignement extends Entity
 
     public function stringify(): string
     {
-        return '['.$this->getId().'] '.$this->getStrAlignement();
+        return $this->getStrAlignement();
     }
 }

@@ -12,6 +12,16 @@ class RpgTypeVision extends Entity
         Field::UKTAG,
     ];
 
-    protected string $name;
-    protected string $ukTag;
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::UKTAG => 'string',
+    ];
+    
+    protected string $name = '';
+    protected string $ukTag = '';
+
+    public function stringify(): string
+    {
+        return $this->getName();
+    }
 }

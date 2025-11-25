@@ -1,5 +1,5 @@
 <?php
-namespace src\Entity;
+namespace src\Service;
 
 use src\Collection\Collection;
 use src\Constant\Field;
@@ -7,7 +7,7 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
 
-class MonsterAbilities
+class MonsterAbilitiesService
 {
     private int $monsterId;
 

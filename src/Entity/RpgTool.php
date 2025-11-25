@@ -3,6 +3,7 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Controller\RpgTool as ControllerRpgTool;
+use src\Repository\RpgTool as RepositoryRpgTool;
 
 class RpgTool extends Entity
 {
@@ -13,13 +14,35 @@ class RpgTool extends Entity
         Field::PARENTID,
     ];
 
-    protected string $name;
-    protected int $parentId;
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::PARENTID => 'intPositive',
+    ];
+        
+    protected string $name = '';
+    protected int $parentId = 0;
 
+    private ?RpgTool $toolCache = null;
+    
+    // TODO : à externaliser
     public function getController(): ControllerRpgTool
     {
         $controller = new ControllerRpgTool();
         $controller->setField(self::TABLE, $this);
         return $controller;
+    }
+
+    public function stringify(): string
+    {
+        return $this->parentId > 0
+            ? $this->getParent()->getName() . ' → ' . $this->getName()
+            : $this->getName();
+    }
+
+    public function getParent(): ?RpgTool
+    {
+        return $this->parentId > 0
+            ? $this->getRelatedEntity('toolCache', RepositoryRpgTool::class, $this->parentId)
+            : null;
     }
 }

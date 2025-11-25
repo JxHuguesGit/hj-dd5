@@ -3,10 +3,8 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Controller\RpgMonsterLanguage as ControllerRpgMonsterLanguage;
-use src\Entity\RpgLanguage as EntityRpgLanguage;
-use src\Repository\RpgLanguage;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+use src\Repository\RpgLanguage as RepositoryRpgLanguage;
+use src\Repository\RpgMonster as RepositoryRpgMonster;
 
 class RpgMonsterLanguage extends Entity
 {
@@ -18,10 +16,20 @@ class RpgMonsterLanguage extends Entity
         Field::VALUE,
     ];
 
+    public const FIELD_TYPES = [
+        Field::MONSTERID => 'intPositive',
+        Field::LANGUAGEID => 'intPositive',
+        Field::VALUE => 'float',
+    ];
+    
     protected int $monsterId;
-    protected string $languageId;
+    protected int $languageId;
     protected float $value;
     
+    private ?RpgMonster $monsterCache = null;
+    private ?RpgLanguage $languageCache = null;
+    
+    // TODO : à externaliser
     public function getController(): ControllerRpgMonsterLanguage
     {
         $obj = new ControllerRpgMonsterLanguage();
@@ -29,11 +37,13 @@ class RpgMonsterLanguage extends Entity
         return $obj;
     }
 
-    public function getLanguage(): ?EntityRpgLanguage
+    public function getMonster(): ?RpgMonster
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgLanguage($queryBuilder, $queryExecutor);
-        return $objDao->find($this->languageId);
+        return $this->getRelatedEntity('monsterCache', RepositoryRpgMonster::class, $this->monsterId);
+    }
+
+    public function getLanguage(): ?RpgLanguage
+    {
+        return $this->getRelatedEntity('languageCache', RepositoryRpgLanguage::class, $this->languageId);
     }
 }

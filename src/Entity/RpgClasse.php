@@ -20,6 +20,7 @@ class RpgClasse extends Entity
     protected string $name = '';
     protected int $skills  = 0;
 
+    // TODO : A externaliser
     public function getController(): ControllerRpgClasse
     {
         $controller = new ControllerRpgClasse;
@@ -30,8 +31,7 @@ class RpgClasse extends Entity
     public function stringify(): string
     {
         return sprintf(
-            "[%s] %s (%d)",
-            $this->getId(),
+            "%s (%d)",
             $this->getName(),
             $this->getSkills()
         );

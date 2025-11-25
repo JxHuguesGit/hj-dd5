@@ -14,6 +14,7 @@ use src\Form\RpgMonster as FormRpgMonster;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgTypeMonstre as RepositoryRpgTypeMonster;
 use src\Helper\SizeHelper;
+use src\Presenter\MonsterPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Utils\Html;
@@ -155,6 +156,8 @@ class RpgMonster extends Utilities
 
     public function addBodyRow(Table &$objTable, array $arrParams): void
     {
+		$presenter = new MonsterPresenter($this->rpgMonster);    
+        
         $htmlExtenion = '.html';
         $blnComplet = $this->rpgMonster->getField(Field::INCOMPLET)==0;
         /////////////////////////////////////////////////////////////////////
@@ -200,10 +203,10 @@ class RpgMonster extends Utilities
         /////////////////////////////////////////////////////////////////////
 
         // Le CR
-        $strCr = $this->rpgMonster->getFormatCr();
+        $strCr = $presenter->getCR();
 
         // Le type de monstre
-        $strType = $this->rpgMonster->getStrType();
+        $strType = $presenter->getStrType();
 
         // La taille
         //$strSize = SizeHelper::toLabelFr($this->rpgMonster->getField(Field::MSTSIZE));
@@ -225,8 +228,8 @@ class RpgMonster extends Utilities
         //$strHabitat = $this->rpgMonster->getField(Field::HABITAT);
 
         // Référence
-        $objReference = $this->rpgMonster->getReference();
-        $strReference = $objReference->getField(Field::NAME);
+        $objReference = $presenter->getReference();
+        $strReference = $objReference?->getName() ?? '';
         
         // Actions
         $label = Html::getIcon(Icon::IBOOK);
@@ -252,36 +255,37 @@ class RpgMonster extends Utilities
     
     public function getMonsterCard(): string
     {
-        $objsTrait = $this->rpgMonster->getTraits();
-        $objsActions = $this->rpgMonster->getActions();
-        $objsBonusActions = $this->rpgMonster->getBonusActions();
-        $objsReactions = $this->rpgMonster->getReactions();
-        $objsActionsLegendaires = $this->rpgMonster->getLegendaryActions();
+    	$presenter = new MonsterPresenter($this->rpgMonster);
+        $objsTrait = $presenter->getTraits();
+        $objsActions = $presenter->getActions();
+        $objsBonusActions = $presenter->getBonusActions();
+        $objsReactions = $presenter->getReactions();
+        $objsActionsLegendaires = $presenter->getLegendaryActions();
 
         $attributes = [
-            $this->rpgMonster->getStrName(),
-            $this->rpgMonster->getSizeTypeAndAlignement(),
-            $this->rpgMonster->getStrExtra(Field::SCORECA),
-            $this->rpgMonster->getStrInitiative(),
-            $this->rpgMonster->getStrExtra(Field::SCOREHP),
-            $this->rpgMonster->getStrVitesse(),
-            $this->rpgMonster->getStringScore('str'),
-            $this->rpgMonster->getStringScore('dex'),
-            $this->rpgMonster->getStringScore('con'),
-            $this->rpgMonster->getStringScore('int'),
-            $this->rpgMonster->getStringScore('wis'),
-            $this->rpgMonster->getStringScore('cha'),
-            $this->getSkillsToCR(),
-            $objsTrait->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Traits
-            $this->getSpecialAbilitiesList($objsTrait), // Liste des traits
-            $objsActions->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas d'Actions
+            '',//$presenter->getStrName(),
+            '',//$presenter->getSizeTypeAndAlignement(),
+            '',//$presenter->getStrExtra(Field::SCORECA),
+            '',//$presenter->getStrInitiative(),
+            '',//$presenter->getStrExtra(Field::SCOREHP),
+            '',//$presenter->getStrVitesse(),
+            '',//$presenter->getStringScore('str'),
+            '',//$presenter->getStringScore('dex'),
+            '',//$presenter->getStringScore('con'),
+            '',//$presenter->getStringScore('int'),
+            '',//$presenter->getStringScore('wis'),
+            '',//$presenter->getStringScore('cha'),
+            '',//$this->getSkillsToCR(),
+            empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Traits
+            '',//$this->getSpecialAbilitiesList($objsTrait), // Liste des traits
+            empty($objsActions) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas d'Actions
             $this->getSpecialAbilitiesList($objsActions), // Liste des actions
-            $objsBonusActions->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Bonus actions
-            $this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
-            $objsReactions->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Réactions
-            $this->getSpecialAbilitiesList($objsReactions), // Liste des Réactions
-            $objsActionsLegendaires->isEmpty() ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Legendary Actions
-            $this->getSpecialAbilitiesList($objsActionsLegendaires), // Liste des Actions Légendaires
+            empty($objsBonusActions) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Bonus actions
+            '',//$this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
+            empty($objsReactions) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Réactions
+            '',//$this->getSpecialAbilitiesList($objsReactions), // Liste des Réactions
+            empty($objsActionsLegendaires) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Legendary Actions
+            '',//$this->getSpecialAbilitiesList($objsActionsLegendaires), // Liste des Actions Légendaires
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
         return $this->getRender(Template::MONSTER_CARD, $attributes);
@@ -440,14 +444,11 @@ class RpgMonster extends Utilities
         return $str;
     }
     
-    private function getSpecialAbilitiesList(Collection $objs): string
+    private function getSpecialAbilitiesList(array $objs): string
     {
         $str = '';
-        $objs->rewind();
-        while ($objs->valid()) {
-            $obj = $objs->current();
+        foreach ($objs as $obj) {
             $str .= $obj->getController()->getFormatString();
-            $objs->next();
         }
         return $str;
     }

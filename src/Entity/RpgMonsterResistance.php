@@ -3,10 +3,9 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Controller\RpgMonsterResistance as ControllerRpgMonsterResistance;
-use src\Entity\RpgCondition as EntityRpgCondition;
-use src\Entity\RpgTypeDamage as EntityRpgTypeDamage;
-use src\Repository\RpgCondition;
-use src\Repository\RpgTypeDamage;
+use src\Repository\RpgCondition as RepositoryRpgCondition;
+use src\Repository\RpgMonster as RepositoryRpgMonster;
+use src\Repository\RpgTypeDamage as RepositoryRpgTypeDamage;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
@@ -19,11 +18,22 @@ class RpgMonsterResistance extends Entity
         Field::TYPEDMGID,
         Field::TYPERESID,
     ];
+    
+    public const FIELD_TYPES = [
+        Field::MONSTERID => 'intPositive',
+        Field::TYPEDMGID => 'intPositive',
+        Field::TYPERESID => 'string',
+    ];
+    
+    protected int $monsterId = 0;
+    protected int $typeDamageId = 0;
+    protected string $typeResistanceId = '';
 
-    protected int $monsterId;
-    protected string $typeDamageId;
-    protected string $typeResistanceId;
+    private ?RpgMonster $monsterCache = null;
+    private ?RpgTypeDamage $typeDamageCache = null;
+    private ?RpgCondition $conditionCache = null;
 
+    // TODO : à externaliser
     public function getController(): ControllerRpgMonsterResistance
     {
         $controller = new ControllerRpgMonsterResistance();
@@ -31,20 +41,18 @@ class RpgMonsterResistance extends Entity
         return $controller;
     }
 
-    public function getTypeDamage(): ?EntityRpgTypeDamage
+    public function getMonster(): ?RpgMonster
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgTypeDamage($queryBuilder, $queryExecutor);
-        return $objDao->find($this->typeDamageId);
+        return $this->getRelatedEntity('monsterCache', RepositoryRpgMonster::class, $this->monsterId);
     }
 
-    public function getTypeCondition(): ?EntityRpgCondition
+    public function getTypeDamage(): ?RpgTypeDamage
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgCondition($queryBuilder, $queryExecutor);
-        return $objDao->find($this->typeDamageId);
+        return $this->getRelatedEntity('typeDamageCache', RepositoryRpgTypeDamage::class, $this->typeDamageId);
     }
 
+    public function getTypeCondition(): ?RpgCondition
+    {
+        return $this->getRelatedEntity('conditionCache', RepositoryRpgCondition::class, $this->typeDamageId);
+    }
 }

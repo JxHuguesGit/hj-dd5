@@ -4,13 +4,9 @@ namespace src\Entity;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgWeapon as ControllerRpgWeapon;
-use src\Entity\RpgMasteryProficiency as EntityRpgMasteryProficiency;
-use src\Entity\RpgTypeDamage as EntityRpgTypeDamage;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\RpgMasteryProficiency;
-use src\Repository\RpgTypeDamage;
-use src\Repository\RpgWeaponWeaponProficiency;
+use src\Repository\RpgMasteryProficiency as RepositoryRpgMasteryProficiency;
+use src\Repository\RpgTypeDamage as RepositoryRpgTypeDamage;
+use src\Repository\RpgWeaponWeaponProficiency as RepositoryRpgWeaponWeaponProficiency;
 
 class RpgWeapon extends Entity
 {
@@ -27,15 +23,31 @@ class RpgWeapon extends Entity
         Field::MSTPROFID,
     ];
 
-    protected string $name;
-    protected string $damage;
-    protected int $typeDamageId;
-    protected float $weight;
-    protected float $goldPrice;
-    protected bool $martial;
-    protected bool $melee;
-    protected int $masteryProficiencyId;
+    public const FIELD_TYPES = [
+        Field::NAME => 'string',
+        Field::DAMAGE => 'string',
+        Field::TYPEDMGID => 'intPositive',
+        Field::WEIGHT => 'float',
+        Field::GOLDPRICE => 'float',
+        Field::MARTIAL => 'bool',
+        Field::MELEE => 'bool',
+        Field::MSTPROFID => 'intPositive',
+    ];
+    
+    protected string $name = '';
+    protected string $damage = '';
+    protected int $typeDamageId = 0;
+    protected float $weight = 0.0;
+    protected float $goldPrice = 0.0;
+    protected bool $martial = false;
+    protected bool $melee = false;
+    protected int $masteryProficiencyId = 0;
 
+    private ?RpgMasteryProficiency $masteryProficiencyCache = null;
+    private ?RpgTypeDamage $typeDamageCache = null;
+    private ?Collection $weaponWeaponProficiencysCache = null;
+    
+    // TODO : à externaliser
     public function getController(): ControllerRpgWeapon
     {
         $controller = new ControllerRpgWeapon;
@@ -43,28 +55,33 @@ class RpgWeapon extends Entity
         return $controller;
     }
 
-    public function getMasteryProficiency(): ?EntityRpgMasteryProficiency
+    public function stringify(): string
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgMasteryProficiency($queryBuilder, $queryExecutor);
-        return $objDao->find($this->masteryProficiencyId);
+        return sprintf(
+            "%s (%s) - %.2f kg - %.2f gp",
+            $this->getName(),
+            $this->getDamage(),
+            $this->getWeight(),
+            $this->getGoldPrice()
+        );
     }
 
-    public function getTypeDamage(): ?EntityRpgTypeDamage
+    public function getMasteryProficiency(): ?RpgMasteryProficiency
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgTypeDamage($queryBuilder, $queryExecutor);
-        return $objDao->find($this->typeDamageId);
+        return $this->getRelatedEntity('masteryProficiencyCache', RepositoryRpgMasteryProficiency::class, $this->masteryProficiencyId);
+    }
+
+    public function getTypeDamage(): ?RpgTypeDamage
+    {
+        return $this->getRelatedEntity('typeDamageCache', RepositoryRpgTypeDamage::class, $this->typeDamageId);
     }
 
     public function getWeaponProficiencies(): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RpgWeaponWeaponProficiency($queryBuilder, $queryExecutor);
-        return $objDao->findBy([Field::WEAPONID=>$this->id]);
+        if ($this->weaponWeaponProficiencysCache === null) {
+            $objDao = new RepositoryRpgWeaponWeaponProficiency(static::$qb, static::$qe);
+            $this->weaponWeaponProficiencysCache = $objDao->findBy([Field::WEAPONID=>$this->getId()], [Field::NAME=>'ASC']);
+        }
+        return $this->weaponWeaponProficiencysCache;
     }
-
 }

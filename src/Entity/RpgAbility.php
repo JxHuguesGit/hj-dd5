@@ -15,5 +15,9 @@ class RpgAbility extends Entity
     ];
     
     protected string $name = '';
-
+    
+    public function stringify(): string
+    {
+        return $this->name;
+    }
 }

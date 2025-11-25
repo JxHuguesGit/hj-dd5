@@ -15,6 +15,7 @@ class RpgFeat extends Entity
         Field::FEATTYPEID,
         Field::POSTID,
     ];
+
     public const FIELD_TYPES = [
         Field::NAME => 'string',
         Field::FEATTYPEID => 'intPositive',
@@ -25,30 +26,37 @@ class RpgFeat extends Entity
     protected int $featTypeId = 0;
     protected int $postId     = 0;
 
+    private ?RpgFeatType $featTypeCache = null;
+    private ?WP_Post $wpPostCache = null;
+
     public function stringify(): string
     {
         return sprintf(
-            "[%s] %s",
-            $this->getId(),
-            $this->getName()
+            "%s (Type: %s, PostID: %d)",
+            $this->getName(),
+            $this->getFeatType()?->getName() ?? 'N/A',
+            $this->postId
         );
     }
 
+    // TODO : Externaliser
     public function getController(): ControllerRpgFeat
     {
         $controller = new ControllerRpgFeat;
         $controller->setField(self::TABLE, $this);
         return $controller;
     }
-    
+
     public function getFeatType(): ?RpgFeatType
     {
-        $objDao = new RepositoryRpgFeatType($this->qb, $this->qe);
-        return $objDao->find($this->featTypeId);
+        return $this->getRelatedEntity('featTypeCache', RepositoryRpgFeatType::class, $this->featTypeId);
     }
     
     public function getWpPost(): ?WP_Post
     {
-        return get_post($this->postId);
+        if ($this->wpPostCache === null) {
+            $this->wpPostCache = get_post($this->postId) ?: null;
+        }
+        return $this->wpPostCache;
     }
 }

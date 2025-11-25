@@ -128,6 +128,17 @@ class Entity
         return $this;
     }
 
+    protected function getRelatedEntity(
+        string $cacheProperty,
+        string $repositoryClass,
+        int $id
+    ): ?object {
+        if ($this->{$cacheProperty} === null) {
+            $repo = new $repositoryClass(static::$qb, static::$qe);
+            $this->{$cacheProperty} = $repo->find($id);
+        }
+        return $this->{$cacheProperty};
+    }
 
     protected function validateField(string $field, mixed $value): mixed
     {

@@ -2,8 +2,6 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgTypeAmmunition as RepositoryRpgTypeAmmunition;
 use src\Repository\RpgWeaponProficiency as RepositoryRpgWeaponProficiency;
 
@@ -20,34 +18,53 @@ class RpgWeaponWeaponProficiency extends Entity
         Field::POLYDMG,
     ];
 
-    protected int $weaponId;
-    protected int $weaponProficiencyId;
-    protected ?float $minRange;
-    protected ?int $maxRange;
-    protected ?int $typeAmmunitionId;
-    protected ?string $versatileDamage;
+    public const FIELD_TYPES = [
+        Field::WEAPONID => 'intPositive',
+        Field::WPNPROFID => 'intPositive',
+        Field::MINRANGE => 'float',
+        Field::MAXRANGE => 'intPositive',
+        Field::TYPEAMMID => 'intPositive',
+        Field::POLYDMG => 'string',
+    ];
+    
+    protected int $weaponId = 0;
+    protected int $weaponProficiencyId = 0;
+    protected float $minRange = 0.0;
+    protected int $maxRange = 0;
+    protected int $typeAmmunitionId = 0;
+    protected string $versatileDamage = '';
+
+    private ?RpgWeaponProficiency $wpnProfCache = null;
+    private ?RpgTypeAmmunition $ammoTypeCache = null;
+
+    public function stringify(): string
+    {
+        return $this->getStrName();
+    }
 
     public function getWeaponProficiency(): ?RpgWeaponProficiency
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgWeaponProficiency($queryBuilder, $queryExecutor);
-        return $objDao->find($this->weaponProficiencyId);
+        return $this->getRelatedEntity('wpnProfCache', RepositoryRpgWeaponProficiency::class, $this->weaponProficiencyId);
     }
-
+    
+    public function getTypeAmmunition(): ?RpgTypeAmmunition
+    {
+        return $this->getRelatedEntity('ammoTypeCache', RepositoryRpgTypeAmmunition::class, $this->typeAmmunitionId);
+    }
+    
     public function getStrName(): string
     {
         $objWeaponProficiency = $this->getWeaponProficiency();
         $returned = $objWeaponProficiency->getField(Field::NAME);
         switch ($this->weaponProficiencyId) {
-            case '1' :
+            case 1 :
                 $objTypeAmmunition = $this->getTypeAmmunition();
                 $returned .= ' (portée '.$this->minRange.'/'.$this->maxRange.' ; '.$objTypeAmmunition->getField(Field::NAME).')';
             break;
-            case '8' :
+            case 8 :
                 $returned .= ' (portée '.$this->minRange.'/'.$this->maxRange.')';
             break;
-            case '10' :
+            case 10 :
                 $returned .= ' ('.$this->versatileDamage.')';
             break;
             default :
@@ -55,13 +72,4 @@ class RpgWeaponWeaponProficiency extends Entity
         }
         return $returned;
     }
-    
-    public function getTypeAmmunition(): ?RpgTypeAmmunition
-    {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgTypeAmmunition($queryBuilder, $queryExecutor);
-        return $objDao->find($this->typeAmmunitionId);
-    }
-
 }
