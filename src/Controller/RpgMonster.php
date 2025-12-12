@@ -92,17 +92,22 @@ class RpgMonster extends Utilities
         }
         
         $attributes = [
-            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=monsters', // Url du formulaire
+            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id=monsters',
             $params['selectAllType'] ? ' checked' : '',
             count($params['typeFilter']),
             $typeOptions,
-            '',//$params['selectAllSchool'] ? ' checked' : '',
-            '',//count($params['schoolFilter']),
-            '',//$schoolOptions,
+            //$params['selectAllSchool'] ? ' checked' : '',
+            '',
+            //count($params['schoolFilter']),
+            '',
+            //$schoolOptions,
+            '',
             $minOptions,
             $maxOptions,
-            '',//$params['onlyRituel'] ? ' checked' : '',
-            '',//$params['onlyConcentration'] ? ' checked' : '',
+            //$params['onlyRituel'] ? ' checked' : '',
+            '',
+            //$params['onlyConcentration'] ? ' checked' : '',
+            '',
             $params[Constant::PAGE_NBPERPAGE] ?? 10,
             $params['refElementId'],
         ];
@@ -156,7 +161,7 @@ class RpgMonster extends Utilities
 
     public function addBodyRow(Table &$objTable, array $arrParams): void
     {
-		$presenter = new MonsterPresenter($this->rpgMonster);    
+        $presenter = new MonsterPresenter($this->rpgMonster);
         
         $htmlExtenion = '.html';
         $blnComplet = $this->rpgMonster->getField(Field::INCOMPLET)==0;
@@ -255,7 +260,7 @@ class RpgMonster extends Utilities
     
     public function getMonsterCard(): string
     {
-    	$presenter = new MonsterPresenter($this->rpgMonster);
+        $presenter = new MonsterPresenter($this->rpgMonster);
         $objsTrait = $presenter->getTraits();
         $objsActions = $presenter->getActions();
         $objsBonusActions = $presenter->getBonusActions();
@@ -276,16 +281,26 @@ class RpgMonster extends Utilities
             '',//$presenter->getStringScore('wis'),
             '',//$presenter->getStringScore('cha'),
             '',//$this->getSkillsToCR(),
-            empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Traits
-            '',//$this->getSpecialAbilitiesList($objsTrait), // Liste des traits
-            empty($objsActions) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas d'Actions
-            $this->getSpecialAbilitiesList($objsActions), // Liste des actions
-            empty($objsBonusActions) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Bonus actions
-            '',//$this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
-            empty($objsReactions) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Réactions
-            '',//$this->getSpecialAbilitiesList($objsReactions), // Liste des Réactions
-            empty($objsActionsLegendaires) ? ' '.Bootstrap::CSS_DNONE : '', // d-none si pas de Legendary Actions
-            '',//$this->getSpecialAbilitiesList($objsActionsLegendaires), // Liste des Actions Légendaires
+            // d-none si pas de Traits
+            empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '',
+            //$this->getSpecialAbilitiesList($objsTrait), // Liste des traits
+            '',
+            // d-none si pas d'Actions
+            empty($objsActions) ? ' '.Bootstrap::CSS_DNONE : '',
+             // Liste des actions
+            $this->getSpecialAbilitiesList($objsActions),
+            // d-none si pas de Bonus actions
+            empty($objsBonusActions) ? ' '.Bootstrap::CSS_DNONE : '',
+            //$this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
+            '',
+            // d-none si pas de Réactions
+            empty($objsReactions) ? ' '.Bootstrap::CSS_DNONE : '',
+            //$this->getSpecialAbilitiesList($objsReactions), // Liste des Réactions
+            '',
+            // d-none si pas de Legendary Actions
+            empty($objsActionsLegendaires) ? ' '.Bootstrap::CSS_DNONE : '',
+            //$this->getSpecialAbilitiesList($objsActionsLegendaires), // Liste des Actions Légendaires
+            '',
             '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
         ];
         return $this->getRender(Template::MONSTER_CARD, $attributes);

@@ -29,10 +29,6 @@ class RpgMonsterResistance extends Entity
     protected int $typeDamageId = 0;
     protected string $typeResistanceId = '';
 
-    private ?RpgMonster $monsterCache = null;
-    private ?RpgTypeDamage $typeDamageCache = null;
-    private ?RpgCondition $conditionCache = null;
-
     // TODO : à externaliser
     public function getController(): ControllerRpgMonsterResistance
     {

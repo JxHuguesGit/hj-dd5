@@ -22,7 +22,6 @@ class RpgSkill extends Entity
     protected string $name = '';
     protected int $abilityId = 0;
 
-    private ?RpgAbility $abilityCache = null;
     private ?Collection $subSkillsCache = null;
     
     // TODO : à externaliser

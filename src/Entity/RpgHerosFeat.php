@@ -26,10 +26,6 @@ class RpgHerosFeat extends Entity
     protected int $featId = 0;
     protected int $extra = 0;
 
-    private ?RpgHeros $herosCache = null;
-    private ?RpgFeat $featCache = null;
-    private ?RpgClasse $classeCache = null;
-
     public function getHeros(): ?RpgHeros
     {
         return $this->getRelatedEntity('herosCache', RepositoryRpgHeros::class, $this->herosId);

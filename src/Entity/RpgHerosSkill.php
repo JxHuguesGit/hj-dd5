@@ -25,9 +25,6 @@ class RpgHerosSkill extends Entity
     protected int $skillId = 0;
     protected bool $expertise = false;
 
-    private ?RpgHeros $herosCache = null;
-    private ?RpgSkill $skillCache = null;
-
     public function getHeros(): ?RpgHeros
     {
         return $this->getRelatedEntity('herosCache', RepositoryRpgHeros::class, $this->herosId);

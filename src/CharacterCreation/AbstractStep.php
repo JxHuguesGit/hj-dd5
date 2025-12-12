@@ -37,12 +37,14 @@ abstract class AbstractStep
      */
     public function getSidebarValue(): string
     {
-        return ''; // Par défaut vide, les sous-classes peuvent override
+        // Par défaut vide, les sous-classes peuvent override
+        return '';
     }
 
     public static function getSidebarLabel(): string
     {
-        return static::class; // fallback moche mais sûr
+        // fallback moche mais sûr
+        return static::class;
     }
         
     /**

@@ -27,9 +27,6 @@ class RpgMonsterTypeVision extends Entity
     protected int $typeVisionId = 0;
     protected float $value = 0;
     protected string $extra = '';
-
-    private ?RpgMonster $monsterCache = null;
-    private ?RpgTypeVision $visionTypeCache = null;
     
     // TODO : à externaliser
     public function getController(): ControllerRpgMonsterTypeVision

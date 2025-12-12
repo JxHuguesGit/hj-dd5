@@ -32,7 +32,7 @@ class SidebarRenderer
             }
         }
 
-        $baseUrl = '/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=character&id='.$this->hero->getField(Field::ID).'&step=';
+        $baseUrl = '/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=character&id='.$this->hero->getField(Field::ID);
         $html = '';
 
         // Génération du HTML
@@ -45,15 +45,17 @@ class SidebarRenderer
 
             $html .= sprintf(
                 '<p><strong><a href="%s" class="text-black">%s</a> :</strong> <span id="sidebar%s">%s</span></p>',
-                $baseUrl.$stepKey,
+                $baseUrl.'&step='.$stepKey,
                 ucfirst($label),
                 ucfirst($stepKey),
                 htmlspecialchars($value)
             );
         }
 
+        $deleteUrl = $baseUrl.'&action=delete';
+
         // Injection dans le template
-        return call_user_func($this->renderer, Template::CREATE_SIDEBAR, [$html]);
+        return call_user_func($this->renderer, Template::CREATE_SIDEBAR, [$deleteUrl, $html]);
     }
 }
 

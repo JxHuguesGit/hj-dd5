@@ -26,7 +26,6 @@ class RpgFeat extends Entity
     protected int $featTypeId = 0;
     protected int $postId     = 0;
 
-    private ?RpgFeatType $featTypeCache = null;
     private ?WP_Post $wpPostCache = null;
 
     public function stringify(): string

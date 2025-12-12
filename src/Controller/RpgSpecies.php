@@ -19,9 +19,11 @@ class RpgSpecies extends Utilities
     {
         $id = $this->rpgSpecies->getField(Field::ID);
         $name = $this->rpgSpecies->getField(Field::NAME);
-        return '<div class="form-check">'
-                . '<input class="" type="radio" name="characterSpeciesId" value="'.$id.'" id="species'.$id.'"'.($checked?' checked':'').'>'
-                . '<label class="form-check-label" for="species'.$id.'">'.$name.'</label>'
-                . '</div>';
+        return sprintf(
+            '<div class="form-check"><input class="" type="radio" name="characterSpeciesId" value="%1s" id="species%1s"%2s><label class="form-check-label" for="species%1s">%3s</label></div>',
+            $id,
+            $checked?' checked':'',
+            $name
+        );
     }
 }

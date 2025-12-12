@@ -2,6 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Field;
+use src\Entity\Entity;
 use src\Entity\RpgHerosFeat as EntityRpgHerosFeat;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -29,5 +30,13 @@ class RpgHerosFeat extends Repository
         );
 
         return $objRpgHerosFeat ?? new EntityRpgHerosFeat(...[0, 0, 0, 0]);
+    }
+    
+    public function deleteBy(array $criteria)
+    {
+        $objs = $this->findBy($criteria);
+        foreach ($objs as $obj) {
+            $this->delete($obj);
+        }
     }
 }

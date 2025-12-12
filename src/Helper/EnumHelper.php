@@ -5,16 +5,16 @@ trait EnumHelper
 {
     public static function values(): array
     {
-        return array_map(fn($case) => $case->value, self::cases());
+        return array_map(fn($case) => $case->value, static::cases());
     }
 
     public static function labels(): array
     {
-        return array_map(fn($case) => $case->label(), self::cases());
+        return array_map(fn($case) => $case->label(), static::cases());
     }
 
     public static function labelFromDb(string $value): ?string
     {
-        return self::tryFrom($value)?->label();
+        return static::tryFrom($value)?->label();
     }
 }

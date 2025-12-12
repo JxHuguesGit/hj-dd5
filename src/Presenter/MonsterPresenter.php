@@ -30,7 +30,7 @@ class MonsterPresenter
     public function getStrName(): string
     {
     return 'wip';
-        return $this->monster->frName ?: $this->monster->name;
+        //return $this->monster->frName ?: $this->monster->name;
     }
 
     public function getStrType(): string
@@ -72,11 +72,11 @@ class MonsterPresenter
     public function getXP(): string
     {
         $xpMap = [
-            -1 => 0, 0 => 10, 0.125 => 25, 0.25 => 50, 0.5 => 100, 
+            -1 => 0, 0 => 10, 0.125 => 25, 0.25 => 50, 0.5 => 100,
             1 => 200, 2 => 450, 3 => 700, 4 => 1100, 5 => 1800,
             6 => 2300, 8 => 3900, 9 => 5000, 10 => 5900, 14 => 11500, 16 => 15000,
         ];
-        $xp = $xpMap[$this->monster->cr] ?? 0;
+        $xp = $xpMap[$this->monster->getCr()] ?? 0;
         return number_format($xp, 0, ',', ' ');
     }
 
@@ -110,18 +110,21 @@ class MonsterPresenter
     // -----------------------
     public function getInitiative(): string
     {
-        return ($this->monster->initiative >= 0 ? '+' : '') . $this->monster->initiative;
+        return ($this->monster->getInitiative() >= 0 ? '+' : '') . $this->monster->getInitiative();
     }
 
     public function getSpeed(): string
     {
-        $value = $this->monster->vitesse . ' m';
-        $objs = $this->monster->getSenses(); // exemple, remplacer par typeSpeed si nécessaire
+        $value = $this->monster->getVitesse() . ' m';
+        // exemple, remplacer par typeSpeed si nécessaire
+        $objs = $this->monster->getSenses();
         foreach ($objs as $obj) {
             $value .= ', ' . $obj->getController()->getFormatString();
         }
         $extra = $this->monster->getExtra('vitesse');
-        if ($extra) $value .= $extra;
+        if ($extra) {
+            $value .= $extra;
+        }
         return $value;
     }
 

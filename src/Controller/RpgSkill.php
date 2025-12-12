@@ -89,10 +89,14 @@ class RpgSkill extends Utilities
     {
         $id = $this->rpgSkill->getField(Field::ID);
         $name = $this->rpgSkill->getField(Field::NAME);
-        $returned = '<div class="form-check">'
-                . '<input class="" type="checkbox"'.($readonly?'':' name="skillId[]"').' value="'.$id.'" id="skill'.$id.'"'.($checked?' checked':'').($readonly?' disabled':'').'>'
-                . '<label class="form-check-label" for="skill'.$id.'">'.$name.'</label>'
-                . '</div>';
+        $returned = sprintf(
+            '<div class="form-check"><input class="" type="checkbox"%1s value="%2s" id="skill%2s"%3s%4s><label class="form-check-label" for="skill%2s">%5s</label></div>',
+            $readonly?'':' name="skillId[]"',
+            $id,
+            $checked?' checked':'',
+            $readonly?' disabled':'',
+            $name
+        );
         if ($readonly) {
             $returned .= '<input type="hidden" name="skillId[]" value="'.$id.'"/>';
         }

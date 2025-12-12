@@ -26,9 +26,6 @@ class RpgMonsterSkill extends Entity
     protected int $monsterId = 0;
     protected int $skillId = 0;
     protected int $value = 0;
-    
-    private ?RpgMonster $monsterCache = null;
-    private ?RpgSkill $skillCache = null;
 
     // TODO : à externaliser
     public function getController(): ControllerRpgMonsterSkill

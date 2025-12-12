@@ -21,7 +21,7 @@ class RpgSpell extends Repository
         );
     }
     
-    public function findBy(array $criteria, array $orderBy=[], int $limit=-1): Collection
+    public function findBy(array $criteria, array $orderBy=[], int $limit=-1, bool $display=false): Collection
     {
         $collection = new Collection();
         $meta_query = ['relation' => 'AND'];
@@ -40,7 +40,8 @@ class RpgSpell extends Repository
         if (count($criteria['schoolFilter'])!=8) {
             $meta_query[] = [
                 'key'     => 'ecole',
-                'value'   => $criteria['schoolFilter'],  // un tableau
+                // un tableau
+                'value'   => $criteria['schoolFilter'],
                 'compare' => 'IN'
             ];
         }
@@ -51,7 +52,8 @@ class RpgSpell extends Repository
             foreach ($criteria['classFilter'] as $class) {
                 $classes_meta_conditions[] = [
                     'key'     => 'classes',
-                    'value'   => '"' . $class . '"',  // important : chercher la valeur entre guillemets dans la serialization
+                    // important : chercher la valeur entre guillemets dans la serialization
+                    'value'   => '"' . $class . '"',
                     'compare' => 'LIKE'
                 ];
             }
@@ -81,9 +83,9 @@ class RpgSpell extends Repository
         
         // Définition du $args pour la requête WP_Query
         $args = [
-            'post_type'      => 'post',          // ou 'sort' si tu fais un CPT
-            'posts_per_page' => -1,              // pagination
-            'category_name'  => 'sort',         // le slug de ta catégorie
+            'post_type'      => 'post',
+            'posts_per_page' => -1,
+            'category_name'  => 'sort',
             'orderby'        => 'title',
             'order'          => 'ASC',
             'meta_query'     => $meta_query,
@@ -108,9 +110,9 @@ class RpgSpell extends Repository
         $collection = new Collection();
 
         $args = [
-            'post_type'      => 'post',          // ou 'sort' si tu fais un CPT
-            'posts_per_page' => -1,              // pagination
-            'category_name'  => 'sort',         // le slug de ta catégorie
+            'post_type'      => 'post',
+            'posts_per_page' => -1,
+            'category_name'  => 'sort',
             'orderby'        => 'title',
             'order'          => 'ASC',
             'meta_query'     => [

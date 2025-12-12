@@ -4,6 +4,7 @@ namespace src\Entity;
 use src\Constant\Field;
 use src\Controller\RpgSpecies as ControllerRpgSpecies;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
+use WP_Post;
 
 class RpgSpecies extends Entity
 {
@@ -11,19 +12,25 @@ class RpgSpecies extends Entity
     public const FIELDS = [
         Field::ID,
         Field::NAME,
+        Field::SLUG,
         Field::PARENTID,
+        Field::POSTID,
     ];
 
     public const FIELD_TYPES = [
         Field::NAME => 'string',
+        Field::SLUG => 'string',
         Field::PARENTID => 'intPositive',
+        Field::POSTID => 'intPositive',
     ];
     
     protected string $name = '';
+    protected string $slug = '';
     protected int $parentId = 0;
+    protected int $postId = 0;
 
-    private ?RpgSpecies $speciesCache = null;
-    
+    private ?WP_Post $wpPostCache = null;
+
     // TODO : à externaliser
     public function getController(): ControllerRpgSpecies
     {
@@ -49,5 +56,13 @@ class RpgSpecies extends Entity
     public function getSpecies(): ?RpgSpecies
     {
         return $this->getRelatedEntity('speciesCache', RepositoryRpgSpecies::class, $this->parentId);
+    }
+    
+    public function getWpPost(): ?WP_Post
+    {
+        if ($this->wpPostCache === null) {
+            $this->wpPostCache = get_post($this->postId) ?: null;
+        }
+        return $this->wpPostCache;
     }
 }

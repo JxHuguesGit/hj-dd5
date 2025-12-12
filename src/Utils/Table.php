@@ -22,7 +22,7 @@ class Table
     {
         $this->attributes = [
             Constant::CST_CLASS=>'table',
-            'aria-describedby' => '',//'Liste des missions',
+            'aria-describedby' => '',
         ];
 
     }

@@ -52,6 +52,7 @@ class AdminSidebar extends Utilities
             'Nouveau',
             'd-none',
             '',
+            '', '',
         ];
         $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         // TODO : Gérer un nombre excessif de personnages ?
@@ -62,15 +63,19 @@ class AdminSidebar extends Utilities
         $rpgHeros->rewind();
         while ($rpgHeros->valid()) {
             $rpgHero = $rpgHeros->current();
-            $id = $rpgHero->getField(Field::ID);
+            $id = $rpgHero->getId();
+            $name = $rpgHero->getName();
+            $parts = explode(' ', $name);
+            $initiales = substr($parts[0], 0, 1).substr($parts[1]??'', 0, 1);
             $attributes = [
                 '',
                 '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id='.$id.'&step='.$rpgHero->getField(Field::CREATESTEP),
                 $this->currentTab=='character' && $this->currentId==$id ? 'active' : '',
                 'user',
-                $rpgHero->getField(Field::NAME),
+                $name,
                 'd-none',
                 '',
+                '', $initiales,
             ];
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
             $rpgHeros->next();
@@ -86,6 +91,7 @@ class AdminSidebar extends Utilities
             'Personnages',
             '',
             $strChildren,
+            '', '',
         ];
         
         return $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
@@ -94,13 +100,15 @@ class AdminSidebar extends Utilities
     private function getTimelineItem(): string
     {
         $attributes = [
-            '',// la classe ne sera jamais menu-open puisque pas d'enfants.
+            // la classe ne sera jamais menu-open puisque pas d'enfants.
+            '',
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=timeline',
             $this->currentTab=='timeline' ? 'active' : '',
             'timeline',
             'Initiative',
             'd-none',
             '',
+            '', '',
         ];
         
         return $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
@@ -130,6 +138,7 @@ class AdminSidebar extends Utilities
                 $child['label'],
                 'd-none',
                 '',
+                '', '',
             ];
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         }
@@ -144,6 +153,7 @@ class AdminSidebar extends Utilities
             'Compendium',
             '',
             $strChildren,
+            '', '',
         ];
         
         return $this->getRender(Template::ADMINSIDEBARITEM, $attributes);

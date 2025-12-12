@@ -1,15 +1,8 @@
 <?php
 namespace src\Controller;
 
-use src\Collection\Collection;
-use src\Constant\Constant;
-use src\Constant\Field;
 use src\Constant\Template;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\Hero as HeroRepository;
-use src\Utils\Session;
-use WP_User;
+use src\Controller\PublicHome;
 
 class HomePage extends Utilities
 {
@@ -22,61 +15,11 @@ class HomePage extends Utilities
 
     public function getContentPage(string $msgProcessError=''): string
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-
-        $currentUser = Session::getWpUser();
-
-        // On va récupérer la liste des personnages créés par ce User
-        $repository = new HeroRepository($queryBuilder, $queryExecutor);
-        $collection = $repository->findBy([Field::WPUSERID=>$currentUser->ID]);
-
-        // On va présenter un formulaire qui liste ces personnages disponibles
-        $strExistingPjs = '';
-        $collection->rewind();
-        while ($collection->valid()) {
-            $hero = $collection->current();
-            $strExistingPjs .= $hero->getController()->getHeroSelectionLine();
-            $collection->next();
-        }
-        // Puis on ajoute la possibilité de créer un nouveau personnage.
-        // Dans le template
-
-        return $this->getRender(Template::HERO_SELECTION, [$strExistingPjs]);
+        return $this->getRender(Template::WIP_PAGE, []);
     }
 
-    public static function getController(): Utilities
+    public static function getController(): PublicBase
     {
-        // On commente pour le moment sinon, on n'accède nulle par si on n'est pas identifié.
-        //if (!is_user_logged_in()) {
-        //    $controller = new self();
-        //} else {
-            if (Session::isPostSubmitted()) {
-                if (Session::fromPost(Constant::FORMNAME)=='heroSelection') {
-                    $controller = new Hero();
-                } elseif (Session::fromPost(Constant::FORMNAME)=='classSelection') {
-                    $controller = Caste::getCreationContentForCaste();
-                } else {
-                    $controller = new self();
-                }
-            } else {
-                $action = Session::fromGet('action', '');
-                if ($action=='heroLogOut') {
-                    Session::unsetSession('sessionHeroId');
-                }
-                $heroId = Session::fromSession('sessionHeroId');
-                $queryBuilder  = new QueryBuilder();
-                $queryExecutor = new QueryExecutor();
-                $repository = new HeroRepository($queryBuilder, $queryExecutor);
-                $entityHero = $repository->find($heroId);
-                if ($entityHero!=null) {
-                    $controller = new Hero();
-                } else {
-                    $controller = new self();
-                }
-            }
-        //}
-
-        return $controller;
+        return new PublicHome();
     }
 }

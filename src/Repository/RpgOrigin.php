@@ -1,6 +1,7 @@
 <?php
 namespace src\Repository;
 
+use src\Collection\Collection;
 use src\Entity\RpgOrigin as EntityRpgOrigin;
 
 class RpgOrigin extends Repository
@@ -9,4 +10,5 @@ class RpgOrigin extends Repository
     {
         return EntityRpgOrigin::class;
     }
+
 }

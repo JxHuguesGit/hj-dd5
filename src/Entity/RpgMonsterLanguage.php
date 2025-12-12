@@ -26,9 +26,6 @@ class RpgMonsterLanguage extends Entity
     protected int $languageId;
     protected float $value;
     
-    private ?RpgMonster $monsterCache = null;
-    private ?RpgLanguage $languageCache = null;
-    
     // TODO : à externaliser
     public function getController(): ControllerRpgMonsterLanguage
     {

@@ -50,7 +50,7 @@ class Repository
         return $this->findBy([], $orderBy);
     }
 
-    public function findBy(array $criteria, array $orderBy=[], int $limit=-1): Collection
+    public function findBy(array $criteria, array $orderBy=[], int $limit=-1, bool $display=false): Collection
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
@@ -62,10 +62,28 @@ class Repository
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $this->queryBuilder->getParams(),
+            $display
         );
     }
+    
+    public function findByComplex(array $criteriaComplex, array $orderBy=[], int $limit=-1, bool $display=false): Collection
+    {
+        $this->query = $this->queryBuilder->reset()
+            ->select($this->fields, $this->table)
+            ->whereComplex($criteriaComplex)
+            ->orderBy($orderBy)
+            ->limit($limit)
+            ->getQuery();
 
+        return $this->queryExecutor->fetchAll(
+            $this->query,
+            $this->resolveEntityClass(),
+            $this->queryBuilder->getParams(),
+            $display
+        );
+    }
+    
     protected function resolveEntityClass(): string
     {
         $entityClass = $this->getEntityClass();
@@ -108,7 +126,7 @@ class Repository
 
         $values = $this->getEntityValues($entity, true);
         $insertId = $this->queryExecutor->insert($this->query, $values);
-        $entity->setField(Field::ID, $insertId);
+        $entity->assignId($insertId);
     }
 
     public function update(Entity $entity): void

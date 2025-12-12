@@ -13,7 +13,8 @@ class SkillStep extends AbstractStep
     public function validateAndSave(): void
     {
         if (!Session::isPostSubmitted()) {
-            return; // Rien à valider
+            // Rien à valider
+            return;
         }
         
         $herosId = $this->hero->getField(Field::ID);
@@ -90,7 +91,6 @@ class SkillStep extends AbstractStep
         $toolHtml = '';
         $tools = $this->deps['toolRepo']->findAll([Field::NAME=>Constant::CST_ASC]);
         foreach ($tools as $tool) {
-            $toolIdToFind = $tool->getField(Field::ID);
             $filteredOrigin = $tool->getField(Field::ID) == $originToolId;
 
             if ($filteredOrigin) {
@@ -118,8 +118,8 @@ class SkillStep extends AbstractStep
                 'toolSkillHtml'     => $originToolHtml,
                 'skillByClass'      => $nbSkillsByClasse,
                 'classeSkillHtml'   => $classeSkillHtml,
-                'skillsHtml'        => '',//$skillHtml,
-                'toolsHtml'         => '',//$toolHtml,
+                'skillsHtml'        => $skillHtml,
+                'toolsHtml'         => $toolHtml,
                 '', '', '', '',
             ],
         ];

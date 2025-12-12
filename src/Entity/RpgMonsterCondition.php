@@ -22,9 +22,6 @@ class RpgMonsterCondition extends Entity
     protected int $monsterId = 0;
     protected int $conditionId = 0;
 
-    private ?RpgMonster $monsterCache = null;
-    private ?RpgCondition $conditionCache = null;
-
     public function getMonster(): ?RpgMonster
     {
         return $this->getRelatedEntity('monsterCache', RepositoryRpgMonster::class, $this->monsterId);

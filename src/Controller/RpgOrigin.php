@@ -18,7 +18,6 @@ class RpgOrigin extends Utilities
     public function __construct()
     {
         parent::__construct();
-
         $this->title = Language::LG_ORIGINS;
     }
 
@@ -59,8 +58,7 @@ class RpgOrigin extends Utilities
             ->addHeaderCell([Constant::CST_CONTENT=>'Caractéristiques'])
             ->addHeaderCell([Constant::CST_CONTENT=>"Don d'origine"])
             ->addHeaderCell([Constant::CST_CONTENT=>'Compétences'])
-            ->addHeaderCell([Constant::CST_CONTENT=>'Outils'])
-;
+            ->addHeaderCell([Constant::CST_CONTENT=>'Outils']);
         
         if ($rpgFeats->valid()) {
             $objTable->addBodyRows($rpgFeats, 5);
@@ -72,16 +70,28 @@ class RpgOrigin extends Utilities
     {
         /////////////////////////////////////////////////////////////////////
         // Le nom
-        $strName = $this->rpgOrigin->getField(Field::NAME);
+        $strName = $this->rpgOrigin->getName();
         
         // La liste des caractéristiques
-        $strAbilities = '';//$this->rpgOrigin->getCaracteristiques();
+        $parts = [];
+        $abilities = $this->rpgOrigin->getOriginAbilities();
+        foreach ($abilities as $ability) {
+            $parts[] = $ability->getAbility()->getName();
+        }
+        $strAbilities = implode(', ', $parts);
         
         // Le don d'origine rattaché
-        $strOriginFeat = $this->rpgOrigin->getOriginFeat()->getField(Field::NAME);
+        $strOriginFeat = $this->rpgOrigin->getOriginFeat()->getName();
         
-        $strSkills = $this->rpgOrigin->getOriginSkills();
-        $strTool = '';
+        $parts = [];
+        $skills = $this->rpgOrigin->getOriginSkills();
+        foreach ($skills as $skill) {
+            $parts[] = $skill->getSkill()->getName();
+        }
+        $strSkills = implode(', ', $parts);
+
+        // L'outil rattaché
+        $strTool = $this->rpgOrigin->getOriginTool()->getName();
                 
         $objTable->addBodyRow()
             ->addBodyCell([Constant::CST_CONTENT=>$strName])
@@ -96,10 +106,10 @@ class RpgOrigin extends Utilities
     {
         $id = $this->rpgOrigin->getField(Field::ID);
         $name = $this->rpgOrigin->getField(Field::NAME);
-        return '<div class="form-check">'
-                . '<input class="ajaxAction" data-trigger="click" data-type="origin" type="radio" name="characterOriginId" value="'.$id.'" id="origin'.$id.'"'.($checked?' checked':'').'>'
-                . '<label class="form-check-label" for="origin'.$id.'">'.$name.'</label>'
-                . '</div>';
+        return '<div class="form-check">
+            <input class="ajaxAction" data-trigger="click" data-type="origin" type="radio" name="characterOriginId" value="'.$id.'" id="origin'.$id.'"'.($checked?' checked':'').'>
+                <label class="form-check-label" for="origin'.$id.'">'.$name.'</label>
+            </div>';
     }
     
     public function getDescription(): string

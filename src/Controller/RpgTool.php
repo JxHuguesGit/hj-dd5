@@ -19,12 +19,16 @@ class RpgTool extends Utilities
     {
         $id = $this->rpgTool->getField(Field::ID);
         $name = $this->rpgTool->getField(Field::NAME);
-        $returned = '<div class="form-check">'
-                . '<input class="" type="checkbox"'.($readonly?'':' name="toolId[]"').' value="'.$id.'" id="tool'.$id.'"'.($checked?' checked':'').($readonly?' disabled':'').'>'
-                . '<label class="form-check-label" for="tool'.$id.'">'.$name.'</label>'
-                . '</div>';
+        $returned = sprintf(
+            '<div class="form-check"><input class="" type="checkbox"%1s value="%2s" id="tool%2s"%3s%4s><label class="form-check-label" for="tool%2s">%5s</label></div>',
+            $readonly?'':' name="toolId[]"',
+            $id,
+            $checked?' checked':'',
+            $readonly?' disabled':'',
+            $name
+        );
         if ($readonly) {
-        $returned .= '<input type="hidden" name="toolId[]" value="'.$id.'"/>';
+            $returned .= '<input type="hidden" name="toolId[]" value="'.$id.'"/>';
         }
         return $returned;
     }

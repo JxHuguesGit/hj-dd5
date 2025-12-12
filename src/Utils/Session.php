@@ -65,6 +65,11 @@ class Session
         return $value;
     }
 
+    public static function getRequestUri(): string
+    {
+        return $_SERVER['REQUEST_URI'];
+    }
+
     public static function fromServer(string $field): string
     {
         $strSanitized = isset($_SERVER[$field]) ? htmlentities((string) $_SERVER[$field], ENT_QUOTES, 'UTF-8') : '';

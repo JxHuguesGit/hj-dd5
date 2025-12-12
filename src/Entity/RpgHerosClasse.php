@@ -25,9 +25,6 @@ class RpgHerosClasse extends Entity
     protected int $classeId = 0;
     protected int $niveau = 0;
 
-    private ?RpgHeros $herosCache = null;
-    private ?RpgClasse $classeCache = null;
-
     public function getHeros(): ?RpgHeros
     {
         return $this->getRelatedEntity('herosCache', RepositoryRpgHeros::class, $this->herosId);

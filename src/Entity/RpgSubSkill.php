@@ -24,8 +24,6 @@ class RpgSubSkill extends Entity
     protected int $skillId = 0;
     protected string $description = '';
 
-    private ?RpgSkill $skillCache = null;
-
     public function stringify(): string
     {
         return sprintf(

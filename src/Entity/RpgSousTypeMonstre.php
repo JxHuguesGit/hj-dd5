@@ -34,8 +34,6 @@ class RpgSousTypeMonstre extends Entity
     protected int $monstreTypeId = 0;
     protected string $name = '';
 
-    private ?RpgTypeMonstre $monstreTypeCache = null;
-
     public function stringify(): string
     {
         return $this->getStrName();

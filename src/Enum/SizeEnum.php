@@ -28,7 +28,7 @@ enum SizeEnum: int
 
     public static function fromBitmask(int $bitmask): array
     {
-        return array_filter(self::cases(), fn($size) => ($bitmask & $size->value) === $size->value);
+        return array_filter(static::cases(), fn($size) => ($bitmask & $size->value) === $size->value);
     }
 
     public static function toBitmask(array $sizes): int

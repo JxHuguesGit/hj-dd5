@@ -21,9 +21,6 @@ class RpgOriginAbility extends Entity
 
     protected int $originId = 0;
     protected int $abilityId = 0;
-    
-    private ?RpgOrigin $originCache = null;
-    private ?RpgAbility $abilityCache = null;
 
     public function getOrigin(): ?RpgOrigin
     {

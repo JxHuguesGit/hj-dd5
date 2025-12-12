@@ -4,7 +4,14 @@ use src\Constant\Constant;
 use src\Constant\Template;
 use src\Controller\Hero;
 use src\Controller\HomePage;
+use src\Controller\PublicBase;
+use src\Controller\PublicHome;
 use src\Controller\Utilities;
+use src\Model\PageElement;
+use src\Model\PageRegistry;
+use src\Page\PageHome;
+use src\Page\PageOrigines;
+use src\Router\Router;
 use src\Utils\Session;
 
 if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
@@ -20,9 +27,19 @@ class DD5Base
 {
     public static function display(): void
     {
+        $registry = PageRegistry::getInstance();
+        /*
+        $registry->register((new PageSpecies())->getPageElement());
+        $registry->register((new PageClasses())->getPageElement());
+        $registry->register((new PageFeats())->getPageElement());
+        $registry->register((new PageSpells())->getPageElement());
+        $registry->register((new PageGear())->getPageElement());
+        $registry->register((new PageRules())->getPageElement());
+        */
+
         $msgProcessError = '';
         $errorPanel = '';
-        $controller = self::getController();
+        $controller = Router::getController();
 
         if (DD5_URL=='http://localhost/') {
             $srcCssFilesTpl = $controller->getRender(Template::LOCAL_CSS, [PLUGINS_DD5]);
@@ -43,11 +60,6 @@ class DD5Base
             $srcJsFilesTpl,
         ];
         echo $controller->getRender(Template::BASE, $attributes);
-    }
-
-    public static function getController(): Utilities
-    {
-        return HomePage::getController();
     }
 
 }

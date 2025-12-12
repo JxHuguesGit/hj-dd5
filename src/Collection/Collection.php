@@ -21,7 +21,8 @@ class Collection implements \Iterator
     public function addItem(Entity $obj, ?string $key = null): self
     {
         if ($key === null) {
-            $key = ++$this->indexIterator;
+            ++$this->indexIterator;
+            $key = $this->indexIterator;
         }
 
         // Si la clé existe déjà, une exception est levée
@@ -237,5 +238,10 @@ class Collection implements \Iterator
     public function first(): ?Entity
     {
         return reset($this->items) ?: null;
+    }
+
+    public function map(string $method): array
+    {
+        return array_map(fn($item) => $item->$method(), $this->items);
     }
 }

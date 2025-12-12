@@ -22,8 +22,6 @@ class RpgTool extends Entity
     protected string $name = '';
     protected int $parentId = 0;
 
-    private ?RpgTool $toolCache = null;
-    
     // TODO : à externaliser
     public function getController(): ControllerRpgTool
     {

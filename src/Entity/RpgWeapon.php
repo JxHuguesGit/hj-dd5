@@ -43,8 +43,6 @@ class RpgWeapon extends Entity
     protected bool $melee = false;
     protected int $masteryProficiencyId = 0;
 
-    private ?RpgMasteryProficiency $masteryProficiencyCache = null;
-    private ?RpgTypeDamage $typeDamageCache = null;
     private ?Collection $weaponWeaponProficiencysCache = null;
     
     // TODO : à externaliser

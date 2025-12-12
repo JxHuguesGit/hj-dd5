@@ -46,6 +46,10 @@ final class Template
     public const HERO_SELECTION      = self::CARD_PATH.'heroSelection.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
     public const SPELL_CARD          = self::CARD_PATH.'spellCard.tpl';
+    public const ORIGIN_CARD         = self::CARD_PATH.'origineCard.tpl';
+    public const ORIGIN_DETAIL_CARD  = self::CARD_PATH.'origineDetailCard.tpl';
+    public const SPECIE_DETAIL_CARD  = self::CARD_PATH.'specieDetailCard.tpl';
+    public const SPECIES_POWER_CARD  = self::CARD_PATH.'speciesPowerCard.tpl';
 
     public const CASTE_PATH          = self::TEMPLATE_PATH.'caste/';
     public const CASTE_DETAIL_GEN    = self::CASTE_PATH.'casteDetailGenerique.tpl';
@@ -63,6 +67,15 @@ final class Template
     public const HERO_PATH           = self::TEMPLATE_PATH.'hero/';
     public const HERO_CREATE_HEADER  = self::HERO_PATH.'createHeader.tpl';
     public const HERO_CREATE_FORM    = self::HERO_PATH.'createForm.tpl';
+
+    public const PUBLIC_PATH         = self::TEMPLATE_PATH.'public/';
+    public const MAIN_PAGE           = self::PUBLIC_PATH.'main.tpl';
+    public const HOME_PAGE           = self::PUBLIC_PATH.'home.tpl';
+    public const DETAIL_PAGE         = self::PUBLIC_PATH.'detail.tpl';
+    public const CATEGORY_PAGE       = self::PUBLIC_PATH.'category.tpl';
+
+    public const WIP_PAGE            = self::PUBLIC_PATH.'wip.tpl';
+    public const NOT_FOUND           = self::PUBLIC_PATH.'wip.tpl';
 
     public const UTILITIES_PATH      = self::TEMPLATE_PATH.'utilities/';
     public const CASTE_SELECT_BTN    = self::UTILITIES_PATH.'casteSelectionButton.tpl';

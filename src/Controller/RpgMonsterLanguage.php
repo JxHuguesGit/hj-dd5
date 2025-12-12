@@ -8,11 +8,6 @@ class RpgMonsterLanguage extends Utilities
 {
     protected EntityRpgMonsterLanguage $rpgMonsterLanguage;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
     public function getStrLanguage(): string
     {
         $objLanguage = $this->rpgMonsterLanguage->getLanguage();

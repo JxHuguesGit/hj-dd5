@@ -48,12 +48,14 @@ class Field
     public const PROFBONUS   = 'profBonus';
     public const PERCPASSIVE = 'percPassive';
      
+    public const DESCRIPTION  = 'description';
+    public const ENTITYTYPE   = 'entityType';
     public const EXPERTISE    = 'expertise';
     public const EXTRA        = 'extra';
-    public const RANK         = 'rank';
     public const NIVEAU       = 'niveau';
-    public const DESCRIPTION  = 'description';
+    public const RANK         = 'rank';
     public const SKILLS       = 'skills';
+    public const SLUG         = 'slug';
         
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';
@@ -61,6 +63,7 @@ class Field
     public const CASTEID      = 'casteId';
     public const CLASSEID     = 'classeId';
     public const CONDITIONID  = 'conditionId';
+    public const ENTITYID     = 'entityId';
     public const FEATID       = 'featId';
     public const FEATTYPEID   = 'featTypeId';
     public const HEROSID      = 'herosId';
@@ -69,9 +72,11 @@ class Field
     public const MSTPROFID    = 'masteryProficiencyId';
     public const MSTSSTYPID   = 'monsterSubTypeId';
     public const MSTTYPEID    = 'monstreTypeId';
+    public const OPTIONID     = 'optionId';
     public const ORIGINID     = 'originId';
     public const PARENTID     = 'parentId';
     public const POSTID       = 'postId';
+    public const POWERID      = 'powerId';
     public const REFID        = 'referenceId';
     public const SKILLID      = 'skillId';
     public const SPECIESID    = 'speciesId';

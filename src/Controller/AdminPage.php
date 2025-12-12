@@ -4,6 +4,10 @@ namespace src\Controller;
 use src\Constant\Constant;
 use src\Constant\Template;
 
+use src\Entity\Entity;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+
 class AdminPage extends Utilities
 {
     private array $allowedOnglets = [
@@ -15,9 +19,11 @@ class AdminPage extends Utilities
     
     public function getAdminContentPage(string $content): string
     {
+        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
+
         $attributes = [
-            'Hugues Joneaux',// WPUser username
-            $this->getSidebar(),// Menu de la sidebar
+            'Hugues Joneaux',
+            $this->getSidebar(),
             $content
         ];
         return $this->getRender(Template::ADMINBASE, $attributes);
@@ -38,6 +44,8 @@ class AdminPage extends Utilities
 
     public static function getAdminController(array $arrUri): mixed
     {
+        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
+        
         $controller = new AdminPage($arrUri);
         $currentTab = $controller->getArrParams(Constant::ONGLET, 'home');
         switch ($currentTab) {

@@ -1,6 +1,7 @@
 <?php
 namespace src\Action;
 
+use src\Entity\Entity;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
@@ -10,17 +11,16 @@ class LoadCreationStepSide
 {
     public static function build(string $type, int $id): string
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-    
+        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
+
     switch ($type) {
         case 'origin' :
-            $obj = new RepositoryRpgOrigin($queryBuilder, $queryExecutor);
+            $obj = new RepositoryRpgOrigin(Entity::$qb, Entity::$qe);
             $origin = $obj->find($id);
             $returned = $origin->getController()->getDescription();
            break;
         case 'feat' :
-            $obj = new RepositoryRpgFeat($queryBuilder, $queryExecutor);
+            $obj = new RepositoryRpgFeat(Entity::$qb, Entity::$qe);
             $origin = $obj->find($id);
             $returned = $origin->getController()->getDescription();
            break;

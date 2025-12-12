@@ -20,9 +20,6 @@ class RpgOriginSkill extends Entity
 
     protected int $originId = 0;
     protected int $skillId = 0;
-    
-    private ?RpgOrigin $originCache = null;
-    private ?RpgSkill $skillCache = null;
 
     public function getOrigin(): ?RpgOrigin
     {

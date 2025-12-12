@@ -8,6 +8,8 @@ use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgOriginAbility as RepositoryRpgOriginAbility;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
 use src\Repository\RpgTool as RepositoryRpgTool;
+use src\Utils\Utils;
+use WP_Post;
 
 class RpgOrigin extends Entity
 {
@@ -17,20 +19,26 @@ class RpgOrigin extends Entity
         Field::NAME,
         Field::FEATID,
         Field::TOOLID,
+        Field::SLUG,
+        Field::POSTID,
     ];
     
     public const FIELD_TYPES = [
         Field::NAME => 'string',
         Field::FEATID => 'intPositive',
         Field::TOOLID => 'intPositive',
+        Field::SLUG => 'string',
+        Field::POSTID => 'intPositive',
     ];
 
     protected string $name = '';
     protected int $featId = 0;
     protected int $toolId = 0;
+    protected string $slug = '';
+    protected int $postId = 0;
 
-    private ?RpgFeat $featCache = null;
-    private ?RpgTool $toolCache = null;
+    private ?WP_Post $wpPostCache = null;
+
     private ?Collection $skillsCache = null;
     private ?Collection $abilitiesCache = null;
 
@@ -46,7 +54,12 @@ class RpgOrigin extends Entity
     {
         return $this->getName();
     }
-
+    
+    public function getSlug(): string
+    {
+        return Utils::slugify($this->getName());
+    }
+    
     public function getOriginFeat(): ?RpgFeat
     {
         return $this->getRelatedEntity('featCache', RepositoryRpgFeat::class, $this->featId);
@@ -73,5 +86,13 @@ class RpgOrigin extends Entity
             $this->abilitiesCache = $objDao->findBy([Field::ORIGINID=>$this->getId()]);
         }
         return $this->abilitiesCache;
+    }
+    
+    public function getWpPost(): ?WP_Post
+    {
+        if ($this->wpPostCache === null) {
+            $this->wpPostCache = get_post($this->postId) ?: null;
+        }
+        return $this->wpPostCache;
     }
 }

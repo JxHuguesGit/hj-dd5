@@ -1,6 +1,7 @@
 <?php
 namespace src\Entity;
 
+use src\Collection\Collection;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
@@ -10,8 +11,10 @@ class Entity
 
     protected ?int $id = null;
 
-    protected static QueryBuilder $qb;
-    protected static QueryExecutor $qe;
+    public static QueryBuilder $qb;
+    public static QueryExecutor $qe;
+
+    protected array $relatedCache = [];
 
     public const DISPLAY_FIELDS = [];
     public const FIELDS = [];
@@ -120,7 +123,7 @@ class Entity
 
     public function assignId(int $id): self
     {
-        if ($this->id !== null) {
+        if ($this->id !== null && $this->id !== 0) {
             throw new \LogicException("L'identifiant est déjà défini et ne peut plus être modifié.");
         }
 
@@ -133,12 +136,22 @@ class Entity
         string $repositoryClass,
         int $id
     ): ?object {
-        if ($this->{$cacheProperty} === null) {
+        if (!isset($this->relatedCache[$cacheProperty])) {
             $repo = new $repositoryClass(static::$qb, static::$qe);
-            $this->{$cacheProperty} = $repo->find($id);
+            $this->relatedCache[$cacheProperty] = $repo->find($id);
         }
-        return $this->{$cacheProperty};
+        return $this->relatedCache[$cacheProperty];
     }
+
+    protected function getRelatedCollection(
+        string $repoClass,
+        array $criteria,
+        array $order = []
+    ): Collection {
+        $repo = new $repoClass(static::$qb, static::$qe);
+        return $repo->findBy($criteria, $order);
+    }
+
 
     protected function validateField(string $field, mixed $value): mixed
     {

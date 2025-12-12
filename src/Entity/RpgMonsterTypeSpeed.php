@@ -28,9 +28,6 @@ class RpgMonsterTypeSpeed extends Entity
     protected float $value = 0.0;
     protected string $extra = '';
 
-    private ?RpgMonster $monsterCache = null;
-    private ?RpgTypeSpeed $speedTypeCache = null;
-
     // TODO : à externaliser
     public function getController(): ControllerRpgMonsterTypeSpeed
     {

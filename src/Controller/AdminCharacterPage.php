@@ -35,9 +35,23 @@ class AdminCharacterPage extends AdminPage
         // Dépendances
         $deps = $this->buildDeps($queryBuilder, $queryExecutor);
 
+        // Suppression éventuelle du héros.
+        if (isset($this->arrParams['action']) && $this->arrParams['action'] === 'delete') {
+            $heroId = $this->arrParams['id'];
+            $wpUserId = Session::getWpUser()->ID;
+
+            $heros = $deps['heroRepo']->findBy([Field::ID=>$heroId, Field::WPUSERID=>$wpUserId], [], -1, true);
+            $hero = $heros->first();
+            if ($hero instanceof RpgHeros) {
+            var_dump($hero);
+                $hero->delete();
+                $this->arrParams['id'] = 0;
+            }
+        }
+
         // Initialisation du Heros
         $rpgHero = $this->loadHero($deps['heroRepo']);
-        
+
         // Flow de création
         $flow = new CharacterCreationFlow(
             $rpgHero,

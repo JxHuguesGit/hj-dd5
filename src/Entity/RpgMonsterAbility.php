@@ -31,8 +31,6 @@ class RpgMonsterAbility extends Entity
     protected string $description = '';
     protected int $rank = 0;
 
-    private ?RpgMonster $monsterCache = null;
-
     public function stringify(): string
     {
         return sprintf(

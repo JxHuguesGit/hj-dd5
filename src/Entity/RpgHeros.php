@@ -1,11 +1,17 @@
 <?php
 namespace src\Entity;
 
+use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Repository\RpgHeros as RepositoryRpgHeros;
+use src\Repository\RpgHerosClasse as RepositoryRpgHerosClasse;
+use src\Repository\RpgHerosFeat as RepositoryRpgHerosFeat;
+use src\Repository\RpgHerosSkill as RepositoryRpgHerosSkill;
 use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
-use src\Repository\RpgHerosFeat as RepositoryRpgHeroFeat;
 use src\Utils\Session;
 
 class RpgHeros extends Entity
@@ -37,8 +43,6 @@ class RpgHeros extends Entity
     protected string $createStep = '';
     protected int $lastUpdate = 0;
 
-    private ?RpgOrigin $originCache = null;
-    private ?RpgSpecies $speciesCache = null;
     private ?RpgFeat $originFeatCache = null;
 
     public static function init()
@@ -80,7 +84,7 @@ class RpgHeros extends Entity
     public function getOriginFeat(bool $extra=false): RpgFeat
     {
         if ($this->originFeatCache === null) {
-            $objDao = new RepositoryRpgHeroFeat(static::$qb, static::$qe);
+            $objDao = new RepositoryRpgHerosFeat(static::$qb, static::$qe);
             $objHerosFeat = $objDao->findOriginFeat(
                 [Field::HEROSID => $this->id],
                 [Field::ID => ($extra ? Constant::CST_DESC : Constant::CST_ASC)]
@@ -95,4 +99,31 @@ class RpgHeros extends Entity
         }
         return $this->originFeatCache;
     }
+
+    public function getFeats(): Collection
+    {
+        return $this->getRelatedCollection(
+            RepositoryRpgHerosFeat::class,
+            [Field::HEROSID => $this->id],
+            [Field::ID => Constant::CST_ASC]
+        );
+    }
+
+    public function getSkills(): Collection
+    {
+        return $this->getRelatedCollection(
+            RepositoryRpgHerosSkill::class,
+            [Field::HEROSID => $this->id],
+            [Field::ID => Constant::CST_ASC]
+        );
+    }
+
+    public function delete(): void
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $obj = new RepositoryRpgHeros($queryBuilder, $queryExecutor, self::TABLE, self::FIELDS);
+        $obj->delete($this);
+    }
+
 }

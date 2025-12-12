@@ -80,4 +80,17 @@ class Utils
         return str_ireplace($search, $replace, $str);
     }
     
+    public static function slugify(string $text): string
+    {
+        // Supprimer les accents
+        $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+
+        // Remplacer les espaces par underscore
+        $text = preg_replace('/\s+/', '_', $text);
+
+        // Garder uniquement lettres/chiffres/_/-
+        $text = preg_replace('/[^a-zA-Z0-9_-]/', '', $text);
+
+        return strtolower($text);
+    }
 }

@@ -34,9 +34,6 @@ class RpgWeaponWeaponProficiency extends Entity
     protected int $typeAmmunitionId = 0;
     protected string $versatileDamage = '';
 
-    private ?RpgWeaponProficiency $wpnProfCache = null;
-    private ?RpgTypeAmmunition $ammoTypeCache = null;
-
     public function stringify(): string
     {
         return $this->getStrName();
