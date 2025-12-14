@@ -10,12 +10,11 @@ class PageFeats
         return new PageElement([
             'slug' => 'feats',
             'icon' => 'fa-solid fa-scroll',
-            'title' => 'Aptitudes',
-            'description' => 'Découvrez les dons jouables.',
+            'title' => 'Dons',
+            'description' => "Les dons sont des capacités spéciales que votre personnage peut acquérir, offrant des avantages uniques et personnalisant davantage son style de jeu.",
             'url' => '/feats',
             'order' => 40,
+            'parent' => 'home',
         ]);
     }
-
-    // Ici tu pourrais avoir d'autres méthodes pour rendre la page, etc.
 }

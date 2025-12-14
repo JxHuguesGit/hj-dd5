@@ -1,6 +1,11 @@
 <?php
 namespace src\Model;
 
+use src\Page\PageFeats;
+use src\Page\PageFeatsCombat;
+use src\Page\PageFeatsEpic;
+use src\Page\PageFeatsGeneral;
+use src\Page\PageFeatsOrigin;
 use src\Page\PageHome;
 use src\Page\PageOrigines;
 use src\Page\PageSpecies;
@@ -39,6 +44,21 @@ class PageRegistry
         // Page Espèces (liste)
         $speciesPage = (new PageSpecies())->getPageElement();
         $this->register($speciesPage);
+
+        // Page Dons (liste)
+        $featsPage = (new PageFeats())->getPageElement();
+        $this->register($featsPage);
+
+        // Catégories de Dons (liste)
+        $subFeatsPage = (new PageFeatsCombat())->getPageElement();
+        $this->register($subFeatsPage);
+        $subFeatsPage = (new PageFeatsEpic())->getPageElement();
+        $this->register($subFeatsPage);
+        $subFeatsPage = (new PageFeatsGeneral())->getPageElement();
+        $this->register($subFeatsPage);
+        $subFeatsPage = (new PageFeatsOrigin())->getPageElement();
+        $this->register($subFeatsPage);
+
     }
     
     public function register($elements): void

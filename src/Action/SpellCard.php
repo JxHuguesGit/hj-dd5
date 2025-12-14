@@ -1,8 +1,6 @@
 <?php
 namespace src\Action;
 
-
-use src\Entity\RpgSpell as EntityRpgSpell;
 use src\Factory\SpellFactory;
 use src\Utils\Session;
 

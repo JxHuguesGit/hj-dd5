@@ -12,8 +12,6 @@ use src\Entity\RpgMonsterResistance as EntityRpgMonsterResistance;
 use src\Enum\MonsterTypeEnum;
 use src\Form\RpgMonster as FormRpgMonster;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
-use src\Repository\RpgTypeMonstre as RepositoryRpgTypeMonster;
-use src\Helper\SizeHelper;
 use src\Presenter\MonsterPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;

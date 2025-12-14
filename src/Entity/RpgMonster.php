@@ -1,7 +1,6 @@
 <?php
 namespace src\Entity;
 
-use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgMonster as ControllerRpgMonster;
 use src\Factory\MonsterFactory as RpgMonsterFactory;

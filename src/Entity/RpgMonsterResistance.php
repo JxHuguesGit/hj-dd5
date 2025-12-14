@@ -6,8 +6,6 @@ use src\Controller\RpgMonsterResistance as ControllerRpgMonsterResistance;
 use src\Repository\RpgCondition as RepositoryRpgCondition;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgTypeDamage as RepositoryRpgTypeDamage;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 
 class RpgMonsterResistance extends Entity
 {

@@ -6,7 +6,6 @@ use src\Constant\Field;
 use src\Constant\Template;
 use src\Entity\Entity;
 use src\Entity\RpgHeros;
-use src\Entity\RpgHerosClasse as EntityRpgHerosClasse;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgClasse as RepositoryRpgClasse;

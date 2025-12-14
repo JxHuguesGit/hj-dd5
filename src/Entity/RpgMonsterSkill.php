@@ -5,8 +5,6 @@ use src\Constant\Field;
 use src\Controller\RpgMonsterSkill as ControllerRpgMonsterSkill;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgSkill as RepositoryRpgSkill;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 
 class RpgMonsterSkill extends Entity
 {

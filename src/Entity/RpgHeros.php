@@ -7,7 +7,6 @@ use src\Constant\Field;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgHeros as RepositoryRpgHeros;
-use src\Repository\RpgHerosClasse as RepositoryRpgHerosClasse;
 use src\Repository\RpgHerosFeat as RepositoryRpgHerosFeat;
 use src\Repository\RpgHerosSkill as RepositoryRpgHerosSkill;
 use src\Repository\RpgOrigin as RepositoryRpgOrigin;

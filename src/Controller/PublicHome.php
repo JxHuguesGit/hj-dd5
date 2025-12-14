@@ -3,15 +3,7 @@ namespace src\Controller;
 
 use src\Constant\Template;
 use src\Controller\PublicBase;
-use src\Model\PageElement;
 use src\Model\PageRegistry;
-use src\Page\PageClasses;
-use src\Page\PageFeats;
-use src\Page\PageGear;
-use src\Page\PageOrigines;
-use src\Page\PageRules;
-use src\Page\PageSpecies;
-use src\Page\PageSpells;
 use src\Presenter\CardPresenter;
 use src\Presenter\MenuPresenter;
 

@@ -9,12 +9,15 @@ class RpgFeatType extends Entity
     public const FIELDS = [
         Field::ID,
         Field::NAME,
+        Field::SLUG,
     ];
     public const FIELD_TYPES = [
         Field::NAME => 'string',
+        Field::SLUG => 'string',
     ];
     
     protected string $name = '';
+    protected string $slug = '';
     
     public function stringify(): string
     {

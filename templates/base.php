@@ -28,14 +28,6 @@ class DD5Base
     public static function display(): void
     {
         $registry = PageRegistry::getInstance();
-        /*
-        $registry->register((new PageSpecies())->getPageElement());
-        $registry->register((new PageClasses())->getPageElement());
-        $registry->register((new PageFeats())->getPageElement());
-        $registry->register((new PageSpells())->getPageElement());
-        $registry->register((new PageGear())->getPageElement());
-        $registry->register((new PageRules())->getPageElement());
-        */
 
         $msgProcessError = '';
         $errorPanel = '';

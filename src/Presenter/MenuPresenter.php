@@ -30,7 +30,7 @@ class MenuPresenter
         // Tri par "order"
         usort($this->elements, fn(PageElement $a, PageElement $b) => $a->getOrder() <=> $b->getOrder());
 
-        $html = '<nav class="navbar navbar-expand-md navbar-light"><div class="container-xl"><ul class="navbar-nav">';
+        $html = '<nav class="navbar navbar-expand-md navbar-light pb-0"><div class="container-xl"><ul class="navbar-nav">';
 
         foreach ($this->elements as $el) {
             if ($el->getSlug() !== 'home' && $el->getParentSlug() !== 'home') {

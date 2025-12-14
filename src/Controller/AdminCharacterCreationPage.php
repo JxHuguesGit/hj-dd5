@@ -5,7 +5,6 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
 use src\Entity\RpgHeros;
-use src\Enum\ClassEnum;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgClasse as RepositoryRpgClasse;

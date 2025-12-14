@@ -14,18 +14,21 @@ class RpgFeat extends Entity
         Field::NAME,
         Field::FEATTYPEID,
         Field::POSTID,
+        Field::SLUG,
     ];
 
     public const FIELD_TYPES = [
         Field::NAME => 'string',
         Field::FEATTYPEID => 'intPositive',
         Field::POSTID => 'intPositive',
+        Field::SLUG => 'string',
     ];
 
     protected string $name    = '';
     protected int $featTypeId = 0;
     protected int $postId     = 0;
-
+    protected string $slug     = '';
+    
     private ?WP_Post $wpPostCache = null;
 
     public function stringify(): string

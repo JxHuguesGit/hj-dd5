@@ -15,7 +15,6 @@ use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Utils\Html;
 use src\Utils\Session;
 use src\Utils\Table;
-use src\Utils\Utils;
 use WP_Post;
 
 class RpgFeat extends Utilities

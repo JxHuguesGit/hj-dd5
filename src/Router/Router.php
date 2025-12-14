@@ -3,10 +3,12 @@ namespace src\Router;
 
 use src\Controller\PublicBase;
 use src\Controller\PublicHome;
+use src\Controller\PublicFeat;
 use src\Controller\PublicOrigine;
 use src\Controller\PublicSpecie;
 use src\Controller\PublicNotFound;
 use src\Model\PageRegistry;
+use src\Page\PageFeat;
 use src\Page\PageOrigine;
 use src\Page\PageSpecies;
 use src\Utils\Session;
@@ -39,6 +41,19 @@ class Router
             return new PublicSpecie($matches[1], new PageSpecies());
         }
 
+        // --- Gestion d'une catégorie de dons ---
+        if (preg_match('#^feats-(.+)$#', $path, $matches)) {
+            $typeSlug = $matches[1];
+            $controllerClass = 'src\\Controller\\PublicFeat' . ucfirst($typeSlug);
+            if (class_exists($controllerClass)) {
+                return new $controllerClass();
+            }
+        }
+
+        // --- Gestion d'un don individuel ---
+        if (preg_match('#^feat-(.+)$#', $path, $matches)) {
+            return new PublicFeat($matches[1], new PageFeat());
+        }
 
         // --- Partie statique via PageRegistry ---
         $registry = PageRegistry::getInstance();

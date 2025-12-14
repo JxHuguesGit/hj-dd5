@@ -5,9 +5,6 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
-use src\Entity\RpgHeros;
-use src\Repository\RpgHeros as RepositoryRpgHeros;
-use src\Repository\RpgSpecies as RepositoryRpgSpecies;
 use src\Utils\Session;
 
 class SpeciesStep extends AbstractStep

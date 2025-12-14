@@ -6,7 +6,6 @@ use src\Constant\Field;
 use src\Constant\Template;
 use src\Factory\RepositoryFactory;
 use src\Model\PageRegistry;
-use src\Model\PageElement;
 use src\Presenter\MenuPresenter;
 use src\Presenter\OrigineCardPresenter;
 use src\Repository\RpgOrigin as RepositoryRpgOrigin;

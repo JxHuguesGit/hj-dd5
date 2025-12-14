@@ -3,7 +3,6 @@ namespace src\Controller;
 
 use src\Constant\Field;
 use src\Entity\RpgMonsterSkill as EntityRpgMonsterSkill;
-use src\Utils\Utils;
 
 class RpgMonsterSkill extends Utilities
 {
