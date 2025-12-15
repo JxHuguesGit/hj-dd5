@@ -1,12 +1,15 @@
 <?php
 namespace src\Repository;
 
-use src\Entity\RpgAbility as EntityRpgAbility;
+use src\Constant\Table;
+use src\Domain\RpgAbility as DomainRpgAbility;
 
 class RpgAbility extends Repository
 {
+    public const TABLE = Table::ABILITY;
+
     public function getEntityClass(): string
     {
-        return EntityRpgAbility::class;
+        return DomainRpgAbility::class;
     }
 }

@@ -1,14 +1,16 @@
 <?php
 namespace src\Repository;
 
-use src\Collection\Collection;
-use src\Entity\RpgOrigin as EntityRpgOrigin;
+use src\Constant\Table;
+use src\Domain\RpgOrigin as DomainRpgOrigin;
 
 class RpgOrigin extends Repository
 {
+    public const TABLE = Table::ORIGIN;
+    
     public function getEntityClass(): string
     {
-        return EntityRpgOrigin::class;
+        return DomainRpgOrigin::class;
     }
 
 }

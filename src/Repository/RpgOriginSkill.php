@@ -1,12 +1,15 @@
 <?php
 namespace src\Repository;
 
-use src\Entity\RpgOriginSkill as EntityRpgOriginSkill;
+use src\Constant\Table;
+use src\Domain\RpgOriginSkill as DomainRpgOriginSkill;
 
 class RpgOriginSkill extends Repository
 {
+    public const TABLE = Table::ORIGINSKILL;
+    
     public function getEntityClass(): string
     {
-        return EntityRpgOriginSkill::class;
+        return DomainRpgOriginSkill::class;
     }
 }

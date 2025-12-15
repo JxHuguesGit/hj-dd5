@@ -7,10 +7,19 @@ use src\Controller\PublicFeat;
 use src\Controller\PublicOrigine;
 use src\Controller\PublicSpecie;
 use src\Controller\PublicNotFound;
+use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageFeat;
 use src\Page\PageOrigine;
+use src\Page\PageOriginList;
 use src\Page\PageSpecies;
+use src\Presenter\MenuPresenter;
+use src\Presenter\OriginDetailPresenter;
+use src\Presenter\OriginListPresenter;
+use src\Presenter\RpgOriginTableBuilder;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 class Router
@@ -30,17 +39,33 @@ class Router
         if ($path === '' || $path === 'home') {
             return new PublicHome();
         }
+        
+        $queryBuilder = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $factory = new ServiceFactory($queryBuilder, $queryExecutor);
 
+        ////////////////////////////////////////////////////////////
         // --- Gestion d'une origine individuelle ---
         if (preg_match('#^origine-(.+)$#', $path, $matches)) {
-            return new PublicOrigine($matches[1], new PageOrigine());
+            return new PublicOrigine(
+                $matches[1],
+                $factory->getRpgOriginService(),
+                $factory->getRpgOriginQueryService(),
+                new OriginDetailPresenter(),
+                new PageOrigine(new TemplateRenderer()),
+                new MenuPresenter(PageRegistry::getInstance()->all())
+            );
         }
+        ////////////////////////////////////////////////////////////
 
+        ////////////////////////////////////////////////////////////
         // --- Gestion d'une espèce individuelle ---
         if (preg_match('#^specie-(.+)$#', $path, $matches)) {
             return new PublicSpecie($matches[1], new PageSpecies());
         }
+        ////////////////////////////////////////////////////////////
 
+        ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de dons ---
         if (preg_match('#^feats-(.+)$#', $path, $matches)) {
             $typeSlug = $matches[1];
@@ -54,29 +79,45 @@ class Router
         if (preg_match('#^feat-(.+)$#', $path, $matches)) {
             return new PublicFeat($matches[1], new PageFeat());
         }
+        ////////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////////
+        // --- Gestion d'une catégorie de matériel ---
+        if (preg_match('#^equipments-(.+)$#', $path, $matches)) {
+            $typeSlug = $matches[1];
+            $controllerClass = 'src\\Controller\\PublicEquipment' . ucfirst($typeSlug);
+            if (class_exists($controllerClass)) {
+                return new $controllerClass($factory->getRpgArmorService());
+            }
+        }
+        ////////////////////////////////////////////////////////////
 
         // --- Partie statique via PageRegistry ---
         $registry = PageRegistry::getInstance();
         $pageElement = $registry->get($path);
 
         if ($pageElement) {
-            // Convention : contrôleur = Public + ucfirst(slug)
             $controllerClass = 'src\\Controller\\Public' . ucfirst($pageElement->getSlug());
+                        
             if (class_exists($controllerClass)) {
-                return new $controllerClass();
+                return match($pageElement->getSlug()) {
+                    'origines' => new $controllerClass(
+                        $factory->getRpgOriginQueryService(),
+                        new OriginListPresenter(),
+                        new PageOriginList(
+                            new TemplateRenderer(),
+                            new RpgOriginTableBuilder($factory->getRpgOriginService())
+                        ),
+                        new MenuPresenter(PageRegistry::getInstance()->all())
+                    ),
+                    'feats'    => new $controllerClass($factory->getRpgFeatService()),
+                    default    => new $controllerClass(),
+                };
             } else {
                 echo "Controller class $controllerClass does not exist.";
             }
         }
 
-/*
-        $patterns = [
-            '#^origine/([^/]+)$#' => PublicOrigines::class,
-            '#^classe/([^/]+)$#'  => PublicClasses::class,
-            '#^don/([^/]+)$#'     => PublicDons::class,
-            '#^sort/([^/]+)$#'    => PublicSorts::class,
-        ];
-*/
         return new PublicNotFound();
     }
 }

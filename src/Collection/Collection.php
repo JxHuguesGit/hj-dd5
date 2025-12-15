@@ -1,6 +1,7 @@
 <?php
 namespace src\Collection;
 
+use src\Domain\Entity as DomainEntity;
 use src\Entity\Entity;
 use src\Exception\KeyAlreadyUse;
 use src\Exception\KeyInvalid;
@@ -18,7 +19,7 @@ class Collection implements \Iterator
      * @return self
      * @throws KeyAlreadyUse Si la clé existe déjà.
      */
-    public function addItem(Entity $obj, ?string $key = null): self
+    public function addItem(Entity|DomainEntity $obj, ?string $key = null): self
     {
         if ($key === null) {
             ++$this->indexIterator;
@@ -235,7 +236,7 @@ class Collection implements \Iterator
         $this->indexIterator = 0;
     }
 
-    public function first(): ?Entity
+    public function first(): ?object
     {
         return reset($this->items) ?: null;
     }

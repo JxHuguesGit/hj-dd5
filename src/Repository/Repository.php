@@ -10,6 +10,9 @@ use src\Query\QueryExecutor;
 
 class Repository
 {
+    // Valeur par défaut
+    public const TABLE = '';
+
     protected string $query = '';
     protected string $table;
     protected array $fields;
@@ -17,21 +20,37 @@ class Repository
     public function __construct(
         protected QueryBuilder $queryBuilder,
         protected QueryExecutor $queryExecutor,
-        ?string $table='',
-        ?array $fields=[]
-    ){
+        ?string $table = null,
+        ?array $fields = null
+    ) {
         $entityClass = $this->getEntityClass();
-        if ($entityClass!==null) {
-            $this->table = $entityClass::TABLE;
-            $this->fields = $entityClass::FIELDS;
-        } else {
-            $this->table = $table;
-            $this->fields = $fields;
-        }
 
+        if ($entityClass !== null) {
+            // Ancien comportement : récupération des champs depuis l'entité
+            $this->fields = $entityClass::FIELDS;
+
+            // Pour la table, on préfère la constante static::TABLE si elle existe
+            if (defined('static::TABLE') && static::TABLE!='') {
+                $this->table = static::TABLE;
+            } elseif ($table !== null) {
+                $this->table = $table;
+            } else {
+                $entityClass = $this->getEntityClass();
+                if ($entityClass!==null) {
+                    $this->table = $entityClass::TABLE;
+                    $this->fields = $entityClass::FIELDS;
+                } else {
+                    throw new \LogicException("Le Repository " . static::class . " doit définir une table.");
+                }
+            }
+        } else {
+            // Ancien Repository qui ne retourne pas d'entité Domain
+            $this->table = $table ?? '';
+            $this->fields = $fields ?? [];
+        }
     }
 
-    public function find(mixed $id, bool $display=false): ?Entity
+    public function find(mixed $id, bool $display=false): ?object
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
@@ -45,9 +64,9 @@ class Repository
         );
     }
 
-    public function findAll(array $orderBy=[Field::ID=>Constant::CST_ASC]): Collection
+    public function findAll(array $orderBy=[Field::ID=>Constant::CST_ASC], bool $display=false): Collection
     {
-        return $this->findBy([], $orderBy);
+        return $this->findBy([], $orderBy, -1, $display);
     }
 
     public function findBy(array $criteria, array $orderBy=[], int $limit=-1, bool $display=false): Collection

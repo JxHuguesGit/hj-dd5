@@ -12,8 +12,8 @@ class RpgArmor extends Entity
         Field::NAME,
         Field::ARMORTYPID,
         Field::ARMORCLASS,
-        Field::MALUSSTR,
-        Field::MALUSSTE,
+        Field::STRPENALTY,
+        Field::STHDISADV,
         Field::WEIGHT,
         Field::GOLDPRICE,
     ];
@@ -21,8 +21,8 @@ class RpgArmor extends Entity
         Field::NAME => 'string',
         Field::ARMORTYPID => 'int',
         Field::ARMORCLASS => 'int',
-        Field::MALUSSTR => 'int',
-        Field::MALUSSTE => 'bool',
+        Field::STRPENALTY => 'int',
+        Field::STHDISADV => 'bool',
         Field::WEIGHT => 'float',
         Field::GOLDPRICE => 'float',
     ];

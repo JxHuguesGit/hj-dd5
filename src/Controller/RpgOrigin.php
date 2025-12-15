@@ -27,8 +27,38 @@ class RpgOrigin extends Utilities
         return $objTable?->display();
     }
 
-    public static function getTable(array $params): Table
+    public static function getTable(iterable $origins, array $params=[]): Table
     {
+        $objTable = new Table();
+        $objTable->setTable([Constant::CST_CLASS => implode(' ', [Bootstrap::CSS_TABLE_SM, Bootstrap::CSS_TABLE_STRIPED, $params['withMarginTop'] ? Bootstrap::CSS_MT5 : ''])])
+            ->addHeader([Constant::CST_CLASS => implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
+            ->addHeaderRow()
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_ORIGINS])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_ABILITIES])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_ORIGIN_FEAT])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_SKILLS])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_TOOLS]);
+        
+        foreach ($origins as $origin) {
+            /////////////////////////////////////////////////////////////////////
+            // Le nom
+            $strName = $origin->name;
+            $strAbilities = '';
+            $strOriginFeat = '';
+            $strSkills = '';
+            $strTool = $origin->getTool()?->name ?? '';
+        
+        
+            $objTable->addBodyRow([])
+                ->addBodyCell([Constant::CST_CONTENT => $strName])
+                ->addBodyCell([Constant::CST_CONTENT => $strAbilities])
+                ->addBodyCell([Constant::CST_CONTENT => $strOriginFeat])
+                ->addBodyCell([Constant::CST_CONTENT => $strSkills])
+                ->addBodyCell([Constant::CST_CONTENT => $strTool]);
+        }
+        return $objTable;
+
+
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgOrigin($queryBuilder, $queryExecutor);
@@ -48,7 +78,6 @@ class RpgOrigin extends Utilities
             Constant::PAGE_NBPERPAGE => $nbPerPage
         ];
         $refElementId = ($curPage-1)*$nbPerPage + 1;
-        $objTable = new Table();
         $objTable->setTable([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_SM, Bootstrap::CSS_TABLE_STRIPED, Bootstrap::CSS_MT5])])
             ->setPaginate($paginate)
             ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])

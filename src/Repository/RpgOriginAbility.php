@@ -1,12 +1,15 @@
 <?php
 namespace src\Repository;
 
-use src\Entity\RpgOriginAbility as EntityRpgOriginAbility;
+use src\Constant\Table;
+use src\Domain\RpgOriginAbility as DomainRpgOriginAbility;
 
 class RpgOriginAbility extends Repository
 {
+    public const TABLE = Table::ORIGINABILITY;
+    
     public function getEntityClass(): string
     {
-        return EntityRpgOriginAbility::class;
+        return DomainRpgOriginAbility::class;
     }
 }

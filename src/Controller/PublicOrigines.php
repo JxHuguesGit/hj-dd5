@@ -1,37 +1,26 @@
 <?php
 namespace src\Controller;
 
+use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Template;
-use src\Factory\RepositoryFactory;
-use src\Model\PageRegistry;
+use src\Page\PageOriginList;
 use src\Presenter\MenuPresenter;
-use src\Presenter\OrigineCardPresenter;
-use src\Repository\RpgOrigin as RepositoryRpgOrigin;
+use src\Presenter\OriginListPresenter;
+use src\Service\RpgOriginQueryService;
 
 class PublicOrigines extends PublicBase
 {
-    private array $origines = [];
+    private ?Collection $origins = null;
 
-    public function __construct()
-    {
-        $this->title = 'Les Origines';
-
-        // Ici, new Repo
-        $repo = RepositoryFactory::create(RepositoryRpgOrigin::class);
-        $origins = $repo->findAll([Field::NAME=>Constant::CST_ASC]);
-
-        $this->origines = [];
-        foreach ($origins as $origin) {
-            $this->origines[] = [
-                'url' => '/origine-'.$origin->getSlug(),
-                'title' => $origin->getName(),
-                'description' => '',//$origin->getExcerpt(),
-                'icon' => '',//$origin->getIcon(),
-                'image' => '',//$origin->getImage(),
-            ];
-        }
+    public function __construct(
+        private RpgOriginQueryService $originQueryService,
+        private OriginListPresenter $presenter,
+        private PageOriginList $page,
+        private MenuPresenter $menuPresenter,
+    ) {
+        $this->origins = $this->originQueryService->getAllOrigins([Field::NAME=>Constant::CST_ASC]);
+        $this->title = 'Les Historiques';
     }
 
     public function getTitle(): string
@@ -41,15 +30,27 @@ class PublicOrigines extends PublicBase
 
     public function getContentPage(): string
     {
-        // Récupérer le menu depuis le registry
+        $menu = $this->menuPresenter->render('origines');
+        $viewData = $this->presenter->present($this->origins);
+        $viewData['title'] = $this->getTitle();
+        /*
+
         $registry = PageRegistry::getInstance();
         $menuHtml = (new MenuPresenter($registry->all(), 'origines'))->render();
-        $cardPresenter = new OrigineCardPresenter($this->origines);
-        $contentHtml = $cardPresenter->render();
         
-        $contentSection = $this->getRender(Template::CATEGORY_PAGE, [$this->getTitle(), $contentHtml]);
+        if (!$this->origins) {
+            return $this->getRender(Template::NOT_FOUND, [$menuHtml]);
+        }
+        
+        $tableBuilder = new RpgOriginTableBuilder($this->originService);
+        $contentHtml = $tableBuilder->build($this->origins, ['withMarginTop' => false]);
+        $contentSection = $this->getRender(
+            Template::CATEGORY_PAGE,
+            [$this->getTitle(), $contentHtml->display()]
+        );
 
-        return $this->getRender(Template::MAIN_PAGE, [$menuHtml, $contentSection]);
+        */
+        return $this->page->render($menu, $viewData);
     }
 }
 

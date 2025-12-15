@@ -17,6 +17,7 @@ class Bootstrap
     
     public const CSS_ROW_PRIMARY_STRIPED_EVEN = 'row-primary-striped-even';
     public const CSS_ROW_PRIMARY_STRIPED_ODD  = 'row-primary-striped-odd';
+    public const CSS_ROW_DARK_STRIPED         = 'row-dark-striped';
     
     public const CSS_COL_MD_2      = 'col-md-2';
     public const CSS_COL_MD_3      = 'col-md-3';
@@ -27,5 +28,6 @@ class Bootstrap
     public const CSS_TABLE_STRIPED = self::CSS_TABLE.'-'.self::CSS_STRIPED;
     public const CSS_TABLE_DARK    = self::CSS_TABLE.'-'.self::CSS_DARK;
     public const CSS_TEXT_CENTER   = self::CSS_TEXT.'-'.self::CSS_CENTER;
+    public const CSS_TEXT_DARK     = self::CSS_TEXT.'-'.self::CSS_DARK;
     public const CSS_TEXT_END      = self::CSS_TEXT.'-'.self::CSS_END;
 }

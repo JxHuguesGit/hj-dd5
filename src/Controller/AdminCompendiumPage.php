@@ -2,7 +2,11 @@
 namespace src\Controller;
 
 use src\Constant\Constant;
+use src\Constant\Field;
 use src\Constant\Template;
+use src\Repository\RpgArmor as RepositoryRpgArmor;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
 
 class AdminCompendiumPage extends AdminPage
 {
@@ -14,7 +18,15 @@ class AdminCompendiumPage extends AdminPage
 
         switch ($currentId) {
             case Constant::ARMORS :
-                $objTable = RpgArmor::getTable();
+                $queryBuilder  = new QueryBuilder();
+                $queryExecutor = new QueryExecutor();
+                $objDao = new RepositoryRpgArmor($queryBuilder, $queryExecutor);
+                $armors = $objDao->findAll([
+                    Field::ARMORTYPID=>Constant::CST_ASC,
+                    Field::ARMORCLASS=>Constant::CST_ASC,
+                    Field::GOLDPRICE=>Constant::CST_ASC
+                ]);
+                $objTable = RpgArmor::getTable($armors);
                 $pageContent = $objTable?->display();
             break;
             case Constant::WEAPONS :

@@ -7,7 +7,7 @@ use src\Entity\Entity;
 class QueryExecutor
 {
 
-    public function fetchOne(string $sql, string $entityClass, array $params = [], bool $display=false): ?Entity
+    public function fetchOne(string $sql, string $entityClass, array $params = [], bool $display=false): ?object
     {
         $collection = $this->fetchAll($sql, $entityClass, $params, $display);
         return $collection->first() ?: null;

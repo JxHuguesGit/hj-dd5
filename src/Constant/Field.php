@@ -19,8 +19,8 @@ class Field
     public const MELEE       = 'melee';
 
     public const ARMORCLASS  = 'armorClass';
-    public const MALUSSTR    = 'malusStr';
-    public const MALUSSTE    = 'malusSte';
+    public const STRPENALTY  = 'strengthPenalty';
+    public const STHDISADV   = 'stealthDisadvantage';
  
     public const MINRANGE    = 'minRange';
     public const MAXRANGE    = 'maxRange';

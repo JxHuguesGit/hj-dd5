@@ -1,13 +1,16 @@
 <?php
 namespace src\Repository;
 
-use src\Entity\RpgArmor as EntityRpgArmor;
+use src\Constant\Table;
+use src\Domain\RpgArmor as DomainRpgArmor;
 
 class RpgArmor extends Repository
 {
+    public const TABLE = Table::ARMOR;
+
     public function getEntityClass(): string
     {
-        return EntityRpgArmor::class;
+        return DomainRpgArmor::class;
     }
 
 }

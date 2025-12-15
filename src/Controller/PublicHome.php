@@ -29,6 +29,10 @@ class PublicHome extends PublicBase
             $registry->all(),
             fn($el) => $el->getSlug() !== 'home'
         );
+        $pages = array_filter(
+            $pages,
+            fn($el) => $el->getParentSlug() === 'home'
+        );
         $cardPresenter = new CardPresenter($pages);
         
         $mainMenu = $menuPresenter->render();

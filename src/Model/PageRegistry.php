@@ -1,6 +1,7 @@
 <?php
 namespace src\Model;
 
+use src\Page\PageEquipements;
 use src\Page\PageFeats;
 use src\Page\PageFeatsCombat;
 use src\Page\PageFeatsEpic;
@@ -58,6 +59,10 @@ class PageRegistry
         $this->register($subFeatsPage);
         $subFeatsPage = (new PageFeatsOrigin())->getPageElement();
         $this->register($subFeatsPage);
+
+        // Page Equipements (liste)
+        $equipmentsPage = (new PageEquipements())->getPageElement();
+        $this->register($equipmentsPage);
 
     }
     
