@@ -2,16 +2,12 @@
 namespace src\Parser;
 
 use src\Constant\Field;
-use src\Entity\RpgMonster as EntityRpgMonster;
 use src\Entity\RpgMonsterSkill as EntityRpgMonsterSkill;
 use src\Enum\SkillEnum;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Repository\RpgMonsterSkill as RepositoryRpgMonsterSkill;
 use src\Repository\RpgSkill as RepositoryRpgSkill;
 use src\Utils\Utils;
-use \DomDocument;
 
 class RpgMonster extends AbstractMonsterParser
 {

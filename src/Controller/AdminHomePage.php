@@ -1,8 +1,6 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Template;
-
 class AdminHomePage extends AdminPage
 {
     public function getAdminContentPage(string $content=''): string

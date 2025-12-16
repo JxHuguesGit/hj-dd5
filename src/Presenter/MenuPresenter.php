@@ -41,7 +41,7 @@ class MenuPresenter
             
             $html .= sprintf(
                 '<li class="nav-item%s">
-                    <a class="nav-link" href="%s">
+                    <a class="nav-link text-dark" href="%s">
                         %s
                         <span class="nav-link-title">%s</span>
                     </a>

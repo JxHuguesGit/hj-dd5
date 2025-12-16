@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Constant;
 use src\Exception\TemplateInvalid;
 use src\Constant\Template;
 

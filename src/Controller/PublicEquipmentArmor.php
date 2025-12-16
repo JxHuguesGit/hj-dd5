@@ -3,9 +3,7 @@ namespace src\Controller;
 
 use src\Collection\Collection;
 use src\Controller\RpgArmor as ControllerRpgArmor;
-use src\Constant\Constant;
 use src\Constant\Template;
-use src\Domain\RpgArmor;
 use src\Model\PageRegistry;
 use src\Page\PageEquipmentArmor;
 use src\Presenter\MenuPresenter;

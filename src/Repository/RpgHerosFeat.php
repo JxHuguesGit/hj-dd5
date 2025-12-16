@@ -1,11 +1,7 @@
 <?php
 namespace src\Repository;
 
-use src\Constant\Field;
-use src\Entity\Entity;
 use src\Entity\RpgHerosFeat as EntityRpgHerosFeat;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 
 class RpgHerosFeat extends Repository
 {

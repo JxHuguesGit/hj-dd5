@@ -2,7 +2,6 @@
 namespace src\Page;
 
 use src\Constant\Template;
-use src\Presenter\OriginDetailPresenter;
 use src\Renderer\TemplateRenderer;
 
 class PageOrigine

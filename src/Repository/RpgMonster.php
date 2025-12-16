@@ -3,10 +3,6 @@ namespace src\Repository;
 
 use src\Entity\RpgMonster as EntityRpgMonster;
 use src\Collection\Collection;
-use src\Constant\Field;
-use src\Enum\MonsterTypeEnum;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 
 class RpgMonster extends Repository
 {
@@ -15,7 +11,7 @@ class RpgMonster extends Repository
         return EntityRpgMonster::class;
     }
     
-    public function findBy(array $criteria, array $orderBy=[], int $limit=-1): Collection
+    public function findBy(array $criteria, array $orderBy=[], int $limit=-1, bool $display=false): Collection
     {
         $conditions = [];
         if (isset($criteria['fpMinFilter'])) {

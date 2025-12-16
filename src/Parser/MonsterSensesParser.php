@@ -2,10 +2,7 @@
 namespace src\Parser;
 
 use src\Constant\Field;
-use src\Entity\RpgMonster;
 use src\Entity\RpgMonsterTypeVision as EntityRpgMonsterTypeVision;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Repository\RpgMonsterTypeVision as RepositoryRpgMonsterTypeVision;
 use src\Repository\RpgTypeVision as RepositoryRpgTypeVision;
 
@@ -92,7 +89,7 @@ class MonsterSensesParser extends AbstractMonsterParser
             ]);
 
             if ($existing->isEmpty()) {
-                $entity = new EntityRpgMonsterTypeVision(0, $monsterId, $typeId, $value, '');
+                $entity = new EntityRpgMonsterTypeVision([0, $monsterId, $typeId, $value, '']);
                 $linkRepo->insert($entity);
                 $hasChanged = true;
             } else {

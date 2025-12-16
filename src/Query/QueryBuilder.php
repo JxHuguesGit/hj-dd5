@@ -1,8 +1,6 @@
 <?php
 namespace src\Query;
 
-use src\Entity\Entity;
-
 class QueryBuilder
 {
     private string $baseQuery = '';

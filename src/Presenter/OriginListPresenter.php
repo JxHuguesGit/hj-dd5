@@ -2,7 +2,6 @@
 namespace src\Presenter;
 
 use src\Collection\Collection;
-use src\Domain\RpgOrigin;
 
 class OriginListPresenter
 {

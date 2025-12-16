@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller;
 
-use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;

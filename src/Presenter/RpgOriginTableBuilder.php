@@ -33,7 +33,7 @@ class RpgOriginTableBuilder
 
         foreach ($origins as $origin) {
 
-			/////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
             // Le nom
             $strName = $origin->name;
             $strUrl = Html::getLink($strName, '/origine-'.$origin->getSlug(), Bootstrap::CSS_TEXT_DARK);
@@ -50,22 +50,27 @@ class RpgOriginTableBuilder
             $parts = [];
             $skills = $this->originService->getSkills($origin);
             foreach ($skills as $skill) {
+            /*
+	            $skillUrl = Html::getLink($skill->name, '/skill-'.$skill->getSlug(), Bootstrap::CSS_TEXT_DARK);
+                $parts[] = $skillUrl;
+            */
                 $parts[] = $skill->name;
             }
             $strSkills = implode(', ', $parts);
             
             // Le don d'origine rattaché
             $feat = $this->originService->getFeat($origin);
-            $strOriginFeat = $feat?->getName() ?? '-';
+            $strOriginFeat = $feat?->name ?? '-';
+            $originUrl = Html::getLink($strOriginFeat, '/feat-'.$feat?->getSlug(), Bootstrap::CSS_TEXT_DARK);
 
-            // L'outil rattaché 
+            // L'outil rattaché
             $tool = $this->originService->getTool($origin);
             $strTool = $tool?->getName() ?? '-';
         
             $objTable->addBodyRow([])
                 ->addBodyCell([Constant::CST_CONTENT => $strUrl])
                 ->addBodyCell([Constant::CST_CONTENT => $strAbilities])
-                ->addBodyCell([Constant::CST_CONTENT => $strOriginFeat])
+                ->addBodyCell([Constant::CST_CONTENT => $originUrl])
                 ->addBodyCell([Constant::CST_CONTENT => $strSkills])
                 ->addBodyCell([Constant::CST_CONTENT => $strTool]);
         }

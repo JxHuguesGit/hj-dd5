@@ -2,7 +2,6 @@
 namespace src\Query;
 
 use src\Collection\Collection;
-use src\Entity\Entity;
 
 class QueryExecutor
 {

@@ -1,7 +1,6 @@
 <?php
 namespace src\Form;
 
-use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
 use src\Controller\Utilities;
@@ -10,7 +9,6 @@ use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Utils\Html;
 use src\Utils\Session;
 
 class RpgFeat extends Form

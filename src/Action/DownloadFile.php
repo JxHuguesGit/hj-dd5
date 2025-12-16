@@ -1,7 +1,6 @@
 <?php
 namespace src\Action;
 
-use src\Controller\Utilities;
 use src\Utils\Session;
 
 class DownloadFile

@@ -1,7 +1,6 @@
 <?php
 namespace src\CharacterCreation;
 
-use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
