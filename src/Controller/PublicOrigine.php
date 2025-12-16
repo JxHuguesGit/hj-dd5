@@ -35,12 +35,16 @@ class PublicOrigine extends PublicBase
         $nav = $this->originQueryService->getPreviousAndNext($this->origin);
         $originFeat = $this->originService->getFeat($this->origin);
         $originTool = $this->originService->getTool($this->origin);
+        $abilities = $this->originService->getAbilities($this->origin);
+        $skills = $this->originService->getSkills($this->origin);
         $viewData = $this->presenter->present(
             $this->origin,
             $nav['prev'],
             $nav['next'],
             $originFeat,
             $originTool,
+            $abilities,
+            $skills,
         );
         $viewData['title'] = $this->getTitle();
         return $this->page->render($menu, $viewData);

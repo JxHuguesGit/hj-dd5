@@ -9,6 +9,9 @@ class RepositoryFactory
 {
     public static function create(string $repositoryClass): Repository
     {
-        return new $repositoryClass(new QueryBuilder(), new QueryExecutor());
+        return new $repositoryClass(
+            new QueryBuilder(),
+            new QueryExecutor()
+        );
     }
 }

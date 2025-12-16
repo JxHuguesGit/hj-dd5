@@ -3,12 +3,7 @@ namespace src\Presenter;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
-use src\Constant\Field;
 use src\Constant\Language;
-use src\Domain\RpgOrigin as DomainRpgOrigin;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Service\RpgOriginService;
 use src\Utils\Html;
 use src\Utils\Table;
@@ -51,7 +46,7 @@ class RpgOriginTableBuilder
             $skills = $this->originService->getSkills($origin);
             foreach ($skills as $skill) {
             /*
-	            $skillUrl = Html::getLink($skill->name, '/skill-'.$skill->getSlug(), Bootstrap::CSS_TEXT_DARK);
+                $skillUrl = Html::getLink($skill->name, '/skill-'.$skill->getSlug(), Bootstrap::CSS_TEXT_DARK);
                 $parts[] = $skillUrl;
             */
                 $parts[] = $skill->name;

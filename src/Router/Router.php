@@ -12,11 +12,17 @@ use src\Model\PageRegistry;
 use src\Page\PageFeat;
 use src\Page\PageOrigine;
 use src\Page\PageOriginList;
+use src\Page\PageSpecie;
 use src\Page\PageSpecies;
+use src\Page\PageSpeciesList;
 use src\Presenter\MenuPresenter;
+use src\Presenter\FeatDetailPresenter;
 use src\Presenter\OriginDetailPresenter;
 use src\Presenter\OriginListPresenter;
+use src\Presenter\SpeciesDetailPresenter;
+use src\Presenter\SpeciesListPresenter;
 use src\Presenter\RpgOriginTableBuilder;
+use src\Presenter\RpgSpeciesTableBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
@@ -53,7 +59,7 @@ class Router
                 $factory->getRpgOriginQueryService(),
                 new OriginDetailPresenter(),
                 new PageOrigine(new TemplateRenderer()),
-                new MenuPresenter(PageRegistry::getInstance()->all())
+                new MenuPresenter(PageRegistry::getInstance()->all(), 'origines')
             );
         }
         ////////////////////////////////////////////////////////////
@@ -61,7 +67,14 @@ class Router
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une espèce individuelle ---
         if (preg_match('#^specie-(.+)$#', $path, $matches)) {
-            return new PublicSpecie($matches[1], new PageSpecies());
+            return new PublicSpecie(
+                $matches[1],
+                $factory->getRpgSpeciesService(),
+                $factory->getRpgSpeciesQueryService(),
+                new SpeciesDetailPresenter(),
+                new PageSpecie(new TemplateRenderer()),
+                new MenuPresenter(PageRegistry::getInstance()->all(), 'species'),
+            );
         }
         ////////////////////////////////////////////////////////////
 
@@ -77,7 +90,14 @@ class Router
 
         // --- Gestion d'un don individuel ---
         if (preg_match('#^feat-(.+)$#', $path, $matches)) {
-            return new PublicFeat($matches[1], new PageFeat());
+            return new PublicFeat(
+                $matches[1],
+                $factory->getRpgFeatService(),
+                $factory->getRpgFeatQueryService(),
+                new FeatDetailPresenter(),
+                new PageFeat(new TemplateRenderer()),
+                new MenuPresenter(PageRegistry::getInstance()->all(), 'feats')
+            );
         }
         ////////////////////////////////////////////////////////////
 
@@ -108,7 +128,16 @@ class Router
                             new TemplateRenderer(),
                             new RpgOriginTableBuilder($factory->getRpgOriginService())
                         ),
-                        new MenuPresenter(PageRegistry::getInstance()->all())
+                        new MenuPresenter(PageRegistry::getInstance()->all(), 'origines')
+                    ),
+                    'species' => new $controllerClass(
+                        $factory->getRpgSpeciesQueryService(),
+                        new SpeciesListPresenter(),
+                        new PageSpeciesList(
+                            new TemplateRenderer(),
+                            new RpgSpeciesTableBuilder($factory->getRpgSpeciesService())
+                        ),
+                        new MenuPresenter(PageRegistry::getInstance()->all(), 'species')
                     ),
                     'feats'    => new $controllerClass($factory->getRpgFeatService()),
                     default    => new $controllerClass(),

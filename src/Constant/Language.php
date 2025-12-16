@@ -22,6 +22,7 @@ class Language
     public const LG_WEAPON_PROP     = 'Botte d\'arme';
     public const LG_ABILITIES       = 'Caractéristiques';
     public const LG_CATEGORY        = 'Catégorie';
+    public const LG_SIZE_CATEGORY   = 'Catégorie de taille';
     public const LG_CA              = 'Classe d\'armure (CA)';
     public const LG_SKILLS          = 'Compétences';
     public const LG_DAMAGES         = 'Dégâts';
@@ -29,6 +30,7 @@ class Language
     public const LG_STEALTH         = 'Discrétion';
     public const LG_FEATS           = 'Dons';
     public const LG_ORIGIN_FEAT     = 'Don d\'origine';
+    public const LG_SPECIE          = 'Espèce';
     public const LG_FORCE           = 'Force';
     public const LG_ORIGINS         = 'Origines';
     public const LG_TOOLS           = 'Outils';
@@ -36,6 +38,8 @@ class Language
     public const LG_PRICE           = 'Prix';
     public const LG_PROPERTIES      = 'Propriétés';
     public const LG_SPELLS          = 'Sorts';
+    public const LG_CREATURE_TYPE   = 'Type de créature';
+    public const LG_SPEED           = 'Vitesse';
     
     
     

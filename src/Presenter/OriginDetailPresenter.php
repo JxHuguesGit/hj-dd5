@@ -1,7 +1,8 @@
 <?php
 namespace src\Presenter;
 
-use src\Entity\RpgFeat;
+use src\Collection\Collection;
+use src\Domain\RpgFeat;
 use src\Domain\RpgOrigin;
 use src\Entity\RpgTool;
 
@@ -13,26 +14,25 @@ class OriginDetailPresenter
         ?RpgOrigin $next,
         ?RpgFeat $rpgFeat,
         ?RpgTool $rpgTool,
+        Collection $originAbilities,
+        Collection $originSkills
     ): array {
         // Capacités
         $abilities = [];
-        /*
-        foreach ($origin->getOriginAbilities() as $originAbility) {
-            $abilities[] = $originAbility->getAbility()->getName();
+        foreach ($originAbilities as $ability) {
+            $abilities[] = $ability->name;
         }
-        */
 
         // Compétences
         $skills = [];
-        /*
-        foreach ($origin->getOriginSkills() as $originSkill) {
-            $skills[] = $originSkill->getSkill()->getName();
+        foreach ($originSkills as $skill) {
+            $skills[] = $skill->name;
         }
-        */
 
-        $strContent = '';//$origin->getWpPost()->post_content;
+        $wpPost = get_post($origin->postId);
+        $strContent = $wpPost->post_content;
         $strContent = preg_replace('/<p>|<\/p>/', '', $strContent);
-        $strEquipment = '';//get_field('equipement', $this->origin->getWpPost()->ID);
+        $strEquipment = get_field('equipement', $wpPost->ID);
 
         return [
             'title' => $origin->name,
@@ -42,7 +42,7 @@ class OriginDetailPresenter
             'skills'    => $skills,
 
             'description' => $strContent,
-            'originFeat' => $rpgFeat->getName(),
+            'originFeat' => $rpgFeat->name,
             'originTool' => $rpgTool->getName(),
             'originEquipment' => $strEquipment,
 

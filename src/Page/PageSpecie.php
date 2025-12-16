@@ -4,7 +4,7 @@ namespace src\Page;
 use src\Constant\Template;
 use src\Renderer\TemplateRenderer;
 
-class PageFeat
+class PageSpecie
 {
     public function __construct(
         private TemplateRenderer $renderer
@@ -14,7 +14,7 @@ class PageFeat
     {
         $prevHtml = $data['prev']
             ? sprintf(
-                '<a class="btn btn-sm btn-outline-dark" href="/feat-%s">&lt; %s</a>',
+                '<a class="btn btn-sm btn-outline-dark" href="/specie-%s">&lt; %s</a>',
                 $data['prev']['slug'],
                 $data['prev']['name']
             )
@@ -22,21 +22,23 @@ class PageFeat
 
         $nextHtml = $data['next']
             ? sprintf(
-                '<a class="btn btn-sm btn-outline-dark" href="/feat-%s">%s &gt;</a>',
+                '<a class="btn btn-sm btn-outline-dark" href="/specie-%s">%s &gt;</a>',
                 $data['next']['slug'],
                 $data['next']['name']
             )
             : '<span></span>';
-        
+
         $detailCard = $this->renderer->render(
-            Template::FEAT_DETAIL_CARD,
+            Template::SPECIE_DETAIL_CARD,
             [
-                '',
                 $data['title'],
                 $data['description'],
                 $prevHtml,
                 $nextHtml,
-                $data['featType'],
+                $data['creatureType'],
+                $data['sizeCategory'],
+                $data['speed'],
+                $data['powers'],
             ]
         );
 

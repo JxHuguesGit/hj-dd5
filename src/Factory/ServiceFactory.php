@@ -9,14 +9,19 @@ use src\Repository\RpgFeat;
 use src\Repository\RpgOrigin;
 use src\Repository\RpgOriginAbility;
 use src\Repository\RpgOriginSkill;
+use src\Repository\RpgSpecies;
 use src\Repository\RpgSkill;
 use src\Repository\RpgTool;
 use src\Service\RpgAbilityService;
 use src\Service\RpgAbilityQueryService;
 use src\Service\RpgArmorService;
+use src\Service\RpgFeatService;
+use src\Service\RpgFeatQueryService;
 use src\Service\RpgOriginQueryService;
 use src\Service\RpgOriginService;
 use src\Service\RpgSkillQueryService;
+use src\Service\RpgSpeciesService;
+use src\Service\RpgSpeciesQueryService;
 
 final class ServiceFactory
 {
@@ -28,12 +33,26 @@ final class ServiceFactory
         $this->queryExecutor = $queryExecutor;
     }
 
+    public function getRpgFeatQueryService(): RpgFeatQueryService
+    {
+        $featRepo = new RpgFeat($this->queryBuilder, $this->queryExecutor);
+        return new RpgFeatQueryService($featRepo);
+    }
+
     public function getRpgOriginQueryService(): RpgOriginQueryService
     {
         $originRepo = new RpgOrigin($this->queryBuilder, $this->queryExecutor);
         return new RpgOriginQueryService($originRepo);
     }
-    
+
+    public function getRpgSpeciesQueryService(): RpgSpeciesQueryService
+    {
+        $speciesRepo = new RpgSpecies($this->queryBuilder, $this->queryExecutor);
+        return new RpgSpeciesQueryService($speciesRepo);
+    }
+
+
+
     public function getRpgAbilityService(): RpgAbilityService
     {
         $repo = new RpgAbility($this->queryBuilder, $this->queryExecutor);
@@ -65,5 +84,11 @@ final class ServiceFactory
         $abilityQueryService = new RpgAbilityQueryService($abilityRepo);
         
         return new RpgOriginService($featRepo, $toolRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
+    }
+    
+    public function getRpgSpeciesService(): RpgSpeciesService
+    {
+        $repo = new RpgSpecies($this->queryBuilder, $this->queryExecutor);
+        return new RpgSpeciesService($repo);
     }
 }

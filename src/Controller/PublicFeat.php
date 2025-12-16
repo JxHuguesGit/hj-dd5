@@ -1,6 +1,9 @@
 <?php
 namespace src\Controller;
 
+use src\Domain\RpgFeat;
+
+
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
@@ -13,41 +16,47 @@ use src\Model\PageRegistry;
 use src\Page\PageFeat;
 use src\Presenter\BreadcrumbPresenter;
 use src\Presenter\MenuPresenter;
+use src\Presenter\FeatDetailPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
+use src\Service\RpgFeatService;
+use src\Service\RpgFeatQueryService;
 
 class PublicFeat extends PublicBase
 {
-    private ?EntityRpgFeat $feat;
+    private ?RpgFeat $feat;
 
-    public function __construct(string $slug, PageFeat $pageFeat)
-    {
-        $repo = RepositoryFactory::create(RepositoryRpgFeat::class);
-        $this->feat = $repo->findBy([Field::SLUG=>$slug])?->first();
-
-        if (!$this->feat) {
-            throw new NotFoundException("Don introuvable : " . $slug);
-        }
-
-        // Construire le PageElement dynamique
-        $pageElement = $pageFeat->getPageElement([
-            'slug' => $this->feat->getSlug(),
-            'title' => $this->feat->getName(),
-            'url' => '/feat-' . $this->feat->getSlug(),
-        ]);
-        PageRegistry::getInstance()->register($pageElement);
-        $this->pageElement = $pageElement;
-        
-        $this->title = $this->feat->getName();
+    public function __construct(
+        private string $slug,
+        private RpgFeatService $featService,
+        private RpgFeatQueryService $featQueryService,
+        private FeatDetailPresenter $presenter,
+        private PageFeat $page,
+        private MenuPresenter $menuPresenter,
+    ) {
+        $this->feat = $featQueryService->getFeatBySlug($this->slug);
+        $this->title = $this->feat->name;
     }
 
     public function getTitle(): string
     {
         return $this->title;
     }
+    
     public function getContentPage(): string
     {
+        $menu = $this->menuPresenter->render('feats');
+        $nav = $this->featQueryService->getPreviousAndNext($this->feat);
+        $viewData = $this->presenter->present(
+            $this->feat,
+            $nav['prev'],
+            $nav['next'],
+        );
+        $viewData['title'] = $this->getTitle();
+        return $this->page->render($menu, $viewData);
+        
+        
         $registry = PageRegistry::getInstance();
         $menuHtml = (new MenuPresenter($registry->all(), 'feats'))->render();
 
