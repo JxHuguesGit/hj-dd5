@@ -3,18 +3,18 @@ namespace src\Page;
 
 use src\Model\PageElement;
 
-class PageEquipmentArmor
+class PageItemArmor
 {
     public function getPageElement(): PageElement
     {
         return new PageElement([
-            'slug' => 'equipments-armor',
+            'slug' => 'items-armor',
             'icon' => 'fa-solid fa-shield-halved',
             'title' => 'Armures',
             'description' => 'Les armures disponibles pour les aventuriers.',
-            'url' => '/equipments-armor',
+            'url' => '/items-armor',
             'order' => 51,
-            'parent' => 'equipments',
+            'parent' => 'items',
         ]);
     }
 }

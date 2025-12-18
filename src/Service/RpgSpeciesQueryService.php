@@ -53,7 +53,12 @@ final class RpgSpeciesQueryService
                     'field'   => Field::NAME,
                     'operand' => '<',
                     'value'   => $species->name,
-                ]
+                ],
+                [
+                    'field'   => Field::PARENTID,
+                    'operand' => '=',
+                    'value'   => $species->parentId,
+                ],
             ],
             [Field::NAME => Constant::CST_DESC],
             1
@@ -66,7 +71,12 @@ final class RpgSpeciesQueryService
                     'field'   => Field::NAME,
                     'operand' => '>',
                     'value'   => $species->name,
-                ]
+                ],
+                [
+                    'field'   => Field::PARENTID,
+                    'operand' => '=',
+                    'value'   => $species->parentId,
+                ],
             ],
             [Field::NAME => Constant::CST_ASC],
             1

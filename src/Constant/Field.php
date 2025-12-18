@@ -47,6 +47,7 @@ class Field
     public const CHASCORE    = 'chaScore';
     public const PROFBONUS   = 'profBonus';
     public const PERCPASSIVE = 'percPassive';
+    public const TYPE        = 'type';
      
     public const DESCRIPTION  = 'description';
     public const ENTITYTYPE   = 'entityType';
@@ -56,6 +57,8 @@ class Field
     public const RANK         = 'rank';
     public const SKILLS       = 'skills';
     public const SLUG         = 'slug';
+    public const DICECOUNT    = 'diceCount';
+    public const DICEFACES    = 'diceFaces';
         
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';
@@ -63,6 +66,7 @@ class Field
     public const CASTEID      = 'casteId';
     public const CLASSEID     = 'classeId';
     public const CONDITIONID  = 'conditionId';
+    public const DMGDIEID     = 'damageDieId';
     public const ENTITYID     = 'entityId';
     public const FEATID       = 'featId';
     public const FEATTYPEID   = 'featTypeId';
@@ -87,8 +91,17 @@ class Field
     public const TYPERESID    = 'typeResistanceId';
     public const TYPESPEEDID  = 'typeSpeedId';
     public const TYPEVISIONID = 'typeVisionId';
+    public const WPNCATID     = 'weaponCategoryId';
     public const WEAPONID     = 'weaponId';
     public const WPNPROFID    = 'weaponProficiencyId';
+    public const WPNRANGEID   = 'weaponRangeId';
     public const WPUSERID     = 'wpUserId';
     
+    public const CATEGORYSLUG     = 'categorySlug';
+    public const CATEGORYNAME     = 'categoryName';
+    public const MASTERYNAME      = 'masteryName';
+    public const TYPDMGNAME       = 'typeDamageName';
+    public const RANGESLUG        = 'rangeSlug';
+    public const RANGENAME        = 'rangeName';
+
 }

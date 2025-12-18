@@ -28,6 +28,8 @@ class PageOrigine
             )
             : '<span></span>';
 
+        $urlFeat = '<a class="text-dark" href="/feat-'.$data['featSlug'].'">'.$data['originFeat'].'</a>';
+
         $detailCard = $this->renderer->render(
             Template::ORIGIN_DETAIL_CARD,
             [
@@ -36,9 +38,9 @@ class PageOrigine
                 $data['description'],
                 implode(', ', $data['abilities']),
                 implode(', ', $data['skills']),
-                $data['originFeat'],
+                $urlFeat,
                 $data['originTool'],
-                $data['originEquipment'],
+                $data['originItem'],
                 $prevHtml,
                 $nextHtml,
             ]

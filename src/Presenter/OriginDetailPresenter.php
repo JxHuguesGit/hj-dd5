@@ -32,7 +32,7 @@ class OriginDetailPresenter
         $wpPost = get_post($origin->postId);
         $strContent = $wpPost->post_content;
         $strContent = preg_replace('/<p>|<\/p>/', '', $strContent);
-        $strEquipment = get_field('equipement', $wpPost->ID);
+        $strItem = get_field('equipement', $wpPost->ID);
 
         return [
             'title' => $origin->name,
@@ -43,8 +43,9 @@ class OriginDetailPresenter
 
             'description' => $strContent,
             'originFeat' => $rpgFeat->name,
+            'featSlug' => $rpgFeat->getSlug(),
             'originTool' => $rpgTool->getName(),
-            'originEquipment' => $strEquipment,
+            'originItem' => $strItem,
 
             'prev' => $prev ? [
                 'slug' => $prev->getSlug(),

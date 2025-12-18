@@ -9,20 +9,26 @@ use src\Controller\PublicSpecie;
 use src\Controller\PublicNotFound;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
+use src\Page\PageArmorList;
 use src\Page\PageFeat;
 use src\Page\PageOrigine;
 use src\Page\PageOriginList;
 use src\Page\PageSpecie;
 use src\Page\PageSpecies;
 use src\Page\PageSpeciesList;
+use src\Page\PageWeaponList;
+use src\Presenter\ArmorListPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\FeatDetailPresenter;
 use src\Presenter\OriginDetailPresenter;
 use src\Presenter\OriginListPresenter;
+use src\Presenter\RpgArmorTableBuilder;
 use src\Presenter\SpeciesDetailPresenter;
 use src\Presenter\SpeciesListPresenter;
 use src\Presenter\RpgOriginTableBuilder;
 use src\Presenter\RpgSpeciesTableBuilder;
+use src\Presenter\RpgWeaponTableBuilder;
+use src\Presenter\WeaponListPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
@@ -103,11 +109,31 @@ class Router
 
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de matériel ---
-        if (preg_match('#^equipments-(.+)$#', $path, $matches)) {
+        if (preg_match('#^items-(.+)$#', $path, $matches)) {
             $typeSlug = $matches[1];
-            $controllerClass = 'src\\Controller\\PublicEquipment' . ucfirst($typeSlug);
+            $controllerClass = 'src\\Controller\\PublicItem' . ucfirst($typeSlug);
             if (class_exists($controllerClass)) {
-                return new $controllerClass($factory->getRpgArmorService());
+                return match($typeSlug) {
+                    'armor' => new $controllerClass(
+                        $factory->getRpgArmorQueryService(),
+                        new ArmorListPresenter(),
+                        new PageArmorList(
+                            new TemplateRenderer(),
+                            new RpgArmorTableBuilder()
+                        ),
+                        new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
+                    ),
+                    'weapon' => new $controllerClass(
+                        $factory->getRpgWeaponQueryService(),
+                        new WeaponListPresenter(),
+                        new PageWeaponList(
+                            new TemplateRenderer(),
+                            new RpgWeaponTableBuilder()
+                        ),
+                        new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
+                    ),
+                    default    => new $controllerClass(),
+                };
             }
         }
         ////////////////////////////////////////////////////////////

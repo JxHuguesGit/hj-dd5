@@ -47,6 +47,12 @@ class QueryBuilder
         return "DELETE FROM `{$table}` WHERE `id` = %s";
     }
 
+    public function setBaseQuery(string $sql): self
+    {
+        $this->baseQuery = $sql;
+        return $this;
+    }
+
     public function distinct(string $field, string $table): self
     {
         $this->baseQuery = "SELECT DISTINCT $field FROM $table";

@@ -3,16 +3,16 @@ namespace src\Page;
 
 use src\Model\PageElement;
 
-class PageEquipements
+class PageItems
 {
     public function getPageElement(): PageElement
     {
         return new PageElement([
-            'slug' => 'equipments',
+            'slug' => 'items',
             'icon' => 'fa-solid fa-scroll',
-            'title' => 'Equipement',
+            'title' => 'Matériel',
             'description' => "Tout l'équipement dont a besoin un aventurier.",
-            'url' => '/equipments',
+            'url' => '/items',
             'order' => 50,
             'parent' => 'home',
         ]);

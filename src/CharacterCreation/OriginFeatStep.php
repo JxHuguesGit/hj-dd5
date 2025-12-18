@@ -120,7 +120,7 @@ class OriginFeatStep extends AbstractStep
             $returned .= "<strong>Don</strong> : le don d'origine associé.<br>";
             $returned .= "<strong>Compétences</strong> : le 2 compétences associées.<br>";
             $returned .= "<strong>Outils</strong> : l'outil associé.<br>";
-            $returned .= "<strong>Equipement</strong> : la liste d'équipement standard disponible par l'origine<br>";
+            $returned .= "<strong>Matériel</strong> : la liste d'équipement standard disponible par l'origine<br>";
 
             return 'WIP - '.$returned;
         }

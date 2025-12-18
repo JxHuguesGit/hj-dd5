@@ -10,9 +10,9 @@ use src\Presenter\MenuPresenter;
 use src\Presenter\OrigineCardPresenter;
 use src\Repository\RpgFeatType as RepositoryRpgFeatType;
 
-class PublicEquipments extends PublicBase
+class PublicItems extends PublicBase
 {
-    private array $equipments = [];
+    private array $items = [];
     private Collection $subTypes;
 
     public function __construct()
@@ -39,13 +39,21 @@ class PublicEquipments extends PublicBase
     {
         // Récupérer le menu depuis le registry
         $registry = PageRegistry::getInstance();
-        $menuHtml = (new MenuPresenter($registry->all(), 'equipments'))->render();
+        $menuHtml = (new MenuPresenter($registry->all(), 'items'))->render();
 
         $data = [];
 
         $data[] = [
-            'url' => '/equipments-armor',
+            'url' => '/items-armor',
             'title' => 'Armures',
+            'description' => '',
+            'icon' => '',
+            'image' => '',
+        ];
+
+        $data[] = [
+            'url' => '/items-weapon',
+            'title' => 'Armes',
             'description' => '',
             'icon' => '',
             'image' => '',

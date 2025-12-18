@@ -43,7 +43,12 @@ final class RpgFeatQueryService
                     'field'   => Field::NAME,
                     'operand' => '<',
                     'value'   => $feat->name,
-                ]
+                ],
+                [
+                    'field'   => Field::FEATTYPEID,
+                    'operand' => '=',
+                    'value'   => $feat->featTypeId,
+                ],
             ],
             [Field::NAME => Constant::CST_DESC],
             1
@@ -56,7 +61,12 @@ final class RpgFeatQueryService
                     'field'   => Field::NAME,
                     'operand' => '>',
                     'value'   => $feat->name,
-                ]
+                ],
+                [
+                    'field'   => Field::FEATTYPEID,
+                    'operand' => '=',
+                    'value'   => $feat->featTypeId,
+                ],
             ],
             [Field::NAME => Constant::CST_ASC],
             1

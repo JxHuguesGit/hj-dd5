@@ -8,11 +8,11 @@ class PageGear
     public function getPageElement(): PageElement
     {
         return new PageElement([
-            'slug' => 'equipment',
+            'slug' => 'item',
             'icon' => 'fa-solid fa-box-open',
             'title' => 'Équipement',
             'description' => 'Découvrez l\'équipement jouable.',
-            'url' => '/equipment',
+            'url' => '/item',
             'order' => 60,
         ]);
     }

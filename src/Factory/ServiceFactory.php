@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory;
 
+use src\Controller\RpgWeapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgAbility;
@@ -12,8 +13,10 @@ use src\Repository\RpgOriginSkill;
 use src\Repository\RpgSpecies;
 use src\Repository\RpgSkill;
 use src\Repository\RpgTool;
+use src\Repository\RpgWeapon as RepositoryRpgWeapon;
 use src\Service\RpgAbilityService;
 use src\Service\RpgAbilityQueryService;
+use src\Service\RpgArmorQueryService;
 use src\Service\RpgArmorService;
 use src\Service\RpgFeatService;
 use src\Service\RpgFeatQueryService;
@@ -22,6 +25,7 @@ use src\Service\RpgOriginService;
 use src\Service\RpgSkillQueryService;
 use src\Service\RpgSpeciesService;
 use src\Service\RpgSpeciesQueryService;
+use src\Service\RpgWeaponQueryService;
 
 final class ServiceFactory
 {
@@ -50,6 +54,18 @@ final class ServiceFactory
         $speciesRepo = new RpgSpecies($this->queryBuilder, $this->queryExecutor);
         return new RpgSpeciesQueryService($speciesRepo);
     }
+    
+    public function getRpgArmorQueryService(): RpgArmorQueryService
+    {
+        $repo = new RpgArmor($this->queryBuilder, $this->queryExecutor);
+        return new RpgArmorQueryService($repo);
+    }
+    
+    public function getRpgWeaponQueryService(): RpgWeaponQueryService
+    {
+        $repo = new RepositoryRpgWeapon($this->queryBuilder, $this->queryExecutor);
+        return new RpgWeaponQueryService($repo);
+    }
 
 
 
@@ -57,12 +73,6 @@ final class ServiceFactory
     {
         $repo = new RpgAbility($this->queryBuilder, $this->queryExecutor);
         return new RpgAbilityService($repo);
-    }
-    
-    public function getRpgArmorService(): RpgArmorService
-    {
-        $repo = new RpgArmor($this->queryBuilder, $this->queryExecutor);
-        return new RpgArmorService($repo);
     }
     
     public function getRpgFeatService(): RpgFeatService

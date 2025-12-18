@@ -160,7 +160,7 @@ class RpgOrigin extends Utilities
         $returned .= '<strong>Don</strong> : '.$originName.'<br>';
         $returned .= '<strong>Compétences</strong> : '.implode(', ', $partSkills).'<br>';
         $returned .= '<strong>Outils</strong> : '.$toolName.'<br>';
-        $returned .= '<strong>Equipement</strong> : WIP<br>';
+        $returned .= '<strong>Matériel</strong> : WIP<br>';
         
         return $returned;
     }
