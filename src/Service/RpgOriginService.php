@@ -4,6 +4,7 @@ namespace src\Service;
 use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\RpgOrigin;
+use src\Domain\RpgTool as DomainRpgTool;
 use src\Repository\RpgFeat;
 use src\Repository\RpgTool;
 use src\Repository\RpgOriginAbility;
@@ -37,14 +38,13 @@ final class RpgOriginService
         return $this->featRepository->find($origin->featId);
     }
 
-    // TODO modifier object en Domain\RpgTool quand il sera défini
     public function getTool(RpgOrigin $origin): ?object
     {
         if ($origin->toolId <= 0) {
             return null;
         }
 
-        return $this->toolRepository->find($origin->toolId);
+        return null;//$this->toolRepository->find($origin->toolId);
     }
 
     public function getSkills(RpgOrigin $origin): Collection

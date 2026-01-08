@@ -14,6 +14,7 @@ class Table
     public const ORIGINSKILL   = 'rpgOriginSkill';
     public const SKILL         = 'rpgSkill';
     public const SPECIES       = 'rpgSpecies';
+    public const TOOL          = 'rpgTool';
     public const TYPEDAMAGE    = 'rpgTypeDamage';
     public const WEAPON        = 'rpgWeapon';
     public const WPNCATEGORY   = 'rpgWeaponCategory';

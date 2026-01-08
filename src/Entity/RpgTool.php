@@ -11,15 +11,18 @@ class RpgTool extends Entity
     public const FIELDS = [
         Field::ID,
         Field::NAME,
+        Field::SLUG,
         Field::PARENTID,
     ];
 
     public const FIELD_TYPES = [
         Field::NAME => 'string',
+        Field::SLUG => 'string',
         Field::PARENTID => 'intPositive',
     ];
         
     protected string $name = '';
+    protected string $slug = '';
     protected int $parentId = 0;
 
     // TODO : à externaliser
