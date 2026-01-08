@@ -29,8 +29,7 @@ class MonsterPresenter
     // -----------------------
     public function getStrName(): string
     {
-    return 'wip';
-        //return $this->monster->frName ?: $this->monster->name;
+        return $this->monster->frName ?: $this->monster->name;
     }
 
     public function getStrType(): string
@@ -86,6 +85,7 @@ class MonsterPresenter
     public function getScore(string $carac): string
     {
         $score = $this->monster->getStats()->{"{$carac}Score"} ?? 0;
+        $score = $this->monster->{"{$carac}Score"} ?? 0;
         $mod = Utils::getModAbility($score);
         $bonus = $this->monster->getExtra('js'.$carac) ?: 0;
         $modWithBonus = Utils::getModAbility($score, $bonus);

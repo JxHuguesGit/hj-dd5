@@ -2,14 +2,14 @@
 namespace src\Page;
 
 use src\Constant\Template;
-use src\Presenter\RpgArmorTableBuilder;
+use src\Presenter\RpgSkillTableBuilder;
 use src\Renderer\TemplateRenderer;
 
-class PageArmorList
+class PageSkillList
 {
     public function __construct(
         private TemplateRenderer $renderer,
-        private RpgArmorTableBuilder $tableBuilder
+        private RpgSkillTableBuilder $tableBuilder
     ) {}
 
     public function render(string $menuHtml, array $viewData): string
@@ -23,8 +23,8 @@ class PageArmorList
 
     public function renderAdmin(array $viewData): string
     {
-        // Construire le tableau des origines
-        $tableHtml = $this->tableBuilder->build($viewData['items'], ['withMarginTop' => false]);
+        // Construire le tableau des compétences
+        $tableHtml = $this->tableBuilder->build($viewData['skills'], ['withMarginTop' => false]);
 
         // Section centrale (titre + tableau)
         return $this->renderer->render(

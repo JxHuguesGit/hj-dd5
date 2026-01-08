@@ -11,9 +11,9 @@ final class RpgSkillQueryService
         private RepositoryRpgSkill $skillRepository
     ) {}
     
-    public function getAllSkills(): Collection
+    public function getAllSkills(array $orderBy=[]): Collection
     {
-        return $this->skillRepository->findAll();
+        return $this->skillRepository->findAll($orderBy);
     }
     
     public function getSkill(int $id): ?DomainRpgSkill

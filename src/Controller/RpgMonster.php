@@ -265,18 +265,18 @@ class RpgMonster extends Utilities
         $objsActionsLegendaires = $presenter->getLegendaryActions();
 
         $attributes = [
-            '',//$presenter->getStrName(),
+            $presenter->getStrName(),
             '',//$presenter->getSizeTypeAndAlignement(),
             '',//$presenter->getStrExtra(Field::SCORECA),
             '',//$presenter->getStrInitiative(),
             '',//$presenter->getStrExtra(Field::SCOREHP),
             '',//$presenter->getStrVitesse(),
-            '',//$presenter->getStringScore('str'),
-            '',//$presenter->getStringScore('dex'),
-            '',//$presenter->getStringScore('con'),
-            '',//$presenter->getStringScore('int'),
-            '',//$presenter->getStringScore('wis'),
-            '',//$presenter->getStringScore('cha'),
+            $presenter->getScore('str'),
+            $presenter->getScore('dex'),
+            $presenter->getScore('con'),
+            $presenter->getScore('int'),
+            $presenter->getScore('wis'),
+            $presenter->getScore('cha'),
             '',//$this->getSkillsToCR(),
             // d-none si pas de Traits
             empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '',
@@ -370,46 +370,6 @@ class RpgMonster extends Utilities
         $content = implode(' ; ', $parts);
 
         return '<div class="col-12"><strong>' . $label . '</strong> ' . $content . '</div>';
-    }
-
-    private function getOldResistances(string $type, string $label, string $tag):string
-    {
-        $str = '';
-        //////////////////////////////////////////////////////////////
-        // Gestion des vulnérabilités, des résistances et des immunités du monstre
-        $objs = $this->rpgMonster->getResistances($type);
-        $resistances = $this->rpgMonster->getExtra($tag);
-        if (!$objs->isEmpty() || $resistances!='') {
-            $str .= '<div class="col-12"><strong>'.$label.'</strong> ';
-            $comma = false;
-            $objs->rewind();
-            $firstCond = true;
-            while ($objs->valid()) {
-                if ($comma) {
-                    $str .= ', ';
-                }
-                $obj = $objs->current();
-                
-                if ($obj instanceof EntityRpgMonsterResistance) {
-                    $objDmgOrCond = $obj->getTypeDamage();
-                } else {
-                    $objDmgOrCond = $obj->getCondition();
-                    if ($firstCond && $comma) {
-                        $str = substr($str, 0, -2).' ; ';
-                    }
-                    $firstCond = false;
-                }
-                $str .= $objDmgOrCond->getField(Field::NAME);
-                $comma = true;
-                $objs->next();
-            }
-            if ($resistances!='') {
-                $str .= ($comma ? ', ' : '').$resistances;
-            }
-            $str .= '</div>';
-        }
-        //////////////////////////////////////////////////////////////
-        return $str;
     }
 
     private function getSenses(): string

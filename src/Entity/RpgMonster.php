@@ -94,6 +94,14 @@ class RpgMonster extends Entity
         $this->defenses = new MonsterDefensesService($this->id);
     }
 
+    public function __get(string $field): mixed
+    {
+        if (property_exists($this, $field)) {
+            return $this->$field;
+        }
+        return null;
+    }
+
     // -----------------------
     // Factory
     // -----------------------

@@ -9,6 +9,7 @@ use src\Page\PageFeatsGeneral;
 use src\Page\PageFeatsOrigin;
 use src\Page\PageHome;
 use src\Page\PageOrigines;
+use src\Page\PageSkills;
 use src\Page\PageSpecies;
 
 class PageRegistry
@@ -63,6 +64,10 @@ class PageRegistry
         // Page Items (liste)
         $itemsPage = (new PageItems())->getPageElement();
         $this->register($itemsPage);
+
+        // Page Skills (liste)
+        $skillsPage = (new PageSkills())->getPageElement();
+        $this->register($skillsPage);
 
     }
     

@@ -17,12 +17,12 @@ use src\Repository\RpgWeapon as RepositoryRpgWeapon;
 use src\Service\RpgAbilityService;
 use src\Service\RpgAbilityQueryService;
 use src\Service\RpgArmorQueryService;
-use src\Service\RpgArmorService;
 use src\Service\RpgFeatService;
 use src\Service\RpgFeatQueryService;
 use src\Service\RpgOriginQueryService;
 use src\Service\RpgOriginService;
 use src\Service\RpgSkillQueryService;
+use src\Service\RpgSkillService;
 use src\Service\RpgSpeciesService;
 use src\Service\RpgSpeciesQueryService;
 use src\Service\RpgWeaponQueryService;
@@ -65,6 +65,18 @@ final class ServiceFactory
     {
         $repo = new RepositoryRpgWeapon($this->queryBuilder, $this->queryExecutor);
         return new RpgWeaponQueryService($repo);
+    }
+
+    public function getRpgSkillQueryService(): RpgSkillQueryService
+    {
+        $repo = new RpgSkill($this->queryBuilder, $this->queryExecutor);
+        return new RpgSkillQueryService($repo);
+    }
+
+    public function getRpgSkillService(): RpgSkillService
+    {
+        $repo = new RpgSkill($this->queryBuilder, $this->queryExecutor);
+        return new RpgSkillService($repo);
     }
 
 

@@ -4,9 +4,17 @@ namespace src\Controller;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
+use src\Page\PageArmorList;
+use src\Page\PageWeaponList;
+use src\Presenter\ArmorListPresenter;
+use src\Presenter\RpgArmorTableBuilder;
+use src\Presenter\RpgWeaponTableBuilder;
+use src\Presenter\WeaponListPresenter;
 use src\Repository\RpgArmor as RepositoryRpgArmor;
+use src\Repository\RpgWeapon as RepositoryRpgWeapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 
 class AdminCompendiumPage extends AdminPage
 {
@@ -18,20 +26,36 @@ class AdminCompendiumPage extends AdminPage
 
         switch ($currentId) {
             case Constant::ARMORS :
-                $queryBuilder  = new QueryBuilder();
-                $queryExecutor = new QueryExecutor();
-                $objDao = new RepositoryRpgArmor($queryBuilder, $queryExecutor);
-                $armors = $objDao->findAll([
+                $objDao = new RepositoryRpgArmor(new QueryBuilder(), new QueryExecutor());
+                $armors = $objDao->findAllWithItemAndType([], [
                     Field::ARMORTYPID=>Constant::CST_ASC,
                     Field::ARMORCLASS=>Constant::CST_ASC,
                     Field::GOLDPRICE=>Constant::CST_ASC
                 ]);
-                $objTable = RpgArmor::getTable($armors);
-                $pageContent = $objTable?->display();
+
+                $presenter = new ArmorListPresenter();
+                $pageContent = $presenter->present($armors);
+                $page = new PageArmorList(
+                    new TemplateRenderer(),
+                    new RpgArmorTableBuilder()
+                );
+                $pageContent = $page->renderAdmin($pageContent);
             break;
             case Constant::WEAPONS :
-                $objTable = RpgWeapon::getTable($this->arrParams);
-                $pageContent = $objTable?->display();
+                $objDao = new RepositoryRpgWeapon(new QueryBuilder(), new QueryExecutor());
+                $weapons = $objDao->findAllWithItemAndType([], [
+                    Field::WPNCATID=>Constant::CST_ASC,
+                    Field::WPNRANGEID=>Constant::CST_ASC,
+                    'i.name'=>Constant::CST_ASC,
+                ]);
+
+                $presenter = new WeaponListPresenter();
+                $pageContent = $presenter->present($weapons);
+                $page = new PageWeaponList(
+                    new TemplateRenderer(),
+                    new RpgWeaponTableBuilder()
+                );
+                $pageContent = $page->renderAdmin($pageContent);
             break;
             case Constant::SKILLS :
                 $objTable = RpgSkill::getTable($this->arrParams);
