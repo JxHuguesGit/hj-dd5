@@ -20,7 +20,7 @@ class PublicHome extends PublicBase
     /**
      * Contenu de la page
      */
-    public function getContentPage(string $err = ''): string
+    public function getContentPage(): string
     {
         $registry = PageRegistry::getInstance();
         

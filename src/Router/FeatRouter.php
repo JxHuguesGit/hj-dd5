@@ -28,7 +28,6 @@ class FeatRouter
         if (preg_match('#^feat-(.+)$#', $path, $matches)) {
             return new PublicFeat(
                 $matches[1],
-                $factory->getRpgFeatService(),
                 $factory->getRpgFeatQueryService(),
                 new FeatDetailPresenter(),
                 new PageFeat(new TemplateRenderer()),

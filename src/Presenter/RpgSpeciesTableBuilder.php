@@ -3,22 +3,12 @@ namespace src\Presenter;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
-use src\Constant\Field;
 use src\Constant\Language;
-use src\Domain\RpgSpecies as DomainRpgSpecies;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\RpgSpecies as RepositoryRpgSpecies;
-use src\Service\RpgSpeciesService;
 use src\Utils\Html;
 use src\Utils\Table;
 
 class RpgSpeciesTableBuilder
 {
-    public function __construct(
-        private RpgSpeciesService $speciesService
-    ) {}
-    
     public function build(iterable $species, array $params = []): Table
     {
         $objTable = new Table();

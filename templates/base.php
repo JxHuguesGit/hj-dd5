@@ -1,18 +1,8 @@
 <?php
 
-use src\Constant\Constant;
 use src\Constant\Template;
-use src\Controller\Hero;
-use src\Controller\HomePage;
-use src\Controller\PublicBase;
-use src\Controller\PublicHome;
-use src\Controller\Utilities;
-use src\Model\PageElement;
 use src\Model\PageRegistry;
-use src\Page\PageHome;
-use src\Page\PageOrigines;
 use src\Router\Router;
-use src\Utils\Session;
 
 if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
     define('DD5_URL', 'http://localhost/');
@@ -27,7 +17,7 @@ class DD5Base
 {
     public static function display(): void
     {
-        $registry = PageRegistry::getInstance();
+        PageRegistry::getInstance();
 
         $msgProcessError = '';
         $errorPanel = '';

@@ -2,25 +2,9 @@
 namespace src\Controller;
 
 use src\Domain\RpgFeat;
-
-
-use src\Constant\Constant;
-use src\Constant\Field;
-use src\Constant\Template;
-use src\Entity\Entity;
-use src\Entity\RpgFeat as EntityRpgFeat;
-use src\Exception\NotFoundException;
-use src\Factory\RepositoryFactory;
-use src\Model\PageElement;
-use src\Model\PageRegistry;
 use src\Page\PageFeat;
-use src\Presenter\BreadcrumbPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\FeatDetailPresenter;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\RpgFeat as RepositoryRpgFeat;
-use src\Service\RpgFeatService;
 use src\Service\RpgFeatQueryService;
 
 class PublicFeat extends PublicBase
@@ -29,7 +13,6 @@ class PublicFeat extends PublicBase
 
     public function __construct(
         private string $slug,
-        private RpgFeatService $featService,
         private RpgFeatQueryService $featQueryService,
         private FeatDetailPresenter $presenter,
         private PageFeat $page,

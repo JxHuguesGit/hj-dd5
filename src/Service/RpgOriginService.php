@@ -4,9 +4,7 @@ namespace src\Service;
 use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\RpgOrigin;
-use src\Domain\RpgTool as DomainRpgTool;
 use src\Repository\RpgFeat;
-use src\Repository\RpgTool;
 use src\Repository\RpgOriginAbility;
 use src\Repository\RpgOriginSkill;
 use src\Service\RpgAbilityQueryService;
@@ -21,7 +19,6 @@ final class RpgOriginService
     
     public function __construct(
         private RpgFeat $featRepository,
-        private RpgTool $toolRepository,
         private RpgOriginSkill $originSkillRepository,
         private RpgOriginAbility $originAbilityRepository,
         private RpgSkillQueryService $skillQueryService,
@@ -53,7 +50,6 @@ final class RpgOriginService
             Field::ORIGINID => $origin->id
         ]);
 
-        $abilities = [];
         $collection = new Collection();
 
         foreach ($originSkills as $originSkill) {

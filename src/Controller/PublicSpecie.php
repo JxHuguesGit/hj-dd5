@@ -6,7 +6,6 @@ use src\Page\PageSpecie;
 use src\Presenter\MenuPresenter;
 use src\Service\RpgSpeciesQueryService;
 use src\Presenter\SpeciesDetailPresenter;
-use src\Service\RpgSpeciesService;
 
 class PublicSpecie extends PublicBase
 {
@@ -14,7 +13,6 @@ class PublicSpecie extends PublicBase
 
     public function __construct(
         private string $slug,
-        private RpgSpeciesService $speciesService,
         private RpgSpeciesQueryService $speciesQueryService,
         private SpeciesDetailPresenter $presenter,
         private PageSpecie $page,

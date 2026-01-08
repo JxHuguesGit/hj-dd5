@@ -12,7 +12,6 @@ use src\Repository\RpgFeatType as RepositoryRpgFeatType;
 
 class PublicFeats extends PublicBase
 {
-    private array $feats = [];
     private Collection $subTypes;
 
     public function __construct()

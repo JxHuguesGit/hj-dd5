@@ -96,7 +96,6 @@ final class ServiceFactory
     public function getRpgOriginService(): RpgOriginService
     {
         $featRepo     = new RpgFeat($this->queryBuilder, $this->queryExecutor);
-        $toolRepo     = new RpgTool($this->queryBuilder, $this->queryExecutor);
         $originSkillRepo    = new RpgOriginSkill($this->queryBuilder, $this->queryExecutor);
         $originAbilityRepo  = new RpgOriginAbility($this->queryBuilder, $this->queryExecutor);
         
@@ -105,7 +104,7 @@ final class ServiceFactory
         $abilityRepo  = new RpgAbility($this->queryBuilder, $this->queryExecutor);
         $abilityQueryService = new RpgAbilityQueryService($abilityRepo);
         
-        return new RpgOriginService($featRepo, $toolRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
+        return new RpgOriginService($featRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
     }
     
     public function getRpgSpeciesService(): RpgSpeciesService

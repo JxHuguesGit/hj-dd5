@@ -22,7 +22,6 @@ class SpecieRouter
 
         return new PublicSpecie(
             $matches[1] ?? '',
-            $factory->getRpgSpeciesService(),
             $factory->getRpgSpeciesQueryService(),
             new SpeciesDetailPresenter(),
             new PageSpecie(new TemplateRenderer()),

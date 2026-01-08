@@ -62,7 +62,6 @@ class RpgOrigin extends Utilities
             $parts = [];
             $originService = new RpgOriginService(
                 new RepositoryRpgFeat(new QueryBuilder(), new QueryExecutor()),
-                new RepositoryRpgTool(new QueryBuilder(), new QueryExecutor()),
                 new RepositoryRpgOriginSkill(new QueryBuilder(), new QueryExecutor()),
                 new RepositoryRpgOriginAbility(new QueryBuilder(), new QueryExecutor()),
                 new RpgSkillQueryService(new RepositoryRpgSkill(new QueryBuilder(), new QueryExecutor())),
