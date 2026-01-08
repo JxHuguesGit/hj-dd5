@@ -9,6 +9,7 @@ use src\Domain\RpgWeapon as DomainRpgWeapon;
 
 class RpgWeapon extends Repository
 {
+    public const INNERJOIN = 'INNER JOIN ';
     public const TABLE = Table::WEAPON;
 
     public function getEntityClass(): string
@@ -29,13 +30,13 @@ class RpgWeapon extends Repository
                 , ".Field::DICECOUNT.", ".Field::DICEFACES."
                 , td.".Field::NAME." AS ".Field::TYPDMGNAME."
                 , r.".Field::SLUG." AS ".Field::RANGESLUG.", r.".Field::NAME." AS ".Field::RANGENAME."
-            FROM " . Table::WEAPON . " a
-            INNER JOIN " . Table::ITEM . " i ON i.id = a.id
-            INNER JOIN " . Table::WPNCATEGORY . " c ON c.id = a.".Field::WPNCATID."
-            INNER JOIN " . Table::MSTPROFCY . " p ON p.id = a.".Field::MSTPROFID."
-            INNER JOIN " . Table::DMGDIE . " d ON d.id = a.".Field::DMGDIEID."
-            INNER JOIN " . Table::TYPEDAMAGE . " td ON td.id = a.".Field::TYPEDMGID."
-            INNER JOIN " . Table::WPNRANGE . " r ON r.id = a.".Field::WPNRANGEID."
+            FROM " . Table::WEAPON . " a ".
+            self::INNERJOIN . Table::ITEM . " i ON i.id = a.id " .
+            self::INNERJOIN . Table::WPNCATEGORY . " c ON c.id = a.".Field::WPNCATID." " .
+            self::INNERJOIN . Table::MSTPROFCY . " p ON p.id = a.".Field::MSTPROFID." " .
+            self::INNERJOIN . Table::DMGDIE . " d ON d.id = a.".Field::DMGDIEID." " .
+            self::INNERJOIN . Table::TYPEDAMAGE . " td ON td.id = a.".Field::TYPEDMGID." " .
+            self::INNERJOIN . Table::WPNRANGE . " r ON r.id = a.".Field::WPNRANGEID."
         ";
 
         $this->query = $this->queryBuilder->reset()

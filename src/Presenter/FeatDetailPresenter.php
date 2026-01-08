@@ -18,10 +18,10 @@ class FeatDetailPresenter
 
         switch ($feat->featTypeId) {
             case 1:
-                $featType = 'Don d\'origines';
+                $featType = '<a href="/feats-origin" class="text-black">Don d\'origines</a>';
                 break;
             case 2:
-                $featType = 'Don général (prérequis : niveau 4 ou supérieur';
+                $featType = '<a href="/feats-general" class="text-black">Don général</a> (prérequis : niveau 4 ou supérieur';
                 $strPreRequis = get_field('prerequis', $wpPost->ID);
                 if ($strPreRequis) {
                     $featType .= ', ' . $strPreRequis;
@@ -29,10 +29,10 @@ class FeatDetailPresenter
                 $featType .= ')';
                 break;
             case 3:
-                $featType = 'Don de Style de combat (prérequis : aptitude Style de combat)';
+                $featType = '<a href="/feats-combat" class="text-black">Don de Style de combat</a> (prérequis : aptitude Style de combat)';
                 break;
             case 4:
-                $featType = 'Don de faveur épique (prérequis : niveau 19 ou supérieur';
+                $featType = '<a href="/feats-epic" class="text-black">Don de faveur épique</a> (prérequis : niveau 19 ou supérieur';
                 $strPreRequis = get_field('prerequis', $wpPost->ID);
                 if ($strPreRequis) {
                     $featType .= ', ' . $strPreRequis;

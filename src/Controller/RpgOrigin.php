@@ -8,7 +8,17 @@ use src\Constant\Language;
 use src\Entity\RpgOrigin as EntityRpgOrigin;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Repository\RpgAbility as RepositoryRpgAbility;
+use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgOrigin as RepositoryRpgOrigin;
+use src\Repository\RpgOriginAbility as RepositoryRpgOriginAbility;
+use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
+use src\Repository\RpgSkill as RepositoryRpgSkill;
+use src\Repository\RpgTool as RepositoryRpgTool;
+use src\Service\RpgAbilityQueryService;
+use src\Service\RpgOriginQueryService;
+use src\Service\RpgOriginService;
+use src\Service\RpgSkillQueryService;
 use src\Utils\Table;
 
 class RpgOrigin extends Utilities
@@ -23,7 +33,11 @@ class RpgOrigin extends Utilities
 
     public static function getAdminContentPage(array $params): string
     {
-        $objTable = static::getTable($params);
+        $originQueryService = new RpgOriginQueryService(
+            new RepositoryRpgOrigin(new QueryBuilder(), new QueryExecutor())
+        );
+        $origins = $originQueryService->getAllOrigins([Field::NAME=>Constant::CST_ASC]);
+        $objTable = static::getTable($origins, $params);
         return $objTable?->display();
     }
 
@@ -38,15 +52,43 @@ class RpgOrigin extends Utilities
             ->addHeaderCell([Constant::CST_CONTENT => Language::LG_ORIGIN_FEAT])
             ->addHeaderCell([Constant::CST_CONTENT => Language::LG_SKILLS])
             ->addHeaderCell([Constant::CST_CONTENT => Language::LG_TOOLS]);
-        
+
         foreach ($origins as $origin) {
             /////////////////////////////////////////////////////////////////////
             // Le nom
             $strName = $origin->name;
-            $strAbilities = '';
-            $strOriginFeat = '';
-            $strSkills = '';
-            $strTool = $origin->getTool()?->name ?? '';
+
+            // La liste des caractéristiques
+            $parts = [];
+            $originService = new RpgOriginService(
+                new RepositoryRpgFeat(new QueryBuilder(), new QueryExecutor()),
+                new RepositoryRpgTool(new QueryBuilder(), new QueryExecutor()),
+                new RepositoryRpgOriginSkill(new QueryBuilder(), new QueryExecutor()),
+                new RepositoryRpgOriginAbility(new QueryBuilder(), new QueryExecutor()),
+                new RpgSkillQueryService(new RepositoryRpgSkill(new QueryBuilder(), new QueryExecutor())),
+                new RpgAbilityQueryService(new RepositoryRpgAbility(new QueryBuilder(), new QueryExecutor())),
+            );
+            $abilities = $originService->getAbilities($origin);
+            foreach ($abilities as $ability) {
+                $parts[] = $ability->name;
+            }
+            $strAbilities = implode(', ', $parts);
+
+            // Le don d'origine rattaché
+            $feat = $originService->getFeat($origin);
+            $strOriginFeat = $feat?->name ?? '-';
+
+            // La liste des compétences
+            $parts = [];
+            $skills = $originService->getSkills($origin);
+            foreach ($skills as $skill) {
+                $skillUrl = $skill->name;
+                $parts[] = $skillUrl;
+            }
+            $strSkills = implode(', ', $parts);
+
+            //$origin->getTool()?->name ?? '';
+            $strTool = '';
         
         
             $objTable->addBodyRow([])
@@ -56,42 +98,7 @@ class RpgOrigin extends Utilities
                 ->addBodyCell([Constant::CST_CONTENT => $strSkills])
                 ->addBodyCell([Constant::CST_CONTENT => $strTool]);
         }
-        return $objTable;
 
-
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgOrigin($queryBuilder, $queryExecutor);
-        $sortAttributes = [Field::NAME=>Constant::CST_ASC];
-        $rpgFeats = $objDao->findAll($sortAttributes);
-        $curPage      = $params[Constant::CST_CURPAGE] ?? 1;
-        $nbPerPage    = $params[Constant::PAGE_NBPERPAGE] ?? 10;
-        $refElementId = $params['refElementId'] ?? ($curPage-1)*$nbPerPage+1;
-        
-        if (($curPage-1)*$nbPerPage>$refElementId || $curPage*$nbPerPage<$refElementId) {
-            $curPage = floor(($refElementId-1)/$nbPerPage)+1;
-        }
-        
-        $paginate = [
-            Constant::PAGE_OBJS      => $rpgFeats,
-            Constant::CST_CURPAGE    => $curPage ?? 1,
-            Constant::PAGE_NBPERPAGE => $nbPerPage
-        ];
-        $refElementId = ($curPage-1)*$nbPerPage + 1;
-        $objTable->setTable([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_SM, Bootstrap::CSS_TABLE_STRIPED, Bootstrap::CSS_MT5])])
-            ->setPaginate($paginate)
-            ->addHeader([Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
-            ->setNbPerPage($refElementId, $nbPerPage)
-            ->addHeaderRow()
-            ->addHeaderCell([Constant::CST_CONTENT=>Language::LG_ORIGINS])
-            ->addHeaderCell([Constant::CST_CONTENT=>'Caractéristiques'])
-            ->addHeaderCell([Constant::CST_CONTENT=>"Don d'origine"])
-            ->addHeaderCell([Constant::CST_CONTENT=>'Compétences'])
-            ->addHeaderCell([Constant::CST_CONTENT=>'Outils']);
-        
-        if ($rpgFeats->valid()) {
-            $objTable->addBodyRows($rpgFeats, 5);
-        }
         return $objTable;
     }
 

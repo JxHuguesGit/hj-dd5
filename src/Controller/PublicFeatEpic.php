@@ -45,7 +45,7 @@ class PublicFeatEpic extends PublicBase
         foreach ($this->feats as $feat) {
             $data[] = [
                 'url' => '/feat-'.$feat->getSlug(),
-                'title' => $feat->getName(),
+                'title' => $feat->name,
                 'description' => '',//$feat->getExcerpt(),
                 'icon' => '',//$feat->getIcon(),
                 'image' => '',//$feat->getImage(),

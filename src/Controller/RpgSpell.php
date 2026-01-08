@@ -61,23 +61,36 @@ class RpgSpell extends Utilities
         return $objTable?->display();
     }
     
-    public function getFilter(array $params): string
+    private function buildClassOptions(array $selectedClasses): string
     {
-        // Liste des options de classes.
-        $classOptions = '';
+        $options = '';
         foreach (ClassEnum::cases() as $case) {
             if (in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])) {
                 continue;
             }
             $value = $case->value;
-            $classOptions .= '<option value="'.$value.'"'.(in_array($value, $params['classFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
+            $options .= '<option value="'.$value.'"'.(in_array($value, $selectedClasses) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
         }
+        return $options;
+    }
+
+    private function buildMagicSchoolOptions(array $selectedSchools): string
+    {
+        $options = '';
+        foreach (MagicSchoolEnum::cases() as $case) {
+            $value = $case->value;
+            $options .= '<option value="'.$value.'"'.(in_array($value, $selectedSchools) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
+        }
+        return $options;
+    }
+
+    public function getFilter(array $params): string
+    {
+        // Liste des options de classes.
+        $classOptions = $this->buildClassOptions($params['classFilter']);
 
         // Liste des options d'écoles
-        $schoolOptions = '';
-        foreach (MagicSchoolEnum::cases() as $case) {
-            $schoolOptions .= '<option value="'.$case->value.'"'.(in_array($case->value, $params['schoolFilter']) ? ' '.Constant::CST_SELECTED : '').'>'.ucfirst($case->label()).'</option>';
-        }
+        $schoolOptions = $this->buildMagicSchoolOptions($params['schoolFilter']);
         
         // Liste des niveaux
         $minOptions = '';

@@ -43,13 +43,9 @@ class PublicFeatCombat extends PublicBase
         
         $data = [];
         foreach ($this->feats as $feat) {
-            $wpPost = $feat->getWpPost();
-            if (!$wpPost) {
-                continue;
-            }
             $data[] = [
                 'url' => '/feat-'.$feat->getSlug(),
-                'title' => $feat->getName(),
+                'title' => $feat->name,
                 'description' => '',//$feat->getExcerpt(),
                 'icon' => '',//$feat->getIcon(),
                 'image' => '',//$feat->getImage(),

@@ -131,8 +131,8 @@ class Table
             foreach ($this->body['rows'] as $row) {
                 $rowContent = '';
                 foreach ($row['cells'] as $cell) {
-                    $cellContent = $cell[Constant::CST_CONTENT];
-                    $cellType = $cell[Constant::CST_TYPE];
+                    $cellContent = $cell[Constant::CST_CONTENT] ?? '';
+                    $cellType = $cell[Constant::CST_TYPE] ?? '';
                     $cellAttributes = $cell['attributes'];
                     $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }

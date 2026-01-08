@@ -285,7 +285,7 @@ class RpgMonster extends Utilities
             // d-none si pas d'Actions
             empty($objsActions) ? ' '.Bootstrap::CSS_DNONE : '',
              // Liste des actions
-            $this->getSpecialAbilitiesList($objsActions),
+            '',//$this->getSpecialAbilitiesList($objsActions),
             // d-none si pas de Bonus actions
             empty($objsBonusActions) ? ' '.Bootstrap::CSS_DNONE : '',
             //$this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
@@ -332,7 +332,47 @@ class RpgMonster extends Utilities
         return $str;
     }
 
-    private function getResistances(string $type, string $label, string $tag):string
+    private function getResistances(string $type, string $label, string $tag): string
+    {
+        $objs = $this->rpgMonster->getResistances($type);
+        $extra = $this->rpgMonster->getExtra($tag);
+
+        if ($objs->isEmpty() && $extra === '') {
+            return '';
+        }
+
+        $damageTypes = [];
+        $conditions  = [];
+
+        foreach ($objs as $obj) {
+            if ($obj instanceof EntityRpgMonsterResistance) {
+                $damageTypes[] = $obj->getTypeDamage()->getField(Field::NAME);
+            } else {
+                $conditions[] = $obj->getCondition()->getField(Field::NAME);
+            }
+        }
+
+        $parts = [];
+
+        if (!empty($damageTypes)) {
+            $parts[] = implode(', ', $damageTypes);
+        }
+
+        if (!empty($conditions)) {
+            $parts[] = implode(', ', $conditions);
+        }
+
+        if ($extra !== '') {
+            $parts[] = $extra;
+        }
+
+        // Types de dégâts et conditions séparés par un point-virgule
+        $content = implode(' ; ', $parts);
+
+        return '<div class="col-12"><strong>' . $label . '</strong> ' . $content . '</div>';
+    }
+
+    private function getOldResistances(string $type, string $label, string $tag):string
     {
         $str = '';
         //////////////////////////////////////////////////////////////
