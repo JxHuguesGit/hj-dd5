@@ -4,18 +4,19 @@ namespace src\Service;
 use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\RpgOrigin;
+use src\Domain\Skill as DomainSkill;
 use src\Repository\RpgFeat;
 use src\Repository\RpgOriginAbility;
 use src\Repository\RpgOriginSkill;
 use src\Repository\Tool as RepositoryTool;
 use src\Service\RpgAbilityQueryService;
-use src\Service\RpgSkillQueryService;
+use src\Service\Skill\SkillReader;
 
 final class RpgOriginService
 {
     /** @var array<int, RpgAbility> */
     private array $abilityCache = [];
-    /** @var array<int, RpgSkill> */
+    /** @var array<int, DomainSkill> */
     private array $skillCache = [];
     
     public function __construct(
@@ -23,7 +24,7 @@ final class RpgOriginService
         private RepositoryTool $toolRepository,
         private RpgOriginSkill $originSkillRepository,
         private RpgOriginAbility $originAbilityRepository,
-        private RpgSkillQueryService $skillQueryService,
+        private SkillReader $skillQueryService,
         private RpgAbilityQueryService $abilityQueryService,
     ) {}
     

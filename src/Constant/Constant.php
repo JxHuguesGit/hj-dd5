@@ -16,6 +16,7 @@ class Constant
     
     public const ARMORS   = 'armors';
     public const WEAPONS  = 'weapons';
+    public const SPECIES  = 'species';
     public const SKILLS   = 'skills';
     public const FEATS    = 'feats';
     public const MONSTERS = 'monsters';
@@ -42,6 +43,10 @@ class Constant
     public const CST_NEXT       = 'next';
     public const CST_PREV       = 'prev';
     public const CST_SLUG       = 'slug';
+    public const CST_MARTIAL    = 'martial';
+    public const CST_SIMPLE     = 'simple';
+    public const CST_MELEE      = 'melee';
+    public const CST_RANGED     = 'ranged';
 
     public const CST_ABILITIES   = 'abilities';
     public const CST_SKILLS      = 'skills';
@@ -56,6 +61,9 @@ class Constant
     public const CST_TYPELABEL   = 'typeLabel';
     public const CST_EQUIPMENT   = 'equipement';
     public const CST_DESCRIPTION = 'description';
+    public const CST_CREATURE_TYPE = 'creatureType';
+    public const CST_SIZE_CATEGORY = 'categorie_de_taille';
+    public const CST_SPEED        = 'vitesse';
 
     public const CST_EMPTY_SPAN = '<span></span>';
     

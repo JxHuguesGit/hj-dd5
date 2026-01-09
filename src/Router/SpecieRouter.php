@@ -1,6 +1,7 @@
 <?php
 namespace src\Router;
 
+use src\Constant\Constant;
 use src\Controller\PublicBase;
 use src\Controller\PublicSpecie;
 use src\Factory\ServiceFactory;
@@ -22,10 +23,10 @@ class SpecieRouter
 
         return new PublicSpecie(
             $matches[1] ?? '',
-            $factory->getRpgSpeciesQueryService(),
+            $factory->getSpecieReader(),
             new SpeciesDetailPresenter(),
             new PageSpecie(new TemplateRenderer()),
-            new MenuPresenter(PageRegistry::getInstance()->all(), 'species'),
+            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES),
         );
     }
 }

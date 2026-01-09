@@ -3,6 +3,8 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Language;
+use src\Domain\Weapon as DomainWeapon;
 use src\Utils\Table;
 use src\Utils\Utils;
 
@@ -10,7 +12,7 @@ class WeaponTableBuilder implements TableBuilderInterface
 {
     public function build(iterable $groups, array $params=[]): Table
     {
-        $withMarginTop = $params['withMarginTop'] ?? true;
+        $withMarginTop = $params[Bootstrap::CSS_WITH_MRGNTOP] ?? true;
     
         $table = new Table();
         $table->setTable([Constant::CST_CLASS => implode(' ', [
@@ -20,30 +22,30 @@ class WeaponTableBuilder implements TableBuilderInterface
             ])])
             ->addHeader([Constant::CST_CLASS => Bootstrap::CSS_TABLE_DARK])
             ->addHeaderRow()
-            ->addHeaderCell(['content' => 'Arme'])
-            ->addHeaderCell(['content' => 'Dégâts'])
-            ->addHeaderCell(['content' => 'Propriétés'])
-            ->addHeaderCell(['content' => 'Botte'])
-            ->addHeaderCell(['content' => 'Poids'])
-            ->addHeaderCell(['content' => 'Prix']);
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_WEAPONS])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_DAMAGES])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_PROPERTIES])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_WEAPON_PROP])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_WEIGHT])
+            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_PRICE]);
 
         foreach ($groups as $group) {
-            if (empty($group['weapons'])) {
+            if (empty($group[Constant::WEAPONS])) {
                 continue;
             }
 
             // Ligne de séparation
-            $table->addBodyRow([Constant::CST_CLASS => 'row-dark-striped'])
+            $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
                 ->addBodyCell([
-                    Constant::CST_CONTENT => $group['label'],
+                    Constant::CST_CONTENT => $group[Constant::CST_TYPELABEL],
                     Constant::CST_ATTRIBUTES => [
-                        'colspan' => 6,
+                        Constant::CST_COLSPAN => 6,
                         Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC
                     ]
                 ]);
 
-            foreach ($group['weapons'] as $weapon) {
-                /** @var Weapon $weapon */
+            foreach ($group[Constant::WEAPONS] as $weapon) {
+                /** @var DomainWeapon $weapon */
 
                 // Dégâts
                 $strDegats = $weapon->getDamageDie();
@@ -62,17 +64,17 @@ class WeaponTableBuilder implements TableBuilderInterface
                 $mastery = $weapon->masteryName;
 
                 $table->addBodyRow([])
-                    ->addBodyCell(['content' => $weapon->name])
-                    ->addBodyCell(['content' => $strDegats])
-                    ->addBodyCell(['content' => $strProps])
-                    ->addBodyCell(['content' => $mastery])
+                    ->addBodyCell([Constant::CST_CONTENT => $weapon->name])
+                    ->addBodyCell([Constant::CST_CONTENT => $strDegats])
+                    ->addBodyCell([Constant::CST_CONTENT => $strProps])
+                    ->addBodyCell([Constant::CST_CONTENT => $mastery])
                     ->addBodyCell([
-                        'content' => Utils::getStrWeight($weapon->weight),
-                        'attributes' => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
+                        Constant::CST_CONTENT => Utils::getStrWeight($weapon->weight),
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
                     ])
                     ->addBodyCell([
-                        'content' => Utils::getStrPrice($weapon->goldPrice),
-                        'attributes' => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
+                        Constant::CST_CONTENT => Utils::getStrPrice($weapon->goldPrice),
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
                     ]);
             }
         }

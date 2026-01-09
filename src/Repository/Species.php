@@ -2,14 +2,14 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\RpgSpecies as DomainRpgSpecies;
+use src\Domain\Specie as DomainSpecies;
 
-class RpgSpecies extends Repository
+class Species extends Repository
 {
     public const TABLE = Table::SPECIES;
     
     public function getEntityClass(): string
     {
-        return DomainRpgSpecies::class;
+        return DomainSpecies::class;
     }
 }

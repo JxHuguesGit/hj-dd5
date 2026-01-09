@@ -7,14 +7,13 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageOriginList;
-use src\Page\PageSkillList;
-use src\Page\PageSpeciesList;
+use src\Page\PageList;
 use src\Presenter\OriginListPresenter;
 use src\Presenter\RpgOriginTableBuilder;
-use src\Presenter\RpgSkillTableBuilder;
-use src\Presenter\RpgSpeciesTableBuilder;
-use src\Presenter\SkillListPresenter;
-use src\Presenter\SpeciesListPresenter;
+use src\Presenter\ListPresenter\SkillListPresenter;
+use src\Presenter\ListPresenter\SpeciesListPresenter;
+use src\Presenter\TableBuilder\SkillTableBuilder;
+use src\Presenter\TableBuilder\SpeciesTableBuilder;
 
 class RegistryRouter
 {
@@ -40,20 +39,20 @@ class RegistryRouter
                         new MenuPresenter(PageRegistry::getInstance()->all(), 'origines')
                     ),
                     'species' => new $controllerClass(
-                        $factory->getRpgSpeciesQueryService(),
+                        $factory->getSpecieReader(),
                         new SpeciesListPresenter(),
-                        new PageSpeciesList(
+                        new PageList(
                             new TemplateRenderer(),
-                            new RpgSpeciesTableBuilder($factory->getRpgSpeciesService())
+                            new SpeciesTableBuilder()
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), 'species')
                     ),
                     'skills' => new $controllerClass(
-                        $factory->getRpgSkillQueryService(),
+                        $factory->getSkillReader(),
                         new SkillListPresenter(),
-                        new PageSkillList(
+                        new PageList(
                             new TemplateRenderer(),
-                            new RpgSkillTableBuilder($factory->getRpgSkillService())
+                            new SkillTableBuilder()
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), 'skills')
                     ),

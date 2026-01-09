@@ -2,14 +2,14 @@
 namespace src\Presenter;
 
 use src\Collection\Collection;
-use src\Domain\RpgSpecies;
+use src\Domain\Specie as DomainSpecies;
 
 class SpeciesDetailPresenter
 {
     public function present(
-        RpgSpecies $species,
-        ?RpgSpecies $prev,
-        ?RpgSpecies $next,
+        DomainSpecies $species,
+        ?DomainSpecies $prev,
+        ?DomainSpecies $next,
     ): array {
         $wpPost = get_post($species->postId);
         $strContent = $wpPost->post_content;

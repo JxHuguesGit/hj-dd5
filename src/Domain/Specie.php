@@ -11,7 +11,7 @@ use src\Utils\Utils;
  * @property int $parentId
  * @property int $postId
  */
-final class RpgSpecies extends Entity
+final class Specie extends Entity
 {
     public const FIELDS = [
         Field::ID,

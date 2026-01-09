@@ -1,7 +1,8 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
+use src\Constant\Constant;
 
 class SpeciesListPresenter
 {
@@ -11,7 +12,7 @@ class SpeciesListPresenter
     public function present(Collection $species): array
     {
         return [
-            'species' => $species
+            Constant::CST_ITEMS => $species
         ];
     }
 }

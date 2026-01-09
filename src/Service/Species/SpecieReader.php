@@ -1,36 +1,36 @@
 <?php
-namespace src\Service;
+namespace src\Service\Species;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\RpgSpecies as DomainRpgSpecies;
+use src\Domain\Specie as DomainSpecie;
 use src\Exception\NotFoundException;
-use src\Repository\RpgSpecies as RepositoryRpgSpecies;
+use src\Repository\Species as RepositorySpecies;
 
-final class RpgSpeciesQueryService
+final class SpecieReader
 {
     public function __construct(
-        private RepositoryRpgSpecies $speciesRepository,
+        private RepositorySpecies $speciesRepository,
     ) {}
 
-    public function getSpecies(int $id): ?DomainRpgSpecies
+    public function getSpecies(int $id): ?DomainSpecie
     {
         return $this->speciesRepository->find($id);
     }
-    
-    public function getAllSpecies(array $order=[Field::NAME=>'ASC']): Collection
+
+    public function getAllSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->speciesRepository->findAll($order);
     }
 
-    public function getSpeciesBySlug(string $slug): ?DomainRpgSpecies
+    public function getSpeciesBySlug(string $slug): ?DomainSpecie
     {
         $feat = $this->speciesRepository->findBy([Field::SLUG=>$slug]);
         return $feat?->first() ?? null;
     }
 
-    public function getSpeciesBySlugOrFail(string $slug): ?DomainRpgSpecies
+    public function getSpeciesBySlugOrFail(string $slug): ?DomainSpecie
     {
         $species = $this->getSpeciesBySlug($slug);
         if (!$species) {
@@ -39,12 +39,12 @@ final class RpgSpeciesQueryService
         return $species;
     }
 
-    public function getSpeciesByParent(int $parentId, array $order=[Field::NAME=>'ASC']): Collection
+    public function getSpeciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->speciesRepository->findBy([Field::PARENTID=>$parentId], $order);
     }
 
-    public function getPreviousAndNext(DomainRpgSpecies $species): array
+    public function getPreviousAndNext(DomainSpecie $species): array
     {
         // Don précédent (ordre alphabétique)
         $prev = $this->speciesRepository->findByComplex(

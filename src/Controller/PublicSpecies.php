@@ -4,24 +4,19 @@ namespace src\Controller;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Template;
-use src\Factory\RepositoryFactory;
-use src\Model\PageRegistry;
-use src\Page\PageSpeciesList;
+use src\Page\PageList;
 use src\Presenter\MenuPresenter;
-use src\Presenter\SpeciesCardPresenter;
-use src\Presenter\SpeciesListPresenter;
-use src\Repository\RpgSpecies as RepositoryRpgSpecies;
-use src\Service\RpgSpeciesQueryService;
+use src\Presenter\ListPresenter\SpeciesListPresenter;
+use src\Service\Species\SpecieReader;
 
 class PublicSpecies extends PublicBase
 {
     private ?Collection $species = null;
 
     public function __construct(
-        private RpgSpeciesQueryService $speciesQueryService,
+        private SpecieReader $speciesQueryService,
         private SpeciesListPresenter $presenter,
-        private PageSpeciesList $page,
+        private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
         $this->species = $this->speciesQueryService->getSpeciesByParent(0, [Field::NAME=>Constant::CST_ASC]);
@@ -35,9 +30,9 @@ class PublicSpecies extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render('species');
+        $menu = $this->menuPresenter->render(Constant::SPECIES);
         $viewData = $this->presenter->present($this->species);
-        $viewData['title'] = $this->getTitle();
+        $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }

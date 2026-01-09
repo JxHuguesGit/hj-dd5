@@ -1,19 +1,19 @@
 <?php
 namespace src\Controller;
 
-use src\Domain\RpgSpecies;
+use src\Domain\Specie as DomainSpecies;
 use src\Page\PageSpecie;
 use src\Presenter\MenuPresenter;
-use src\Service\RpgSpeciesQueryService;
+use src\Service\Species\SpecieReader;
 use src\Presenter\SpeciesDetailPresenter;
 
 class PublicSpecie extends PublicBase
 {
-    private ?RpgSpecies $species;
+    private ?DomainSpecies $species;
 
     public function __construct(
         private string $slug,
-        private RpgSpeciesQueryService $speciesQueryService,
+        private SpecieReader $speciesQueryService,
         private SpeciesDetailPresenter $presenter,
         private PageSpecie $page,
         private MenuPresenter $menuPresenter,

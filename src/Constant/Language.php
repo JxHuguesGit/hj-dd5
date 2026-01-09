@@ -28,6 +28,7 @@ class Language
     public const LG_CA_LONG         = 'Classe d\'armure (CA)';
     public const LG_CA              = 'CA';
     public const LG_SKILLS          = 'Compétences';
+    public const LG_SKILLS_TITLE    = 'Les Compétences';
     public const LG_DAMAGES         = 'Dégâts';
     public const LG_DISADVANTAGE    = 'Désavantage';
     public const LG_STEALTH         = 'Discrétion';

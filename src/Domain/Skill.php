@@ -9,7 +9,7 @@ use src\Constant\FieldType;
  * @property string $slug
  * @property int abilityid
  */
-final class RpgSkill extends Entity
+final class Skill extends Entity
 {
     public const FIELDS = [
         Field::NAME,
