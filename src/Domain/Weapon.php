@@ -109,12 +109,4 @@ final class Weapon extends Entity
             $this->typeDamageName
         );
     }
-/*
-    public function getProperties(): array;
-    public function hasProperty(string $slug): bool;
-    public function getRange(): ?array;
-    public function isVersatile(): bool;
-    public function getVersatileDamage(): ?string;
-    public function usesAmmunition(): bool;
-    */
 }

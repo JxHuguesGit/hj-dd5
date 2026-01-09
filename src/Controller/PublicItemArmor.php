@@ -7,7 +7,7 @@ use src\Constant\Language;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
 use src\Presenter\MenuPresenter;
-use src\Service\Armor\ArmorReader;
+use src\Service\Reader\ArmorReader;
 
 final class PublicItemArmor extends PublicBase
 {

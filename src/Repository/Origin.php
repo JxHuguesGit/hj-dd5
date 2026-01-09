@@ -2,15 +2,15 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\RpgOrigin as DomainRpgOrigin;
+use src\Domain\Origin as DomainOrigin;
 
-class RpgOrigin extends Repository
+class Origin extends Repository
 {
     public const TABLE = Table::ORIGIN;
     
     public function getEntityClass(): string
     {
-        return DomainRpgOrigin::class;
+        return DomainOrigin::class;
     }
 
 }

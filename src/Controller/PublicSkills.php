@@ -8,7 +8,7 @@ use src\Constant\Language;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
-use src\Service\Skill\SkillReader;
+use src\Service\Reader\SkillReader;
 
 class PublicSkills extends PublicBase
 {

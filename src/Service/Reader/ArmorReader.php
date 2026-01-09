@@ -1,5 +1,5 @@
 <?php
-namespace src\Service\Armor;
+namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;

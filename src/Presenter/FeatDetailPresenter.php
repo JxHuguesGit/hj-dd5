@@ -2,14 +2,14 @@
 namespace src\Presenter;
 
 use src\Collection\Collection;
-use src\Domain\RpgFeat;
+use src\Domain\Feat as DomainFeat;
 
 class FeatDetailPresenter
 {
     public function present(
-        RpgFeat $feat,
-        ?RpgFeat $prev,
-        ?RpgFeat $next,
+        DomainFeat $feat,
+        ?DomainFeat $prev,
+        ?DomainFeat $next,
     ): array {
         $wpPost = get_post($feat->postId);
         $strContent = $wpPost->post_content;

@@ -3,27 +3,26 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\RpgAbility;
+use src\Repository\Ability as RepositoryAbility;
 use src\Repository\Armor as RepositoryArmor;
-use src\Repository\RpgFeat;
-use src\Repository\RpgOrigin;
-use src\Repository\RpgOriginAbility;
-use src\Repository\RpgOriginSkill;
+use src\Repository\Feat as RepositoryFeat;
+use src\Repository\Origin as RepositoryOrigin;
+use src\Repository\OriginAbility as RepositoryOriginAbility;
+use src\Repository\OriginSkill as RepositoryOriginSkill;
 use src\Repository\Species as RepositorySpecies;
 use src\Repository\Skill as RepositorySkill;
 use src\Repository\Tool as RepositoryTool;
 use src\Repository\Weapon as RepositoryWeapon;
-use src\Service\RpgAbilityService;
-use src\Service\RpgAbilityQueryService;
-use src\Service\Armor\ArmorReader;
-use src\Service\RpgFeatService;
-use src\Service\RpgFeatQueryService;
-use src\Service\RpgOriginQueryService;
-use src\Service\RpgOriginService;
-use src\Service\Skill\SkillReader;
-use src\Service\Species\SpecieReader;
-use src\Service\Tool\ToolReader;
-use src\Service\Weapon\WeaponReader;
+use src\Service\OriginService;
+use src\Service\AbilityService;
+use src\Service\Reader\AbilityReader;
+use src\Service\Reader\ArmorReader;
+use src\Service\Reader\FeatReader;
+use src\Service\Reader\OriginReader;
+use src\Service\Reader\SkillReader;
+use src\Service\Reader\SpecieReader;
+use src\Service\Reader\ToolReader;
+use src\Service\Reader\WeaponReader;
 
 final class ServiceFactory
 {
@@ -35,16 +34,16 @@ final class ServiceFactory
         $this->queryExecutor = $queryExecutor;
     }
 
-    public function getRpgFeatQueryService(): RpgFeatQueryService
+    public function getFeatReader(): FeatReader
     {
-        $featRepo = new RpgFeat($this->queryBuilder, $this->queryExecutor);
-        return new RpgFeatQueryService($featRepo);
+        $featRepo = new RepositoryFeat($this->queryBuilder, $this->queryExecutor);
+        return new FeatReader($featRepo);
     }
 
-    public function getRpgOriginQueryService(): RpgOriginQueryService
+    public function getOriginReader(): OriginReader
     {
-        $originRepo = new RpgOrigin($this->queryBuilder, $this->queryExecutor);
-        return new RpgOriginQueryService($originRepo);
+        $originRepo = new RepositoryOrigin($this->queryBuilder, $this->queryExecutor);
+        return new OriginReader($originRepo);
     }
 
     public function getSpecieReader(): SpecieReader
@@ -55,8 +54,14 @@ final class ServiceFactory
     
     public function getArmorReader(): ArmorReader
     {
-        $repo = new RepositoryArmor($this->queryBuilder, $this->queryExecutor);
-        return new ArmorReader($repo);
+        $repositoryFactory = new RepositoryFactory(
+            $this->queryBuilder,
+            $this->queryExecutor
+        );
+
+        $readerFactory = new ReaderFactory($repositoryFactory);
+
+        return $readerFactory->armor();
     }
 
     public function getToolReader(): ToolReader
@@ -78,30 +83,24 @@ final class ServiceFactory
     }
 
 
-    public function getRpgAbilityService(): RpgAbilityService
+    public function getRpgAbilityService(): AbilityReader
     {
-        $repo = new RpgAbility($this->queryBuilder, $this->queryExecutor);
-        return new RpgAbilityService($repo);
-    }
-    
-    public function getRpgFeatService(): RpgFeatService
-    {
-        $repo = new RpgFeat($this->queryBuilder, $this->queryExecutor);
-        return new RpgFeatService($repo);
+        $repo = new RepositoryAbility($this->queryBuilder, $this->queryExecutor);
+        return new AbilityReader($repo);
     }
 
-    public function getRpgOriginService(): RpgOriginService
+    public function origin(): OriginService
     {
-        $featRepo     = new RpgFeat($this->queryBuilder, $this->queryExecutor);
+        $featRepo     = new RepositoryFeat($this->queryBuilder, $this->queryExecutor);
         $toolRepo     = new RepositoryTool($this->queryBuilder, $this->queryExecutor);
-        $originSkillRepo    = new RpgOriginSkill($this->queryBuilder, $this->queryExecutor);
-        $originAbilityRepo  = new RpgOriginAbility($this->queryBuilder, $this->queryExecutor);
+        $originSkillRepo    = new RepositoryOriginSkill($this->queryBuilder, $this->queryExecutor);
+        $originAbilityRepo  = new RepositoryOriginAbility($this->queryBuilder, $this->queryExecutor);
 
         $skillRepo    = new RepositorySkill($this->queryBuilder, $this->queryExecutor);
         $skillQueryService   = new SkillReader($skillRepo);
-        $abilityRepo  = new RpgAbility($this->queryBuilder, $this->queryExecutor);
-        $abilityQueryService = new RpgAbilityQueryService($abilityRepo);
+        $abilityRepo  = new RepositoryAbility($this->queryBuilder, $this->queryExecutor);
+        $abilityQueryService = new AbilityReader($abilityRepo);
         
-        return new RpgOriginService($featRepo, $toolRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
+        return new OriginService($featRepo, $toolRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
     }
 }

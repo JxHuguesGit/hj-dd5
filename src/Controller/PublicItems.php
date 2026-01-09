@@ -1,20 +1,13 @@
 <?php
 namespace src\Controller;
 
-use src\Collection\Collection;
 use src\Constant\Template;
-use src\Factory\RepositoryFactory;
 use src\Model\PageRegistry;
-use src\Page\PageFeats;
 use src\Presenter\MenuPresenter;
 use src\Presenter\OrigineCardPresenter;
-use src\Repository\RpgFeatType as RepositoryRpgFeatType;
 
 class PublicItems extends PublicBase
 {
-    private array $items = [];
-    private Collection $subTypes;
-
     public function __construct()
     {
         $this->title = 'Le Matériel';

@@ -1,5 +1,5 @@
 <?php
-namespace src\Service\Tool;
+namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;

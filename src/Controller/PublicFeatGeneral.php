@@ -9,7 +9,7 @@ use src\Presenter\MenuPresenter;
 use src\Model\PageRegistry;
 use src\Page\PageFeatsGeneral;
 use src\Presenter\OrigineCardPresenter;
-use src\Repository\RpgFeat as RepositoryRpgFeat;
+use src\Repository\Feat as RepositoryFeat;
 
 class PublicFeatGeneral extends PublicBase
 {
@@ -17,7 +17,7 @@ class PublicFeatGeneral extends PublicBase
 
     public function __construct()
     {
-        $repo = RepositoryFactory::create(RepositoryRpgFeat::class);
+        $repo = RepositoryFactory::create(RepositoryFeat::class);
         $this->feats = $repo->findBy(['featTypeId' => 2], [Field::NAME => Constant::CST_ASC]);
 
         $pageElement = (new PageFeatsGeneral())->getPageElement();

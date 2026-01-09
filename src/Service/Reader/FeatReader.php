@@ -1,40 +1,40 @@
 <?php
-namespace src\Service;
+namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\RpgFeat as DomainRpgFeat;
-use src\Repository\RpgFeat as RepositoryRpgFeat;
+use src\Domain\Feat as DomainFeat;
+use src\Repository\Feat as RepositoryFeat;
 
-final class RpgFeatQueryService
+final class FeatReader
 {
     public function __construct(
-        private RepositoryRpgFeat $featRepository,
+        private RepositoryFeat $featRepository,
     ) {}
 
-    public function getFeat(int $id): ?DomainRpgFeat
+    public function getFeat(int $id): ?DomainFeat
     {
         return $this->featRepository->find($id);
     }
-    
-    public function getAllFeats(array $order=[Field::NAME=>'ASC']): Collection
+
+    public function getAllFeats(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->featRepository->findAll($order);
     }
 
-    public function getFeatBySlug(string $slug): ?DomainRpgFeat
+    public function getFeatBySlug(string $slug): ?DomainFeat
     {
         $feat = $this->featRepository->findBy([Field::SLUG=>$slug]);
         return $feat?->first() ?? null;
     }
 
-    public function getFeatsByCategory(int $categoryId, array $order=[Field::NAME=>'ASC']): Collection
+    public function getFeatsByCategory(int $categoryId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->featRepository->findBy([Field::FEATTYPEID=>$categoryId], $order);
     }
 
-    public function getPreviousAndNext(DomainRpgFeat $feat): array
+    public function getPreviousAndNext(DomainFeat $feat): array
     {
         // Don précédent (ordre alphabétique)
         $prev = $this->featRepository->findByComplex(

@@ -2,6 +2,7 @@
 namespace src\Router;
 
 use src\Controller\PublicBase;
+use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
@@ -16,7 +17,7 @@ use src\Presenter\TableBuilder\ToolTableBuilder;
 
 class ItemRouter
 {
-    public function match(string $path, ServiceFactory $factory): ?PublicBase
+    public function match(string $path, ReaderFactory $factory): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de matériel ---
@@ -29,7 +30,7 @@ class ItemRouter
         if (class_exists($controllerClass)) {
             return match($typeSlug) {
                 'armor' => new $controllerClass(
-                    $factory->getArmorReader(),
+                    $factory->armor(),
                     new ArmorListPresenter(),
                     new PageList(
                         new TemplateRenderer(),
@@ -38,7 +39,7 @@ class ItemRouter
                     new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
                 ),
                 'tool' => new $controllerClass(
-                    $factory->getToolReader(),
+                    $factory->tool(),
                     new ToolListPresenter(),
                     new PageList(
                         new TemplateRenderer(),
@@ -47,7 +48,7 @@ class ItemRouter
                     new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
                 ),
                 'weapon' => new $controllerClass(
-                    $factory->getWeaponReader(),
+                    $factory->weapon(),
                     new WeaponListPresenter(),
                     new PageList(
                         new TemplateRenderer(),

@@ -1,5 +1,5 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
@@ -12,7 +12,7 @@ class OriginListPresenter
     public function present(Collection $origins): array
     {
         return [
-            Constant::ORIGINS => $origins
+            Constant::CST_ITEMS => $origins
         ];
     }
 }

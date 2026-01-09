@@ -1,18 +1,19 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Service\RpgOriginService;
+use src\Presenter\TableBuilder\TableBuilderInterface;
+use src\Service\OriginService;
 use src\Utils\Html;
 use src\Utils\Table;
 use src\Utils\UrlGenerator;
 
-class RpgOriginTableBuilder
+class OriginTableBuilder implements TableBuilderInterface
 {
     public function __construct(
-        private RpgOriginService $originService
+        private OriginService $originService
     ) {}
     
     public function build(iterable $origins, array $params = []): Table

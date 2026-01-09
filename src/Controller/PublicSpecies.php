@@ -7,7 +7,7 @@ use src\Constant\Field;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\SpeciesListPresenter;
-use src\Service\Species\SpecieReader;
+use src\Service\Reader\SpecieReader;
 
 class PublicSpecies extends PublicBase
 {

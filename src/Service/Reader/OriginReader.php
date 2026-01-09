@@ -1,20 +1,20 @@
 <?php
-namespace src\Service;
+namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\RpgOrigin as DomainRpgOrigin;
+use src\Domain\Origin as DomainOrigin;
 use src\Exception\NotFoundException;
-use src\Repository\RpgOrigin as RepositoryRpgOrigin;
+use src\Repository\Origin as RepositoryOrigin;
 
-final class RpgOriginQueryService
+final class OriginReader
 {
     public function __construct(
-        private RepositoryRpgOrigin $originRepository,
+        private RepositoryOrigin $originRepository,
     ) {}
 
-    public function getOrigin(int $id): ?DomainRpgOrigin
+    public function getOrigin(int $id): ?DomainOrigin
     {
         return $this->originRepository->find($id);
     }
@@ -24,13 +24,13 @@ final class RpgOriginQueryService
         return $this->originRepository->findAll($order);
     }
 
-    public function getOriginBySlug(string $slug): ?DomainRpgOrigin
+    public function getOriginBySlug(string $slug): ?DomainOrigin
     {
         $origin = $this->originRepository->findBy([Field::SLUG=>$slug]);
         return $origin?->first() ?? null;
     }
 
-    public function getOriginBySlugOrFail(string $slug): ?DomainRpgOrigin
+    public function getOriginBySlugOrFail(string $slug): ?DomainOrigin
     {
         $origin = $this->getOriginBySlug($slug);
         if (!$origin) {
@@ -39,7 +39,7 @@ final class RpgOriginQueryService
         return $origin;
     }
 
-    public function getPreviousAndNext(DomainRpgOrigin $origin): array
+    public function getPreviousAndNext(DomainOrigin $origin): array
     {
         // Origine précédente (ordre alphabétique)
         $prev = $this->originRepository->findByComplex(

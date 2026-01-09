@@ -1,24 +1,24 @@
 <?php
 namespace src\Controller;
 
-use src\Domain\RpgFeat;
+use src\Domain\Feat as DomainFeat;
 use src\Page\PageFeat;
 use src\Presenter\MenuPresenter;
 use src\Presenter\FeatDetailPresenter;
-use src\Service\RpgFeatQueryService;
+use src\Service\Reader\FeatReader;
 
 class PublicFeat extends PublicBase
 {
-    private ?RpgFeat $feat;
+    private ?DomainFeat $feat;
 
     public function __construct(
         private string $slug,
-        private RpgFeatQueryService $featQueryService,
+        private FeatReader $featReader,
         private FeatDetailPresenter $presenter,
         private PageFeat $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feat = $featQueryService->getFeatBySlug($this->slug);
+        $this->feat = $featReader->getFeatBySlug($this->slug);
         $this->title = $this->feat->name;
     }
 
@@ -30,7 +30,7 @@ class PublicFeat extends PublicBase
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render('feats');
-        $nav = $this->featQueryService->getPreviousAndNext($this->feat);
+        $nav = $this->featReader->getPreviousAndNext($this->feat);
         $viewData = $this->presenter->present(
             $this->feat,
             $nav['prev'],

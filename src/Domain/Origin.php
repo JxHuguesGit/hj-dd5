@@ -7,37 +7,40 @@ use src\Utils\Utils;
 
 /**
  * @property string $name
- * @property int $featTypeId
- * @property int $postId
+ * @property int $featId
+ * @property int $toolId
  * @property string $slug
+ * @property int $postId
  */
-final class RpgFeat extends Entity
+final class Origin extends Entity
 {
     public const FIELDS = [
         Field::ID,
         Field::NAME,
-        Field::FEATTYPEID,
-        Field::POSTID,
+        Field::FEATID,
+        Field::TOOLID,
         Field::SLUG,
+        Field::POSTID,
     ];
-
     public const FIELD_TYPES = [
-        Field::NAME =>       FieldType::STRING,
-        Field::FEATTYPEID => FieldType::INTPOSITIVE,
-        Field::POSTID =>     FieldType::INTPOSITIVE,
-        Field::SLUG =>       FieldType::STRING,
+        Field::NAME =>    FieldType::STRING,
+        Field::FEATID =>  FieldType::INTPOSITIVE,
+        Field::TOOLID =>  FieldType::INTPOSITIVE,
+        Field::SLUG =>    FieldType::STRING,
+        Field::POSTID =>  FieldType::INTPOSITIVE,
     ];
 
     /**
-     * Retourne une représentation texte du don
+     * Retourne une représentation texte de l'historique
      */
     public function stringify(): string
     {
         return sprintf(
-            "%s - Slug : %s - (FeatType: %s, PostID: %d)",
+            "%s - Slug : %s - FeatId : %s - ToolId : %s - PostId : %s",
             $this->name,
             $this->getSlug(),
-            $this->featTypeId,
+            $this->featId,
+            $this->tooldId,
             $this->postId,
         );
     }

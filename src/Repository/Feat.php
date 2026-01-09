@@ -2,14 +2,14 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\RpgFeat as DomainRpgFeat;
+use src\Domain\Feat as DomainFeat;
 
-class RpgFeat extends Repository
+class Feat extends Repository
 {
     public const TABLE = Table::FEAT;
     
     public function getEntityClass(): string
     {
-        return DomainRpgFeat::class;
+        return DomainFeat::class;
     }
 }

@@ -2,26 +2,27 @@
 namespace src\Controller;
 
 use src\Constant\Constant;
-use src\Domain\RpgOrigin;
+use src\Domain\Origin as DomainOrigin;
 use src\Page\PageOrigine;
 use src\Presenter\MenuPresenter;
-use src\Service\RpgOriginQueryService;
-use src\Service\Page\OriginPageService;
+use src\Service\Reader\OriginReader;
+use src\Service\OriginService;
+use src\Service\OriginPageService;
 use src\Presenter\OriginDetailPresenter;
 
 class PublicOrigine extends PublicBase
 {
-    private RpgOrigin $origin;
+    private DomainOrigin $origin;
 
     public function __construct(
         private string $slug,
-        private RpgOriginQueryService $originQueryService,
+        private OriginReader $originReader,
         private OriginPageService $pageService,
         private OriginDetailPresenter $presenter,
         private PageOrigine $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->origin = $this->originQueryService->getOriginBySlugOrFail($this->slug);
+        $this->origin = $this->originReader->getOriginBySlugOrFail($this->slug);
         $this->title = $this->origin->name;
     }
 

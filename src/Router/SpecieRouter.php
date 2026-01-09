@@ -4,6 +4,7 @@ namespace src\Router;
 use src\Constant\Constant;
 use src\Controller\PublicBase;
 use src\Controller\PublicSpecie;
+use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
@@ -13,7 +14,7 @@ use src\Presenter\SpeciesDetailPresenter;
 
 class SpecieRouter
 {
-    public function match(string $path, ServiceFactory $factory): ?PublicBase
+    public function match(string $path, ReaderFactory $factory): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une espèce individuelle ---
@@ -23,7 +24,7 @@ class SpecieRouter
 
         return new PublicSpecie(
             $matches[1] ?? '',
-            $factory->getSpecieReader(),
+            $factory->species(),
             new SpeciesDetailPresenter(),
             new PageSpecie(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES),

@@ -2,17 +2,17 @@
 namespace src\Presenter\ViewModel;
 
 use src\Collection\Collection;
-use src\Domain\RpgFeat;
+use src\Domain\Feat as DomainFeat;
 use src\Domain\Item as DomainItem;
-use src\Domain\RpgOrigin;
+use src\Domain\Origin as DomainOrigin;
 
 final class OriginPageView
 {
     public function __construct(
-        public RpgOrigin $origin,
-        public ?RpgOrigin $previous = null,
-        public ?RpgOrigin $next = null,
-        public ?RpgFeat $feat = null,
+        public DomainOrigin $origin,
+        public ?DomainOrigin $previous = null,
+        public ?DomainOrigin $next = null,
+        public ?DomainFeat $feat = null,
         public ?DomainItem $tool = null,
         public Collection $abilities = new Collection(),
         public Collection $skills = new Collection(),

@@ -6,18 +6,18 @@ use src\Constant\FieldType;
 
 /**
  * @property int $originId
- * @property int $abilityId
+ * @property int $skillId
  */
-final class RpgOriginAbility extends Entity
+final class OriginSkill extends Entity
 {
     public const FIELDS = [
         Field::ID,
         Field::ORIGINID,
-        Field::ABILITYID,
+        Field::SKILLID,
     ];
     public const FIELD_TYPES = [
         Field::ORIGINID =>  FieldType::INTPOSITIVE,
-        Field::ABILITYID => FieldType::INTPOSITIVE,
+        Field::SKILLID => FieldType::INTPOSITIVE,
     ];
 
     /**
@@ -26,9 +26,9 @@ final class RpgOriginAbility extends Entity
     public function stringify(): string
     {
         return sprintf(
-            "OriginId : %s - AbilityId : %s",
+            "OriginId : %s - SkillId : %s",
             $this->originId,
-            $this->abilityId,
+            $this->skillId,
         );
     }
 

@@ -9,7 +9,7 @@ use src\Presenter\MenuPresenter;
 use src\Model\PageRegistry;
 use src\Page\PageFeatsEpic;
 use src\Presenter\OrigineCardPresenter;
-use src\Repository\RpgFeat as RepositoryRpgFeat;
+use src\Repository\Feat as RepositoryFeat;
 
 class PublicFeatEpic extends PublicBase
 {
@@ -17,7 +17,7 @@ class PublicFeatEpic extends PublicBase
 
     public function __construct()
     {
-        $repo = RepositoryFactory::create(RepositoryRpgFeat::class);
+        $repo = RepositoryFactory::create(RepositoryFeat::class);
         $this->feats = $repo->findBy(['featTypeId' => 4], [Field::NAME => Constant::CST_ASC]);
 
         $pageElement = (new PageFeatsEpic())->getPageElement();

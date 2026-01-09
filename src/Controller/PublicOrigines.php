@@ -5,22 +5,22 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Page\PageOriginList;
+use src\Page\PageList;
 use src\Presenter\MenuPresenter;
-use src\Presenter\OriginListPresenter;
-use src\Service\RpgOriginQueryService;
+use src\Presenter\ListPresenter\OriginListPresenter;
+use src\Service\Reader\OriginReader;
 
 class PublicOrigines extends PublicBase
 {
     private ?Collection $origins = null;
 
     public function __construct(
-        private RpgOriginQueryService $originQueryService,
+        private OriginReader $originReader,
         private OriginListPresenter $presenter,
-        private PageOriginList $page,
+        private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->origins = $this->originQueryService->getAllOrigins([Field::NAME=>Constant::CST_ASC]);
+        $this->origins = $this->originReader->getAllOrigins([Field::NAME=>Constant::CST_ASC]);
         $this->title = Language::LG_HISTORIQUES;
     }
 

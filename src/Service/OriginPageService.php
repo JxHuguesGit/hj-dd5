@@ -1,20 +1,19 @@
 <?php
-namespace src\Service\Page;
+namespace src\Service;
 
 use src\Constant\Constant;
-use src\Domain\RpgOrigin;
+use src\Domain\Origin as DomainOrigin;
 use src\Presenter\ViewModel\OriginPageView;
-use src\Service\RpgOriginService;
-use src\Service\RpgOriginQueryService;
+use src\Service\Reader\OriginReader;
 
 final class OriginPageService
 {
     public function __construct(
-        private RpgOriginService $originService,
-        private RpgOriginQueryService $queryService,
+        private OriginService $originService,
+        private OriginReader $queryService,
     ) {}
 
-    public function build(RpgOrigin $origin): OriginPageView
+    public function build(DomainOrigin $origin): OriginPageView
     {
         $nav = $this->queryService->getPreviousAndNext($origin);
 

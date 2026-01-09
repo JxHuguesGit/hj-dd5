@@ -7,7 +7,7 @@ use src\Constant\FieldType;
 /**
  * @property string $name
  */
-final class RpgAbility extends Entity
+final class Ability extends Entity
 {
     public const FIELDS = [
         Field::ID,

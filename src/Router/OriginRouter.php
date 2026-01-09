@@ -3,17 +3,18 @@ namespace src\Router;
 
 use src\Controller\PublicBase;
 use src\Controller\PublicOrigine;
+use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Page\PageOrigine;
 use src\Presenter\MenuPresenter;
 use src\Presenter\OriginDetailPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
-use src\Service\Page\OriginPageService;
+use src\Service\OriginPageService;
 
 class OriginRouter
 {
-    public function match(string $path, ServiceFactory $factory): ?PublicBase
+    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
     {
         if (!preg_match('#^origine-(.+)$#', $path, $matches)) {
             return null;
@@ -21,8 +22,8 @@ class OriginRouter
 
         return new PublicOrigine(
             $matches[1],
-            $factory->getRpgOriginQueryService(),
-            new OriginPageService($factory->getRpgOriginService(), $factory->getRpgOriginQueryService()),
+            $factory->origin(),
+            new OriginPageService($serviceFactory->origin(), $factory->origin()),
             new OriginDetailPresenter(),
             new PageOrigine(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), 'origines')

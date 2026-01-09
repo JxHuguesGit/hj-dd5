@@ -1,8 +1,8 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Entity\RpgFeat;
+use src\Domain\Feat as DomainFeat;
 use src\Utils\Utils;
 
 class FeatListPresenter
@@ -33,10 +33,10 @@ class FeatListPresenter
         return $html;
     }
 
-    private function renderCard(RpgFeat $feat): string
+    private function renderCard(DomainFeat $feat): string
     {
-        $name = htmlspecialchars($feat->getName());
-        $desc = nl2br(htmlspecialchars($feat->getShortDescription() ?? ''));
+        $name = htmlspecialchars($feat->name);
+        $desc = 'TODO';//nl2br(htmlspecialchars($feat->getShortDescription() ?? ''));
         $url  = '/don-' . $feat->getSlug();
 
         return <<<HTML

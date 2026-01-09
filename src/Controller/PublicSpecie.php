@@ -4,7 +4,7 @@ namespace src\Controller;
 use src\Domain\Specie as DomainSpecies;
 use src\Page\PageSpecie;
 use src\Presenter\MenuPresenter;
-use src\Service\Species\SpecieReader;
+use src\Service\Reader\SpecieReader;
 use src\Presenter\SpeciesDetailPresenter;
 
 class PublicSpecie extends PublicBase

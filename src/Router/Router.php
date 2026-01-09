@@ -4,6 +4,8 @@ namespace src\Router;
 use src\Controller\PublicBase;
 use src\Controller\PublicHome;
 use src\Controller\PublicNotFound;
+use src\Factory\ReaderFactory;
+use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -41,7 +43,9 @@ class Router
     public static function getController(): PublicBase
     {
         $path = self::normalizePath(Session::getRequestUri());
-        $factory = new ServiceFactory(new QueryBuilder(), new QueryExecutor());
+        $repositoryFactory = new RepositoryFactory(new QueryBuilder(), new QueryExecutor());
+        $readerFactory     = new ReaderFactory($repositoryFactory);
+        $serviceFactory    = new ServiceFactory(new QueryBuilder(), new QueryExecutor());
 
         $handlers = [
             new OriginRouter(),
@@ -52,7 +56,7 @@ class Router
         ];
 
         foreach ($handlers as $handler) {
-            $controller = $handler->match($path, $factory);
+            $controller = $handler->match($path, $readerFactory, $serviceFactory);
             if ($controller !== null) {
                 return $controller;
             }

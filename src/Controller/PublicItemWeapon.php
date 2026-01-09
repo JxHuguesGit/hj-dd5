@@ -7,7 +7,7 @@ use src\Constant\Language;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\MenuPresenter;
-use src\Service\Weapon\WeaponReader;
+use src\Service\Reader\WeaponReader;
 
 final class PublicItemWeapon extends PublicBase
 {

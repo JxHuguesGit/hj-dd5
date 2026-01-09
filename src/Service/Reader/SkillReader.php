@@ -1,5 +1,5 @@
 <?php
-namespace src\Service\Skill;
+namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Skill as DomainSkill;
