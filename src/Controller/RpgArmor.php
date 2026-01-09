@@ -4,11 +4,11 @@ namespace src\Controller;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Domain\RpgArmor as DomainRpgArmor;
+use src\Domain\Armor as DomainArmor;
 use src\Utils\Table;
 use src\Utils\Utils;
 
-class RpgArmor extends Utilities
+class Armor extends Utilities
 {
     public function __construct()
     {
@@ -18,6 +18,6 @@ class RpgArmor extends Utilities
 
     public function getContentPage(): string
     {
-        return 'WIP RpgArmor::getContentPage';
+        return 'WIP ControllerArmor::getContentPage';
     }
 }

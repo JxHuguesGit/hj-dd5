@@ -4,14 +4,13 @@ namespace src\Controller;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
-use src\Page\PageArmorList;
-use src\Page\PageWeaponList;
-use src\Presenter\ArmorListPresenter;
-use src\Presenter\RpgArmorTableBuilder;
-use src\Presenter\RpgWeaponTableBuilder;
-use src\Presenter\WeaponListPresenter;
-use src\Repository\RpgArmor as RepositoryRpgArmor;
-use src\Repository\RpgWeapon as RepositoryRpgWeapon;
+use src\Page\PageList;
+use src\Presenter\ListPresenter\ArmorListPresenter;
+use src\Presenter\ListPresenter\WeaponListPresenter;
+use src\Presenter\TableBuilder\ArmorTableBuilder;
+use src\Presenter\TableBuilder\WeaponTableBuilder;
+use src\Repository\Armor as RepositoryArmor;
+use src\Repository\Weapon as RepositoryWeapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
@@ -26,7 +25,7 @@ class AdminCompendiumPage extends AdminPage
 
         switch ($currentId) {
             case Constant::ARMORS :
-                $objDao = new RepositoryRpgArmor(new QueryBuilder(), new QueryExecutor());
+                $objDao = new RepositoryArmor(new QueryBuilder(), new QueryExecutor());
                 $armors = $objDao->findAllWithItemAndType([], [
                     Field::ARMORTYPID=>Constant::CST_ASC,
                     Field::ARMORCLASS=>Constant::CST_ASC,
@@ -35,14 +34,14 @@ class AdminCompendiumPage extends AdminPage
 
                 $presenter = new ArmorListPresenter();
                 $pageContent = $presenter->present($armors);
-                $page = new PageArmorList(
+                $page = new PageList(
                     new TemplateRenderer(),
-                    new RpgArmorTableBuilder()
+                    new ArmorTableBuilder()
                 );
                 $pageContent = $page->renderAdmin($pageContent);
             break;
             case Constant::WEAPONS :
-                $objDao = new RepositoryRpgWeapon(new QueryBuilder(), new QueryExecutor());
+                $objDao = new RepositoryWeapon(new QueryBuilder(), new QueryExecutor());
                 $weapons = $objDao->findAllWithItemAndType([], [
                     Field::WPNCATID=>Constant::CST_ASC,
                     Field::WPNRANGEID=>Constant::CST_ASC,
@@ -51,9 +50,9 @@ class AdminCompendiumPage extends AdminPage
 
                 $presenter = new WeaponListPresenter();
                 $pageContent = $presenter->present($weapons);
-                $page = new PageWeaponList(
+                $page = new PageList(
                     new TemplateRenderer(),
-                    new RpgWeaponTableBuilder()
+                    new WeaponTableBuilder()
                 );
                 $pageContent = $page->renderAdmin($pageContent);
             break;

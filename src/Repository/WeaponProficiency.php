@@ -1,9 +1,9 @@
 <?php
 namespace src\Repository;
 
-use src\Entity\RpgWeaponProficiency as EntityRpgWeaponProficiency;
+use src\Entity\WeaponProficiency as EntityRpgWeaponProficiency;
 
-class RpgWeaponProficiency extends Repository
+class WeaponProficiency extends Repository
 {
     public function getEntityClass(): string
     {

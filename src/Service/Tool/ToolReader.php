@@ -1,5 +1,5 @@
 <?php
-namespace src\Service;
+namespace src\Service\Tool;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
@@ -7,7 +7,7 @@ use src\Constant\Field;
 use src\Domain\Tool as DomainTool;
 use src\Repository\Tool as RepositoryTool;
 
-final class ToolQueryService
+final class ToolReader
 {
     public function __construct(
         private RepositoryTool $toolRepository

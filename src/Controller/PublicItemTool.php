@@ -4,25 +4,24 @@ namespace src\Controller;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Page\PageToolList;
+use src\Page\PageList;
 use src\Presenter\MenuPresenter;
-use src\Presenter\ToolListPresenter;
-use src\Service\ToolQueryService;
+use src\Presenter\ListPresenter\ToolListPresenter;
+use src\Service\Tool\ToolReader;
 
 final class PublicItemTool extends PublicBase
 {
     private ?Collection $tools = null;
 
     public function __construct(
-        private ToolQueryService $toolQueryService,
+        private ToolReader $toolQueryService,
         private ToolListPresenter $presenter,
-        private PageToolList $page,
+        private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
         $this->tools = $this->toolQueryService->getAllTools();
         $this->title = Language::LG_TOOLS_TITLE;
     }
-
 
     public function getContentPage(): string
     {

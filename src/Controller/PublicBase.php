@@ -27,6 +27,9 @@ class PublicBase
     public function getContentHeader(): string
     { return ''; }
 
+    public function getContentPage(): string
+    { return '  '; }
+
     public function getContentFooter(): string
     { return ' '; }
 

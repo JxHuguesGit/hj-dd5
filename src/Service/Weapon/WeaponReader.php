@@ -1,16 +1,16 @@
 <?php
-namespace src\Service;
+namespace src\Service\Weapon;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\RpgWeapon as DomainRpgWeapon;
-use src\Repository\RpgWeapon as RepositoryRpgWeapon;
+use src\Domain\Weapon as DomainWeapon;
+use src\Repository\Weapon as RepositoryWeapon;
 
-final class RpgWeaponQueryService
+final class WeaponReader
 {
     public function __construct(
-        private RepositoryRpgWeapon $weaponRepository
+        private RepositoryWeapon $weaponRepository
     ) {}
     
     public function getAllWeapons(): Collection
@@ -18,12 +18,12 @@ final class RpgWeaponQueryService
         $orderBy = [
             Field::WPNCATID=>Constant::CST_ASC,
             Field::WPNRANGEID=>Constant::CST_ASC,
-            'i.name'=>Constant::CST_ASC,
+            Field::NAME=>Constant::CST_ASC,
         ];
-        return $this->weaponRepository->findByCategory('weapon', $orderBy);
+        return $this->weaponRepository->findByCategory($orderBy);
     }
     
-    public function getWeapon(int $id): ?DomainRpgWeapon
+    public function getWeapon(int $id): ?DomainWeapon
     {
         return $this->weaponRepository->find($id);
     }

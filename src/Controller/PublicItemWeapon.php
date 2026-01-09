@@ -2,35 +2,32 @@
 namespace src\Controller;
 
 use src\Collection\Collection;
-use src\Page\PageWeaponList;
-use src\Presenter\WeaponListPresenter;
+use src\Constant\Constant;
+use src\Constant\Language;
+use src\Page\PageList;
+use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\MenuPresenter;
-use src\Service\RpgWeaponQueryService;
+use src\Service\Weapon\WeaponReader;
 
 final class PublicItemWeapon extends PublicBase
 {
     private ?Collection $weapons = null;
 
     public function __construct(
-        private RpgWeaponQueryService $weaponQueryService,
+        private WeaponReader $weaponReader,
         private WeaponListPresenter $presenter,
-        private PageWeaponList $page,
+        private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->weapons = $this->weaponQueryService->getAllWeapons();
-        $this->title = 'Les Armes';
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
+        $this->weapons = $this->weaponReader->getAllWeapons();
+        $this->title = Language::LG_WEAPONS_TITLE;
     }
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render('items');
+        $menu = $this->menuPresenter->render(Constant::CST_ITEMS);
         $viewData = $this->presenter->present($this->weapons);
-        $viewData['title'] = $this->getTitle();
+        $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }

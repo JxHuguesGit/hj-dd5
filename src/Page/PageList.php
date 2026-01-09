@@ -4,14 +4,15 @@ namespace src\Page;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Template;
-use src\Presenter\TableBuilder\ToolTableBuilder;
+use src\Presenter\TableBuilder\ArmorTableBuilder;
+use src\Presenter\TableBuilder\TableBuilderInterface;
 use src\Renderer\TemplateRenderer;
 
-class PageToolList
+class PageList
 {
     public function __construct(
         private TemplateRenderer $renderer,
-        private ToolTableBuilder $tableBuilder
+        private TableBuilderInterface $tableBuilder
     ) {}
 
     public function render(string $menuHtml, array $viewData): string
@@ -25,7 +26,7 @@ class PageToolList
 
     public function renderAdmin(array $viewData): string
     {
-        // Construire le tableau des origines
+        // Construire le tableau des armures
         $tableHtml = $this->tableBuilder->build(
             $viewData[Constant::CST_ITEMS],
             [Bootstrap::CSS_WITH_MRGNTOP => false]

@@ -18,12 +18,15 @@ class Language
     public const LG_WEAPON_RANGED   = ' à distance';
     
     public const LG_WEAPONS         = 'Armes';
+    public const LG_WEAPONS_TITLE   = 'Les Armes';
     public const LG_ARMORS          = 'Armures';
+    public const LG_ARMORS_TITLE    = 'Les Armures';
     public const LG_WEAPON_PROP     = 'Botte d\'arme';
     public const LG_ABILITIES       = 'Caractéristiques';
     public const LG_CATEGORY        = 'Catégorie';
     public const LG_SIZE_CATEGORY   = 'Catégorie de taille';
-    public const LG_CA              = 'Classe d\'armure (CA)';
+    public const LG_CA_LONG         = 'Classe d\'armure (CA)';
+    public const LG_CA              = 'CA';
     public const LG_SKILLS          = 'Compétences';
     public const LG_DAMAGES         = 'Dégâts';
     public const LG_DISADVANTAGE    = 'Désavantage';

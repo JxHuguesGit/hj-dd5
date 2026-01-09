@@ -13,7 +13,7 @@ use src\Constant\FieldType;
  * @property float $weight
  * @property float $goldPrice
  */
-final class RpgArmor extends Entity
+final class Armor extends Entity
 {
     public const FIELDS = [
         Field::ID,

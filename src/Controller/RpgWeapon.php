@@ -5,16 +5,16 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Entity\RpgWeapon as EntityRpgWeapon;
-use src\Repository\RpgWeapon as RepositoryRpgWeapon;
+use src\Domain\Weapon as DomainWeapon;
+use src\Repository\Weapon as RepositoryWeapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Utils\Table;
 use src\Utils\Utils;
 
-class RpgWeapon extends Utilities
+class Weapon extends Utilities
 {
-    protected EntityRpgWeapon $rpgWeapon;
+    protected DomainWeapon $rpgWeapon;
 
     public function __construct()
     {
@@ -25,14 +25,14 @@ class RpgWeapon extends Utilities
 
     public function getContentPage(): string
     {
-        return 'WIP RpgWeapon::getContentPage';
+        return 'WIP ControllerWeapon::getContentPage';
     }
     
     public static function getTable(array $params): Table
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgWeapon($queryBuilder, $queryExecutor);
+        $objDao = new RepositoryWeapon($queryBuilder, $queryExecutor);
         $rpgWeapons = $objDao->findAll([Field::MARTIAL=>Constant::CST_ASC, Field::MELEE=>'DESC', Field::NAME=>Constant::CST_ASC]);
         $paginate = [
             Constant::PAGE_OBJS      => $rpgWeapons,
@@ -62,11 +62,13 @@ class RpgWeapon extends Utilities
     public function addBodyRow(Table &$objTable, array $arrParams, int &$oldTypeWeaponId): void
     {
         // Dégâts
-        $strDegats = $this->rpgWeapon->getField(Field::DAMAGE);
-        $objTypeDamage = $this->rpgWeapon->getTypeDamage();
+        $strDegats = $this->rpgWeapon->damage;
+        /*
+        $objTypeDamage = '';//$this->rpgWeapon->getTypeDamage();
         $strDegats .= ' '.strtolower($objTypeDamage->getField(Field::NAME)).'s';
-
+*/
         // Propriétés
+        /*
         $objsWeaponWeaponProficiency = $this->rpgWeapon->getWeaponProficiencies();
         if (!$objsWeaponWeaponProficiency->valid()) {
             $strProprietes = '-';
@@ -80,8 +82,10 @@ class RpgWeapon extends Utilities
             }
             $strProprietes = substr($strProprietes, 0, -2);
         }
+            */
 
         // Botte d'arme
+        /*
         $objMasteryProficiency = $this->rpgWeapon->getMasteryProficiency();
         $strBotteDArme = $objMasteryProficiency->getField(Field::NAME);
 
@@ -93,15 +97,16 @@ class RpgWeapon extends Utilities
             $objTable->addBodyRow([Constant::CST_CLASS=>'row-dark-striped'])
                 ->addBodyCell([Constant::CST_CONTENT=>$libelle, 'attributes'=>['colspan'=>6, Constant::CST_CLASS=>Bootstrap::CSS_FONT_ITALIC]]);
         }
+                */
         
         $objTable->addBodyRow($arrParams)
-            ->addBodyCell([Constant::CST_CONTENT=>$this->rpgWeapon->getField(Field::NAME)])
+            ->addBodyCell([Constant::CST_CONTENT=>$this->rpgWeapon->name])
             ->addBodyCell([Constant::CST_CONTENT=>$strDegats])
-            ->addBodyCell([Constant::CST_CONTENT=>$strProprietes])
-            ->addBodyCell([Constant::CST_CONTENT=>$strBotteDArme])
-            ->addBodyCell([Constant::CST_CONTENT=>Utils::getStrWeight($this->rpgWeapon->getField(Field::WEIGHT)), 'attributes'=>[Constant::CST_CLASS=>Bootstrap::CSS_TEXT_END]])
-            ->addBodyCell([Constant::CST_CONTENT=>Utils::getStrPrice($this->rpgWeapon->getField(Field::GOLDPRICE)), 'attributes'=>[Constant::CST_CLASS=>Bootstrap::CSS_TEXT_END]]);
+            ->addBodyCell([Constant::CST_CONTENT=>''/*$strProprietes*/])
+            ->addBodyCell([Constant::CST_CONTENT=>''/*$strBotteDArme*/])
+            ->addBodyCell([Constant::CST_CONTENT=>Utils::getStrWeight($this->rpgWeapon->weight), 'attributes'=>[Constant::CST_CLASS=>Bootstrap::CSS_TEXT_END]])
+            ->addBodyCell([Constant::CST_CONTENT=>Utils::getStrPrice($this->rpgWeapon->goldPrice), 'attributes'=>[Constant::CST_CLASS=>Bootstrap::CSS_TEXT_END]]);
 
-        $oldTypeWeaponId = $typeWeaponId;
+//        $oldTypeWeaponId = $typeWeaponId;
     }
 }

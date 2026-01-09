@@ -5,16 +5,16 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\RpgWeapon as DomainRpgWeapon;
+use src\Domain\Weapon as DomainWeapon;
 
-class RpgWeapon extends Repository
+class Weapon extends Repository
 {
     public const INNERJOIN = 'INNER JOIN ';
     public const TABLE = Table::WEAPON;
 
     public function getEntityClass(): string
     {
-        return DomainRpgWeapon::class;
+        return DomainWeapon::class;
     }
 
     /**
@@ -52,11 +52,8 @@ class RpgWeapon extends Repository
         );
     }
 
-    /**
-     * Filtre les armes par catégorie (ex: 'armor')
-     */
-    public function findByCategory(string $slug, array $orderBy=[]): Collection
+    public function findByCategory(array $orderBy=[]): Collection
     {
-        return $this->findAllWithItemAndType([Field::TYPE=>$slug], $orderBy);
+        return $this->findAllWithItemAndType([Field::TYPE=>Constant::CST_WEAPON], $orderBy);
     }
 }

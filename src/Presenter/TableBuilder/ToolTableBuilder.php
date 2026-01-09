@@ -7,7 +7,7 @@ use src\Constant\Language;
 use src\Utils\Table;
 use src\Utils\Utils;
 
-class ToolTableBuilder
+class ToolTableBuilder implements TableBuilderInterface
 {
     public function build(iterable $groupedTools, array $params=[]): Table
     {

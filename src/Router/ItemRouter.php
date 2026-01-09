@@ -6,15 +6,13 @@ use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
-use src\Page\PageArmorList;
-use src\Page\PageToolList;
-use src\Page\PageWeaponList;
-use src\Presenter\ArmorListPresenter;
-use src\Presenter\RpgArmorTableBuilder;
-use src\Presenter\RpgWeaponTableBuilder;
+use src\Page\PageList;
+use src\Presenter\ListPresenter\ArmorListPresenter;
+use src\Presenter\ListPresenter\ToolListPresenter;
+use src\Presenter\ListPresenter\WeaponListPresenter;
+use src\Presenter\TableBuilder\ArmorTableBuilder;
+use src\Presenter\TableBuilder\WeaponTableBuilder;
 use src\Presenter\TableBuilder\ToolTableBuilder;
-use src\Presenter\ToolListPresenter;
-use src\Presenter\WeaponListPresenter;
 
 class ItemRouter
 {
@@ -31,29 +29,29 @@ class ItemRouter
         if (class_exists($controllerClass)) {
             return match($typeSlug) {
                 'armor' => new $controllerClass(
-                    $factory->getRpgArmorQueryService(),
+                    $factory->getArmorReader(),
                     new ArmorListPresenter(),
-                    new PageArmorList(
+                    new PageList(
                         new TemplateRenderer(),
-                        new RpgArmorTableBuilder()
+                        new ArmorTableBuilder()
                     ),
                     new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
                 ),
                 'tool' => new $controllerClass(
-                    $factory->getToolQueryService(),
+                    $factory->getToolReader(),
                     new ToolListPresenter(),
-                    new PageToolList(
+                    new PageList(
                         new TemplateRenderer(),
                         new ToolTableBuilder()
                     ),
                     new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
                 ),
                 'weapon' => new $controllerClass(
-                    $factory->getRpgWeaponQueryService(),
+                    $factory->getWeaponReader(),
                     new WeaponListPresenter(),
-                    new PageWeaponList(
+                    new PageList(
                         new TemplateRenderer(),
-                        new RpgWeaponTableBuilder()
+                        new WeaponTableBuilder()
                     ),
                     new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
                 ),

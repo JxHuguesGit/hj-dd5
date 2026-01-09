@@ -22,7 +22,7 @@ use src\Constant\FieldType;
  * @property string $rangeSlug
  * @property string $rangeName
  */
-final class RpgWeapon extends Entity
+final class Weapon extends Entity
 {
     public const FIELDS = [
         Field::ID,

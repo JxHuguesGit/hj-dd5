@@ -3,12 +3,12 @@ namespace src\Entity;
 
 use src\Collection\Collection;
 use src\Constant\Field;
-use src\Controller\RpgWeapon as ControllerRpgWeapon;
+use src\Controller\Weapon as ControllerRpgWeapon;
 use src\Repository\RpgMasteryProficiency as RepositoryRpgMasteryProficiency;
 use src\Repository\RpgTypeDamage as RepositoryRpgTypeDamage;
-use src\Repository\RpgWeaponWeaponProficiency as RepositoryRpgWeaponWeaponProficiency;
+use src\Repository\WeaponWeaponProficiency as RepositoryRpgWeaponWeaponProficiency;
 
-class RpgWeapon extends Entity
+class Weapon extends Entity
 {
     public const TABLE = 'rpgWeapon';
     public const FIELDS = [

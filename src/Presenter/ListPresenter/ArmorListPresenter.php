@@ -1,8 +1,9 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\ListPresenter;
 
-use src\Domain\RpgArmor as DomainRpgArmor;
+use src\Constant\Constant;
 use src\Constant\Language;
+use src\Domain\Armor as DomainArmor;
 
 class ArmorListPresenter
 {
@@ -14,7 +15,7 @@ class ArmorListPresenter
     {
         $grouped = [];
         foreach ($armors as $armor) {
-            /** @var DomainRpgArmor $armor */
+            /** @var DomainArmor $armor */
             $grouped[$armor->armorTypeId][] = $armor;
         }
 
@@ -28,11 +29,11 @@ class ArmorListPresenter
         $result = [];
         foreach ($grouped as $typeId => $armorsByType) {
             $result[] = [
-                'typeLabel' => $typesLabel[$typeId] ?? 'Unknown',
-                'armors' => $armorsByType
+                Constant::CST_TYPELABEL => $typesLabel[$typeId] ?? '',
+                Constant::ARMORS => $armorsByType
             ];
         }
 
-        return ['items'=>$result];
+        return [Constant::CST_ITEMS=>$result];
     }
 }

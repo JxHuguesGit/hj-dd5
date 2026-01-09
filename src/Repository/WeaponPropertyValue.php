@@ -4,9 +4,9 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\RpgWeaponPropertyValue as DomainRpgWeaponPropertyValue;
+use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
 
-class RpgWeaponPropertyValue extends Repository
+class WeaponPropertyValue extends Repository
 {
     /*
     public const TABLE = Table::WPNPROPVALUE;

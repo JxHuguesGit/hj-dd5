@@ -3,7 +3,7 @@ namespace src\Entity;
 
 use src\Constant\Field;
 
-class RpgWeaponProficiency extends Entity
+class WeaponProficiency extends Entity
 {
     public const TABLE = 'rpgWeaponProficiency';
     public const FIELDS = [

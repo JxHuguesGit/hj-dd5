@@ -2,7 +2,7 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Controller\RpgArmor as ControllerRpgArmor;
+use src\Controller\Armor as ControllerArmor;
 
 class RpgArmor extends Entity
 {
@@ -36,9 +36,9 @@ class RpgArmor extends Entity
     protected float $goldPrice = 0.0;
     
     // TODO : Déplacer cette logique dans un EntityManager ou Factory plutôt que dans l'entité.
-    public function getController(): ControllerRpgArmor
+    public function getController(): ControllerArmor
     {
-        $controller = new ControllerRpgArmor();
+        $controller = new ControllerArmor();
         $controller->setField(self::TABLE, $this);
         return $controller;
     }

@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain;
 
-final class RpgWeaponPropertyValue
+final class WeaponPropertyValue
 {
     public string $slug;
 

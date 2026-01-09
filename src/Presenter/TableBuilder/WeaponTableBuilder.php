@@ -1,12 +1,12 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Utils\Table;
 use src\Utils\Utils;
 
-class RpgWeaponTableBuilder
+class WeaponTableBuilder implements TableBuilderInterface
 {
     public function build(iterable $groups, array $params=[]): Table
     {
@@ -43,14 +43,9 @@ class RpgWeaponTableBuilder
                 ]);
 
             foreach ($group['weapons'] as $weapon) {
-                /** @var RpgWeapon $weapon */
+                /** @var Weapon $weapon */
 
                 // Dégâts
-                /*
-                $damage = $weapon->damage;
-                $typeDamage = strtolower($weapon->getTypeDamage()->name);
-                $strDegats = $damage . ' ' . $typeDamage . 's';
-                */
                 $strDegats = $weapon->getDamageDie();
 
                 // Propriétés
@@ -64,9 +59,6 @@ class RpgWeaponTableBuilder
                 $strProps = 'TODO';
 
                 // Botte
-                /*
-                $mastery = $weapon->getMasteryProficiency()->name;
-                */
                 $mastery = $weapon->masteryName;
 
                 $table->addBodyRow([])

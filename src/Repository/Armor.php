@@ -5,15 +5,15 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\RpgArmor as DomainRpgArmor;
+use src\Domain\Armor as DomainArmor;
 
-class RpgArmor extends Repository
+class Armor extends Repository
 {
     public const TABLE = Table::ARMOR;
 
     public function getEntityClass(): string
     {
-        return DomainRpgArmor::class;
+        return DomainArmor::class;
     }
 
     /**
@@ -44,8 +44,8 @@ class RpgArmor extends Repository
     /**
      * Filtre les armures par catégorie (ex: 'armor')
      */
-    public function findByCategory(string $slug, array $orderBy=[]): Collection
+    public function findByCategory(array $orderBy=[]): Collection
     {
-        return $this->findAllWithItemAndType([Field::TYPE=>$slug], $orderBy);
+        return $this->findAllWithItemAndType([Field::TYPE=>Constant::CST_ARMOR], $orderBy);
     }
 }

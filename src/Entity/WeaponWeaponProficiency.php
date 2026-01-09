@@ -3,9 +3,9 @@ namespace src\Entity;
 
 use src\Constant\Field;
 use src\Repository\RpgTypeAmmunition as RepositoryRpgTypeAmmunition;
-use src\Repository\RpgWeaponProficiency as RepositoryRpgWeaponProficiency;
+use src\Repository\WeaponProficiency as RepositoryWeaponProficiency;
 
-class RpgWeaponWeaponProficiency extends Entity
+class WeaponWeaponProficiency extends Entity
 {
     public const TABLE = 'rpgWeaponWeaponProficiency';
     public const FIELDS = [
@@ -39,9 +39,9 @@ class RpgWeaponWeaponProficiency extends Entity
         return $this->getStrName();
     }
 
-    public function getWeaponProficiency(): ?RpgWeaponProficiency
+    public function getWeaponProficiency(): ?WeaponProficiency
     {
-        return $this->getRelatedEntity('wpnProfCache', RepositoryRpgWeaponProficiency::class, $this->weaponProficiencyId);
+        return $this->getRelatedEntity('wpnProfCache', RepositoryWeaponProficiency::class, $this->weaponProficiencyId);
     }
     
     public function getTypeAmmunition(): ?RpgTypeAmmunition
