@@ -4,10 +4,11 @@ namespace src\Entity;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgOrigin as ControllerRpgOrigin;
+use src\Domain\Tool;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgOriginAbility as RepositoryRpgOriginAbility;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
-use src\Repository\RpgTool as RepositoryRpgTool;
+use src\Repository\Tool as RepositoryTool;
 use src\Utils\Utils;
 use WP_Post;
 
@@ -65,9 +66,9 @@ class RpgOrigin extends Entity
         return $this->getRelatedEntity('featCache', RepositoryRpgFeat::class, $this->featId);
     }
     
-    public function getOriginTool(): ?RpgTool
+    public function getOriginTool(): ?Tool
     {
-        return $this->getRelatedEntity('toolCache', RepositoryRpgTool::class, $this->toolId);
+        return $this->getRelatedEntity('toolCache', RepositoryTool::class, $this->toolId);
     }
     
     public function getOriginSkills(): Collection

@@ -2,6 +2,7 @@
 namespace src\Presenter;
 
 use src\Collection\Collection;
+use src\Constant\Constant;
 
 class OriginListPresenter
 {
@@ -11,7 +12,7 @@ class OriginListPresenter
     public function present(Collection $origins): array
     {
         return [
-            'origins' => $origins
+            Constant::ORIGINS => $origins
         ];
     }
 }

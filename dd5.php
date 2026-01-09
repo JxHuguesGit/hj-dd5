@@ -31,8 +31,26 @@ set_exception_handler(function($e) {
     ExceptionRenderer::handle($e);
 });
 
-spl_autoload_register(function ($classname) {
+spl_autoload_register(function ($className) {
     // Définir le répertoire principal du plugin
+    $prefix = 'src\\';
+    $baseDir = plugin_dir_path(__FILE__) . 'src/';
+
+    if (!str_starts_with($className, $prefix)) {
+        return;
+    }
+
+    // Supprime le préfixe src\
+    $relativeClass = substr($className, strlen($prefix));
+
+    // Namespace → chemin de fichier
+    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+    }
+
+    /*
     $base_dir = substr(plugin_dir_path(__FILE__), 0, -1) . '\\src\\';
 
     $nbAntiSlash = substr_count($classname, '\\');
@@ -41,16 +59,13 @@ spl_autoload_register(function ($classname) {
     }
 
     list(, $directory, $file) = explode ('\\', $classname);
-    // Définir un tableau avec les répertoires dans lesquels les classes peuvent se trouver
-    $directories = ['Collection', 'Constant', 'Controller', 'Entity', 'Enum', 'Exception', 'Form', 'Repository', 'Utils'];
-
     $pathFile = $base_dir.$directory.'\\'.$file.'.php';
     $pathFile = str_replace('\\', '/', $pathFile);
     // Vérifier si le fichier existe et inclure le fichier si trouvé
     if (file_exists($pathFile)) {
         require_once $pathFile;
-        return;  // Une fois la classe incluse, on arrête la recherche
     }
+    */
 });
 
 function dd5Menu()

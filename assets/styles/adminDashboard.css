@@ -13,7 +13,7 @@ body.sidebar-collapse #wpbody-content > nav {
 body.sidebar-collapse .brand-text,
 body.sidebar-collapse .info,
 body.sidebar-collapse .main-sidebar .nav-link > p {
-	display: none;
+    display: none;
 }
 
 .table .row-striped-even > td {

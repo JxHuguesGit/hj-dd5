@@ -2,10 +2,10 @@
 namespace src\Entity;
 
 use src\Constant\Field;
-use src\Controller\RpgTool as ControllerRpgTool;
-use src\Repository\RpgTool as RepositoryRpgTool;
+use src\Controller\Tool as ControllerTool;
+use src\Repository\Tool as RepositoryTool;
 
-class RpgTool extends Entity
+class Tool extends Entity
 {
     public const TABLE = 'rpgTool';
     public const FIELDS = [
@@ -26,9 +26,9 @@ class RpgTool extends Entity
     protected int $parentId = 0;
 
     // TODO : à externaliser
-    public function getController(): ControllerRpgTool
+    public function getController(): ControllerTool
     {
-        $controller = new ControllerRpgTool();
+        $controller = new ControllerTool();
         $controller->setField(self::TABLE, $this);
         return $controller;
     }
@@ -40,10 +40,10 @@ class RpgTool extends Entity
             : $this->getName();
     }
 
-    public function getParent(): ?RpgTool
+    public function getParent(): ?Tool
     {
         return $this->parentId > 0
-            ? $this->getRelatedEntity('toolCache', RepositoryRpgTool::class, $this->parentId)
+            ? $this->getRelatedEntity('toolCache', RepositoryTool::class, $this->parentId)
             : null;
     }
 }

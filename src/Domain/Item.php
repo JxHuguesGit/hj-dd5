@@ -10,7 +10,7 @@ use src\Constant\FieldType;
  * @property float $weight
  * @property float $goldPrice
  */
-abstract class RpgItem extends Entity
+abstract class Item extends Entity
 {
     public const COMMON_FIELDS = [
         Field::NAME,

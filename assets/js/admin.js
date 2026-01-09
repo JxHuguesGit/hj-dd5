@@ -268,10 +268,23 @@ function showModal(type, title, content) {
     $('#modalBody').html(content);
     $('#infoModal').modal('show');
 }
+function showConfirmModal(type, title, content) {
+    $('#confirmModal .modal-content').removeClass('border-*').addClass('border-'+type);
+    $('#confirmModalLabel').html(title);
+    $('#confirmModalBody').removeClass('bg-*').addClass('bg-'+type).html(content);
+    $('#confirmModal').modal('show');
+}
 
 function ajaxActionClick(obj, e) {
-//    e.preventDefault();
-    loadCreationStepSide(obj.data('type'), obj.val());
+    if (obj.data('action')=='confirmCharacterDeletion') {
+        e.preventDefault();
+        $('#confirmModalButton').off('click').on('click', function() {
+            globalThis.location.href = obj.data('url');
+        });
+        showConfirmModal('danger', "Suppression d'un personnage", "Confirmez-vous la suppression définitive de ce personnage ?");
+    } else {
+        loadCreationStepSide(obj.data('type'), obj.val());
+    }
     return false;
 }
 

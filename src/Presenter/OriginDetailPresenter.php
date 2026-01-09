@@ -1,60 +1,52 @@
 <?php
 namespace src\Presenter;
 
-use src\Collection\Collection;
-use src\Domain\RpgFeat;
-use src\Domain\RpgOrigin;
-use src\Entity\RpgTool;
+use src\Constant\Constant;
+use src\Presenter\ViewModel\OriginPageView;
 
 class OriginDetailPresenter
 {
     public function present(
-        RpgOrigin $origin,
-        ?RpgOrigin $prev,
-        ?RpgOrigin $next,
-        ?RpgFeat $rpgFeat,
-        ?RpgTool $rpgTool,
-        Collection $originAbilities,
-        Collection $originSkills
+        OriginPageView $viewData
     ): array {
         // Capacités
         $abilities = [];
-        foreach ($originAbilities as $ability) {
+        foreach ($viewData->abilities as $ability) {
             $abilities[] = $ability->name;
         }
 
         // Compétences
         $skills = [];
-        foreach ($originSkills as $skill) {
+        foreach ($viewData->skills as $skill) {
             $skills[] = $skill->name;
         }
 
-        $wpPost = get_post($origin->postId);
+        $wpPost = get_post($viewData->origin->postId);
         $strContent = $wpPost->post_content;
         $strContent = preg_replace('/<p>|<\/p>/', '', $strContent);
-        $strItem = get_field('equipement', $wpPost->ID);
+        $strItem = get_field(Constant::CST_EQUIPMENT, $wpPost->ID);
 
         return [
-            'title' => $origin->name,
-            'slug'  => $origin->getSlug(),
+            Constant::CST_TITLE => $viewData->origin->name,
+            Constant::CST_SLUG  => $viewData->origin->getSlug(),
 
-            'abilities' => $abilities,
-            'skills'    => $skills,
+            Constant::CST_ABILITIES => $abilities,
+            Constant::CST_SKILLS    => $skills,
 
-            'description' => $strContent,
-            'originFeat' => $rpgFeat->name,
-            'featSlug' => $rpgFeat->getSlug(),
-            'originTool' => $rpgTool->getName(),
-            'originItem' => $strItem,
+            Constant::CST_DESCRIPTION => $strContent,
+            Constant::CST_FEATNAME    => $viewData->feat?->name,
+            Constant::CST_FEATSLUG    => $viewData->feat?->getSlug(),
+            Constant::CST_TOOLNAME    => $viewData->tool?->name,
+            Constant::CST_EQUIPMENT   => $strItem,
 
-            'prev' => $prev ? [
-                'slug' => $prev->getSlug(),
-                'name' => $prev->name,
+            Constant::CST_PREV => $viewData->previous ? [
+                Constant::CST_SLUG => $viewData?->previous->getSlug(),
+                Constant::CST_NAME => $viewData?->previous->name,
             ] : null,
 
-            'next' => $next ? [
-                'slug' => $next->getSlug(),
-                'name' => $next->name,
+            Constant::CST_NEXT => $viewData->next ? [
+                Constant::CST_SLUG => $viewData->next->getSlug(),
+                Constant::CST_NAME => $viewData->next->name,
             ] : null,
         ];
     }

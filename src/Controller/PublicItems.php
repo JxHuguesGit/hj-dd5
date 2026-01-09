@@ -18,21 +18,6 @@ class PublicItems extends PublicBase
     public function __construct()
     {
         $this->title = 'Le Matériel';
-
-        /*
-        $repoSub = RepositoryFactory::create(RepositoryRpgFeatType::class);
-        $this->subTypes = $repoSub->findAll();
-
-        $pageElement = (new PageFeats())->getPageElement();
-        PageRegistry::getInstance()->register($pageElement);
-        $this->pageElement = $pageElement;
-*/
-        //$repo = RepositoryFactory::create(RepositoryRpgFeat::class);
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     public function getContentPage(): string
@@ -41,22 +26,28 @@ class PublicItems extends PublicBase
         $registry = PageRegistry::getInstance();
         $menuHtml = (new MenuPresenter($registry->all(), 'items'))->render();
 
-        $data = [];
-
-        $data[] = [
-            'url' => '/items-armor',
-            'title' => 'Armures',
-            'description' => '',
-            'icon' => '',
-            'image' => '',
-        ];
-
-        $data[] = [
-            'url' => '/items-weapon',
-            'title' => 'Armes',
-            'description' => '',
-            'icon' => '',
-            'image' => '',
+        $data = [
+            [
+                'url' => '/items-armor',
+                'title' => 'Armures',
+                'description' => '',
+                'icon' => '',
+                'image' => '',
+            ],
+            [
+                'url' => '/items-weapon',
+                'title' => 'Armes',
+                'description' => '',
+                'icon' => '',
+                'image' => '',
+            ],
+            [
+                'url' => '/items-tool',
+                'title' => 'Outils',
+                'description' => '',
+                'icon' => '',
+                'image' => '',
+            ]
         ];
 
         $cardPresenter = new OrigineCardPresenter($data);

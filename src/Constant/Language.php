@@ -32,17 +32,21 @@ class Language
     public const LG_ORIGIN_FEAT     = 'Don d\'origine';
     public const LG_SPECIE          = 'Espèce';
     public const LG_FORCE           = 'Force';
+    public const LG_HISTORIQUES     = 'Les Historiques';
     public const LG_ORIGINS         = 'Origines';
     public const LG_TOOLS           = 'Outils';
+    public const LG_TOOLS_TITLE     = 'Les Outils';
     public const LG_WEIGHT          = 'Poids';
     public const LG_PRICE           = 'Prix';
     public const LG_PROPERTIES      = 'Propriétés';
     public const LG_SPELLS          = 'Sorts';
     public const LG_CREATURE_TYPE   = 'Type de créature';
     public const LG_SPEED           = 'Vitesse';
-    
-    
-    
+
+    public const LG_TOOL_DIVERS     = 'Outils divers';
+    public const LG_TOOL_GAMES      = 'Boîte de jeux';
+    public const LG_TOOL_MUSIC      = 'Instruments de Musique';
+    public const LG_TOOL_TOOLS      = 'Outils d\'artisan';
 
 
 }

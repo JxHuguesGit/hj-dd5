@@ -7,10 +7,13 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageArmorList;
+use src\Page\PageToolList;
 use src\Page\PageWeaponList;
 use src\Presenter\ArmorListPresenter;
 use src\Presenter\RpgArmorTableBuilder;
 use src\Presenter\RpgWeaponTableBuilder;
+use src\Presenter\TableBuilder\ToolTableBuilder;
+use src\Presenter\ToolListPresenter;
 use src\Presenter\WeaponListPresenter;
 
 class ItemRouter
@@ -33,6 +36,15 @@ class ItemRouter
                     new PageArmorList(
                         new TemplateRenderer(),
                         new RpgArmorTableBuilder()
+                    ),
+                    new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
+                ),
+                'tool' => new $controllerClass(
+                    $factory->getToolQueryService(),
+                    new ToolListPresenter(),
+                    new PageToolList(
+                        new TemplateRenderer(),
+                        new ToolTableBuilder()
                     ),
                     new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
                 ),

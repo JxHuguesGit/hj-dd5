@@ -7,6 +7,7 @@ use src\Domain\RpgOrigin;
 use src\Repository\RpgFeat;
 use src\Repository\RpgOriginAbility;
 use src\Repository\RpgOriginSkill;
+use src\Repository\Tool as RepositoryTool;
 use src\Service\RpgAbilityQueryService;
 use src\Service\RpgSkillQueryService;
 
@@ -19,6 +20,7 @@ final class RpgOriginService
     
     public function __construct(
         private RpgFeat $featRepository,
+        private RepositoryTool $toolRepository,
         private RpgOriginSkill $originSkillRepository,
         private RpgOriginAbility $originAbilityRepository,
         private RpgSkillQueryService $skillQueryService,
@@ -41,7 +43,7 @@ final class RpgOriginService
             return null;
         }
 
-        return null;//$this->toolRepository->find($origin->toolId);
+        return $this->toolRepository->find($origin->toolId);
     }
 
     public function getSkills(RpgOrigin $origin): Collection

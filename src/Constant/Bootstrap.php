@@ -14,6 +14,8 @@ class Bootstrap
     public const CSS_TABLE         = 'table';
     public const CSS_TEXT          = 'text';
     public const CSS_DNONE         = 'd-none';
+    public const CSS_BTN           = 'btn';
+    public const CSS_OUTLINE       = 'outline';
     
     public const CSS_ROW_PRIMARY_STRIPED_EVEN = 'row-primary-striped-even';
     public const CSS_ROW_PRIMARY_STRIPED_ODD  = 'row-primary-striped-odd';
@@ -30,4 +32,9 @@ class Bootstrap
     public const CSS_TEXT_CENTER   = self::CSS_TEXT.'-'.self::CSS_CENTER;
     public const CSS_TEXT_DARK     = self::CSS_TEXT.'-'.self::CSS_DARK;
     public const CSS_TEXT_END      = self::CSS_TEXT.'-'.self::CSS_END;
+
+    public const CSS_BTN_SM     = self::CSS_BTN.'-'.self::CSS_SM;
+    public const CSS_BTN_OUTLINE_DARK = self::CSS_BTN.'-'.self::CSS_OUTLINE.'-'.self::CSS_DARK;
+
+    public const CSS_WITH_MRGNTOP = 'withMarginTop';
 }

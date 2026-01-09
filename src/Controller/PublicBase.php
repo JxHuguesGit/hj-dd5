@@ -19,6 +19,11 @@ class PublicBase
         }
     }
 
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
     public function getContentHeader(): string
     { return ''; }
 

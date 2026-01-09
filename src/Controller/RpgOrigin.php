@@ -14,7 +14,7 @@ use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgOriginAbility as RepositoryRpgOriginAbility;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
 use src\Repository\RpgSkill as RepositoryRpgSkill;
-use src\Repository\RpgTool as RepositoryRpgTool;
+use src\Repository\Tool as RepositoryTool;
 use src\Service\RpgAbilityQueryService;
 use src\Service\RpgOriginQueryService;
 use src\Service\RpgOriginService;
@@ -62,6 +62,7 @@ class RpgOrigin extends Utilities
             $parts = [];
             $originService = new RpgOriginService(
                 new RepositoryRpgFeat(new QueryBuilder(), new QueryExecutor()),
+                new RepositoryTool(new QueryBuilder(), new QueryExecutor()),
                 new RepositoryRpgOriginSkill(new QueryBuilder(), new QueryExecutor()),
                 new RepositoryRpgOriginAbility(new QueryBuilder(), new QueryExecutor()),
                 new RpgSkillQueryService(new RepositoryRpgSkill(new QueryBuilder(), new QueryExecutor())),
@@ -86,9 +87,9 @@ class RpgOrigin extends Utilities
             }
             $strSkills = implode(', ', $parts);
 
-            //$origin->getTool()?->name ?? '';
-            $strTool = '';
-        
+            // L'outil rattaché
+            $tool = $originService->getTool($origin);
+            $strTool = $tool?->name ?? '';
         
             $objTable->addBodyRow([])
                 ->addBodyCell([Constant::CST_CONTENT => $strName])
@@ -126,7 +127,7 @@ class RpgOrigin extends Utilities
         $strSkills = implode(', ', $parts);
 
         // L'outil rattaché
-        $strTool = $this->rpgOrigin->getOriginTool()->getName();
+        $strTool = $this->rpgOrigin->getOriginTool()->name;
                 
         $objTable->addBodyRow()
             ->addBodyCell([Constant::CST_CONTENT=>$strName])
@@ -160,7 +161,7 @@ class RpgOrigin extends Utilities
         foreach ($originSkills as $originSkill) {
             $partSkills[] = $originSkill->getSkill()->getField(Field::NAME);
         }
-        $toolName = $this->rpgOrigin->getOriginTool()->getField(Field::NAME);
+        $toolName = $this->rpgOrigin->getOriginTool()->name;
         
         $returned = '<strong>Caractéristiques</strong> : '.implode(', ', $partAbilities).'.<br>';
         $returned .= '<strong>Don</strong> : '.$originName.'<br>';

@@ -7,7 +7,7 @@ use src\Constant\FieldType;
 /**
  * @property int $parentId
  */
-final class RpgTool extends RpgItem
+final class Tool extends Item
 {
     public const SPECIFIC_FIELDS = [
         Field::PARENTID,

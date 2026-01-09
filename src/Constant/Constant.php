@@ -38,6 +38,24 @@ class Constant
     public const CST_ID         = 'id';
     public const CST_CHECKED    = 'checked';
     public const CST_SELECTED   = 'selected';
+    public const CST_TITLE      = 'title';
+    public const CST_NEXT       = 'next';
+    public const CST_PREV       = 'prev';
+    public const CST_SLUG       = 'slug';
+
+    public const CST_ABILITIES   = 'abilities';
+    public const CST_SKILLS      = 'skills';
+    public const CST_ITEMS       = 'items';
+    public const CST_TOOL        = 'tool';
+    public const CST_TOOLS       = 'tools';
+    public const CST_FEATNAME    = 'featname';
+    public const CST_TOOLNAME    = 'toolname';
+    public const CST_FEATSLUG    = 'featSlug';
+    public const CST_TYPELABEL   = 'typeLabel';
+    public const CST_EQUIPMENT   = 'equipement';
+    public const CST_DESCRIPTION = 'description';
+
+    public const CST_EMPTY_SPAN = '<span></span>';
     
     /////////////////////////////////////////////////
     // Pagination

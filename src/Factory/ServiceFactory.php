@@ -12,7 +12,7 @@ use src\Repository\RpgOriginAbility;
 use src\Repository\RpgOriginSkill;
 use src\Repository\RpgSpecies;
 use src\Repository\RpgSkill;
-use src\Repository\RpgTool;
+use src\Repository\Tool as RepositoryTool;
 use src\Repository\RpgWeapon as RepositoryRpgWeapon;
 use src\Service\RpgAbilityService;
 use src\Service\RpgAbilityQueryService;
@@ -26,6 +26,7 @@ use src\Service\RpgSkillService;
 use src\Service\RpgSpeciesService;
 use src\Service\RpgSpeciesQueryService;
 use src\Service\RpgWeaponQueryService;
+use src\Service\ToolQueryService;
 
 final class ServiceFactory
 {
@@ -59,6 +60,12 @@ final class ServiceFactory
     {
         $repo = new RpgArmor($this->queryBuilder, $this->queryExecutor);
         return new RpgArmorQueryService($repo);
+    }
+
+    public function getToolQueryService(): ToolQueryService
+    {
+        $repo = new RepositoryTool($this->queryBuilder, $this->queryExecutor);
+        return new ToolQueryService($repo);
     }
     
     public function getRpgWeaponQueryService(): RpgWeaponQueryService
@@ -96,6 +103,7 @@ final class ServiceFactory
     public function getRpgOriginService(): RpgOriginService
     {
         $featRepo     = new RpgFeat($this->queryBuilder, $this->queryExecutor);
+        $toolRepo     = new RepositoryTool($this->queryBuilder, $this->queryExecutor);
         $originSkillRepo    = new RpgOriginSkill($this->queryBuilder, $this->queryExecutor);
         $originAbilityRepo  = new RpgOriginAbility($this->queryBuilder, $this->queryExecutor);
         
@@ -104,7 +112,7 @@ final class ServiceFactory
         $abilityRepo  = new RpgAbility($this->queryBuilder, $this->queryExecutor);
         $abilityQueryService = new RpgAbilityQueryService($abilityRepo);
         
-        return new RpgOriginService($featRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
+        return new RpgOriginService($featRepo, $toolRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
     }
     
     public function getRpgSpeciesService(): RpgSpeciesService

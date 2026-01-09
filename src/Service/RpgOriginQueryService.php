@@ -18,8 +18,8 @@ final class RpgOriginQueryService
     {
         return $this->originRepository->find($id);
     }
-    
-    public function getAllOrigins(array $order=[Field::NAME=>'ASC']): Collection
+
+    public function getAllOrigins(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->originRepository->findAll($order);
     }

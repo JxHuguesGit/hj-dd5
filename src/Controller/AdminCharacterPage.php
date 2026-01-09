@@ -19,7 +19,7 @@ use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
 use src\Repository\RpgSkill as RepositoryRpgSkill;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
-use src\Repository\RpgTool as RepositoryRpgTool;
+use src\Repository\Tool as RepositoryTool;
 use src\Utils\Session;
 
 class AdminCharacterPage extends AdminPage
@@ -89,7 +89,7 @@ class AdminCharacterPage extends AdminPage
             'originSkillRepo' => new RepositoryRpgOriginSkill($qb, $qe),
             'skillRepo'       => new RepositoryRpgSkill($qb, $qe),
             'speciesRepo'     => new RepositoryRpgSpecies($qb, $qe),
-            'toolRepo'        => new RepositoryRpgTool($qb, $qe),
+            'toolRepo'        => new RepositoryTool($qb, $qe),
         ];
     }
 }
