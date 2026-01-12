@@ -7,7 +7,7 @@ use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Page\PageOrigine;
 use src\Presenter\MenuPresenter;
-use src\Presenter\OriginDetailPresenter;
+use src\Presenter\Detail\OriginDetailPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Service\OriginPageService;

@@ -1,8 +1,12 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
 use src\Constant\Template;
 use src\Renderer\TemplateRenderer;
+use src\Utils\Html;
+use src\Utils\UrlGenerator;
 
 class PageSpecie
 {
@@ -12,33 +16,33 @@ class PageSpecie
     
     public function render(string $menuHtml, array $data): string
     {
-        $prevHtml = $data['prev']
-            ? sprintf(
-                '<a class="btn btn-sm btn-outline-dark" href="/specie-%s">&lt; %s</a>',
-                $data['prev']['slug'],
-                $data['prev']['name']
+        $prevHtml = $data[Constant::CST_PREV]
+            ? Html::getLink(
+                '&lt; '.$data[Constant::CST_PREV][Constant::CST_NAME],
+                UrlGenerator::specie($data[Constant::CST_PREV][Constant::CST_SLUG]),
+                implode(' ', [Bootstrap::CSS_BTN, Bootstrap::CSS_BTN_SM, Bootstrap::CSS_BTN_OUTLINE_DARK])
             )
-            : '<span></span>';
+            : Constant::CST_EMPTY_SPAN;
 
-        $nextHtml = $data['next']
-            ? sprintf(
-                '<a class="btn btn-sm btn-outline-dark" href="/specie-%s">%s &gt;</a>',
-                $data['next']['slug'],
-                $data['next']['name']
+        $nextHtml = $data[Constant::CST_NEXT]
+            ? Html::getLink(
+                $data[Constant::CST_NEXT][Constant::CST_NAME].' &gt;',
+                UrlGenerator::specie($data[Constant::CST_NEXT][Constant::CST_SLUG]),
+                implode(' ', [Bootstrap::CSS_BTN, Bootstrap::CSS_BTN_SM, Bootstrap::CSS_BTN_OUTLINE_DARK])
             )
-            : '<span></span>';
+            : Constant::CST_EMPTY_SPAN;
 
         $detailCard = $this->renderer->render(
             Template::SPECIE_DETAIL_CARD,
             [
-                $data['title'],
-                $data['description'],
+                $data[Constant::CST_TITLE],
+                $data[Constant::CST_DESCRIPTION],
                 $prevHtml,
                 $nextHtml,
-                $data['creatureType'],
-                $data['sizeCategory'],
-                $data['speed'],
-                $data['powers'],
+                $data[Constant::CST_CREATURE_TYPE],
+                $data[Constant::CST_SIZE_CATEGORY],
+                $data[Constant::CST_SPEED],
+                $data[Constant::CST_POWERS],
             ]
         );
 

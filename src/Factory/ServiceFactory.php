@@ -4,21 +4,24 @@ namespace src\Factory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\Ability as RepositoryAbility;
-use src\Repository\Armor as RepositoryArmor;
 use src\Repository\Feat as RepositoryFeat;
+use src\Repository\Power as RepositoryPower;
 use src\Repository\Origin as RepositoryOrigin;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
 use src\Repository\Species as RepositorySpecies;
+use src\Repository\SpeciePower as RepositorySpeciePower;
 use src\Repository\Skill as RepositorySkill;
 use src\Repository\Tool as RepositoryTool;
 use src\Repository\Weapon as RepositoryWeapon;
+use src\Service\FeatService;
 use src\Service\OriginService;
-use src\Service\AbilityService;
+use src\Service\SpecieService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\PowerReader;
 use src\Service\Reader\SkillReader;
 use src\Service\Reader\SpecieReader;
 use src\Service\Reader\ToolReader;
@@ -54,13 +57,8 @@ final class ServiceFactory
     
     public function getArmorReader(): ArmorReader
     {
-        $repositoryFactory = new RepositoryFactory(
-            $this->queryBuilder,
-            $this->queryExecutor
-        );
-
+        $repositoryFactory = new RepositoryFactory($this->queryBuilder, $this->queryExecutor);
         $readerFactory = new ReaderFactory($repositoryFactory);
-
         return $readerFactory->armor();
     }
 
@@ -83,7 +81,7 @@ final class ServiceFactory
     }
 
 
-    public function getRpgAbilityService(): AbilityReader
+    public function getAbilityReader(): AbilityReader
     {
         $repo = new RepositoryAbility($this->queryBuilder, $this->queryExecutor);
         return new AbilityReader($repo);
@@ -102,5 +100,19 @@ final class ServiceFactory
         $abilityQueryService = new AbilityReader($abilityRepo);
         
         return new OriginService($featRepo, $toolRepo, $originSkillRepo, $originAbilityRepo, $skillQueryService, $abilityQueryService);
+    }
+
+    public function feat(): FeatService
+    {
+        return new FeatService();
+    }
+
+    public function specie(): SpecieService
+    {
+        $speciePowerRepo  = new RepositorySpeciePower($this->queryBuilder, $this->queryExecutor);
+        $powerRepo  = new RepositoryPower($this->queryBuilder, $this->queryExecutor);
+        $powerReader = new PowerReader($powerRepo);
+
+        return new SpecieService($speciePowerRepo, $powerReader);
     }
 }

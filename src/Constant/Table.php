@@ -13,6 +13,7 @@ class Table
     public const ORIGINABILITY = 'rpgOriginAbility';
     public const ORIGINSKILL   = 'rpgOriginSkill';
     public const SKILL         = 'rpgSkill';
+    public const SPECIEPOWER   = 'rpgSpeciesPower';
     public const SPECIES       = 'rpgSpecies';
     public const TOOL          = 'rpgTool';
     public const TYPEDAMAGE    = 'rpgTypeDamage';

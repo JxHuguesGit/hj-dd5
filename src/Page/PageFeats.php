@@ -13,7 +13,7 @@ class PageFeats
             'title' => 'Dons',
             'description' => "Les dons sont des capacités spéciales que votre personnage peut acquérir, offrant des avantages uniques et personnalisant davantage son style de jeu.",
             'url' => '/feats',
-            'order' => 40,
+            'order' => 20,
             'parent' => 'home',
         ]);
     }

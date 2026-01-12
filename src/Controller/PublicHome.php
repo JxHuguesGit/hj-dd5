@@ -23,24 +23,20 @@ class PublicHome extends PublicBase
     public function getContentPage(): string
     {
         $registry = PageRegistry::getInstance();
-        
-        $menuPresenter = new MenuPresenter($registry->all());
+        $menuHtml = (new MenuPresenter($registry->all()))->render();
+
         $pages = array_filter(
             $registry->all(),
-            fn($el) => $el->getSlug() !== 'home'
+            fn($el) => $el->getSlug() !== 'home' && $el->getParentSlug() === 'home'
         );
-        $pages = array_filter(
-            $pages,
-            fn($el) => $el->getParentSlug() === 'home'
-        );
+
         $cardPresenter = new CardPresenter($pages);
-        
-        $mainMenu = $menuPresenter->render();
         $contentGrid = $cardPresenter->render();
+        
         $sectionGrid = $this->getRender(Template::HOME_PAGE, [$contentGrid]);
         
         // Ici on renvoie le template de la home
-        return $this->getRender(Template::MAIN_PAGE, [$mainMenu, $sectionGrid]);
+        return $this->getRender(Template::MAIN_PAGE, [$menuHtml, $sectionGrid]);
     }
 }
 

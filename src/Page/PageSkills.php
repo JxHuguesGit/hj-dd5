@@ -13,7 +13,7 @@ class PageSkills
             'title' => 'Compétences',
             'description' => "Les compétences sont des aptitudes liées aux caractéristiques qui permettent d'accomplir certaines actions spécifiques.",
             'url' => '/skills',
-            'order' => 60,
+            'order' => 10,
             'parent' => 'home',
         ]);
     }

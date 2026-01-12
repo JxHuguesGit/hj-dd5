@@ -17,9 +17,13 @@ class Constant
     public const ARMORS   = 'armors';
     public const WEAPONS  = 'weapons';
     public const SPECIES  = 'species';
+    public const GENERAL  = 'general';
+    public const EPIC     = 'epic';
+    public const COMBAT   = 'combat';
     public const SKILLS   = 'skills';
     public const FEATS    = 'feats';
     public const MONSTERS = 'monsters';
+    public const ORIGIN   = 'origin';
     public const ORIGINS  = 'origins';
     public const SPELLS   = 'spells';
 
@@ -58,12 +62,18 @@ class Constant
     public const CST_FEATNAME    = 'featname';
     public const CST_TOOLNAME    = 'toolname';
     public const CST_FEATSLUG    = 'featSlug';
+    public const CST_FEATTYPE    = 'featType';
     public const CST_TYPELABEL   = 'typeLabel';
     public const CST_EQUIPMENT   = 'equipement';
     public const CST_DESCRIPTION = 'description';
-    public const CST_CREATURE_TYPE = 'creatureType';
+    public const CST_CREATURE_TYPE = 'type_de_creature';
     public const CST_SIZE_CATEGORY = 'categorie_de_taille';
     public const CST_SPEED        = 'vitesse';
+    public const CST_POWERS       = 'powers';
+    public const CST_PREREQUIS    = 'prerequis';
+    public const CST_PREREQUIS_NIV4 = ' (prérequis : niveau 4 ou supérieur';
+    public const CST_PREREQUIS_ASDC = ' (prérequis : aptitude Style de combat)';
+    public const CST_PREREQUIS_NIV19 = ' (prérequis : niveau 19 ou supérieur';
 
     public const CST_EMPTY_SPAN = '<span></span>';
     

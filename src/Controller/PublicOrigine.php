@@ -4,11 +4,10 @@ namespace src\Controller;
 use src\Constant\Constant;
 use src\Domain\Origin as DomainOrigin;
 use src\Page\PageOrigine;
+use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Reader\OriginReader;
-use src\Service\OriginService;
 use src\Service\OriginPageService;
-use src\Presenter\OriginDetailPresenter;
 
 class PublicOrigine extends PublicBase
 {
@@ -32,7 +31,6 @@ class PublicOrigine extends PublicBase
         $pageView = $this->pageService->build($this->origin);
         $viewData = $this->presenter->present($pageView);
         $viewData[Constant::CST_TITLE] = $this->getTitle();
-
         return $this->page->render($menu, $viewData);
     }
 }

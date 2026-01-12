@@ -3,6 +3,7 @@ namespace src\Service;
 
 use src\Constant\Field;
 use src\Collection\Collection;
+use src\Domain\Ability as DomainAbility;
 use src\Domain\Origin as DomainOrigin;
 use src\Domain\Skill as DomainSkill;
 use src\Repository\Feat as RepositoryFeat;
@@ -14,7 +15,7 @@ use src\Service\Reader\SkillReader;
 
 final class OriginService
 {
-    /** @var array<int, RpgAbility> */
+    /** @var array<int, DomainAbility> */
     private array $abilityCache = [];
     /** @var array<int, DomainSkill> */
     private array $skillCache = [];

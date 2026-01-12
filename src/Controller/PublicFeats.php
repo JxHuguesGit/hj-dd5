@@ -4,8 +4,10 @@ namespace src\Controller;
 use src\Collection\Collection;
 use src\Constant\Template;
 use src\Factory\RepositoryFactory;
+use src\Model\PageElement;
 use src\Model\PageRegistry;
 use src\Page\PageFeats;
+use src\Presenter\CardPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\OrigineCardPresenter;
 use src\Repository\RpgFeatType as RepositoryRpgFeatType;
@@ -24,8 +26,6 @@ class PublicFeats extends PublicBase
         $pageElement = (new PageFeats())->getPageElement();
         PageRegistry::getInstance()->register($pageElement);
         $this->pageElement = $pageElement;
-
-        //$repo = RepositoryFactory::create(RepositoryRpgFeat::class);
     }
 
     public function getTitle(): string
@@ -41,16 +41,14 @@ class PublicFeats extends PublicBase
 
         $data = [];
         foreach ($this->subTypes as $subType) {
-            $data[] = [
+            $data[] = new PageElement([
                 'url' => '/feats-'.$subType->getSlug(),
                 'title' => $subType->getName(),
                 'description' => '',//$subType->getExcerpt(),
-                'icon' => '',//$subType->getIcon(),
-                'image' => '',//$subType->getImage(),
-            ];
+            ]);
         }
 
-        $cardPresenter = new OrigineCardPresenter($data);
+        $cardPresenter = new CardPresenter($data);
         $contentHtml = $cardPresenter->render();
 
         $contentSection = $this->getRender(Template::CATEGORY_PAGE, [$this->getTitle(), $contentHtml]);

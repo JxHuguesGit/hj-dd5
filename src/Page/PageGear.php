@@ -13,7 +13,7 @@ class PageGear
             'title' => 'Équipement',
             'description' => 'Découvrez l\'équipement jouable.',
             'url' => '/item',
-            'order' => 60,
+            'order' => 50,
         ]);
     }
 

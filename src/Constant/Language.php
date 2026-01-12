@@ -12,6 +12,7 @@ class Language
     public const LG_ARM_MDM_DONDOFF = 'Armures intermédiaires (s\'enfile en 5 minutes, se retire en 1 minute)';
     public const LG_ARM_HVY_DONDOFF = 'Armures lourdes (s\'enfile en 10 minutes, se retire en 5 minutes)';
     public const LG_ARM_SHD_DONDOFF = 'Boucliers (s\'enfile ou se retire au prix de l\'action Utilisation)';
+     
     public const LG_WEAPON_MARTIAL  = ' de guerre';
     public const LG_WEAPON_SIMPLE   = ' courantes';
     public const LG_WEAPON_MELEE    = ' de corps à corps';
@@ -34,6 +35,9 @@ class Language
     public const LG_STEALTH         = 'Discrétion';
     public const LG_FEATS           = 'Dons';
     public const LG_ORIGIN_FEAT     = 'Don d\'origine';
+    public const LG_GENERAL_FEAT    = 'Don général';
+    public const LG_CBT_STYLE_FEAT  = 'Don de Style de combat';
+    public const LG_CBT_STYLE_EPIC  = 'Don de faveur épique';
     public const LG_SPECIE          = 'Espèce';
     public const LG_FORCE           = 'Force';
     public const LG_HISTORIQUES     = 'Les Historiques';

@@ -1,14 +1,18 @@
 <?php
-namespace src\Presenter;
+namespace src\Presenter\Detail;
 
 use src\Constant\Constant;
 use src\Presenter\ViewModel\OriginPageView;
+use src\Service\WpPostService;
 
 class OriginDetailPresenter
 {
     public function present(
         OriginPageView $viewData
     ): array {
+        $wpPostService = new WpPostService();
+        $wpPost = $wpPostService->getById($viewData->origin->postId);
+
         // Capacités
         $abilities = [];
         foreach ($viewData->abilities as $ability) {
@@ -21,10 +25,9 @@ class OriginDetailPresenter
             $skills[] = $skill->name;
         }
 
-        $wpPost = get_post($viewData->origin->postId);
         $strContent = $wpPost->post_content;
         $strContent = preg_replace('/<p>|<\/p>/', '', $strContent);
-        $strItem = get_field(Constant::CST_EQUIPMENT, $wpPost->ID);
+        $strItem = $wpPostService->getField(Constant::CST_EQUIPMENT);
 
         return [
             Constant::CST_TITLE => $viewData->origin->name,
@@ -45,8 +48,8 @@ class OriginDetailPresenter
             ] : null,
 
             Constant::CST_NEXT => $viewData->next ? [
-                Constant::CST_SLUG => $viewData->next->getSlug(),
-                Constant::CST_NAME => $viewData->next->name,
+                Constant::CST_SLUG => $viewData?->next->getSlug(),
+                Constant::CST_NAME => $viewData?->next->name,
             ] : null,
         ];
     }

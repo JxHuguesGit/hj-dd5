@@ -2,7 +2,9 @@
 namespace src\Controller;
 
 use src\Constant\Template;
+use src\Model\PageElement;
 use src\Model\PageRegistry;
+use src\Presenter\CardPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\OrigineCardPresenter;
 
@@ -19,31 +21,21 @@ class PublicItems extends PublicBase
         $registry = PageRegistry::getInstance();
         $menuHtml = (new MenuPresenter($registry->all(), 'items'))->render();
 
-        $data = [
-            [
-                'url' => '/items-armor',
-                'title' => 'Armures',
-                'description' => '',
-                'icon' => '',
-                'image' => '',
-            ],
-            [
-                'url' => '/items-weapon',
-                'title' => 'Armes',
-                'description' => '',
-                'icon' => '',
-                'image' => '',
-            ],
-            [
-                'url' => '/items-tool',
-                'title' => 'Outils',
-                'description' => '',
-                'icon' => '',
-                'image' => '',
-            ]
-        ];
+        $data = [];
+        $data[] = new PageElement([
+            'url' => '/feats-armor',
+            'title' => 'Armures',
+        ]);
+        $data[] = new PageElement([
+            'url' => '/feats-weapon',
+            'title' => 'Armes',
+        ]);
+        $data[] = new PageElement([
+            'url' => '/feats-tool',
+            'title' => 'Outils',
+        ]);
 
-        $cardPresenter = new OrigineCardPresenter($data);
+        $cardPresenter = new CardPresenter($data);
         $contentHtml = $cardPresenter->render();
 
         $contentSection = $this->getRender(Template::CATEGORY_PAGE, [$this->getTitle(), $contentHtml]);

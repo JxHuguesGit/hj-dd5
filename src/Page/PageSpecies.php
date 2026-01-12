@@ -13,7 +13,7 @@ class PageSpecies
             'title' => 'Espèces',
             'description' => "Les peuples du multivers de D&D proviennent de mondes très différents et comprennent maintes formes de vie intelligentes. L'espèce d'un personnage-joueur est l'ensemble des traits de jeu que l'aventurier reçoit en choisissant d'incarner l'une ou l'autre de ces formes de vie.",
             'url' => '/species',
-            'order' => 20,
+            'order' => 30,
             'parent' => 'home',
         ]);
     }

@@ -10,11 +10,12 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageSpecie;
-use src\Presenter\SpeciesDetailPresenter;
+use src\Presenter\Detail\SpeciesDetailPresenter;
+use src\Service\SpeciePageService;
 
 class SpecieRouter
 {
-    public function match(string $path, ReaderFactory $factory): ?PublicBase
+    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une espèce individuelle ---
@@ -25,6 +26,7 @@ class SpecieRouter
         return new PublicSpecie(
             $matches[1] ?? '',
             $factory->species(),
+            new SpeciePageService($serviceFactory->specie(), $factory->species()),
             new SpeciesDetailPresenter(),
             new PageSpecie(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES),

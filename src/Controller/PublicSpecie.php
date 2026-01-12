@@ -1,11 +1,13 @@
 <?php
 namespace src\Controller;
 
+use src\Constant\Constant;
 use src\Domain\Specie as DomainSpecies;
 use src\Page\PageSpecie;
 use src\Presenter\MenuPresenter;
 use src\Service\Reader\SpecieReader;
-use src\Presenter\SpeciesDetailPresenter;
+use src\Service\SpeciePageService;
+use src\Presenter\Detail\SpeciesDetailPresenter;
 
 class PublicSpecie extends PublicBase
 {
@@ -13,12 +15,13 @@ class PublicSpecie extends PublicBase
 
     public function __construct(
         private string $slug,
-        private SpecieReader $speciesQueryService,
+        private SpecieReader $specieReader,
+        private SpeciePageService $pageService,
         private SpeciesDetailPresenter $presenter,
         private PageSpecie $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->species = $speciesQueryService->getSpeciesBySlugOrFail($this->slug);
+        $this->species = $this->specieReader->getSpeciesBySlugOrFail($this->slug);
         $this->title = $this->species->name;
     }
     
@@ -29,14 +32,10 @@ class PublicSpecie extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render('species');
-        $nav = $this->speciesQueryService->getPreviousAndNext($this->species);
-        $viewData = $this->presenter->present(
-            $this->species,
-            $nav['prev'],
-            $nav['next'],
-        );
-        $viewData['title'] = $this->getTitle();
+        $menu = $this->menuPresenter->render(Constant::SPECIES);
+        $pageView = $this->pageService->build($this->species);
+        $viewData = $this->presenter->present($pageView);
+        $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }

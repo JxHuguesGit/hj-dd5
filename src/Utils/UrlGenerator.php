@@ -21,6 +21,11 @@ final class UrlGenerator
         return self::build(Routes::FEAT_PREFIX, $slug, $absolute);
     }
 
+    public static function feats(string $slug, bool $absolute = false): string
+    {
+        return self::build(Routes::FEATS_PREFIX, $slug, $absolute);
+    }
+
     public static function skill(string $slug, bool $absolute = false): string
     {
         return self::build(Routes::SKILL_PREFIX, $slug, $absolute);

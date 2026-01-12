@@ -9,11 +9,12 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageFeat;
-use src\Presenter\FeatDetailPresenter;
+use src\Presenter\Detail\FeatDetailPresenter;
+use src\Service\FeatPageService;
 
 class FeatRouter
 {
-    public function match(string $path, ReaderFactory $factory): ?PublicBase
+    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de dons ---
@@ -30,6 +31,7 @@ class FeatRouter
             return new PublicFeat(
                 $matches[1],
                 $factory->feat(),
+                new FeatPageService($factory->feat(), $serviceFactory->feat()),
                 new FeatDetailPresenter(),
                 new PageFeat(new TemplateRenderer()),
                 new MenuPresenter(PageRegistry::getInstance()->all(), 'feats')
