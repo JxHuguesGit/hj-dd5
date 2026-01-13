@@ -11,6 +11,7 @@ use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
 use src\Repository\Species as RepositorySpecies;
 use src\Repository\SpeciePower as RepositorySpeciePower;
+use src\Repository\SubSkill as RepositorySubSkill;
 use src\Repository\Skill as RepositorySkill;
 use src\Repository\Tool as RepositoryTool;
 use src\Repository\Weapon as RepositoryWeapon;
@@ -26,6 +27,7 @@ use src\Service\Reader\SkillReader;
 use src\Service\Reader\SpecieReader;
 use src\Service\Reader\ToolReader;
 use src\Service\Reader\WeaponReader;
+use src\Service\SkillService;
 
 final class ServiceFactory
 {
@@ -114,5 +116,12 @@ final class ServiceFactory
         $powerReader = new PowerReader($powerRepo);
 
         return new SpecieService($speciePowerRepo, $powerReader);
+    }
+
+    public function skill(): SkillService
+    {
+        $subSkillRepo  = new RepositorySubSkill($this->queryBuilder, $this->queryExecutor);
+
+        return new SkillService($subSkillRepo);
     }
 }

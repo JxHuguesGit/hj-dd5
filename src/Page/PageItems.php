@@ -1,6 +1,7 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageItems
@@ -12,7 +13,7 @@ class PageItems
             'icon' => 'fa-solid fa-scroll',
             'title' => 'Matériel',
             'description' => "Tout l'équipement dont a besoin un aventurier.",
-            'url' => '/items',
+            'url' => Routes::ITEMS_PREFIX,
             'order' => 50,
             'parent' => 'home',
         ]);

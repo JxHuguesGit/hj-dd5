@@ -1,6 +1,8 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageItemArmor
@@ -12,7 +14,7 @@ class PageItemArmor
             'icon' => 'fa-solid fa-shield-halved',
             'title' => 'Armures',
             'description' => 'Les armures disponibles pour les aventuriers.',
-            'url' => '/items-armor',
+            'url' => Routes::ITEMS_PREFIX.Constant::CST_ARMOR,
             'order' => 51,
             'parent' => 'items',
         ]);

@@ -47,7 +47,7 @@ class MenuPresenter
                     </a>
                 </li>',
                 $activeClass,
-                $el->getUrl(),
+                trim($el->getUrl(), '-'),
                 //$el->getIcon() ? '<i class="' . $el->getIcon() . '"></i>' : '',
                 '',
                 htmlspecialchars($el->getTitle())

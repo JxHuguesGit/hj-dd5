@@ -4,6 +4,7 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Feat as DomainFeat;
 use src\Domain\Origin as DomainOrigin;
 use src\Exception\NotFoundException;
 use src\Repository\Origin as RepositoryOrigin;
@@ -28,6 +29,11 @@ final class OriginReader
     {
         $origin = $this->originRepository->findBy([Field::SLUG=>$slug]);
         return $origin?->first() ?? null;
+    }
+
+    public function getOriginsByFeat(DomainFeat $feat): Collection
+    {
+        return $this->originRepository->findBy([Field::FEATID=>$feat->id]);
     }
 
     public function getOriginBySlugOrFail(string $slug): ?DomainOrigin

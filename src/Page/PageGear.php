@@ -1,6 +1,7 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageGear
@@ -12,7 +13,7 @@ class PageGear
             'icon' => 'fa-solid fa-box-open',
             'title' => 'Équipement',
             'description' => 'Découvrez l\'équipement jouable.',
-            'url' => '/item',
+            'url' => Routes::ITEM_PREFIX,
             'order' => 50,
         ]);
     }

@@ -9,7 +9,10 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageFeat;
+use src\Page\PageList;
 use src\Presenter\Detail\FeatDetailPresenter;
+use src\Presenter\ListPresenter\FeatListPresenter;
+use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Service\FeatPageService;
 
 class FeatRouter
@@ -19,10 +22,18 @@ class FeatRouter
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de dons ---
         if (preg_match('#^feats-(.+)$#', $path, $matches)) {
-            $typeSlug = $matches[1];
+            $typeSlug = ucfirst($matches[1]);
             $controllerClass = 'src\\Controller\\PublicFeat' . ucfirst($typeSlug);
             if (class_exists($controllerClass)) {
-                return new $controllerClass();
+                return new $controllerClass(
+                    $factory->feat(),
+                    new FeatListPresenter(),
+                    new PageList(
+                        new TemplateRenderer(),
+                        new FeatTableBuilder($factory->origin())
+                    ),
+                    new MenuPresenter(PageRegistry::getInstance()->all(), 'feats')
+                );
             }
         }
 

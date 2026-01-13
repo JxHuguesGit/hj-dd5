@@ -1,12 +1,13 @@
 <?php
 namespace src\Controller;
 
+use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Constant\Template;
 use src\Model\PageElement;
 use src\Model\PageRegistry;
 use src\Presenter\CardPresenter;
 use src\Presenter\MenuPresenter;
-use src\Presenter\OrigineCardPresenter;
 
 class PublicItems extends PublicBase
 {
@@ -23,16 +24,16 @@ class PublicItems extends PublicBase
 
         $data = [];
         $data[] = new PageElement([
-            'url' => '/feats-armor',
-            'title' => 'Armures',
+            'url' => Routes::ITEMS_PREFIX.Constant::CST_ARMOR,
+            Constant::CST_TITLE => 'Armures',
         ]);
         $data[] = new PageElement([
-            'url' => '/feats-weapon',
-            'title' => 'Armes',
+            'url' => Routes::ITEMS_PREFIX.Constant::CST_WEAPON,
+            Constant::CST_TITLE => 'Armes',
         ]);
         $data[] = new PageElement([
-            'url' => '/feats-tool',
-            'title' => 'Outils',
+            'url' => Routes::ITEMS_PREFIX.Constant::CST_TOOL,
+            Constant::CST_TITLE => 'Outils',
         ]);
 
         $cardPresenter = new CardPresenter($data);

@@ -2,54 +2,42 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
+use src\Constant\Constant;
+use src\Constant\Language;
 use src\Domain\Feat as DomainFeat;
-use src\Utils\Utils;
 
 class FeatListPresenter
 {
-    private Collection $feats;
-    private Utils $utils;
-
-    public function __construct(Collection $feats)
+    public function present(Collection $feats): array
     {
-        $this->feats = $feats;
-        $this->utils = new Utils();
-    }
-
-    public function render(): string
-    {
-        if ($this->feats->isEmpty()) {
-            return '<p>Aucun don disponible dans cette catégorie.</p>';
+        $grouped = [];
+        foreach ($feats as $feat) {
+            /** @var DomainFeat $feat */
+            $grouped[$feat->featTypeId][] = $feat;
         }
 
-        $html = '<div class="row gy-4">';
+        $typesSlug = [
+            1 => Constant::ORIGIN,
+            2 => Constant::GENERAL,
+            3 => Constant::COMBAT,
+            4 => Constant::EPIC,
+        ];
+        $typesLabel = [
+            1 => Language::LG_ORIGIN_FEATS,
+            2 => Language::LG_GENERAL_FEATS,
+            3 => Language::LG_CBT_STYLE_FEATS,
+            4 => Language::LG_CBT_STYLE_EPICS,
+        ];
 
-        foreach ($this->feats as $feat) {
-            $html .= $this->renderCard($feat);
+        $result = [];
+        foreach ($grouped as $typeId => $featsByType) {
+            $result[] = [
+                Constant::CST_TYPELABEL => $typesLabel[$typeId] ?? '',
+                Constant::CST_SLUG => $typesSlug[$typeId] ?? '',
+                Constant::FEATS => $featsByType
+            ];
         }
 
-        $html .= '</div>';
-
-        return $html;
-    }
-
-    private function renderCard(DomainFeat $feat): string
-    {
-        $name = htmlspecialchars($feat->name);
-        $desc = 'TODO';//nl2br(htmlspecialchars($feat->getShortDescription() ?? ''));
-        $url  = '/don-' . $feat->getSlug();
-
-        return <<<HTML
-<div class="col-12 col-md-6">
-    <a href="{$url}" class="text-decoration-none text-dark">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">{$name}</h5>
-                <p class="card-text">{$desc}</p>
-            </div>
-        </div>
-    </a>
-</div>
-HTML;
+        return [Constant::CST_ITEMS=>$result];
     }
 }

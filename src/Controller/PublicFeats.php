@@ -2,58 +2,33 @@
 namespace src\Controller;
 
 use src\Collection\Collection;
-use src\Constant\Template;
-use src\Factory\RepositoryFactory;
-use src\Model\PageElement;
-use src\Model\PageRegistry;
-use src\Page\PageFeats;
-use src\Presenter\CardPresenter;
+use src\Constant\Constant;
+use src\Constant\Field;
+use src\Constant\Language;
+use src\Page\PageList;
+use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\MenuPresenter;
-use src\Presenter\OrigineCardPresenter;
-use src\Repository\RpgFeatType as RepositoryRpgFeatType;
+use src\Service\Reader\FeatReader;
 
 class PublicFeats extends PublicBase
 {
-    private Collection $subTypes;
+    private Collection $feats;
 
-    public function __construct()
-    {
-        $this->title = 'Les Dons';
-
-        $repoSub = RepositoryFactory::create(RepositoryRpgFeatType::class);
-        $this->subTypes = $repoSub->findAll();
-
-        $pageElement = (new PageFeats())->getPageElement();
-        PageRegistry::getInstance()->register($pageElement);
-        $this->pageElement = $pageElement;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
+    public function __construct(
+        private FeatReader $featReader,
+        private FeatListPresenter $presenter,
+        private PageList $page,
+        private MenuPresenter $menuPresenter,
+    ) {
+        $this->feats = $this->featReader->getAllFeats([Field::FEATTYPEID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC]);
+        $this->title = Language::LG_FEATS;
     }
 
     public function getContentPage(): string
     {
-        // Récupérer le menu depuis le registry
-        $registry = PageRegistry::getInstance();
-        $menuHtml = (new MenuPresenter($registry->all(), 'feats'))->render();
-
-        $data = [];
-        foreach ($this->subTypes as $subType) {
-            $data[] = new PageElement([
-                'url' => '/feats-'.$subType->getSlug(),
-                'title' => $subType->getName(),
-                'description' => '',//$subType->getExcerpt(),
-            ]);
-        }
-
-        $cardPresenter = new CardPresenter($data);
-        $contentHtml = $cardPresenter->render();
-
-        $contentSection = $this->getRender(Template::CATEGORY_PAGE, [$this->getTitle(), $contentHtml]);
-        
-        return $this->getRender(Template::MAIN_PAGE, [$menuHtml, $contentSection]);
+        $menu = $this->menuPresenter->render(Constant::FEATS);
+        $viewData = $this->presenter->present($this->feats);
+        $viewData[Constant::CST_TITLE] = $this->getTitle();
+        return $this->page->render($menu, $viewData);
     }
 }
-

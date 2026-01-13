@@ -7,22 +7,22 @@ use src\Utils\Utils;
 
 /**
  * @property string $name
- * @property string $slug
- * @property int $abilityid
+ * @property int $skillId
+ * @property string $description
  */
-final class Skill extends Entity
+final class SubSkill extends Entity
 {
     public const FIELDS = [
         Field::ID,
         Field::NAME,
         Field::SLUG,
-        Field::ABILITYID,
+        Field::SKILLID,
         Field::DESCRIPTION,
     ];
     public const FIELD_TYPES = [
         Field::NAME => FieldType::STRING,
         Field::SLUG => FieldType::STRING,
-        Field::ABILITYID => FieldType::INTPOSITIVE,
+        Field::SKILLID => FieldType::INTPOSITIVE,
         Field::DESCRIPTION => FieldType::STRING,
     ];
     

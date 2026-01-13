@@ -1,6 +1,8 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageFeatsEpic
@@ -12,7 +14,7 @@ class PageFeatsEpic
             'icon' => 'fa-solid fa-star',
             'title' => 'Faveurs épiques',
             'description' => 'Les dons de haut niveau, puissants et rares.',
-            'url' => '/feats-epic',
+            'url' => Routes::FEATS_PREFIX.Constant::EPIC,
             'order' => 44,
             'parent' => 'feats',
         ]);

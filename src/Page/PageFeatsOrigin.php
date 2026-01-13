@@ -1,6 +1,8 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageFeatsOrigin
@@ -12,7 +14,7 @@ class PageFeatsOrigin
             'icon' => 'fa-solid fa-scroll',
             'title' => 'Dons d\'origine',
             'description' => "Les dons d'origine liés aux historiques de personnage.",
-            'url' => '/feats-origin',
+            'url' => Routes::FEATS_PREFIX.Constant::ORIGIN,
             'order' => 41,
             'parent' => 'feats',
         ]);

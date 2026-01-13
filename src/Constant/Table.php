@@ -15,6 +15,7 @@ class Table
     public const SKILL         = 'rpgSkill';
     public const SPECIEPOWER   = 'rpgSpeciesPower';
     public const SPECIES       = 'rpgSpecies';
+    public const SUBSKILL      = 'rpgSubSkill';
     public const TOOL          = 'rpgTool';
     public const TYPEDAMAGE    = 'rpgTypeDamage';
     public const WEAPON        = 'rpgWeapon';

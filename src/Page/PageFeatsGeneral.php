@@ -1,6 +1,8 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageFeatsGeneral
@@ -12,7 +14,7 @@ class PageFeatsGeneral
             'icon' => 'fa-solid fa-scroll',
             'title' => 'Dons généraux',
             'description' => "Les dons accessibles au cours de la carrière d'un personnage.",
-            'url' => '/feats-general',
+            'url' => Routes::FEATS_PREFIX.Constant::GENERAL,
             'order' => 42,
             'parent' => 'feats',
         ]);
