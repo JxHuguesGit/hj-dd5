@@ -3,17 +3,27 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\AbilityRepository;
 use src\Repository\Repository;
+use src\Repository\AbilityRepository;
+use src\Repository\AbilityRepositoryInterface;
 use src\Repository\ArmorRepository;
+use src\Repository\ArmorRepositoryInterface;
 use src\Repository\FeatRepository;
+use src\Repository\FeatRepositoryInterface;
 use src\Repository\OriginRepository;
+use src\Repository\OriginRepositoryInterface;
 use src\Repository\PowerRepository;
+use src\Repository\PowerRepositoryInterface;
 use src\Repository\SkillRepository;
-use src\Repository\SpeciesRepository;
+use src\Repository\SkillRepositoryInterface;
 use src\Repository\SubSkillRepository;
+use src\Repository\SubSkillRepositoryInterface;
+use src\Repository\SpeciesRepository;
+use src\Repository\SpeciesRepositoryInterface;
 use src\Repository\ToolRepository;
+use src\Repository\ToolRepositoryInterface;
 use src\Repository\WeaponRepository;
+use src\Repository\WeaponRepositoryInterface;
 
 class RepositoryFactory
 {
@@ -22,62 +32,58 @@ class RepositoryFactory
         private QueryExecutor $executor
     ) {}
     
-    public function ability(): AbilityRepository
+    private function make(string $repositoryClass): object
     {
-        return new AbilityRepository($this->builder, $this->executor);
-    }
-    
-    public function armor(): ArmorRepository
-    {
-        return new ArmorRepository($this->builder, $this->executor);
-    }
-    
-    public function feat(): FeatRepository
-    {
-        return new FeatRepository($this->builder, $this->executor);
+        return new $repositoryClass($this->builder, $this->executor);
     }
 
-    public function origin(): OriginRepository
+    public function ability(): AbilityRepositoryInterface
     {
-        return new OriginRepository($this->builder, $this->executor);
-    }
-
-    public function power(): PowerRepository
-    {
-        return new PowerRepository($this->builder, $this->executor);
+        return $this->make(AbilityRepository::class);
     }
     
-    public function skill(): SkillRepository
+    public function armor(): ArmorRepositoryInterface
     {
-        return new SkillRepository($this->builder, $this->executor);
+        return $this->make(ArmorRepository::class);
     }
     
-    public function subSkill(): SubSkillRepository
+    public function feat(): FeatRepositoryInterface
     {
-        return new SubSkillRepository($this->builder, $this->executor);
+        return $this->make(FeatRepository::class);
+    }
+
+    public function origin(): OriginRepositoryInterface
+    {
+        return $this->make(OriginRepository::class);
+    }
+
+    public function power(): PowerRepositoryInterface
+    {
+        return $this->make(PowerRepository::class);
     }
     
-    public function species(): SpeciesRepository
+    public function skill(): SkillRepositoryInterface
     {
-        return new SpeciesRepository($this->builder, $this->executor);
+        return $this->make(SkillRepository::class);
     }
     
-    public function tool(): ToolRepository
+    public function subSkill(): SubSkillRepositoryInterface
     {
-        return new ToolRepository($this->builder, $this->executor);
+        return $this->make(SubSkillRepository::class);
+    }
+    
+    public function species(): SpeciesRepositoryInterface
+    {
+        return $this->make(SpeciesRepository::class);
+    }
+    
+    public function tool(): ToolRepositoryInterface
+    {
+        return $this->make(ToolRepository::class);
     }
 
-    public function weapon(): WeaponRepository
+    public function weapon(): WeaponRepositoryInterface
     {
-        return new WeaponRepository($this->builder, $this->executor);
-    }
-
-
-    public static function create(string $repositoryClass): Repository
-    {
-        return new $repositoryClass(
-            new QueryBuilder(),
-            new QueryExecutor()
-        );
+        return $this->make(WeaponRepository::class);
     }
 }
