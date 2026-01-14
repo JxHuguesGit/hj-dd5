@@ -62,36 +62,6 @@ final class OriginReader
             ->findAllWithCriteria($nextCriteria, [Field::NAME => Constant::CST_ASC])
             ->first();
 
-        // Origine précédente (ordre alphabétique)
-        /*
-        $prev = $this->originRepository->findByComplex(
-            [
-                [
-                    'field'   => Field::NAME,
-                    'operand' => '<',
-                    'value'   => $origin->name,
-                ]
-            ],
-            [Field::NAME => Constant::CST_DESC],
-            1
-        )->first();
-        */
-
-        // Origine suivante
-        /*
-        $next = $this->originRepository->findByComplex(
-            [
-                [
-                    'field'   => Field::NAME,
-                    'operand' => '>',
-                    'value'   => $origin->name,
-                ]
-            ],
-            [Field::NAME => Constant::CST_ASC],
-            1
-        )->first();
-        */
-
         return [
             'prev' => $prev ?: null,
             'next' => $next ?: null,
