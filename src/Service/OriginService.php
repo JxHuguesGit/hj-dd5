@@ -4,19 +4,24 @@ namespace src\Service;
 use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\Ability as DomainAbility;
+use src\Domain\Item as DomainItem;
 use src\Domain\Origin as DomainOrigin;
 use src\Domain\Skill as DomainSkill;
 use src\Repository\Feat as RepositoryFeat;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
+use src\Repository\OriginItem as RepositoryOriginItem;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
 use src\Repository\Tool as RepositoryTool;
 use src\Service\Reader\AbilityReader;
+use src\Service\Reader\ItemReader;
 use src\Service\Reader\SkillReader;
 
 final class OriginService
 {
     /** @var array<int, DomainAbility> */
     private array $abilityCache = [];
+    /** @var array<int, DomainItem> */
+    private array $itemCache = [];
     /** @var array<int, DomainSkill> */
     private array $skillCache = [];
     
@@ -25,8 +30,10 @@ final class OriginService
         private RepositoryTool $toolRepository,
         private RepositoryOriginSkill $originSkillRepository,
         private RepositoryOriginAbility $originAbilityRepository,
+        private RepositoryOriginItem $originItemRepository,
         private SkillReader $skillReader,
         private AbilityReader $abilityReader,
+        private ItemReader $itemReader,
     ) {}
     
     // TODO modifier object en Domain\RpgFeat quand il sera défini
@@ -76,6 +83,26 @@ final class OriginService
             $ability = $this->abilityReader->getAbility($abilityId);
             $this->abilityCache[$abilityId] ??= $ability;
             $collection->addItem($this->abilityCache[$abilityId]);
+        }
+        return $collection;
+    }
+
+    public function getItems(DomainOrigin $origin): Collection
+    {
+        $originItems = $this->originItemRepository->findBy([
+            Field::ORIGINID => $origin->id
+        ]);
+
+        $collection = new Collection();
+        foreach ($originItems as $originItem) {
+            $itemId = $originItem->itemId;
+            $item = $this->itemReader->getItem($itemId);
+            $this->itemCache[$itemId] ??= $item;
+            if ($item!==null) {
+                for ($i=0; $i<$originItem->quantity; $i++) {
+                    $collection->addItem($this->itemCache[$itemId]);
+                }
+            }
         }
         return $collection;
     }

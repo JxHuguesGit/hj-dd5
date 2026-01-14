@@ -42,7 +42,6 @@ class AdminCharacterPage extends AdminPage
             $heros = $deps['heroRepo']->findBy([Field::ID=>$heroId, Field::WPUSERID=>$wpUserId], [], -1, true);
             $hero = $heros->first();
             if ($hero instanceof RpgHeros) {
-            var_dump($hero);
                 $hero->delete();
                 $this->arrParams['id'] = 0;
             }

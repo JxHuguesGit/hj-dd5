@@ -4,6 +4,7 @@ namespace src\Presenter\TableBuilder;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
+use src\Service\WpPostService;
 use src\Utils\Html;
 use src\Utils\Table;
 use src\Utils\UrlGenerator;
@@ -39,10 +40,11 @@ class SpeciesTableBuilder implements TableBuilderInterface
             
             /////////////////////////////////////////////////////////////////////
             // Les données rattachées au WpPost
-            $wpPost = get_post($specie->postId);
-            $strCreatureType = get_field(Constant::CST_CREATURE_TYPE, $wpPost->ID) ?? '';
-            $strSizeCategory = get_field(Constant::CST_SIZE_CATEGORY, $wpPost->ID) ?? '';
-            $strSpeed = get_field(Constant::CST_SPEED, $wpPost->ID) ?? '';
+            $wpPostServices = new WpPostService();
+            $wpPostServices->getById($specie->postId);
+            $strCreatureType = $wpPostServices->getField(Constant::CST_CREATURE_TYPE) ?? '';
+            $strSizeCategory = $wpPostServices->getField(Constant::CST_SIZE_CATEGORY) ?? '';
+            $strSpeed        = $wpPostServices->getField(Constant::CST_SPEED) ?? '';
 
             $objTable->addBodyRow([])
                 ->addBodyCell([Constant::CST_CONTENT => $strUrl])

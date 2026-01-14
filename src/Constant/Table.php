@@ -11,7 +11,9 @@ class Table
     public const MSTPROFCY     = 'rpgMasteryProficiency';
     public const ORIGIN        = 'rpgOrigin';
     public const ORIGINABILITY = 'rpgOriginAbility';
+    public const ORIGINITEM    = 'rpgOriginItem';
     public const ORIGINSKILL   = 'rpgOriginSkill';
+    public const POWER         = 'rpgPower';
     public const SKILL         = 'rpgSkill';
     public const SPECIEPOWER   = 'rpgSpeciesPower';
     public const SPECIES       = 'rpgSpecies';

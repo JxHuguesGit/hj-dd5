@@ -3,6 +3,7 @@ namespace src\Domain;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Utils\Utils;
 
 /**
  * @property int $parentId
@@ -26,5 +27,12 @@ final class Tool extends Item
         ...self::COMMON_FIELD_TYPES,
         ...self::SPECIFIC_FIELD_TYPES,
     ];
+
+    public function getSlug(): string
+    {
+        return $this->slug !== ''
+            ? $this->slug
+            : Utils::slugify($this->name);
+    }
 
 }

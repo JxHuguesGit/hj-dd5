@@ -8,16 +8,20 @@ use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
 
 class WeaponPropertyValue extends Repository
 {
-    /*
     public const TABLE = Table::WPNPROPVALUE;
 
     public function getEntityClass(): string
     {
-        return DomainRpgWeaponPropertyValue::class;
+        return DomainWeaponPropertyValue::class;
     }
 
     public function findByWeaponIds(array $weaponIds): Collection
     {
+        return new Collection();
+    }
+
+    /*
+
         $baseQuery = "
             SELECT wpv.id, ".Field::MINRANGE.", ".Field::MAXRANGE."
                 , p.".Field::SLUG." AS ".Field::PROPERTYSLUG.", p.".Field::NAME." AS ".Field::PROPERTYNAME."

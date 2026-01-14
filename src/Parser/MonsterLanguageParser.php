@@ -71,7 +71,6 @@ class MonsterLanguageParser extends AbstractMonsterParser
         $langObj = $objs->current();
         if ($langObj === null) {
             // Tu pourrais ici logger ou lever une alerte plutôt que d’afficher
-            echo "[" . $enum->label() . "]";
             return false;
         }
 

@@ -61,6 +61,7 @@ class Constant
     public const CST_TOOLS       = 'tools';
     public const CST_FEATNAME    = 'featname';
     public const CST_TOOLNAME    = 'toolname';
+    public const CST_TOOLSLUG    = 'toolSlug';
     public const CST_FEATSLUG    = 'featSlug';
     public const CST_FEATTYPE    = 'featType';
     public const CST_TYPELABEL   = 'typeLabel';

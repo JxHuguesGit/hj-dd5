@@ -16,6 +16,7 @@ final class OriginPageView
         public ?DomainItem $tool = null,
         public Collection $abilities = new Collection(),
         public Collection $skills = new Collection(),
+        public Collection $items = new Collection(),
     ) {}
 
     public function __get(string $name): mixed

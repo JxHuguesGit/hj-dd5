@@ -25,6 +25,7 @@ final class OriginPageService
             $this->originService->getTool($origin),
             $this->originService->getAbilities($origin),
             $this->originService->getSkills($origin),
+            $this->originService->getItems($origin),
         );
     }
 }

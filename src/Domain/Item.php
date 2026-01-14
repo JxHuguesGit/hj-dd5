@@ -3,6 +3,7 @@ namespace src\Domain;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Utils\Utils;
 
 /**
  * @property string $name
@@ -10,13 +11,27 @@ use src\Constant\FieldType;
  * @property float $weight
  * @property float $goldPrice
  */
-abstract class Item extends Entity
+class Item extends Entity
 {
+    public const FIELDS = [
+        Field::NAME,
+        Field::SLUG,
+        Field::WEIGHT,
+        Field::GOLDPRICE,
+    ];
+
     public const COMMON_FIELDS = [
         Field::NAME,
         Field::SLUG,
         Field::WEIGHT,
         Field::GOLDPRICE,
+    ];
+
+    public const FIELD_TYPES = [
+        Field::NAME =>       FieldType::STRING,
+        Field::SLUG =>       FieldType::STRING,
+        Field::WEIGHT =>     FieldType::FLOAT,
+        Field::GOLDPRICE =>  FieldType::FLOAT,
     ];
 
     public const COMMON_FIELD_TYPES = [
@@ -34,5 +49,12 @@ abstract class Item extends Entity
             $this->weight,
             $this->goldPrice
         );
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug !== ''
+            ? $this->slug
+            : Utils::slugify($this->name);
     }
 }

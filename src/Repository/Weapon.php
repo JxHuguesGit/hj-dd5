@@ -24,9 +24,10 @@ class Weapon extends Repository
     {
         $baseQuery = "
             SELECT a.id
-                , i.".Field::NAME." AS ".Field::NAME.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
+                , i.".Field::NAME." AS ".Field::NAME.", i.".Field::SLUG." AS ".Field::SLUG."
+                , ".Field::WEIGHT.", ".Field::GOLDPRICE."
                 , c.".Field::SLUG." AS ".Field::CATEGORYSLUG.", c.".Field::NAME." AS ".Field::CATEGORYNAME."
-                , p.".Field::NAME." AS ".Field::MASTERYNAME."
+                , p.".Field::NAME." AS ".Field::MASTERYNAME.", p.".Field::POSTID." AS ".Field::MASTERYPOSTID."
                 , ".Field::DICECOUNT.", ".Field::DICEFACES."
                 , td.".Field::NAME." AS ".Field::TYPDMGNAME."
                 , r.".Field::SLUG." AS ".Field::RANGESLUG.", r.".Field::NAME." AS ".Field::RANGENAME."

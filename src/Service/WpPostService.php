@@ -17,4 +17,9 @@ final class WpPostService
     {
         return get_field($field, $this->wpPost->ID);
     }
+
+    public function getPostContent(): string
+    {
+        return $this->wpPost->post_content ?? '';
+    }
 }

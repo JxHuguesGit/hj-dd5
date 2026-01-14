@@ -3,6 +3,7 @@ namespace src\Domain;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Utils\Utils;
 
 /**
  * Classe de base pour toutes les entités Domain.

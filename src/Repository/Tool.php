@@ -48,9 +48,16 @@ class Tool extends Repository
 
     public function find(mixed $id, bool $display=false): ?object
     {
+        $baseQuery = "
+            SELECT ".Field::PARENTID."
+                , ".Field::NAME.", ".Field::SLUG.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
+            FROM " . Table::TOOL . " t
+            INNER JOIN " . Table::ITEM . " i ON i.id = t.id
+            WHERE i.id = " . $id
+        ;
+
         $this->query = $this->queryBuilder->reset()
-            ->select($this->fields, $this->table)
-            ->where([Field::ID=>$id])
+            ->setBaseQuery($baseQuery)
             ->getQuery();
 
         return $this->queryExecutor->fetchOne(

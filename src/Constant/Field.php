@@ -59,6 +59,7 @@ class Field
     public const SLUG         = 'slug';
     public const DICECOUNT    = 'diceCount';
     public const DICEFACES    = 'diceFaces';
+    public const QUANTITY     = 'quantity';
         
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';
@@ -71,9 +72,11 @@ class Field
     public const FEATID       = 'featId';
     public const FEATTYPEID   = 'featTypeId';
     public const HEROSID      = 'herosId';
+    public const ITEMID       = 'itemId';
     public const LANGUAGEID   = 'languageId';
     public const MONSTERID    = 'monsterId';
     public const MSTPROFID    = 'masteryProficiencyId';
+    public const MASTERYPOSTID = 'masteryPostId';
     public const MSTSSTYPID   = 'monsterSubTypeId';
     public const MSTTYPEID    = 'monstreTypeId';
     public const OPTIONID     = 'optionId';

@@ -5,13 +5,17 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Weapon as DomainWeapon;
+use src\Service\WpPostService;
+use src\Utils\Html;
 use src\Utils\Table;
+use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 
 class WeaponTableBuilder implements TableBuilderInterface
 {
     public function build(iterable $groups, array $params=[]): Table
     {
+        $wpPostServices = new WpPostService();
         $withMarginTop = $params[Bootstrap::CSS_WITH_MRGNTOP] ?? true;
     
         $table = new Table();
@@ -46,6 +50,12 @@ class WeaponTableBuilder implements TableBuilderInterface
 
             foreach ($group[Constant::WEAPONS] as $weapon) {
                 /** @var DomainWeapon $weapon */
+                // Lien vers le détail de l'arme
+                $strLink = Html::getLink(
+                    $weapon->name,
+                    UrlGenerator::item($weapon->getSlug()),
+                    Bootstrap::CSS_TEXT_DARK
+                );
 
                 // Dégâts
                 $strDegats = $weapon->getDamageDie();
@@ -61,13 +71,20 @@ class WeaponTableBuilder implements TableBuilderInterface
                 $strProps = 'TODO';
 
                 // Botte
-                $mastery = $weapon->masteryName;
+                $wpPostServices->getById($weapon->masteryPostId);
+                $linkContent = $weapon->masteryName
+                    . Html::getSpan($wpPostServices?->getPostContent() ?? '', [Constant::CST_CLASS=>'tooltip-text']);
+                $strMasteryUrl = Html::getLink(
+                    $linkContent,
+                    '#',
+                    Bootstrap::CSS_TEXT_DARK.' tooltip-trigger',
+                );
 
                 $table->addBodyRow([])
-                    ->addBodyCell([Constant::CST_CONTENT => $weapon->name])
+                    ->addBodyCell([Constant::CST_CONTENT => $strLink])
                     ->addBodyCell([Constant::CST_CONTENT => $strDegats])
                     ->addBodyCell([Constant::CST_CONTENT => $strProps])
-                    ->addBodyCell([Constant::CST_CONTENT => $mastery])
+                    ->addBodyCell([Constant::CST_CONTENT => $strMasteryUrl])
                     ->addBodyCell([
                         Constant::CST_CONTENT => Utils::getStrWeight($weapon->weight),
                         Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]

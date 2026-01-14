@@ -22,14 +22,14 @@ final class SpecieService
     public function getAbilities(DomainSpecie $specie): Collection
     {
         $speciePowers = $this->speciePowerRepository->findBy([
-            Field::ORIGINID => $specie->id
+            Field::SPECIESID => $specie->id
         ]);
 
         $collection = new Collection();
         foreach ($speciePowers as $speciePower) {
             $powerId = $speciePower->powerId;
             $power = $this->powerReader->getPower($powerId);
-            $this->abilityCache[$powerId] ??= $power;
+            $this->powerCache[$powerId] ??= $power;
             $collection->addItem($this->powerCache[$powerId]);
         }
         return $collection;

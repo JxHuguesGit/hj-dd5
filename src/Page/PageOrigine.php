@@ -32,9 +32,24 @@ class PageOrigine
             )
             : Constant::CST_EMPTY_SPAN;
 
+        $parts = [];
+        foreach ($data[Constant::CST_SKILLS] as $skill) {
+            $parts[] = Html::getLink(
+                $skill->name,
+                UrlGenerator::skill($skill->getSlug()),
+                Bootstrap::CSS_TEXT_DARK
+            );
+        }
+
         $urlFeat = Html::getLink(
             $data[Constant::CST_FEATNAME],
             UrlGenerator::feat($data[Constant::CST_FEATSLUG]),
+            Bootstrap::CSS_TEXT_DARK
+        );
+
+        $urlTool = Html::getLink(
+            $data[Constant::CST_TOOLNAME],
+            UrlGenerator::item($data[Constant::CST_TOOLSLUG]),
             Bootstrap::CSS_TEXT_DARK
         );
         
@@ -45,10 +60,10 @@ class PageOrigine
                 $data[Constant::CST_TITLE],
                 $data[Constant::CST_DESCRIPTION],
                 implode(', ', $data[Constant::CST_ABILITIES]),
-                implode(', ', $data[Constant::CST_SKILLS]),
+                implode(', ', $parts),
                 $urlFeat,
-                $data[Constant::CST_TOOLNAME],
-                $data[Constant::CST_EQUIPMENT],
+                $urlTool,
+                implode(', ', $data[Constant::CST_EQUIPMENT]),
                 $prevHtml,
                 $nextHtml,
             ]

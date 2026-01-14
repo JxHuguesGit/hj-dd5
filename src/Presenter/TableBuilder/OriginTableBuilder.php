@@ -74,8 +74,8 @@ class OriginTableBuilder implements TableBuilderInterface
             );
 
             // L'outil rattaché
-            $tool = null;//$this->originService->getTool($origin);
-            $strTool = $tool?->getName() ?? '-';
+            $tool = $this->originService->getTool($origin);
+            $strTool = $tool?->name ?? '-';
             $toolUrl = Html::getLink(
                 $strTool,
                 UrlGenerator::item($tool?->getSlug() ?? ''),

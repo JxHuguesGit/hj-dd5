@@ -11,25 +11,25 @@ class SpeciesDetailPresenter
         SpeciePageView $viewData
     ): array {
         $wpPostService = new WpPostService();
-        $wpPost = $wpPostService->getById($viewData->species->postId);
+        $wpPost = $wpPostService->getById($viewData->specie->postId??0);
 
         // Capacités
         $abilities = [];
         foreach ($viewData->abilities as $ability) {
-            $abilities[] = $ability->name;
+            //$abilities[] = $ability->data['name'];
         }
 
         $strContent = $wpPost->post_content;
 
         return [
-            Constant::CST_TITLE => $viewData->species->name,
-            Constant::CST_SLUG  => $viewData->species->getSlug(),
+            Constant::CST_TITLE => $viewData->specie->name,
+            Constant::CST_SLUG  => $viewData->specie?->getSlug(),
 
             Constant::CST_DESCRIPTION   => $strContent,
-            Constant::CST_CREATURE_TYPE => $wpPost->getField(Constant::CST_CREATURE_TYPE),
-            Constant::CST_SIZE_CATEGORY => $wpPost->getField(Constant::CST_SIZE_CATEGORY),
-            Constant::CST_SPEED         => $wpPost->getField(Constant::CST_SPEED),
-            Constant::CST_POWERS        => $abilities,
+            Constant::CST_CREATURE_TYPE => $wpPostService?->getField(Constant::CST_CREATURE_TYPE),
+            Constant::CST_SIZE_CATEGORY => $wpPostService?->getField(Constant::CST_SIZE_CATEGORY),
+            Constant::CST_SPEED         => $wpPostService?->getField(Constant::CST_SPEED),
+            Constant::CST_POWERS        => implode(', ', $abilities),
 
             Constant::CST_PREV => $viewData->previous ? [
                 Constant::CST_SLUG => $viewData?->previous->getSlug(),
