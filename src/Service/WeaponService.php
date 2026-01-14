@@ -5,7 +5,7 @@ use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\Ability as DomainAbility;
 use src\Domain\Origin as DomainOrigin;
-use src\Repository\WeaponPropertyValue as RepositoryWeaponPropertyValue;
+use src\Repository\WeaponPropertyValueRepository;
 use src\Service\Reader\WeaponPropertyValueReader;
 
 final class WeaponService
@@ -14,7 +14,7 @@ final class WeaponService
     private array $wpnPropValueCache = [];
     
     public function __construct(
-        private RepositoryWeaponPropertyValue $weaponPropertyValueRepository,
+        private WeaponPropertyValueRepository $weaponPropertyValueRepository,
         private WeaponPropertyValueReader $weaponPropertyValueReader,
     ) {}
     
@@ -27,7 +27,7 @@ final class WeaponService
         $collection = new Collection();
         foreach ($weaponPropertyValues as $weaponPropertyValue) {
             $wpValueId = $weaponPropertyValue->itemId;
-            $wpValue = $this->weaponPropertyValueReader->getWeaponPropertyValue($wpValueId);
+            $wpValue = $this->weaponPropertyValueReader->weaponPropertyValueById($wpValueId);
             if ($wpValue!==null) {
                 $this->wpnPropValueCache[$wpValueId] ??= $wpValue;
                 $collection->addItem($this->wpnPropValueCache[$wpValueId]);

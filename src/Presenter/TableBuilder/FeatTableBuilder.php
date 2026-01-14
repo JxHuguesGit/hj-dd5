@@ -69,7 +69,7 @@ class FeatTableBuilder implements TableBuilderInterface
                 switch ($feat->featTypeId) {
                     case 1 :
                         $parts = [];
-                        $origins = $this->originReader->getOriginsByFeat($feat);
+                        $origins = $this->originReader->originsByFeat($feat);
                         foreach ($origins as $origin) {
                             $parts[] = Html::getLink(
                                 $origin->name,

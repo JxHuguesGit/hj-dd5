@@ -3,20 +3,23 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Skill as DomainSkill;
-use src\Repository\Skill as RepositorySkill;
+use src\Repository\SkillRepositoryInterface;
 
 final class SkillReader
 {
     public function __construct(
-        private RepositorySkill $skillRepository
+        private SkillRepositoryInterface $skillRepository
     ) {}
     
-    public function getAllSkills(array $orderBy=[]): Collection
+    /**
+     * @return Collection<DomainSkill>
+     */
+    public function allSkills(array $orderBy=[]): Collection
     {
         return $this->skillRepository->findAll($orderBy);
     }
     
-    public function getSkill(int $id): ?DomainSkill
+    public function skillById(int $id): ?DomainSkill
     {
         return $this->skillRepository->find($id);
     }

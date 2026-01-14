@@ -3,20 +3,20 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\Ability as RepositoryAbility;
-use src\Repository\Feat as RepositoryFeat;
-use src\Repository\Item as RepositoryItem;
-use src\Repository\Power as RepositoryPower;
-use src\Repository\Origin as RepositoryOrigin;
+use src\Repository\AbilityRepository;
+use src\Repository\FeatRepository;
+use src\Repository\ItemRepository;
+use src\Repository\PowerRepository;
+use src\Repository\OriginRepository;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginItem as RepositoryOriginItem;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
-use src\Repository\Species as RepositorySpecies;
+use src\Repository\SpeciesRepository;
 use src\Repository\SpeciePower as RepositorySpeciePower;
-use src\Repository\SubSkill as RepositorySubSkill;
-use src\Repository\Skill as RepositorySkill;
-use src\Repository\Tool as RepositoryTool;
-use src\Repository\Weapon as RepositoryWeapon;
+use src\Repository\SubSkillRepository;
+use src\Repository\SkillRepository;
+use src\Repository\ToolRepository;
+use src\Repository\WeaponRepository;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\FeatReader;
@@ -44,19 +44,19 @@ final class ServiceFactory
 
     public function getFeatReader(): FeatReader
     {
-        $featRepo = new RepositoryFeat($this->queryBuilder, $this->queryExecutor);
+        $featRepo = new FeatRepository($this->queryBuilder, $this->queryExecutor);
         return new FeatReader($featRepo);
     }
 
     public function getOriginReader(): OriginReader
     {
-        $originRepo = new RepositoryOrigin($this->queryBuilder, $this->queryExecutor);
+        $originRepo = new OriginRepository($this->queryBuilder, $this->queryExecutor);
         return new OriginReader($originRepo);
     }
 
     public function getSpecieReader(): SpecieReader
     {
-        $speciesRepo = new RepositorySpecies($this->queryBuilder, $this->queryExecutor);
+        $speciesRepo = new SpeciesRepository($this->queryBuilder, $this->queryExecutor);
         return new SpecieReader($speciesRepo);
     }
     
@@ -69,42 +69,42 @@ final class ServiceFactory
 
     public function getToolReader(): ToolReader
     {
-        $repo = new RepositoryTool($this->queryBuilder, $this->queryExecutor);
+        $repo = new ToolRepository($this->queryBuilder, $this->queryExecutor);
         return new ToolReader($repo);
     }
     
     public function getWeaponReader(): WeaponReader
     {
-        $repo = new RepositoryWeapon($this->queryBuilder, $this->queryExecutor);
+        $repo = new WeaponRepository($this->queryBuilder, $this->queryExecutor);
         return new WeaponReader($repo);
     }
 
     public function getSkillReader(): SkillReader
     {
-        $repo = new RepositorySkill($this->queryBuilder, $this->queryExecutor);
+        $repo = new SkillRepository($this->queryBuilder, $this->queryExecutor);
         return new SkillReader($repo);
     }
 
 
     public function getAbilityReader(): AbilityReader
     {
-        $repo = new RepositoryAbility($this->queryBuilder, $this->queryExecutor);
+        $repo = new AbilityRepository($this->queryBuilder, $this->queryExecutor);
         return new AbilityReader($repo);
     }
 
     public function origin(): OriginService
     {
-        $featRepo     = new RepositoryFeat($this->queryBuilder, $this->queryExecutor);
-        $toolRepo     = new RepositoryTool($this->queryBuilder, $this->queryExecutor);
+        $featRepo     = new FeatRepository($this->queryBuilder, $this->queryExecutor);
+        $toolRepo     = new ToolRepository($this->queryBuilder, $this->queryExecutor);
         $originSkillRepo    = new RepositoryOriginSkill($this->queryBuilder, $this->queryExecutor);
         $originAbilityRepo  = new RepositoryOriginAbility($this->queryBuilder, $this->queryExecutor);
         $originItemRepo     = new RepositoryOriginItem($this->queryBuilder, $this->queryExecutor);
 
-        $skillRepo    = new RepositorySkill($this->queryBuilder, $this->queryExecutor);
+        $skillRepo    = new SkillRepository($this->queryBuilder, $this->queryExecutor);
         $skillQueryService   = new SkillReader($skillRepo);
-        $abilityRepo  = new RepositoryAbility($this->queryBuilder, $this->queryExecutor);
+        $abilityRepo  = new AbilityRepository($this->queryBuilder, $this->queryExecutor);
         $abilityQueryService = new AbilityReader($abilityRepo);
-        $itemRepo  = new RepositoryItem($this->queryBuilder, $this->queryExecutor);
+        $itemRepo  = new ItemRepository($this->queryBuilder, $this->queryExecutor);
         $itemQueryService = new ItemReader($itemRepo);
         
         return new OriginService(
@@ -127,7 +127,7 @@ final class ServiceFactory
     public function specie(): SpecieService
     {
         $speciePowerRepo  = new RepositorySpeciePower($this->queryBuilder, $this->queryExecutor);
-        $powerRepo  = new RepositoryPower($this->queryBuilder, $this->queryExecutor);
+        $powerRepo  = new PowerRepository($this->queryBuilder, $this->queryExecutor);
         $powerReader = new PowerReader($powerRepo);
 
         return new SpecieService($speciePowerRepo, $powerReader);
@@ -135,7 +135,7 @@ final class ServiceFactory
 
     public function skill(): SkillService
     {
-        $subSkillRepo  = new RepositorySubSkill($this->queryBuilder, $this->queryExecutor);
+        $subSkillRepo  = new SubSkillRepository($this->queryBuilder, $this->queryExecutor);
 
         return new SkillService($subSkillRepo);
     }

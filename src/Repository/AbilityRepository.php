@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Constant\Table;
 use src\Domain\Ability as DomainAbility;
 
-class Ability extends Repository
+class AbilityRepository extends Repository implements AbilityRepositoryInterface
 {
     public const TABLE = Table::ABILITY;
 

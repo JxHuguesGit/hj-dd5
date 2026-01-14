@@ -5,31 +5,37 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Feat as DomainFeat;
-use src\Repository\Feat as RepositoryFeat;
+use src\Repository\FeatRepository;
 
 final class FeatReader
 {
     public function __construct(
-        private RepositoryFeat $featRepository,
+        private FeatRepository $featRepository,
     ) {}
 
-    public function getFeat(int $id): ?DomainFeat
+    public function featById(int $id): ?DomainFeat
     {
         return $this->featRepository->find($id);
     }
 
-    public function getAllFeats(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    /**
+     * @return Collection<DomainFeat>
+     */
+    public function allFeats(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->featRepository->findAll($order);
     }
 
-    public function getFeatBySlug(string $slug): ?DomainFeat
+    public function featBySlug(string $slug): ?DomainFeat
     {
         $feat = $this->featRepository->findBy([Field::SLUG=>$slug]);
         return $feat?->first() ?? null;
     }
 
-    public function getFeatsByCategory(int $categoryId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    /**
+     * @return Collection<DomainFeat>
+     */
+    public function featsByCategory(int $categoryId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->featRepository->findBy([Field::FEATTYPEID=>$categoryId], $order);
     }

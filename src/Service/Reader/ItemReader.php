@@ -5,15 +5,18 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Item as DomainItem;
-use src\Repository\Item as RepositoryItem;
+use src\Repository\ItemRepositoryInterface;
 
 final class ItemReader
 {
     public function __construct(
-        private RepositoryItem $itemRepository
+        private ItemRepositoryInterface $itemRepository
     ) {}
     
-    public function getAllItems(): Collection
+    /**
+     * @return Collection<DomainItem>
+     */
+    public function allItems(): Collection
     {
         $orderBy = [
             Field::NAME=>Constant::CST_ASC,
@@ -21,7 +24,7 @@ final class ItemReader
         return $this->itemRepository->findAll($orderBy);
     }
 
-    public function getItem(int $id): ?DomainItem
+    public function itemById(int $id): ?DomainItem
     {
         return $this->itemRepository->find($id);
     }

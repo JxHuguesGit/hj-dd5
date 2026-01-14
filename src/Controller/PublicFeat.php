@@ -21,7 +21,7 @@ class PublicFeat extends PublicBase
         private PageFeat $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feat = $this->featReader->getFeatBySlug($this->slug);
+        $this->feat = $this->featReader->featBySlug($this->slug);
         $this->title = $this->feat->name;
     }
 

@@ -19,7 +19,7 @@ final class PublicItemWeapon extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->weapons = $this->weaponReader->getAllWeapons();
+        $this->weapons = $this->weaponReader->allWeapons();
         $this->title = Language::LG_WEAPONS_TITLE;
     }
 

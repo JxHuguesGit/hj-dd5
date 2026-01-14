@@ -21,7 +21,7 @@ class PublicOrigine extends PublicBase
         private PageOrigine $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->origin = $this->originReader->getOriginBySlugOrFail($this->slug);
+        $this->origin = $this->originReader->originBySlug($this->slug);
         $this->title = $this->origin->name;
     }
 

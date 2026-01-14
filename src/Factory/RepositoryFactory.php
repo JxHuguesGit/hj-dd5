@@ -4,13 +4,13 @@ namespace src\Factory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\Repository;
-use src\Repository\Armor as RepositoryArmor;
-use src\Repository\Feat as RepositoryFeat;
-use src\Repository\Origin as RepositoryOrigin;
-use src\Repository\Skill as RepositorySkill;
-use src\Repository\Species as RepositorySpecies;
-use src\Repository\Tool as RepositoryTool;
-use src\Repository\Weapon as RepositoryWeapon;
+use src\Repository\ArmorRepository;
+use src\Repository\FeatRepository;
+use src\Repository\OriginRepository;
+use src\Repository\SkillRepository;
+use src\Repository\SpeciesRepository;
+use src\Repository\ToolRepository;
+use src\Repository\WeaponRepository;
 
 class RepositoryFactory
 {
@@ -19,39 +19,39 @@ class RepositoryFactory
         private QueryExecutor $executor
     ) {}
     
-    public function armor(): RepositoryArmor
+    public function armor(): ArmorRepository
     {
-        return new RepositoryArmor($this->builder, $this->executor);
+        return new ArmorRepository($this->builder, $this->executor);
     }
     
-    public function feat(): RepositoryFeat
+    public function feat(): FeatRepository
     {
-        return new RepositoryFeat($this->builder, $this->executor);
+        return new FeatRepository($this->builder, $this->executor);
     }
 
-    public function origin(): RepositoryOrigin
+    public function origin(): OriginRepository
     {
-        return new RepositoryOrigin($this->builder, $this->executor);
+        return new OriginRepository($this->builder, $this->executor);
     }
     
-    public function skill(): RepositorySkill
+    public function skill(): SkillRepository
     {
-        return new RepositorySkill($this->builder, $this->executor);
+        return new SkillRepository($this->builder, $this->executor);
     }
     
-    public function species(): RepositorySpecies
+    public function species(): SpeciesRepository
     {
-        return new RepositorySpecies($this->builder, $this->executor);
+        return new SpeciesRepository($this->builder, $this->executor);
     }
     
-    public function tool(): RepositoryTool
+    public function tool(): ToolRepository
     {
-        return new RepositoryTool($this->builder, $this->executor);
+        return new ToolRepository($this->builder, $this->executor);
     }
 
-    public function weapon(): RepositoryWeapon
+    public function weapon(): WeaponRepository
     {
-        return new RepositoryWeapon($this->builder, $this->executor);
+        return new WeaponRepository($this->builder, $this->executor);
     }
 
 

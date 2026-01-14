@@ -19,7 +19,7 @@ final class PublicItemTool extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->tools = $this->toolQueryService->getAllTools();
+        $this->tools = $this->toolQueryService->allTools();
         $this->title = Language::LG_TOOLS_TITLE;
     }
 

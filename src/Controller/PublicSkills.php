@@ -20,7 +20,7 @@ class PublicSkills extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->skills = $this->skillReader->getAllSkills([Field::ABILITYID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC]);
+        $this->skills = $this->skillReader->allSkills([Field::ABILITYID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC]);
         $this->title = Language::LG_SKILLS_TITLE;
     }
 

@@ -19,7 +19,7 @@ final class PublicItemArmor extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->armors = $this->armorReader->getAllArmors();
+        $this->armors = $this->armorReader->allArmors();
         $this->title = Language::LG_ARMORS_TITLE;
     }
 

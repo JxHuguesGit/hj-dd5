@@ -20,7 +20,7 @@ class PublicFeatEpic extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->getFeatsByCategory(4, [Field::NAME=>Constant::CST_ASC]);
+        $this->feats = $this->featReader->featsByCategory(4, [Field::NAME=>Constant::CST_ASC]);
         $this->title = Language::LG_CBT_STYLE_EPICS;
     }
 

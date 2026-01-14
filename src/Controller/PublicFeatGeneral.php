@@ -20,7 +20,7 @@ class PublicFeatGeneral extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->getFeatsByCategory(2, [Field::NAME=>Constant::CST_ASC]);
+        $this->feats = $this->featReader->featsByCategory(2, [Field::NAME=>Constant::CST_ASC]);
         $this->title = Language::LG_GENERAL_FEATS;
     }
 

@@ -3,20 +3,23 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\SubSkill as DomainSubSkill;
-use src\Repository\SubSkill as RepositorySubSkill;
+use src\Repository\SubSkillRepositoryInterface;
 
 final class SubSkillReader
 {
     public function __construct(
-        private RepositorySubSkill $subSkillRepository
+        private SubSkillRepositoryInterface $subSkillRepository
     ) {}
     
-    public function getAllSubSkills(array $orderBy=[]): Collection
+    /**
+     * @return Collection<DomainSubSkill>
+     */
+    public function allSubSkills(array $orderBy=[]): Collection
     {
         return $this->subSkillRepository->findAll($orderBy);
     }
 
-    public function getSubSkill(int $id): ?DomainSubSkill
+    public function subSkillById(int $id): ?DomainSubSkill
     {
         return $this->subSkillRepository->find($id);
     }

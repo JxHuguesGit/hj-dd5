@@ -20,7 +20,7 @@ class PublicFeatOrigin extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->getFeatsByCategory(1, [Field::NAME=>Constant::CST_ASC]);
+        $this->feats = $this->featReader->featsByCategory(1, [Field::NAME=>Constant::CST_ASC]);
         $this->title = Language::LG_ORIGIN_FEATS;
     }
 

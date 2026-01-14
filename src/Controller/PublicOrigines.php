@@ -20,7 +20,7 @@ class PublicOrigines extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->origins = $this->originReader->getAllOrigins([Field::NAME=>Constant::CST_ASC]);
+        $this->origins = $this->originReader->allOrigins([Field::NAME=>Constant::CST_ASC]);
         $this->title = Language::LG_HISTORIQUES;
     }
 

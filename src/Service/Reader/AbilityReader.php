@@ -3,20 +3,23 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Ability as DomainAbility;
-use src\Repository\Ability as RepositoryAbility;
+use src\Repository\AbilityRepositoryInterface;
 
 final class AbilityReader
 {
     public function __construct(
-        private RepositoryAbility $abilityRepository
+        private AbilityRepositoryInterface $abilityRepository
     ) {}
     
-    public function getAllAbilities(): Collection
+    /**
+     * @return Collection<DomainAbility>
+     */
+    public function allAbilities(): Collection
     {
         return $this->abilityRepository->findAll();
     }
     
-    public function getAbility(int $id): ?DomainAbility
+    public function abilityById(int $id): ?DomainAbility
     {
         return $this->abilityRepository->find($id);
     }

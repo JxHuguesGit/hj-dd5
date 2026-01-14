@@ -36,7 +36,7 @@ class RpgOrigin extends Utilities
         $originQueryService = new RpgOriginQueryService(
             new RepositoryRpgOrigin(new QueryBuilder(), new QueryExecutor())
         );
-        $origins = $originQueryService->getAllOrigins([Field::NAME=>Constant::CST_ASC]);
+        $origins = $originQueryService->allOrigins([Field::NAME=>Constant::CST_ASC]);
         $objTable = static::getTable($origins, $params);
         return $objTable?->display();
     }

@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Constant\Table;
 use src\Domain\Item as DomainItem;
 
-class Item extends Repository
+class ItemRepository extends Repository implements ItemRepositoryInterface
 {
     public const TABLE = Table::ITEM;
     

@@ -3,20 +3,23 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Power as DomainPower;
-use src\Repository\Power as RepositoryPower;
+use src\Repository\PowerRepositoryInterface;
 
 final class PowerReader
 {
     public function __construct(
-        private RepositoryPower $powerRepository
+        private PowerRepositoryInterface $powerRepository
     ) {}
     
-    public function getAllPowers(): Collection
+    /**
+     * @return Collection<DomainPower>
+     */
+    public function allPowers(): Collection
     {
         return $this->powerRepository->findAll();
     }
     
-    public function getPower(int $id): ?DomainPower
+    public function powerById(int $id): ?DomainPower
     {
         return $this->powerRepository->find($id);
     }

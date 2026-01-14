@@ -7,11 +7,11 @@ use src\Domain\Ability as DomainAbility;
 use src\Domain\Item as DomainItem;
 use src\Domain\Origin as DomainOrigin;
 use src\Domain\Skill as DomainSkill;
-use src\Repository\Feat as RepositoryFeat;
+use src\Repository\FeatRepository;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginItem as RepositoryOriginItem;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
-use src\Repository\Tool as RepositoryTool;
+use src\Repository\ToolRepository;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ItemReader;
 use src\Service\Reader\SkillReader;
@@ -26,8 +26,8 @@ final class OriginService
     private array $skillCache = [];
     
     public function __construct(
-        private RepositoryFeat $featRepository,
-        private RepositoryTool $toolRepository,
+        private FeatRepository $featRepository,
+        private ToolRepository $toolRepository,
         private RepositoryOriginSkill $originSkillRepository,
         private RepositoryOriginAbility $originAbilityRepository,
         private RepositoryOriginItem $originItemRepository,
@@ -64,7 +64,7 @@ final class OriginService
         $collection = new Collection();
         foreach ($originSkills as $originSkill) {
             $skillId = $originSkill->skillId;
-            $skill = $this->skillReader->getSkill($skillId);
+            $skill = $this->skillReader->skillById($skillId);
             $this->skillCache[$skillId] ??= $skill;
             $collection->addItem($this->skillCache[$skillId]);
         }
@@ -80,7 +80,7 @@ final class OriginService
         $collection = new Collection();
         foreach ($originAbilities as $originAbility) {
             $abilityId = $originAbility->abilityId;
-            $ability = $this->abilityReader->getAbility($abilityId);
+            $ability = $this->abilityReader->abilityById($abilityId);
             $this->abilityCache[$abilityId] ??= $ability;
             $collection->addItem($this->abilityCache[$abilityId]);
         }
@@ -96,7 +96,7 @@ final class OriginService
         $collection = new Collection();
         foreach ($originItems as $originItem) {
             $itemId = $originItem->itemId;
-            $item = $this->itemReader->getItem($itemId);
+            $item = $this->itemReader->itemById($itemId);
             $this->itemCache[$itemId] ??= $item;
             if ($item!==null) {
                 for ($i=0; $i<$originItem->quantity; $i++) {

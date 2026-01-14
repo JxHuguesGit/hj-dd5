@@ -28,7 +28,7 @@ final class SpecieService
         $collection = new Collection();
         foreach ($speciePowers as $speciePower) {
             $powerId = $speciePower->powerId;
-            $power = $this->powerReader->getPower($powerId);
+            $power = $this->powerReader->powerById($powerId);
             $this->powerCache[$powerId] ??= $power;
             $collection->addItem($this->powerCache[$powerId]);
         }

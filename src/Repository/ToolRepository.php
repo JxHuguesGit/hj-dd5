@@ -6,8 +6,9 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Tool as DomainTool;
+use src\Domain\Criteria\ToolCriteria;
 
-class Tool extends Repository
+class ToolRepository extends Repository implements ToolRepositoryInterface
 {
     public const TABLE = Table::TOOL;
     
@@ -17,9 +18,21 @@ class Tool extends Repository
     }
 
     /**
-     * Retourne toutes les outils avec les infos issues de item et tool
+     * @return Collection<DomainTool>
      */
-    public function findAllWithItemAndType(array $criteria=[], array $orderBy=[Field::NAME=>Constant::CST_ASC]): Collection
+    public function findAll(array $orderBy = []): Collection
+    {
+        $criteria = new ToolCriteria();
+        return $this->findAllWithItemAndType($criteria, $orderBy);
+    }
+
+    /**
+     * @return Collection<DomainTool>
+     */
+    public function findAllWithItemAndType(
+        ToolCriteria $criteria,
+        array $orderBy=[Field::NAME=>Constant::CST_ASC]
+    ): Collection
     {
         $baseQuery = "
             SELECT ".Field::PARENTID."
@@ -28,9 +41,14 @@ class Tool extends Repository
             INNER JOIN " . Table::ITEM . " i ON i.id = t.id
         ";
 
+        $filters = [];
+        if ($criteria->type !== null) {
+            $filters[Field::TYPE] = $criteria->type;
+        }
+
         $this->query = $this->queryBuilder->reset()
             ->setBaseQuery($baseQuery)
-            ->where($criteria)
+            ->where($filters)
             ->orderBy($orderBy)
             ->getQuery();
 
@@ -41,9 +59,14 @@ class Tool extends Repository
         );
     }
 
+    /**
+     * @return Collection<DomainTool>
+     */
     public function findByCategory(array $orderBy=[]): Collection
     {
-        return $this->findAllWithItemAndType([Field::TYPE=>Constant::CST_TOOL], $orderBy);
+        $criteria = new ToolCriteria();
+        $criteria->type = Constant::CST_TOOL;
+        return $this->findAllWithItemAndType($criteria, $orderBy);
     }
 
     public function find(mixed $id, bool $display=false): ?object

@@ -4,83 +4,59 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Criteria\SpeciesCriteria;
 use src\Domain\Specie as DomainSpecie;
-use src\Exception\NotFoundException;
-use src\Repository\Species as RepositorySpecies;
+use src\Repository\SpeciesRepositoryInterface;
 
 final class SpecieReader
 {
     public function __construct(
-        private RepositorySpecies $speciesRepository,
+        private SpeciesRepositoryInterface $speciesRepository,
     ) {}
 
-    public function getSpecies(int $id): ?DomainSpecie
+    public function speciesById(int $id): ?DomainSpecie
     {
         return $this->speciesRepository->find($id);
     }
 
-    public function getAllSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    /**
+     * @return Collection<DomainSpecie>
+     */
+    public function allSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->speciesRepository->findAll($order);
     }
 
-    public function getSpeciesBySlug(string $slug): ?DomainSpecie
+    public function speciesBySlug(string $slug): ?DomainSpecie
     {
-        $feat = $this->speciesRepository->findBy([Field::SLUG=>$slug]);
-        return $feat?->first() ?? null;
+        $species = $this->speciesRepository->findBy([Field::SLUG=>$slug]);
+        return $species->first() ?? null;
     }
 
-    public function getSpeciesBySlugOrFail(string $slug): ?DomainSpecie
-    {
-        $species = $this->getSpeciesBySlug($slug);
-        if (!$species) {
-            throw new NotFoundException("Espèce introuvable : $slug");
-        }
-        return $species;
-    }
-
-    public function getSpeciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    /**
+     * @return Collection<DomainSpecie>
+     */
+    public function speciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->speciesRepository->findBy([Field::PARENTID=>$parentId], $order);
     }
 
     public function getPreviousAndNext(DomainSpecie $species): array
     {
-        // Don précédent (ordre alphabétique)
-        $prev = $this->speciesRepository->findByComplex(
-            [
-                [
-                    'field'   => Field::NAME,
-                    'operand' => '<',
-                    'value'   => $species->name,
-                ],
-                [
-                    'field'   => Field::PARENTID,
-                    'operand' => '=',
-                    'value'   => $species->parentId,
-                ],
-            ],
-            [Field::NAME => Constant::CST_DESC],
-            1
-        )->first();
+        // Critère pour l'origine précédente (nom < courant)
+        $prevCriteria = new SpeciesCriteria();
+        $prevCriteria->nameLt = $species->name;
 
-        // Don suivant
-        $next = $this->speciesRepository->findByComplex(
-            [
-                [
-                    'field'   => Field::NAME,
-                    'operand' => '>',
-                    'value'   => $species->name,
-                ],
-                [
-                    'field'   => Field::PARENTID,
-                    'operand' => '=',
-                    'value'   => $species->parentId,
-                ],
-            ],
-            [Field::NAME => Constant::CST_ASC],
-            1
-        )->first();
+        $prev = $this->speciesRepository
+            ->findAllWithCriteria($prevCriteria, [Field::NAME => Constant::CST_DESC])
+            ->first();
+
+        $nextCriteria = new SpeciesCriteria();
+        $nextCriteria->nameGt = $species->name;
+
+        $next = $this->speciesRepository
+            ->findAllWithCriteria($nextCriteria, [Field::NAME => Constant::CST_ASC])
+            ->first();
 
         return [
             'prev' => $prev ?: null,

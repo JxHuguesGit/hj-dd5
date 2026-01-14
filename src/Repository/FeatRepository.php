@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Constant\Table;
 use src\Domain\Feat as DomainFeat;
 
-class Feat extends Repository
+class FeatRepository extends Repository implements FeatRepositoryInterface
 {
     public const TABLE = Table::FEAT;
     

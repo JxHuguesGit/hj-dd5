@@ -6,8 +6,9 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Weapon as DomainWeapon;
+use src\Domain\Criteria\WeaponCriteria;
 
-class Weapon extends Repository
+class WeaponRepository extends Repository implements WeaponRepositoryInterface
 {
     public const INNERJOIN = 'INNER JOIN ';
     public const TABLE = Table::WEAPON;
@@ -18,9 +19,21 @@ class Weapon extends Repository
     }
 
     /**
-     * Retourne toutes les armes avec les infos issues de item et weapon
+     * @return Collection<DomainWeapon>
      */
-    public function findAllWithItemAndType(array $criteria=[], array $orderBy=['i.name'=>Constant::CST_ASC]): Collection
+    public function findAll(array $orderBy = []): Collection
+    {
+        $criteria = new WeaponCriteria();
+        return $this->findAllWithItemAndType($criteria, $orderBy);
+    }
+
+    /**
+     * @return Collection<DomainWeapon>
+     */
+    public function findAllWithItemAndType(
+        WeaponCriteria $criteria,
+        array $orderBy=['i.name'=>Constant::CST_ASC]
+    ): Collection
     {
         $baseQuery = "
             SELECT a.id
@@ -40,9 +53,14 @@ class Weapon extends Repository
             self::INNERJOIN . Table::WPNRANGE . " r ON r.id = a.".Field::WPNRANGEID."
         ";
 
+        $filters = [];
+        if ($criteria->type !== null) {
+            $filters[Field::TYPE] = $criteria->type;
+        }
+
         $this->query = $this->queryBuilder->reset()
             ->setBaseQuery($baseQuery)
-            ->where($criteria)
+            ->where($filters)
             ->orderBy($orderBy)
             ->getQuery();
 
@@ -53,8 +71,13 @@ class Weapon extends Repository
         );
     }
 
+    /**
+     * @return Collection<DomainWeapon>
+     */
     public function findByCategory(array $orderBy=[]): Collection
     {
-        return $this->findAllWithItemAndType([Field::TYPE=>Constant::CST_WEAPON], $orderBy);
+        $criteria = new WeaponCriteria();
+        $criteria->type = Constant::CST_WEAPON;
+        return $this->findAllWithItemAndType($criteria, $orderBy);
     }
 }

@@ -6,7 +6,7 @@ use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
 
-class WeaponPropertyValue extends Repository
+class WeaponPropertyValueRepository extends Repository implements WeaponPropertyValueRepositoryInterface
 {
     public const TABLE = Table::WPNPROPVALUE;
 
@@ -15,7 +15,7 @@ class WeaponPropertyValue extends Repository
         return DomainWeaponPropertyValue::class;
     }
 
-    public function findByWeaponIds(array $weaponIds): Collection
+    public function byWeaponIds(array $weaponIds): Collection
     {
         return new Collection();
     }

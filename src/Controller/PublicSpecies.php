@@ -19,7 +19,7 @@ class PublicSpecies extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->species = $this->speciesQueryService->getSpeciesByParent(0, [Field::NAME=>Constant::CST_ASC]);
+        $this->species = $this->speciesQueryService->speciesByParent(0, [Field::NAME=>Constant::CST_ASC]);
         $this->title = 'Les Espèces';
     }
 

@@ -21,7 +21,7 @@ class PublicSpecie extends PublicBase
         private PageSpecie $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->species = $this->specieReader->getSpeciesBySlugOrFail($this->slug);
+        $this->species = $this->specieReader->speciesBySlug($this->slug);
         $this->title = $this->species->name;
     }
     

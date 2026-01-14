@@ -4,50 +4,66 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Criteria\OriginCriteria;
 use src\Domain\Feat as DomainFeat;
 use src\Domain\Origin as DomainOrigin;
-use src\Exception\NotFoundException;
-use src\Repository\Origin as RepositoryOrigin;
+use src\Repository\OriginRepositoryInterface;
 
 final class OriginReader
 {
     public function __construct(
-        private RepositoryOrigin $originRepository,
+        private OriginRepositoryInterface $originRepository,
     ) {}
 
-    public function getOrigin(int $id): ?DomainOrigin
+    public function originById(int $id): ?DomainOrigin
     {
         return $this->originRepository->find($id);
     }
 
-    public function getAllOrigins(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    /**
+     * @return Collection<DomainOrigin>
+     */
+    public function allOrigins(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->originRepository->findAll($order);
     }
 
-    public function getOriginBySlug(string $slug): ?DomainOrigin
+    public function originBySlug(string $slug): ?DomainOrigin
     {
-        $origin = $this->originRepository->findBy([Field::SLUG=>$slug]);
-        return $origin?->first() ?? null;
+        $criteria = new OriginCriteria();
+        $criteria->slug = $slug;
+        return $this->originRepository->findAllWithCriteria($criteria)?->first() ?? null;
     }
 
-    public function getOriginsByFeat(DomainFeat $feat): Collection
+    /**
+     * @return Collection<DomainOrigin>
+     */
+    public function originsByFeat(DomainFeat $feat): Collection
     {
-        return $this->originRepository->findBy([Field::FEATID=>$feat->id]);
-    }
-
-    public function getOriginBySlugOrFail(string $slug): ?DomainOrigin
-    {
-        $origin = $this->getOriginBySlug($slug);
-        if (!$origin) {
-            throw new NotFoundException("Historique introuvable : $slug");
-        }
-        return $origin;
+        $criteria = new OriginCriteria();
+        $criteria->featId = $feat->id;
+        return $this->originRepository->findAllWithCriteria($criteria);
     }
 
     public function getPreviousAndNext(DomainOrigin $origin): array
     {
+        // Critère pour l'origine précédente (nom < courant)
+        $prevCriteria = new OriginCriteria();
+        $prevCriteria->nameLt = $origin->name;
+
+        $prev = $this->originRepository
+            ->findAllWithCriteria($prevCriteria, [Field::NAME => Constant::CST_DESC])
+            ->first();
+
+        $nextCriteria = new OriginCriteria();
+        $nextCriteria->nameGt = $origin->name;
+
+        $next = $this->originRepository
+            ->findAllWithCriteria($nextCriteria, [Field::NAME => Constant::CST_ASC])
+            ->first();
+
         // Origine précédente (ordre alphabétique)
+        /*
         $prev = $this->originRepository->findByComplex(
             [
                 [
@@ -59,8 +75,10 @@ final class OriginReader
             [Field::NAME => Constant::CST_DESC],
             1
         )->first();
+        */
 
         // Origine suivante
+        /*
         $next = $this->originRepository->findByComplex(
             [
                 [
@@ -72,6 +90,7 @@ final class OriginReader
             [Field::NAME => Constant::CST_ASC],
             1
         )->first();
+        */
 
         return [
             'prev' => $prev ?: null,

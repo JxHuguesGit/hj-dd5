@@ -9,7 +9,7 @@ use src\Presenter\ListPresenter\ArmorListPresenter;
 use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\TableBuilder\ArmorTableBuilder;
 use src\Presenter\TableBuilder\WeaponTableBuilder;
-use src\Repository\Armor as RepositoryArmor;
+use src\Repository\ArmorRepository;
 use src\Repository\Weapon as RepositoryWeapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -25,7 +25,7 @@ class AdminCompendiumPage extends AdminPage
 
         switch ($currentId) {
             case Constant::ARMORS :
-                $objDao = new RepositoryArmor(new QueryBuilder(), new QueryExecutor());
+                $objDao = new ArmorRepository(new QueryBuilder(), new QueryExecutor());
                 $armors = $objDao->findAllWithItemAndType([], [
                     Field::ARMORTYPID=>Constant::CST_ASC,
                     Field::ARMORCLASS=>Constant::CST_ASC,

@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Constant\Table;
 use src\Domain\SubSkill as DomainSubSkill;
 
-class SubSkill extends Repository
+class SubSkillRepository extends Repository implements SubSkillRepositoryInterface
 {
     public const TABLE = Table::SUBSKILL;
 

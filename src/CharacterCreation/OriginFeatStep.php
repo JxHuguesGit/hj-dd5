@@ -93,7 +93,7 @@ class OriginFeatStep extends AbstractStep
                 'extraRadioBtns'    => $primaryExtraFeatHtml,
                 'showExtra2nd'      => $isHuman && $secondFeatId==self::SPECIAL_FEAT_ID ? '' : ' '.Bootstrap::CSS_DNONE,
                 'extraRadioBtns2nd' => $secondaryExtraFeatHtml,
-                'description'       => $this->getDescription($firstFeat?->getFeat()),
+                'description'       => $this->getDescription($firstFeat?->featById()),
             ],
         ];
     }

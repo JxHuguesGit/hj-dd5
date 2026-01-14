@@ -5,15 +5,18 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Armor as DomainArmor;
-use src\Repository\Armor as RepositoryArmor;
+use src\Repository\ArmorRepositoryInterface;
 
 final class ArmorReader
 {
     public function __construct(
-        private RepositoryArmor $armorRepository
+        private ArmorRepositoryInterface $armorRepository
     ) {}
     
-    public function getAllArmors(): Collection
+    /**
+     * @return Collection<DomainArmor>
+     */
+    public function allArmors(): Collection
     {
         $orderBy = [
             Field::ARMORTYPID=>Constant::CST_ASC,
@@ -23,7 +26,7 @@ final class ArmorReader
         return $this->armorRepository->findByCategory($orderBy);
     }
     
-    public function getArmor(int $id): ?DomainArmor
+    public function armorById(int $id): ?DomainArmor
     {
         return $this->armorRepository->find($id);
     }
