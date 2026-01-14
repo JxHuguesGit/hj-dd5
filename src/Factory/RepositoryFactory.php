@@ -3,12 +3,15 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Repository\AbilityRepository;
 use src\Repository\Repository;
 use src\Repository\ArmorRepository;
 use src\Repository\FeatRepository;
 use src\Repository\OriginRepository;
+use src\Repository\PowerRepository;
 use src\Repository\SkillRepository;
 use src\Repository\SpeciesRepository;
+use src\Repository\SubSkillRepository;
 use src\Repository\ToolRepository;
 use src\Repository\WeaponRepository;
 
@@ -18,6 +21,11 @@ class RepositoryFactory
         private QueryBuilder $builder,
         private QueryExecutor $executor
     ) {}
+    
+    public function ability(): AbilityRepository
+    {
+        return new AbilityRepository($this->builder, $this->executor);
+    }
     
     public function armor(): ArmorRepository
     {
@@ -33,10 +41,20 @@ class RepositoryFactory
     {
         return new OriginRepository($this->builder, $this->executor);
     }
+
+    public function power(): PowerRepository
+    {
+        return new PowerRepository($this->builder, $this->executor);
+    }
     
     public function skill(): SkillRepository
     {
         return new SkillRepository($this->builder, $this->executor);
+    }
+    
+    public function subSkill(): SubSkillRepository
+    {
+        return new SubSkillRepository($this->builder, $this->executor);
     }
     
     public function species(): SpeciesRepository

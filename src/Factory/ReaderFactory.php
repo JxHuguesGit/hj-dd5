@@ -1,11 +1,14 @@
 <?php
 namespace src\Factory;
 
+use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\PowerReader;
 use src\Service\Reader\SkillReader;
 use src\Service\Reader\SpecieReader;
+use src\Service\Reader\SubSkillReader;
 use src\Service\Reader\ToolReader;
 use src\Service\Reader\WeaponReader;
 
@@ -14,6 +17,11 @@ final class ReaderFactory
     public function __construct(
         private RepositoryFactory $repositories
     ) {}
+
+    public function ability(): AbilityReader
+    {
+        return new AbilityReader($this->repositories->ability());
+    }
 
     public function armor(): ArmorReader
     {
@@ -30,9 +38,19 @@ final class ReaderFactory
         return new OriginReader($this->repositories->origin());
     }
 
+    public function power(): PowerReader
+    {
+        return new PowerReader($this->repositories->power());
+    }
+
     public function skill(): SkillReader
     {
         return new SkillReader($this->repositories->skill());
+    }
+
+    public function subSkill(): SubSkillReader
+    {
+        return new SubSkillReader($this->repositories->subSkill());
     }
 
     public function species(): SpecieReader
