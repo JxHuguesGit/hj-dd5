@@ -12,4 +12,9 @@ class FeatRepository extends Repository implements FeatRepositoryInterface
     {
         return DomainFeat::class;
     }
+
+    public function find(int $id): DomainFeat
+    {
+        return parent::find($id) ?? new DomainFeat();
+    }
 }

@@ -36,7 +36,7 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     {
         $baseQuery = "
             SELECT ".Field::PARENTID."
-                , ".Field::NAME.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
+                , ".Field::NAME.", ".Field::SLUG.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
             FROM " . Table::TOOL . " t
             INNER JOIN " . Table::ITEM . " i ON i.id = t.id
         ";
@@ -69,7 +69,7 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
         return $this->findAllWithItemAndType($criteria, $orderBy);
     }
 
-    public function find(mixed $id, bool $display=false): ?object
+    public function find(mixed $id, bool $display=false): ?DomainTool
     {
         $baseQuery = "
             SELECT ".Field::PARENTID."

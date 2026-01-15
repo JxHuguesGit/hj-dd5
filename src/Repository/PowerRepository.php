@@ -12,4 +12,9 @@ class PowerRepository extends Repository implements PowerRepositoryInterface
     {
         return DomainPower::class;
     }
+
+    public function find(int $id): DomainPower
+    {
+        return parent::find($id) ?? new DomainPower();
+    }
 }

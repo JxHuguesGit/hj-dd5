@@ -3,7 +3,6 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Field;
 use src\Query\QueryBuilder;
-use src\Repository\Repository;
 
 final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
 {
@@ -16,10 +15,14 @@ final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
 
     public function apply(QueryBuilder $queryBuilder): void
     {
-        $this->applyEquals($queryBuilder, [
-            Field::FEATID => $this->featId,
-            Field::SLUG => $this->slug,
-        ]);
+        $filters = [];
+        if ($this->featId!=null) {
+            $filters[Field::FEATID] = $this->featId;
+        }
+        if ($this->slug!=null) {
+            $filters[Field::SLUG] = $this->slug;
+        }
+        $this->applyEquals($queryBuilder, $filters);
         $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
         $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
     }

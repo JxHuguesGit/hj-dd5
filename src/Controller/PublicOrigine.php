@@ -11,7 +11,7 @@ use src\Service\OriginPageService;
 
 class PublicOrigine extends PublicBase
 {
-    private DomainOrigin $origin;
+    private ?DomainOrigin $origin;
 
     public function __construct(
         private string $slug,

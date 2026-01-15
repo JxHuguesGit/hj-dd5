@@ -12,4 +12,9 @@ class SubSkillRepository extends Repository implements SubSkillRepositoryInterfa
     {
         return DomainSubSkill::class;
     }
+
+    public function find(int $id): DomainSubSkill
+    {
+        return parent::find($id) ?? new DomainSubSkill();
+    }
 }

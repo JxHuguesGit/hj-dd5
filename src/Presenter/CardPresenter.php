@@ -35,7 +35,7 @@ class CardPresenter
                     <h3>%s</h3>
                     <p>%s</p>
                 </a>',
-                $el->getUrl(),
+                trim($el->getUrl(), '-'),
                 htmlspecialchars($el->getTitle()),
                 htmlspecialchars($el->getDescription())
             );

@@ -26,4 +26,9 @@ class OriginRepository extends Repository implements OriginRepositoryInterface
     {
         return $this->findAllByCriteria($criteria, $orderBy);
     }
+
+    public function find(int $id): DomainOrigin
+    {
+        return parent::find($id) ?? new DomainOrigin();
+    }
 }

@@ -7,7 +7,7 @@ use src\Presenter\BreadcrumbPresenter;
 
 class PublicBase
 {
-    protected string $title = '';
+    protected ?string $title = '';
     protected PageElement $pageElement;
 
     public function getRender(string $urlTemplate, array $args=[]): string
@@ -21,7 +21,7 @@ class PublicBase
 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->title ?? '';
     }
 
     public function getContentHeader(): string

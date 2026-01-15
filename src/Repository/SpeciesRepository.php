@@ -26,4 +26,9 @@ class SpeciesRepository extends Repository implements SpeciesRepositoryInterface
     {
         return $this->findAllByCriteria($criteria, $orderBy);
     }
+
+    public function find(int $id): DomainSpecies
+    {
+        return parent::find($id) ?? new DomainSpecies();
+    }
 }

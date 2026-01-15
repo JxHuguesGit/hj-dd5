@@ -5,6 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\CriteriaInterface;
+use src\Domain\Entity as DomainEntity;
 use src\Entity\Entity;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -51,7 +52,10 @@ class Repository
         }
     }
 
-    public function find(mixed $id, bool $display=false): ?object
+    /**
+     * @return src\Domain\Entity|null
+     */
+    public function find(int $id)
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
@@ -60,8 +64,7 @@ class Repository
         return $this->queryExecutor->fetchOne(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams(),
-            $display
+            $this->queryBuilder->getParams()
         );
     }
 

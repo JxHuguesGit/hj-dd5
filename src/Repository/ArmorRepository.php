@@ -78,4 +78,9 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
         $criteria->type = Constant::CST_ARMOR;
         return $this->findAllWithItemAndType($criteria, $orderBy);
     }
+
+    public function find(int $id): DomainArmor
+    {
+        return parent::find($id) ?? new DomainArmor();
+    }
 }

@@ -12,4 +12,9 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     {
         return DomainItem::class;
     }
+
+    public function find(int $id): DomainItem
+    {
+        return parent::find($id) ?? new DomainItem();
+    }
 }

@@ -12,4 +12,9 @@ class AbilityRepository extends Repository implements AbilityRepositoryInterface
     {
         return DomainAbility::class;
     }
+
+    public function find(int $id): DomainAbility
+    {
+        return parent::find($id) ?? new DomainAbility();
+    }
 }

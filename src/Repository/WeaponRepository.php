@@ -80,4 +80,9 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
         $criteria->type = Constant::CST_WEAPON;
         return $this->findAllWithItemAndType($criteria, $orderBy);
     }
+
+    public function find(int $id): DomainWeapon
+    {
+        return parent::find($id) ?? new DomainWeapon();
+    }
 }
