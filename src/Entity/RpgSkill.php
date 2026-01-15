@@ -42,7 +42,7 @@ class RpgSkill extends Entity
         return $this->getRelatedEntity('abilityCache', RepositoryRpgAbility::class, $this->abilityId);
     }
     
-    public function getSubSkills(): Collection
+    public function subSkills(): Collection
     {
         if ($this->subSkillsCache === null) {
             $objDao = new RepositoryRpgSubSkill(static::$qb, static::$qe);

@@ -5,57 +5,65 @@ use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Armor as DomainArmor;
 use src\Presenter\ViewModel\ArmorGroup;
+use src\Presenter\ViewModel\ArmorRow;
+use src\Utils\UrlGenerator;
+use src\Utils\Utils;
 
-class ArmorListPresenter
+final class ArmorListPresenter
 {
-    /**
-     * Transforme une liste d'armures en tableau prêt pour le Renderer.
-     * Groupé par type.
-     */
     public function present(iterable $armors): array
     {
         $grouped = [];
         foreach ($armors as $armor) {
             /** @var DomainArmor $armor */
-            $grouped[$armor->armorTypeId][] = $armor;
+            $grouped[$armor->armorTypeId][] = $this->buildRow($armor);
         }
 
         $typesLabel = self::getTypesLabel();
-
         $result = [];
-        foreach ($grouped as $typeId => $armorsByType) {
+        foreach ($grouped as $typeId => $rows) {
             $result[] = new ArmorGroup(
-                $typesLabel[$typeId][Constant::CST_LABEL] ?? '',
-                $typesLabel[$typeId][Constant::CST_SLUG] ?? '',
-                $armorsByType
+                label: $typesLabel[$typeId][Constant::CST_LABEL] ?? '',
+                slug: $typesLabel[$typeId][Constant::CST_SLUG] ?? '',
+                rows: $rows
             );
         }
 
-        return [Constant::CST_ITEMS=>$result];
+        return [Constant::CST_ITEMS => $result];
     }
 
-    /**
-     * Labels des types d'armure.
-     * @return array<int,string>
-     */
-    private static function getTypesLabel(): array {
+    private function buildRow(DomainArmor $armor): ArmorRow
+    {
+        return new ArmorRow(
+            name: $armor->name,
+            url: UrlGenerator::item($armor->slug),
+            armorClass: $armor->displayArmorClass(),
+            strengthPenalty: $armor->strengthPenalty,
+            stealth: $armor->stealthDisadvantage ? Language::LG_DISADVANTAGE : '-',
+            weight: Utils::getStrWeight($armor->weight),
+            price: Utils::getStrPrice($armor->goldPrice)
+        );
+    }
+
+    private static function getTypesLabel(): array
+    {
         return [
-            DomainArmor::TYPE_LIGHT  => [
-                Constant::CST_SLUG=>Constant::LIGHT,
-                Constant::CST_LABEL=>Language::LG_ARM_LGT_DONDOFF,
+            DomainArmor::TYPE_LIGHT => [
+                Constant::CST_SLUG => Constant::LIGHT,
+                Constant::CST_LABEL => Language::LG_ARM_LGT_DONDOFF,
             ],
-            DomainArmor::TYPE_MEDIUM  => [
-                Constant::CST_SLUG=>Constant::MEDIUM,
-                Constant::CST_LABEL=>Language::LG_ARM_MDM_DONDOFF,
+            DomainArmor::TYPE_MEDIUM => [
+                Constant::CST_SLUG => Constant::MEDIUM,
+                Constant::CST_LABEL => Language::LG_ARM_MDM_DONDOFF,
             ],
-            DomainArmor::TYPE_HEAVY  => [
-                Constant::CST_SLUG=>Constant::HEAVY,
-                Constant::CST_LABEL=>Language::LG_ARM_HVY_DONDOFF,
+            DomainArmor::TYPE_HEAVY => [
+                Constant::CST_SLUG => Constant::HEAVY,
+                Constant::CST_LABEL => Language::LG_ARM_HVY_DONDOFF,
             ],
-            DomainArmor::TYPE_SHIELD  => [
-                Constant::CST_SLUG=>Constant::SHIELD,
-                Constant::CST_LABEL=>Language::LG_ARM_SHD_DONDOFF,
+            DomainArmor::TYPE_SHIELD => [
+                Constant::CST_SLUG => Constant::SHIELD,
+                Constant::CST_LABEL => Language::LG_ARM_SHD_DONDOFF,
             ],
         ];
     }
- }
+}

@@ -3,6 +3,7 @@ namespace src\Router;
 
 use src\Controller\Public\PublicBase;
 use src\Factory\ReaderFactory;
+use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
@@ -16,7 +17,7 @@ use src\Presenter\TableBuilder\ToolTableBuilder;
 
 class ItemRouter
 {
-    public function match(string $path, ReaderFactory $factory): ?PublicBase
+    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de matériel ---
@@ -48,7 +49,9 @@ class ItemRouter
                 ),
                 'weapon' => new $controllerClass(
                     $factory->weapon(),
-                    new WeaponListPresenter(),
+                    new WeaponListPresenter(
+                        $serviceFactory->wordPress()
+                    ),
                     new PageList(
                         new TemplateRenderer(),
                         new WeaponTableBuilder()

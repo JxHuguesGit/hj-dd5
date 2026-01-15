@@ -2,6 +2,7 @@
 namespace src\Utils;
 
 use src\Constant\Language;
+use src\Domain\Weapon as DomainWeapon;
 
 class Utils
 {
@@ -63,6 +64,44 @@ class Utils
         }
         return $strPrix;
     }
+
+    public static function getStrDamage(DomainWeapon $weapon): string
+    {
+        // Cas spécial : dégâts fixes (ex : sarbacane = 1)
+        if ($weapon->diceFaces <= 1) {
+            return (string) $weapon->diceCount . ' ' . $weapon->typeDamageName;
+        }
+
+        return sprintf(
+            '%dd%d %s',
+            $weapon->diceCount,
+            $weapon->diceFaces,
+            $weapon->typeDamageName
+        );
+    }
+
+    public static function getWeaponProperties(DomainWeapon $weapon): string
+    {
+        $props = [];
+        foreach ($weapon->weaponProficiencies as $prop) {
+            $props[] = $prop->name;
+        }
+        return $props ? implode(', ', $props) : '-';
+    }
+
+    public static function getWeaponRange(DomainWeapon $weapon): string
+    {
+        if ($weapon->isMelee()) {
+            return '-';
+        }
+
+        if ($weapon->rangeNormal == $weapon->rangeMax) {
+            return $weapon->rangeNormal . ' m';
+        }
+
+        return $weapon->rangeNormal . ' / ' . $weapon->rangeMax . ' m';
+    }
+
 
     public static function formatBBCode(string $str): string
     {

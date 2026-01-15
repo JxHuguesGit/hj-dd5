@@ -1,12 +1,15 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-class ToolGroup
+final class ToolGroup
 {
+    /**
+     * @param ToolRow[] $rows
+     */
     public function __construct(
         public string $label,
         public string $slug,
-        /** @var DomainTool[] */
-        public array $tools
+        public array $rows,
+        public string $extra = ''
     ) {}
 }

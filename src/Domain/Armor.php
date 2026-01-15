@@ -3,9 +3,11 @@ namespace src\Domain;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Utils\Utils;
 
 /**
  * @property string $name
+ * @property string $slug
  * @property int $armorTypeId
  * @property int $armorClass
  * @property int $strengthPenalty
@@ -13,33 +15,33 @@ use src\Constant\FieldType;
  * @property float $weight
  * @property float $goldPrice
  */
-final class Armor extends Entity
+final class Armor extends Item
 {
     public const TYPE_LIGHT = 1;
     public const TYPE_MEDIUM = 2;
     public const TYPE_HEAVY = 3;
     public const TYPE_SHIELD = 4;
     
-    public const FIELDS = [
-        Field::ID,
-        Field::NAME,
+    public const SPECIFIC_FIELDS = [
         Field::ARMORTYPID,
         Field::ARMORCLASS,
         Field::STRPENALTY,
         Field::STHDISADV,
-        Field::WEIGHT,
-        Field::GOLDPRICE,
     ];
-    public const FIELD_TYPES = [
-        Field::NAME =>       FieldType::STRING,
+    public const SPECIFIC_FIELD_TYPES = [
         Field::ARMORTYPID => FieldType::INT,
         Field::ARMORCLASS => FieldType::INT,
         Field::STRPENALTY => FieldType::INT,
         Field::STHDISADV =>  FieldType::BOOL,
-        Field::WEIGHT =>     FieldType::FLOAT,
-        Field::GOLDPRICE =>  FieldType::FLOAT,
     ];
-
+    public const FIELDS = [
+        ...self::COMMON_FIELDS,
+        ...self::SPECIFIC_FIELDS,
+    ];
+    public const FIELD_TYPES = [
+        ...self::COMMON_FIELD_TYPES,
+        ...self::SPECIFIC_FIELD_TYPES,
+    ];
     /**
      * Retourne une représentation texte de l'armure
      */
@@ -65,5 +67,12 @@ final class Armor extends Entity
             self::TYPE_HEAVY => (string)$this->armorClass,
             default => (string)$this->armorClass,
         };
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug !== ''
+            ? $this->slug
+            : Utils::slugify($this->name);
     }
 }

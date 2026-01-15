@@ -27,7 +27,10 @@ class FeatRouter
             if (class_exists($controllerClass)) {
                 return new $controllerClass(
                     $factory->feat(),
-                    new FeatListPresenter(),
+                    new FeatListPresenter(
+                        $factory->origin(),
+                        $serviceFactory->wordPress()
+                    ),
                     new PageList(
                         new TemplateRenderer(),
                         new FeatTableBuilder($factory->origin())

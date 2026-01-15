@@ -68,7 +68,7 @@ class RpgSkill extends Utilities
             ->addBodyCell([Constant::CST_CONTENT=>$strName, Constant::CST_ATTRIBUTES=>[Constant::CST_CLASS=>Bootstrap::CSS_COL_MD_9]]);
         
         // On récupère les sous-compétences de la compétence courante
-        $subSkills = $this->rpgSkill->getSubSkills();
+        $subSkills = $this->rpgSkill->subSkills();
 
         $subSkills->rewind();
         $cpt = 1;

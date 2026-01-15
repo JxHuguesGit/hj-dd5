@@ -13,7 +13,7 @@ final class SkillService
         private SubSkillRepository $subSkillRepository,
     ) {}
 
-    public function getSubSkills(DomainSkill $skill): Collection
+    public function subSkills(DomainSkill $skill): Collection
     {
         return $this->subSkillRepository->findBy([
             Field::SKILLID => $skill->id

@@ -245,4 +245,9 @@ class Collection implements \Iterator
     {
         return array_map(fn($item) => $item->$method(), $this->items);
     }
+
+    public function items(): array
+    {
+        return $this->items;
+    }
 }

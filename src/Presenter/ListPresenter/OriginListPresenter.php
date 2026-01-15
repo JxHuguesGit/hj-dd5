@@ -3,16 +3,49 @@ namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
+use src\Domain\Origin as DomainOrigin;
+use src\Presenter\ViewModel\OriginGroup;
+use src\Presenter\ViewModel\OriginRow;
+use src\Service\OriginService;
+use src\Utils\Html;
+use src\Utils\UrlGenerator;
+use src\Constant\Bootstrap;
 
-class OriginListPresenter
+final class OriginListPresenter
 {
-    /**
-     * Transforme la collection d'origines en tableau prêt à être rendu par la Page.
-     */
+    public function __construct(private OriginService $originService) {}
+
     public function present(Collection $origins): array
     {
-        return [
-            Constant::CST_ITEMS => $origins
-        ];
+        $rows = [];
+        foreach ($origins as $origin) {
+            $rows[] = $this->buildRow($origin);
+        }
+
+        return [Constant::CST_ITEMS => [new OriginGroup(label: 'Origines', slug: 'origins', rows: $rows)]];
+    }
+
+    private function buildRow(DomainOrigin $origin): OriginRow
+    {
+        return new OriginRow(
+            name: $origin->name??'',
+            url: UrlGenerator::origin($origin->slug)??'',
+            abilities: implode(', ', array_map(fn($a) => $a->name, $this->originService->getAbilities($origin)->items())),
+            skills: implode('<br>', array_map(fn($s) => Html::getLink($s->name, UrlGenerator::skill($s->slug), Bootstrap::CSS_TEXT_DARK), $this->originService->getSkills($origin)->items())),
+            originFeat: $this->originFeatLink($origin),
+            tool: $this->originToolLink($origin)
+        );
+    }
+
+    private function originFeatLink(DomainOrigin $origin): string
+    {
+        $feat = $this->originService->getFeat($origin);
+        return $feat ? Html::getLink($feat->name, UrlGenerator::feat($feat->getSlug()), Bootstrap::CSS_TEXT_DARK) : '-';
+    }
+
+    private function originToolLink(DomainOrigin $origin): string
+    {
+        $tool = $this->originService->getTool($origin);
+        return $tool ? Html::getLink($tool->name, UrlGenerator::item($tool->getSlug()), Bootstrap::CSS_TEXT_DARK) : '-';
     }
 }

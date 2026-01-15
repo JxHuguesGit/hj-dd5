@@ -31,6 +31,7 @@ use src\Service\FeatService;
 use src\Service\OriginService;
 use src\Service\SpecieService;
 use src\Service\SkillService;
+use src\Service\WpPostService;
 
 final class ServiceFactory
 {
@@ -138,5 +139,10 @@ final class ServiceFactory
         $subSkillRepo  = new SubSkillRepository($this->queryBuilder, $this->queryExecutor);
 
         return new SkillService($subSkillRepo);
+    }
+
+    public function wordPress(): WpPostService
+    {
+        return new WpPostService();
     }
 }

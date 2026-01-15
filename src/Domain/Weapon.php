@@ -129,21 +129,6 @@ final class Weapon extends Item
         return $this->rangeSlug === 'ranged';
     }
 
-    public function getDamageDie(): string
-    {
-        // Cas spécial : dégâts fixes (ex : sarbacane = 1)
-        if ($this->diceFaces <= 1) {
-            return (string) $this->diceCount . ' ' . $this->typeDamageName;
-        }
-
-        return sprintf(
-            '%dd%d %s',
-            $this->diceCount,
-            $this->diceFaces,
-            $this->typeDamageName
-        );
-    }
-
     public function getSlug(): string
     {
         return $this->slug !== ''

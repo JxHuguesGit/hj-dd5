@@ -1,13 +1,15 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-class FeatGroup
+final class FeatGroup
 {
+    /**
+     * @param FeatRow[] $rows
+     */
     public function __construct(
         public string $label,
         public string $slug,
-        public string $extraprerequis,
-        /** @var DomainFeat[] */
-        public array $feats
+        public array $rows,
+        public string $extraPrerequis = ''
     ) {}
 }

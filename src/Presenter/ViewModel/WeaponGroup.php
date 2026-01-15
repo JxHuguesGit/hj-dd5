@@ -1,12 +1,15 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-class WeaponGroup
+final class WeaponGroup
 {
+    /**
+     * @param WeaponRow[] $rows
+     */
     public function __construct(
         public string $label,
         public string $slug,
-        /** @var DomainWeapon[] */
-        public array $weapons
+        public array $rows,
+        public string $extra = ''
     ) {}
 }

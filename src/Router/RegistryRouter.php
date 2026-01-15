@@ -34,7 +34,9 @@ class RegistryRouter
                 return match($pageElement->getSlug()) {
                     'origines' => new $controllerClass(
                         $readerFactory->origin(),
-                        new OriginListPresenter(),
+                        new OriginListPresenter(
+                            $serviceFactory->origin()
+                        ),
                         new PageList(
                             new TemplateRenderer(),
                             new OriginTableBuilder($serviceFactory->origin(), $readerFactory->origin())
@@ -43,7 +45,9 @@ class RegistryRouter
                     ),
                     Constant::SPECIES => new $controllerClass(
                         $readerFactory->species(),
-                        new SpeciesListPresenter(),
+                        new SpeciesListPresenter(
+                            $serviceFactory->wordPress()
+                        ),
                         new PageList(
                             new TemplateRenderer(),
                             new SpeciesTableBuilder()
@@ -52,7 +56,9 @@ class RegistryRouter
                     ),
                     Constant::SKILLS => new $controllerClass(
                         $readerFactory->skill(),
-                        new SkillListPresenter(),
+                        new SkillListPresenter(
+                            $serviceFactory->skill()
+                        ),
                         new PageList(
                             new TemplateRenderer(),
                             new SkillTableBuilder($serviceFactory->skill())
@@ -61,7 +67,10 @@ class RegistryRouter
                     ),
                     Constant::FEATS => new $controllerClass(
                         $readerFactory->feat(),
-                        new FeatListPresenter(),
+                        new FeatListPresenter(
+                            $readerFactory->origin(),
+                            $serviceFactory->wordPress()
+                        ),
                         new PageList(
                             new TemplateRenderer(),
                             new FeatTableBuilder($readerFactory->origin())

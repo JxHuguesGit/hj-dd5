@@ -1,10 +1,10 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-final class SkillGroup
+final class SpeciesGroup
 {
     /**
-     * @param SkillRow[] $rows
+     * @param SpeciesRow[] $rows
      */
     public function __construct(
         public string $label,

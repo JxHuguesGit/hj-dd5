@@ -37,7 +37,8 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
         $baseQuery = "
             SELECT a.id, a.".Field::ARMORTYPID.", a.".Field::ARMORCLASS.",
                 a.".Field::STRPENALTY.", a.".Field::STHDISADV.",
-                i.".Field::NAME.", i.".Field::WEIGHT.", i.".Field::GOLDPRICE."
+                i.".Field::NAME.", i.".Field::SLUG." AS ".Field::SLUG.",
+                i.".Field::WEIGHT.", i.".Field::GOLDPRICE."
             FROM " . Table::ARMOR . " a
             INNER JOIN " . Table::ITEM . " i ON i.id = a.id
         ";
