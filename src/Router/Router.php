@@ -1,9 +1,9 @@
 <?php
 namespace src\Router;
 
-use src\Controller\PublicBase;
-use src\Controller\PublicHome;
-use src\Controller\PublicNotFound;
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicHome;
+use src\Controller\Public\PublicNotFound;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;

@@ -1,8 +1,8 @@
 <?php
 namespace src\Router;
 
-use src\Controller\PublicBase;
-use src\Controller\PublicFeat;
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicFeat;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
@@ -23,7 +23,7 @@ class FeatRouter
         // --- Gestion d'une catégorie de dons ---
         if (preg_match('#^feats-(.+)$#', $path, $matches)) {
             $typeSlug = ucfirst($matches[1]);
-            $controllerClass = 'src\\Controller\\PublicFeat' . ucfirst($typeSlug);
+            $controllerClass = 'src\\Controller\\Public\\PublicFeat' . ucfirst($typeSlug);
             if (class_exists($controllerClass)) {
                 return new $controllerClass(
                     $factory->feat(),

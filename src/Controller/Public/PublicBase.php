@@ -1,5 +1,5 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Exception\TemplateInvalid;
 use src\Model\PageElement;

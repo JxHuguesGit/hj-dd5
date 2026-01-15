@@ -2,7 +2,7 @@
 namespace src\Router;
 
 use src\Constant\Constant;
-use src\Controller\PublicBase;
+use src\Controller\Public\PublicBase;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
@@ -28,7 +28,7 @@ class RegistryRouter
         $pageElement = $registry->get($path);
 
         if ($pageElement) {
-            $controllerClass = 'src\\Controller\\Public' . ucfirst($pageElement->getSlug());
+            $controllerClass = 'src\\Controller\\Public\\Public' . ucfirst($pageElement->getSlug());
                         
             if (class_exists($controllerClass)) {
                 return match($pageElement->getSlug()) {

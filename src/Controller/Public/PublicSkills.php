@@ -1,5 +1,5 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;

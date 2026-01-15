@@ -1,32 +1,32 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Page\PageList;
-use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\MenuPresenter;
-use src\Service\Reader\WeaponReader;
+use src\Presenter\ListPresenter\ToolListPresenter;
+use src\Service\Reader\ToolReader;
 
-final class PublicItemWeapon extends PublicBase
+final class PublicItemTool extends PublicBase
 {
-    private ?Collection $weapons = null;
+    private ?Collection $tools = null;
 
     public function __construct(
-        private WeaponReader $weaponReader,
-        private WeaponListPresenter $presenter,
+        private ToolReader $toolQueryService,
+        private ToolListPresenter $presenter,
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->weapons = $this->weaponReader->allWeapons();
-        $this->title = Language::LG_WEAPONS_TITLE;
+        $this->tools = $this->toolQueryService->allTools();
+        $this->title = Language::LG_TOOLS_TITLE;
     }
 
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render(Constant::CST_ITEMS);
-        $viewData = $this->presenter->present($this->weapons);
+        $viewData = $this->presenter->present($this->tools);
         $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }

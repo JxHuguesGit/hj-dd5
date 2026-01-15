@@ -1,8 +1,7 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Constant\Template;
-use src\Controller\PublicBase;
 use src\Model\PageRegistry;
 use src\Presenter\CardPresenter;
 use src\Presenter\MenuPresenter;

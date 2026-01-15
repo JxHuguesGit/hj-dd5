@@ -1,5 +1,5 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 class PublicNotFound extends PublicBase
 {

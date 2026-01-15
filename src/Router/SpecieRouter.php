@@ -2,8 +2,8 @@
 namespace src\Router;
 
 use src\Constant\Constant;
-use src\Controller\PublicBase;
-use src\Controller\PublicSpecie;
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicSpecie;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;

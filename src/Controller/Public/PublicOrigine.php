@@ -1,5 +1,5 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Constant\Constant;
 use src\Domain\Origin as DomainOrigin;

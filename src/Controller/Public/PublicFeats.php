@@ -1,16 +1,16 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Presenter\MenuPresenter;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\FeatListPresenter;
+use src\Presenter\MenuPresenter;
 use src\Service\Reader\FeatReader;
 
-class PublicFeatCombat extends PublicBase
+class PublicFeats extends PublicBase
 {
     private Collection $feats;
 
@@ -20,8 +20,8 @@ class PublicFeatCombat extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->featsByCategory(3, [Field::NAME=>Constant::CST_ASC]);
-        $this->title = Language::LG_CBT_STYLE_FEATS;
+        $this->feats = $this->featReader->allFeats([Field::FEATTYPEID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC]);
+        $this->title = Language::LG_FEATS;
     }
 
     public function getContentPage(): string

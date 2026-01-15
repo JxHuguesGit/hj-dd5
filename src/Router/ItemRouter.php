@@ -1,9 +1,8 @@
 <?php
 namespace src\Router;
 
-use src\Controller\PublicBase;
+use src\Controller\Public\PublicBase;
 use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
@@ -26,7 +25,7 @@ class ItemRouter
         }
 
         $typeSlug = $matches[1];
-        $controllerClass = 'src\\Controller\\PublicItem' . ucfirst($typeSlug);
+        $controllerClass = 'src\\Controller\\Public\\PublicItem' . ucfirst($typeSlug);
         if (class_exists($controllerClass)) {
             return match($typeSlug) {
                 'armor' => new $controllerClass(

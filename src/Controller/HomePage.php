@@ -2,7 +2,8 @@
 namespace src\Controller;
 
 use src\Constant\Template;
-use src\Controller\PublicHome;
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicHome;
 
 class HomePage extends Utilities
 {

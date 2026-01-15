@@ -1,8 +1,8 @@
 <?php
 namespace src\Router;
 
-use src\Controller\PublicBase;
-use src\Controller\PublicOrigine;
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicOrigine;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Page\PageOrigine;

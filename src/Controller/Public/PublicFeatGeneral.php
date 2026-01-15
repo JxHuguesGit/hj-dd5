@@ -1,5 +1,5 @@
 <?php
-namespace src\Controller;
+namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
@@ -10,7 +10,7 @@ use src\Page\PageList;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Service\Reader\FeatReader;
 
-class PublicFeatEpic extends PublicBase
+class PublicFeatGeneral extends PublicBase
 {
     private Collection $feats;
 
@@ -20,8 +20,8 @@ class PublicFeatEpic extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->featsByCategory(4, [Field::NAME=>Constant::CST_ASC]);
-        $this->title = Language::LG_CBT_STYLE_EPICS;
+        $this->feats = $this->featReader->featsByCategory(2, [Field::NAME=>Constant::CST_ASC]);
+        $this->title = Language::LG_GENERAL_FEATS;
     }
 
     public function getContentPage(): string
