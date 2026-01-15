@@ -4,6 +4,7 @@ namespace src\Presenter\ListPresenter;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Tool as DomainTool;
+use src\Presenter\ViewModel\ToolGroup;
 
 class ToolListPresenter
 {
@@ -19,21 +20,37 @@ class ToolListPresenter
             $grouped[$tool->parentId][] = $tool;
         }
 
-        $typesLabel = [
-            1 => Language::LG_TOOL_DIVERS,
-            2 => Language::LG_TOOL_GAMES,
-            3 => Language::LG_TOOL_MUSIC,
-            4 => Language::LG_TOOL_TOOLS,
-        ];
+        $types = self::getToolTypes();
 
         $result = [];
         foreach ($grouped as $typeId => $toolsByType) {
-            $result[] = [
-                Constant::CST_TYPELABEL => $typesLabel[$typeId],
-                Constant::CST_TOOLS => $toolsByType
-            ];
+            $result[] = new ToolGroup(
+                $types[$typeId][Constant::CST_LABEL] ?? '',
+                $types[$typeId][Constant::CST_SLUG] ?? '',
+                $toolsByType
+            );
         }
 
         return [Constant::CST_ITEMS=>$result];
     }
+    private static function getToolTypes(): array {
+        return [
+            DomainTool::TYPE_DIVERS => [
+                Constant::CST_SLUG => Constant::DIVERS,
+                Constant::CST_LABEL => Language::LG_TOOL_DIVERS,
+            ],
+            DomainTool::TYPE_GAMES => [
+                Constant::CST_SLUG => Constant::GAMES,
+                Constant::CST_LABEL => Language::LG_TOOL_GAMES,
+            ],
+            DomainTool::TYPE_MUSIC => [
+                Constant::CST_SLUG => Constant::MUSIC,
+                Constant::CST_LABEL => Language::LG_TOOL_MUSIC,
+            ],
+            DomainTool::TYPE_TOOL => [
+                Constant::CST_SLUG => Constant::TOOLS,
+                Constant::CST_LABEL => Language::LG_TOOL_TOOLS,
+            ],
+        ];
+     }
 }

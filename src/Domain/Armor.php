@@ -15,6 +15,11 @@ use src\Constant\FieldType;
  */
 final class Armor extends Entity
 {
+    public const TYPE_LIGHT = 1;
+    public const TYPE_MEDIUM = 2;
+    public const TYPE_HEAVY = 3;
+    public const TYPE_SHIELD = 4;
+    
     public const FIELDS = [
         Field::ID,
         Field::NAME,
@@ -54,10 +59,10 @@ final class Armor extends Entity
     public function displayArmorClass(): string
     {
         return match ($this->armorTypeId) {
-            4 => '+' . $this->armorClass,
-            2 => $this->armorClass . ' + Dex (max 2)',
-            1 => $this->armorClass . ' + Dex',
-            3 => (string)$this->armorClass,
+            self::TYPE_SHIELD => '+' . $this->armorClass,
+            self::TYPE_MEDIUM => $this->armorClass . ' + Dex (max 2)',
+            self::TYPE_LIGHT => $this->armorClass . ' + Dex',
+            self::TYPE_HEAVY => (string)$this->armorClass,
             default => (string)$this->armorClass,
         };
     }

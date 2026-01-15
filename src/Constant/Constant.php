@@ -26,6 +26,14 @@ class Constant
     public const ORIGIN   = 'origin';
     public const ORIGINS  = 'origins';
     public const SPELLS   = 'spells';
+    public const LIGHT    = 'light';
+    public const MEDIUM   = 'medium';
+    public const HEAVY    = 'heavy';
+    public const SHIELD   = 'shield';
+    public const DIVERS   = 'divers';
+    public const GAMES   = 'games';
+    public const MUSIC   = 'music';
+    public const TOOLS   = 'outils';
 
     public const CST_EXTRA = '-extra';
     public const CST_ASC = 'ASC';
@@ -39,6 +47,7 @@ class Constant
     public const CST_PARENT     = 'parent';
     public const CST_TARGET     = 'target';
     public const CST_VALUE      = 'value';
+    public const CST_LABEL      = 'label';
     public const CST_NAME       = 'name';
     public const CST_ID         = 'id';
     public const CST_CHECKED    = 'checked';
@@ -51,6 +60,7 @@ class Constant
     public const CST_SIMPLE     = 'simple';
     public const CST_MELEE      = 'melee';
     public const CST_RANGED     = 'ranged';
+    public const CST_EXTRA_PREREQUIS = 'extraprerequis';
 
     public const CST_ABILITIES   = 'abilities';
     public const CST_SKILLS      = 'skills';

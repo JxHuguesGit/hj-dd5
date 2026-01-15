@@ -4,6 +4,8 @@ namespace src\Presenter\TableBuilder;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
+use src\Domain\Feat as DomainFeat;
+use src\Presenter\ViewModel\FeatGroup;
 use src\Service\Reader\OriginReader;
 use src\Service\WpPostService;
 use src\Utils\Html;
@@ -27,82 +29,92 @@ class FeatTableBuilder implements TableBuilderInterface
                 $withMarginTop ? Bootstrap::CSS_MT5 : ''
             ])])
             ->addHeader([Constant::CST_CLASS => implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
-            ->addHeaderRow()
-            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_FEATS])
-            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_ORIGIN])
-            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_PREQUISITE])
-            ;
+            ->addHeaderRow();
+        $this->addHeaders($table);
 
         foreach ($feats as $group) {
-            if (count($feats)!=1) {
-                $strLink = Html::getLink(
-                    $group[Constant::CST_TYPELABEL],
-                    UrlGenerator::feats($group[Constant::CST_SLUG]),
-                    Bootstrap::CSS_TEXT_WHITE
-                );
+            $this->addGroupRow($table, $group);
 
-                if ($group[Constant::CST_SLUG]=='general') {
-                    $strLink .= Constant::CST_PREREQUIS_NIV4.')';
-                } elseif ($group[Constant::CST_SLUG]=='combat') {
-                    $strLink .= Constant::CST_PREREQUIS_ASDC.')';
-                } elseif ($group[Constant::CST_SLUG]=='epic') {
-                    $strLink .= Constant::CST_PREREQUIS_NIV19.')';
-                }
-                // Ligne de rupture
-                $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
-                    ->addBodyCell([
-                        Constant::CST_CONTENT => $strLink,
-                        Constant::CST_ATTRIBUTES => [
-                            Constant::CST_COLSPAN => 6,
-                            Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC
-                        ]
-                    ]);
-            }
-
-            foreach ($group[Constant::FEATS] as $feat) {
-                $strLink = Html::getLink(
-                    $feat->name,
-                    UrlGenerator::feat($feat->slug),
-                    Bootstrap::CSS_TEXT_DARK
-                );
-
-                switch ($feat->featTypeId) {
-                    case 1 :
-                        $parts = [];
-                        $origins = $this->originReader->originsByFeat($feat);
-                        foreach ($origins as $origin) {
-                            $parts[] = Html::getLink(
-                                $origin->name,
-                                UrlGenerator::origin($origin->slug),
-                                Bootstrap::CSS_TEXT_DARK
-                            );
-                        }
-                        $strOrigineLink = implode(', ', $parts);
-                        $strPreRequis = '-';
-                    break;
-                    case 2:
-                    case 4:
-                        $strOrigineLink = '-';
-                        $wpPostService = new WpPostService();
-                        $wpPostService->getById($feat->postId);
-                        $wpPreRequis = $wpPostService->getField(Constant::CST_PREREQUIS);
-                        $strPreRequis = $wpPreRequis ? ucfirst($wpPreRequis) : '-';
-                    break;
-                    default :
-                        $strOrigineLink = '-';
-                        $strPreRequis = '-';
-                    break;
-                }
-
+            foreach ($group->feats as $feat) {
                 /** @var DomainFeat $feat */
-                $table->addBodyRow([])
-                    ->addBodyCell([Constant::CST_CONTENT => $strLink])
-                    ->addBodyCell([Constant::CST_CONTENT => $strOrigineLink])
-                    ->addBodyCell([Constant::CST_CONTENT => $strPreRequis])
-                    ;
+                $this->addFeatRow($table, $feat);
             }
         }
 
         return $table;
     }
+
+    private function addHeaders(Table $table): void
+    {
+        $headerLabels = [
+            Language::LG_FEATS,
+            Language::LG_ORIGIN,
+            Language::LG_PREQUISITE,
+        ];
+        foreach ($headerLabels as $label) {
+            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
+        }
+    }
+
+    private function addGroupRow(Table $table, FeatGroup $featGroup): void
+    {
+        $strLink = Html::getLink(
+            $featGroup->label,
+            UrlGenerator::feats($featGroup->slug),
+            Bootstrap::CSS_TEXT_WHITE
+        ) . $featGroup->extraprerequis;
+
+        $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
+            ->addBodyCell([
+                Constant::CST_CONTENT => $strLink,
+                Constant::CST_ATTRIBUTES => [
+                    Constant::CST_COLSPAN => 6,
+                    Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC
+                ]
+            ]);
+    }
+
+    private function addFeatRow(Table $table, DomainFeat $feat): void
+    {
+        $strLink = Html::getLink(
+            $feat->name,
+            UrlGenerator::feat($feat->slug),
+            Bootstrap::CSS_TEXT_DARK
+        );
+
+        [$strOrigineLink, $strPreRequis] = $this->getFeatDetails($feat);
+
+        /** @var DomainFeat $feat */
+        $table->addBodyRow([])
+            ->addBodyCell([Constant::CST_CONTENT => $strLink])
+            ->addBodyCell([Constant::CST_CONTENT => $strOrigineLink])
+            ->addBodyCell([Constant::CST_CONTENT => $strPreRequis])
+            ;
+    }
+
+    private function getFeatDetails(DomainFeat $feat): array
+    {
+        switch ($feat->featTypeId) {
+            case DomainFeat::TYPE_ORIGIN:
+                $parts = [];
+                $origins = $this->originReader->originsByFeat($feat);
+                foreach ($origins as $origin) {
+                    $parts[] = Html::getLink(
+                        $origin->name,
+                        UrlGenerator::origin($origin->slug),
+                        Bootstrap::CSS_TEXT_DARK );
+                }
+                return [implode(', ', $parts), '-'];
+            case DomainFeat::TYPE_GENERAL:
+            case DomainFeat::TYPE_EPIC:
+                $wpPostService = new WpPostService();
+                $wpPostService->getById($feat->postId);
+                $wpPreRequis = $wpPostService->getField(Constant::CST_PREREQUIS);
+                return ['-', $wpPreRequis ? ucfirst($wpPreRequis) : '-'];
+            default:
+                return ['-', '-'];
+        }
+    }
+
 }
+

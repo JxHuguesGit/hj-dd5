@@ -14,12 +14,12 @@ class Collection implements \Iterator
     /**
      * Ajoute un objet à la collection.
      *
-     * @param Entity $obj L'objet à ajouter.
+     * @param $obj L'objet à ajouter.
      * @param string|null $key La clé optionnelle. Si aucune clé n'est fournie, un hash unique de l'objet est utilisé.
      * @return self
      * @throws KeyAlreadyUse Si la clé existe déjà.
      */
-    public function addItem(Entity|DomainEntity $obj, ?string $key = null): self
+    public function addItem($obj, ?string $key = null): self
     {
         if ($key === null) {
             ++$this->indexIterator;

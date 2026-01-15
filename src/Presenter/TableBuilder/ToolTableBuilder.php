@@ -4,6 +4,8 @@ namespace src\Presenter\TableBuilder;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
+use src\Domain\Tool as DomainTool;
+use src\Presenter\ViewModel\ToolGroup;
 use src\Utils\Table;
 use src\Utils\Utils;
 
@@ -20,38 +22,58 @@ class ToolTableBuilder implements TableBuilderInterface
                 $withMarginTop ? Bootstrap::CSS_MT5 : ''
             ])])
             ->addHeader([Constant::CST_CLASS => implode(' ', [Bootstrap::CSS_TABLE_DARK, Bootstrap::CSS_TEXT_CENTER])])
-            ->addHeaderRow()
-            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_TOOLS])
-            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_WEIGHT])
-            ->addHeaderCell([Constant::CST_CONTENT => Language::LG_PRICE]);
+            ->addHeaderRow();
+        $this->addHeaders($table);
 
         foreach ($groupedTools as $group) {
-            // Ligne de rupture
-            $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
-                ->addBodyCell([
-                    Constant::CST_CONTENT => $group[Constant::CST_TYPELABEL],
-                    Constant::CST_ATTRIBUTES => [
-                        Constant::CST_COLSPAN => 6,
-                        Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC
-                    ]
-                ]);
+            $this->addGroupRow($table, $group);
 
             // Outils de ce type
-            foreach ($group[Constant::CST_TOOLS] as $tool) {
+            foreach ($group->tools as $tool) {
                 /** @var DomainTool $tool */
-                $table->addBodyRow([])
-                    ->addBodyCell([Constant::CST_CONTENT => $tool->name])
-                    ->addBodyCell([
-                        Constant::CST_CONTENT => Utils::getStrWeight($tool->weight),
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
-                    ])
-                    ->addBodyCell([
-                        Constant::CST_CONTENT => Utils::getStrPrice($tool->goldPrice),
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
-                    ]);
+                $this->addToolRow($table, $tool);
             }
         }
 
         return $table;
+    }
+
+    private function addHeaders(Table $table): void
+    {
+        $headerLabels = [
+            Language::LG_TOOLS,
+            Language::LG_WEIGHT,
+            Language::LG_PRICE,
+        ];
+        foreach ($headerLabels as $label) {
+            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
+        }
+    }
+
+    private function addGroupRow(Table $table, ToolGroup $toolGroup): void
+    {
+        // Ligne de rupture
+        $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
+            ->addBodyCell([
+                Constant::CST_CONTENT => $toolGroup->label,
+                Constant::CST_ATTRIBUTES => [
+                    Constant::CST_COLSPAN => 3,
+                    Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC
+                ]
+            ]);
+    }
+
+    private function addToolRow(Table $table, DomainTool $tool): void
+    {
+        $table->addBodyRow([])
+            ->addBodyCell([Constant::CST_CONTENT => $tool->name])
+            ->addBodyCell([
+                Constant::CST_CONTENT => Utils::getStrWeight($tool->weight),
+                Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
+            ])
+            ->addBodyCell([
+                Constant::CST_CONTENT => Utils::getStrPrice($tool->goldPrice),
+                Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
+            ]);
     }
 }

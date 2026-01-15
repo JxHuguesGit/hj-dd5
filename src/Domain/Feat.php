@@ -13,6 +13,11 @@ use src\Utils\Utils;
  */
 final class Feat extends Entity
 {
+    public const TYPE_ORIGIN = 1;
+    public const TYPE_GENERAL = 2;
+    public const TYPE_COMBAT = 3;
+    public const TYPE_EPIC = 4;
+
     public const FIELDS = [
         Field::ID,
         Field::NAME,

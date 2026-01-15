@@ -3,7 +3,9 @@ namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
+use src\Constant\Language;
 use src\Domain\Skill as DomainSkill;
+use src\Presenter\ViewModel\SkillGroup;
 
 class SkillListPresenter
 {
@@ -18,23 +20,47 @@ class SkillListPresenter
             $grouped[$skill->abilityId][] = $skill;
         }
 
-        $typesLabel = [
-            1 => Constant::ABLSTR,
-            2 => Constant::ABLDEX,
-            3 => Constant::ABLCON,
-            4 => Constant::ABLINT,
-            5 => Constant::ABLWIS,
-            6 => Constant::ABLCHA,
-        ];
+        $types = self::getSkillTypes();
 
         $result = [];
         foreach ($grouped as $typeId => $skillsByType) {
-            $result[] = [
-                Constant::CST_TYPELABEL => $typesLabel[$typeId] ?? '',
-                Constant::CST_SKILLS => $skillsByType
-            ];
+            $result[] = new SkillGroup(
+                $types[$typeId][Constant::CST_LABEL] ?? '',
+                $types[$typeId][Constant::CST_SLUG] ?? '',
+                $skillsByType
+            );
         }
 
         return [Constant::CST_ITEMS=>$result];
+    }
+
+    private function getSkillTypes(): array
+    {
+        return [
+            1 => [
+                Constant::CST_SLUG  => Constant::ABLSTR,
+                Constant::CST_LABEL => Language::LG_FORCE,
+            ],
+            2 => [
+                Constant::CST_SLUG  => Constant::ABLDEX,
+                Constant::CST_LABEL => Language::LG_DEXTERITE,
+            ],
+            3 => [
+                Constant::CST_SLUG  => Constant::ABLCON,
+                Constant::CST_LABEL => Language::LG_CONSTITUTION,
+            ],
+            4 => [
+                Constant::CST_SLUG  => Constant::ABLINT,
+                Constant::CST_LABEL => Language::LG_INTELLIGENCE,
+            ],
+            5 => [
+                Constant::CST_SLUG  => Constant::ABLWIS,
+                Constant::CST_LABEL => Language::LG_SAGESSE,
+            ],
+            6 => [
+                Constant::CST_SLUG  => Constant::ABLCHA,
+                Constant::CST_LABEL => Language::LG_CHARISME,
+            ],
+        ];
     }
 }

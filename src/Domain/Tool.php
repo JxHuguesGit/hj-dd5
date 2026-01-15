@@ -10,6 +10,11 @@ use src\Utils\Utils;
  */
 final class Tool extends Item
 {
+    public const TYPE_DIVERS = 1;
+    public const TYPE_GAMES = 2;
+    public const TYPE_MUSIC = 3;
+    public const TYPE_TOOL = 4;
+
     public const SPECIFIC_FIELDS = [
         Field::PARENTID,
     ];

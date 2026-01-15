@@ -45,6 +45,11 @@ class Language
     public const LG_CBT_STYLE_EPICS = 'Faveurs épiques';
     public const LG_SPECIE          = 'Espèce';
     public const LG_FORCE           = 'Force';
+    public const LG_DEXTERITE       = 'Dextérité';
+    public const LG_CONSTITUTION    = 'Constitution';
+    public const LG_INTELLIGENCE    = 'Intelligence';
+    public const LG_SAGESSE         = 'Sagesse';
+    public const LG_CHARISME        = 'Charisme';
     public const LG_HISTORIQUES     = 'Les Historiques';
     public const LG_ORIGIN          = 'Origine';
     public const LG_ORIGINS         = 'Origines';
