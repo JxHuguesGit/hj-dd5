@@ -4,7 +4,7 @@ namespace src\Domain\Criteria;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class SpeciesCriteria implements CriteriaInterface
+final class SpeciesCriteria extends AbstractCriteria implements CriteriaInterface
 {
     public ?string $slug = null;
     public ?string $nameLt = null;
@@ -12,26 +12,10 @@ final class SpeciesCriteria implements CriteriaInterface
 
     public function apply(QueryBuilder $queryBuilder): void
     {
-        $filters = [];
-
-        if ($this->slug !== null) {
-            $filters[Field::SLUG] = $this->slug;
-        }
-
-        if ($filters) {
-            $queryBuilder->where($filters);
-        }
-
-        if ($this->nameLt !== null) {
-            $queryBuilder->whereComplex([
-                ['field' => Field::NAME, 'operand' => '<', 'value' => $this->nameLt],
-            ]);
-        }
-
-        if ($this->nameGt !== null) {
-            $queryBuilder->whereComplex([
-                ['field' => Field::NAME, 'operand' => '>', 'value' => $this->nameGt],
-            ]);
-        }
+        $this->applyEquals($queryBuilder, [
+            Field::SLUG => $this->slug,
+        ]);
+        $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
+        $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
     }
 }

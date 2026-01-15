@@ -5,7 +5,7 @@ use src\Constant\Field;
 use src\Query\QueryBuilder;
 use src\Repository\Repository;
 
-final class OriginCriteria implements CriteriaInterface
+final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
 {
     public ?int $featId = null;
     public ?string $type = null;
@@ -16,29 +16,11 @@ final class OriginCriteria implements CriteriaInterface
 
     public function apply(QueryBuilder $queryBuilder): void
     {
-        $filters = [];
-
-        if ($this->featId !== null) {
-            $filters[Field::FEATID] = $this->featId;
-        }
-        if ($this->slug !== null) {
-            $filters[Field::SLUG] = $this->slug;
-        }
-
-        if ($filters) {
-            $queryBuilder->where($filters);
-        }
-
-        if ($this->nameLt !== null) {
-            $queryBuilder->whereComplex([
-                ['field' => Field::NAME, 'operand' => '<', 'value' => $this->nameLt],
-            ]);
-        }
-
-        if ($this->nameGt !== null) {
-            $queryBuilder->whereComplex([
-                ['field' => Field::NAME, 'operand' => '>', 'value' => $this->nameGt],
-            ]);
-        }
+        $this->applyEquals($queryBuilder, [
+            Field::FEATID => $this->featId,
+            Field::SLUG => $this->slug,
+        ]);
+        $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
+        $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
     }
 }
