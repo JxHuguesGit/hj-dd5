@@ -3,7 +3,6 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\Repository;
 use src\Repository\AbilityRepository;
 use src\Repository\AbilityRepositoryInterface;
 use src\Repository\ArmorRepository;

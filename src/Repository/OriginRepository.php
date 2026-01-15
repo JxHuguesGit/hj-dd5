@@ -24,35 +24,6 @@ class OriginRepository extends Repository implements OriginRepositoryInterface
         array $orderBy = []
     ): Collection
     {
-        $filters = [];
-
-        if ($criteria->featId !== null) {
-            $filters[Field::FEATID] = $criteria->featId;
-        }
-        if ($criteria->slug !== null) {
-            $filters[Field::SLUG] = $criteria->slug;
-        }
-        if ($criteria->nameLt !== null) {
-            $this->queryBuilder->whereComplex([
-                ['field' => Field::NAME, 'operand' => '<', 'value' => $criteria->nameLt]
-            ]);
-        }
-        if ($criteria->nameGt !== null) {
-            $this->queryBuilder->whereComplex([
-                ['field' => Field::NAME, 'operand' => '>', 'value' => $criteria->nameGt]
-            ]);
-        }
-
-        $this->query = $this->queryBuilder->reset()
-            ->select($this->fields, $this->table)
-            ->where($filters)
-            ->orderBy($orderBy)
-            ->getQuery();
-
-        return $this->queryExecutor->fetchAll(
-            $this->query,
-            $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
-        );
+        return $this->findAllByCriteria($criteria, $orderBy);
     }
 }
