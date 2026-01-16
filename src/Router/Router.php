@@ -7,8 +7,12 @@ use src\Controller\Public\PublicNotFound;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
+use src\Model\PageRegistry;
+use src\Page\PageNotFound;
+use src\Presenter\MenuPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 class Router
@@ -62,6 +66,12 @@ class Router
             }
         }
 
-        return static::fromHome($path) ?? new PublicNotFound();
+        return static::fromHome($path)
+            ?? new PublicNotFound(
+                new PageNotFound(
+                    new TemplateRenderer()
+                ),
+                new MenuPresenter(PageRegistry::getInstance()->all(), '')
+            );
     }
 }

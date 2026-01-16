@@ -1,74 +1,62 @@
 <?php
 namespace src\Page;
 
+use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Template;
-use src\Helper\NavigationHelper;
-use src\Renderer\TemplateRenderer;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
-class PageOrigine
+class PageOrigine extends PageDetail
 {
-    public function __construct(
-        private TemplateRenderer $renderer
-    ) {}
-
-    public function render(string $menuHtml, string $title, array $data): string
+    protected function getEntityUrl(string $slug): string
     {
-        [$prevHtml, $nextHtml] = NavigationHelper::getPrevNext($data, Constant::ORIGIN);
+        return UrlGenerator::origin($slug);
+    }
 
+    public function render(string $menuHtml, array $data): string
+    {
+        return $this->renderDetail(
+            $menuHtml,
+            $data,
+            Template::ORIGIN_DETAIL_CARD,
+            [
+                '',
+                $data[Constant::CST_TITLE] ?? '',
+                $data[Constant::CST_DESCRIPTION] ?? '',
+                implode(', ', $data[Constant::CST_ABILITIES]),
+                $this->formatSkills($data[Constant::CST_SKILLS]),
+                $this->formatLink($data[Constant::CST_FEAT], fn($slug) => UrlGenerator::feat($slug)),
+                $this->formatLink($data[Constant::CST_TOOL], fn($slug) => UrlGenerator::item($slug)),
+                implode(', ', $data[Constant::CST_EQUIPMENT]),
+            ]
+        );
+    }
+
+    private function formatSkills(Collection $skills): string
+    {
         $parts = [];
-        foreach ($data[Constant::CST_SKILLS] as $skill) {
+        foreach ($skills as $skill) {
             $parts[] = Html::getLink(
                 $skill->name,
                 UrlGenerator::skill($skill->getSlug()),
                 Bootstrap::CSS_TEXT_DARK
             );
         }
+        return implode(', ', $parts);
+    }
 
-        $urlFeat = $data[Constant::CST_FEAT]
-            ? Html::getLink(
-                $data[Constant::CST_FEAT][Constant::CST_NAME],
-                UrlGenerator::feat($data[Constant::CST_FEAT][Constant::CST_SLUG]),
-                Bootstrap::CSS_TEXT_DARK
-            )
-            : '-';
+    private function formatLink(?array $entityData, callable $urlGenerator): string
+    {
+        if (!$entityData) {
+            return '-';
+        }
 
-        $urlTool = $data[Constant::CST_TOOL]
-            ? Html::getLink(
-                $data[Constant::CST_TOOL][Constant::CST_NAME],
-                UrlGenerator::item($data[Constant::CST_TOOL][Constant::CST_SLUG]),
-                Bootstrap::CSS_TEXT_DARK
-            )
-            : '-';
-        
-        $detailCard = $this->renderer->render(
-            Template::ORIGIN_DETAIL_CARD,
-            [
-                '',
-                $title,
-                $data[Constant::CST_DESCRIPTION],
-                implode(', ', $data[Constant::CST_ABILITIES]),
-                implode(', ', $parts),
-                $urlFeat,
-                $urlTool,
-                implode(', ', $data[Constant::CST_EQUIPMENT]),
-                $prevHtml,
-                $nextHtml,
-            ]
-        );
-
-        $contentSection = $this->renderer->render(
-            Template::DETAIL_PAGE,
-            ['', $detailCard]
-        );
-
-        return $this->renderer->render(
-            Template::MAIN_PAGE,
-            [$menuHtml, $contentSection]
+        return Html::getLink(
+            $entityData[Constant::CST_NAME],
+            $urlGenerator($entityData[Constant::CST_SLUG]),
+            Bootstrap::CSS_TEXT_DARK
         );
     }
 }
-

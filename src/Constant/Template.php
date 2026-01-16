@@ -43,8 +43,8 @@ final class Template
 
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
     public const FEAT_CARD           = self::CARD_PATH.'featCard.tpl';
-    public const HERO_SELECTION      = self::CARD_PATH.'heroSelection.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
+    public const NOT_FOUND_CARD      = self::CARD_PATH.'notFoundCard.tpl';
     public const SPELL_CARD          = self::CARD_PATH.'spellCard.tpl';
     public const FEAT_DETAIL_CARD    = self::CARD_PATH.'featDetailCard.tpl';
     public const ORIGIN_CARD         = self::CARD_PATH.'origineCard.tpl';

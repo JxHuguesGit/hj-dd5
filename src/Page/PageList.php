@@ -3,9 +3,7 @@ namespace src\Page;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap;
-use src\Constant\Constant;
 use src\Constant\Template;
-use src\Presenter\TableBuilder\ArmorTableBuilder;
 use src\Presenter\TableBuilder\TableBuilderInterface;
 use src\Renderer\TemplateRenderer;
 

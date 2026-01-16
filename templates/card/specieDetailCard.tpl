@@ -10,22 +10,22 @@
             </div>
 
             <div class="col-12 col-sm-3">
-                <p><strong>Type de créature</strong> : %5$s</p>
+                <p><strong>Type de créature</strong> : %3$s</p>
 
-                <p><strong>Catégorie de taille</strong> : %6$s</p>
+                <p><strong>Catégorie de taille</strong> : %4$s</p>
 
-                <p><strong>Vitesse</strong> : %7$s</p>
+                <p><strong>Vitesse</strong> : %5$s</p>
             </div>
 
             <hr>
 
             <div class="row g-3 abilities">
-                %8$s
+                %6$s
             </div>
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            %3$s
-			%4$s
+            %7$s
+			%8$s
         </div>
     </div>

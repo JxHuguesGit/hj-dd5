@@ -30,6 +30,7 @@ class PublicOrigine extends PublicBase
         $menu = $this->menuPresenter->render(Constant::ORIGINS);
         $pageView = $this->pageService->build($this->origin);
         $viewData = $this->presenter->present($pageView);
-        return $this->page->render($menu, $this->title, $viewData);
+        $viewData[Constant::CST_TITLE] = $this->getTitle();
+        return $this->page->render($menu, $viewData);
     }
 }

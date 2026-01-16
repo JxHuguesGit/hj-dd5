@@ -35,7 +35,6 @@ class PublicFeat extends PublicBase
         $menu = $this->menuPresenter->render('feats');
         $pageView = $this->pageService->build($this->feat);
         $viewData = $this->presenter->present($pageView);
-        $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }
