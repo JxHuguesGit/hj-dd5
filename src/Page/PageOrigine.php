@@ -4,6 +4,7 @@ namespace src\Page;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Template;
+use src\Helper\NavigationHelper;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
@@ -14,23 +15,9 @@ class PageOrigine
         private TemplateRenderer $renderer
     ) {}
 
-    public function render(string $menuHtml, array $data): string
+    public function render(string $menuHtml, string $title, array $data): string
     {
-        $prevHtml = $data[Constant::CST_PREV]
-            ? Html::getLink(
-                '&lt; '.$data[Constant::CST_PREV][Constant::CST_NAME],
-                UrlGenerator::origin($data[Constant::CST_PREV][Constant::CST_SLUG]),
-                implode(' ', [Bootstrap::CSS_BTN, Bootstrap::CSS_BTN_SM, Bootstrap::CSS_BTN_OUTLINE_DARK])
-            )
-            : Constant::CST_EMPTY_SPAN;
-
-        $nextHtml = $data[Constant::CST_NEXT]
-            ? Html::getLink(
-                $data[Constant::CST_NEXT][Constant::CST_NAME].' &gt;',
-                UrlGenerator::origin($data[Constant::CST_NEXT][Constant::CST_SLUG]),
-                implode(' ', [Bootstrap::CSS_BTN, Bootstrap::CSS_BTN_SM, Bootstrap::CSS_BTN_OUTLINE_DARK])
-            )
-            : Constant::CST_EMPTY_SPAN;
+        [$prevHtml, $nextHtml] = NavigationHelper::getPrevNext($data, Constant::ORIGIN);
 
         $parts = [];
         foreach ($data[Constant::CST_SKILLS] as $skill) {
@@ -41,23 +28,27 @@ class PageOrigine
             );
         }
 
-        $urlFeat = Html::getLink(
-            $data[Constant::CST_FEATNAME],
-            UrlGenerator::feat($data[Constant::CST_FEATSLUG]),
-            Bootstrap::CSS_TEXT_DARK
-        );
+        $urlFeat = $data[Constant::CST_FEAT]
+            ? Html::getLink(
+                $data[Constant::CST_FEAT][Constant::CST_NAME],
+                UrlGenerator::feat($data[Constant::CST_FEAT][Constant::CST_SLUG]),
+                Bootstrap::CSS_TEXT_DARK
+            )
+            : '-';
 
-        $urlTool = Html::getLink(
-            $data[Constant::CST_TOOLNAME],
-            UrlGenerator::item($data[Constant::CST_TOOLSLUG]),
-            Bootstrap::CSS_TEXT_DARK
-        );
+        $urlTool = $data[Constant::CST_TOOL]
+            ? Html::getLink(
+                $data[Constant::CST_TOOL][Constant::CST_NAME],
+                UrlGenerator::item($data[Constant::CST_TOOL][Constant::CST_SLUG]),
+                Bootstrap::CSS_TEXT_DARK
+            )
+            : '-';
         
         $detailCard = $this->renderer->render(
             Template::ORIGIN_DETAIL_CARD,
             [
                 '',
-                $data[Constant::CST_TITLE],
+                $title,
                 $data[Constant::CST_DESCRIPTION],
                 implode(', ', $data[Constant::CST_ABILITIES]),
                 implode(', ', $parts),

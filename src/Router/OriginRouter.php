@@ -24,7 +24,9 @@ class OriginRouter
             $matches[1],
             $factory->origin(),
             new OriginPageService($serviceFactory->origin(), $factory->origin()),
-            new OriginDetailPresenter(),
+            new OriginDetailPresenter(
+                $serviceFactory->wordPress()
+            ),
             new PageOrigine(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), 'origines')
         );

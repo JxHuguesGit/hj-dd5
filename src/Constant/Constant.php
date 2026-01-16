@@ -17,6 +17,7 @@ class Constant
     public const ARMORS   = 'armors';
     public const WEAPONS  = 'weapons';
     public const SPECIES  = 'species';
+    public const SPECIE   = 'specie';
     public const GENERAL  = 'general';
     public const EPIC     = 'epic';
     public const COMBAT   = 'combat';
@@ -41,6 +42,7 @@ class Constant
     public const CST_CONTENT = 'content';
     public const CST_DESC       = 'DESC';
     public const CST_TYPE = 'type';
+    public const CST_FEAT = 'feat';
     public const CST_COLSPAN = 'colspan';
     public const CST_ATTRIBUTES = 'attributes';
     public const CST_DATA       = 'data';

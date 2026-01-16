@@ -27,7 +27,9 @@ class SpecieRouter
             $matches[1] ?? '',
             $factory->species(),
             new SpeciePageService($serviceFactory->specie(), $factory->species()),
-            new SpeciesDetailPresenter(),
+            new SpeciesDetailPresenter(
+                $serviceFactory->wordPress()
+            ),
             new PageSpecie(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES),
         );

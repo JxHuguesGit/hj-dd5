@@ -46,7 +46,9 @@ class FeatRouter
                 $matches[1],
                 $factory->feat(),
                 new FeatPageService($factory->feat(), $serviceFactory->feat()),
-                new FeatDetailPresenter(),
+                new FeatDetailPresenter(
+                    $serviceFactory->wordPress()
+                ),
                 new PageFeat(new TemplateRenderer()),
                 new MenuPresenter(PageRegistry::getInstance()->all(), 'feats')
             );

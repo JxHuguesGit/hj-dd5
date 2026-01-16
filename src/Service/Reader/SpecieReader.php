@@ -45,6 +45,7 @@ final class SpecieReader
     {
         // Critère pour l'origine précédente (nom < courant)
         $prevCriteria = new SpeciesCriteria();
+        $prevCriteria->parentId = $species->parentId;
         $prevCriteria->nameLt = $species->name;
 
         $prev = $this->speciesRepository
@@ -52,6 +53,7 @@ final class SpecieReader
             ->first();
 
         $nextCriteria = new SpeciesCriteria();
+        $nextCriteria->parentId = $species->parentId;
         $nextCriteria->nameGt = $species->name;
 
         $next = $this->speciesRepository
