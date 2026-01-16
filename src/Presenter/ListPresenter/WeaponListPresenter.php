@@ -11,10 +11,15 @@ use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 use src\Constant\Bootstrap;
+use src\Service\WeaponPropertiesFormatter;
 
 final class WeaponListPresenter
 {
-    public function __construct(private WpPostService $wpPostService) {}
+    public function __construct(
+        private WpPostService $wpPostService,
+        private WeaponPropertiesFormatter $formatter,
+        private WeaponPropertyValueRepository $weaponPropertyValueRepo
+    ) {}
 
     public function present(iterable $weapons): Collection
     {
@@ -45,11 +50,18 @@ final class WeaponListPresenter
             name: $weapon->name,
             url: UrlGenerator::item($weapon->slug),
             damage: Utils::getStrDamage($weapon),
-            properties: '', // TODO: Utils::getWeaponProperties($weapon)
+            properties: $this->properties($weapon),
             masteryLink: $this->masteryLink($weapon),
             weight: Utils::getStrWeight($weapon->weight),
             price: Utils::getStrPrice($weapon->goldPrice)
         );
+    }
+
+    private function properties(DomainWeapon $weapon): string
+    {
+        $weaponPropertyValues = $this->weaponPropertyValueRepo->findAll();
+
+        return '';
     }
 
     private function masteryLink(DomainWeapon $weapon): string

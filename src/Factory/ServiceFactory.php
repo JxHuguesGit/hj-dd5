@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory;
 
+use src\Controller\Weapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\AbilityRepository;
@@ -31,6 +32,7 @@ use src\Service\FeatService;
 use src\Service\OriginService;
 use src\Service\SpecieService;
 use src\Service\SkillService;
+use src\Service\WeaponPropertiesFormatter;
 use src\Service\WpPostService;
 
 final class ServiceFactory
@@ -144,5 +146,10 @@ final class ServiceFactory
     public function wordPress(): WpPostService
     {
         return new WpPostService();
+    }
+
+    public function weaponProperties(): WeaponPropertiesFormatter
+    {
+        return new WeaponPropertiesFormatter();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace src\Router;
 
+use src\Constant\Constant;
 use src\Controller\Public\PublicBase;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
@@ -9,9 +10,11 @@ use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
+use src\Presenter\ListPresenter\GearListPresenter;
 use src\Presenter\ListPresenter\ToolListPresenter;
 use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\TableBuilder\ArmorTableBuilder;
+use src\Presenter\TableBuilder\ItemTableBuilder;
 use src\Presenter\TableBuilder\WeaponTableBuilder;
 use src\Presenter\TableBuilder\ToolTableBuilder;
 
@@ -29,34 +32,44 @@ class ItemRouter
         $controllerClass = 'src\\Controller\\Public\\PublicItem' . ucfirst($typeSlug);
         if (class_exists($controllerClass)) {
             return match($typeSlug) {
-                'armor' => new $controllerClass(
+                Constant::CST_ARMOR => new $controllerClass(
                     $factory->armor(),
                     new ArmorListPresenter(),
                     new PageList(
                         new TemplateRenderer(),
                         new ArmorTableBuilder()
                     ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
+                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
                 ),
-                'tool' => new $controllerClass(
+                Constant::CST_TOOL => new $controllerClass(
                     $factory->tool(),
                     new ToolListPresenter(),
                     new PageList(
                         new TemplateRenderer(),
                         new ToolTableBuilder()
                     ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
+                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
                 ),
-                'weapon' => new $controllerClass(
+                Constant::CST_WEAPON => new $controllerClass(
                     $factory->weapon(),
                     new WeaponListPresenter(
-                        $serviceFactory->wordPress()
+                        $serviceFactory->wordPress(),
+                        $serviceFactory->weaponProperties()
                     ),
                     new PageList(
                         new TemplateRenderer(),
                         new WeaponTableBuilder()
                     ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), 'items')
+                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
+                ),
+                Constant::CST_GEAR => new $controllerClass(
+                    $factory->item(),
+                    new GearListPresenter(),
+                    new PageList(
+                        new TemplateRenderer(),
+                        new ItemTableBuilder()
+                    ),
+                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
                 ),
                 default    => new $controllerClass(),
             };
