@@ -28,7 +28,6 @@ class PublicSkills extends PublicBase
     {
         $menu = $this->menuPresenter->render(Constant::CST_SKILLS);
         $viewData = $this->presenter->present($this->skills);
-        $viewData[Constant::CST_TITLE] = $this->getTitle();
-        return $this->page->render($menu, $viewData);
+        return $this->page->render($menu, $this->title, $viewData);
     }
 }

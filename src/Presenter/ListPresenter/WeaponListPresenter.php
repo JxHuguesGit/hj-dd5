@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\ListPresenter;
 
+use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Domain\Weapon as DomainWeapon;
 use src\Presenter\ViewModel\WeaponGroup;
@@ -15,7 +16,7 @@ final class WeaponListPresenter
 {
     public function __construct(private WpPostService $wpPostService) {}
 
-    public function present(iterable $weapons): array
+    public function present(iterable $weapons): Collection
     {
         $grouped = [];
         foreach ($weapons as $weapon) {
@@ -26,16 +27,16 @@ final class WeaponListPresenter
         }
 
         $types = self::getWeaponTypes();
-        $result = [];
+        $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $result[] = new WeaponGroup(
+            $collection->addItem(new WeaponGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows
-            );
+            ));
         }
 
-        return [Constant::CST_ITEMS => $result];
+        return $collection;
     }
 
     private function buildRow(DomainWeapon $weapon): WeaponRow

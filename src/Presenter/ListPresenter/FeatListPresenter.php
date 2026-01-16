@@ -20,7 +20,7 @@ final class FeatListPresenter
         private WpPostService $wpPostService
     ) {}
 
-    public function present(Collection $feats): array
+    public function present(iterable $feats): Collection
     {
         $grouped = [];
         foreach ($feats as $feat) {
@@ -29,17 +29,17 @@ final class FeatListPresenter
         }
 
         $types = self::getFeatTypes();
-        $result = [];
+        $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $result[] = new FeatGroup(
+            $collection->addItem(new FeatGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 extraPrerequis: $types[$typeId][Constant::CST_EXTRA_PREREQUIS] ?? '',
                 rows: $rows
-            );
+            ));
         }
 
-        return [Constant::CST_ITEMS => $result];
+        return $collection;
     }
 
     private function buildRow(DomainFeat $feat): FeatRow

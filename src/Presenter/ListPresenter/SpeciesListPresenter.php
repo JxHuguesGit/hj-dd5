@@ -12,14 +12,13 @@ final class SpeciesListPresenter
 {
     public function __construct(private WpPostService $wpPostService) {}
 
-    public function present(Collection $species): array
+    public function present(iterable $species): Collection
     {
-        $rows = [];
+        $collection = new Collection();
         foreach ($species as $specie) {
-            $rows[] = $this->buildRow($specie);
+            $collection->addItem($this->buildRow($specie));
         }
-
-        return [Constant::CST_ITEMS => $rows];
+        return $collection;
     }
 
     private function buildRow(DomainSpecie $specie): SpeciesRow

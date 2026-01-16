@@ -15,14 +15,16 @@ final class OriginListPresenter
 {
     public function __construct(private OriginService $originService) {}
 
-    public function present(Collection $origins): array
+    public function present(iterable $origins): Collection
     {
         $rows = [];
         foreach ($origins as $origin) {
             $rows[] = $this->buildRow($origin);
         }
 
-        return [Constant::CST_ITEMS => [new OriginGroup(label: 'Origines', slug: 'origins', rows: $rows)]];
+        $collection = new Collection();
+        $collection->addItem(new OriginGroup(label: 'Origines', slug: 'origins', rows: $rows));
+        return $collection;
     }
 
     private function buildRow(DomainOrigin $origin): OriginRow

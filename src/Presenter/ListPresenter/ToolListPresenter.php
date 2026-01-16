@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\ListPresenter;
 
+use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Tool as DomainTool;
@@ -11,7 +12,7 @@ use src\Utils\Utils;
 
 final class ToolListPresenter
 {
-    public function present(iterable $tools): array
+    public function present(iterable $tools): Collection
     {
         $grouped = [];
         foreach ($tools as $tool) {
@@ -20,16 +21,16 @@ final class ToolListPresenter
         }
 
         $types = self::getToolTypes();
-        $result = [];
+        $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $result[] = new ToolGroup(
+            $collection->addItem(new ToolGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows
-            );
+            ));
         }
 
-        return [Constant::CST_ITEMS => $result];
+        return $collection;
     }
 
     private function buildRow(DomainTool $tool): ToolRow

@@ -16,7 +16,7 @@ final class SkillListPresenter
 {
     public function __construct(private SkillService $skillService) {}
 
-    public function present(Collection $skills): array
+    public function present(iterable $skills): Collection
     {
         $grouped = [];
         foreach ($skills as $skill) {
@@ -24,16 +24,16 @@ final class SkillListPresenter
         }
 
         $types = self::getSkillTypes();
-        $result = [];
+        $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $result[] = new SkillGroup(
+            $collection->addItem(new SkillGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows
-            );
+            ));
         }
 
-        return [Constant::CST_ITEMS => $result];
+        return $collection;
     }
 
     private function buildRow(DomainSkill $skill): SkillRow

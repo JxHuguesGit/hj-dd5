@@ -32,7 +32,6 @@ class PublicSpecies extends PublicBase
     {
         $menu = $this->menuPresenter->render(Constant::SPECIES);
         $viewData = $this->presenter->present($this->species);
-        $viewData[Constant::CST_TITLE] = $this->getTitle();
-        return $this->page->render($menu, $viewData);
+        return $this->page->render($menu, $this->title, $viewData);
     }
 }

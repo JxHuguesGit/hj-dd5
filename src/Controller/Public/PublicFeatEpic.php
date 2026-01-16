@@ -28,7 +28,6 @@ class PublicFeatEpic extends PublicBase
     {
         $menu = $this->menuPresenter->render(Constant::FEATS);
         $viewData = $this->presenter->present($this->feats);
-        $viewData[Constant::CST_TITLE] = $this->getTitle();
-        return $this->page->render($menu, $viewData);
+        return $this->page->render($menu, $this->title, $viewData);
     }
 }
