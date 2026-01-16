@@ -4,6 +4,7 @@ namespace src\Factory;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\FeatReader;
+use src\Service\Reader\ItemReader;
 use src\Service\Reader\OriginReader;
 use src\Service\Reader\PowerReader;
 use src\Service\Reader\SkillReader;
@@ -31,6 +32,11 @@ final class ReaderFactory
     public function feat(): FeatReader
     {
         return new FeatReader($this->repositories->feat());
+    }
+
+    public function item(): ItemReader
+    {
+        return new ItemReader($this->repositories->item());
     }
 
     public function origin(): OriginReader

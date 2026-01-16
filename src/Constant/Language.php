@@ -62,6 +62,9 @@ class Language
     public const LG_SPELLS          = 'Sorts';
     public const LG_CREATURE_TYPE   = 'Type de créature';
     public const LG_SPEED           = 'Vitesse';
+    public const LG_GEAR            = 'Matériel';
+    public const LG_GEAR_TITLE      = 'Le Matériel';
+    public const LG_DIVERS          = 'Divers';
 
     public const LG_TOOL_DIVERS     = 'Outils divers';
     public const LG_TOOL_GAMES      = 'Boîte de jeux';

@@ -9,6 +9,8 @@ use src\Repository\ArmorRepository;
 use src\Repository\ArmorRepositoryInterface;
 use src\Repository\FeatRepository;
 use src\Repository\FeatRepositoryInterface;
+use src\Repository\ItemRepository;
+use src\Repository\ItemRepositoryInterface;
 use src\Repository\OriginRepository;
 use src\Repository\OriginRepositoryInterface;
 use src\Repository\PowerRepository;
@@ -49,6 +51,11 @@ class RepositoryFactory
     public function feat(): FeatRepositoryInterface
     {
         return $this->make(FeatRepository::class);
+    }
+    
+    public function item(): ItemRepositoryInterface
+    {
+        return $this->make(ItemRepository::class);
     }
 
     public function origin(): OriginRepositoryInterface
