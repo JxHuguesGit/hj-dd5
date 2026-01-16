@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\ListPresenter;
 
+use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Armor as DomainArmor;
@@ -11,7 +12,7 @@ use src\Utils\Utils;
 
 final class ArmorListPresenter
 {
-    public function present(iterable $armors): array
+    public function present(iterable $armors): Collection
     {
         $grouped = [];
         foreach ($armors as $armor) {
@@ -20,16 +21,16 @@ final class ArmorListPresenter
         }
 
         $typesLabel = self::getTypesLabel();
-        $result = [];
+        $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $result[] = new ArmorGroup(
+            $collection->addItem(new ArmorGroup(
                 label: $typesLabel[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $typesLabel[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows
-            );
+            ));
         }
 
-        return [Constant::CST_ITEMS => $result];
+        return $collection;
     }
 
     private function buildRow(DomainArmor $armor): ArmorRow

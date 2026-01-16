@@ -1,6 +1,7 @@
 <?php
 namespace src\Page;
 
+use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Template;
@@ -15,27 +16,27 @@ class PageList
         private TableBuilderInterface $tableBuilder
     ) {}
 
-    public function render(string $menuHtml, array $viewData): string
+    public function render(string $menuHtml, string $title, Collection $viewData): string
     {
         // Page complète avec menu
         return $this->renderer->render(
             Template::MAIN_PAGE,
-            [$menuHtml, $this->renderAdmin($viewData)]
+            [$menuHtml, $this->renderAdmin($title, $viewData)]
         );
     }
 
-    public function renderAdmin(array $viewData): string
+    public function renderAdmin(string $title, Collection $viewData): string
     {
         // Construire le tableau des armures
         $tableHtml = $this->tableBuilder->build(
-            $viewData[Constant::CST_ITEMS],
+            $viewData,
             [Bootstrap::CSS_WITH_MRGNTOP => false]
         );
 
         // Section centrale (titre + tableau)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$viewData[Constant::CST_TITLE], $tableHtml->display()]
+            [$title, $tableHtml->display()]
         );
     }
 }
