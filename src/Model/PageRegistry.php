@@ -11,6 +11,7 @@ use src\Page\PageHome;
 use src\Page\PageOrigines;
 use src\Page\PageSkills;
 use src\Page\PageSpecies;
+use src\Page\PageSpells;
 
 class PageRegistry
 {
@@ -68,6 +69,10 @@ class PageRegistry
         // Page Skills (liste)
         $skillsPage = (new PageSkills())->getPageElement();
         $this->register($skillsPage);
+
+        // Page Spells (liste)
+        $spellsPage = (new PageSpells())->getPageElement();
+        $this->register($spellsPage);
 
     }
     

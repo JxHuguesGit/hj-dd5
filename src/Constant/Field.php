@@ -60,6 +60,10 @@ class Field
     public const DICECOUNT    = 'diceCount';
     public const DICEFACES    = 'diceFaces';
     public const QUANTITY     = 'quantity';
+
+    public const LEVEL        = 'niveau';
+    public const SCHOOL       = 'ecole';
+    public const CLASSES      = 'classes';
         
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';

@@ -14,7 +14,7 @@ class PageFeatsCombat
             'icon' => 'fa-solid fa-shield-halved',
             'title' => 'Styles de combat',
             'description' => 'Les dons spécifiques aux styles de combat des guerriers.',
-            'url' => Routes::FEATS_PREFIX.Constant::COMBAT,
+            'url' => Routes::FEAT_PREFIX.'-'.Constant::COMBAT,
             'order' => 43,
             'parent' => 'feats',
         ]);

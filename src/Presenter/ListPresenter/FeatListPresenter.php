@@ -78,22 +78,22 @@ final class FeatListPresenter
     {
         return [
             DomainFeat::TYPE_ORIGIN  => [
-                Constant::CST_SLUG => Constant::ORIGIN,
+                Constant::CST_SLUG => '-'.Constant::ORIGIN,
                 Constant::CST_LABEL => Language::LG_ORIGIN_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => ''
             ],
             DomainFeat::TYPE_GENERAL => [
-                Constant::CST_SLUG => Constant::GENERAL,
+                Constant::CST_SLUG => '-'.Constant::GENERAL,
                 Constant::CST_LABEL => Language::LG_GENERAL_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV4.')'
             ],
             DomainFeat::TYPE_COMBAT  => [
-                Constant::CST_SLUG => Constant::COMBAT,
+                Constant::CST_SLUG => '-'.Constant::COMBAT,
                 Constant::CST_LABEL => Language::LG_CBT_STYLE_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_ASDC.')'
             ],
             DomainFeat::TYPE_EPIC    => [
-                Constant::CST_SLUG => Constant::EPIC,
+                Constant::CST_SLUG => '-'.Constant::EPIC,
                 Constant::CST_LABEL => Language::LG_CBT_STYLE_EPICS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV19.')'
             ],

@@ -14,7 +14,7 @@ class PageFeatsEpic
             'icon' => 'fa-solid fa-star',
             'title' => 'Faveurs épiques',
             'description' => 'Les dons de haut niveau, puissants et rares.',
-            'url' => Routes::FEATS_PREFIX.Constant::EPIC,
+            'url' => Routes::FEAT_PREFIX.'-'.Constant::EPIC,
             'order' => 44,
             'parent' => 'feats',
         ]);

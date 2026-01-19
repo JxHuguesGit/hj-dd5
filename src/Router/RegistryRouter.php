@@ -13,10 +13,13 @@ use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\ListPresenter\OriginListPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
 use src\Presenter\ListPresenter\SpeciesListPresenter;
+use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\TableBuilder\OriginTableBuilder;
 use src\Presenter\TableBuilder\SkillTableBuilder;
 use src\Presenter\TableBuilder\SpeciesTableBuilder;
+use src\Presenter\TableBuilder\SpellTableBuilder;
+use src\Service\SpellService;
 
 class RegistryRouter
 {
@@ -76,6 +79,20 @@ class RegistryRouter
                             new FeatTableBuilder($readerFactory->origin())
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
+                    ),
+                    Constant::SPELLS => new $controllerClass(
+                        new SpellService(
+                            $serviceFactory->wordPress()
+                        ),
+                        new SpellListPresenter(
+                            $readerFactory->spell(),
+                            $serviceFactory->wordPress()
+                        ),
+                        new PageList(
+                            new TemplateRenderer(),
+                            new SpellTableBuilder($readerFactory->spell())
+                        ),
+                        new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS)
                     ),
                     default    => new $controllerClass(),
                 };

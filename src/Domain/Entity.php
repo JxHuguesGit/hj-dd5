@@ -148,11 +148,12 @@ abstract class Entity
         }
 
         return match ($expectedType) {
+            FieldType::ARRAY => $this->validateArray($field, $value),
+            FieldType::BOOL => $this->validateBool($field, $value),
+            FieldType::FLOAT => $this->validateFloat($field, $value),
             FieldType::INT => $this->validateInt($field, $value),
             FieldType::INTNULLABLE  => $this->validateIntNullable($field, $value),
             FieldType::INTPOSITIVE  => $this->validateIntPositive($field, $value),
-            FieldType::FLOAT => $this->validateFloat($field, $value),
-            FieldType::BOOL => $this->validateBool($field, $value),
             FieldType::STRING => $this->validateString($field, $value),
             FieldType::STRINGNULLABLE => $this->validateStringNullable($field, $value),
             default => $value,
@@ -207,7 +208,7 @@ abstract class Entity
     protected function validateString(string $field, mixed $value): string
     {
         if (!is_string($value)) {
-            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne.");
+            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne (".gettype($value)."). ");
         }
         return trim($value);
     }
@@ -221,5 +222,13 @@ abstract class Entity
             throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne.");
         }
         return trim($value);
+    }
+
+    protected function validateArray(string $field, mixed $value): array
+    {
+        if (!is_array($value)) {
+            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne. ");
+        }
+        return $value;
     }
 }

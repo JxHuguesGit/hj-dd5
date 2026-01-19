@@ -1,15 +1,16 @@
 <?php
 namespace src\Factory;
 
-use src\Entity\RpgSpell;
+use src\Domain\Spell as DomainSpell;
 
 class SpellFactory
 {
-    public static function fromWpPost(\WP_Post $post): RpgSpell
+    public static function fromWpPost(\WP_Post $post): DomainSpell
     {
-        return new RpgSpell([
+        return new DomainSpell([
             'id'                     => $post->ID,
-            'title'                  => $post->post_title,
+            'name'                   => $post->post_title,
+            'slug'                   => $post->post_name,
             'content'                => apply_filters('the_content', $post->post_content),
             'tempsIncantation'       => get_field('temps_dincantation', $post->ID),
             'portee'                  => get_field('portee', $post->ID),

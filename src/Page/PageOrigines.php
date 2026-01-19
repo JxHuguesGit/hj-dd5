@@ -1,6 +1,7 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageOrigines
@@ -12,7 +13,7 @@ class PageOrigines
             'icon' => 'fa-solid fa-users',
             'title' => 'Historiques',
             'description' => "L'historique de votre personnage est un ensemble d'éléments disparates qui symbolisent le lieu et l'occupation de votre héros en herbe avant qu'il embrasse la carrière d'aventurier.",
-            'url' => '/origines',
+            'url' => Routes::ORIGINS_PREFIX,
             'order' => 40,
             'parent' => 'home',
         ]);

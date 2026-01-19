@@ -21,6 +21,8 @@ use src\Repository\SubSkillRepository;
 use src\Repository\SubSkillRepositoryInterface;
 use src\Repository\SpeciesRepository;
 use src\Repository\SpeciesRepositoryInterface;
+use src\Repository\SpellRepository;
+use src\Repository\SpellRepositoryInterface;
 use src\Repository\ToolRepository;
 use src\Repository\ToolRepositoryInterface;
 use src\Repository\WeaponPropertyValueRepository;
@@ -73,6 +75,11 @@ class RepositoryFactory
     public function skill(): SkillRepositoryInterface
     {
         return $this->make(SkillRepository::class);
+    }
+    
+    public function spell(): SpellRepositoryInterface
+    {
+        return $this->make(SpellRepository::class);
     }
     
     public function subSkill(): SubSkillRepositoryInterface

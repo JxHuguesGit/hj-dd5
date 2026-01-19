@@ -14,7 +14,7 @@ class PageFeatsGeneral
             'icon' => 'fa-solid fa-scroll',
             'title' => 'Dons généraux',
             'description' => "Les dons accessibles au cours de la carrière d'un personnage.",
-            'url' => Routes::FEATS_PREFIX.Constant::GENERAL,
+            'url' => Routes::FEAT_PREFIX.'-'.Constant::GENERAL,
             'order' => 42,
             'parent' => 'feats',
         ]);

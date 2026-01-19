@@ -9,6 +9,7 @@ use src\Service\Reader\OriginReader;
 use src\Service\Reader\PowerReader;
 use src\Service\Reader\SkillReader;
 use src\Service\Reader\SpecieReader;
+use src\Service\Reader\SpellReader;
 use src\Service\Reader\SubSkillReader;
 use src\Service\Reader\ToolReader;
 use src\Service\Reader\WeaponPropertyValueReader;
@@ -53,6 +54,11 @@ final class ReaderFactory
     public function skill(): SkillReader
     {
         return new SkillReader($this->repositories->skill());
+    }
+
+    public function spell(): SpellReader
+    {
+        return new SpellReader($this->repositories->spell());
     }
 
     public function subSkill(): SubSkillReader

@@ -33,7 +33,7 @@ enum ClassEnum: string
             static::Moi => 'Moine',
             static::Occ => 'Occultiste',
             static::Pal => 'Paladin',
-            static::Rod => 'Rodeur',
+            static::Rod => 'Rôdeur',
             static::Rou => 'Roublard',
         };
     }

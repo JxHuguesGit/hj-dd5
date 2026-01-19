@@ -1,6 +1,7 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Routes;
 use src\Model\PageElement;
 
 class PageSpells
@@ -11,11 +12,10 @@ class PageSpells
             'slug' => 'spells',
             'icon' => 'fa-solid fa-spell-sparkles',
             'title' => 'Sorts',
-            'description' => 'Découvrez les sorts jouables.',
-            'url' => '/spells',
-            'order' => 50,
+            'description' => 'Les sorts auxquels ont accès les différentes classes.',
+            'url' => Routes::SPELLS_PREFIX,
+            'order' => 60,
+            'parent' => 'home',
         ]);
     }
-
-    // Ici tu pourrais avoir d'autres méthodes pour rendre la page, etc.
 }

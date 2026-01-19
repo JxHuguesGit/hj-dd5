@@ -35,15 +35,11 @@ class CardPresenter
                     <h3>%s</h3>
                     <p>%s</p>
                 </a>',
-                trim($el->getUrl(), '-'),
+                $el->getUrl(),
                 htmlspecialchars($el->getTitle()),
                 htmlspecialchars($el->getDescription())
             );
         }
-/*
-                    <i class="%s icon"></i>
-                $el->getUrl(),
-*/
         return $html;
     }
 

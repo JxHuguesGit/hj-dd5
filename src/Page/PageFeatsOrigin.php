@@ -14,7 +14,7 @@ class PageFeatsOrigin
             'icon' => 'fa-solid fa-scroll',
             'title' => 'Dons d\'origine',
             'description' => "Les dons d'origine liés aux historiques de personnage.",
-            'url' => Routes::FEATS_PREFIX.Constant::ORIGIN,
+            'url' => Routes::FEAT_PREFIX.'-'.Constant::ORIGIN,
             'order' => 41,
             'parent' => 'feats',
         ]);
