@@ -143,7 +143,8 @@
   color: #fff;
   padding: 6px 10px;
   border-radius: 4px;
-  white-space: nowrap;
+  white-space: normal;
+  width: 500px;
   transition: opacity 0.3s;
   z-index: 10;
 }

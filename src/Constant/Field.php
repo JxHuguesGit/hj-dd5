@@ -97,6 +97,7 @@ class Field
     public const WPNCATID     = 'weaponCategoryId';
     public const WEAPONID     = 'weaponId';
     public const WPNPROFID    = 'weaponProficiencyId';
+    public const WPNPROPID    = 'weaponPropertyId';
     public const WPNRANGEID   = 'weaponRangeId';
     public const WPUSERID     = 'wpUserId';
     
@@ -106,5 +107,8 @@ class Field
     public const TYPDMGNAME       = 'typeDamageName';
     public const RANGESLUG        = 'rangeSlug';
     public const RANGENAME        = 'rangeName';
+    public const PROPERTYSLUG     = 'propertySlug';
+    public const PROPERTYNAME     = 'propertyName';
+    public const AMMONAME         = 'ammunitionName';
 
 }

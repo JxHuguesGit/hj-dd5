@@ -1,42 +1,78 @@
 <?php
 namespace src\Service;
 
-use src\Domain\Weapon as DomainWeapon;
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
+use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Utils\Html;
 
 class WeaponPropertiesFormatter
 {
-    public function format(DomainWeapon $weapon): string
+    public function format(
+        DomainWeaponPropertyValue $weaponPropertyValue,
+        WpPostService $wpPostService
+    ): string
     {
-        var_dump($weapon);
-        $properties = [];
-        foreach ($weapon->properties as $propValue) {
-            $name = $propValue->property->name;
-            switch ($name) {
-                case 'Munitions':
-                    if ($propValue->typeAmmunition) {
-                        $properties[] = 'Munitions (' . $propValue->typeAmmunition->name . ')';
-                    }
-                break;
-                case 'Portée':
-                    if ($propValue->minRange && $propValue->maxRange) {
-                        $properties[] = 'Portée (' . $propValue->minRange . '/' . $propValue->maxRange . ')';
-                    }
-                break;
-                case 'Lancer':
-                    if ($propValue->minRange && $propValue->maxRange) {
-                        $properties[] = 'Lancer (' . $propValue->minRange . '/' . $propValue->maxRange . ')';
-                    }
-                break;
-                case 'Polyvalente':
-                    if ($propValue->damageDie) {
-                        $properties[] = 'Polyvalente (' . $propValue->damageDie->diceCount . 'd' . $propValue->damageDie->diceFaces . ')';
-                    }
-                break;
-                default:
-                    $properties[] = $name;
-                    break;
-            }
+        $property = $this->getLink($weaponPropertyValue, $wpPostService);
+        switch ($weaponPropertyValue->propertySlug) {
+            case 'polyvalente' :
+                $property .= $this->formatPolyvalente($weaponPropertyValue);
+            break;
+            case 'lancer' :
+                $property .= $this->formatLancer($weaponPropertyValue);
+            break;
+            case 'munitions' :
+                $property .= $this->formatMunitions($weaponPropertyValue);
+            break;
+            case 'finesse' :
+            case 'legere' :
+            case 'deux_mains' :
+            case 'chargement' :
+            case 'lourde' :
+            case 'allonge' :
+                // Rien à ajouter
+            break;
+            default :
+        var_dump($weaponPropertyValue);
+        echo '<br>';
+        echo $weaponPropertyValue->propertySlug;
+        echo '<br>';
+            break;
         }
-        return implode(', ', $properties);
+        return $property;
     }
+
+    private function formatPolyvalente(DomainWeaponPropertyValue $weaponPropertyValue): string
+    {
+        return " (" . $weaponPropertyValue->diceCount
+            . ($weaponPropertyValue->diceFaces > 1 ? "d" . $weaponPropertyValue->diceFaces : "") . ")";
+    }
+
+    private function formatLancer(DomainWeaponPropertyValue $weaponPropertyValue): string
+    {
+        return " (portée " . $this->feetToMeters($weaponPropertyValue->minRange)
+            . "/" . $this->feetToMeters($weaponPropertyValue->maxRange) . ")";
+    }
+
+    private function feetToMeters(float $value)
+    {
+        return 3*$value/10;
+    }
+
+    private function formatMunitions(DomainWeaponPropertyValue $weaponPropertyValue): string
+    {
+        return substr($this->formatLancer(($weaponPropertyValue)), 0, -1) . " ; " . $weaponPropertyValue->ammunitionName . ")";
+    }
+
+    private function getLink(
+        DomainWeaponPropertyValue $weaponPropertyValue,
+        WpPostService $wpPostService
+    ): string
+    {
+        $wpPostService->getById($weaponPropertyValue->postId);
+        $linkContent = $weaponPropertyValue->propertyName
+            . Html::getSpan($wpPostService->getPostContent() ?? '', [Constant::CST_CLASS=>'tooltip-text']);
+        return Html::getLink($linkContent, '#', Bootstrap::CSS_TEXT_DARK.' tooltip-trigger');
+    }
+    
 }

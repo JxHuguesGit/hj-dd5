@@ -19,9 +19,11 @@ class Table
     public const SPECIES       = 'rpgSpecies';
     public const SUBSKILL      = 'rpgSubSkill';
     public const TOOL          = 'rpgTool';
+    public const TYPEAMMO      = 'rpgTypeAmmunition';
     public const TYPEDAMAGE    = 'rpgTypeDamage';
     public const WEAPON        = 'rpgWeapon';
     public const WPNCATEGORY   = 'rpgWeaponCategory';
+    public const WPNPROPERTY   = 'rpgWeaponProperty';
     public const WPNPROPVALUE  = 'rpgWeaponPropertyValue';
     public const WPNRANGE      = 'rpgWeaponRange';
 }

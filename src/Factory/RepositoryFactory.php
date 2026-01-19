@@ -23,6 +23,8 @@ use src\Repository\SpeciesRepository;
 use src\Repository\SpeciesRepositoryInterface;
 use src\Repository\ToolRepository;
 use src\Repository\ToolRepositoryInterface;
+use src\Repository\WeaponPropertyValueRepository;
+use src\Repository\WeaponPropertyValueRepositoryInterface;
 use src\Repository\WeaponRepository;
 use src\Repository\WeaponRepositoryInterface;
 
@@ -91,5 +93,10 @@ class RepositoryFactory
     public function weapon(): WeaponRepositoryInterface
     {
         return $this->make(WeaponRepository::class);
+    }
+
+    public function weaponPropertyValue(): WeaponPropertyValueRepositoryInterface
+    {
+        return $this->make(WeaponPropertyValueRepository::class);
     }
 }

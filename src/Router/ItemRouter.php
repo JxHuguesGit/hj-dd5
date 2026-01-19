@@ -54,7 +54,8 @@ class ItemRouter
                     $factory->weapon(),
                     new WeaponListPresenter(
                         $serviceFactory->wordPress(),
-                        $serviceFactory->weaponProperties()
+                        $serviceFactory->weaponProperties(),
+                        $factory->weaponPropertyValue()
                     ),
                     new PageList(
                         new TemplateRenderer(),

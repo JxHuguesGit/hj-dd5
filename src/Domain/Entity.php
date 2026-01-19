@@ -149,10 +149,12 @@ abstract class Entity
 
         return match ($expectedType) {
             FieldType::INT => $this->validateInt($field, $value),
+            FieldType::INTNULLABLE  => $this->validateIntNullable($field, $value),
             FieldType::INTPOSITIVE  => $this->validateIntPositive($field, $value),
             FieldType::FLOAT => $this->validateFloat($field, $value),
             FieldType::BOOL => $this->validateBool($field, $value),
             FieldType::STRING => $this->validateString($field, $value),
+            FieldType::STRINGNULLABLE => $this->validateStringNullable($field, $value),
             default => $value,
         };
     }
@@ -163,6 +165,17 @@ abstract class Entity
             throw new \InvalidArgumentException("Le champ '$field' doit être un entier.");
         }
         return (int)$value;
+    }
+
+    protected function validateIntNullable(string $field, mixed $value): int
+    {
+        if ($value===null) {
+            return 0;
+        }
+        if ($value < 0) {
+            throw new \InvalidArgumentException("Le champ '$field' doit être un entier strictement positif.");
+        }
+        return $value;
     }
 
     protected function validateIntPositive(string $field, mixed $value): int
@@ -199,4 +212,14 @@ abstract class Entity
         return trim($value);
     }
 
+    protected function validateStringNullable(string $field, mixed $value): string
+    {
+        if ($value===null) {
+            return '';
+        }
+        if (!is_string($value)) {
+            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne.");
+        }
+        return trim($value);
+    }
 }

@@ -11,6 +11,7 @@ use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 use src\Constant\Bootstrap;
+use src\Service\Reader\WeaponPropertyValueReader;
 use src\Service\WeaponPropertiesFormatter;
 
 final class WeaponListPresenter
@@ -18,7 +19,7 @@ final class WeaponListPresenter
     public function __construct(
         private WpPostService $wpPostService,
         private WeaponPropertiesFormatter $formatter,
-        private WeaponPropertyValueRepository $weaponPropertyValueRepo
+        private WeaponPropertyValueReader $weaponPropertyValue
     ) {}
 
     public function present(iterable $weapons): Collection
@@ -59,9 +60,16 @@ final class WeaponListPresenter
 
     private function properties(DomainWeapon $weapon): string
     {
-        $weaponPropertyValues = $this->weaponPropertyValueRepo->findAll();
-
-        return '';
+        $weaponPropertyValues = $this->weaponPropertyValue->byWeaponId($weapon->id);
+        if ($weaponPropertyValues->isEmpty()) {
+            return '-';
+        }
+        
+        $parts = [];
+        foreach ($weaponPropertyValues as $weaponPropertyValue) {
+            $parts[] = $this->formatter->format($weaponPropertyValue, $this->wpPostService);
+        }
+        return implode(', ', $parts);
     }
 
     private function masteryLink(DomainWeapon $weapon): string

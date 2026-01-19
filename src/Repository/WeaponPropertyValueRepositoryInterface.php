@@ -6,13 +6,17 @@ use src\Collection\Collection;
 
 interface WeaponPropertyValueRepositoryInterface
 {
-    public function find(int $id): ?DomainWeaponPropertyValue;
+    public function find(int $id);
     /**
      * @return Collection<DomainWeaponPropertyValue>
      */
-    public function findAll(): Collection;
+    public function allWeaponPropertyValues(): Collection;
     /**
      * @return Collection<DomainWeaponPropertyValue>
      */
     public function byWeaponIds(array $weaponIds): Collection;
+    /**
+     * @return Collection<DomainWeaponPropertyValue>
+     */
+    public function byWeaponId(int $weaponId): Collection;
 }

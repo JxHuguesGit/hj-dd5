@@ -19,6 +19,14 @@ final class WeaponPropertyValueReader
         return $this->wpnPropValueRepository->findAll($orderBy);
     }
 
+    /**
+     * @return Collection<DomainWeaponPropertyValue>
+     */
+    public function byWeaponId(int $weaponId): Collection
+    {
+        return $this->wpnPropValueRepository->byWeaponId($weaponId);
+    }
+
     public function weaponPropertyValueById(int $id): ?DomainWeaponPropertyValue
     {
         return $this->wpnPropValueRepository->find($id);

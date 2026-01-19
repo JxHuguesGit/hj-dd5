@@ -2,6 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
+use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
@@ -15,34 +16,39 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
         return DomainWeaponPropertyValue::class;
     }
 
-    public function byWeaponIds(array $weaponIds): Collection
+    public function allWeaponPropertyValues(): Collection
     {
         return new Collection();
     }
 
-    /*
-
+    public function byWeaponId(int $weaponId): Collection
+    {
         $baseQuery = "
-            SELECT wpv.id, ".Field::MINRANGE.", ".Field::MAXRANGE."
-                , p.".Field::SLUG." AS ".Field::PROPERTYSLUG.", p.".Field::NAME." AS ".Field::PROPERTYNAME."
-                , a.".Field::SLUG." AS ".Field::AMMOSLUG.", a.".Field::NAME." AS ".Field::AMMONAME."
+            SELECT " . Field::MINRANGE . ", " . Field::MAXRANGE . "
+                , wp." . Field::NAME . " AS " . Field::PROPERTYNAME . ", wp." . Field::SLUG . " AS " . Field::PROPERTYSLUG . "
+                , " . Field::POSTID . "
+                , ta." . Field::NAME . " AS " . Field::AMMONAME . "
+                , " . Field::DICECOUNT . ", " . Field::DICEFACES . "
             FROM " . Table::WPNPROPVALUE . " wpv
-            INNER JOIN " . Table::WPNPROPERTY . " wp ON wp.id = wpv.".Field::WPNPROPID."
-            LEFT JOIN " . Table::DMGDIE . " d ON d.id = a.".Field::DMGDIEID."
-            LEFT JOIN " . Table::TYPEAMMO . " d ON d.id = a.".Field::TYPEAMMID."
+            INNER JOIN " . Table::WPNPROPERTY . " wp ON wp.id = wpv." . Field::WPNPROPID . "
+            LEFT JOIN " . Table::TYPEAMMO . " ta ON ta.id = wpv." . Field::TYPEAMMID . "
+            LEFT JOIN " . Table::DMGDIE . " dd ON dd.id = wpv." . Field::DMGDIEID . "
+            WHERE " . Field::WEAPONID . " = " .$weaponId . "
+            ORDER BY " . Field::PROPERTYNAME . " " . Constant::CST_ASC . "
         ";
-
         $this->query = $this->queryBuilder->reset()
             ->setBaseQuery($baseQuery)
-//            ->where($criteria)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams(),
-            true
+            $this->queryBuilder->getParams()
         );
     }
-        */
+    
+    public function byWeaponIds(array $weaponIds): Collection
+    {
+        return new Collection();
+    }
 }

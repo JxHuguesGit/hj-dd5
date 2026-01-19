@@ -11,6 +11,7 @@ use src\Service\Reader\SkillReader;
 use src\Service\Reader\SpecieReader;
 use src\Service\Reader\SubSkillReader;
 use src\Service\Reader\ToolReader;
+use src\Service\Reader\WeaponPropertyValueReader;
 use src\Service\Reader\WeaponReader;
 
 final class ReaderFactory
@@ -72,6 +73,11 @@ final class ReaderFactory
     public function weapon(): WeaponReader
     {
         return new WeaponReader($this->repositories->weapon());
+    }
+
+    public function weaponPropertyValue(): WeaponPropertyValueReader
+    {
+        return new WeaponPropertyValueReader($this->repositories->weaponPropertyValue());
     }
 
 }
