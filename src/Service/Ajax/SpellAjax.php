@@ -1,5 +1,5 @@
 <?php
-namespace src\Action;
+namespace src\Service\Ajax;
 
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;
@@ -7,9 +7,9 @@ use src\Service\Domain\SpellService;
 use src\Service\Domain\WpPostService;
 use src\Utils\Session;
 
-class LoadMoreSpells
+class SpellAjax
 {
-    public static function build(): string
+    public static function loadMoreSpells(): string
     {
         $spellListePresenter = new SpellListPresenter();
         $spellService = new SpellService(

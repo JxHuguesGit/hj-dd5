@@ -8,35 +8,51 @@ class Ajax{
     public static function dealWithAjax()
     {
         $ajaxAction    = Session::fromPost('ajaxAction');
-        switch ($ajaxAction) {
-            case 'loadCreationStepSide':
-                $type    = Session::fromPost('type');
-                $id      = Session::fromPost('id');
-                $returnedValue = LoadCreationStepSide::build($type, $id);
-            break;
-            case 'loadCasteDetail':
-                $returnedValue = LoadCasteDetail::build();
-            break;
-            case 'downloadFile':
-                $returnedValue = DownloadFile::start();
-            break;
-            case 'modalFeatCard':
-                $returnedValue = FeatCard::build();
-            break;
-            case 'modalMonsterCard':
-                $returnedValue = MonsterCard::build();
-            break;
-            case 'modalSpellCard':
-                $returnedValue = SpellCard::build();
-            break;
-            case 'loadMoreSpells':
-                $returnedValue = LoadMoreSpells::build();
-            break;
-            default:
-                $returnedValue = 'default';
-            break;
+
+        $actions = [
+            'downloadFile' => fn() => DownloadFile::start(),
+            'loadCasteDetail' => fn() => LoadCasteDetail::build(),
+            'loadCreationStepSide' => fn() => LoadCreationStepSide::build(Session::fromPost('type'), Session::fromPost('id')),
+            'modalFeatCard' => fn() => FeatCard::build(),
+            'modalMonsterCard' => fn() => MonsterCard::build(),
+            'modalSpellCard' => fn() => SpellCard::build(),
+        ];
+        try {
+            if ($ajaxAction === 'loadMoreSpells') {
+                $router = new AjaxRouter();
+                $response = $router->dispatch($ajaxAction);
+                $response[$ajaxAction] = $response['data'];
+            } elseif (isset($actions[$ajaxAction])) {
+                $returnedValue = $actions[$ajaxAction];
+
+                $response = [
+                    // A terme, supprimer cet élément
+                    $ajaxAction => $returnedValue,
+                    // Fin suppression
+                    'status' => 'success',
+                    'action' => $ajaxAction,
+                    'data'   => $returnedValue
+                ];
+            } else {
+                $response = [
+                    $ajaxAction => 'default',
+                    'status' => 'error',
+                    'action' => $ajaxAction,
+                    'message' => 'default'
+                ];
+            }
+        } catch (\Throwable $e) {
+            $response = [
+                // A terme, supprimer cet élément
+                $ajaxAction => 'default',
+                // Fin suppression
+                'status' => 'error',
+                'action' => $ajaxAction,
+                'message' => $e->getMessage()
+            ];
         }
-        return '{"'.$ajaxAction.'": '.json_encode($returnedValue).'}';
+
+        return json_encode($response);
     }
     
 }

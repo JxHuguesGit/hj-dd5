@@ -46,7 +46,7 @@ function loadMoreSpells(ajaxAction) {
             try {
                 let obj = JSON.parse(response.data);
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(obj[ajaxAction], "text/html");
+                const doc = parser.parseFromString(obj.data, "text/html");
                 const tbodyContent = doc.querySelector("tbody").innerHTML;
                 $('#spellTable tbody').append(tbodyContent);
             } catch (e) {
