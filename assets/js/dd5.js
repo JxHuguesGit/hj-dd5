@@ -27,9 +27,35 @@ function ajaxActionClick(obj, e) {
     for (let oneAction of actions) {
         if (oneAction=='loadCasteDetail') {
             loadCasteDetail(oneAction, obj.data('key'), obj.data('lang'));
+        } else if (oneAction=='loadMoreSpells') {
+            loadMoreSpells(oneAction);
         }
     }
     return false;
+}
+
+function loadMoreSpells(ajaxAction) {
+    const page = $('#spellTable tbody tr').length/10 + 1;
+    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadMoreSpells', 'page': page};
+    const baseUrl = globalThis.location.origin;
+    const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
+    $.post(
+        ajaxUrl,
+        data,
+        function(response) {
+            try {
+                let obj = JSON.parse(response.data);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(obj[ajaxAction], "text/html");
+                const tbodyContent = doc.querySelector("tbody").innerHTML;
+                $('#spellTable tbody').append(tbodyContent);
+            } catch (e) {
+                console.log("error: "+e);
+                console.log(response);
+            }
+        }
+    ).done(function(response) {
+    });    
 }
 
 function loadCasteDetail(ajaxAction, key, lang) {

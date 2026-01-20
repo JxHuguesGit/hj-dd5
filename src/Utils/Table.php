@@ -146,7 +146,7 @@ class Table
             'table',
             Html::getBalise('thead', $headContent, [Constant::CST_CLASS=>$this->header[Constant::CST_CLASS]]).
             Html::getBalise('tbody', $bodyContent).
-            Html::getBalise('tfoot', $footContent),
+            Html::getBalise('tfoot', $footContent, [Constant::CST_CLASS=>$this->foot[Constant::CST_CLASS]]),
             $this->attributes
         );
     }
@@ -274,6 +274,12 @@ class Table
         return $this;
     }
     
+    public function addFooter(array $attributes=[]): self
+    {
+        $this->foot = $attributes;
+        return $this;
+    }
+
     public function addFootRow(array $attributes=[]): self
     {
         if ($this->nbFootRows==-1) {

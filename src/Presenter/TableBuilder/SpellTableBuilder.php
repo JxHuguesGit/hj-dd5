@@ -13,11 +13,13 @@ class SpellTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $rows, array $params = []): Table
     {
-        $table = $this->createTable(1, $params);
+        $params[Constant::CST_ID] = 'spellTable';
+        $table = $this->createTable(8, $params);
 
         $headers = [
             [Constant::CST_LABEL=>Language::LG_SPELLS],
             [Constant::CST_LABEL=>'Niveau'],
+//            [Constant::CST_LABEL=>'<div class="text-nowrap">Niveau <i class="fa-solid fa-filter modal-tooltip ajaxAction" data-trigger="click" data-action="openModal"></i></div>'],
             [Constant::CST_LABEL=>'Ecole'],
             [Constant::CST_LABEL=>'Classes'],
             [Constant::CST_LABEL=>'TI', 'abbr'=>'Temps d\'incantation'],
@@ -58,6 +60,18 @@ class SpellTableBuilder extends AbstractTableBuilder
                 */
             ;
         }
+
+        $table->addFooter([
+            Constant::CST_CLASS => implode(' ', [
+                Bootstrap::CSS_TABLE_DARK,
+                Bootstrap::CSS_TEXT_CENTER
+            ])
+        ])
+            ->addFootRow()
+            ->addFootCell([
+                Constant::CST_CONTENT=>'<div class="ajaxAction" data-trigger="click" data-action="loadMoreSpells" style="cursor:pointer;"><i class="fa-solid fa-circle-plus"></i></div>',
+                Constant::CST_ATTRIBUTES=>[Constant::CST_COLSPAN=>8]
+            ]);
 
         return $table;
     }

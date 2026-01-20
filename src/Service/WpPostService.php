@@ -2,6 +2,7 @@
 namespace src\Service;
 
 use WP_Post;
+use WP_Query;
 
 final class WpPostService
 {
@@ -21,5 +22,20 @@ final class WpPostService
     public function getPostContent(): string
     {
         return $this->wpPost->post_content ?? '';
+    }
+
+    public function query(array $args): ?WP_Query
+    {
+        return new WP_Query($args);
+    }
+
+    public function getPost(): ?WP_Post
+    {
+        return get_post();
+    }
+
+    public function resetPostdata(): void
+    {
+        wp_reset_postdata();
     }
 }

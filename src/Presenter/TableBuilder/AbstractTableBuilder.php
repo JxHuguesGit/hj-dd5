@@ -11,18 +11,25 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
     protected function createTable(int $colCount, array $params = []): Table
     {
         $withMarginTop = $params[Bootstrap::CSS_WITH_MRGNTOP] ?? true;
-        return (new Table())->setTable([
+        $tableAttributes = [
             Constant::CST_CLASS => implode(' ', [
                 Bootstrap::CSS_TABLE_SM,
                 Bootstrap::CSS_TABLE_STRIPED,
                 $withMarginTop ? Bootstrap::CSS_MT5 : ''
             ])
-        ])->addHeader([
-            Constant::CST_CLASS => implode(' ', [
-                Bootstrap::CSS_TABLE_DARK,
-                Bootstrap::CSS_TEXT_CENTER
+        ];
+        if (isset($params[Constant::CST_ID])) {
+            $tableAttributes[Constant::CST_ID] = $params[Constant::CST_ID];
+        }
+        return (new Table())
+            ->setTable($tableAttributes)
+            ->addHeader([
+                Constant::CST_CLASS => implode(' ', [
+                    Bootstrap::CSS_TABLE_DARK,
+                    Bootstrap::CSS_TEXT_CENTER
+                ])
             ])
-        ])->addHeaderRow();
+            ->addHeaderRow();
     }
 
     protected function addGroupRow(Table $table, string $label, int $colspan): void

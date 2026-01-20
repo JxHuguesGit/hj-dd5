@@ -29,6 +29,9 @@ class Ajax{
             case 'modalSpellCard':
                 $returnedValue = SpellCard::build();
             break;
+            case 'loadMoreSpells':
+                $returnedValue = LoadMoreSpells::build();
+            break;
             default:
                 $returnedValue = 'default';
             break;
