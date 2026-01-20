@@ -5,8 +5,8 @@ use src\Constant\Field;
 use src\Controller\RpgMonster as ControllerRpgMonster;
 use src\Factory\MonsterFactory as RpgMonsterFactory;
 use src\Entity\CharacterStats;
-use src\Service\MonsterAbilitiesService;
-use src\Service\MonsterDefensesService;
+use src\Service\Domain\MonsterAbilitiesService;
+use src\Service\Domain\MonsterDefensesService;
 
 class RpgMonster extends Entity
 {

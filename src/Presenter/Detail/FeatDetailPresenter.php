@@ -5,7 +5,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Presenter\ViewModel\FeatPageView;
-use src\Service\WpPostService;
+use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 

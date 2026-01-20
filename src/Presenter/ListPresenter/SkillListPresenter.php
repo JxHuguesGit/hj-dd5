@@ -2,15 +2,15 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Language;
 use src\Domain\Skill as DomainSkill;
 use src\Presenter\ViewModel\SkillGroup;
 use src\Presenter\ViewModel\SkillRow;
-use src\Service\SkillService;
+use src\Service\Domain\SkillService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
-use src\Constant\Bootstrap;
-use src\Constant\Language;
 
 final class SkillListPresenter
 {

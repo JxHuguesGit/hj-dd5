@@ -7,7 +7,7 @@ use src\Page\PageOrigine;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Reader\OriginReader;
-use src\Service\OriginPageService;
+use src\Service\Page\OriginPageService;
 
 class PublicOrigine extends PublicBase
 {

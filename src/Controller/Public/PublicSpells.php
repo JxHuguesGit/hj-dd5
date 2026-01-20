@@ -6,9 +6,7 @@ use src\Constant\Constant;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\SpellListPresenter;
-use src\Service\Reader\SpellReader;
-use src\Service\SpellService;
-use src\Service\WpPostService;
+use src\Service\Domain\SpellService;
 
 class PublicSpells extends PublicBase
 {

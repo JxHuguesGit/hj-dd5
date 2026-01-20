@@ -1,9 +1,10 @@
 <?php
-namespace src\Service;
+namespace src\Service\Page;
 
 use src\Constant\Constant;
 use src\Domain\Origin as DomainOrigin;
 use src\Presenter\ViewModel\OriginPageView;
+use src\Service\Domain\OriginService;
 use src\Service\Reader\OriginReader;
 
 final class OriginPageService

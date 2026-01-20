@@ -1,9 +1,10 @@
 <?php
-namespace src\Service;
+namespace src\Service\Page;
 
 use src\Constant\Constant;
 use src\Domain\Specie as DomainSpecie;
 use src\Presenter\ViewModel\SpeciePageView;
+use src\Service\Domain\SpecieService;
 use src\Service\Reader\SpecieReader;
 
 final class SpeciePageService

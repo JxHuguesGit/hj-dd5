@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Domain\Specie as DomainSpecie;
 use src\Presenter\ViewModel\SpeciesRow;
-use src\Service\WpPostService;
+use src\Service\Domain\WpPostService;
 use src\Utils\UrlGenerator;
 
 final class SpeciesListPresenter

@@ -10,7 +10,7 @@ use src\Presenter\MenuPresenter;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
-use src\Service\OriginPageService;
+use src\Service\Page\OriginPageService;
 
 class OriginRouter
 {

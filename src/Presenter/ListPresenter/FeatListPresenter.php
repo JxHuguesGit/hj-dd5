@@ -8,7 +8,7 @@ use src\Domain\Feat as DomainFeat;
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
 use src\Service\Reader\OriginReader;
-use src\Service\WpPostService;
+use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Constant\Bootstrap;

@@ -4,7 +4,6 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Domain\Spell as DomainSpell;
 use src\Repository\SpellRepositoryInterface;
-use src\Service\WpPostService;
 
 final class SpellReader
 {

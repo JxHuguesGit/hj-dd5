@@ -18,6 +18,12 @@ use src\Repository\SubSkillRepository;
 use src\Repository\SkillRepository;
 use src\Repository\ToolRepository;
 use src\Repository\WeaponRepository;
+use src\Service\Domain\FeatService;
+use src\Service\Domain\OriginService;
+use src\Service\Domain\SpecieService;
+use src\Service\Domain\SkillService;
+use src\Service\Domain\WpPostService;
+use src\Service\Formatter\WeaponPropertiesFormatter;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\FeatReader;
@@ -28,12 +34,6 @@ use src\Service\Reader\SkillReader;
 use src\Service\Reader\SpecieReader;
 use src\Service\Reader\ToolReader;
 use src\Service\Reader\WeaponReader;
-use src\Service\FeatService;
-use src\Service\OriginService;
-use src\Service\SpecieService;
-use src\Service\SkillService;
-use src\Service\WeaponPropertiesFormatter;
-use src\Service\WpPostService;
 
 final class ServiceFactory
 {

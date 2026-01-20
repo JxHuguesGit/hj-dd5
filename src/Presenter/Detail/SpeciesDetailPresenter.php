@@ -3,7 +3,7 @@ namespace src\Presenter\Detail;
 
 use src\Constant\Constant;
 use src\Presenter\ViewModel\SpeciePageView;
-use src\Service\WpPostService;
+use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 
 class SpeciesDetailPresenter

@@ -6,7 +6,7 @@ use src\Constant\Constant;
 use src\Domain\Origin as DomainOrigin;
 use src\Presenter\ViewModel\OriginGroup;
 use src\Presenter\ViewModel\OriginRow;
-use src\Service\OriginService;
+use src\Service\Domain\OriginService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Constant\Bootstrap;

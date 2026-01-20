@@ -1,5 +1,5 @@
 <?php
-namespace src\Service;
+namespace src\Service\Domain;
 
 final class FeatService
 {

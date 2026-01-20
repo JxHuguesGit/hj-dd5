@@ -1,5 +1,5 @@
 <?php
-namespace src\Service;
+namespace src\Service\Page;
 
 use src\Constant\Constant;
 use src\Domain\Feat as DomainFeat;

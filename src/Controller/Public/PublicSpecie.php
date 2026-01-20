@@ -5,8 +5,8 @@ use src\Constant\Constant;
 use src\Domain\Specie as DomainSpecies;
 use src\Page\PageSpecie;
 use src\Presenter\MenuPresenter;
+use src\Service\Page\SpeciePageService;
 use src\Service\Reader\SpecieReader;
-use src\Service\SpeciePageService;
 use src\Presenter\Detail\SpeciesDetailPresenter;
 
 class PublicSpecie extends PublicBase

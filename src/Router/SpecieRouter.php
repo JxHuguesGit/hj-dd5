@@ -6,12 +6,12 @@ use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicSpecie;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
-use src\Presenter\MenuPresenter;
-use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageSpecie;
+use src\Presenter\MenuPresenter;
 use src\Presenter\Detail\SpeciesDetailPresenter;
-use src\Service\SpeciePageService;
+use src\Renderer\TemplateRenderer;
+use src\Service\Page\SpeciePageService;
 
 class SpecieRouter
 {

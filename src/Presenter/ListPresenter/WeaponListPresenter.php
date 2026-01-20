@@ -2,17 +2,17 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Domain\Weapon as DomainWeapon;
 use src\Presenter\ViewModel\WeaponGroup;
 use src\Presenter\ViewModel\WeaponRow;
-use src\Service\WpPostService;
+use src\Service\Domain\WpPostService;
+use src\Service\Formatter\WeaponPropertiesFormatter;
+use src\Service\Reader\WeaponPropertyValueReader;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
-use src\Constant\Bootstrap;
-use src\Service\Reader\WeaponPropertyValueReader;
-use src\Service\WeaponPropertiesFormatter;
 
 final class WeaponListPresenter
 {

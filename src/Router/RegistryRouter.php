@@ -19,7 +19,7 @@ use src\Presenter\TableBuilder\OriginTableBuilder;
 use src\Presenter\TableBuilder\SkillTableBuilder;
 use src\Presenter\TableBuilder\SpeciesTableBuilder;
 use src\Presenter\TableBuilder\SpellTableBuilder;
-use src\Service\SpellService;
+use src\Service\Domain\SpellService;
 
 class RegistryRouter
 {

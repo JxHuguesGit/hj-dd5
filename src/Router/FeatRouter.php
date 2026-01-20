@@ -13,7 +13,7 @@ use src\Page\PageList;
 use src\Presenter\Detail\FeatDetailPresenter;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
-use src\Service\FeatPageService;
+use src\Service\Page\FeatPageService;
 
 class FeatRouter
 {

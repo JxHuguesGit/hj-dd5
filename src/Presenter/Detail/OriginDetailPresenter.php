@@ -4,7 +4,7 @@ namespace src\Presenter\Detail;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Presenter\ViewModel\OriginPageView;
-use src\Service\WpPostService;
+use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 

@@ -1,9 +1,10 @@
 <?php
-namespace src\Service;
+namespace src\Service\Formatter;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 
 class WeaponPropertiesFormatter

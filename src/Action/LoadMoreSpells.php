@@ -3,8 +3,8 @@ namespace src\Action;
 
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;
-use src\Service\SpellService;
-use src\Service\WpPostService;
+use src\Service\Domain\SpellService;
+use src\Service\Domain\WpPostService;
 use src\Utils\Session;
 
 class LoadMoreSpells
