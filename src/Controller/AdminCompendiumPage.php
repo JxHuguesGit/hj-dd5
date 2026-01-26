@@ -2,18 +2,11 @@
 namespace src\Controller;
 
 use src\Constant\Constant;
-use src\Constant\Field;
 use src\Constant\Template;
-use src\Page\PageList;
-use src\Presenter\ListPresenter\ArmorListPresenter;
-use src\Presenter\ListPresenter\WeaponListPresenter;
-use src\Presenter\TableBuilder\ArmorTableBuilder;
-use src\Presenter\TableBuilder\WeaponTableBuilder;
-use src\Repository\ArmorRepository;
-use src\Repository\Weapon as RepositoryWeapon;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Renderer\TemplateRenderer;
+use src\Controller\Compendium\ArmorCompendiumHandler;
+use src\Controller\Compendium\FeatCompendiumHandler;
+use src\Controller\Compendium\SkillCompendiumHandler;
+use src\Controller\Compendium\WeaponCompendiumHandler;
 
 class AdminCompendiumPage extends AdminPage
 {
@@ -25,47 +18,20 @@ class AdminCompendiumPage extends AdminPage
 
         switch ($currentId) {
             case Constant::ARMORS :
-                $objDao = new ArmorRepository(new QueryBuilder(), new QueryExecutor());
-                $armors = $objDao->findAllWithItemAndType([], [
-                    Field::ARMORTYPID=>Constant::CST_ASC,
-                    Field::ARMORCLASS=>Constant::CST_ASC,
-                    Field::GOLDPRICE=>Constant::CST_ASC
-                ]);
-
-                $presenter = new ArmorListPresenter();
-                $pageContent = $presenter->present($armors);
-                $page = new PageList(
-                    new TemplateRenderer(),
-                    new ArmorTableBuilder()
-                );
-                $pageContent = $page->renderAdmin($pageContent);
+                $pageContent = (new ArmorCompendiumHandler())->render();
             break;
             case Constant::WEAPONS :
-                $objDao = new RepositoryWeapon(new QueryBuilder(), new QueryExecutor());
-                $weapons = $objDao->findAllWithItemAndType([], [
-                    Field::WPNCATID=>Constant::CST_ASC,
-                    Field::WPNRANGEID=>Constant::CST_ASC,
-                    'i.name'=>Constant::CST_ASC,
-                ]);
-
-                $presenter = new WeaponListPresenter();
-                $pageContent = $presenter->present($weapons);
-                $page = new PageList(
-                    new TemplateRenderer(),
-                    new WeaponTableBuilder()
-                );
-                $pageContent = $page->renderAdmin($pageContent);
+                $pageContent = (new WeaponCompendiumHandler())->render();
             break;
             case Constant::SKILLS :
-                $objTable = RpgSkill::getTable($this->arrParams);
-                $pageContent = $objTable?->display();
+                $pageContent = (new SkillCompendiumHandler())->render();
             break;
             case Constant::MONSTERS :
                 $pageContent = RpgMonster::getAdminContentPage($this->arrParams);
                 $paddingTop = '';
             break;
             case Constant::FEATS :
-                $pageContent = RpgFeat::getAdminContentPage($this->arrParams);
+                $pageContent = (new FeatCompendiumHandler())->render();
                break;
             case Constant::ORIGINS :
                 $pageContent = RpgOrigin::getAdminContentPage($this->arrParams);
@@ -75,7 +41,6 @@ class AdminCompendiumPage extends AdminPage
                 $paddingTop = '';
                break;
             default :
-                $objTable = null;
                 $pageContent = '';
             break;
         }

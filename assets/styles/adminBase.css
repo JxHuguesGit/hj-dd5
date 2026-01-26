@@ -53008,3 +53008,29 @@ a.text-muted:hover {
   border-color: #4b545c !important;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+
+.tooltip-trigger {
+  position: relative; /* nécessaire pour positionner le tooltip */
+  cursor: pointer;
+}
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 125%; /* au-dessus du lien */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: normal;
+  width: 500px;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+.tooltip-trigger:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

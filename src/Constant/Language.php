@@ -35,6 +35,7 @@ class Language
     public const LG_DESCRIPTION     = 'Description';
     public const LG_STEALTH         = 'Discrétion';
     public const LG_FEATS           = 'Dons';
+    public const LG_FEATS_TITLE     = 'Les Dons';
     public const LG_ORIGIN_FEAT     = 'Don d\'origine';
     public const LG_ORIGIN_FEATS    = 'Dons d\'origine';
     public const LG_GENERAL_FEAT    = 'Don général';
