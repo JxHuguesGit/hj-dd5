@@ -90,4 +90,9 @@ final class Template
     public const CREATE_FEAT         = self::CREATE_PATH.'step-feat.tpl';
     public const CREATE_SKILLTOOL    = self::CREATE_PATH.'step-skillTool.tpl';
     public const CREATE_SIDEBAR      = self::CREATE_PATH.'step-sidebar.tpl';
+
+    public const MODAL_PATH          = self::TEMPLATE_PATH.'modal/';
+    public const MAIN_MODAL          = self::MODAL_PATH.'modal.tpl';
+    public const SPELL_FILTER_MODAL  = self::MODAL_PATH.'spellFilter.tpl';
+
 }

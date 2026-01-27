@@ -92,6 +92,10 @@ class Html
     public static function getIcon(string $icon, string $prefix='solid', array $extraAttributes=[]): string
     {
         $strClass = 'fa-'.$prefix.' fa-'.$icon;
+        if (isset($extraAttributes[Constant::CST_CLASS])) {
+            $strClass .= ' '.$extraAttributes[Constant::CST_CLASS];
+            unset($extraAttributes[Constant::CST_CLASS]);
+        }
         $attributes = array_merge(
             [Constant::CST_CLASS=>$strClass],
             $extraAttributes

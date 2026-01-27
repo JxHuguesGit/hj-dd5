@@ -3,6 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Icon;
 use src\Presenter\ViewModel\SpellRow;
 use src\Utils\Table;
 use src\Utils\Html;
@@ -18,14 +19,13 @@ class SpellTableBuilder extends AbstractTableBuilder
 
         $headers = [
             [Constant::CST_LABEL=>Language::LG_SPELLS],
-            [Constant::CST_LABEL=>'Niveau'],
-//            [Constant::CST_LABEL=>'<div class="text-nowrap">Niveau <i class="fa-solid fa-filter modal-tooltip ajaxAction" data-trigger="click" data-action="openModal"></i></div>'],
-            [Constant::CST_LABEL=>'Ecole'],
-            [Constant::CST_LABEL=>'Classes'],
-            [Constant::CST_LABEL=>'TI', 'abbr'=>'Temps d\'incantation'],
-            [Constant::CST_LABEL=>'Portée'],
-            [Constant::CST_LABEL=>'Durée'],
-            [Constant::CST_LABEL=>'V,S,M', 'abbr'=>'Composantes'],
+            [Constant::CST_LABEL=>Language::LG_LEVEL, 'filter'=>true],
+            [Constant::CST_LABEL=>Language::LG_SCHOOL],
+            [Constant::CST_LABEL=>Language::LG_CLASSES],
+            [Constant::CST_LABEL=>'TI', 'abbr'=>Language::LG_INCTIME],
+            [Constant::CST_LABEL=>Language::LG_RANGE],
+            [Constant::CST_LABEL=>Language::LG_DURATION],
+            [Constant::CST_LABEL=>'V,S,M', 'abbr'=>Language::LG_COMPONENTS],
             /*
             [Constant::CST_LABEL=>'C', 'abbr'=>'Concentration'],
             [Constant::CST_LABEL=>'R', 'abbr'=>'Rituel']
@@ -33,9 +33,27 @@ class SpellTableBuilder extends AbstractTableBuilder
         ];
         foreach ($headers as $data) {
             if (isset($data['abbr'])) {
-                $strContent = '<abbr title="'.$data['abbr'].'">'.$data[Constant::CST_LABEL].'</abbr>';
+                $strContent = Html::getBalise('abbr', $data[Constant::CST_LABEL], [Constant::CST_TITLE=>$data['abbr']]);
             } else {
                 $strContent = $data[Constant::CST_LABEL];
+            }
+
+            if ($data['filter'] ?? false) {
+                $strContent = Html::getDiv(
+                    $strContent . ' '.Html::getIcon(
+                        Icon::IFITLER,
+                        Icon::SOLID,
+                        [
+                            Constant::CST_CLASS => 'modal-tooltip ajaxAction',
+                            Constant::CST_DATA  => [
+                                Constant::CST_TRIGGER => Constant::CST_CLICK,
+                                Constant::CST_ACTION  => Constant::CST_OPENMODAL,
+                                Constant::CST_TARGET  => 'spellFilter',
+                            ]
+                        ]
+                    ),
+                    [Constant::CST_CLASS => Bootstrap::CSS_TEXT_NOWRAP]
+                );
             }
             $table->addHeaderCell([Constant::CST_CONTENT => $strContent]);
         }

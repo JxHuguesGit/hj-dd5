@@ -28,7 +28,9 @@ class Language
     public const LG_SIZE_CATEGORY   = 'Catégorie de taille';
     public const LG_CA_LONG         = 'Classe d\'armure (CA)';
     public const LG_CA              = 'CA';
+    public const LG_CLASSES         = 'Classes';
     public const LG_SKILLS          = 'Compétences';
+    public const LG_COMPONENTS      = 'Composantes';
     public const LG_SKILLS_TITLE    = 'Les Compétences';
     public const LG_DAMAGES         = 'Dégâts';
     public const LG_DISADVANTAGE    = 'Désavantage';
@@ -44,6 +46,8 @@ class Language
     public const LG_CBT_STYLE_EPIC  = 'Don de faveur épique';
     public const LG_CBT_STYLE_EPICS = 'Faveurs épiques';
     public const LG_SPECIE          = 'Espèce';
+    public const LG_LEVEL           = 'Niveau';
+    public const LG_SCHOOL          = 'Ecole';
     public const LG_FORCE           = 'Force';
     public const LG_DEXTERITE       = 'Dextérité';
     public const LG_CONSTITUTION    = 'Constitution';
@@ -58,6 +62,9 @@ class Language
     public const LG_WEIGHT          = 'Poids';
     public const LG_PREQUISITE      = 'Pré-requis';
     public const LG_PRICE           = 'Prix';
+    public const LG_RANGE           = 'Portée';
+    public const LG_DURATION        = 'Durée';
+    public const LG_INCTIME         = 'Temps d\'incantation';
     public const LG_PROPERTIES      = 'Propriétés';
     public const LG_SPELLS          = 'Sorts';
     public const LG_CREATURE_TYPE   = 'Type de créature';
@@ -65,6 +72,7 @@ class Language
     public const LG_GEAR            = 'Matériel';
     public const LG_GEAR_TITLE      = 'Le Matériel';
     public const LG_DIVERS          = 'Divers';
+    public const LG_SPELLS_TITLE    = 'Les Sorts';
 
     public const LG_TOOL_DIVERS     = 'Outils divers';
     public const LG_TOOL_GAMES      = 'Boîte de jeux';

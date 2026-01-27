@@ -14,12 +14,12 @@ class PageList
         private TableBuilderInterface $tableBuilder
     ) {}
 
-    public function render(string $menuHtml, string $title, Collection $viewData): string
+    public function render(string $menuHtml, string $title, Collection $viewData, ?string $modalContent = null): string
     {
         // Page complète avec menu
         return $this->renderer->render(
             Template::MAIN_PAGE,
-            [$menuHtml, $this->renderAdmin($title, $viewData)]
+            [$menuHtml, $this->renderAdmin($title, $viewData), $modalContent]
         );
     }
 

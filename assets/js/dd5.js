@@ -29,9 +29,29 @@ function ajaxActionClick(obj, e) {
             loadCasteDetail(oneAction, obj.data('key'), obj.data('lang'));
         } else if (oneAction=='loadMoreSpells') {
             loadMoreSpells(oneAction);
+        } else if (oneAction=='openModal') {
+            openModal(obj.data('target'));
+            $('#spellFilter button.btn-primary').on('click', function() {
+                loadMoreSpells('loadMoreSpells');
+                closeModal('spellFilter');
+            });
         }
     }
     return false;
+}
+
+function openModal(id) {
+    $('#'+id).addClass('show').css('display', 'block');
+    $('#'+id+' + .modal-backdrop').addClass('show').removeClass('d-none');
+
+    $('button[data-bs-dismiss="modal"]').on('click', function() {
+        closeModal(id);
+    });
+}
+
+function closeModal(id) {
+    $('#'+id).removeClass('show').css('display', 'none');
+    $('#'+id+' + .modal-backdrop').removeClass('show').addClass('d-none');
 }
 
 function loadMoreSpells(ajaxAction) {

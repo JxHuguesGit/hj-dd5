@@ -35,6 +35,7 @@
 
 %2$s
 
+%3$s
 <!-- FOOTER -->
 <footer>
     <div class="container footer-inner">

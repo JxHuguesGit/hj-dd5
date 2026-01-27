@@ -12,6 +12,9 @@ class PublicBase
 
     public function getRender(string $urlTemplate, array $args=[]): string
     {
+        if (count($args)==2) {
+            $args[] = '';
+        }
         if (file_exists(PLUGIN_PATH.$urlTemplate)) {
             return vsprintf(file_get_contents(PLUGIN_PATH.$urlTemplate), $args);
         } else {

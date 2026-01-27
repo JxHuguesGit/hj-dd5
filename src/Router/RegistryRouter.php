@@ -3,6 +3,7 @@ namespace src\Router;
 
 use src\Constant\Constant;
 use src\Controller\Public\PublicBase;
+use src\Controller\Utilities;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
@@ -14,6 +15,7 @@ use src\Presenter\ListPresenter\OriginListPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
 use src\Presenter\ListPresenter\SpeciesListPresenter;
 use src\Presenter\ListPresenter\SpellListPresenter;
+use src\Presenter\Modal\SpellFilterModalPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\TableBuilder\OriginTableBuilder;
 use src\Presenter\TableBuilder\SkillTableBuilder;
@@ -92,7 +94,10 @@ class RegistryRouter
                             new TemplateRenderer(),
                             new SpellTableBuilder($readerFactory->spell())
                         ),
-                        new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS)
+                        new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS),
+                        new SpellFilterModalPresenter(
+                            new Utilities()
+                        )
                     ),
                     default    => new $controllerClass(),
                 };

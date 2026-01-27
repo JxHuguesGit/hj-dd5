@@ -48,7 +48,11 @@ class Constant
     public const CST_DATA       = 'data';
     public const CST_PARENT     = 'parent';
     public const CST_TARGET     = 'target';
+    public const CST_TRIGGER    = 'trigger';
+    public const CST_ACTION     = 'action';
+    public const CST_CLICK      = 'click';
     public const CST_VALUE      = 'value';
+    public const CST_OPENMODAL  = 'openModal';
     public const CST_LABEL      = 'label';
     public const CST_NAME       = 'name';
     public const CST_ID         = 'id';
