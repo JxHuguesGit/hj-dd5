@@ -6,6 +6,7 @@ use src\Constant\Template;
 use src\Controller\Compendium\ArmorCompendiumHandler;
 use src\Controller\Compendium\FeatCompendiumHandler;
 use src\Controller\Compendium\SkillCompendiumHandler;
+use src\Controller\Compendium\SpellCompendiumHandler;
 use src\Controller\Compendium\WeaponCompendiumHandler;
 
 class AdminCompendiumPage extends AdminPage
@@ -37,7 +38,7 @@ class AdminCompendiumPage extends AdminPage
                 $pageContent = RpgOrigin::getAdminContentPage($this->arrParams);
                break;
             case Constant::SPELLS :
-                $pageContent = RpgSpell::getAdminContentPage($this->arrParams);
+                $pageContent = (new SpellCompendiumHandler())->render();
                 $paddingTop = '';
                break;
             default :

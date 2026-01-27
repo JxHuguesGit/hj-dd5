@@ -21,8 +21,7 @@ class PublicSpells extends PublicBase
         private MenuPresenter $menuPresenter,
         private SpellFilterModalPresenter $filterModalPresenter,
     ) {
-        $result = $this->spellService->allSpells();
-        $this->spells = $result->getCollection();
+        $this->spells = ($this->spellService->allSpells())->collection;
         $this->title = Language::LG_SPELLS_TITLE;
     }
 
