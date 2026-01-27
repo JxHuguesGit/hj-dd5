@@ -20,8 +20,8 @@ class SpellTableBuilder extends AbstractTableBuilder
         $headers = [
             [Constant::CST_LABEL=>Language::LG_SPELLS],
             [Constant::CST_LABEL=>Language::LG_LEVEL, 'filter'=>true],
-            [Constant::CST_LABEL=>Language::LG_SCHOOL],
-            [Constant::CST_LABEL=>Language::LG_CLASSES],
+            [Constant::CST_LABEL=>Language::LG_SCHOOL, 'filter'=>true],
+            [Constant::CST_LABEL=>Language::LG_CLASSES, 'filter'=>true],
             [Constant::CST_LABEL=>'TI', 'abbr'=>Language::LG_INCTIME],
             [Constant::CST_LABEL=>Language::LG_RANGE],
             [Constant::CST_LABEL=>Language::LG_DURATION],

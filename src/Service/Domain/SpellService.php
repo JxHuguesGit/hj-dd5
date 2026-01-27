@@ -2,6 +2,7 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
+use src\Domain\Result\SpellResult;
 use src\Factory\SpellFactory;
 
 final class SpellService
@@ -10,7 +11,7 @@ final class SpellService
         private WpPostService $wpService,
     ) {}
 
-    public function allSpells(array $criteria = []): Collection
+    public function allSpells(array $criteria = []): SpellResult
     {
         $collection = new Collection();
 
@@ -36,6 +37,11 @@ final class SpellService
             $this->wpService->resetPostdata();
         }
 
-        return $collection;
+        return new SpellResult(
+            collection: $collection,
+            foundPosts: $query->found_posts,
+            maxNumPages: $query->max_num_pages,
+            currentPage: $args['paged'] ?? 1,
+        );
     }
 }

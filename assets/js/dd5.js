@@ -28,11 +28,13 @@ function ajaxActionClick(obj, e) {
         if (oneAction=='loadCasteDetail') {
             loadCasteDetail(oneAction, obj.data('key'), obj.data('lang'));
         } else if (oneAction=='loadMoreSpells') {
-            loadMoreSpells(oneAction);
+            const page = $('#spellTable tbody tr').length/10 + 1;
+            loadMoreSpells(page, 'append');
         } else if (oneAction=='openModal') {
             openModal(obj.data('target'));
-            $('#spellFilter button.btn-primary').on('click', function() {
-                loadMoreSpells('loadMoreSpells');
+            $('#spellFilter button.btn-primary').unbind().on('click', function() {
+                const page = $('#spellTable tbody tr').length/10;
+                loadMoreSpells(page, 'replace');
                 closeModal('spellFilter');
             });
         }
@@ -54,11 +56,17 @@ function closeModal(id) {
     $('#'+id+' + .modal-backdrop').removeClass('show').addClass('d-none');
 }
 
-function loadMoreSpells(ajaxAction) {
-    const page = $('#spellTable tbody tr').length/10 + 1;
-    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadMoreSpells', 'page': page};
+function loadMoreSpells(page, type) {
+    const data = {
+        'action': 'dealWithAjax',
+        'ajaxAction': 'loadMoreSpells',
+        'type': type,
+        'page': page,
+        'spellFilter': $('#formSpellFilter').serialize()
+    };
     const baseUrl = globalThis.location.origin;
     const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
+    
     $.post(
         ajaxUrl,
         data,
@@ -66,9 +74,21 @@ function loadMoreSpells(ajaxAction) {
             try {
                 let obj = JSON.parse(response.data);
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(obj.data, "text/html");
+                const doc = parser.parseFromString(obj.data.html, "text/html");
                 const tbodyContent = doc.querySelector("tbody").innerHTML;
-                $('#spellTable tbody').append(tbodyContent);
+                if (type=='append') {
+                    $('#spellTable tbody').append(tbodyContent);
+                } else {
+                    $('#spellTable tbody').html(tbodyContent);
+                }
+
+                const hasMore = obj.data.hasMore;
+                if (!hasMore) {
+                    $('div[data-action="loadMoreSpells"] i').hide();
+                } else {
+                    $('div[data-action="loadMoreSpells"] i').show();
+                }
+
             } catch (e) {
                 console.log("error: "+e);
                 console.log(response);
