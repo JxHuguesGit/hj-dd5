@@ -50,6 +50,6 @@ final class WeaponCompendiumHandler implements CompendiumHandlerInterface
             new WeaponTableBuilder()
         );
 
-        return $page->renderAdmin(Language::LG_WEAPONS_TITLE, $content);
+        return $page->renderAdmin('', $content);
     }
 }

@@ -5,6 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Template;
 use src\Controller\Compendium\ArmorCompendiumHandler;
 use src\Controller\Compendium\FeatCompendiumHandler;
+use src\Controller\Compendium\OriginCompendiumHandler;
 use src\Controller\Compendium\SkillCompendiumHandler;
 use src\Controller\Compendium\SpellCompendiumHandler;
 use src\Controller\Compendium\WeaponCompendiumHandler;
@@ -15,7 +16,7 @@ class AdminCompendiumPage extends AdminPage
     public function getAdminContentPage(string $content=''): string
     {
         $currentId = $this->getArrParams('id');
-        $paddingTop = 'padding-top:2rem;';
+        $paddingTop = 'padding-top:112px;';
 
         switch ($currentId) {
             case Constant::ARMORS :
@@ -35,11 +36,10 @@ class AdminCompendiumPage extends AdminPage
                 $pageContent = (new FeatCompendiumHandler())->render();
                break;
             case Constant::ORIGINS :
-                $pageContent = RpgOrigin::getAdminContentPage($this->arrParams);
+                $pageContent = (new OriginCompendiumHandler())->render();
                break;
             case Constant::SPELLS :
                 $pageContent = (new SpellCompendiumHandler())->render();
-                $paddingTop = '';
                break;
             default :
                 $pageContent = '';

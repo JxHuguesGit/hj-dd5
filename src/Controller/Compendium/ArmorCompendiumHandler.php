@@ -36,6 +36,6 @@ final class ArmorCompendiumHandler implements CompendiumHandlerInterface
             new ArmorTableBuilder()
         );
 
-        return $page->renderAdmin(Language::LG_ARMORS_TITLE, $content);
+        return $page->renderAdmin('', $content);
     }
 }

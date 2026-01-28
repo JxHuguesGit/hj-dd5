@@ -1,7 +1,10 @@
 <?php
 namespace src\Presenter;
 
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
 use src\Model\PageElement;
+use src\Utils\Html;
 
 class MenuPresenter
 {
@@ -30,31 +33,21 @@ class MenuPresenter
         // Tri par "order"
         usort($this->elements, fn(PageElement $a, PageElement $b) => $a->getOrder() <=> $b->getOrder());
 
-        $html = '<nav class="navbar navbar-expand-md navbar-light pb-0"><div class="container-xl"><ul class="navbar-nav">';
+        $html = '';
 
         foreach ($this->elements as $el) {
             if ($el->getSlug() !== 'home' && $el->getParentSlug() !== 'home') {
                 continue;
             }
-            
-            $activeClass = ($el->getSlug() === $this->currentSlug) ? ' active' : '';
-            
-            $html .= sprintf(
-                '<li class="nav-item%s">
-                    <a class="nav-link text-dark" href="%s">
-                        %s
-                        <span class="nav-link-title">%s</span>
-                    </a>
-                </li>',
-                $activeClass,
-                trim($el->getUrl(), '-'),
-                //$el->getIcon() ? '<i class="' . $el->getIcon() . '"></i>' : '',
-                '',
-                htmlspecialchars($el->getTitle())
-            );
+            $activeClass = ($el->getSlug() === $this->currentSlug) ? ' '.Constant::CST_ACTIVE : '';
+            $strSpan = Html::getSpan(htmlspecialchars($el->getTitle()), [Constant::CST_CLASS => Bootstrap::CSS_NAV_LINK_TITLE]);
+            $strLink = Html::getLink($strSpan, trim($el->getUrl(), '-'), implode(' ', [Bootstrap::CSS_NAV_LINK, Bootstrap::CSS_TEXT_DARK]));
+            $html .= Html::getLi($strLink, [Constant::CST_CLASS => Bootstrap::CSS_NAV_ITEM.$activeClass]);
         }
 
-        return $html.'</ul></div></nav>';
+        $strUl = Html::getBalise('ul', $html, [Constant::CST_CLASS => 'navbar-nav']);
+        $strDiv = Html::getDiv($strUl, [Constant::CST_CLASS => 'container-xl']);
+        return Html::getBalise('nav', $strDiv, [Constant::CST_CLASS => 'navbar navbar-expand-md navbar-light pb-0']);
     }
 
     /**

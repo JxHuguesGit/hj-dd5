@@ -54,6 +54,7 @@ class Router
         $handlers = [
             new OriginRouter(),
             new SpecieRouter(),
+            new SpellRouter(),
             new FeatRouter(),
             new ItemRouter(),
             new RegistryRouter(),

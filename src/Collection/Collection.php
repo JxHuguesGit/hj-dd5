@@ -164,6 +164,17 @@ class Collection implements \Iterator
         return $newCollection;
     }
 
+    public function findIndex(callable $callback): ?int
+    {
+        foreach ($this->items as $index => $item) {
+            if ($callback($item)) {
+                return $index;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * Trie les éléments de la collection.
      *

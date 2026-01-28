@@ -37,6 +37,6 @@ class SkillCompendiumHandler implements CompendiumHandlerInterface
             new TemplateRenderer(),
             new SkillTableBuilder()
         );
-        return $page->renderAdmin(Language::LG_SKILLS_TITLE, $presentContent);
+        return $page->renderAdmin('', $presentContent);
     }
 }

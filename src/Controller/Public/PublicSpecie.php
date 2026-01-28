@@ -24,11 +24,6 @@ class PublicSpecie extends PublicBase
         $this->species = $this->specieReader->speciesBySlug($this->slug);
         $this->title = $this->species->name;
     }
-    
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
 
     public function getContentPage(): string
     {

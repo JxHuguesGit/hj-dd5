@@ -2,7 +2,9 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
+use src\Constant\Constant;
 use src\Domain\Result\SpellResult;
+use src\Domain\Spell;
 use src\Factory\SpellFactory;
 
 final class SpellService
@@ -43,5 +45,23 @@ final class SpellService
             maxNumPages: $query->max_num_pages,
             currentPage: $args['paged'] ?? 1,
         );
+    }
+
+    public function spellBySlug(string $slug): Spell
+    {
+        $spellResult = $this->allSpells([Constant::CST_NAME=>$slug]);
+        return ($spellResult->collection)->first();
+    }
+
+    public function getPreviousAndNext(Spell $spell): array
+    {
+        $allSpells = $this->allSpells(['posts_per_page'=>-1]);
+        $idx = $allSpells->collection->findIndex(fn($post) => $post->slug === $spell->slug);
+        $idxPrev = $idx==0 ? $allSpells->collection->length() : $idx-1;
+        $idxNext = $idx==$allSpells->collection->length() ? 0 : $idx+1;
+
+        $prev = $allSpells->collection->slice($idxPrev, 1)->first();
+        $next = $allSpells->collection->slice($idxNext, 1)->first();
+        return [Constant::CST_PREV=>$prev, Constant::CST_NEXT=>$next];
     }
 }

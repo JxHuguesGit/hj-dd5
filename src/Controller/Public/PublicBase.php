@@ -3,7 +3,6 @@ namespace src\Controller\Public;
 
 use src\Exception\TemplateInvalid;
 use src\Model\PageElement;
-use src\Presenter\BreadcrumbPresenter;
 
 class PublicBase
 {
@@ -38,13 +37,6 @@ class PublicBase
 
     public function getPageElement(): PageElement
     { return $this->pageElement; }
-    
-    public function getBreadcrumb(): string
-    {
-        $page = $this->getPageElement();
 
-        $presenter = new BreadcrumbPresenter($page);
-        return $presenter->render();
-    }
 }
 

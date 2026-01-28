@@ -25,7 +25,7 @@ class SpellAjax
         ]);
 
         $result   = $spellService->allSpells($criteria->toWpQueryArgs());
-        $viewData = $spellListePresenter->present($result->getCollection());
+        $viewData = $spellListePresenter->present($result->collection);
         $objTable = $spellTableBuilder->build($viewData);
 
         return [

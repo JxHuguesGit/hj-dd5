@@ -46,6 +46,7 @@ final class Template
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
     public const NOT_FOUND_CARD      = self::CARD_PATH.'notFoundCard.tpl';
     public const SPELL_CARD          = self::CARD_PATH.'spellCard.tpl';
+    public const SPELL_DETAIL_CARD   = self::CARD_PATH.'spellDetailCard.tpl';
     public const FEAT_DETAIL_CARD    = self::CARD_PATH.'featDetailCard.tpl';
     public const ORIGIN_CARD         = self::CARD_PATH.'origineCard.tpl';
     public const ORIGIN_DETAIL_CARD  = self::CARD_PATH.'origineDetailCard.tpl';

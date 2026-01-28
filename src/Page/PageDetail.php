@@ -23,9 +23,9 @@ abstract class PageDetail
         // Navigation prev/next mutualisée
         $prevHtml = $this->renderNavLink($data[Constant::CST_PREV] ?? null, Constant::CST_PREV);
         $nextHtml = $this->renderNavLink($data[Constant::CST_NEXT] ?? null, Constant::CST_NEXT);
-        $detailCard = $this->renderer->render( $detailTemplate, array_merge($detailFields, [$prevHtml, $nextHtml]) );
-        $contentSection = $this->renderer->render( Template::DETAIL_PAGE, ['', $detailCard] );
-        return $this->renderer->render( Template::MAIN_PAGE, [$menuHtml, $contentSection] );
+        $detailCard = $this->renderer->render($detailTemplate, array_merge($detailFields, [$prevHtml, $nextHtml]));
+        $contentSection = $this->renderer->render(Template::DETAIL_PAGE, ['', $detailCard]);
+        return $this->renderer->render(Template::MAIN_PAGE, [$menuHtml, $contentSection, '']);
     }
 
     private function renderNavLink(

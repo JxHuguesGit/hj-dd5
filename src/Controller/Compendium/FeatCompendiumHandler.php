@@ -40,7 +40,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             new FeatTableBuilder()
         );
 
-        return $page->renderAdmin(Language::LG_FEATS_TITLE, $presentContent);
+        return $page->renderAdmin('', $presentContent);
     }
 }
 

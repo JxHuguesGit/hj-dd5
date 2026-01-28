@@ -26,6 +26,6 @@ class SpellCompendiumHandler implements CompendiumHandlerInterface
             new TemplateRenderer(),
             new SpellTableBuilder()
         );
-        return $page->renderAdmin(Language::LG_SPELLS_TITLE, $presentContent);
+        return $page->renderAdmin('', $presentContent);
     }
 }

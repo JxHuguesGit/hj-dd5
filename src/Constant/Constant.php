@@ -39,6 +39,7 @@ class Constant
     public const CST_EXTRA = '-extra';
     public const CST_ASC = 'ASC';
     public const CST_CLASS = 'class';
+    public const CST_ACTIVE = 'active';
     public const CST_CONTENT = 'content';
     public const CST_DESC       = 'DESC';
     public const CST_TYPE = 'type';
