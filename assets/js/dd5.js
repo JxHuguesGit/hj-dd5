@@ -83,10 +83,10 @@ function loadMoreSpells(page, type) {
                 }
 
                 const hasMore = obj.data.hasMore;
-                if (!hasMore) {
-                    $('div[data-action="loadMoreSpells"] i').hide();
-                } else {
+                if (hasMore) {
                     $('div[data-action="loadMoreSpells"] i').show();
+                } else {
+                    $('div[data-action="loadMoreSpells"] i').hide();
                 }
 
             } catch (e) {

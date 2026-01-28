@@ -25,7 +25,6 @@ class PageSpell extends PageDetail
 
         return $this->renderDetailTemporaire(
             $menuHtml,
-            $view,
             Template::SPELL_DETAIL_CARD,
             [
                 $spell->name,
@@ -50,7 +49,6 @@ class PageSpell extends PageDetail
 
     protected function renderDetailTemporaire(
         string $menuHtml,
-        SpellPageView $view,
         string $detailTemplate,
         array $detailFields
     ): string

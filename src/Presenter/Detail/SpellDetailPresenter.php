@@ -1,20 +1,12 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Constant;
 use src\Domain\Spell as DomainSpell;
 use src\Presenter\ViewModel\SpellDetail;
-use src\Presenter\ViewModel\SpellPageView;
-use src\Service\Domain\WpPostService;
-use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
 class SpellDetailPresenter
 {
-    public function __construct(
-        private WpPostService $wpPostService
-    ) {}
-
     public function present(
         DomainSpell $spell
     ): SpellDetail {
@@ -32,12 +24,8 @@ class SpellDetailPresenter
             composantes: $spell->composantes,
             composanteMaterielle: $spell->composanteMaterielle,
             description: $spell->content,
-            source: '',//TODO : $spell->source
+            // Source n'existe pas encore dans le moteur Wordpress
+            source: '',
         );
-    }
-
-    private function cleanContent(string $content): string
-    {
-        return preg_replace('/<p>|<\/p>/', '', $content);
     }
 }
