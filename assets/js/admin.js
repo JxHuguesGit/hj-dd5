@@ -4,7 +4,7 @@ $(document).ready(function(e) {
         const postId = $(this).data('postid');
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalFeatCard', 'postId': postId};
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+        const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
         
         $.post({
             url: ajaxUrl,
@@ -27,7 +27,7 @@ $(document).ready(function(e) {
         const uktag = $(this).data('uktag');
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalMonsterCard', 'uktag': uktag};
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+        const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
         
         $.post({
             url: ajaxUrl,
@@ -50,7 +50,7 @@ $(document).ready(function(e) {
         const id = $(this).data('uktag');
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalSpellCard', 'id': id};
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+        const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
         
         $.post({
             url: ajaxUrl,
@@ -75,7 +75,7 @@ $(document).ready(function(e) {
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'downloadFile', 'source': source, 'uktag': uktag}
         const filePath = globalThis.location.origin + '/wp-content/plugins/hj-dd5/assets/aidedd/'+uktag+'.html';
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-        const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+        const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
 
         $.post({
             url: ajaxUrl,
@@ -251,10 +251,10 @@ $(document).ready(function(e) {
             }
         }
 
-        if (!blnOk) {
-            showModal('danger', 'Formulaire invalide', '<p class="p-5 m-0 bg-light">'+msgError+'</p>');
-        } else {
+        if (blnOk) {
             $('form').submit();
+        } else {
+            showModal('danger', 'Formulaire invalide', '<p class="p-5 m-0 bg-light">'+msgError+'</p>');
         }
     });
     
@@ -291,7 +291,7 @@ function ajaxActionClick(obj, e) {
 function loadCreationStepSide(type, id) {
     const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadCreationStepSide', 'type' : type, 'id': id};
     const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-    const ajaxUrl = baseUrl.substr(0, baseUrl.length-4) + '-ajax.php';
+    const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
 
     $.post({
         url: ajaxUrl,
