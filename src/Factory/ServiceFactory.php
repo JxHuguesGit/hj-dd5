@@ -18,7 +18,6 @@ use src\Repository\SubSkillRepository;
 use src\Repository\SkillRepository;
 use src\Repository\ToolRepository;
 use src\Repository\WeaponRepository;
-use src\Service\Domain\FeatService;
 use src\Service\Domain\OriginService;
 use src\Service\Domain\SpecieService;
 use src\Service\Domain\SkillService;
@@ -120,11 +119,6 @@ final class ServiceFactory
             $abilityQueryService,
             $itemQueryService
         );
-    }
-
-    public function feat(): FeatService
-    {
-        return new FeatService();
     }
 
     public function specie(): SpecieService
