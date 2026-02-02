@@ -1,10 +1,18 @@
 <?php
 namespace src\Router;
 
+use src\Constant\Constant;
 use src\Constant\Routes;
 use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicSkill;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
+use src\Model\PageRegistry;
+use src\Page\PageSkill;
+use src\Presenter\Detail\SkillDetailPresenter;
+use src\Presenter\MenuPresenter;
+use src\Renderer\TemplateRenderer;
+use src\Service\Page\SkillPageService;
 
 class SkillRouter
 {
@@ -20,16 +28,16 @@ class SkillRouter
         if (!preg_match(Routes::SKILL_PATTERN, $path, $matches)) {
             return null;
         }
-        return null;
-        /*
+
         return new PublicSkill(
             $matches[1] ?? '',
-            $factory->skill(),
-            new SkillPageService($serviceFactory->skill(), $factory->skill()),
-            new SkillDetailPresenter(),
+            $this->factory->skill(),
+            new SkillPageService($this->serviceFactory->skill(), $this->factory->skill()),
+            new SkillDetailPresenter(
+                $this->factory->subSkill()
+            ),
             new PageSkill(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SKILLS),
         );
-        */
     }
 }

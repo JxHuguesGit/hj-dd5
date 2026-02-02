@@ -50,6 +50,7 @@ final class Template
     public const FEAT_DETAIL_CARD    = self::CARD_PATH.'featDetailCard.tpl';
     public const ORIGIN_CARD         = self::CARD_PATH.'origineCard.tpl';
     public const ORIGIN_DETAIL_CARD  = self::CARD_PATH.'origineDetailCard.tpl';
+    public const SKILL_DETAIL_CARD   = self::CARD_PATH.'skillDetailCard.tpl';
     public const SPECIE_DETAIL_CARD  = self::CARD_PATH.'specieDetailCard.tpl';
     public const SPECIES_POWER_CARD  = self::CARD_PATH.'speciesPowerCard.tpl';
 

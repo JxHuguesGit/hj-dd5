@@ -25,6 +25,7 @@ class Router
             new OriginRouter($this->readerFactory, $this->serviceFactory),
             new SpecieRouter($this->readerFactory, $this->serviceFactory),
             new SpellRouter($this->serviceFactory),
+            new SkillRouter($this->readerFactory, $this->serviceFactory),
             new FeatRouter($this->readerFactory, $this->serviceFactory),
             new ItemRouter($this->readerFactory, $this->serviceFactory),
             new RegistryRouter($this->readerFactory, $this->serviceFactory),

@@ -78,6 +78,7 @@ class Constant
     public const CST_ARMOR       = 'armor';
     public const CST_WEAPON      = 'weapon';
     public const CST_TOOLS       = 'tools';
+    public const CST_SUBSKILLS   = 'subSkills';
     public const CST_FEATNAME    = 'featname';
     public const CST_TOOLNAME    = 'toolname';
     public const CST_TOOLSLUG    = 'toolSlug';
