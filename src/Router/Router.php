@@ -1,23 +1,37 @@
 <?php
 namespace src\Router;
 
+use src\Collection\Collection;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicHome;
 use src\Controller\Public\PublicNotFound;
 use src\Factory\ReaderFactory;
-use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageNotFound;
 use src\Presenter\MenuPresenter;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 class Router
 {
-    public static function fromHome(string $path): ?PublicBase
+    private Collection $handlers;
+
+    public function __construct(
+        private ReaderFactory $readerFactory,
+        private ServiceFactory $serviceFactory
+    ) {
+        $this->handlers = new Collection([
+            new OriginRouter($this->readerFactory, $this->serviceFactory),
+            new SpecieRouter($this->readerFactory, $this->serviceFactory),
+            new SpellRouter($this->serviceFactory),
+            new FeatRouter($this->readerFactory, $this->serviceFactory),
+            new ItemRouter($this->readerFactory, $this->serviceFactory),
+            new RegistryRouter($this->readerFactory, $this->serviceFactory),
+        ]);
+    }
+
+    public function fromHome(string $path): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion de la page d'accueil ---
@@ -44,30 +58,18 @@ class Router
         return $path;
     }
 
-    public static function getController(): PublicBase
+    public function getController(): PublicBase
     {
-        $path = self::normalizePath(Session::getRequestUri());
-        $repositoryFactory = new RepositoryFactory(new QueryBuilder(), new QueryExecutor());
-        $readerFactory     = new ReaderFactory($repositoryFactory);
-        $serviceFactory    = new ServiceFactory(new QueryBuilder(), new QueryExecutor());
+        $path = $this->normalizePath(Session::getRequestUri());
 
-        $handlers = [
-            new OriginRouter(),
-            new SpecieRouter(),
-            new SpellRouter(),
-            new FeatRouter(),
-            new ItemRouter(),
-            new RegistryRouter(),
-        ];
-
-        foreach ($handlers as $handler) {
-            $controller = $handler->match($path, $readerFactory, $serviceFactory);
+        foreach ($this->handlers as $handler) {
+            $controller = $handler->match($path);
             if ($controller !== null) {
                 return $controller;
             }
         }
 
-        return static::fromHome($path)
+        return $this->fromHome($path)
             ?? new PublicNotFound(
                 new PageNotFound(
                     new TemplateRenderer()

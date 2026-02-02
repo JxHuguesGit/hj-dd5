@@ -15,4 +15,13 @@ final class Routes
     public const SPECIES_PREFIX = '/species';
     public const SPELL_PREFIX   = '/spell-';
     public const SPELLS_PREFIX  = '/spells';
+
+    public const FEAT_PATTERN   = '#^feat-(.+)$#';
+    public const FEATS_PATTERN  = '#^feats-(.+)$#';
+    public const ITEM_PATTERN   = '#^item-(.+)$#';
+    public const ITEMS_PATTERN  = '#^items-(.+)$#';
+    public const ORIGIN_PATTERN = '#^origine-(.+)$#';
+    public const SKILL_PATTERN  = '#^skill-(.+)$#';
+    public const SPECIE_PATTERN = '#^specie-(.+)$#';
+    public const SPELL_PATTERN  = '#^spell-(.+)$#';
 }

@@ -1,25 +1,23 @@
 <?php
 namespace src\Router;
 
-use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Controller\Public\PublicBase;
-use src\Controller\Public\PublicSkill;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
-use src\Presenter\MenuPresenter;
-use src\Renderer\TemplateRenderer;
-use src\Model\PageRegistry;
-use src\Page\PageSkill;
-use src\Presenter\Detail\SkillDetailPresenter;
-use src\Service\SkillPageService;
 
 class SkillRouter
 {
-    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
+    public function __construct(
+        private ReaderFactory $factory,
+        private ServiceFactory $serviceFactory
+    ) {}
+
+    public function match(string $path): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une compétence ---
-        if (!preg_match('#^skill-(.+)$#', $path, $matches)) {
+        if (!preg_match(Routes::SKILL_PATTERN, $path, $matches)) {
             return null;
         }
         return null;

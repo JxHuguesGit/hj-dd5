@@ -25,7 +25,12 @@ use src\Service\Domain\SpellService;
 
 class RegistryRouter
 {
-    public function match(string $path, ReaderFactory $readerFactory, ServiceFactory $serviceFactory): ?PublicBase
+    public function __construct(
+        private ReaderFactory $readerFactory,
+        private ServiceFactory $serviceFactory
+    ) {}
+    
+    public function match(string $path): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Partie statique via PageRegistry ---
@@ -37,21 +42,21 @@ class RegistryRouter
                         
             if (class_exists($controllerClass)) {
                 return match($pageElement->getSlug()) {
-                    'origines' => new $controllerClass(
-                        $readerFactory->origin(),
+                    Constant::ORIGINES => new $controllerClass(
+                        $this->readerFactory->origin(),
                         new OriginListPresenter(
-                            $serviceFactory->origin()
+                            $this->serviceFactory->origin()
                         ),
                         new PageList(
                             new TemplateRenderer(),
-                            new OriginTableBuilder($serviceFactory->origin(), $readerFactory->origin())
+                            new OriginTableBuilder($this->serviceFactory->origin(), $this->readerFactory->origin())
                         ),
-                        new MenuPresenter(PageRegistry::getInstance()->all(), 'origines')
+                        new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ORIGINES)
                     ),
                     Constant::SPECIES => new $controllerClass(
-                        $readerFactory->species(),
+                        $this->readerFactory->species(),
                         new SpeciesListPresenter(
-                            $serviceFactory->wordPress()
+                            $this->serviceFactory->wordPress()
                         ),
                         new PageList(
                             new TemplateRenderer(),
@@ -60,39 +65,39 @@ class RegistryRouter
                         new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES)
                     ),
                     Constant::SKILLS => new $controllerClass(
-                        $readerFactory->skill(),
+                        $this->readerFactory->skill(),
                         new SkillListPresenter(
-                            $serviceFactory->skill()
+                            $this->serviceFactory->skill()
                         ),
                         new PageList(
                             new TemplateRenderer(),
-                            new SkillTableBuilder($serviceFactory->skill())
+                            new SkillTableBuilder($this->serviceFactory->skill())
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SKILLS)
                     ),
                     Constant::FEATS => new $controllerClass(
-                        $readerFactory->feat(),
+                        $this->readerFactory->feat(),
                         new FeatListPresenter(
-                            $readerFactory->origin(),
-                            $serviceFactory->wordPress()
+                            $this->readerFactory->origin(),
+                            $this->serviceFactory->wordPress()
                         ),
                         new PageList(
                             new TemplateRenderer(),
-                            new FeatTableBuilder($readerFactory->origin())
+                            new FeatTableBuilder($this->readerFactory->origin())
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
                     ),
                     Constant::SPELLS => new $controllerClass(
                         new SpellService(
-                            $serviceFactory->wordPress()
+                            $this->serviceFactory->wordPress()
                         ),
                         new SpellListPresenter(
-                            $readerFactory->spell(),
-                            $serviceFactory->wordPress()
+                            $this->readerFactory->spell(),
+                            $this->serviceFactory->wordPress()
                         ),
                         new PageList(
                             new TemplateRenderer(),
-                            new SpellTableBuilder($readerFactory->spell())
+                            new SpellTableBuilder($this->readerFactory->spell())
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS),
                         new SpellFilterModalPresenter(

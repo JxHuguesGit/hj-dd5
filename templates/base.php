@@ -1,7 +1,12 @@
 <?php
 
 use src\Constant\Template;
+use src\Factory\ReaderFactory;
+use src\Factory\RepositoryFactory;
+use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
 use src\Router\Router;
 
 if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
@@ -21,7 +26,15 @@ class DD5Base
 
         $msgProcessError = '';
         $errorPanel = '';
-        $controller = Router::getController();
+        $queryBuilder = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $router = new Router(
+            new ReaderFactory(
+                new RepositoryFactory($queryBuilder, $queryExecutor)
+            ),
+            new ServiceFactory($queryBuilder, $queryExecutor)
+        );
+        $controller = $router->getController();
 
         if (DD5_URL=='http://localhost/') {
             $srcCssFilesTpl = $controller->getRender(Template::LOCAL_CSS, [PLUGINS_DD5]);

@@ -2,7 +2,12 @@
 namespace src\Router;
 
 use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicItemArmor;
+use src\Controller\Public\PublicItemGear;
+use src\Controller\Public\PublicItemTool;
+use src\Controller\Public\PublicItemWeapon;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
@@ -20,62 +25,75 @@ use src\Presenter\TableBuilder\ToolTableBuilder;
 
 class ItemRouter
 {
-    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
+    private MenuPresenter $menu;
+    private TemplateRenderer $renderer;
+
+    public function __construct(
+        private ReaderFactory $factory,
+        private ServiceFactory $serviceFactory
+    ) {}
+    
+    public function match(string $path): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de matériel ---
-        if (!preg_match('#^items-(.+)$#', $path, $matches)) {
+        if (!preg_match(Routes::ITEMS_PATTERN, $path, $matches)) {
             return null;
         }
 
         $typeSlug = $matches[1];
-        $controllerClass = 'src\\Controller\\Public\\PublicItem' . ucfirst($typeSlug);
-        if (class_exists($controllerClass)) {
-            return match($typeSlug) {
-                Constant::CST_ARMOR => new $controllerClass(
-                    $factory->armor(),
-                    new ArmorListPresenter(),
-                    new PageList(
-                        new TemplateRenderer(),
-                        new ArmorTableBuilder()
-                    ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
-                ),
-                Constant::CST_TOOL => new $controllerClass(
-                    $factory->tool(),
-                    new ToolListPresenter(),
-                    new PageList(
-                        new TemplateRenderer(),
-                        new ToolTableBuilder()
-                    ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
-                ),
-                Constant::CST_WEAPON => new $controllerClass(
-                    $factory->weapon(),
-                    new WeaponListPresenter(
-                        $serviceFactory->wordPress(),
-                        $serviceFactory->weaponProperties(),
-                        $factory->weaponPropertyValue()
-                    ),
-                    new PageList(
-                        new TemplateRenderer(),
-                        new WeaponTableBuilder()
-                    ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
-                ),
-                Constant::CST_GEAR => new $controllerClass(
-                    $factory->item(),
-                    new GearListPresenter(),
-                    new PageList(
-                        new TemplateRenderer(),
-                        new ItemTableBuilder()
-                    ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS)
-                ),
-                default    => new $controllerClass(),
-            };
-        } else {
-            return null;
-        }
+        $this->menu = new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS);
+        $this->renderer = new TemplateRenderer();
+
+        return match($typeSlug) {
+            Constant::CST_ARMOR  => $this->buildArmorController(),
+            Constant::CST_TOOL   => $this->buildToolController(),
+            Constant::CST_WEAPON => $this->buildWeaponController(),
+            Constant::CST_GEAR   => $this->buildGearController(),
+            default              => null,
+        };
+    }
+
+    private function buildArmorController(): PublicBase
+    {
+        return new PublicItemArmor(
+            $this->factory->armor(),
+            new ArmorListPresenter(),
+            new PageList($this->renderer, new ArmorTableBuilder()),
+            $this->menu
+        );
+    }
+
+    private function buildToolController(): PublicBase
+    {
+        return new PublicItemTool(
+            $this->factory->tool(),
+            new ToolListPresenter(),
+            new PageList($this->renderer, new ToolTableBuilder()),
+            $this->menu
+        );
+    }
+
+    private function buildWeaponController(): PublicBase
+    {
+        return new PublicItemWeapon(
+            $this->factory->weapon(),
+            new WeaponListPresenter(
+                $this->serviceFactory->wordPress(),
+                $this->serviceFactory->weaponProperties(),
+                $this->factory->weaponPropertyValue()
+            ),
+            new PageList($this->renderer, new WeaponTableBuilder()),
+            $this->menu
+        );
+    }
+
+    private function buildGearController(): PublicBase {
+        return new PublicItemGear(
+            $this->factory->item(),
+            new GearListPresenter(),
+            new PageList($this->renderer, new ItemTableBuilder()),
+            $this->menu
+        );
     }
 }

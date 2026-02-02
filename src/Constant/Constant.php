@@ -25,6 +25,7 @@ class Constant
     public const FEATS    = 'feats';
     public const MONSTERS = 'monsters';
     public const ORIGIN   = 'origin';
+    public const ORIGINES = 'origines';
     public const ORIGINS  = 'origins';
     public const SPELLS   = 'spells';
     public const LIGHT    = 'light';

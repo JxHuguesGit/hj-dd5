@@ -1,6 +1,8 @@
 <?php
 namespace src\Router;
 
+use src\Constant\Constant;
+use src\Constant\Routes;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicFeat;
 use src\Factory\ReaderFactory;
@@ -17,43 +19,52 @@ use src\Service\Page\FeatPageService;
 
 class FeatRouter
 {
-    public function match(string $path, ReaderFactory $factory, ServiceFactory $serviceFactory): ?PublicBase
+    public function __construct(
+        private ReaderFactory $factory,
+        private ServiceFactory $serviceFactory
+    ) {}
+    
+    public function match(string $path): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de dons ---
-        if (preg_match('#^feats-(.+)$#', $path, $matches)) {
-            $typeSlug = ucfirst($matches[1]);
-            $controllerClass = 'src\\Controller\\Public\\PublicFeat' . ucfirst($typeSlug);
+        if ($slug = $this->matchPattern($path, Routes::FEATS_PATTERN)) {
+            $controllerClass = 'src\\Controller\\Public\\PublicFeat' . ucfirst($slug);
             if (class_exists($controllerClass)) {
                 return new $controllerClass(
-                    $factory->feat(),
+                    $this->factory->feat(),
                     new FeatListPresenter(
-                        $factory->origin(),
-                        $serviceFactory->wordPress()
+                        $this->factory->origin(),
+                        $this->serviceFactory->wordPress()
                     ),
                     new PageList(
                         new TemplateRenderer(),
-                        new FeatTableBuilder($factory->origin())
+                        new FeatTableBuilder($this->factory->origin())
                     ),
-                    new MenuPresenter(PageRegistry::getInstance()->all(), 'feats')
+                    new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
                 );
             }
         }
 
         // --- Gestion d'un don individuel ---
-        if (preg_match('#^feat-(.+)$#', $path, $matches)) {
+        if ($slug = $this->matchPattern($path, Routes::FEAT_PATTERN)) {
             return new PublicFeat(
-                $matches[1],
-                $factory->feat(),
-                new FeatPageService($factory->feat(), $serviceFactory->feat()),
+                $slug,
+                $this->factory->feat(),
+                new FeatPageService($this->factory->feat()),
                 new FeatDetailPresenter(
-                    $serviceFactory->wordPress()
+                    $this->serviceFactory->wordPress()
                 ),
                 new PageFeat(new TemplateRenderer()),
-                new MenuPresenter(PageRegistry::getInstance()->all(), 'feats')
+                new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
             );
         }
 
         return null;
+    }
+
+    private function matchPattern(string $path, string $pattern): ?string
+    {
+        return preg_match($pattern, $path, $matches) ? $matches[1] : null;
     }
 }
