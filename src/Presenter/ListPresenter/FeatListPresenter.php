@@ -31,7 +31,7 @@ final class FeatListPresenter
         $types = self::getFeatTypes();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $collection->addItem(new FeatGroup(
+            $collection->add(new FeatGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 extraPrerequis: $types[$typeId][Constant::CST_EXTRA_PREREQUIS] ?? '',

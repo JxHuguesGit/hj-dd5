@@ -125,7 +125,7 @@ class AdminCharacterCreationPage extends AdminPage
         $objDaoRHF = new RepositoryRpgHerosFeat($queryBuilder, $queryExecutor);
         $objsHeroFeat = $objDaoRHF->findBy([Field::HEROSID=>$rpgHero->getField(Field::ID)]);
         $objsHeroFeat->rewind();
-        switch ($objsHeroFeat->length()) {
+        switch ($objsHeroFeat->count()) {
             case 1 :
                 $objHeroFeat = $objsHeroFeat->current();
                 $checkedFeatId = $objHeroFeat->getField(Field::FEATID);

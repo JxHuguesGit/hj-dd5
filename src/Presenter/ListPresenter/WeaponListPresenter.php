@@ -35,7 +35,7 @@ final class WeaponListPresenter
         $types = self::getWeaponTypes();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $collection->addItem(new WeaponGroup(
+            $collection->add(new WeaponGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows

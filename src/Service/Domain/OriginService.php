@@ -66,7 +66,7 @@ final class OriginService
             $skillId = $originSkill->skillId;
             $skill = $this->skillReader->skillById($skillId);
             $this->skillCache[$skillId] ??= $skill;
-            $collection->addItem($this->skillCache[$skillId]);
+            $collection->add($this->skillCache[$skillId]);
         }
         return $collection;
     }
@@ -82,7 +82,7 @@ final class OriginService
             $abilityId = $originAbility->abilityId;
             $ability = $this->abilityReader->abilityById($abilityId);
             $this->abilityCache[$abilityId] ??= $ability;
-            $collection->addItem($this->abilityCache[$abilityId]);
+            $collection->add($this->abilityCache[$abilityId]);
         }
         return $collection;
     }
@@ -100,7 +100,7 @@ final class OriginService
             $this->itemCache[$itemId] ??= $item;
             if ($item!==null) {
                 for ($i=0; $i<$originItem->quantity; $i++) {
-                    $collection->addItem($this->itemCache[$itemId]);
+                    $collection->add($this->itemCache[$itemId]);
                 }
             }
         }

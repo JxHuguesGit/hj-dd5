@@ -23,7 +23,7 @@ final class ToolListPresenter
         $types = self::getToolTypes();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $collection->addItem(new ToolGroup(
+            $collection->add(new ToolGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows

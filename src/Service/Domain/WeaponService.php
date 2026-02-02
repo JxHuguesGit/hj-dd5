@@ -30,7 +30,7 @@ final class WeaponService
             $wpValue = $this->weaponPropertyValueReader->weaponPropertyValueById($wpValueId);
             if ($wpValue!==null) {
                 $this->wpnPropValueCache[$wpValueId] ??= $wpValue;
-                $collection->addItem($this->wpnPropValueCache[$wpValueId]);
+                $collection->add($this->wpnPropValueCache[$wpValueId]);
             }
         }
         return $collection;

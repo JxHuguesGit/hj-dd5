@@ -38,7 +38,7 @@ class Paginate
         // On récupère la liste des objets de la pagination.
         // On défini le nombre d'éléments et le nombre de pages
         $this->objs = $arrData[Constant::PAGE_OBJS] ?? new Collection();
-        $this->nbElements = $this->objs->length();
+        $this->nbElements = $this->objs->count();
         $this->nbPages = ceil($this->nbElements/$this->nbPerPage);
         $curPage = $arrData[Constant::CST_CURPAGE] ?? 1;
         $this->curPage = max(1, min($curPage, $this->nbPages));

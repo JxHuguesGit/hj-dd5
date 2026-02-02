@@ -1,264 +1,131 @@
 <?php
 namespace src\Collection;
 
-use src\Domain\Entity as DomainEntity;
-use src\Entity\Entity;
 use src\Exception\KeyAlreadyUse;
 use src\Exception\KeyInvalid;
 
-class Collection implements \Iterator
+class Collection implements \IteratorAggregate, \Countable
 {
-    private array $items = [];
-    private int $indexIterator = -1;
+    public function __construct(
+        private array $items=[]
+    ) {}
 
-    /**
-     * Ajoute un objet à la collection.
-     *
-     * @param $obj L'objet à ajouter.
-     * @param string|null $key La clé optionnelle. Si aucune clé n'est fournie, un hash unique de l'objet est utilisé.
-     * @return self
-     * @throws KeyAlreadyUse Si la clé existe déjà.
-     */
-    public function addItem($obj, ?string $key = null): self
+    public function add($obj, ?string $key = null): self
     {
         if ($key === null) {
-            ++$this->indexIterator;
-            $key = $this->indexIterator;
-        }
-
-        // Si la clé existe déjà, une exception est levée
-        if (isset($this->items[$key])) {
+            $this->items[] = $obj;
+        } elseif (isset($this->items[$key])) {
             throw new KeyAlreadyUse("La clé '$key' est déjà utilisée.");
+        } else {
+            $this->items[$key] = $obj;
         }
-
-        $this->items[$key] = $obj;
-
         return $this;
     }
 
-    /**
-     * Supprime un objet de la collection.
-     *
-     * @param int $key L'index de l'objet à supprimer.
-     * @throws KeyInvalid Si l'objet n'est pas trouvé dans la collection.
-     */
-    public function deleteItem(int $key): void
-    {
-        if (isset($this->items[$key])) {
-            unset($this->items[$key]);
-        } else {
-            throw new KeyInvalid("L'objet avec la clé '$key' est invalide.");
+    public function remove(string|int $key): void {
+        if (!isset($this->items[$key])) {
+            throw new KeyInvalid("Clé '$key' invalide.");
         }
+        unset($this->items[$key]);
     }
 
-    /**
-     * Vérifie si un objet existe dans la collection.
-     *
-     * @param int $key L'index de l'objet à vérifier.
-     * @return bool Vrai si l'objet existe, faux sinon.
-     */
-    public function hasItem(int $key): bool
+    public function has(string|int $key): bool
     {
         return isset($this->items[$key]);
     }
 
-    /**
-     * Retourne toutes les clés de la collection.
-     *
-     * @return array Les clés de la collection.
-     */
-    public function keys(): array
+    public function getIterator(): \Traversable
     {
-        return array_keys($this->items);
+        return new \ArrayIterator($this->items);
     }
 
-    /**
-     * Retourne le nombre d'éléments dans la collection.
-     *
-     * @return int Le nombre d'éléments.
-     */
-    public function length(): int
+    public function count(): int
     {
         return count($this->items);
     }
     
     public function isEmpty(): bool
     {
-        return $this->length()==0;
+        return $this->count()==0;
     }
 
-    /**
-     * Retourne une nouvelle collection contenant une portion de la collection initiale.
-     *
-     * @param int $offset L'index de départ.
-     * @param int $length Le nombre d'éléments à extraire.
-     * @return Collection La nouvelle collection contenant les éléments extraits.
-     */
-    public function slice(int $offset, int $length): Collection
+    public function keys(): array
     {
-        $slicedItems = array_slice($this->items, $offset, $length);
-        $newCollection = new self();
-
-        foreach ($slicedItems as $item) {
-            $newCollection->addItem($item);
-        }
-
-        return $newCollection;
-    }
-
-    /**
-     * Fusionne une autre collection avec la collection actuelle.
-     *
-     * @param Collection $collection La collection à fusionner.
-     * @return self
-     * @throws KeyAlreadyUse Si une clé existe déjà.
-     */
-    public function merge(Collection $collection): self
-    {
-        foreach ($collection->items as $key => $obj) {
-            // Si la clé existe déjà, une exception est levée
-            if (isset($this->items[$key])) {
-                throw new KeyAlreadyUse("La clé '$key' est déjà utilisée.");
-            }
-
-            $this->addItem($obj, $key);
-        }
-
-        return $this;
+        return array_keys($this->items);
     }
     
-    public function concat(Collection $collection, ): self
+    public function clear(): void
     {
-        foreach ($collection->items as $obj) {
-            $this->addItem($obj);
-        }
-
-        return $this;
+        $this->items = [];
     }
-    
-    /**
-     * Convertit la collection en un tableau.
-     *
-     * @return array Le tableau contenant tous les objets de la collection.
-     */
+
+    public function first(): mixed
+    {
+        return reset($this->items) ?: null;
+    }
+
     public function toArray(): array
     {
-        return array_map(fn($item) => get_object_vars($item), $this->items);
+        return $this->items;
     }
 
-    /**
-     * Filtre les éléments de la collection en fonction d'une fonction de rappel.
-     *
-     * @param callable $callback La fonction de rappel utilisée pour filtrer les éléments.
-     * @return Collection La nouvelle collection contenant les éléments filtrés.
-     */
-    public function filter(callable $callback): Collection
-    {
-        $filteredItems = array_filter($this->items, $callback);
-        $newCollection = new self();
+    // Helpers
 
-        foreach ($filteredItems as $item) {
-            $newCollection->addItem($item);
+    public function slice(int $offset, int $length): self
+    {
+        return new self(array_slice($this->items, $offset, $length, true));
+    }
+
+    public function filter(callable $callback): self
+    {
+        return new self(array_filter($this->items, $callback));
+    }
+
+    public function map(callable $callback): self
+    {
+        return new self(array_map($callback, $this->items));
+    }
+
+    public function sort(callable $callback): self
+    {
+        $items = $this->items;
+        uasort($items, $callback);
+        return new self($items);
+    }
+
+    public function merge(Collection $collection, bool $preserveKeys = true): self
+    {
+        foreach ($collection->items as $key => $obj) {
+            if ($preserveKeys) {
+                if (isset($this->items[$key])) {
+                    throw new KeyAlreadyUse("La clé '$key' est déjà utilisée.");
+                }
+                $this->items[$key] = $obj;
+            } else {
+                $this->items[] = $obj;
+            }
         }
-
-        return $newCollection;
+        return $this;
     }
 
-    public function findIndex(callable $callback): ?int
+    public function find(callable $callback): mixed
     {
-        foreach ($this->items as $index => $item) {
+        foreach ($this->items as $item) {
             if ($callback($item)) {
-                return $index;
+                return $item;
             }
         }
         return null;
     }
 
-
-    /**
-     * Trie les éléments de la collection.
-     *
-     * @param callable $callback La fonction de rappel utilisée pour comparer les éléments.
-     * @return self La collection triée.
-     *
-     * Exemple :
-     * $sortedCollection = $collection->sort(function($a, $b) {
-     *      return $a->getWeight() <=> $b->getWeight(); // Trie par poids
-     * });
-     */
-    public function sort(callable $callback): self
+    public function findKey(callable $callback): string|int|null
     {
-        usort($this->items, $callback);
-        return $this;
+        foreach ($this->items as $key => $item) {
+            if ($callback($item)) {
+                return $key;
+            }
+        }
+        return null;
     }
 
-    /**
-     * Réinitialise l'index de l'itérateur à 0.
-     */
-    public function rewind(): void
-    {
-        $this->indexIterator = 0;
-    }
-
-    /**
-     * Vérifie si l'index est valide.
-     *
-     * @return bool Vrai si l'index est valide, sinon faux.
-     */
-    public function valid(): bool
-    {
-        return isset($this->items[$this->indexIterator]);
-    }
-
-    /**
-     * Retourne l'élément courant de l'itérateur.
-     *
-     * @return mixed L'élément courant.
-     */
-    public function current(): mixed
-    {
-        return $this->items[$this->indexIterator];
-    }
-
-    /**
-     * Avance l'index de l'itérateur.
-     */
-    public function next(): void
-    {
-        ++$this->indexIterator;
-    }
-
-    /**
-     * Retourne l'index de l'itérateur.
-     *
-     * @return int L'index courant.
-     */
-    public function key(): int
-    {
-        return $this->indexIterator;
-    }
-
-    /**
-     * Vide la collection.
-     */
-    public function empty(): void
-    {
-        $this->items = [];
-        $this->indexIterator = 0;
-    }
-
-    public function first(): ?object
-    {
-        return reset($this->items) ?: null;
-    }
-
-    public function map(string $method): array
-    {
-        return array_map(fn($item) => $item->$method(), $this->items);
-    }
-
-    public function items(): array
-    {
-        return $this->items;
-    }
 }

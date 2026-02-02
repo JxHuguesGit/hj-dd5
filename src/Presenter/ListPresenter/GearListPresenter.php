@@ -13,7 +13,7 @@ final class GearListPresenter
     {
         $collection = new Collection();
         foreach ($gears as $gear) {
-            $collection->addItem($this->buildRow($gear));
+            $collection->add($this->buildRow($gear));
         }
         return $collection;
     }

@@ -35,7 +35,7 @@ class OriginDetailPresenter
                 Constant::CST_NAME => $viewData->tool->name,
                 Constant::CST_SLUG => $viewData->tool->getSlug(),
             ] : null,
-            Constant::CST_EQUIPMENT   => $this->formatItems($viewData->items),
+            Constant::CST_EQUIPMENT   => $this->formatItems($viewData->toArray),
 
             Constant::CST_PREV => $viewData->previous ? [
                 Constant::CST_NAME => $viewData->previous->name,
@@ -60,7 +60,7 @@ class OriginDetailPresenter
 
     private function formatAbilities(iterable $abilities): array
     {
-        return array_map(fn($a) => $a->name, $abilities->items());
+        return array_map(fn($a) => $a->name, $abilities->toArray());
     }
 
     private function cleanContent(string $content): string

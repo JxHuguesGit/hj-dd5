@@ -23,7 +23,7 @@ final class ArmorListPresenter
         $typesLabel = self::getTypesLabel();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $collection->addItem(new ArmorGroup(
+            $collection->add(new ArmorGroup(
                 label: $typesLabel[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $typesLabel[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows

@@ -16,7 +16,7 @@ final class SpeciesListPresenter
     {
         $collection = new Collection();
         foreach ($species as $specie) {
-            $collection->addItem($this->buildRow($specie));
+            $collection->add($this->buildRow($specie));
         }
         return $collection;
     }

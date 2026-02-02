@@ -26,7 +26,7 @@ final class SkillListPresenter
         $types = self::getSkillTypes();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
-            $collection->addItem(new SkillGroup(
+            $collection->add(new SkillGroup(
                 label: $types[$typeId][Constant::CST_LABEL] ?? '',
                 slug: $types[$typeId][Constant::CST_SLUG] ?? '',
                 rows: $rows
@@ -50,7 +50,7 @@ final class SkillListPresenter
                         $s->slug ? UrlGenerator::skill($s->slug) : '#',
                         Bootstrap::CSS_TEXT_DARK
                     ),
-                    $this->skillService->subSkills($skill)->items()
+                    $this->skillService->subSkills($skill)->toArray()
                 )
             )
         );

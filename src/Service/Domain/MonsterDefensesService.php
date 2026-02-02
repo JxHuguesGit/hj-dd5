@@ -30,7 +30,7 @@ class MonsterDefensesService
         if ($typeResistanceId === 'I') {
             $repoCond = new RepositoryRpgMonsterCondition($queryBuilder, $queryExecutor);
             $paramsCond = [Field::MONSTERID => $this->monsterId];
-            $collection->concat($repoCond->findBy($paramsCond));
+            $collection->merge($repoCond->findBy($paramsCond), false);
         }
 
         return $collection;

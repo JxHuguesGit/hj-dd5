@@ -71,13 +71,13 @@ class SkillStep extends AbstractStep
                 return $item->getField(Field::SKILLID) === $skillIdToFind;
             });
             
-            if ($filteredOrigin->length()>0) {
+            if (!$filteredOrigin->isEmpty()) {
                 $originSkillHtml .= $skill->getController()->getCheckboxForm(true, true);
             } else {
-                if ($filteredClasse->length()>0) {
-                    $classeSkillHtml .= $skill->getController()->getCheckboxForm($filtered->length()>0);
+                if (!$filteredClasse->isEmpty()) {
+                    $classeSkillHtml .= $skill->getController()->getCheckboxForm(!$filtered->empty());
                 }
-                $skillHtml .= $skill->getController()->getCheckboxForm($filtered->length()>0);
+                $skillHtml .= $skill->getController()->getCheckboxForm(!$filtered->isEmpty());
             }
         }
         // TODO : On doit décider si les skills associés à l'origine peuvent être modifiés.
@@ -95,7 +95,7 @@ class SkillStep extends AbstractStep
             if ($filteredOrigin) {
                 $originToolHtml .= $tool->getController()->getCheckboxForm(true, true);
             } else {
-                $toolHtml .= $tool->getController()->getCheckboxForm(false/*$filtered->length()>0*/);
+                $toolHtml .= $tool->getController()->getCheckboxForm(false);
             }
         }
         // On doit construire l'interface en s'appuyant sur ces deux listes.

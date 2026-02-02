@@ -12,7 +12,7 @@ final class SpellListPresenter
     {
         $collection = new Collection();
         foreach ($spells as $spell) {
-            $collection->addItem($this->buildRow($spell));
+            $collection->add($this->buildRow($spell));
         }
 
         return $collection;

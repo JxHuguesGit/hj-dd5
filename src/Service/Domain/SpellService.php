@@ -34,7 +34,7 @@ final class SpellService
                 $query->the_post();
                 $post = $this->wpService->getPost();
                 $rpgSpell = SpellFactory::fromWpPost($post);
-                $collection->addItem($rpgSpell);
+                $collection->add($rpgSpell);
             }
             $this->wpService->resetPostdata();
         }
@@ -56,9 +56,10 @@ final class SpellService
     public function getPreviousAndNext(Spell $spell): array
     {
         $allSpells = $this->allSpells(['posts_per_page'=>-1]);
-        $idx = $allSpells->collection->findIndex(fn($post) => $post->slug === $spell->slug);
-        $idxPrev = $idx==0 ? $allSpells->collection->length() : $idx-1;
-        $idxNext = $idx==$allSpells->collection->length() ? 0 : $idx+1;
+        $idx = $allSpells->collection->findKey(fn($post) => $post->slug === $spell->slug);
+
+        $idxPrev = $idx==0 ? $allSpells->collection->count() : $idx-1;
+        $idxNext = $idx==$allSpells->collection->count() ? 0 : $idx+1;
 
         $prev = $allSpells->collection->slice($idxPrev, 1)->first();
         $next = $allSpells->collection->slice($idxNext, 1)->first();

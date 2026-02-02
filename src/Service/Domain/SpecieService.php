@@ -30,7 +30,7 @@ final class SpecieService
             $powerId = $speciePower->powerId;
             $power = $this->powerReader->powerById($powerId);
             $this->powerCache[$powerId] ??= $power;
-            $collection->addItem($this->powerCache[$powerId]);
+            $collection->add($this->powerCache[$powerId]);
         }
         return $collection;
     }

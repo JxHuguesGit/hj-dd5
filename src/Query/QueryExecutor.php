@@ -26,7 +26,7 @@ class QueryExecutor
             $entity = method_exists($entityClass, 'factory')
                 ? $entityClass::factory($result)
                 : new $entityClass($result);
-            $collection->addItem($entity);
+            $collection->add($entity);
         }
 
         return $collection;
