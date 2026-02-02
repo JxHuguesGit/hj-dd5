@@ -27,6 +27,8 @@ class FeatDetailPresenter
             Constant::CST_DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
             Constant::CST_FEATTYPE => $this->formatFeatType($viewData),
 
+            Constant::ORIGINES => $this->formatOrigines($viewData),
+
             Constant::CST_PREV => $viewData->previous ? [
                 Constant::CST_SLUG => $viewData?->previous->getSlug(),
                 Constant::CST_NAME => $viewData?->previous->name,
@@ -38,6 +40,25 @@ class FeatDetailPresenter
             ] : null,
         ];
         
+    }
+
+    private function formatOrigines(FeatPageView $viewData): string
+    {
+        if ($viewData->origins === null) {
+            return '';
+        }
+        $html = '';
+        foreach ($viewData->origins as $slug => $value) {
+            $html .= Html::getDiv(
+                Html::getLink(
+                    $value,
+                    UrlGenerator::origin($slug),
+                    Bootstrap::CSS_TEXT_WHITE
+                ),
+                [Constant::CST_CLASS=>implode(' ', [Bootstrap::CSS_BADGE, Bootstrap::CSS_BG_DARK])]
+            ) . ' ';
+        }
+        return $html;
     }
 
     private function formatFeatType(FeatPageView $viewData): string

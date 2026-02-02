@@ -7,6 +7,7 @@ class FeatPageView
 {
     public function __construct(
         public DomainFeat $feat,
+        public ?array $origins = null,
         public ?DomainFeat $previous = null,
         public ?DomainFeat $next = null,
     ) {}

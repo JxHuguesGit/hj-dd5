@@ -51,7 +51,10 @@ class FeatRouter
             return new PublicFeat(
                 $slug,
                 $this->factory->feat(),
-                new FeatPageService($this->factory->feat()),
+                new FeatPageService(
+                    $this->factory->feat(),
+                    $this->factory->origin()
+                ),
                 new FeatDetailPresenter(
                     $this->serviceFactory->wordPress()
                 ),

@@ -23,6 +23,7 @@ class PageFeat extends PageDetail
                 $data[Constant::CST_TITLE] ?? '',
                 $data[Constant::CST_DESCRIPTION] ?? '',
                 $data[Constant::CST_FEATTYPE] ?? '-',
+                $data[Constant::ORIGINES] ?? '',
             ]
         );
     }

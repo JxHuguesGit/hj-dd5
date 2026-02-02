@@ -9,10 +9,14 @@
             <div class="col-12">
                    <p class="card-text">%3$s</p>
             </div>
+
+            <div class="col-12">
+                   <p class="card-text">%5$s</p>
+            </div>
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            %5$s
-			%6$s
+            %6$s
+			%7$s
         </div>
     </div>
