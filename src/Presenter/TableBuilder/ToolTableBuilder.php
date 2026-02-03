@@ -13,20 +13,21 @@ class ToolTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $groups, array $params = []): Table
     {
-        $table = $this->createTable(3, $params);
+        $table = $this->createTable(4, $params);
 
-        foreach ([Language::LG_TOOLS, Language::LG_WEIGHT, Language::LG_PRICE] as $label) {
+        foreach ([Language::LG_TOOLS, Language::LG_ORIGINS, Language::LG_WEIGHT, Language::LG_PRICE] as $label) {
             $table->addHeaderCell([Constant::CST_CONTENT => $label]);
         }
 
         foreach ($groups as $group) {
             /** @var ToolGroup $group */
-            $this->addGroupRow($table, $group->label, 3);
+            $this->addGroupRow($table, $group->label, 4);
 
             foreach ($group->rows as $row) {
                 /** @var ToolRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)])
+                    ->addBodyCell([Constant::CST_CONTENT => $row->originLabel])
                     ->addBodyCell([Constant::CST_CONTENT => $row->weight, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]])
                     ->addBodyCell([Constant::CST_CONTENT => $row->price, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]]);
             }

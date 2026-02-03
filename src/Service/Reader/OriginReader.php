@@ -7,6 +7,7 @@ use src\Constant\Field;
 use src\Domain\Criteria\OriginCriteria;
 use src\Domain\Feat as DomainFeat;
 use src\Domain\Origin as DomainOrigin;
+use src\Domain\Tool as DomainTool;
 use src\Repository\OriginRepositoryInterface;
 
 final class OriginReader
@@ -42,6 +43,13 @@ final class OriginReader
     {
         $criteria = new OriginCriteria();
         $criteria->featId = $feat->id;
+        return $this->originRepository->findAllWithCriteria($criteria);
+    }
+
+    public function originsByTool(DomainTool $tool): Collection
+    {
+        $criteria = new OriginCriteria();
+        $criteria->toolId = $tool->id;
         return $this->originRepository->findAllWithCriteria($criteria);
     }
 

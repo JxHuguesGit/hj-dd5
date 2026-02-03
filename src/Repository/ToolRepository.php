@@ -35,7 +35,7 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     ): Collection
     {
         $baseQuery = "
-            SELECT ".Field::PARENTID."
+            SELECT i.".Field::ID." as ".Field::ID.", ".Field::PARENTID."
                 , ".Field::NAME.", ".Field::SLUG.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
             FROM " . Table::TOOL . " t
             INNER JOIN " . Table::ITEM . " i ON i.id = t.id

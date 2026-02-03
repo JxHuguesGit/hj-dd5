@@ -68,7 +68,9 @@ class ItemRouter
     {
         return new PublicItemTool(
             $this->factory->tool(),
-            new ToolListPresenter(),
+            new ToolListPresenter(
+                $this->factory->origin()
+            ),
             new PageList($this->renderer, new ToolTableBuilder()),
             $this->menu
         );

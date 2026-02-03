@@ -2,16 +2,23 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Tool as DomainTool;
 use src\Presenter\ViewModel\ToolGroup;
 use src\Presenter\ViewModel\ToolRow;
+use src\Service\Reader\OriginReader;
+use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 
 final class ToolListPresenter
 {
+    public function __construct(
+        private OriginReader $originReader
+    ) {}
+
     public function present(iterable $tools): Collection
     {
         $grouped = [];
@@ -35,12 +42,29 @@ final class ToolListPresenter
 
     private function buildRow(DomainTool $tool): ToolRow
     {
+        $originLabel = $this->resolveToolDetails($tool);
+
         return new ToolRow(
             name: $tool->name,
             url: UrlGenerator::item($tool->slug),
+            originLabel: $originLabel,
             weight: Utils::getStrWeight($tool->weight),
             price: Utils::getStrPrice($tool->goldPrice)
         );
+    }
+
+    private function resolveToolDetails(DomainTool $tool): string
+    {
+        $origins = $this->originReader->originsByTool($tool);
+        if ($origins->isEmpty()) {
+            return '-';
+        }
+
+        $parts = [];
+        foreach ($origins as $origin) {
+            $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), Bootstrap::CSS_TEXT_DARK);
+        }
+        return implode(', ', $parts);
     }
 
     private static function getToolTypes(): array

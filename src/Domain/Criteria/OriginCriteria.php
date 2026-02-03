@@ -7,6 +7,7 @@ use src\Query\QueryBuilder;
 final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
 {
     public ?int $featId = null;
+    public ?int $toolId = null;
     public ?string $type = null;
     public ?string $slug = null;
     public ?string $name = null;
@@ -18,6 +19,9 @@ final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
         $filters = [];
         if ($this->featId!=null) {
             $filters[Field::FEATID] = $this->featId;
+        }
+        if ($this->toolId!=null) {
+            $filters[Field::TOOLID] = $this->toolId;
         }
         if ($this->slug!=null) {
             $filters[Field::SLUG] = $this->slug;
