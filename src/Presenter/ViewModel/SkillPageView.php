@@ -11,6 +11,7 @@ class SkillPageView
         public DomainSkill $skill,
         public Collection $subSkills,
         public Ability $ability,
+        public Collection $origins,
         public ?DomainSkill $previous = null,
         public ?DomainSkill $next = null,
     ) {}

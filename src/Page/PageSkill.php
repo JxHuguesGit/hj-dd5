@@ -22,6 +22,7 @@ class PageSkill extends PageDetail
                 $data[Constant::CST_TITLE] ?? '',
                 $data[Constant::CST_ABILITIES] ?? '',
                 $data[Constant::CST_DESCRIPTION] ?? '',
+                $data[Constant::ORIGINES] ?? [],
                 $data[Constant::CST_SUBSKILLS] ?? [],
             ]
         );

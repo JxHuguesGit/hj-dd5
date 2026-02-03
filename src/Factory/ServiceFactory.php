@@ -132,9 +132,12 @@ final class ServiceFactory
 
     public function skill(): SkillService
     {
+        $originSkillRepository  = new RepositoryOriginSkill($this->queryBuilder, $this->queryExecutor);
         $subSkillRepo  = new SubSkillRepository($this->queryBuilder, $this->queryExecutor);
+        $originRepo  = new OriginRepository($this->queryBuilder, $this->queryExecutor);
+        $originReader = new OriginReader($originRepo);
 
-        return new SkillService($subSkillRepo);
+        return new SkillService($originSkillRepository, $subSkillRepo, $originReader);
     }
 
     public function wordPress(): WpPostService

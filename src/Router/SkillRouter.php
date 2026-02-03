@@ -35,7 +35,8 @@ class SkillRouter
             new SkillPageService(
                 $this->serviceFactory->skill(),
                 $this->factory->skill(),
-                $this->factory->ability()
+                $this->factory->ability(),
+                $this->factory->origin()
             ),
             new SkillDetailPresenter(),
             new PageSkill(new TemplateRenderer()),

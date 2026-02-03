@@ -63,8 +63,8 @@ final class OriginReader
             ->first();
 
         return [
-            'prev' => $prev ?: null,
-            'next' => $next ?: null,
+            Constant::CST_PREV => $prev ?: null,
+            Constant::CST_NEXT => $next ?: null,
         ];
     }
 }

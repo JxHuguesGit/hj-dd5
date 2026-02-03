@@ -10,15 +10,19 @@
                 <div class="card-text">%3$s</div>
             </div>
 
+            <div class="col-12">
+                   <p class="card-text">%4$s</p>
+            </div>
+
             <hr>
 
             <div class="row g-3 abilities">
-                %4$s
+                %5$s
             </div>
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            %5$s
-			%6$s
+            %6$s
+			%7$s
         </div>
     </div>
