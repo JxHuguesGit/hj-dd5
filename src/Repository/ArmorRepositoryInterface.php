@@ -8,5 +8,4 @@ interface ArmorRepositoryInterface
 {
     public function find(int $id): ?DomainArmor;
     public function findAll(): Collection;
-    public function findByCategory(array $orderBy = []): Collection;
 }

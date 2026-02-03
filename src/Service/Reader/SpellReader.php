@@ -18,9 +18,4 @@ final class SpellReader
     {
         return $this->spellRepository->findAll($orderBy);
     }
-    
-    public function spellById(int $id): ?DomainSpell
-    {
-        return $this->spellRepository->find($id);
-    }
 }

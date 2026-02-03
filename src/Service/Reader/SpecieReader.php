@@ -7,6 +7,7 @@ use src\Constant\Field;
 use src\Domain\Criteria\SpeciesCriteria;
 use src\Domain\Specie as DomainSpecie;
 use src\Repository\SpeciesRepositoryInterface;
+use src\Utils\Navigation;
 
 final class SpecieReader
 {
@@ -19,18 +20,18 @@ final class SpecieReader
         return $this->speciesRepository->find($id);
     }
 
+    public function speciesBySlug(string $slug): ?DomainSpecie
+    {
+        $species = $this->speciesRepository->findBy([Field::SLUG=>$slug]);
+        return $species->first() ?? null;
+    }
+
     /**
      * @return Collection<DomainSpecie>
      */
     public function allSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         return $this->speciesRepository->findAll($order);
-    }
-
-    public function speciesBySlug(string $slug): ?DomainSpecie
-    {
-        $species = $this->speciesRepository->findBy([Field::SLUG=>$slug]);
-        return $species->first() ?? null;
     }
 
     /**
@@ -43,26 +44,16 @@ final class SpecieReader
 
     public function getPreviousAndNext(DomainSpecie $species): array
     {
-        // Critère pour l'origine précédente (nom < courant)
-        $prevCriteria = new SpeciesCriteria();
-        $prevCriteria->parentId = $species->parentId;
-        $prevCriteria->nameLt = $species->name;
-
-        $prev = $this->speciesRepository
-            ->findAllWithCriteria($prevCriteria, [Field::NAME => Constant::CST_DESC])
-            ->first();
-
-        $nextCriteria = new SpeciesCriteria();
-        $nextCriteria->parentId = $species->parentId;
-        $nextCriteria->nameGt = $species->name;
-
-        $next = $this->speciesRepository
-            ->findAllWithCriteria($nextCriteria, [Field::NAME => Constant::CST_ASC])
-            ->first();
-
-        return [
-            'prev' => $prev ?: null,
-            'next' => $next ?: null,
-        ];
+        return Navigation::getPrevNext(
+            function (string $operand, string $order) use ($species) {
+                $criteria = new SpeciesCriteria();
+                $criteria->parentId = $species->parentId;
+                $operand === '<'
+                    ? $criteria->nameLt = $species->name
+                    : $criteria->nameGt = $species->name
+                ;
+                return $this->speciesRepository->findAllWithCriteria($criteria, [Field::NAME => $order]);
+            }
+        );
     }
 }

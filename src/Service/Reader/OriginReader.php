@@ -9,6 +9,7 @@ use src\Domain\Feat as DomainFeat;
 use src\Domain\Origin as DomainOrigin;
 use src\Domain\Tool as DomainTool;
 use src\Repository\OriginRepositoryInterface;
+use src\Utils\Navigation;
 
 final class OriginReader
 {
@@ -55,24 +56,15 @@ final class OriginReader
 
     public function getPreviousAndNext(DomainOrigin $origin): array
     {
-        // Critère pour l'origine précédente (nom < courant)
-        $prevCriteria = new OriginCriteria();
-        $prevCriteria->nameLt = $origin->name;
-
-        $prev = $this->originRepository
-            ->findAllWithCriteria($prevCriteria, [Field::NAME => Constant::CST_DESC])
-            ->first();
-
-        $nextCriteria = new OriginCriteria();
-        $nextCriteria->nameGt = $origin->name;
-
-        $next = $this->originRepository
-            ->findAllWithCriteria($nextCriteria, [Field::NAME => Constant::CST_ASC])
-            ->first();
-
-        return [
-            Constant::CST_PREV => $prev ?: null,
-            Constant::CST_NEXT => $next ?: null,
-        ];
+        return Navigation::getPrevNext(
+            function (string $operand, string $order) use ($origin) {
+                $criteria = new OriginCriteria();
+                $operand === '<'
+                    ? $criteria->nameLt = $origin->name
+                    : $criteria->nameGt = $origin->name
+                ;
+                return $this->originRepository->findAllWithCriteria($criteria, [Field::NAME => $order]);
+            }
+        );
     }
 }

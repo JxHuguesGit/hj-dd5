@@ -5,12 +5,12 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Feat as DomainFeat;
-use src\Repository\FeatRepository;
+use src\Repository\FeatRepositoryInterface;
 
 final class FeatReader
 {
     public function __construct(
-        private FeatRepository $featRepository,
+        private FeatRepositoryInterface $featRepository,
     ) {}
 
     public function featById(int $id): ?DomainFeat

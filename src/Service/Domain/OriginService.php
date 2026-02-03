@@ -4,9 +4,11 @@ namespace src\Service\Domain;
 use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\Ability as DomainAbility;
+use src\Domain\Feat as DomainFeat;
 use src\Domain\Item as DomainItem;
 use src\Domain\Origin as DomainOrigin;
 use src\Domain\Skill as DomainSkill;
+use src\Domain\Tool as DomainTool;
 use src\Repository\FeatRepository;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginItem as RepositoryOriginItem;
@@ -36,8 +38,7 @@ final class OriginService
         private ItemReader $itemReader,
     ) {}
     
-    // TODO modifier object en Domain\RpgFeat quand il sera défini
-    public function getFeat(DomainOrigin $origin): ?object
+    public function getFeat(DomainOrigin $origin): ?DomainFeat
     {
         if ($origin->featId <= 0) {
             return null;
@@ -46,7 +47,7 @@ final class OriginService
         return $this->featRepository->find($origin->featId);
     }
 
-    public function getTool(DomainOrigin $origin): ?object
+    public function getTool(DomainOrigin $origin): ?DomainTool
     {
         if ($origin->toolId <= 0) {
             return null;

@@ -2,7 +2,6 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Armor as DomainArmor;
@@ -15,6 +14,11 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
     public function getEntityClass(): string
     {
         return DomainArmor::class;
+    }
+
+    public function find(int $id): DomainArmor
+    {
+        return parent::find($id) ?? new DomainArmor();
     }
 
     /**
@@ -30,8 +34,7 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
      * @return Collection<DomainArmor>
      */
     public function findAllWithItemAndType(
-        ArmorCriteria $criteria,
-        array $orderBy=['i.name'=>Constant::CST_ASC]
+        ArmorCriteria $criteria
     ): Collection
     {
         $baseQuery = "
@@ -60,7 +63,7 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
         $this->query = $this->queryBuilder->reset()
             ->setBaseQuery($baseQuery)
             ->where($filters)
-            ->orderBy($orderBy)
+            ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
@@ -68,20 +71,5 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
             $this->resolveEntityClass(),
             $this->queryBuilder->getParams()
         );
-    }
-
-    /**
-     * @return Collection<DomainArmor>
-     */
-    public function findByCategory(array $orderBy=[]): Collection
-    {
-        $criteria = new ArmorCriteria();
-        $criteria->type = Constant::CST_ARMOR;
-        return $this->findAllWithItemAndType($criteria, $orderBy);
-    }
-
-    public function find(int $id): DomainArmor
-    {
-        return parent::find($id) ?? new DomainArmor();
     }
 }

@@ -18,6 +18,11 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
         return DomainWeapon::class;
     }
 
+    public function find(int $id): DomainWeapon
+    {
+        return parent::find($id) ?? new DomainWeapon();
+    }
+
     /**
      * @return Collection<DomainWeapon>
      */
@@ -31,10 +36,11 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
      * @return Collection<DomainWeapon>
      */
     public function findAllWithItemAndType(
-        WeaponCriteria $criteria,
-        array $orderBy=['i.name'=>Constant::CST_ASC]
+        WeaponCriteria $criteria
     ): Collection
     {
+//                array $orderBy=['i.name'=>Constant::CST_ASC]
+
         $baseQuery = "
             SELECT a.id
                 , i.".Field::NAME." AS ".Field::NAME.", i.".Field::SLUG." AS ".Field::SLUG."
@@ -61,7 +67,7 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
         $this->query = $this->queryBuilder->reset()
             ->setBaseQuery($baseQuery)
             ->where($filters)
-            ->orderBy($orderBy)
+            ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
@@ -69,20 +75,5 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
             $this->resolveEntityClass(),
             $this->queryBuilder->getParams()
         );
-    }
-
-    /**
-     * @return Collection<DomainWeapon>
-     */
-    public function findByCategory(array $orderBy=[]): Collection
-    {
-        $criteria = new WeaponCriteria();
-        $criteria->type = Constant::CST_WEAPON;
-        return $this->findAllWithItemAndType($criteria, $orderBy);
-    }
-
-    public function find(int $id): DomainWeapon
-    {
-        return parent::find($id) ?? new DomainWeapon();
     }
 }

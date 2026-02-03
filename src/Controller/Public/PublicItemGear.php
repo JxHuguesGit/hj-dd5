@@ -14,12 +14,12 @@ final class PublicItemGear extends PublicBase
     private ?Collection $gears = null;
 
     public function __construct(
-        private ItemReader $toolQueryService,
+        private ItemReader $itemReader,
         private GearListPresenter $presenter,
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->gears = $this->toolQueryService->allGears();
+        $this->gears = $this->itemReader->allGears();
         $this->title = Language::LG_GEAR_TITLE;
     }
 
