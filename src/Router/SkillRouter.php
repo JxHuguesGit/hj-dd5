@@ -32,10 +32,12 @@ class SkillRouter
         return new PublicSkill(
             $matches[1] ?? '',
             $this->factory->skill(),
-            new SkillPageService($this->serviceFactory->skill(), $this->factory->skill()),
-            new SkillDetailPresenter(
-                $this->factory->subSkill()
+            new SkillPageService(
+                $this->serviceFactory->skill(),
+                $this->factory->skill(),
+                $this->factory->ability()
             ),
+            new SkillDetailPresenter(),
             new PageSkill(new TemplateRenderer()),
             new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SKILLS),
         );

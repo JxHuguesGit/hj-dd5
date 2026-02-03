@@ -30,7 +30,6 @@ class PublicSkill extends PublicBase
         $menu = $this->menuPresenter->render(Constant::SKILLS);
         $pageView = $this->pageService->build($this->skill);
         $viewData = $this->presenter->present($pageView);
-        $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }

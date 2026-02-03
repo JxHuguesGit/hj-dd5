@@ -1,12 +1,16 @@
 <?php
 namespace src\Presenter\ViewModel;
 
+use src\Collection\Collection;
+use src\Domain\Ability;
 use src\Domain\Skill as DomainSkill;
 
 class SkillPageView
 {
     public function __construct(
         public DomainSkill $skill,
+        public Collection $subSkills,
+        public Ability $ability,
         public ?DomainSkill $previous = null,
         public ?DomainSkill $next = null,
     ) {}

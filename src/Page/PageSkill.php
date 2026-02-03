@@ -20,11 +20,9 @@ class PageSkill extends PageDetail
             Template::SKILL_DETAIL_CARD,
             [
                 $data[Constant::CST_TITLE] ?? '',
+                $data[Constant::CST_ABILITIES] ?? '',
                 $data[Constant::CST_DESCRIPTION] ?? '',
-                $data[Constant::ORIGINES] ?? '',
                 $data[Constant::CST_SUBSKILLS] ?? [],
-                '5',
-                '6',
             ]
         );
     }
