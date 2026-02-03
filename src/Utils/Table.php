@@ -232,10 +232,8 @@ class Table
         }
         
         $oldId = -1;
-        $objs->rewind();
         $cpt = 1;
-        while ($objs->valid()) {
-            $obj = $objs->current();
+        foreach ($objs as $obj) {
             if ($cpt%2==0) {
                 $arrParams[Constant::CST_CLASS] = 'row-striped-even';
             } elseif (isset($arrParams[Constant::CST_CLASS])) {
@@ -245,7 +243,6 @@ class Table
             }
 
             $obj->getController()->addBodyRow($this, $arrParams, $oldId);
-            $objs->next();
             ++$cpt;
         }
         return $this;

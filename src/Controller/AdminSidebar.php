@@ -60,9 +60,7 @@ class AdminSidebar extends Utilities
         $queryExecutor = new QueryExecutor();
         $objDaoHeros = new RepositoryRpgHeros($queryBuilder, $queryExecutor);
         $rpgHeros = $objDaoHeros->findBy([Field::WPUSERID=>Session::getWpUser()->data->ID]);
-        $rpgHeros->rewind();
-        while ($rpgHeros->valid()) {
-            $rpgHero = $rpgHeros->current();
+        foreach ($rpgHeros as $rpgHero) {
             $id = $rpgHero->getId();
             $name = $rpgHero->getName();
             $parts = explode(' ', $name);
@@ -78,7 +76,6 @@ class AdminSidebar extends Utilities
                 '', $initiales,
             ];
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
-            $rpgHeros->next();
         }
         
         $strChildren .= '</ul>';
