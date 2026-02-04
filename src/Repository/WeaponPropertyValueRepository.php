@@ -5,6 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
+use src\Domain\Criteria\WeaponPropertyValueCriteria;
 use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
 
 class WeaponPropertyValueRepository extends Repository implements WeaponPropertyValueRepositoryInterface
@@ -19,6 +20,16 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
     public function allWeaponPropertyValues(): Collection
     {
         return new Collection();
+    }
+
+    /**
+     * @return Collection<DomainWeaponPropertyValue>
+     */
+    public function findAllWithCriteria(
+        WeaponPropertyValueCriteria $criteria
+    ): Collection
+    {
+        return $this->findAllByCriteria($criteria);
     }
 
     public function byWeaponId(int $weaponId): Collection

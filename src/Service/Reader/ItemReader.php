@@ -14,11 +14,17 @@ final class ItemReader
         private ItemRepositoryInterface $itemRepository
     ) {}
 
+    /**
+     * @return ?DomainItem
+     */
     public function itemById(int $id): ?DomainItem
     {
         return $this->itemRepository->find($id);
     }
 
+    /**
+     * @return Collection<DomainItem>
+     */
     public function allGears(): Collection
     {
         return $this->itemRepository->findAllWithItemAndType(new ItemCriteria());

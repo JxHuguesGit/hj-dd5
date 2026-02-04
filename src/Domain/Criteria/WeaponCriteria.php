@@ -3,8 +3,9 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Query\QueryBuilder;
 
-final class WeaponCriteria
+final class WeaponCriteria extends AbstractCriteria implements CriteriaInterface
 {
     public string $type = Constant::CST_WEAPON;
     public ?string $name = null;
@@ -15,4 +16,15 @@ final class WeaponCriteria
         Field::NAME       => Constant::CST_ASC,
     ];
 
+    public function apply(QueryBuilder $qb): void
+    {
+        $filters = [];
+        if ($this->type !== null) {
+            $filters[Field::TYPE] = $this->type;
+        }
+        if ($this->name !== null) {
+            $filters[Field::NAME] = $this->name;
+        }
+        $this->applyEquals($qb, $filters);
+    }
 }

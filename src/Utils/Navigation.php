@@ -7,8 +7,8 @@ final class Navigation
 {
     public static function getPrevNext(callable $queryBuilder): array
     {
-        $prev = $queryBuilder('<', Constant::CST_DESC)?->first();
-        $next = $queryBuilder('>', Constant::CST_ASC)?->first();
+        $prev = $queryBuilder('&lt;', Constant::CST_DESC)?->first();
+        $next = $queryBuilder('&gt;', Constant::CST_ASC)?->first();
 
         return [
             Constant::CST_PREV => $prev ?: null,

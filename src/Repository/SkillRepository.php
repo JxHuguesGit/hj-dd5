@@ -15,17 +15,22 @@ class SkillRepository extends Repository implements SkillRepositoryInterface
         return DomainSkill::class;
     }
 
+    /**
+     * @return DomainSkill
+     */
     public function find(int $id): DomainSkill
     {
         return parent::find($id) ?? new DomainSkill();
     }
 
+    /**
+     * @return Collection<DomainSkill>
+     */
     public function findAllWithCriteria(
-        SkillCriteria $criteria,
-        array $orderBy = []
+        SkillCriteria $criteria
     ): Collection
     {
-        return $this->findAllByCriteria($criteria, $orderBy);
+        return $this->findAllByCriteria($criteria);
     }
 
 }

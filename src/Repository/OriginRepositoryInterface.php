@@ -23,5 +23,5 @@ interface OriginRepositoryInterface
     /**
      * @return Collection<DomainOrigin>
      */
-    public function findAllWithCriteria(OriginCriteria $criteria, array $orderBy = []): Collection;
+    public function findAllWithCriteria(OriginCriteria $criteria): Collection;
 }

@@ -11,16 +11,11 @@ final class AbilityReader
         private AbilityRepositoryInterface $abilityRepository
     ) {}
     
+    /**
+     * @return ?DomainAbility
+     */
     public function abilityById(int $id): ?DomainAbility
     {
         return $this->abilityRepository->find($id);
-    }
-    
-    /**
-     * @return Collection<DomainAbility>
-     */
-    public function allAbilities(): Collection
-    {
-        return $this->abilityRepository->findAll();
     }
 }

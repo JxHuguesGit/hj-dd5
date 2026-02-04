@@ -1,6 +1,7 @@
 <?php
 namespace src\Domain\Criteria;
 
+use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
@@ -10,6 +11,10 @@ final class SpeciesCriteria extends AbstractCriteria implements CriteriaInterfac
     public ?int $parentId = null;
     public ?string $nameLt = null;
     public ?string $nameGt = null;
+
+    public array $orderBy = [
+        Field::NAME => Constant::CST_ASC
+    ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {

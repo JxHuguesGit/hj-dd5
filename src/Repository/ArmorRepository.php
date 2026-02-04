@@ -16,18 +16,12 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
         return DomainArmor::class;
     }
 
+    /**
+     * @return DomainArmor
+     */
     public function find(int $id): DomainArmor
     {
         return parent::find($id) ?? new DomainArmor();
-    }
-
-    /**
-     * @return Collection<DomainArmor>
-     */
-    public function findAll(array $orderBy = []): Collection
-    {
-        $criteria = new ArmorCriteria();
-        return $this->findAllWithItemAndType($criteria, $orderBy);
     }
 
     /**

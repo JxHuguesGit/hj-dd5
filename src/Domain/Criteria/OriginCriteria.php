@@ -1,6 +1,7 @@
 <?php
 namespace src\Domain\Criteria;
 
+use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
@@ -13,6 +14,10 @@ final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
     public ?string $name = null;
     public ?string $nameLt = null;
     public ?string $nameGt = null;
+
+    public array $orderBy = [
+        Field::NAME => Constant::CST_ASC
+    ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {

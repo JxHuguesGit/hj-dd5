@@ -15,23 +15,32 @@ final class SkillReader
         private SkillRepositoryInterface $skillRepository
     ) {}
     
+    /**
+     * @return ?DomainSkill
+     */
     public function skillById(int $id): ?DomainSkill
     {
         return $this->skillRepository->find($id);
     }
 
+    /**
+     * @return ?DomainSkill
+     */
     public function skillBySlug(string $slug): ?DomainSkill
     {
-        $skills = $this->skillRepository->findBy([Field::SLUG=>$slug]);
-        return $skills->first() ?? null;
+        $criteria = new SkillCriteria();
+        $criteria->slug = $slug;
+        return $this->skillRepository->findAllWithCriteria($criteria)?->first() ?? null;
     }
     
     /**
      * @return Collection<DomainSkill>
      */
-    public function allSkills(array $orderBy=[]): Collection
+    public function allSkills(array $orderBy=[Field::NAME => Constant::CST_ASC]): Collection
     {
-        return $this->skillRepository->findAll($orderBy);
+        $criteria = new SkillCriteria();
+        $criteria->orderBy = $orderBy;
+        return $this->skillRepository->findAllWithCriteria($criteria);
     }
 
     public function getPreviousAndNext(DomainSkill $skill): array
@@ -40,11 +49,12 @@ final class SkillReader
             function (string $operand, string $order) use ($skill) {
                 $criteria = new SkillCriteria();
                 $criteria->abilityId = $skill->abilityId;
-                $operand === '<'
+                $operand === '&lt;'
                     ? $criteria->nameLt = $skill->name
                     : $criteria->nameGt = $skill->name
                 ;
-                return $this->skillRepository->findAllWithCriteria($criteria, [Field::NAME => $order]);
+                $criteria->orderBy = [Field::NAME => $order];
+                return $this->skillRepository->findAllWithCriteria($criteria);
             }
         );
     }

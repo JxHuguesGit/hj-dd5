@@ -10,6 +10,9 @@ final class PowerReader
         private PowerRepositoryInterface $powerRepository
     ) {}
     
+    /**
+     * @return ?DomainPower
+     */
     public function powerById(int $id): ?DomainPower
     {
         return $this->powerRepository->find($id);

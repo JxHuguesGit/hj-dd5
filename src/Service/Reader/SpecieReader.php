@@ -15,15 +15,22 @@ final class SpecieReader
         private SpeciesRepositoryInterface $speciesRepository,
     ) {}
 
+    /**
+     * @return ?DomainSpecie
+     */
     public function speciesById(int $id): ?DomainSpecie
     {
         return $this->speciesRepository->find($id);
     }
 
+    /**
+     * @return ?DomainSpecie
+     */
     public function speciesBySlug(string $slug): ?DomainSpecie
     {
-        $species = $this->speciesRepository->findBy([Field::SLUG=>$slug]);
-        return $species->first() ?? null;
+        $criteria = new SpeciesCriteria();
+        $criteria->slug = $slug;
+        return $this->speciesRepository->findAllWithCriteria($criteria)?->first() ?? null;
     }
 
     /**
@@ -31,7 +38,9 @@ final class SpecieReader
      */
     public function allSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
-        return $this->speciesRepository->findAll($order);
+        $criteria = new SpeciesCriteria();
+        $criteria->orderBy = $order;
+        return $this->speciesRepository->findAllWithCriteria($criteria);
     }
 
     /**
@@ -39,7 +48,10 @@ final class SpecieReader
      */
     public function speciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
-        return $this->speciesRepository->findBy([Field::PARENTID=>$parentId], $order);
+        $criteria = new SpeciesCriteria();
+        $criteria->parentId = $parentId;
+        $criteria->orderBy = $order;
+        return $this->speciesRepository->findAllWithCriteria($criteria);
     }
 
     public function getPreviousAndNext(DomainSpecie $species): array
@@ -48,11 +60,12 @@ final class SpecieReader
             function (string $operand, string $order) use ($species) {
                 $criteria = new SpeciesCriteria();
                 $criteria->parentId = $species->parentId;
-                $operand === '<'
+                $operand === '&lt;'
                     ? $criteria->nameLt = $species->name
                     : $criteria->nameGt = $species->name
                 ;
-                return $this->speciesRepository->findAllWithCriteria($criteria, [Field::NAME => $order]);
+                $criteria->orderBy = [Field::NAME => $order];
+                return $this->speciesRepository->findAllWithCriteria($criteria);
             }
         );
     }

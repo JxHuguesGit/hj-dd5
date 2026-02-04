@@ -18,6 +18,9 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
         return DomainWeapon::class;
     }
 
+    /**
+     * @return DomainWeapon
+     */
     public function find(int $id): DomainWeapon
     {
         return parent::find($id) ?? new DomainWeapon();

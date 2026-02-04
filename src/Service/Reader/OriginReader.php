@@ -17,9 +17,22 @@ final class OriginReader
         private OriginRepositoryInterface $originRepository,
     ) {}
 
+    /**
+     * @return ?DomainOrigin
+     */
     public function originById(int $id): ?DomainOrigin
     {
         return $this->originRepository->find($id);
+    }
+
+    /**
+     * @return ?DomainOrigin
+     */
+    public function originBySlug(string $slug): ?DomainOrigin
+    {
+        $criteria = new OriginCriteria();
+        $criteria->slug = $slug;
+        return $this->originRepository->findAllWithCriteria($criteria)?->first() ?? null;
     }
 
     /**
@@ -27,14 +40,9 @@ final class OriginReader
      */
     public function allOrigins(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
-        return $this->originRepository->findAll($order);
-    }
-
-    public function originBySlug(string $slug): ?DomainOrigin
-    {
         $criteria = new OriginCriteria();
-        $criteria->slug = $slug;
-        return $this->originRepository->findAllWithCriteria($criteria)?->first() ?? null;
+        $criteria->orderBy = $order;
+        return $this->originRepository->findAllWithCriteria($criteria);
     }
 
     /**
@@ -47,6 +55,9 @@ final class OriginReader
         return $this->originRepository->findAllWithCriteria($criteria);
     }
 
+    /**
+     * @return Collection<DomainOrigin>
+     */
     public function originsByTool(DomainTool $tool): Collection
     {
         $criteria = new OriginCriteria();
@@ -59,11 +70,12 @@ final class OriginReader
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($origin) {
                 $criteria = new OriginCriteria();
-                $operand === '<'
+                $operand === '&lt;'
                     ? $criteria->nameLt = $origin->name
                     : $criteria->nameGt = $origin->name
                 ;
-                return $this->originRepository->findAllWithCriteria($criteria, [Field::NAME => $order]);
+                $criteria->orderBy = [Field::NAME => $order];
+                return $this->originRepository->findAllWithCriteria($criteria);
             }
         );
     }

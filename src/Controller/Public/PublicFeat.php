@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
+use src\Constant\Constant;
 use src\Domain\Feat as DomainFeat;
 use src\Page\PageFeat;
 use src\Presenter\MenuPresenter;
@@ -31,7 +32,7 @@ class PublicFeat extends PublicBase
     
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render('feats');
+        $menu = $this->menuPresenter->render(Constant::FEATS);
         $pageView = $this->pageService->build($this->feat);
         $viewData = $this->presenter->present($pageView);
         return $this->page->render($menu, $viewData);

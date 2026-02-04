@@ -17,18 +17,20 @@ class OriginRepository extends Repository implements OriginRepositoryInterface
     }
 
     /**
-     * @return Collection<DomainOrigin>
+     * @return DomainOrigin
      */
-    public function findAllWithCriteria(
-        OriginCriteria $criteria,
-        array $orderBy = []
-    ): Collection
-    {
-        return $this->findAllByCriteria($criteria, $orderBy);
-    }
-
     public function find(int $id): DomainOrigin
     {
         return parent::find($id) ?? new DomainOrigin();
+    }
+
+    /**
+     * @return Collection<DomainOrigin>
+     */
+    public function findAllWithCriteria(
+        OriginCriteria $criteria
+    ): Collection
+    {
+        return $this->findAllByCriteria($criteria);
     }
 }

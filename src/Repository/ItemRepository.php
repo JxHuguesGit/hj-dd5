@@ -18,11 +18,18 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     }
 
     /**
+     * @return DomainItem
+     */
+    public function find(int $id): DomainItem
+    {
+        return parent::find($id) ?? new DomainItem();
+    }
+
+    /**
      * @return Collection<DomainItem>
      */
     public function findAllWithItemAndType(
-        ItemCriteria $criteria,
-        array $orderBy=[Field::NAME=>Constant::CST_ASC]
+        ItemCriteria $criteria
     ): Collection
     {
         $baseQuery = "
@@ -41,7 +48,7 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
         $this->query = $this->queryBuilder->reset()
             ->setBaseQuery($baseQuery)
             ->where($filters)
-            ->orderBy($orderBy)
+            ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
@@ -49,10 +56,5 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
             $this->resolveEntityClass(),
             $this->queryBuilder->getParams()
         );
-    }
-
-    public function find(int $id): DomainItem
-    {
-        return parent::find($id) ?? new DomainItem();
     }
 }

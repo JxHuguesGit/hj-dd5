@@ -16,6 +16,9 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
         return DomainTool::class;
     }
 
+    /**
+     * @return ?DomainTool
+     */
     public function find(mixed $id, bool $display=false): ?DomainTool
     {
         $baseQuery = "

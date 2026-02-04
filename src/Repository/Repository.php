@@ -53,7 +53,7 @@ class Repository
     }
 
     /**
-     * @return src\Domain\Entity|null
+     * @return ?DomainEntity
      */
     public function find(int $id)
     {
@@ -171,8 +171,7 @@ class Repository
     }
 
     protected function findAllByCriteria(
-        CriteriaInterface $criteria,
-        array $orderBy = []
+        CriteriaInterface $criteria
     ): Collection {
         $queryBuilder = $this->queryBuilder->reset()
             ->select($this->fields, $this->table);
@@ -180,7 +179,7 @@ class Repository
         $criteria->apply($queryBuilder);
 
         $this->query = $queryBuilder
-            ->orderBy($orderBy)
+            ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(

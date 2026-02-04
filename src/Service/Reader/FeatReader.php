@@ -4,8 +4,10 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Feat as DomainFeat;
 use src\Repository\FeatRepositoryInterface;
+use src\Utils\Navigation;
 
 final class FeatReader
 {
@@ -13,9 +15,22 @@ final class FeatReader
         private FeatRepositoryInterface $featRepository,
     ) {}
 
+    /**
+     * @return ?DomainFeat
+     */
     public function featById(int $id): ?DomainFeat
     {
         return $this->featRepository->find($id);
+    }
+
+    /**
+     * @return ?DomainFeat
+     */
+    public function featBySlug(string $slug): ?DomainFeat
+    {
+        $criteria = new FeatCriteria();
+        $criteria->slug = $slug;
+        return $this->featRepository->findAllWithCriteria($criteria)?->first() ?? null;
     }
 
     /**
@@ -23,13 +38,9 @@ final class FeatReader
      */
     public function allFeats(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
-        return $this->featRepository->findAll($order);
-    }
-
-    public function featBySlug(string $slug): ?DomainFeat
-    {
-        $feat = $this->featRepository->findBy([Field::SLUG=>$slug]);
-        return $feat?->first() ?? null;
+        $criteria = new FeatCriteria();
+        $criteria->orderBy = $order;
+        return $this->featRepository->findAllWithCriteria($criteria);
     }
 
     /**
@@ -37,50 +48,25 @@ final class FeatReader
      */
     public function featsByCategory(int $categoryId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
-        return $this->featRepository->findBy([Field::FEATTYPEID=>$categoryId], $order);
+        $criteria = new FeatCriteria();
+        $criteria->featTypeId = $categoryId;
+        $criteria->orderBy    = $order;
+        return $this->featRepository->findAllWithCriteria($criteria);
     }
 
     public function getPreviousAndNext(DomainFeat $feat): array
     {
-        // Don précédent (ordre alphabétique)
-        $prev = $this->featRepository->findByComplex(
-            [
-                [
-                    'field'   => Field::NAME,
-                    'operand' => '<',
-                    'value'   => $feat->name,
-                ],
-                [
-                    'field'   => Field::FEATTYPEID,
-                    'operand' => '=',
-                    'value'   => $feat->featTypeId,
-                ],
-            ],
-            [Field::NAME => Constant::CST_DESC],
-            1
-        )->first();
-
-        // Don suivant
-        $next = $this->featRepository->findByComplex(
-            [
-                [
-                    'field'   => Field::NAME,
-                    'operand' => '>',
-                    'value'   => $feat->name,
-                ],
-                [
-                    'field'   => Field::FEATTYPEID,
-                    'operand' => '=',
-                    'value'   => $feat->featTypeId,
-                ],
-            ],
-            [Field::NAME => Constant::CST_ASC],
-            1
-        )->first();
-
-        return [
-            'prev' => $prev ?: null,
-            'next' => $next ?: null,
-        ];
+        return Navigation::getPrevNext(
+            function (string $operand, string $order) use ($feat) {
+                $criteria = new FeatCriteria();
+                $criteria->featTypeId = $feat->featTypeId;
+                $operand === '&lt;'
+                    ? $criteria->nameLt = $feat->name
+                    : $criteria->nameGt = $feat->name
+                ;
+                $criteria->orderBy = [Field::NAME => $order];
+                return $this->featRepository->findAllWithCriteria($criteria);
+            }
+        );
     }
 }
