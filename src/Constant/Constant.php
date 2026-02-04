@@ -13,6 +13,7 @@ class Constant
     public const FORMNAME = 'formName';
     public const HEROSELECTION = 'heroSelection';
     public const ONGLET = 'onglet';
+    public const EDIT = 'edit';
     
     public const ARMORS   = 'armors';
     public const WEAPONS  = 'weapons';
@@ -36,6 +37,7 @@ class Constant
     public const GAMES   = 'games';
     public const MUSIC   = 'music';
     public const TOOLS   = 'outils';
+    public const ONG_COMPENDIUM = 'compendium';
 
     public const CST_EXTRA = '-extra';
     public const CST_ASC = 'ASC';
@@ -97,6 +99,7 @@ class Constant
     public const CST_PREREQUIS_NIV19 = ' (prérequis : niveau 19 ou supérieur';
 
     public const CST_EMPTY_SPAN = '<span></span>';
+    public const CST_VIDE       = '&nbsp;';
     
     /////////////////////////////////////////////////
     // Pagination

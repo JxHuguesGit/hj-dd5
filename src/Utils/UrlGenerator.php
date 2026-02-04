@@ -11,6 +11,15 @@ final class UrlGenerator
         return $absolute ? DD5_URL . ltrim($url, '/') : $url;
     }
 
+    public static function admin(string $onglet, string $subOnglet, string $slug, string $action): string
+    {
+        return '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php'
+            . '&onglet='.$onglet
+            . '&id='.$subOnglet
+            . '&slug='.$slug
+            . '&action='.$action;
+    }
+
     public static function origin(string $slug, bool $absolute = false): string
     {
         return self::build(Routes::ORIGIN_PREFIX, $slug, $absolute);

@@ -11,6 +11,7 @@ class Icon
     public const IDRAGON  = 'dragon';
     public const ICOMPASS = 'compass';
     public const ISCROLL  = 'scroll';
+    public const IEDIT    = 'pen-to-square';
     
     public const IBOOK    = 'book';
     public const ISQUAREPLUS = 'square-plus';

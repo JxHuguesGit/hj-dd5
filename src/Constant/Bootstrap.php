@@ -16,9 +16,12 @@ class Bootstrap
     public const CSS_STRIPED       = 'striped';
     public const CSS_TABLE         = 'table';
     public const CSS_TEXT          = 'text';
+    public const CSS_AUTO          = 'auto';
     public const CSS_DNONE         = 'd-none';
     public const CSS_BTN           = 'btn';
     public const CSS_BG            = 'bg';
+    public const CSS_MX            = 'mx';
+    public const CSS_MY            = 'my';
     public const CSS_BADGE         = 'badge';
     public const CSS_OUTLINE       = 'outline';
     public const CSS_WHITE         = 'white';
@@ -34,6 +37,8 @@ class Bootstrap
     public const CSS_COL_MD_9      = 'col-md-9';
 
 
+    public const CSS_MX_AUTO          = self::CSS_MX.'-'.self::CSS_AUTO;
+    public const CSS_MY4              = self::CSS_MY.'-4';
 
     public const CSS_NAV_LINK         = self::CSS_NAV.'-'.self::CSS_LINK;
     public const CSS_NAV_ITEM         = self::CSS_NAV.'-'.self::CSS_ITEM;

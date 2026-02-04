@@ -83,7 +83,7 @@ class RegistryRouter
                         ),
                         new PageList(
                             new TemplateRenderer(),
-                            new FeatTableBuilder($this->readerFactory->origin())
+                            new FeatTableBuilder()
                         ),
                         new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
                     ),

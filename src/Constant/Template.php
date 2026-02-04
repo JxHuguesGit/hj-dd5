@@ -62,6 +62,7 @@ final class Template
     public const CASTE_DETAIL_WIZ    = self::CASTE_PATH.'casteDetailWIZ.tpl';
     
     public const FORM_PATH           = self::TEMPLATE_PATH.'form/';
+    public const FORM_CARD           = self::FORM_PATH.'formCard.tpl';
     public const FILTER_MONSTER      = self::FORM_PATH.'monsterFilter.tpl';
     public const FILTER_SPELL        = self::FORM_PATH.'spellFilter.tpl';
     public const FORM_FEAT           = self::FORM_PATH.'RpgFeat.tpl';

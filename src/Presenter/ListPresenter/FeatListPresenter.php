@@ -48,6 +48,7 @@ final class FeatListPresenter
 
         return new FeatRow(
             name: $feat->name,
+            slug: $feat->slug,
             url: UrlGenerator::feat($feat->slug),
             originLabel: $originLabel,
             prerequisite: $prerequisite
