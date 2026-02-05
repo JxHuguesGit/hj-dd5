@@ -2,6 +2,8 @@
 namespace src\Utils;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
 use src\Constant\Template;
 use src\Presenter\FormBuilder\FormField;
 use src\Renderer\TemplateRenderer;
@@ -17,17 +19,17 @@ class Form
 
     public function display(): string
     {
-        $htmlContent = '';
+        $formContent = '';
         foreach ($this->fields as $formField) {
-            $htmlContent .= $formField->display();
+            $formContent .= $formField->display();
         }
 
         return $this->renderer->render(
             Template::FORM_CARD,
             [
-                'Titre',
-                $htmlContent,
-                'Boutons'
+                $this->formAttributes[Constant::CST_TITLE],
+                $formContent,
+                implode(' ', $this->formAttributes['buttons'])
             ]
         );
     }
@@ -41,8 +43,21 @@ class Form
         return $this;
     }
 
-    public function addButton(): self
+    public function addCancel(string $cancelUrl): self
     {
+        $this->formAttributes['buttons'][] = Html::getLink(
+            'Annuler',
+            $cancelUrl,
+            'btn btn-sm btn-secondary ' . Bootstrap::CSS_TEXT_WHITE);
+        return $this;
+    }
+    public function addButton(string $label, string $type, array $params): self
+    {
+        $params['type'] = $type;
+        if (!isset($this->formAttributes['buttons'])) {
+            $this->formAttributes['buttons'] = [];
+        }
+        $this->formAttributes['buttons'][] = Html::getBalise('button', $label, $params);
         return $this;
     }
 }

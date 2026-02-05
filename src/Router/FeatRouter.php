@@ -39,7 +39,7 @@ class FeatRouter
                     ),
                     new PageList(
                         new TemplateRenderer(),
-                        new FeatTableBuilder($this->factory->origin())
+                        new FeatTableBuilder()
                     ),
                     new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
                 );

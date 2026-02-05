@@ -11,7 +11,8 @@ class RpgHeros extends Repository
     {
         return EntityRpgHeros::class;
     }
-
+/*
+// A convertir en DomainEntity
     public function delete(Entity $hero): void
     {
         // supprimer feats
@@ -28,4 +29,5 @@ class RpgHeros extends Repository
 
         parent::delete($hero);
     }
+*/
 }

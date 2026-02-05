@@ -125,24 +125,24 @@ class Repository
         return null;
     }
 
-    protected function getEntityValues(Entity $entity, bool $skipId = false): array
+    protected function getEntityValues(DomainEntity $entity, bool $skipId = false): array
     {
         $values = [];
         foreach ($this->fields as $field) {
             if ($skipId && $field === Field::ID) {
                 continue;
             }
-            $values[] = $entity->getField($field);
+            $values[] = $entity->$field;
         }
         return $values;
     }
 
-    protected function getEntityId(Entity $entity): mixed
+    protected function getEntityId(DomainEntity $entity): mixed
     {
-        return $entity->getField(Field::ID);
+        return $entity->id;
     }
 
-    public function insert(Entity $entity): void
+    public function insert(DomainEntity $entity): void
     {
         $this->query = $this->queryBuilder->reset()
             ->getInsertQuery($this->fields, $this->table);
@@ -152,7 +152,7 @@ class Repository
         $entity->assignId($insertId);
     }
 
-    public function update(Entity $entity): void
+    public function update(DomainEntity $entity): void
     {
         $this->query = $this->queryBuilder->reset()
             ->getUpdateQuery($this->fields, $this->table);
@@ -162,7 +162,24 @@ class Repository
         $this->queryExecutor->update($this->query, $values);
     }
 
-    public function delete(Entity $entity): void
+    public function updatePartial(DomainEntity $entity, array $changedFields): void
+    {
+        if (empty($changedFields)) {
+            return;
+        }
+
+        $this->query = $this->queryBuilder->reset()
+            ->getUpdateQuery($this->fields, $this->table, $changedFields);
+
+        $values = [];
+        foreach ($changedFields as $field) {
+            $values[] = $entity->$field;
+        }
+        $values[] = $this->getEntityId($entity);
+        $this->queryExecutor->update($this->query, $values);
+    }
+
+    public function delete(DomainEntity $entity): void
     {
         $this->query = $this->queryBuilder->reset()
             ->getDeleteQuery($this->table);

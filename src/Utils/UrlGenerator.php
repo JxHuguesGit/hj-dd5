@@ -11,13 +11,18 @@ final class UrlGenerator
         return $absolute ? DD5_URL . ltrim($url, '/') : $url;
     }
 
-    public static function admin(string $onglet, string $subOnglet, string $slug, string $action): string
+    public static function admin(string $onglet, string $subOnglet, string $slug='', string $action=''): string
     {
-        return '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php'
+        $url = '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php'
             . '&onglet='.$onglet
-            . '&id='.$subOnglet
-            . '&slug='.$slug
-            . '&action='.$action;
+            . '&id='.$subOnglet;
+        if ($slug!='') {
+            $url .= '&slug='.$slug;
+        }
+        if ($action!='') {
+            $url .= '&action='.$action;
+        }
+        return $url;
     }
 
     public static function origin(string $slug, bool $absolute = false): string

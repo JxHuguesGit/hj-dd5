@@ -7,7 +7,7 @@ class Session
 {
     public static function isPostSubmitted(): bool
     {
-        return isset($_POST) && !empty($_POST);
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
     
     public static function getPost(): array

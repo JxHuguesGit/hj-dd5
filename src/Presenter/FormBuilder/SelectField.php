@@ -1,7 +1,6 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Constant;
 use src\Utils\Html;
 
 class SelectField extends FormField
@@ -9,30 +8,21 @@ class SelectField extends FormField
     private array $options;
 
     public function __construct(
-        string $id,
         string $name,
         string $label,
         mixed $value = null,
         array $options = [],
-        bool $readonly = false
+        bool $readonly = false,
+        protected array $params = [],
     ) {
-        parent::__construct($id, $name, $label, $value, $readonly);
+        parent::__construct($name, $label, $value, $readonly, $params);
         $this->options = $options;
     }
 
-    public function getType(): string { return 'select'; }
     public function getOptions(): array { return $this->options; }
 
-    public function display(): string
+    public function renderInput(): string
     {
-        $readonly = $this->isReadonly() ? 'readonly' : '';
-
-        $strLabel = Html::getBalise(
-            'label',
-            htmlspecialchars($this->getLabel()),
-            ['for' => $this->getId()]
-        );
-
         $strOptions = '';
         foreach ($this->options as $option) {
             $strOptions .= Html::getOption(
@@ -41,21 +31,15 @@ class SelectField extends FormField
                 $this->value==$option['value']
             );
         }
+        $attrs = [
+            'id'   => $this->getId(),
+            'name' => $this->name,
+            'class' => 'form-select',
+        ];
+        if ($this->readonly) {
+            $attrs['readonly'] = 'readonly';
+        }
 
-        $strBalise = Html::getBalise(
-            'select',
-            $strOptions,
-            [
-                'id'   => $this->getId(),
-                'name' => $this->getName(),
-                'value' => $this->getValue(),
-                $readonly => $readonly
-            ]
-        );
-
-        return Html::getDiv(
-            $strLabel . ' ' . $strBalise,
-            [Constant::CST_CLASS => 'mb-3']
-        );
+        return Html::getBalise('select', $strOptions, $attrs);
     }
 }

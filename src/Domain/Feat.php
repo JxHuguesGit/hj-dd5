@@ -33,6 +33,11 @@ final class Feat extends Entity
         Field::SLUG =>       FieldType::STRING,
     ];
 
+    public const EDITABLE_FIELDS = [
+        Field::FEATTYPEID,
+        Field::POSTID,
+    ];
+
     /**
      * Retourne une représentation texte du don
      */

@@ -3,6 +3,8 @@ namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Criteria\FeatCriteria;
+use src\Domain\Feat;
 use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\FeatFormBuilder;
@@ -25,11 +27,54 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
         $action = Session::fromGet(Constant::CST_ACTION);
         $slug   = Session::fromGet(Constant::CST_SLUG);
 
+        if (Session::isPostSubmitted()) {
+            return $this->handleSubmit($action, $slug);
+        }
+
         if ($action === Constant::EDIT && $slug !== '') {
             return $this->renderEdit($slug);
         }
 
         return $this->renderList();
+    }
+
+    private function handleSubmit(string $action, string $slug): string
+    {
+        $qb = new QueryBuilder();
+        $qe = new QueryExecutor();
+        $repository = new FeatRepository($qb, $qe);
+        $criteria = new FeatCriteria();
+        $criteria->slug = $slug;
+
+        $feat = $repository->findAllWithCriteria($criteria)?->first();
+        if (!$feat) {
+            // Gestion des erreurs ?
+            // En même temps, là, on n'a pas trouvé le don correspondant au slug...
+            return $this->renderEdit($slug);
+        }
+
+        if ($action === Constant::EDIT) {
+            $changedFields = [];
+            foreach (Feat::EDITABLE_FIELDS as $field) {
+                $value = Session::fromPost($field, 'err');
+                if ($value != 'err' && $feat->$field != $value) {
+                    $feat->$field = $value;
+                    $changedFields[] = $field;
+                }
+            }
+
+            if (!empty($changedFields)) {
+                // On sauvegarde le changement
+                $repository->updatePartial($feat, $changedFields);
+            } else {
+                // Rien n'a à être changé
+            }
+        } else {
+            // Action pas encore prévue.
+        }
+
+        // Par défaut. On verra plus tard quand ça fonctionnera bien.
+        return $this->renderEdit($slug);
     }
 
     private function renderEdit(string $slug): string

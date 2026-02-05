@@ -1,15 +1,13 @@
-<div class="card mx-auto my-4 p-0">
-    <div class="card-body row">
-        <h1 class="card-title">%1$s</h1>
+<div class="card mx-auto my-4 shadow-lg p-0" style="max-width: 900px;">
+    <div class="card-header bg-dark text-white">
+        <h2 class="mb-0">%1$s</h2>
+    </div>
 
-        <hr>
+    <form class="card-body row g-4" method="POST">
+        %2$s
 
-        <div class="col-12">
-            %2$s <!-- ici le formulaire complet -->
+        <div class="card-footer d-flex justify-content-end gap-2">
+            %3$s
         </div>
-    </div>
-
-    <div class="card-footer d-flex justify-content-between">
-        %3$s
-    </div>
+    </form>
 </div>

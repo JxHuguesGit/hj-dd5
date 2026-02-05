@@ -30,9 +30,11 @@ class QueryBuilder
         return "INSERT INTO `{$table}` (`$columns`) VALUES ($placeholdersStr)";
     }
 
-    public function getUpdateQuery(array $fields, string $table): string
+    public function getUpdateQuery(array $fields, string $table, ?array $fieldsToUpdate = null): string
     {
-        $filteredFields = array_filter($fields, fn($f) => $f !== 'id');
+        $targetFields = $fieldsToUpdate ?? $fields;
+
+        $filteredFields = array_filter($targetFields, fn($f) => $f !== 'id');
         if (empty($filteredFields)) {
             throw new \InvalidArgumentException("No valid fields to update.");
         }

@@ -5,6 +5,7 @@ use src\Utils\Form;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Renderer\TemplateRenderer;
+use src\Utils\Html;
 
 abstract class AbstractFormBuilder implements FormBuilderInterface
 {
@@ -16,8 +17,7 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
                 Bootstrap::CSS_MY4,
                 $params[Constant::CST_CLASS] ?? ''
             ]),
-            'method' => $params['method'] ?? 'post',
-            'action' => $params['action'] ?? ''
+            Constant::CST_TITLE => $params[Constant::CST_TITLE],
         ];
 
         $form = (new Form(
@@ -25,20 +25,18 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
             $formAttributes
         ));
 
+        $form->addCancel($params['cancelUrl']);
         // Boutons par défaut selon le type
         switch ($params['type'] ?? 'new') {
             case 'edit':
-                $form->addButton('Annuler', 'reset', ['class' => 'btn btn-secondary']);
-                $form->addButton('Modifier', 'submit', ['class' => 'btn btn-primary']);
+                $form->addButton('Modifier', 'submit', ['class' => 'btn btn-sm btn-primary']);
                 break;
             case 'delete':
-                $form->addButton('Annuler', 'reset', ['class' => 'btn btn-secondary']);
-                $form->addButton('Supprimer', 'submit', ['class' => 'btn btn-danger']);
+                $form->addButton('Supprimer', 'submit', ['class' => 'btn btn-sm btn-danger']);
                 break;
             case 'new':
             default:
-                $form->addButton('Annuler', 'reset', ['class' => 'btn btn-secondary']);
-                $form->addButton('Créer', 'submit', ['class' => 'btn btn-success']);
+                $form->addButton('Créer', 'submit', ['class' => 'btn btn-sm btn-success']);
                 break;
         }
 
