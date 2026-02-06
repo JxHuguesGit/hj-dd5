@@ -12,8 +12,6 @@ use src\Presenter\FormBuilder\GearFormBuilder;
 use src\Presenter\ListPresenter\GearListPresenter;
 use src\Presenter\TableBuilder\ItemTableBuilder;
 use src\Presenter\ToastBuilder;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Repository\ItemRepository;
 use src\Service\Reader\ItemReader;
@@ -22,6 +20,13 @@ use src\Utils\Session;
 final class GearCompendiumHandler implements CompendiumHandlerInterface
 {
     private string $toastContent = '';
+
+    public function __construct(
+        private ItemRepository $itemRepository,
+        private ItemReader $itemReader,
+        private ToastBuilder $toastBuilder,
+        private TemplateRenderer $templateRenderer
+    ) {}
 
     public function render(): string
     {
@@ -32,73 +37,68 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             return $this->handleSubmit($action, $slug);
         }
 
-        if ($action === Constant::EDIT && $slug!=='') {
-            return $this->renderEdit($slug);
-        } elseif ($action === Constant::NEW) {
-            $item = ItemFactory::createEmpty();
-            return $this->renderCreate($item);
-        } else {
-            return $this->renderList();
-        }
+        return match(true) {
+            $action === Constant::EDIT && $slug !== '' => $this->renderEdit($slug),
+            $action === Constant::NEW => $this->renderCreate(new Item()),
+            default => $this->renderList(),
+        };
     }
 
     private function handleSubmit(string $action, string $slug): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $repository = new ItemRepository($qb, $qe);
-        $reader = new ItemReader($repository);
-        $templateRender = new TemplateRenderer();
-        $toastBuilder = new ToastBuilder($templateRender);
+        return match ($action) {
+            Constant::EDIT => $this->handleEditSubmit($slug),
+            Constant::NEW  => $this->handleNewSubmit(),
+            default        => $this->renderList(),
+        };
+    }
 
-        if ($action === Constant::EDIT) {
-            $item = $reader->itemBySlug($slug);
-            if (!$item) {
-                $this->toastContent = $toastBuilder->error('Échec', "L'objet modifié n'existe pas.");
-                return $this->renderList($slug);
-            }
-
-            $changedFields = [];
-            foreach (Item::EDITABLE_FIELDS as $field) {
-                $value = Session::fromPost($field, 'err');
-                if ($value != 'err' && $item->$field != $value) {
-                    $item->$field = $value;
-                    $changedFields[] = $field;
-                }
-            }
-
-            if (!empty($changedFields)) {
-                // On sauvegarde le changement
-                $repository->updatePartial($item, $changedFields);
-                $this->toastContent = $toastBuilder->success('Réussite', "L'objet <strong>".$item->name."</strong> a été correctement mis à jour.");
-                return $this->renderList($slug);
-            } else {
-                $this->toastContent = $toastBuilder->info('Information', "Aucune valeur n'a été modifiée pour être enregistrée.");
-                return $this->renderEdit($slug);
-            }
-        } elseif ($action === Constant::NEW) {
+    private function handleNewSubmit(): string
+    {
             $item = ItemFactory::fromPost();
             $errors = ItemValidator::validate($item);
             if (!empty($errors)) {
-                $this->toastContent = $toastBuilder->error( 'Échec', "Le formulaire contient des erreurs : " . implode(', ', $errors) );
+                $this->toastContent = $this->toastBuilder->error( 'Échec', "Le formulaire contient des erreurs : " . implode(', ', $errors) );
                 return $this->renderCreate($item);
             }
             
-            $repository->insert($item);
-            $this->toastContent = $toastBuilder->success('Réussite', "L'objet <strong>".$item->name."</strong> a été correctement créé.");
+            $this->itemRepository->insert($item);
+            $this->toastContent = $this->toastBuilder->success('Réussite', "L'objet <strong>".$item->name."</strong> a été correctement créé.");
+            return $this->renderList();
+    }
+
+    private function handleEditSubmit(string $slug): string
+    {
+        $item = $this->itemReader->itemBySlug($slug);
+        if (!$item) {
+            $this->toastContent = $this->toastBuilder->error('Échec', "L'objet modifié n'existe pas.");
             return $this->renderList($slug);
-    } else {
-            // Action pas encore prévue.
         }
 
-        // Par défaut. On verra plus tard quand ça fonctionnera bien.
-        return $this->renderList($slug);
+        $changedFields = [];
+        foreach (Item::EDITABLE_FIELDS as $field) {
+            $value = Session::fromPost($field, 'err');
+            if ($value != 'err' && $item->$field != $value) {
+                $item->$field = $value;
+                $changedFields[] = $field;
+            }
+        }
+
+        if (!empty($changedFields)) {
+            // On sauvegarde le changement
+            $this->itemRepository->updatePartial($item, $changedFields);
+            $this->toastContent = $this->toastBuilder->success('Réussite', "L'objet <strong>".$item->name."</strong> a été correctement mis à jour.");
+            return $this->renderList();
+        } else {
+            $this->toastContent = $this->toastBuilder->info('Information', "Aucune valeur n'a été modifiée pour être enregistrée.");
+            return $this->renderEdit($slug);
+        }
     }
 
     private function renderCreate(Item $item): string
     {
         $page = new PageForm(
-            new TemplateRenderer(),
+            $this->templateRenderer,
             new GearFormBuilder(Constant::NEW),
             $this->toastContent
         );
@@ -108,15 +108,10 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     private function renderEdit(string $slug): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $repository = new ItemRepository($qb, $qe);
-        $reader = new ItemReader($repository);
-
-        $item = $reader->itemBySlug($slug);
+        $item = $this->itemReader->itemBySlug($slug);
 
         $page = new PageForm(
-            new TemplateRenderer(),
+            $this->templateRenderer,
             new GearFormBuilder(),
             $this->toastContent
         );
@@ -126,19 +121,15 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     public function renderList(): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $repository = new ItemRepository($qb, $qe);
-
-        $gears = $repository->findAllWithItemAndType(
+        $items = $this->itemRepository->findAllWithItemAndType(
             new ItemCriteria()
         );
 
         $presenter = new GearListPresenter();
-        $content   = $presenter->present($gears);
+        $content   = $presenter->present($items);
 
         $page = new PageList(
-            new TemplateRenderer(),
+            $this->templateRenderer,
             new ItemTableBuilder(true)
         );
 

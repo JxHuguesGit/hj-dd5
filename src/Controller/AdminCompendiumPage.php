@@ -11,6 +11,12 @@ use src\Controller\Compendium\SkillCompendiumHandler;
 use src\Controller\Compendium\SpellCompendiumHandler;
 use src\Controller\Compendium\ToolCompendiumHandler;
 use src\Controller\Compendium\WeaponCompendiumHandler;
+use src\Presenter\ToastBuilder;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
+use src\Repository\ItemRepository;
+use src\Service\Reader\ItemReader;
 
 class AdminCompendiumPage extends AdminPage
 {
@@ -31,7 +37,20 @@ class AdminCompendiumPage extends AdminPage
                 $pageContent = (new SkillCompendiumHandler())->render();
             break;
             case Constant::CST_GEAR :
-                $pageContent = (new GearCompendiumHandler())->render();
+                $pageContent = (new GearCompendiumHandler(
+                    new ItemRepository(
+                        new QueryBuilder(),
+                        new QueryExecutor()
+                    ),
+                    new ItemReader(
+                        new ItemRepository(
+                            new QueryBuilder(),
+                            new QueryExecutor()
+                        )
+                    ),
+                    new ToastBuilder(new TemplateRenderer()),
+                    new TemplateRenderer()
+                ))->render();
             break;
             case Constant::MONSTERS :
                 $pageContent = RpgMonster::getAdminContentPage($this->arrParams);

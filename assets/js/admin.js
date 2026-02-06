@@ -259,8 +259,7 @@ $(document).ready(function(e) {
     });
     
     $('div.toast.show').each(function() {
-        const toastEl = this;
-        const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+        const toast = bootstrap.Toast.getOrCreateInstance(this);
         setTimeout(function() {
                 toast.hide();
             },

@@ -34,11 +34,11 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             return $this->handleSubmit($action, $slug);
         }
 
-        if ($action === Constant::EDIT && $slug !== '') {
-            return $this->renderEdit($slug);
-        }
-
-        return $this->renderList();
+        return match(true) {
+            $action === Constant::EDIT && $slug !== '' => $this->renderEdit($slug),
+            //$action === Constant::NEW => $this->renderCreate(new Item()),
+            default => $this->renderList(),
+        };
     }
 
     private function handleSubmit(string $action, string $slug): string
