@@ -12,10 +12,9 @@ class SelectField extends FormField
         string $label,
         mixed $value = null,
         array $options = [],
-        bool $readonly = false,
         protected array $params = [],
     ) {
-        parent::__construct($name, $label, $value, $readonly, $params);
+        parent::__construct($name, $label, $value, false, $params);
         $this->options = $options;
     }
 

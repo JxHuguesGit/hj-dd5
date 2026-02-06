@@ -14,6 +14,8 @@ class Constant
     public const HEROSELECTION = 'heroSelection';
     public const ONGLET = 'onglet';
     public const EDIT = 'edit';
+    public const NEW = 'new';
+    public const CREATE = 'create';
     
     public const ARMORS   = 'armors';
     public const WEAPONS  = 'weapons';

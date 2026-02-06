@@ -3,11 +3,8 @@
         <h2 class="mb-0">%1$s</h2>
     </div>
 
-    <form class="card-body row g-4" method="POST">
-        %2$s
-
-        <div class="card-footer d-flex justify-content-end gap-2">
-            %3$s
-        </div>
+    <form method="POST">
+        <div class="card-body row g-4">%2$s</div>
+        <div class="card-footer d-flex justify-content-end gap-2">%3$s</div>
     </form>
 </div>

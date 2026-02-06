@@ -6,6 +6,18 @@ define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
 
+if (false) {
+    // Activer l'affichage des erreurs
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    // Pour voir la stack complète lors d'une exception
+    set_exception_handler(function($e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+        echo $e->getTraceAsString();
+    });
+}
+
 /**
  * Plugin Name: HJ - DD5
  * Description: DD5
@@ -49,23 +61,6 @@ spl_autoload_register(function ($className) {
     if (file_exists($file)) {
         require_once $file;
     }
-
-    /*
-    $base_dir = substr(plugin_dir_path(__FILE__), 0, -1) . '\\src\\';
-
-    $nbAntiSlash = substr_count($classname, '\\');
-    if ($nbAntiSlash<2) {
-        return;
-    }
-
-    list(, $directory, $file) = explode ('\\', $classname);
-    $pathFile = $base_dir.$directory.'\\'.$file.'.php';
-    $pathFile = str_replace('\\', '/', $pathFile);
-    // Vérifier si le fichier existe et inclure le fichier si trouvé
-    if (file_exists($pathFile)) {
-        require_once $pathFile;
-    }
-    */
 });
 
 function dd5Menu()

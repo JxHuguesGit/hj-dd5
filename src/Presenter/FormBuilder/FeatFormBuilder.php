@@ -37,7 +37,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
 
         $form->addField(new NumberField('id', 'ID', $entity->id, true, ['outerDivClass'=>'col-md-3']))
             ->addField(new TextField('name', 'Nom', $entity->name, true, ['outerDivClass'=>'col-md-5']))
-            ->addField(new SelectField('featTypeId', 'Type de don', $entity->featTypeId, $mock, false, ['outerDivClass'=>'col-md-4']))
+            ->addField(new SelectField('featTypeId', 'Type de don', $entity->featTypeId, $mock, ['outerDivClass'=>'col-md-4']))
             ->addField(new NumberField('postId', 'Post ID', $entity->postId, false, ['outerDivClass'=>'col-md-4']))
             ->addField(new TextField('slug', 'Slug', $entity->slug, true, ['outerDivClass'=>'col-md-8']))
             ->addField(new TextareaField('description', 'Description', $this->wpPostService->getPostContent(), true, ['outerDivClass'=>'col-md-12', 'style'=>'height: 200px']))

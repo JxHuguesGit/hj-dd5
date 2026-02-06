@@ -3,7 +3,6 @@ namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Template;
 use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Feat;
 use src\Page\PageForm;
@@ -11,6 +10,7 @@ use src\Page\PageList;
 use src\Presenter\FormBuilder\FeatFormBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
+use src\Presenter\ToastBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
@@ -48,18 +48,12 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
         $repository = new FeatRepository($qb, $qe);
         $criteria = new FeatCriteria();
         $templateRender = new TemplateRenderer();
+        $toastBuilder = new ToastBuilder($templateRender);
         $criteria->slug = $slug;
 
         $feat = $repository->findAllWithCriteria($criteria)?->first();
         if (!$feat) {
-            $this->toastContent = $templateRender->render(
-                Template::MAIN_TOAST,
-                [
-                    'Échec',
-                    "Le don modifié n'existe pas.",
-                    ' show bg-danger'
-                ]
-            );
+            $this->toastContent = $toastBuilder->error('Échec', "Le don modifié n'existe pas.");
             return $this->renderList($slug);
         }
 
@@ -76,25 +70,10 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             if (!empty($changedFields)) {
                 // On sauvegarde le changement
                 $repository->updatePartial($feat, $changedFields);
-                $this->toastContent = $templateRender->render(
-                    Template::MAIN_TOAST,
-                    [
-                        'Réussite',
-                        "Le don <strong>".$feat->name."</strong> a été correctement mis à jour.",
-                        ' show bg-success'
-                    ]
-                );
+                $this->toastContent = $toastBuilder->success('Réussite', "Le don <strong>".$feat->name."</strong> a été correctement mis à jour.");
                 return $this->renderList($slug);
             } else {
-                // Rien n'a à être changé
-                $this->toastContent = $templateRender->render(
-                    Template::MAIN_TOAST,
-                    [
-                        'Information',
-                        "Aucune valeur n'a été modifié pour être enregistrée.",
-                        ' show bg-info'
-                    ]
-                );
+                $this->toastContent = $toastBuilder->info('Information', "Aucune valeur n'a été modifiée pour être enregistrée.");
                 return $this->renderEdit($slug);
             }
         } else {

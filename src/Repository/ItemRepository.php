@@ -33,13 +33,16 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     ): Collection
     {
         $baseQuery = "
-            SELECT id, ".Field::NAME.", ".Field::SLUG.",
-                ".Field::WEIGHT.", ".Field::GOLDPRICE."
+            SELECT id, ".Field::NAME.", ".Field::SLUG.", ".Field::DESCRIPTION.",
+                ".Field::WEIGHT.", ".Field::GOLDPRICE.", ".Field::TYPE."
             FROM " . Table::ITEM . " ";
 
         $filters = [];
         if ($criteria->type !== null) {
             $filters[Field::TYPE] = $criteria->type;
+        }
+        if ($criteria->slug !== null) {
+            $filters[Field::SLUG] = $criteria->slug;
         }
         if ($criteria->name !== null) {
             $filters[Field::NAME] = $criteria->name;

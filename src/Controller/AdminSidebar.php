@@ -115,13 +115,15 @@ class AdminSidebar extends Utilities
     {
         // Liste des sous menus existants
         $children = [
-            ['id' => Constant::ARMORS, 'label' => 'Armures', 'icon' => Icon::ISHIELD],
-            ['id' => Constant::WEAPONS, 'label' => 'Armes', 'icon' => Icon::IGAVEL],
-            ['id' => Constant::SKILLS, 'label' => 'Compétences', 'icon' => Icon::IBRAIN],
-            ['id' => Constant::FEATS, 'label' => 'Dons', 'icon' => Icon::IMEDAL],
+            ['id' => Constant::WEAPONS,  'label' => 'Armes', 'icon' => Icon::IGAVEL],
+            ['id' => Constant::ARMORS,   'label' => 'Armures', 'icon' => Icon::ISHIELD],
+            ['id' => Constant::SKILLS,   'label' => 'Compétences', 'icon' => Icon::IBRAIN],
+            ['id' => Constant::FEATS,    'label' => 'Dons', 'icon' => Icon::IMEDAL],
+            ['id' => Constant::CST_GEAR, 'label' => 'Matériel', 'icon' => Icon::IBOX],
             ['id' => Constant::MONSTERS, 'label' => 'Monstres', 'icon' => Icon::IDRAGON],
-            ['id' => Constant::ORIGINS, 'label' => 'Origines', 'icon' => Icon::ICOMPASS],
-            ['id' => Constant::SPELLS, 'label' => 'Sorts', 'icon' => Icon::ISCROLL],
+            ['id' => Constant::ORIGINS,  'label' => 'Origines', 'icon' => Icon::ICOMPASS],
+            ['id' => Constant::TOOLS,    'label' => 'Outils', 'icon' => Icon::IGAVEL],
+            ['id' => Constant::SPELLS,   'label' => 'Sorts', 'icon' => Icon::ISCROLL],
         ];
 
         // Construction du menu

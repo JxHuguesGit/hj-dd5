@@ -14,6 +14,9 @@ class NumberField extends FormField
             'value' => $this->value,
             'class' => 'form-control',
         ];
+        if ($this->params['step']) {
+            $attrs['step'] = $this->params['step'];
+        }
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';
         }

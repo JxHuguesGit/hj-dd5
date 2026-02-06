@@ -5,9 +5,11 @@ use src\Constant\Constant;
 use src\Constant\Template;
 use src\Controller\Compendium\ArmorCompendiumHandler;
 use src\Controller\Compendium\FeatCompendiumHandler;
+use src\Controller\Compendium\GearCompendiumHandler;
 use src\Controller\Compendium\OriginCompendiumHandler;
 use src\Controller\Compendium\SkillCompendiumHandler;
 use src\Controller\Compendium\SpellCompendiumHandler;
+use src\Controller\Compendium\ToolCompendiumHandler;
 use src\Controller\Compendium\WeaponCompendiumHandler;
 
 class AdminCompendiumPage extends AdminPage
@@ -28,6 +30,9 @@ class AdminCompendiumPage extends AdminPage
             case Constant::SKILLS :
                 $pageContent = (new SkillCompendiumHandler())->render();
             break;
+            case Constant::CST_GEAR :
+                $pageContent = (new GearCompendiumHandler())->render();
+            break;
             case Constant::MONSTERS :
                 $pageContent = RpgMonster::getAdminContentPage($this->arrParams);
                 $paddingTop = '';
@@ -38,6 +43,9 @@ class AdminCompendiumPage extends AdminPage
             case Constant::ORIGINS :
                 $pageContent = (new OriginCompendiumHandler())->render();
                break;
+            case Constant::TOOLS :
+                $pageContent = (new ToolCompendiumHandler())->render();
+            break;
             case Constant::SPELLS :
                 $pageContent = (new SpellCompendiumHandler())->render();
                break;

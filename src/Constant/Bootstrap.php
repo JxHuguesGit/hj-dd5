@@ -32,6 +32,8 @@ class Bootstrap
     public const CSS_ROW_PRIMARY_STRIPED_ODD  = 'row-primary-striped-odd';
     public const CSS_ROW_DARK_STRIPED         = 'row-dark-striped';
     
+    public const CSS_COL_1         = 'col-1';
+    public const CSS_COL_2         = 'col-2';
     public const CSS_COL_MD_2      = 'col-md-2';
     public const CSS_COL_MD_3      = 'col-md-3';
     public const CSS_COL_MD_9      = 'col-md-9';

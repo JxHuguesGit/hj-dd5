@@ -1,6 +1,7 @@
 <?php
 namespace src\Utils;
 
+use src\Constant\FieldType;
 use WP_User;
 
 class Session
@@ -104,5 +105,30 @@ class Session
     {
         unset($_SESSION[$key]);
     }
+
+    public static function normalizePostData(array $fieldTypes): array
+    {
+        $normalized = [];
+        foreach ($fieldTypes as $field => $type) {
+            $value = self::fromPost($field);
+
+            // Cast en fonction du type attendu
+            switch ($type) {
+                case FieldType::STRING:
+                    $normalized[$field] = (string)$value;
+                    break;
+                case FieldType::FLOAT:
+                    $normalized[$field] = $value === '' ? 0.0 : (float)$value;
+                    break;
+                case FieldType::INTPOSITIVE:
+                    $normalized[$field] = $value === '' ? 0 : (int)$value;
+                    break;
+                default:
+                    $normalized[$field] = $value;
+            }
+        }
+        return $normalized;
+    }
+
 
 }

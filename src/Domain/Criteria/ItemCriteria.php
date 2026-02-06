@@ -7,7 +7,8 @@ use src\Query\QueryBuilder;
 
 final class ItemCriteria extends AbstractCriteria implements CriteriaInterface
 {
-    public string $type = 'other';
+    public string $type  = 'other';
+    public ?string $slug = null;
     public ?string $name = null;
     
     public array $orderBy = [
@@ -19,6 +20,9 @@ final class ItemCriteria extends AbstractCriteria implements CriteriaInterface
         $filters = [];
         if ($this->type !== null) {
             $filters[Field::TYPE] = $this->type;
+        }
+        if ($this->slug!=null) {
+            $filters[Field::SLUG] = $this->slug;
         }
         if ($this->name !== null) {
             $filters[Field::NAME] = $this->name;
