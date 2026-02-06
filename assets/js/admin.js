@@ -258,6 +258,15 @@ $(document).ready(function(e) {
         }
     });
     
+    $('div.toast.show').each(function() {
+        const toastEl = this;
+        const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+        setTimeout(function() {
+                toast.hide();
+            },
+            3000
+        );
+    });
 });
 
 let focusRemembered = '';

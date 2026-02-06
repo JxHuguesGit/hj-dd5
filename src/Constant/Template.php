@@ -96,6 +96,7 @@ final class Template
 
     public const MODAL_PATH          = self::TEMPLATE_PATH.'modal/';
     public const MAIN_MODAL          = self::MODAL_PATH.'modal.tpl';
+    public const MAIN_TOAST          = self::MODAL_PATH.'toast.tpl';
     public const SPELL_FILTER_MODAL  = self::MODAL_PATH.'spellFilter.tpl';
 
 }

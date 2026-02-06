@@ -175,6 +175,13 @@ dd {
   margin: 0;
 }
 
+.toast.fade {
+  transition: opacity 0.8s ease-in-out;
+}
+.toast.fade:not(.show) {
+  opacity: 0;
+}
+
 
 
 

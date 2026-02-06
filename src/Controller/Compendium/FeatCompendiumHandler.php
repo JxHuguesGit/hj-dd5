@@ -3,6 +3,7 @@ namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Constant\Template;
 use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Feat;
 use src\Page\PageForm;
@@ -22,6 +23,8 @@ use src\Utils\Session;
 
 class FeatCompendiumHandler implements CompendiumHandlerInterface
 {
+    private string $toastContent = '';
+
     public function render(): string
     {
         $action = Session::fromGet(Constant::CST_ACTION);
@@ -44,13 +47,20 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
         $qe = new QueryExecutor();
         $repository = new FeatRepository($qb, $qe);
         $criteria = new FeatCriteria();
+        $templateRender = new TemplateRenderer();
         $criteria->slug = $slug;
 
         $feat = $repository->findAllWithCriteria($criteria)?->first();
         if (!$feat) {
-            // Gestion des erreurs ?
-            // En même temps, là, on n'a pas trouvé le don correspondant au slug...
-            return $this->renderEdit($slug);
+            $this->toastContent = $templateRender->render(
+                Template::MAIN_TOAST,
+                [
+                    'Échec',
+                    "Le don modifié n'existe pas.",
+                    ' show bg-danger'
+                ]
+            );
+            return $this->renderList($slug);
         }
 
         if ($action === Constant::EDIT) {
@@ -66,15 +76,33 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             if (!empty($changedFields)) {
                 // On sauvegarde le changement
                 $repository->updatePartial($feat, $changedFields);
+                $this->toastContent = $templateRender->render(
+                    Template::MAIN_TOAST,
+                    [
+                        'Réussite',
+                        "Le don <strong>".$feat->name."</strong> a été correctement mis à jour.",
+                        ' show bg-success'
+                    ]
+                );
+                return $this->renderList($slug);
             } else {
                 // Rien n'a à être changé
+                $this->toastContent = $templateRender->render(
+                    Template::MAIN_TOAST,
+                    [
+                        'Information',
+                        "Aucune valeur n'a été modifié pour être enregistrée.",
+                        ' show bg-info'
+                    ]
+                );
+                return $this->renderEdit($slug);
             }
         } else {
             // Action pas encore prévue.
         }
 
         // Par défaut. On verra plus tard quand ça fonctionnera bien.
-        return $this->renderEdit($slug);
+        return $this->renderList($slug);
     }
 
     private function renderEdit(string $slug): string
@@ -90,7 +118,8 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             new TemplateRenderer(),
             new FeatFormBuilder(
                 new WpPostService()
-            )
+            ),
+            $this->toastContent
         );
         
         return $page->renderAdmin('', $feat);
@@ -120,7 +149,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             new FeatTableBuilder(true)
         );
 
-        return $page->renderAdmin('', $presentContent);
+        return $page->renderAdmin('', $presentContent, $this->toastContent);
     }
 }
 

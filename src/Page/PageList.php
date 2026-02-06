@@ -23,7 +23,7 @@ class PageList
         );
     }
 
-    public function renderAdmin(string $title, Collection $viewData): string
+    public function renderAdmin(string $title, Collection $viewData, ?string $toastContent = null): string
     {
         // Construire le tableau des armures
         $tableHtml = $this->tableBuilder->build(
@@ -34,7 +34,7 @@ class PageList
         // Section centrale (titre + tableau)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $tableHtml->display()]
+            [$title, $tableHtml->display(), $toastContent]
         );
     }
 }

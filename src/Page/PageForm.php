@@ -11,7 +11,8 @@ class PageForm
 {
     public function __construct(
         private TemplateRenderer $renderer,
-        private FormBuilderInterface $formBuilder
+        private FormBuilderInterface $formBuilder,
+        private string $toastContent = '',
     ) {}
 
     public function render(string $menuHtml, string $title, DomainEntity $entity, ?string $modalContent = null): string
@@ -34,7 +35,7 @@ class PageForm
         // Section centrale (titre + formulaire)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $formHtml->display()]
+            [$title, $formHtml->display(), $this->toastContent]
         );
     }
 }
