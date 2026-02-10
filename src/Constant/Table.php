@@ -7,6 +7,7 @@ class Table
     public const ARMOR         = 'rpgArmor';
     public const DMGDIE        = 'rpgDamageDie';
     public const FEAT          = 'rpgFeat';
+    public const FEATTYPE      = 'rpgFeatType';
     public const ITEM          = 'rpgItem';
     public const MSTPROFCY     = 'rpgMasteryProficiency';
     public const ORIGIN        = 'rpgOrigin';

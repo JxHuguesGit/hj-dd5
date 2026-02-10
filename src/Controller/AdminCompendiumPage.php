@@ -16,9 +16,11 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Repository\FeatRepository;
+use src\Repository\FeatTypeRepository;
 use src\Repository\ItemRepository;
 use src\Repository\OriginRepository;
 use src\Service\Reader\FeatReader;
+use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
 use src\Service\Reader\OriginReader;
 
@@ -58,9 +60,11 @@ class AdminCompendiumPage extends AdminPage
             break;
             case Constant::FEATS :
                 $featRepository = new FeatRepository($qb, $qe);
+                $featTypeRepository = new FeatTypeRepository($qb, $qe);
                 $pageContent = (new FeatCompendiumHandler(
                     $featRepository,
                     new FeatReader($featRepository),
+                    new FeatTypeReader($featTypeRepository),
                     new OriginReader(new OriginRepository($qb, $qe)),
                     new ToastBuilder($templateRender),
                     $templateRender

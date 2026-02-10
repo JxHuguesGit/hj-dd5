@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller\Compendium;
 
-use ParagonIE\Sodium\Core\Curve25519\Fe;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\FeatCriteria;
@@ -12,13 +11,11 @@ use src\Presenter\FormBuilder\FeatFormBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\ToastBuilder;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Repository\FeatRepository;
-use src\Repository\OriginRepository;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\FeatReader;
+use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
 use src\Utils\Session;
 
@@ -29,6 +26,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
     public function __construct(
         private FeatRepository $featRepository,
         private FeatReader $featReader,
+        private FeatTypeReader $featTypeReader,
         private OriginReader $originReader,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
@@ -96,7 +94,8 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
         $page = new PageForm(
             $this->templateRenderer,
             new FeatFormBuilder(
-                new WpPostService()
+                new WpPostService(),
+                $this->featTypeReader
             ),
             $this->toastContent
         );
