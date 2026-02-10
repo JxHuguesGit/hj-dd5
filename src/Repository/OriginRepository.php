@@ -16,9 +16,9 @@ class OriginRepository extends Repository implements OriginRepositoryInterface
     }
 
     /**
-     * @return Origin
+     * @return ?Origin
      */
-    public function find(int $id): Origin
+    public function find(int $id): ?Origin
     {
         return parent::find($id) ?? new Origin();
     }

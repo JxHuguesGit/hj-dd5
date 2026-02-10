@@ -3,12 +3,7 @@ namespace src\Service\Domain;
 
 use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Entity\Ability;
-use src\Domain\Entity\Feat;
-use src\Domain\Entity\Item;
-use src\Domain\Entity\Origin;
-use src\Domain\Entity\Skill;
-use src\Domain\Entity\Tool;
+use src\Domain\Entity\{Ability, Feat, Item, Origin, Skill, Tool};
 use src\Repository\FeatRepository;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginItem as RepositoryOriginItem;

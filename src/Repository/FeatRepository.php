@@ -16,9 +16,9 @@ class FeatRepository extends Repository implements FeatRepositoryInterface
     }
 
     /**
-     * @return Feat
+     * @return ?Feat
      */
-    public function find(int $id): Feat
+    public function find(int $id): ?Feat
     {
         return parent::find($id) ?? new Feat();
     }
