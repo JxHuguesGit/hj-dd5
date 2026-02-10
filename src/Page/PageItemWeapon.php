@@ -18,7 +18,7 @@ class PageItemWeapon extends PageDetail
             $viewData,
             Template::WEAPON_CARD,
             [
-                $viewData['title'],
+                $title,
                 $viewData['category'],
                 $viewData['damage'],
                 $viewData['masteryLink'],

@@ -35,7 +35,7 @@ class PageItemArmor extends PageDetail
             $viewData,
             Template::ARMOR_CARD,
             [
-                $viewData['title'],
+                $title,
                 $viewData['armorTypeId'],
                 $viewData['armorClass'],
                 $viewData['strengthPenalty'],

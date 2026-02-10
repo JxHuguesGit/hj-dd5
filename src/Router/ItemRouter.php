@@ -75,19 +75,21 @@ class ItemRouter
             switch ($item?->type) {
                 case Constant::CST_ARMOR :
                     $item = $this->factory->armor()->itemBySlug($itemSlug);
-                    return $this->buildArmorDetailController($item);
+                    $returned = $this->buildArmorDetailController($item);
                     break;
                 case Constant::CST_WEAPON :
                     $item = $this->factory->weapon()->itemBySlug($itemSlug);
-                    return $this->buildWeaponDetailController($item);
+                    $returned = $this->buildWeaponDetailController($item);
                     break;
                 default :
-                    return null;
+                    $returned = null;
                     break;
             }
+        } else {
+            $returned = null;
         }
 
-        return null;
+        return $returned;
     }
 
     private function buildArmorDetailController(Armor $item): ?PublicBase
