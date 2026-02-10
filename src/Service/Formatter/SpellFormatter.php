@@ -1,6 +1,7 @@
 <?php
 namespace src\Service\Formatter;
 
+use src\Constant\Constant;
 use src\Enum\ClassEnum;
 use src\Enum\MagicSchoolEnum;
 
@@ -64,7 +65,7 @@ class SpellFormatter
 
     public static function formatIncantation(string $value, bool $isRituel): string
     {
-        return self::formatDureeConvertie($value). ($isRituel ? ' ou Rituel' : '');
+        return static::formatDureeConvertie($value). ($isRituel ? ' ou Rituel' : '');
     }
 
     public static function formatDureeConvertie(string $value): string
@@ -83,7 +84,7 @@ class SpellFormatter
                 'inst'   => 'Instantanée',
                 'spec'   => 'Spéciale',
                 'bonus'  => 'Action Bonus',
-                'action' => 'Action',
+                Constant::CST_ACTION => 'Action',
                 'reaction' => 'Réaction',
                 default  => $value,
             };

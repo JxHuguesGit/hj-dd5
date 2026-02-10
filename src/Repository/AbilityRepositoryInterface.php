@@ -6,9 +6,8 @@ use src\Collection\Collection;
 
 interface AbilityRepositoryInterface
 {
-    public function find(int $id): ?DomainAbility;
     /**
-     * @return Collection<DomainAbility>
+     * @return ?DomainAbility
      */
-    public function findAll(): Collection;
+    public function find(int $id): ?DomainAbility;
 }

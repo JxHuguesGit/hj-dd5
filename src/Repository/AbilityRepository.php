@@ -14,10 +14,10 @@ class AbilityRepository extends Repository implements AbilityRepositoryInterface
     }
 
     /**
-     * @return DomainAbility
+     * @return ?DomainAbility
      */
-    public function find(int $id): DomainAbility
+    public function find(int $id): ?DomainAbility
     {
-        return parent::find($id) ?? new DomainAbility();
+        return parent::find($id) ?? null;
     }
 }

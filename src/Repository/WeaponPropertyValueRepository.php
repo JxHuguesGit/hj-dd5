@@ -17,6 +17,17 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
         return DomainWeaponPropertyValue::class;
     }
 
+    /**
+     * @return ?DomainWeaponPropertyValue
+     */
+    public function find(int $id): ?DomainWeaponPropertyValue
+    {
+        return parent::find($id) ?? null;
+    }
+
+    /**
+     * @return Collection<DomainWeaponPropertyValue>
+     */
     public function allWeaponPropertyValues(): Collection
     {
         return new Collection();

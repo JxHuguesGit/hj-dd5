@@ -21,17 +21,17 @@ final class ToastBuilder
         );
     }
 
-    public function success(string $title, string $message): string
+    public function success(string $message, string $title = 'Réussite'): string
     {
         return $this->build('success', $title, $message);
     }
 
-    public function error(string $title, string $message): string
+    public function error(string $message, string $title = 'Échec'): string
     {
         return $this->build('danger', $title, $message);
     }
 
-    public function info(string $title, string $message): string
+    public function info(string $message, string $title = 'Information'): string
     {
         return $this->build('info', $title, $message);
     }

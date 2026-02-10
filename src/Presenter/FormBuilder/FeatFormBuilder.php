@@ -1,7 +1,10 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Field;
+use src\Constant\Language;
 use src\Domain\Feat as DomainFeat;
 use src\Service\Domain\WpPostService;
 use src\Utils\Form;
@@ -35,13 +38,13 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $params['cancelUrl'] = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::FEATS);
         $form = $this->createForm($params);
 
-        $form->addField(new NumberField('id', 'ID', $entity->id, true, ['outerDivClass'=>'col-md-3']))
-            ->addField(new TextField('name', 'Nom', $entity->name, true, ['outerDivClass'=>'col-md-5']))
-            ->addField(new SelectField('featTypeId', 'Type de don', $entity->featTypeId, $mock, ['outerDivClass'=>'col-md-4']))
-            ->addField(new NumberField('postId', 'Post ID', $entity->postId, false, ['outerDivClass'=>'col-md-4']))
-            ->addField(new TextField('slug', 'Slug', $entity->slug, true, ['outerDivClass'=>'col-md-8']))
-            ->addField(new TextareaField('description', 'Description', $this->wpPostService->getPostContent(), true, ['outerDivClass'=>'col-md-12', 'style'=>'height: 200px']))
-            ->addField(new TextField('prerequis', 'Pré-requis', $this->wpPostService->getField('prerequis'), true, ['outerDivClass'=>'col-md-12']))
+        $form->addField(new NumberField(Field::ID, 'ID', $entity->id, true, ['outerDivClass'=>Bootstrap::CSS_COL_MD_3]))
+            ->addField(new TextField(Field::NAME, Constant::CST_NAME, $entity->name, true, ['outerDivClass'=>'col-md-5']))
+            ->addField(new SelectField(Field::FEATTYPEID, 'Type de don', $entity->featTypeId, $mock, ['outerDivClass'=>'col-md-4']))
+            ->addField(new NumberField(Field::POSTID, 'Post ID', $entity->postId, false, ['outerDivClass'=>'col-md-4']))
+            ->addField(new TextField(Field::SLUG, Constant::CST_SLUG, $entity->slug, true, ['outerDivClass'=>'col-md-8']))
+            ->addField(new TextareaField(Field::DESCRIPTION, Language::LG_DESCRIPTION, $this->wpPostService->getPostContent(), true, ['outerDivClass'=>'col-md-12', 'style'=>'height: 200px']))
+            ->addField(new TextField('prerequis', Language::LG_PREQUISITE, $this->wpPostService->getField('prerequis'), true, ['outerDivClass'=>'col-md-12']))
         ;
 
         return $form;

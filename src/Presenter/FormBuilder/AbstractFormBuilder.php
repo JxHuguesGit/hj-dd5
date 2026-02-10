@@ -18,6 +18,7 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
                 $params[Constant::CST_CLASS] ?? ''
             ]),
             Constant::CST_TITLE => $params[Constant::CST_TITLE],
+            Constant::CST_ACTION => $params[Constant::CST_ACTION] ?? '',
         ];
 
         $form = (new Form(

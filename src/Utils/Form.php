@@ -29,7 +29,8 @@ class Form
             [
                 $this->formAttributes[Constant::CST_TITLE],
                 $formContent,
-                implode(' ', $this->formAttributes['buttons'])
+                implode(' ', $this->formAttributes['buttons']),
+                $this->formAttributes[Constant::CST_ACTION],
             ]
         );
     }

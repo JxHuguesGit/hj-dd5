@@ -3,9 +3,17 @@ namespace src\Repository;
 
 use src\Domain\Armor as DomainArmor;
 use src\Collection\Collection;
+use src\Domain\Criteria\ArmorCriteria;
 
 interface ArmorRepositoryInterface
 {
+    /**
+     * @return ?DomainArmor
+     */
     public function find(int $id): ?DomainArmor;
-    public function findAll(): Collection;
+
+    /**
+     * @return Collection<DomainArmor>
+     */
+    public function findAllWithItemAndType(ArmorCriteria $criteria): Collection;
 }

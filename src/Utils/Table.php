@@ -1,6 +1,7 @@
 <?php
 namespace src\Utils;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 
 class Table
@@ -21,8 +22,8 @@ class Table
     public function __construct()
     {
         $this->attributes = [
-            Constant::CST_CLASS=>'table',
-            'aria-describedby' => '',
+            Constant::CST_CLASS => Bootstrap::CSS_TABLE,
+            'aria-describedby'  => '',
         ];
 
     }
@@ -40,7 +41,9 @@ class Table
     public function setFilter(string $strContent, int $cols=7): self
     {
         $this->addHeaderRow()
-             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>$cols]]);
+             ->addHeaderCell([
+                Constant::CST_CONTENT    => $strContent,
+                Constant::CST_ATTRIBUTES => [Constant::CST_COLSPAN => $cols]]);
     
         return $this;
     }
@@ -52,24 +55,30 @@ class Table
             $arrNbPerPage = [10, 25, 50, 100];
         }
         // On modifie le margin-top pour pouvoir inclure cette ligne dans le header
-        $this->attributes[Constant::CST_CLASS] = str_replace('mt-5', 'mt-2', $this->attributes[Constant::CST_CLASS]);
+        $this->attributes[Constant::CST_CLASS] = str_replace(Bootstrap::CSS_MT5, 'mt-2', $this->attributes[Constant::CST_CLASS]);
         
         // On construit le contenu de la sélection
         $selectContent = '';
         foreach ($arrNbPerPage as $nbPerPage) {
-            $selectContent .= Html::getOption($nbPerPage, array_merge(['value'=>$nbPerPage], $nbPerPage==$selNbPerPage ? ['selected'=>'selected'] : []));
+            $selectContent .= Html::getOption(
+                $nbPerPage,
+                array_merge(
+                    [Constant::CST_VALUE=>$nbPerPage],
+                    $nbPerPage==$selNbPerPage ? [Constant::CST_SELECTED=>Constant::CST_SELECTED] : []
+                )
+            );
         }
-        $strDivDivContent  = Html::getBalise('label', 'Afficher', ['for'=>Constant::PAGE_NBPERPAGE, Constant::CST_CLASS=>'col-1 me-2 mb-0 text-end"'])
+        $strDivDivContent  = Html::getBalise(Constant::CST_LABEL, 'Afficher', ['for'=>Constant::PAGE_NBPERPAGE, Constant::CST_CLASS=>'col-1 me-2 mb-0 text-end"'])
                            . Html::getBalise('select', $selectContent, [Constant::CST_CLASS=>'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger'=>'change', 'data-action'=>'loadTablePage'])
                            . Html::getSpan('entrées', [Constant::CST_CLASS=>'ms-2 col-9 text-start'])
                            . Html::getBalise('input', '', [Constant::CST_TYPE=>'hidden', Constant::CST_VALUE=>$refElementId, Constant::CST_ID=>'firstElementId', Constant::CST_NAME=>'firstElementId']);
         
         $strDivContent = '<!-- Choix du nombre d\'entrées -->'
-                       . Html::getBalise('div', $strDivDivContent, [Constant::CST_CLASS=>'row col align-items-center']);
+                       . Html::getDiv($strDivDivContent, [Constant::CST_CLASS=>'row col align-items-center']);
         
-        $strContent = Html::getBalise('div', $strDivContent, [Constant::CST_CLASS=>'row mx-2 d-flex justify-content-between align-items-center']);
+        $strContent = Html::getDiv($strDivContent, [Constant::CST_CLASS=>'row mx-2 d-flex justify-content-between align-items-center']);
         $this->addHeaderRow()
-             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, 'attributes'=>['colspan'=>$cols]]);
+             ->addHeaderCell([Constant::CST_CONTENT=>$strContent, Constant::CST_ATTRIBUTES=>[Constant::CST_COLSPAN=>$cols]]);
         return $this;
     }
 
@@ -92,10 +101,10 @@ class Table
                         /*
                     }
                         */
-                    $cellAttributes = $cell['attributes'];
+                    $cellAttributes = $cell[Constant::CST_ATTRIBUTES];
                     $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $headContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
+                $headContent .= Html::getBalise('tr', $rowContent, $row[Constant::CST_ATTRIBUTES]);
             }
         }
         return $headContent;
@@ -111,10 +120,10 @@ class Table
                 foreach ($row['cells'] as $cell) {
                     $cellContent = $cell[Constant::CST_CONTENT];
                     $cellType = $cell[Constant::CST_TYPE];
-                    $cellAttributes = $cell['attributes'];
+                    $cellAttributes = $cell[Constant::CST_ATTRIBUTES];
                     $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $footContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
+                $footContent .= Html::getBalise('tr', $rowContent, $row[Constant::CST_ATTRIBUTES]);
             }
         }
     
@@ -133,17 +142,17 @@ class Table
                 foreach ($row['cells'] as $cell) {
                     $cellContent = $cell[Constant::CST_CONTENT] ?? '';
                     $cellType = $cell[Constant::CST_TYPE] ?? '';
-                    $cellAttributes = $cell['attributes'];
+                    $cellAttributes = $cell[Constant::CST_ATTRIBUTES];
                     $rowContent .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $bodyContent .= Html::getBalise('tr', $rowContent, $row['attributes']);
+                $bodyContent .= Html::getBalise('tr', $rowContent, $row[Constant::CST_ATTRIBUTES]);
             }
         }
 
         $footContent = $this->getFootContent();
 
         return Html::getBalise(
-            'table',
+            Bootstrap::CSS_TABLE,
             Html::getBalise('thead', $headContent, [Constant::CST_CLASS=>$this->header[Constant::CST_CLASS]]).
             Html::getBalise('tbody', $bodyContent).
             Html::getBalise('tfoot', $footContent, [Constant::CST_CLASS=>$this->foot[Constant::CST_CLASS]]),
@@ -164,14 +173,14 @@ class Table
         } else {
             ++$this->nbHeaderRows;
         }
-        $this->header['rows'][$this->nbHeaderRows] = ['attributes'=>[], 'cells'=>[]];
+        $this->header['rows'][$this->nbHeaderRows] = [Constant::CST_ATTRIBUTES=>[], 'cells'=>[]];
         return $this;
     }
     
     public function addHeaderCell(array $cell): self
     {
-        if (!isset($cell['attributes'])) {
-            $cell['attributes'] = [];
+        if (!isset($cell[Constant::CST_ATTRIBUTES])) {
+            $cell[Constant::CST_ATTRIBUTES] = [];
         }
         if (!isset($cell[Constant::CST_TYPE])) {
             $cell[Constant::CST_TYPE] = 'th';
@@ -182,8 +191,8 @@ class Table
     
     public function addFilteredHeaderCell(array $cell): self
     {
-        if (!isset($cell['attributes'])) {
-            $cell['attributes'] = [];
+        if (!isset($cell[Constant::CST_ATTRIBUTES])) {
+            $cell[Constant::CST_ATTRIBUTES] = [];
         }
         if (!isset($cell[Constant::CST_TYPE])) {
             $cell[Constant::CST_TYPE] = 'th';
@@ -197,7 +206,7 @@ class Table
     <li><a class="dropdown-item" href="#">Humanoïde</a></li>
   </ul>';
   
-        $filterTitle = Html::getDiv($button.$dropdown, ['class'=>'dropdown']);
+        $filterTitle = Html::getDiv($button.$dropdown, [Constant::CST_CLASS=>'dropdown']);
         
         $cell[Constant::CST_CONTENT] = $filterTitle;
         
@@ -224,7 +233,7 @@ class Table
             if ($paginateBlock!='') {
                 $this->addFootRow()
                     ->addFootCell(
-                        ['attributes'=>['colspan'=>$colspan], Constant::CST_CONTENT=>$paginateBlock]
+                        [Constant::CST_ATTRIBUTES=>[Constant::CST_COLSPAN=>$colspan], Constant::CST_CONTENT=>$paginateBlock]
                     );
             }
             
@@ -255,14 +264,14 @@ class Table
         } else {
             ++$this->nbBodyRows;
         }
-        $this->body['rows'][$this->nbBodyRows] = ['attributes'=>$attributes, 'cells'=>[]];
+        $this->body['rows'][$this->nbBodyRows] = [Constant::CST_ATTRIBUTES=>$attributes, 'cells'=>[]];
         return $this;
     }
 
     public function addBodyCell(array $cell): self
     {
-        if (!isset($cell['attributes'])) {
-            $cell['attributes'] = [];
+        if (!isset($cell[Constant::CST_ATTRIBUTES])) {
+            $cell[Constant::CST_ATTRIBUTES] = [];
         }
         if (!isset($cell[Constant::CST_TYPE])) {
             $cell[Constant::CST_TYPE] = 'td';
@@ -284,14 +293,14 @@ class Table
         } else {
             ++$this->nbFootRows;
         }
-        $this->foot['rows'][$this->nbFootRows] = ['attributes'=>$attributes, 'cells'=>[]];
+        $this->foot['rows'][$this->nbFootRows] = [Constant::CST_ATTRIBUTES=>$attributes, 'cells'=>[]];
         return $this;
     }
     
     public function addFootCell(array $cell): self
     {
-        if (!isset($cell['attributes'])) {
-            $cell['attributes'] = [];
+        if (!isset($cell[Constant::CST_ATTRIBUTES])) {
+            $cell[Constant::CST_ATTRIBUTES] = [];
         }
         if (!isset($cell[Constant::CST_TYPE])) {
             $cell[Constant::CST_TYPE] = 'th';

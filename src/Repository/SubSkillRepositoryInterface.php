@@ -6,9 +6,8 @@ use src\Collection\Collection;
 
 interface SubSkillRepositoryInterface
 {
-    public function find(int $id): ?DomainSubSkill;
     /**
-     * @return Collection<DomainSubSkill>
+     * @return ?DomainSubSkill
      */
-    public function findAll(array $orderBy = []): Collection;
+    public function find(int $id): ?DomainSubSkill;
 }

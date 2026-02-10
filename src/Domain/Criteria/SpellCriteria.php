@@ -1,10 +1,14 @@
 <?php
 namespace src\Domain\Criteria;
 
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
+use src\Constant\Field;
+
 final class SpellCriteria
 {
     public int $page = 1;
-    public string $type = 'append'; // append ou replace
+    public string $type = 'append';
     public ?int $minLevel = null;
     public ?int $maxLevel = null;
     public array $classes = [];
@@ -21,8 +25,8 @@ final class SpellCriteria
             'post_type'      => 'post',
             'posts_per_page' => 10,
             'category_name'  => 'sort',
-            'orderby'        => 'title',
-            'order'          => 'ASC',
+            'orderby'        => Bootstrap::CSS_TITLE,
+            'order'          => Constant::CST_ASC,
             'paged'          => $this->page,
             'meta_query'     => ['relation' => 'AND'],
         ];
@@ -36,9 +40,9 @@ final class SpellCriteria
         // Filtre niveau
         if ($this->minLevel !== null && $this->maxLevel !== null) {
             $args['meta_query'][] = [
-                'key'     => 'niveau',
-                'value'   => [$this->minLevel, $this->maxLevel],
-                'type'    => 'NUMERIC',
+                'key'     => Field::NIVEAU,
+                Constant::CST_VALUE   => [$this->minLevel, $this->maxLevel],
+                Constant::CST_TYPE    => 'NUMERIC',
                 'compare' => 'BETWEEN',
             ];
         }
@@ -48,8 +52,8 @@ final class SpellCriteria
             $classConditions = [];
             foreach ($this->classes as $class) {
                 $classConditions[] = [
-                    'key'     => 'classes',
-                    'value'   => '"' . $class . '"',
+                    'key'     => Field::CLASSES,
+                    Constant::CST_VALUE   => '"' . $class . '"',
                     'compare' => 'LIKE',
                 ];
             }
@@ -62,8 +66,8 @@ final class SpellCriteria
         // Filtre écoles
         if (!empty($this->schools) && count($this->schools) < 8) {
             $args['meta_query'][] = [
-                'key'     => 'ecole',
-                'value'   => $this->schools,
+                'key'     => Field::SCHOOL,
+                Constant::CST_VALUE   => $this->schools,
                 'compare' => 'IN',
             ];
         }
@@ -72,7 +76,7 @@ final class SpellCriteria
         if ($this->onlyRituel) {
             $args['meta_query'][] = [
                 'key'     => 'rituel',
-                'value'   => '"r"',
+                Constant::CST_VALUE   => '"r"',
                 'compare' => 'LIKE'
             ];
         }
@@ -81,7 +85,7 @@ final class SpellCriteria
         if ($this->onlyConcentration) {
             $args['meta_query'][] = [
                 'key'     => 'concentration',
-                'value'   => '"c"',
+                Constant::CST_VALUE   => '"c"',
                 'compare' => 'LIKE'
             ];
         }
@@ -96,7 +100,7 @@ final class SpellCriteria
     {
         $criteria = new self();
         $criteria->page = (int)($request['page'] ?? 1);
-        $criteria->type = $request['type'] ?? 'append';
+        $criteria->type = $request[Constant::CST_TYPE] ?? 'append';
         $criteria->minLevel = isset($request['levelMinFilter']) ? (int)$request['levelMinFilter'] : null;
         $criteria->maxLevel = isset($request['levelMaxFilter']) ? (int)$request['levelMaxFilter'] : null;
         $criteria->classes = $request['classFilter'] ?? [];

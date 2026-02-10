@@ -23,7 +23,7 @@ final class GearListPresenter
         return new GearRow(
             name: $gear->name,
             slug: $gear->slug,
-            description: $gear->description,
+            description: $gear->getExcerpt(),
             url: UrlGenerator::item($gear->slug),
             weight: Utils::getStrWeight($gear->weight),
             price: Utils::getStrPrice($gear->goldPrice)

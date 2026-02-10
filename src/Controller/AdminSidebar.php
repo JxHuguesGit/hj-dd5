@@ -1,9 +1,11 @@
 <?php
 namespace src\Controller;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Icon;
+use src\Constant\Language;
 use src\Constant\Template;
 use src\Repository\RpgHeros as RepositoryRpgHeros;
 use src\Query\QueryBuilder;
@@ -34,7 +36,7 @@ class AdminSidebar extends Utilities
         $strSidebarMenuItems .= $this->getCompendiumItem();
         
         $attributes = [
-            !in_array($this->currentTab, $this->allowedTabs)||$this->currentTab=='home' ? 'active' : '',
+            !in_array($this->currentTab, $this->allowedTabs)||$this->currentTab=='home' ? Constant::CST_ACTIVE : '',
             $strSidebarMenuItems
         ];
         return $this->getRender(Template::ADMINSIDEBAR, $attributes);
@@ -47,15 +49,15 @@ class AdminSidebar extends Utilities
         $attributes = [
             '',
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=0&step=name',
-            $this->currentTab=='character' && $this->currentId==0 ? 'active' : '',
-            'plus',
+            $this->currentTab=='character' && $this->currentId==0 ? Constant::CST_ACTIVE : '',
+            Icon::IPLUS,
             'Nouveau',
-            'd-none',
+            Bootstrap::CSS_DNONE,
             '',
             '', '',
         ];
         $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
-        // TODO : Gérer un nombre excessif de personnages ?
+
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
         $objDaoHeros = new RepositoryRpgHeros($queryBuilder, $queryExecutor);
@@ -68,10 +70,10 @@ class AdminSidebar extends Utilities
             $attributes = [
                 '',
                 '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id='.$id.'&step='.$rpgHero->getField(Field::CREATESTEP),
-                $this->currentTab=='character' && $this->currentId==$id ? 'active' : '',
+                $this->currentTab=='character' && $this->currentId==$id ? Constant::CST_ACTIVE : '',
                 'user',
                 $name,
-                'd-none',
+                Bootstrap::CSS_DNONE,
                 '',
                 '', $initiales,
             ];
@@ -83,7 +85,7 @@ class AdminSidebar extends Utilities
         $attributes = [
             $this->currentTab=='character' ? 'menu-open' : '',
             '#',
-            $this->currentTab=='character' ? 'active' : '',
+            $this->currentTab=='character' ? Constant::CST_ACTIVE : '',
             'users',
             'Personnages',
             '',
@@ -100,10 +102,10 @@ class AdminSidebar extends Utilities
             // la classe ne sera jamais menu-open puisque pas d'enfants.
             '',
             '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=timeline',
-            $this->currentTab=='timeline' ? 'active' : '',
+            $this->currentTab=='timeline' ? Constant::CST_ACTIVE : '',
             'timeline',
             'Initiative',
-            'd-none',
+            Bootstrap::CSS_DNONE,
             '',
             '', '',
         ];
@@ -115,15 +117,15 @@ class AdminSidebar extends Utilities
     {
         // Liste des sous menus existants
         $children = [
-            ['id' => Constant::WEAPONS,  'label' => 'Armes', 'icon' => Icon::IGAVEL],
-            ['id' => Constant::ARMORS,   'label' => 'Armures', 'icon' => Icon::ISHIELD],
-            ['id' => Constant::SKILLS,   'label' => 'Compétences', 'icon' => Icon::IBRAIN],
-            ['id' => Constant::FEATS,    'label' => 'Dons', 'icon' => Icon::IMEDAL],
-            ['id' => Constant::CST_GEAR, 'label' => 'Matériel', 'icon' => Icon::IBOX],
-            ['id' => Constant::MONSTERS, 'label' => 'Monstres', 'icon' => Icon::IDRAGON],
-            ['id' => Constant::ORIGINS,  'label' => 'Origines', 'icon' => Icon::ICOMPASS],
-            ['id' => Constant::TOOLS,    'label' => 'Outils', 'icon' => Icon::IGAVEL],
-            ['id' => Constant::SPELLS,   'label' => 'Sorts', 'icon' => Icon::ISCROLL],
+            [Constant::CST_ID => Constant::WEAPONS,  Constant::CST_LABEL => Language::LG_WEAPONS,  'icon' => Icon::IGAVEL],
+            [Constant::CST_ID => Constant::ARMORS,   Constant::CST_LABEL => Language::LG_ARMORS,   'icon' => Icon::ISHIELD],
+            [Constant::CST_ID => Constant::SKILLS,   Constant::CST_LABEL => Language::LG_SKILLS,   'icon' => Icon::IBRAIN],
+            [Constant::CST_ID => Constant::FEATS,    Constant::CST_LABEL => Language::LG_FEATS,    'icon' => Icon::IMEDAL],
+            [Constant::CST_ID => Constant::CST_GEAR, Constant::CST_LABEL => Language::LG_GEAR,     'icon' => Icon::IBOX],
+            [Constant::CST_ID => Constant::MONSTERS, Constant::CST_LABEL => 'Monstres',    'icon' => Icon::IDRAGON],
+            [Constant::CST_ID => Constant::ORIGINS,  Constant::CST_LABEL => Language::LG_ORIGINS,  'icon' => Icon::ICOMPASS],
+            [Constant::CST_ID => Constant::TOOLS,    Constant::CST_LABEL => Language::LG_TOOLS,    'icon' => Icon::IGAVEL],
+            [Constant::CST_ID => Constant::SPELLS,   Constant::CST_LABEL => Language::LG_SPELLS,   'icon' => Icon::ISCROLL],
         ];
 
         // Construction du menu
@@ -132,10 +134,10 @@ class AdminSidebar extends Utilities
             $attributes = [
                 '',
                 '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id='.$child['id'],
-                $this->currentTab=='compendium' && $this->currentId==$child['id'] ? 'active' : '',
+                $this->currentTab==Constant::ONG_COMPENDIUM && $this->currentId==$child['id'] ? Constant::CST_ACTIVE : '',
                 $child['icon'],
-                $child['label'],
-                'd-none',
+                $child[Constant::CST_LABEL],
+                Bootstrap::CSS_DNONE,
                 '',
                 '', '',
             ];
@@ -145,9 +147,9 @@ class AdminSidebar extends Utilities
         
         // Attribution au template
         $attributes = [
-            $this->currentTab=='compendium' ? 'menu-open' : '',
+            $this->currentTab==Constant::ONG_COMPENDIUM ? 'menu-open' : '',
             '#',
-            $this->currentTab=='compendium' ? 'active' : '',
+            $this->currentTab==Constant::ONG_COMPENDIUM ? Constant::CST_ACTIVE : '',
             Icon::IBOOK,
             'Compendium',
             '',

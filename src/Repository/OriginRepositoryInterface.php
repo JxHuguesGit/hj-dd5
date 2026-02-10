@@ -7,19 +7,11 @@ use src\Domain\Criteria\OriginCriteria;
 
 interface OriginRepositoryInterface
 {
+    /**
+     * @return ?DomainOrigin
+     */
     public function find(int $id): ?DomainOrigin;
-    /**
-     * @return Collection<DomainOrigin>
-     */
-    public function findAll(array $orderBy = []): Collection;
-    /**
-     * @return Collection<DomainOrigin>
-     */
-    public function findBy(array $criteria, array $orderBy = []): Collection;
-    /**
-     * @return Collection<DomainOrigin>
-     */
-    public function findByComplex(array $criteriaComplex, array $orderBy = [], int $limit = -1): Collection;
+
     /**
      * @return Collection<DomainOrigin>
      */

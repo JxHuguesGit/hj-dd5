@@ -15,14 +15,21 @@ use src\Presenter\ToastBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
+use src\Repository\FeatRepository;
 use src\Repository\ItemRepository;
+use src\Repository\OriginRepository;
+use src\Service\Reader\FeatReader;
 use src\Service\Reader\ItemReader;
+use src\Service\Reader\OriginReader;
 
 class AdminCompendiumPage extends AdminPage
 {
     
     public function getAdminContentPage(string $content=''): string
     {
+        $qb = new QueryBuilder();
+        $qe = new QueryExecutor();
+        $templateRender = new TemplateRenderer();
         $currentId = $this->getArrParams('id');
         $paddingTop = 'padding-top:112px;';
 
@@ -37,19 +44,12 @@ class AdminCompendiumPage extends AdminPage
                 $pageContent = (new SkillCompendiumHandler())->render();
             break;
             case Constant::CST_GEAR :
+                $itemRepository = new ItemRepository($qb, $qe);
                 $pageContent = (new GearCompendiumHandler(
-                    new ItemRepository(
-                        new QueryBuilder(),
-                        new QueryExecutor()
-                    ),
-                    new ItemReader(
-                        new ItemRepository(
-                            new QueryBuilder(),
-                            new QueryExecutor()
-                        )
-                    ),
-                    new ToastBuilder(new TemplateRenderer()),
-                    new TemplateRenderer()
+                    $itemRepository,
+                    new ItemReader($itemRepository),
+                    new ToastBuilder($templateRender),
+                    $templateRender
                 ))->render();
             break;
             case Constant::MONSTERS :
@@ -57,7 +57,14 @@ class AdminCompendiumPage extends AdminPage
                 $paddingTop = '';
             break;
             case Constant::FEATS :
-                $pageContent = (new FeatCompendiumHandler())->render();
+                $featRepository = new FeatRepository($qb, $qe);
+                $pageContent = (new FeatCompendiumHandler(
+                    $featRepository,
+                    new FeatReader($featRepository),
+                    new OriginReader(new OriginRepository($qb, $qe)),
+                    new ToastBuilder($templateRender),
+                    $templateRender
+                ))->render();
                break;
             case Constant::ORIGINS :
                 $pageContent = (new OriginCompendiumHandler())->render();

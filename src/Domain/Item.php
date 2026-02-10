@@ -74,4 +74,9 @@ class Item extends Entity
             ? $this->slug
             : Utils::slugify($this->name);
     }
+
+    public function getExcerpt(int $maxWords = 15): string
+    {
+        return wp_trim_words($this->description, $maxWords, '…');
+    }
 }

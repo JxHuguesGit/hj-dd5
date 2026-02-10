@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller\Compendium;
 
+use ParagonIE\Sodium\Core\Curve25519\Fe;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\FeatCriteria;
@@ -25,6 +26,14 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
 {
     private string $toastContent = '';
 
+    public function __construct(
+        private FeatRepository $featRepository,
+        private FeatReader $featReader,
+        private OriginReader $originReader,
+        private ToastBuilder $toastBuilder,
+        private TemplateRenderer $templateRenderer
+    ) {}
+
     public function render(): string
     {
         $action = Session::fromGet(Constant::CST_ACTION);
@@ -43,58 +52,49 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
 
     private function handleSubmit(string $action, string $slug): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $repository = new FeatRepository($qb, $qe);
-        $criteria = new FeatCriteria();
-        $templateRender = new TemplateRenderer();
-        $toastBuilder = new ToastBuilder($templateRender);
-        $criteria->slug = $slug;
+        return match ($action) {
+            Constant::EDIT => $this->handleEditSubmit($slug),
+            //Constant::NEW  => $this->handleNewSubmit(),
+            default        => $this->renderList(),
+        };
+    }
 
-        $feat = $repository->findAllWithCriteria($criteria)?->first();
+    private function handleEditSubmit(string $slug): string
+    {
+        $criteria = new FeatCriteria();
+        $criteria->slug = $slug;
+        $feat = $this->featRepository->findAllWithCriteria($criteria)?->first();
         if (!$feat) {
-            $this->toastContent = $toastBuilder->error('Échec', "Le don modifié n'existe pas.");
+            $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
             return $this->renderList($slug);
         }
 
-        if ($action === Constant::EDIT) {
-            $changedFields = [];
-            foreach (Feat::EDITABLE_FIELDS as $field) {
-                $value = Session::fromPost($field, 'err');
-                if ($value != 'err' && $feat->$field != $value) {
-                    $feat->$field = $value;
-                    $changedFields[] = $field;
-                }
+        $changedFields = [];
+        foreach (Feat::EDITABLE_FIELDS as $field) {
+            $value = Session::fromPost($field, 'err');
+            if ($value != 'err' && $feat->$field != $value) {
+                $feat->$field = $value;
+                $changedFields[] = $field;
             }
-
-            if (!empty($changedFields)) {
-                // On sauvegarde le changement
-                $repository->updatePartial($feat, $changedFields);
-                $this->toastContent = $toastBuilder->success('Réussite', "Le don <strong>".$feat->name."</strong> a été correctement mis à jour.");
-                return $this->renderList($slug);
-            } else {
-                $this->toastContent = $toastBuilder->info('Information', "Aucune valeur n'a été modifiée pour être enregistrée.");
-                return $this->renderEdit($slug);
-            }
-        } else {
-            // Action pas encore prévue.
         }
 
-        // Par défaut. On verra plus tard quand ça fonctionnera bien.
-        return $this->renderList($slug);
+        if (!empty($changedFields)) {
+            // On sauvegarde le changement
+            $this->featRepository->updatePartial($feat, $changedFields);
+            $this->toastContent = $this->toastBuilder->success("Le don <strong>".$feat->name."</strong> a été correctement mis à jour.");
+            return $this->renderList($slug);
+        } else {
+            $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
+            return $this->renderEdit($slug);
+        }
     }
 
     private function renderEdit(string $slug): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $repository = new FeatRepository($qb, $qe);
-        $reader = new FeatReader($repository);
-        
-        $feat = $reader->featBySlug($slug);
-        // méthode à ajouter dans FeatReader
+        $feat = $this->featReader->featBySlug($slug);
+
         $page = new PageForm(
-            new TemplateRenderer(),
+            $this->templateRenderer,
             new FeatFormBuilder(
                 new WpPostService()
             ),
@@ -106,25 +106,19 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
 
     private function renderList(): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $originRepo = new OriginRepository($qb, $qe);
-        $repository = new FeatRepository($qb, $qe);
-        $reader = new FeatReader($repository);
-
-        $feats = $reader->allFeats([
+        $feats = $this->featReader->allFeats([
             Field::FEATTYPEID => Constant::CST_ASC,
             Field::NAME       => Constant::CST_ASC
         ]);
 
         $presenter = new FeatListPresenter(
-            new OriginReader($originRepo),
+            $this->originReader,
             new WpPostService()
         );
         $presentContent = $presenter->present($feats);
 
         $page = new PageList(
-            new TemplateRenderer(),
+            $this->templateRenderer,
             new FeatTableBuilder(true)
         );
 

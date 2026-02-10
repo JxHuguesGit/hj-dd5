@@ -55,7 +55,7 @@ class Repository
     /**
      * @return ?DomainEntity
      */
-    public function find(int $id)
+    public function find(int $id): ?DomainEntity
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
@@ -78,23 +78,6 @@ class Repository
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
             ->where($criteria)
-            ->orderBy($orderBy)
-            ->limit($limit)
-            ->getQuery();
-
-        return $this->queryExecutor->fetchAll(
-            $this->query,
-            $this->resolveEntityClass(),
-            $this->queryBuilder->getParams(),
-            $display
-        );
-    }
-    
-    public function findByComplex(array $criteriaComplex, array $orderBy=[], int $limit=-1, bool $display=false): Collection
-    {
-        $this->query = $this->queryBuilder->reset()
-            ->select($this->fields, $this->table)
-            ->whereComplex($criteriaComplex)
             ->orderBy($orderBy)
             ->limit($limit)
             ->getQuery();

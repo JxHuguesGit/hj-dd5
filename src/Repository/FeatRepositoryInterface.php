@@ -3,11 +3,17 @@ namespace src\Repository;
 
 use src\Domain\Feat as DomainFeat;
 use src\Collection\Collection;
+use src\Domain\Criteria\FeatCriteria;
 
 interface FeatRepositoryInterface
 {
+    /**
+     * @return ?DomainFeat
+     */
     public function find(int $id): ?DomainFeat;
-    public function findAll(): Collection;
-    public function findBy(array $criteria, array $orderBy = []): Collection;
-    public function findByComplex(array $criteriaComplex, array $orderBy = []): Collection;
+
+    /**
+     * @return Collection<DomainFeat>
+     */
+    public function findAllWithCriteria(FeatCriteria $criteria): Collection;
 }

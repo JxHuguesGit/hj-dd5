@@ -6,9 +6,8 @@ use src\Collection\Collection;
 
 interface PowerRepositoryInterface
 {
-    public function find(int $id): ?DomainPower;
     /**
-     * @return Collection<DomainPower>
+     * @return ?DomainPower
      */
-    public function findAll(): Collection;
+    public function find(int $id): ?DomainPower;
 }

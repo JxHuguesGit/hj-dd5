@@ -33,7 +33,7 @@ final class OriginListPresenter
             name: $origin->name??'',
             url: UrlGenerator::origin($origin->slug)??'',
             abilities: implode(', ', array_map(fn($a) => $a->name, $this->originService->getAbilities($origin)->toArray())),
-            skills: implode('<br>', array_map(fn($s) => Html::getLink($s->name, UrlGenerator::skill($s->slug), Bootstrap::CSS_TEXT_DARK), $this->originService->getSkills($origin)->toArray())),
+            skills: implode(', ', array_map(fn($s) => Html::getLink($s->name, UrlGenerator::skill($s->slug), Bootstrap::CSS_TEXT_DARK), $this->originService->getSkills($origin)->toArray())),
             originFeat: $this->originFeatLink($origin),
             tool: $this->originToolLink($origin)
         );

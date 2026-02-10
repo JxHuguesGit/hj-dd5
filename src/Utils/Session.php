@@ -35,7 +35,8 @@ class Session
             );
         }
 
-        $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
+        //$data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
+        $data = (string) $data;
         return self::sanitizeValue($data, $sanitize);
     }
 
@@ -115,7 +116,7 @@ class Session
             // Cast en fonction du type attendu
             switch ($type) {
                 case FieldType::STRING:
-                    $normalized[$field] = (string)$value;
+                    $normalized[$field] = str_replace("\\'", "'", (string)$value);
                     break;
                 case FieldType::FLOAT:
                     $normalized[$field] = $value === '' ? 0.0 : (float)$value;
