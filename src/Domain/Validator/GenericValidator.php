@@ -31,6 +31,9 @@ final class GenericValidator
                         $errors[$field] = "Le champ $field doit être un entier positif.";
                     }
                     break;
+                default:
+                    $errors[$field] = "Le type de champ $field ($type) n'est pas supporté.";
+                    break;
             }
         }
 

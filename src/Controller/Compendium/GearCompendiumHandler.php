@@ -77,35 +77,39 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
     private function handleEditSubmit(string $slug): string
     {
         $item = $this->itemReader->itemBySlug($slug);
+        $view = null;
+
         if (!$item) {
             $this->toastContent = $this->toastBuilder->error("L'objet modifié n'existe pas.");
-            return $this->renderList($slug);
-        }
-
-        $changedFields = [];
-        foreach (Item::EDITABLE_FIELDS as $field) {
-            $value = Session::fromPost($field, 'err');
-            $value = str_replace("\\'", "'", $value);
-            if ($value != 'err' && $item->$field != $value) {
-                $item->$field = $value;
-                $changedFields[] = $field;
-            }
-        }
-
-        if (!empty($changedFields)) {
-            $errors = ItemValidator::validate($item);
-            if (!empty($errors)) {
-                $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
-                return $this->renderEdit($slug);
-            }
-            // On sauvegarde le changement
-            $this->itemRepository->updatePartial($item, $changedFields);
-            $this->toastContent = $this->toastBuilder->success("L'objet <strong>".$item->name."</strong> a été correctement mis à jour.");
-            return $this->renderList();
+            $view = $this->renderList($slug);
         } else {
-            $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
-            return $this->renderEdit($slug);
+            $changedFields = [];
+            foreach (Item::EDITABLE_FIELDS as $field) {
+                $value = Session::fromPost($field, 'err');
+                $value = str_replace("\\'", "'", $value);
+                if ($value != 'err' && $item->$field != $value) {
+                    $item->$field = $value;
+                    $changedFields[] = $field;
+                }
+            }
+
+            if (!empty($changedFields)) {
+                $errors = ItemValidator::validate($item);
+                if (!empty($errors)) {
+                    $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
+                    $view = $this->renderEdit($slug);
+                } else {
+                    // On sauvegarde le changement
+                    $this->itemRepository->updatePartial($item, $changedFields);
+                    $this->toastContent = $this->toastBuilder->success("L'objet <strong>".$item->name."</strong> a été correctement mis à jour.");
+                    $view = $this->renderList();
+                }
+            } else {
+                $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
+                $view = $this->renderEdit($slug);
+            }
         }
+        return $view;
     }
 
     private function renderCreate(Item $item): string

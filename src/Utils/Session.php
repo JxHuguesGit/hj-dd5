@@ -35,7 +35,6 @@ class Session
             );
         }
 
-        //$data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
         $data = (string) $data;
         return self::sanitizeValue($data, $sanitize);
     }
