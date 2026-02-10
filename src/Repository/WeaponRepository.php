@@ -2,11 +2,11 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Weapon as DomainWeapon;
 use src\Domain\Criteria\WeaponCriteria;
+use src\Query\QueryBuilder;
 
 class WeaponRepository extends Repository implements WeaponRepositoryInterface
 {
@@ -42,12 +42,10 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
         WeaponCriteria $criteria
     ): Collection
     {
-//                array $orderBy=['i.name'=>Constant::CST_ASC]
-
         $baseQuery = "
             SELECT a.id
                 , i.".Field::NAME." AS ".Field::NAME.", i.".Field::SLUG." AS ".Field::SLUG."
-                , ".Field::WEIGHT.", ".Field::GOLDPRICE."
+                , ".Field::WEIGHT.", ".Field::GOLDPRICE.", ".Field::TYPE."
                 , c.".Field::SLUG." AS ".Field::CATEGORYSLUG.", c.".Field::NAME." AS ".Field::CATEGORYNAME."
                 , p.".Field::NAME." AS ".Field::MASTERYNAME.", p.".Field::POSTID." AS ".Field::MASTERYPOSTID."
                 , ".Field::DICECOUNT.", ".Field::DICEFACES."
@@ -62,21 +60,18 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
             self::INNERJOIN . Table::WPNRANGE . " r ON r.id = a.".Field::WPNRANGEID."
         ";
 
-        $filters = [];
-        if ($criteria->type !== null) {
-            $filters[Field::TYPE] = $criteria->type;
-        }
+        $queryBuilder = new QueryBuilder();
+        $queryBuilder->setBaseQuery($baseQuery);
+        $criteria->apply($queryBuilder);
 
-        $this->query = $this->queryBuilder->reset()
-            ->setBaseQuery($baseQuery)
-            ->where($filters)
+        $this->query = $queryBuilder
             ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $queryBuilder->getParams()
         );
     }
 }

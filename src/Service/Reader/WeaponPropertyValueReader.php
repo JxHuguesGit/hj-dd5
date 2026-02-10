@@ -2,6 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
+use src\Constant\Constant;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
 use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
 use src\Repository\WeaponPropertyValueRepositoryInterface;
@@ -37,6 +38,7 @@ final class WeaponPropertyValueReader
     {
         $criteria = new WeaponPropertyValueCriteria();
         $criteria->weaponId = $weaponId;
+        $criteria->orderBy  = ['wp.name'=>Constant::CST_ASC];
         return $this->wpnPropValueRepository->findAllWithCriteria($criteria);
     }
 }

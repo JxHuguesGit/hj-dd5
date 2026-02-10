@@ -7,6 +7,7 @@ use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
 use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Query\QueryBuilder;
 
 class WeaponPropertyValueRepository extends Repository implements WeaponPropertyValueRepositoryInterface
 {
@@ -40,11 +41,6 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
         WeaponPropertyValueCriteria $criteria
     ): Collection
     {
-        return $this->findAllByCriteria($criteria);
-    }
-
-    public function byWeaponId(int $weaponId): Collection
-    {
         $baseQuery = "
             SELECT " . Field::MINRANGE . ", " . Field::MAXRANGE . "
                 , wp." . Field::NAME . " AS " . Field::PROPERTYNAME . ", wp." . Field::SLUG . " AS " . Field::PROPERTYSLUG . "
@@ -55,20 +51,24 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
             INNER JOIN " . Table::WPNPROPERTY . " wp ON wp.id = wpv." . Field::WPNPROPID . "
             LEFT JOIN " . Table::TYPEAMMO . " ta ON ta.id = wpv." . Field::TYPEAMMID . "
             LEFT JOIN " . Table::DMGDIE . " dd ON dd.id = wpv." . Field::DMGDIEID . "
-            WHERE " . Field::WEAPONID . " = " .$weaponId . "
-            ORDER BY " . Field::PROPERTYNAME . " " . Constant::CST_ASC . "
         ";
-        $this->query = $this->queryBuilder->reset()
-            ->setBaseQuery($baseQuery)
+
+        $queryBuilder = new QueryBuilder();
+        $queryBuilder->setBaseQuery($baseQuery);
+
+        $criteria->apply($queryBuilder);
+
+        $this->query = $queryBuilder
+            ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $queryBuilder->getParams()
         );
     }
-    
+
     public function byWeaponIds(array $weaponIds): Collection
     {
         return new Collection();

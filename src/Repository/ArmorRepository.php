@@ -6,6 +6,7 @@ use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Armor as DomainArmor;
 use src\Domain\Criteria\ArmorCriteria;
+use src\Query\QueryBuilder;
 
 class ArmorRepository extends Repository implements ArmorRepositoryInterface
 {
@@ -35,35 +36,23 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
             SELECT a.id, a.".Field::ARMORTYPID.", a.".Field::ARMORCLASS.",
                 a.".Field::STRPENALTY.", a.".Field::STHDISADV.",
                 i.".Field::NAME.", i.".Field::SLUG." AS ".Field::SLUG.",
-                i.".Field::WEIGHT.", i.".Field::GOLDPRICE."
+                i.".Field::WEIGHT.", i.".Field::GOLDPRICE.", i.".Field::TYPE."
             FROM " . Table::ARMOR . " a
             INNER JOIN " . Table::ITEM . " i ON i.id = a.id
         ";
 
-        $filters = [];
-        if ($criteria->type !== null) {
-            $filters[Field::TYPE] = $criteria->type;
-        }
-        if ($criteria->name !== null) {
-            $filters[Field::NAME] = $criteria->name;
-        }
-        if ($criteria->armorTypeId !== null) {
-            $filters[Field::ARMORTYPID] = $criteria->armorTypeId;
-        }
-        if ($criteria->armorClass !== null) {
-            $filters[Field::ARMORCLASS] = $criteria->armorClass;
-        }
+        $queryBuilder = new QueryBuilder();
+        $queryBuilder->setBaseQuery($baseQuery);
+        $criteria->apply($queryBuilder);
 
-        $this->query = $this->queryBuilder->reset()
-            ->setBaseQuery($baseQuery)
-            ->where($filters)
+        $this->query = $queryBuilder
             ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $queryBuilder->getParams()
         );
     }
 }

@@ -67,7 +67,12 @@ class QueryBuilder
             $this->strWhere = " WHERE 1=1";
         }
         foreach ($criteria as $key => $value) {
-            $this->strWhere .= " AND `$key` = %s";
+            if (strpos($key, '.')!==false) {
+                // Dans le cas de jointure, on peut avoir des noms du type : alias.champ
+                $this->strWhere .= " AND $key = %s";
+            } else {
+                $this->strWhere .= " AND `$key` = %s";
+            }
             $this->params[] = $value;
         }
         return $this;
@@ -79,7 +84,11 @@ class QueryBuilder
             $this->strWhere = " WHERE 1=1";
         }
         foreach ($conditions as $cond) {
-            $this->strWhere .= " AND `{$cond['field']}` {$cond['operand']} %s";
+            if (strpos($cond['field'], '.')!==false) {
+                $this->strWhere .= " AND {$cond['field']} {$cond['operand']} %s";
+            } else {
+                $this->strWhere .= " AND `{$cond['field']}` {$cond['operand']} %s";
+            }
             $this->params[] = $cond['value'];
         }
         return $this;

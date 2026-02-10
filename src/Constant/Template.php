@@ -42,6 +42,7 @@ final class Template
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
+    public const ARMOR_CARD          = self::CARD_PATH.'armorCard.tpl';
     public const FEAT_CARD           = self::CARD_PATH.'featCard.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
     public const NOT_FOUND_CARD      = self::CARD_PATH.'notFoundCard.tpl';
@@ -53,6 +54,7 @@ final class Template
     public const SKILL_DETAIL_CARD   = self::CARD_PATH.'skillDetailCard.tpl';
     public const SPECIE_DETAIL_CARD  = self::CARD_PATH.'specieDetailCard.tpl';
     public const SPECIES_POWER_CARD  = self::CARD_PATH.'speciesPowerCard.tpl';
+    public const WEAPON_CARD         = self::CARD_PATH.'weaponCard.tpl';
 
     public const CASTE_PATH          = self::TEMPLATE_PATH.'caste/';
     public const CASTE_DETAIL_GEN    = self::CASTE_PATH.'casteDetailGenerique.tpl';

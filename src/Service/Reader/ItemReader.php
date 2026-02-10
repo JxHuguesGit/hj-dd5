@@ -23,9 +23,11 @@ final class ItemReader
     /**
      * @return ?DomainItem
      */
-    public function itemBySlug(string $slug): ?DomainItem
+    public function itemBySlug(string $slug, ?ItemCriteria $criteria): ?DomainItem
     {
-        $criteria = new ItemCriteria();
+        if ($criteria==null) {
+            $criteria = new ItemCriteria();
+        }
         $criteria->slug = $slug;
         return $this->itemRepository->findAllWithItemAndType($criteria)?->first() ?? null;
     }

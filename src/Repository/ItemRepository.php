@@ -7,6 +7,7 @@ use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Criteria\ItemCriteria;
 use src\Domain\Item as DomainItem;
+use src\Query\QueryBuilder;
 
 class ItemRepository extends Repository implements ItemRepositoryInterface
 {
@@ -37,27 +38,18 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
                 ".Field::WEIGHT.", ".Field::GOLDPRICE.", ".Field::TYPE."
             FROM " . Table::ITEM . " ";
 
-        $filters = [];
-        if ($criteria->type !== null) {
-            $filters[Field::TYPE] = $criteria->type;
-        }
-        if ($criteria->slug !== null) {
-            $filters[Field::SLUG] = $criteria->slug;
-        }
-        if ($criteria->name !== null) {
-            $filters[Field::NAME] = $criteria->name;
-        }
+        $queryBuilder = new QueryBuilder();
+        $queryBuilder->setBaseQuery($baseQuery);
+        $criteria->apply($queryBuilder);
 
-        $this->query = $this->queryBuilder->reset()
-            ->setBaseQuery($baseQuery)
-            ->where($filters)
+        $this->query = $queryBuilder
             ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $queryBuilder->getParams()
         );
     }
 }

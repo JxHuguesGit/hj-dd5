@@ -21,11 +21,6 @@ interface WeaponPropertyValueRepositoryInterface
      * @return Collection<DomainWeaponPropertyValue>
      */
     public function byWeaponIds(array $weaponIds): Collection;
-    
-    /**
-     * @return Collection<DomainWeaponPropertyValue>
-     */
-    public function byWeaponId(int $weaponId): Collection;
 
     /**
      * @return Collection<DomainWeaponPropertyValue>

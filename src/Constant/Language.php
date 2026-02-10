@@ -12,6 +12,10 @@ class Language
     public const LG_ARM_MDM_DONDOFF = 'Armures intermédiaires (s\'enfile en 5 minutes, se retire en 1 minute)';
     public const LG_ARM_HVY_DONDOFF = 'Armures lourdes (s\'enfile en 10 minutes, se retire en 5 minutes)';
     public const LG_ARM_SHD_DONDOFF = 'Boucliers (s\'enfile ou se retire au prix de l\'action Utilisation)';
+    public const LG_ARM_LGT         = 'Armure légère';
+    public const LG_ARM_MDM         = 'Armure intermédiaire';
+    public const LG_ARM_HVY         = 'Armure lourde';
+    public const LG_ARM_SHD         = 'Bouclier';
      
     public const LG_WEAPON_MARTIAL  = ' de guerre';
     public const LG_WEAPON_SIMPLE   = ' courantes';

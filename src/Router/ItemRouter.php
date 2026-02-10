@@ -3,25 +3,34 @@ namespace src\Router;
 
 use src\Constant\Constant;
 use src\Constant\Routes;
-use src\Controller\Public\PublicBase;
-use src\Controller\Public\PublicItemArmor;
-use src\Controller\Public\PublicItemGear;
-use src\Controller\Public\PublicItemTool;
-use src\Controller\Public\PublicItemWeapon;
+use src\Controller\Public\{
+    PublicBase,
+    PublicItemArmor,
+    PublicItemArmorDetail,
+    PublicItemGear,
+    PublicItemTool,
+    PublicItemWeapon,
+    PublicItemWeaponDetail
+};
+use src\Domain\Armor;
+use src\Domain\Criteria\ArmorCriteria;
+use src\Domain\Criteria\ItemCriteria;
+use src\Domain\Item;
+use src\Domain\Weapon;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
+use src\Page\PageItemArmor;
+use src\Page\PageItemWeapon;
 use src\Page\PageList;
-use src\Presenter\ListPresenter\ArmorListPresenter;
-use src\Presenter\ListPresenter\GearListPresenter;
-use src\Presenter\ListPresenter\ToolListPresenter;
-use src\Presenter\ListPresenter\WeaponListPresenter;
-use src\Presenter\TableBuilder\ArmorTableBuilder;
-use src\Presenter\TableBuilder\ItemTableBuilder;
-use src\Presenter\TableBuilder\WeaponTableBuilder;
-use src\Presenter\TableBuilder\ToolTableBuilder;
+use src\Presenter\Detail\ArmorDetailPresenter;
+use src\Presenter\Detail\WeaponDetailPresenter;
+use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolListPresenter, WeaponListPresenter};
+use src\Presenter\TableBuilder\{ArmorTableBuilder, ItemTableBuilder, ToolTableBuilder, WeaponTableBuilder};
+use src\Presenter\ViewModel\ArmorPageView;
+use src\Presenter\ViewModel\WeaponPageView;
 
 class ItemRouter
 {
@@ -37,21 +46,88 @@ class ItemRouter
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de matériel ---
-        if (!preg_match(Routes::ITEMS_PATTERN, $path, $matches)) {
-            return null;
+        if (preg_match(Routes::ITEMS_PATTERN, $path, $matches)) {
+            $typeSlug = $matches[1];
+            $this->menu = new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS);
+            $this->renderer = new TemplateRenderer();
+
+            return match($typeSlug) {
+                Constant::CST_ARMOR  => $this->buildArmorController(),
+                Constant::CST_TOOL   => $this->buildToolController(),
+                Constant::CST_WEAPON => $this->buildWeaponController(),
+                Constant::CST_GEAR   => $this->buildGearController(),
+                default              => null,
+            };
         }
 
-        $typeSlug = $matches[1];
-        $this->menu = new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS);
-        $this->renderer = new TemplateRenderer();
+        ////////////////////////////////////////////////////////////
+        // --- Gestion d'un matériel individuel ---
+        if (preg_match(Routes::ITEM_PATTERN, $path, $matches)) {
+            $itemSlug = $matches[1];
 
-        return match($typeSlug) {
-            Constant::CST_ARMOR  => $this->buildArmorController(),
-            Constant::CST_TOOL   => $this->buildToolController(),
-            Constant::CST_WEAPON => $this->buildWeaponController(),
-            Constant::CST_GEAR   => $this->buildGearController(),
-            default              => null,
-        };
+            $this->menu = new MenuPresenter(PageRegistry::getInstance()->all(), Constant::CST_ITEMS);
+            $this->renderer = new TemplateRenderer();
+
+            $criteria = new ItemCriteria();
+            $criteria->type = null;
+            $item = $this->factory->item()->itemBySlug($itemSlug, $criteria);
+
+            switch ($item?->type) {
+                case Constant::CST_ARMOR :
+                    $item = $this->factory->armor()->itemBySlug($itemSlug);
+                    return $this->buildArmorDetailController($item);
+                    break;
+                case Constant::CST_WEAPON :
+                    $item = $this->factory->weapon()->itemBySlug($itemSlug);
+                    return $this->buildWeaponDetailController($item);
+                    break;
+                default :
+                    return null;
+                    break;
+            }
+        }
+
+        return null;
+    }
+
+    private function buildArmorDetailController(Armor $item): ?PublicBase
+    {
+            if (!$item) {
+                return null;
+            }
+
+            $nav = $this->factory->armor()->getPreviousAndNext($item);
+
+            $pageView = new ArmorPageView(
+                $item,
+                $nav[Constant::CST_PREV],
+                $nav[Constant::CST_NEXT],
+            );
+            $presenter = new ArmorDetailPresenter();
+            $page = new PageItemArmor(
+                new TemplateRenderer()
+            );
+            return new PublicItemArmorDetail($presenter, $this->menu, $pageView, $page);
+    }
+
+    private function buildWeaponDetailController(Weapon $item): ?PublicBase
+    {
+            if (!$item) {
+                return null;
+            }
+
+            $nav = $this->factory->weapon()->getPreviousAndNext($item);
+
+            $pageView = new WeaponPageView(
+                $item,
+                $nav[Constant::CST_PREV],
+                $nav[Constant::CST_NEXT],
+            );
+            $presenter = new WeaponDetailPresenter();
+            $page = new PageItemWeapon(
+                new TemplateRenderer()
+            );
+            return new PublicItemWeaponDetail($presenter, $this->menu, $pageView, $page);
     }
 
     private function buildArmorController(): PublicBase

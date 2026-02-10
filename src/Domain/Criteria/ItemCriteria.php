@@ -7,7 +7,7 @@ use src\Query\QueryBuilder;
 
 final class ItemCriteria extends AbstractCriteria implements CriteriaInterface
 {
-    public string $type  = 'other';
+    public ?string $type  = 'other';
     public ?string $slug = null;
     public ?string $name = null;
     

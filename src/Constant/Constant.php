@@ -60,6 +60,7 @@ class Constant
     public const CST_VALUE      = 'value';
     public const CST_OPENMODAL  = 'openModal';
     public const CST_LABEL      = 'label';
+    public const CST_LABEL_SING = 'labelSingulier';
     public const CST_NAME       = 'name';
     public const CST_ID         = 'id';
     public const CST_CHECKED    = 'checked';

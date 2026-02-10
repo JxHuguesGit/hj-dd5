@@ -8,6 +8,7 @@ use src\Domain\Weapon as DomainWeapon;
 use src\Presenter\ViewModel\WeaponGroup;
 use src\Presenter\ViewModel\WeaponRow;
 use src\Service\Domain\WpPostService;
+use src\Service\Formatter\WeaponFormatter;
 use src\Service\Formatter\WeaponPropertiesFormatter;
 use src\Service\Reader\WeaponPropertyValueReader;
 use src\Utils\Html;
@@ -47,57 +48,45 @@ final class WeaponListPresenter
 
     private function buildRow(DomainWeapon $weapon): WeaponRow
     {
+        $formatter = new WeaponFormatter(
+            $this->wpPostService,
+            $this->formatter,
+            $this->weaponPropertyValue
+        );
+
         return new WeaponRow(
             name: $weapon->name,
             url: UrlGenerator::item($weapon->slug),
             damage: Utils::getStrDamage($weapon),
-            properties: $this->properties($weapon),
-            masteryLink: $this->masteryLink($weapon),
+            properties: $formatter->properties($weapon),
+            masteryLink: $formatter->masteryLink($weapon),
             weight: Utils::getStrWeight($weapon->weight),
             price: Utils::getStrPrice($weapon->goldPrice)
         );
     }
 
-    private function properties(DomainWeapon $weapon): string
-    {
-        $weaponPropertyValues = $this->weaponPropertyValue->byWeaponId($weapon->id);
-        if ($weaponPropertyValues->isEmpty()) {
-            return '-';
-        }
-        
-        $parts = [];
-        foreach ($weaponPropertyValues as $weaponPropertyValue) {
-            $parts[] = $this->formatter->format($weaponPropertyValue, $this->wpPostService);
-        }
-        return implode(', ', $parts);
-    }
-
-    private function masteryLink(DomainWeapon $weapon): string
-    {
-        $this->wpPostService->getById($weapon->masteryPostId);
-        $linkContent = $weapon->masteryName
-            . Html::getSpan($this->wpPostService->getPostContent() ?? '', [Constant::CST_CLASS=>'tooltip-text']);
-        return Html::getLink($linkContent, '#', Bootstrap::CSS_TEXT_DARK.' tooltip-trigger');
-    }
-
-    private static function getWeaponTypes(): array
+    public static function getWeaponTypes(): array
     {
         return [
             Constant::CST_SIMPLE.'_'.Constant::CST_MELEE => [
                 Constant::CST_SLUG => Constant::CST_SIMPLE.'_'.Constant::CST_MELEE,
                 Constant::CST_LABEL => 'Armes simples de mêlée',
+                Constant::CST_LABEL_SING => 'Arme simple de mêlée',
             ],
             Constant::CST_SIMPLE.'_'.Constant::CST_RANGED => [
                 Constant::CST_SLUG => Constant::CST_SIMPLE.'_'.Constant::CST_RANGED,
                 Constant::CST_LABEL => 'Armes simples à distance',
+                Constant::CST_LABEL_SING => 'Arme simple à distance',
             ],
             Constant::CST_MARTIAL.'_'.Constant::CST_MELEE => [
                 Constant::CST_SLUG => Constant::CST_MARTIAL.'_'.Constant::CST_MELEE,
                 Constant::CST_LABEL => 'Armes martiales de mêlée',
+                Constant::CST_LABEL_SING => 'Arme martiale de mêlée',
             ],
             Constant::CST_MARTIAL.'_'.Constant::CST_RANGED => [
                 Constant::CST_SLUG => Constant::CST_MARTIAL.'_'.Constant::CST_RANGED,
                 Constant::CST_LABEL => 'Armes martiales à distance',
+                Constant::CST_LABEL_SING => 'Arme martiale à distance',
             ],
         ];
     }

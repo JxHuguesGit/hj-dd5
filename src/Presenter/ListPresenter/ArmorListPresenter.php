@@ -46,24 +46,28 @@ final class ArmorListPresenter
         );
     }
 
-    private static function getTypesLabel(): array
+    public static function getTypesLabel(): array
     {
         return [
             DomainArmor::TYPE_LIGHT => [
-                Constant::CST_SLUG => Constant::LIGHT,
+                Constant::CST_SLUG  => Constant::LIGHT,
                 Constant::CST_LABEL => Language::LG_ARM_LGT_DONDOFF,
+                Constant::CST_NAME  => Language::LG_ARM_LGT,
             ],
             DomainArmor::TYPE_MEDIUM => [
                 Constant::CST_SLUG => Constant::MEDIUM,
                 Constant::CST_LABEL => Language::LG_ARM_MDM_DONDOFF,
+                Constant::CST_NAME  => Language::LG_ARM_MDM,
             ],
             DomainArmor::TYPE_HEAVY => [
                 Constant::CST_SLUG => Constant::HEAVY,
                 Constant::CST_LABEL => Language::LG_ARM_HVY_DONDOFF,
+                Constant::CST_NAME  => Language::LG_ARM_HVY,
             ],
             DomainArmor::TYPE_SHIELD => [
                 Constant::CST_SLUG => Constant::SHIELD,
                 Constant::CST_LABEL => Language::LG_ARM_SHD_DONDOFF,
+                Constant::CST_NAME  => Language::LG_ARM_SHD,
             ],
         ];
     }

@@ -33,14 +33,23 @@ abstract class Entity
     {
         static::validateSchema();
 
+        // Assigner les valeurs fournies
         foreach ($attributes as $field => $value) {
-            if ($field===Field::ID) {
+            if ($field === Field::ID) {
                 $this->assignId($value);
             } else {
                 $this->__set($field, $value);
             }
         }
+
+        // Compléter avec les champs manquants
+        foreach (static::FIELDS as $field) {
+            if (!array_key_exists($field, $this->data)) {
+                $this->data[$field] = null;
+            }
+        }
     }
+
 
     /**
      * Magic getter pour accéder aux champs via $entity->field
