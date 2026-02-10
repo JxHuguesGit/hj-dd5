@@ -231,7 +231,7 @@ class RpgMonster extends Utilities
 
         // Référence
         $objReference = $presenter->getReference();
-        $strReference = $objReference?->getName() ?? '';
+        $strReference = $objReference?->name ?? '';
         
         // Actions
         $label = Html::getIcon(Icon::IBOOK);

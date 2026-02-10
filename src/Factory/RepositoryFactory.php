@@ -9,6 +9,8 @@ use src\Repository\ArmorRepository;
 use src\Repository\ArmorRepositoryInterface;
 use src\Repository\FeatRepository;
 use src\Repository\FeatRepositoryInterface;
+use src\Repository\FeatTypeRepository;
+use src\Repository\FeatTypeRepositoryInterface;
 use src\Repository\ItemRepository;
 use src\Repository\ItemRepositoryInterface;
 use src\Repository\OriginRepository;
@@ -55,6 +57,11 @@ class RepositoryFactory
     public function feat(): FeatRepositoryInterface
     {
         return $this->make(FeatRepository::class);
+    }
+    
+    public function featType(): FeatTypeRepositoryInterface
+    {
+        return $this->make(FeatTypeRepository::class);
     }
     
     public function item(): ItemRepositoryInterface

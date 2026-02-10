@@ -1,0 +1,23 @@
+<?php
+namespace src\Repository;
+
+use src\Constant\Table;
+use src\Domain\Entity\Reference;
+
+class ReferenceRepository extends Repository
+{
+    public const TABLE = Table::REFERENCE;
+
+    public function getEntityClass(): string
+    {
+        return Reference::class;
+    }
+
+    /**
+     * @return Reference
+     */
+    public function find(int $id): Reference
+    {
+        return parent::find($id) ?? new Reference();
+    }
+}

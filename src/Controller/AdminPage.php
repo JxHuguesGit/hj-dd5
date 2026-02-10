@@ -5,8 +5,10 @@ use src\Constant\Constant;
 use src\Constant\Template;
 
 use src\Entity\Entity;
+use src\Factory\CompendiumFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 
 class AdminPage extends Utilities
 {
@@ -53,7 +55,14 @@ class AdminPage extends Utilities
                 $controller = new AdminCharacterPage($arrUri);
             break;
             case 'compendium' :
-                $controller = new AdminCompendiumPage($arrUri);
+                $controller = new AdminCompendiumPage(
+                    $arrUri,
+                    new CompendiumFactory(
+                        new QueryBuilder(),
+                        new QueryExecutor(),
+                        new TemplateRenderer()
+                    )
+                );
             break;
             case 'home' :
             default :

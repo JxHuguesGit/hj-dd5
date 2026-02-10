@@ -29,6 +29,13 @@ use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolList
 use src\Presenter\TableBuilder\{ArmorTableBuilder, ItemTableBuilder, ToolTableBuilder, WeaponTableBuilder};
 use src\Presenter\ViewModel\ArmorPageView;
 use src\Presenter\ViewModel\WeaponPageView;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Repository\WeaponPropertyValueRepository;
+use src\Service\Domain\WpPostService;
+use src\Service\Formatter\WeaponFormatter;
+use src\Service\Formatter\WeaponPropertiesFormatter;
+use src\Service\Reader\WeaponPropertyValueReader;
 
 class ItemRouter
 {
@@ -123,7 +130,18 @@ class ItemRouter
                 $nav[Constant::CST_PREV],
                 $nav[Constant::CST_NEXT],
             );
-            $presenter = new WeaponDetailPresenter();
+            $presenter = new WeaponDetailPresenter(
+                new WeaponFormatter(
+                    new WpPostService(),
+                    new WeaponPropertiesFormatter(),
+                    new WeaponPropertyValueReader(
+                        new WeaponPropertyValueRepository(
+                            new QueryBuilder(),
+                            new QueryExecutor()
+                        ),
+                    )
+                )
+            );
             $page = new PageItemWeapon(
                 new TemplateRenderer()
             );

@@ -3,81 +3,50 @@ namespace src\Controller;
 
 use src\Constant\Constant;
 use src\Constant\Template;
-use src\Controller\Compendium\ArmorCompendiumHandler;
-use src\Controller\Compendium\FeatCompendiumHandler;
-use src\Controller\Compendium\GearCompendiumHandler;
-use src\Controller\Compendium\OriginCompendiumHandler;
-use src\Controller\Compendium\SkillCompendiumHandler;
-use src\Controller\Compendium\SpellCompendiumHandler;
-use src\Controller\Compendium\ToolCompendiumHandler;
-use src\Controller\Compendium\WeaponCompendiumHandler;
-use src\Presenter\ToastBuilder;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Renderer\TemplateRenderer;
-use src\Repository\FeatRepository;
-use src\Repository\FeatTypeRepository;
-use src\Repository\ItemRepository;
-use src\Repository\OriginRepository;
-use src\Service\Reader\FeatReader;
-use src\Service\Reader\FeatTypeReader;
-use src\Service\Reader\ItemReader;
-use src\Service\Reader\OriginReader;
+use src\Factory\CompendiumFactory;
 
 class AdminCompendiumPage extends AdminPage
 {
+    public function __construct(
+        private array $uri,
+        private CompendiumFactory $compendiumFactory
+    ) {
+        parent::__construct($this->uri);
+    }
     
     public function getAdminContentPage(string $content=''): string
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $templateRender = new TemplateRenderer();
         $currentId = $this->getArrParams('id');
         $paddingTop = 'padding-top:112px;';
 
         switch ($currentId) {
             case Constant::ARMORS :
-                $pageContent = (new ArmorCompendiumHandler())->render();
+                $pageContent = $this->compendiumFactory->armor()->render();
             break;
             case Constant::WEAPONS :
-                $pageContent = (new WeaponCompendiumHandler())->render();
+                $pageContent = $this->compendiumFactory->weapon()->render();
             break;
             case Constant::SKILLS :
-                $pageContent = (new SkillCompendiumHandler())->render();
+                $pageContent = $this->compendiumFactory->skill()->render();
             break;
             case Constant::CST_GEAR :
-                $itemRepository = new ItemRepository($qb, $qe);
-                $pageContent = (new GearCompendiumHandler(
-                    $itemRepository,
-                    new ItemReader($itemRepository),
-                    new ToastBuilder($templateRender),
-                    $templateRender
-                ))->render();
+                $pageContent = $this->compendiumFactory->gear()->render();
             break;
             case Constant::MONSTERS :
                 $pageContent = RpgMonster::getAdminContentPage($this->arrParams);
                 $paddingTop = '';
             break;
             case Constant::FEATS :
-                $featRepository = new FeatRepository($qb, $qe);
-                $featTypeRepository = new FeatTypeRepository($qb, $qe);
-                $pageContent = (new FeatCompendiumHandler(
-                    $featRepository,
-                    new FeatReader($featRepository),
-                    new FeatTypeReader($featTypeRepository),
-                    new OriginReader(new OriginRepository($qb, $qe)),
-                    new ToastBuilder($templateRender),
-                    $templateRender
-                ))->render();
+                $pageContent = $this->compendiumFactory->feat()->render();
                break;
             case Constant::ORIGINS :
-                $pageContent = (new OriginCompendiumHandler())->render();
+                $pageContent = $this->compendiumFactory->origin()->render();
                break;
             case Constant::TOOLS :
-                $pageContent = (new ToolCompendiumHandler())->render();
+                $pageContent = $this->compendiumFactory->tool()->render();
             break;
             case Constant::SPELLS :
-                $pageContent = (new SpellCompendiumHandler())->render();
+                $pageContent = $this->compendiumFactory->spell()->render();
                break;
             default :
                 $pageContent = '';
@@ -90,7 +59,6 @@ class AdminCompendiumPage extends AdminPage
             $pageContent,
             $paddingTop,
         ];
-
         $content .= $this->getRender(Template::ADMINCOMPENDIUM, $attributes);
         return parent::getAdminContentPage($content);
     }

@@ -1,13 +1,15 @@
 <?php
 namespace src\Presenter;
 
+use src\Domain\Entity\Reference;
 use src\Entity\RpgMonster;
 use src\Entity\RpgReference;
 use src\Utils\Utils;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\RpgTypeMonstre;
+use src\Repository\ReferenceRepository;
+use src\Repository\TypeMonstreRepository;
 use src\Repository\RpgSousTypeMonstre;
 use src\Repository\RpgReference as RepositoryRpgReference;
 
@@ -34,7 +36,7 @@ class MonsterPresenter
 
     public function getStrType(): string
     {
-        $objDao = new RpgTypeMonstre($this->queryBuilder, $this->queryExecutor);
+        $objDao = new TypeMonstreRepository($this->queryBuilder, $this->queryExecutor);
         $objTypeMonstre = $objDao->find($this->monster->getMonstreTypeId());
         $gender = '';
         $typeName = $objTypeMonstre?->getStrName($gender) ?? '';
@@ -47,8 +49,8 @@ class MonsterPresenter
         // Sous-type
         if ($this->monster->getMonsterSubTypeId()) {
             $objSousTypeDao = new RpgSousTypeMonstre($this->queryBuilder, $this->queryExecutor);
-            $subType = $objSousTypeDao->find($this->monster->getMonsterSubTypeId());
-            $typeName .= ' (' . ($subType?->getStrName() ?? '') . ')';
+            //$subType = $objSousTypeDao->find($this->monster->getMonsterSubTypeId());
+            //$typeName .= ' (' . ($subType?->getStrName() ?? '') . ')';
         }
 
         return $typeName;
@@ -164,11 +166,11 @@ class MonsterPresenter
         return $this->monster->getAlignement()?->getStrAlignement();
     }
 
-    public function getReference(): ?RpgReference
+    public function getReference(): ?Reference
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
-        $objDao = new RepositoryRpgReference($queryBuilder, $queryExecutor);
+        $objDao = new ReferenceRepository($queryBuilder, $queryExecutor);
         return $objDao->find($this->monster->getReferenceId());
     }
 

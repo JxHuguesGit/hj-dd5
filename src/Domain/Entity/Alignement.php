@@ -1,20 +1,19 @@
 <?php
-namespace src\Entity;
+namespace src\Domain\Entity;
 
 use src\Constant\Field;
+use src\Constant\FieldType;
+use src\Domain\Entity;
 
-class RpgAlignement extends Entity
+class Alignement extends Entity
 {
-    public const TABLE = 'rpgAlignement';
     public const FIELDS = [
         Field::ID,
         Field::NAME,
     ];
     public const FIELD_TYPES = [
-        Field::NAME => 'string',
+        Field::NAME => FieldType::STRING,
     ];
-    
-    protected string $name = '';
 
     protected const ALIGNEMENT_MAP = [
         'Neutral'       => 'Neutre',
