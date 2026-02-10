@@ -2,14 +2,14 @@
 namespace src\Presenter\ViewModel;
 
 use src\Collection\Collection;
-use src\Domain\Specie as DomainSpecie;
+use src\Domain\Entity\Specie;
 
 class SpeciePageView
 {
     public function __construct(
-        public DomainSpecie $specie,
-        public ?DomainSpecie $previous = null,
-        public ?DomainSpecie $next = null,
+        public Specie $specie,
+        public ?Specie $previous = null,
+        public ?Specie $next = null,
         public Collection $abilities = new Collection(),
     ) {}
 

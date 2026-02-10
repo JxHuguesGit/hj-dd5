@@ -3,12 +3,12 @@ namespace src\Service\Domain;
 
 use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Ability as DomainAbility;
-use src\Domain\Feat as DomainFeat;
-use src\Domain\Item as DomainItem;
-use src\Domain\Origin as DomainOrigin;
-use src\Domain\Skill as DomainSkill;
-use src\Domain\Tool as DomainTool;
+use src\Domain\Entity\Ability;
+use src\Domain\Entity\Feat;
+use src\Domain\Entity\Item;
+use src\Domain\Entity\Origin;
+use src\Domain\Entity\Skill;
+use src\Domain\Entity\Tool;
 use src\Repository\FeatRepository;
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginItem as RepositoryOriginItem;
@@ -20,11 +20,11 @@ use src\Service\Reader\SkillReader;
 
 final class OriginService
 {
-    /** @var array<int, DomainAbility> */
+    /** @var array<int, Ability> */
     private array $abilityCache = [];
-    /** @var array<int, DomainItem> */
+    /** @var array<int, Item> */
     private array $itemCache = [];
-    /** @var array<int, DomainSkill> */
+    /** @var array<int, Skill> */
     private array $skillCache = [];
     
     public function __construct(
@@ -38,7 +38,7 @@ final class OriginService
         private ItemReader $itemReader,
     ) {}
     
-    public function getFeat(DomainOrigin $origin): ?DomainFeat
+    public function getFeat(Origin $origin): ?Feat
     {
         if ($origin->featId <= 0) {
             return null;
@@ -47,7 +47,7 @@ final class OriginService
         return $this->featRepository->find($origin->featId);
     }
 
-    public function getTool(DomainOrigin $origin): ?DomainTool
+    public function getTool(Origin $origin): ?Tool
     {
         if ($origin->toolId <= 0) {
             return null;
@@ -56,7 +56,7 @@ final class OriginService
         return $this->toolRepository->find($origin->toolId);
     }
 
-    public function getSkills(DomainOrigin $origin): Collection
+    public function getSkills(Origin $origin): Collection
     {
         $originSkills = $this->originSkillRepository->findBy([
             Field::ORIGINID => $origin->id
@@ -72,7 +72,7 @@ final class OriginService
         return $collection;
     }
 
-    public function getAbilities(DomainOrigin $origin): Collection
+    public function getAbilities(Origin $origin): Collection
     {
         $originAbilities = $this->originAbilityRepository->findBy([
             Field::ORIGINID => $origin->id
@@ -88,7 +88,7 @@ final class OriginService
         return $collection;
     }
 
-    public function getItems(DomainOrigin $origin): Collection
+    public function getItems(Origin $origin): Collection
     {
         $originItems = $this->originItemRepository->findBy([
             Field::ORIGINID => $origin->id

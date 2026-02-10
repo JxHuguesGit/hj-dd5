@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 use src\Repository\SpellRepositoryInterface;
 
 final class SpellReader
@@ -12,7 +12,7 @@ final class SpellReader
     ) {}
     
     /**
-     * @return Collection<DomainSpell>
+     * @return Collection<Spell>
      */
     public function allSpells(array $orderBy=[]): Collection
     {

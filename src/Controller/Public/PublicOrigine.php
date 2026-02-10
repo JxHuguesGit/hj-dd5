@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant;
-use src\Domain\Origin as DomainOrigin;
+use src\Domain\Entity\Origin;
 use src\Page\PageOrigine;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
@@ -11,7 +11,7 @@ use src\Service\Page\OriginPageService;
 
 class PublicOrigine extends PublicBase
 {
-    private ?DomainOrigin $origin;
+    private ?Origin $origin;
 
     public function __construct(
         private string $slug,

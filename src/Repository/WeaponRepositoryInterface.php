@@ -1,19 +1,19 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Weapon as DomainWeapon;
+use src\Domain\Entity\Weapon;
 use src\Collection\Collection;
 use src\Domain\Criteria\WeaponCriteria;
 
 interface WeaponRepositoryInterface
 {
     /**
-     * @return DomainWeapon|null
+     * @return Weapon|null
      */
-    public function find(int $id): ?DomainWeapon;
+    public function find(int $id): ?Weapon;
 
     /**
-     * @return Collection<DomainWeapon>
+     * @return Collection<Weapon>
      */
     public function findAllWithItemAndType(WeaponCriteria $criteria): Collection;
 }

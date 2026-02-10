@@ -1,14 +1,14 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 use src\Presenter\ViewModel\SpellDetail;
 use src\Utils\UrlGenerator;
 
 class SpellDetailPresenter
 {
     public function present(
-        DomainSpell $spell
+        Spell $spell
     ): SpellDetail {
         return new SpellDetail(
             name: $spell->name,

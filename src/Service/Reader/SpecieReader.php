@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\SpeciesCriteria;
-use src\Domain\Specie as DomainSpecie;
+use src\Domain\Entity\Specie;
 use src\Repository\SpeciesRepositoryInterface;
 use src\Utils\Navigation;
 
@@ -16,17 +16,17 @@ final class SpecieReader
     ) {}
 
     /**
-     * @return ?DomainSpecie
+     * @return ?Specie
      */
-    public function speciesById(int $id): ?DomainSpecie
+    public function speciesById(int $id): ?Specie
     {
         return $this->speciesRepository->find($id);
     }
 
     /**
-     * @return ?DomainSpecie
+     * @return ?Specie
      */
-    public function speciesBySlug(string $slug): ?DomainSpecie
+    public function speciesBySlug(string $slug): ?Specie
     {
         $criteria = new SpeciesCriteria();
         $criteria->slug = $slug;
@@ -34,7 +34,7 @@ final class SpecieReader
     }
 
     /**
-     * @return Collection<DomainSpecie>
+     * @return Collection<Specie>
      */
     public function allSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
@@ -44,7 +44,7 @@ final class SpecieReader
     }
 
     /**
-     * @return Collection<DomainSpecie>
+     * @return Collection<Specie>
      */
     public function speciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
@@ -54,7 +54,7 @@ final class SpecieReader
         return $this->speciesRepository->findAllWithCriteria($criteria);
     }
 
-    public function getPreviousAndNext(DomainSpecie $species): array
+    public function getPreviousAndNext(Specie $species): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($species) {

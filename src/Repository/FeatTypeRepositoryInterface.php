@@ -1,7 +1,6 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\FeatType as DomainFeatType;
 use src\Collection\Collection;
 use src\Domain\Criteria\FeatTypeCriteria;
 

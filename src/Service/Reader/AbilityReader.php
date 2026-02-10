@@ -1,8 +1,7 @@
 <?php
 namespace src\Service\Reader;
 
-use src\Collection\Collection;
-use src\Domain\Ability as DomainAbility;
+use src\Domain\Entity\Ability;
 use src\Repository\AbilityRepositoryInterface;
 
 final class AbilityReader
@@ -12,9 +11,9 @@ final class AbilityReader
     ) {}
     
     /**
-     * @return ?DomainAbility
+     * @return ?Ability
      */
-    public function abilityById(int $id): ?DomainAbility
+    public function abilityById(int $id): ?Ability
     {
         return $this->abilityRepository->find($id);
     }

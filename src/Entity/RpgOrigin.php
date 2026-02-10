@@ -4,7 +4,7 @@ namespace src\Entity;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Controller\RpgOrigin as ControllerRpgOrigin;
-use src\Domain\Tool;
+use src\Domain\Entity\Tool;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Repository\RpgOriginAbility as RepositoryRpgOriginAbility;
 use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;

@@ -2,12 +2,10 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant;
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 use src\Presenter\Detail\SpellDetailPresenter;
-use src\Presenter\ViewModel\SpellDetail;
 use src\Presenter\ViewModel\SpellPageView;
 use src\Service\Domain\SpellService;
-use src\Utils\UrlGenerator;
 
 final class SpellPageService
 {
@@ -16,7 +14,7 @@ final class SpellPageService
         private SpellDetailPresenter $presenter,
     ) {}
 
-    public function build(DomainSpell $spell): SpellPageView
+    public function build(Spell $spell): SpellPageView
     {
         $nav = $this->spellService->getPreviousAndNext($spell);
 

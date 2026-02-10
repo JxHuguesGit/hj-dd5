@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\Ability as DomainAbility;
+use src\Domain\Entity\Ability;
 
 class AbilityRepository extends Repository implements AbilityRepositoryInterface
 {
@@ -10,13 +10,13 @@ class AbilityRepository extends Repository implements AbilityRepositoryInterface
 
     public function getEntityClass(): string
     {
-        return DomainAbility::class;
+        return Ability::class;
     }
 
     /**
-     * @return ?DomainAbility
+     * @return ?Ability
      */
-    public function find(int $id): ?DomainAbility
+    public function find(int $id): ?Ability
     {
         return parent::find($id) ?? null;
     }

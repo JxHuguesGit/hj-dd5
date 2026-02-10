@@ -4,7 +4,7 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
-use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Domain\Entity\WeaponPropertyValue;
 use src\Repository\WeaponPropertyValueRepositoryInterface;
 
 final class WeaponPropertyValueReader
@@ -14,15 +14,15 @@ final class WeaponPropertyValueReader
     ) {}
 
     /**
-     * @return ?DomainWeaponPropertyValue
+     * @return ?WeaponPropertyValue
      */
-    public function weaponPropertyValueById(int $id): ?DomainWeaponPropertyValue
+    public function weaponPropertyValueById(int $id): ?WeaponPropertyValue
     {
         return $this->wpnPropValueRepository->find($id);
     }
     
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function allWeaponPropertyValues(array $orderBy=[]): Collection
     {
@@ -32,7 +32,7 @@ final class WeaponPropertyValueReader
     }
 
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function byWeaponId(int $weaponId): Collection
     {

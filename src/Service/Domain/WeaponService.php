@@ -3,14 +3,14 @@ namespace src\Service\Domain;
 
 use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Ability as DomainAbility;
-use src\Domain\Origin as DomainOrigin;
+use src\Domain\Entity\Ability;
+use src\Domain\Entity\Origin;
 use src\Repository\WeaponPropertyValueRepository;
 use src\Service\Reader\WeaponPropertyValueReader;
 
 final class WeaponService
 {
-    /** @var array<int, DomainAbility> */
+    /** @var array<int, Ability> */
     private array $wpnPropValueCache = [];
     
     public function __construct(
@@ -18,7 +18,7 @@ final class WeaponService
         private WeaponPropertyValueReader $weaponPropertyValueReader,
     ) {}
     
-    public function getProperties(DomainOrigin $weapon): Collection
+    public function getProperties(Origin $weapon): Collection
     {
         $weaponPropertyValues = $this->weaponPropertyValueRepository->findBy([
             Field::WEAPONID => $weapon->id

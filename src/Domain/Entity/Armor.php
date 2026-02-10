@@ -1,9 +1,10 @@
 <?php
-namespace src\Domain;
+namespace src\Domain\Entity;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
 use src\Utils\Utils;
+use src\Domain\Entity\Item;
 
 /**
  * @property string $name

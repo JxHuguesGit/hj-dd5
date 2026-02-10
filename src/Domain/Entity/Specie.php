@@ -1,33 +1,31 @@
 <?php
-namespace src\Domain;
+namespace src\Domain\Entity;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Domain\Entity;
 use src\Utils\Utils;
 
 /**
  * @property string $name
- * @property int $featId
- * @property int $toolId
  * @property string $slug
+ * @property int $parentId
  * @property int $postId
  */
-final class Origin extends Entity
+final class Specie extends Entity
 {
     public const FIELDS = [
         Field::ID,
         Field::NAME,
-        Field::FEATID,
-        Field::TOOLID,
         Field::SLUG,
+        Field::PARENTID,
         Field::POSTID,
     ];
     public const FIELD_TYPES = [
-        Field::NAME =>    FieldType::STRING,
-        Field::FEATID =>  FieldType::INTPOSITIVE,
-        Field::TOOLID =>  FieldType::INTPOSITIVE,
-        Field::SLUG =>    FieldType::STRING,
-        Field::POSTID =>  FieldType::INTPOSITIVE,
+        Field::NAME =>     FieldType::STRING,
+        Field::SLUG =>     FieldType::STRING,
+        Field::PARENTID => FieldType::INTPOSITIVE,
+        Field::POSTID =>   FieldType::INTPOSITIVE,
     ];
 
     /**
@@ -36,11 +34,10 @@ final class Origin extends Entity
     public function stringify(): string
     {
         return sprintf(
-            "%s - Slug : %s - FeatId : %s - ToolId : %s - PostId : %s",
+            "%s - Slug : %s - ParentId : %s - PostId : %s",
             $this->name,
             $this->getSlug(),
-            $this->featId,
-            $this->tooldId,
+            $this->parentId,
             $this->postId,
         );
     }

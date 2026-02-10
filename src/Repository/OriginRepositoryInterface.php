@@ -1,19 +1,19 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Origin as DomainOrigin;
+use src\Domain\Entity\Origin;
 use src\Collection\Collection;
 use src\Domain\Criteria\OriginCriteria;
 
 interface OriginRepositoryInterface
 {
     /**
-     * @return ?DomainOrigin
+     * @return ?Origin
      */
-    public function find(int $id): ?DomainOrigin;
+    public function find(int $id): ?Origin;
 
     /**
-     * @return Collection<DomainOrigin>
+     * @return Collection<Origin>
      */
     public function findAllWithCriteria(OriginCriteria $criteria): Collection;
 }

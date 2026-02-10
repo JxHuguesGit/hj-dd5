@@ -4,7 +4,7 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Domain\Criteria\WeaponCriteria;
-use src\Domain\Weapon;
+use src\Domain\Entity\Weapon;
 use src\Repository\WeaponRepositoryInterface;
 use src\Utils\Navigation;
 

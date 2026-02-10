@@ -2,7 +2,7 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant;
-use src\Domain\Specie as DomainSpecie;
+use src\Domain\Entity\Specie;
 use src\Presenter\ViewModel\SpeciePageView;
 use src\Service\Domain\SpecieService;
 use src\Service\Reader\SpecieReader;
@@ -14,7 +14,7 @@ final class SpeciePageService
         private SpecieReader $specieReader,
     ) {}
 
-    public function build(DomainSpecie $specie): SpeciePageView
+    public function build(Specie $specie): SpeciePageView
     {
         $nav = $this->specieReader->getPreviousAndNext($specie);
 

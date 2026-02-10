@@ -1,9 +1,8 @@
 <?php
 namespace src\Repository;
 
-use src\Collection\Collection;
 use src\Constant\Table;
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 
 class SpellRepository extends Repository implements SpellRepositoryInterface
 {
@@ -11,10 +10,10 @@ class SpellRepository extends Repository implements SpellRepositoryInterface
     
     public function getEntityClass(): string
     {
-        return DomainSpell::class;
+        return Spell::class;
     }
 
-    public function find(int $id): ?DomainSpell
+    public function find(int $id): ?Spell
     {
         throw new \Exception('find Not implemented');
     }

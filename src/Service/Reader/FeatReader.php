@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\FeatCriteria;
-use src\Domain\Feat as DomainFeat;
+use src\Domain\Entity\Feat;
 use src\Repository\FeatRepositoryInterface;
 use src\Utils\Navigation;
 
@@ -16,17 +16,17 @@ final class FeatReader
     ) {}
 
     /**
-     * @return ?DomainFeat
+     * @return ?Feat
      */
-    public function featById(int $id): ?DomainFeat
+    public function featById(int $id): ?Feat
     {
         return $this->featRepository->find($id);
     }
 
     /**
-     * @return ?DomainFeat
+     * @return ?Feat
      */
-    public function featBySlug(string $slug): ?DomainFeat
+    public function featBySlug(string $slug): ?Feat
     {
         $criteria = new FeatCriteria();
         $criteria->slug = $slug;
@@ -34,7 +34,7 @@ final class FeatReader
     }
 
     /**
-     * @return Collection<DomainFeat>
+     * @return Collection<Feat>
      */
     public function allFeats(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
@@ -44,7 +44,7 @@ final class FeatReader
     }
 
     /**
-     * @return Collection<DomainFeat>
+     * @return Collection<Feat>
      */
     public function featsByCategory(int $categoryId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
@@ -54,7 +54,7 @@ final class FeatReader
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 
-    public function getPreviousAndNext(DomainFeat $feat): array
+    public function getPreviousAndNext(Feat $feat): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($feat) {

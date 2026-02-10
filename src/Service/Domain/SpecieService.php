@@ -3,14 +3,14 @@ namespace src\Service\Domain;
 
 use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Power as DomainPower;
-use src\Domain\Specie as DomainSpecie;
+use src\Domain\Entity\Power;
+use src\Domain\Entity\Specie;
 use src\Repository\SpeciePower as RepositorySpeciePower;
 use src\Service\Reader\PowerReader;
 
 final class SpecieService
 {
-    /** @var array<int, DomainPower> */
+    /** @var array<int, Power> */
     private array $powerCache = [];
     
     public function __construct(
@@ -19,7 +19,7 @@ final class SpecieService
     ) {}
 
 
-    public function getAbilities(DomainSpecie $specie): Collection
+    public function getAbilities(Specie $specie): Collection
     {
         $speciePowers = $this->speciePowerRepository->findBy([
             Field::SPECIESID => $specie->id

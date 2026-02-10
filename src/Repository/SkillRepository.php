@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Table;
 use src\Domain\Criteria\SkillCriteria;
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 
 class SkillRepository extends Repository implements SkillRepositoryInterface
 {
@@ -12,19 +12,19 @@ class SkillRepository extends Repository implements SkillRepositoryInterface
 
     public function getEntityClass(): string
     {
-        return DomainSkill::class;
+        return Skill::class;
     }
 
     /**
-     * @return DomainSkill
+     * @return Skill
      */
-    public function find(int $id): DomainSkill
+    public function find(int $id): Skill
     {
-        return parent::find($id) ?? new DomainSkill();
+        return parent::find($id) ?? new Skill();
     }
 
     /**
-     * @return Collection<DomainSkill>
+     * @return Collection<Skill>
      */
     public function findAllWithCriteria(
         SkillCriteria $criteria

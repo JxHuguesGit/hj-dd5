@@ -5,9 +5,9 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\OriginCriteria;
-use src\Domain\Feat as DomainFeat;
-use src\Domain\Origin as DomainOrigin;
-use src\Domain\Tool as DomainTool;
+use src\Domain\Entity\Feat;
+use src\Domain\Entity\Origin;
+use src\Domain\Entity\Tool;
 use src\Repository\OriginRepositoryInterface;
 use src\Utils\Navigation;
 
@@ -18,17 +18,17 @@ final class OriginReader
     ) {}
 
     /**
-     * @return ?DomainOrigin
+     * @return ?Origin
      */
-    public function originById(int $id): ?DomainOrigin
+    public function originById(int $id): ?Origin
     {
         return $this->originRepository->find($id);
     }
 
     /**
-     * @return ?DomainOrigin
+     * @return ?Origin
      */
-    public function originBySlug(string $slug): ?DomainOrigin
+    public function originBySlug(string $slug): ?Origin
     {
         $criteria = new OriginCriteria();
         $criteria->slug = $slug;
@@ -36,7 +36,7 @@ final class OriginReader
     }
 
     /**
-     * @return Collection<DomainOrigin>
+     * @return Collection<Origin>
      */
     public function allOrigins(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
@@ -46,9 +46,9 @@ final class OriginReader
     }
 
     /**
-     * @return Collection<DomainOrigin>
+     * @return Collection<Origin>
      */
-    public function originsByFeat(DomainFeat $feat): Collection
+    public function originsByFeat(Feat $feat): Collection
     {
         $criteria = new OriginCriteria();
         $criteria->featId = $feat->id;
@@ -58,14 +58,14 @@ final class OriginReader
     /**
      * @return Collection<DomainOrigin>
      */
-    public function originsByTool(DomainTool $tool): Collection
+    public function originsByTool(Tool $tool): Collection
     {
         $criteria = new OriginCriteria();
         $criteria->toolId = $tool->id;
         return $this->originRepository->findAllWithCriteria($criteria);
     }
 
-    public function getPreviousAndNext(DomainOrigin $origin): array
+    public function getPreviousAndNext(Origin $origin): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($origin) {

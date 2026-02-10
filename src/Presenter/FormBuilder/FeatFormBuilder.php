@@ -5,7 +5,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Domain\Feat as DomainFeat;
+use src\Domain\Entity\Feat;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\FeatTypeReader;
 use src\Utils\Form;
@@ -20,7 +20,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
 
     public function build(object $entity, array $params = []): Form
     {
-        if (!$entity instanceof DomainFeat) {
+        if (!$entity instanceof Feat) {
             throw new \InvalidArgumentException('Expected DomainFeat');
         }
 

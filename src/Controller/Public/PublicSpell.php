@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant;
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 use src\Page\PageSpell;
 use src\Presenter\MenuPresenter;
 use src\Service\Domain\SpellService;
@@ -10,7 +10,7 @@ use src\Service\Page\SpellPageService;
 
 class PublicSpell extends PublicBase
 {
-    private ?DomainSpell $spell;
+    private ?Spell $spell;
 
     public function __construct(
         private string $slug,

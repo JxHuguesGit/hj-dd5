@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\OriginSkill as DomainOriginSkill;
+use src\Domain\Entity\OriginSkill as DomainOriginSkill;
 
 class OriginSkill extends Repository
 {

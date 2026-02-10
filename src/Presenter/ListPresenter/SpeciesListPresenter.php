@@ -3,7 +3,7 @@ namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Domain\Specie as DomainSpecie;
+use src\Domain\Entity\Specie;
 use src\Presenter\ViewModel\SpeciesRow;
 use src\Service\Domain\WpPostService;
 use src\Utils\UrlGenerator;
@@ -21,7 +21,7 @@ final class SpeciesListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainSpecie $specie): SpeciesRow
+    private function buildRow(Specie $specie): SpeciesRow
     {
         $this->wpPostService->getById($specie->postId);
 

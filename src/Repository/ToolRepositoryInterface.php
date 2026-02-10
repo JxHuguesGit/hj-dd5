@@ -1,19 +1,19 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Tool as DomainTool;
+use src\Domain\Entity\Tool;
 use src\Collection\Collection;
 use src\Domain\Criteria\ToolCriteria;
 
 interface ToolRepositoryInterface
 {
     /**
-     * @return ?DomainTool
+     * @return ?Tool
      */
-    public function find(int $id): ?DomainTool;
+    public function find(int $id): ?Tool;
 
     /**
-     * @return Collection<DomainTool>
+     * @return Collection<Tool>
      */
     public function findAllWithItemAndType(ToolCriteria $criteria): Collection;
 }

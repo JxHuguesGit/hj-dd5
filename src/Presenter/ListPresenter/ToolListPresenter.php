@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Domain\Tool as DomainTool;
+use src\Domain\Entity\Tool;
 use src\Presenter\ViewModel\ToolGroup;
 use src\Presenter\ViewModel\ToolRow;
 use src\Service\Reader\OriginReader;
@@ -23,7 +23,7 @@ final class ToolListPresenter
     {
         $grouped = [];
         foreach ($tools as $tool) {
-            /** @var DomainTool $tool */
+            /** @var Tool $tool */
             $grouped[$tool->parentId][] = $this->buildRow($tool);
         }
 
@@ -40,7 +40,7 @@ final class ToolListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainTool $tool): ToolRow
+    private function buildRow(Tool $tool): ToolRow
     {
         $originLabel = $this->resolveToolDetails($tool);
 
@@ -53,7 +53,7 @@ final class ToolListPresenter
         );
     }
 
-    private function resolveToolDetails(DomainTool $tool): string
+    private function resolveToolDetails(Tool $tool): string
     {
         $origins = $this->originReader->originsByTool($tool);
         if ($origins->isEmpty()) {
@@ -70,19 +70,19 @@ final class ToolListPresenter
     private static function getToolTypes(): array
     {
         return [
-            DomainTool::TYPE_DIVERS => [
+            Tool::TYPE_DIVERS => [
                 Constant::CST_SLUG => Constant::DIVERS,
                 Constant::CST_LABEL => Language::LG_TOOL_DIVERS,
             ],
-            DomainTool::TYPE_GAMES => [
+            Tool::TYPE_GAMES => [
                 Constant::CST_SLUG => Constant::GAMES,
                 Constant::CST_LABEL => Language::LG_TOOL_GAMES,
             ],
-            DomainTool::TYPE_MUSIC => [
+            Tool::TYPE_MUSIC => [
                 Constant::CST_SLUG => Constant::MUSIC,
                 Constant::CST_LABEL => Language::LG_TOOL_MUSIC,
             ],
-            DomainTool::TYPE_TOOL => [
+            Tool::TYPE_TOOL => [
                 Constant::CST_SLUG => Constant::TOOLS,
                 Constant::CST_LABEL => Language::LG_TOOL_TOOLS,
             ],

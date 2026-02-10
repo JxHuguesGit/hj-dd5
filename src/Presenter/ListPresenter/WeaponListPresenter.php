@@ -2,16 +2,14 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
 use src\Constant\Constant;
-use src\Domain\Weapon as DomainWeapon;
+use src\Domain\Entity\Weapon;
 use src\Presenter\ViewModel\WeaponGroup;
 use src\Presenter\ViewModel\WeaponRow;
 use src\Service\Domain\WpPostService;
 use src\Service\Formatter\WeaponFormatter;
 use src\Service\Formatter\WeaponPropertiesFormatter;
 use src\Service\Reader\WeaponPropertyValueReader;
-use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 
@@ -27,7 +25,7 @@ final class WeaponListPresenter
     {
         $grouped = [];
         foreach ($weapons as $weapon) {
-            /** @var DomainWeapon $weapon */
+            /** @var Weapon $weapon */
             $key = ($weapon->isMartial() ? Constant::CST_MARTIAL : Constant::CST_SIMPLE) . '_'
                  . ($weapon->isMelee() ? Constant::CST_MELEE : Constant::CST_RANGED);
             $grouped[$key][] = $this->buildRow($weapon);
@@ -46,7 +44,7 @@ final class WeaponListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainWeapon $weapon): WeaponRow
+    private function buildRow(Weapon $weapon): WeaponRow
     {
         $formatter = new WeaponFormatter(
             $this->wpPostService,

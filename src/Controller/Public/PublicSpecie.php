@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant;
-use src\Domain\Specie as DomainSpecies;
+use src\Domain\Entity\Specie;
 use src\Page\PageSpecie;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SpeciePageService;
@@ -11,7 +11,7 @@ use src\Presenter\Detail\SpeciesDetailPresenter;
 
 class PublicSpecie extends PublicBase
 {
-    private ?DomainSpecies $species;
+    private ?Specie $species;
 
     public function __construct(
         private string $slug,

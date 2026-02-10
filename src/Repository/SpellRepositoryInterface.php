@@ -1,14 +1,14 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 use src\Collection\Collection;
 
 interface SpellRepositoryInterface
 {
-    public function find(int $id): ?DomainSpell;
+    public function find(int $id): ?Spell;
     /**
-     * @return Collection<DomainSpell>
+     * @return Collection<Spell>
      */
     public function findAll(array $orderBy = []): Collection;
 }

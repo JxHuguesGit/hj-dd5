@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\SpeciePower as DomainSpeciePower;
+use src\Domain\Entity\SpeciePower as DomainSpeciePower;
 
 class SpeciePower extends Repository
 {

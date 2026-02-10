@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Reader;
 
-use src\Domain\Power as DomainPower;
+use src\Domain\Entity\Power;
 use src\Repository\PowerRepositoryInterface;
 
 final class PowerReader
@@ -11,9 +11,9 @@ final class PowerReader
     ) {}
     
     /**
-     * @return ?DomainPower
+     * @return ?Power
      */
-    public function powerById(int $id): ?DomainPower
+    public function powerById(int $id): ?Power
     {
         return $this->powerRepository->find($id);
     }

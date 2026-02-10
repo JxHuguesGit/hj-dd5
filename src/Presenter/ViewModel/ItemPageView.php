@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-use src\Domain\Item;
+use src\Domain\Entity\Item;
 
 class ItemPageView implements PageViewInterface
 {

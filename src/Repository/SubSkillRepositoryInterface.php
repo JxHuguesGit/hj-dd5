@@ -1,13 +1,12 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\SubSkill as DomainSubSkill;
-use src\Collection\Collection;
+use src\Domain\Entity\SubSkill;
 
 interface SubSkillRepositoryInterface
 {
     /**
-     * @return ?DomainSubSkill
+     * @return ?SubSkill
      */
-    public function find(int $id): ?DomainSubSkill;
+    public function find(int $id): ?SubSkill;
 }

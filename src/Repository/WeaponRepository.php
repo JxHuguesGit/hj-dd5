@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\Weapon as DomainWeapon;
+use src\Domain\Entity\Weapon;
 use src\Domain\Criteria\WeaponCriteria;
 use src\Query\QueryBuilder;
 
@@ -15,19 +15,19 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
 
     public function getEntityClass(): string
     {
-        return DomainWeapon::class;
+        return Weapon::class;
     }
 
     /**
-     * @return DomainWeapon
+     * @return Weapon
      */
-    public function find(int $id): DomainWeapon
+    public function find(int $id): Weapon
     {
-        return parent::find($id) ?? new DomainWeapon();
+        return parent::find($id) ?? new Weapon();
     }
 
     /**
-     * @return Collection<DomainWeapon>
+     * @return Collection<Weapon>
      */
     public function findAll(array $orderBy = []): Collection
     {
@@ -36,7 +36,7 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
     }
 
     /**
-     * @return Collection<DomainWeapon>
+     * @return Collection<Weapon>
      */
     public function findAllWithItemAndType(
         WeaponCriteria $criteria

@@ -12,11 +12,9 @@ use src\Controller\Public\{
     PublicItemWeapon,
     PublicItemWeaponDetail
 };
-use src\Domain\Armor;
-use src\Domain\Criteria\ArmorCriteria;
+use src\Domain\Entity\Armor;
 use src\Domain\Criteria\ItemCriteria;
-use src\Domain\Item;
-use src\Domain\Weapon;
+use src\Domain\Entity\Weapon;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Presenter\MenuPresenter;

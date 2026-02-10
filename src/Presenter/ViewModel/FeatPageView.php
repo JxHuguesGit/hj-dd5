@@ -1,15 +1,15 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-use src\Domain\Feat as DomainFeat;
+use src\Domain\Entity\Feat;
 
 class FeatPageView
 {
     public function __construct(
-        public DomainFeat $feat,
+        public Feat $feat,
         public ?array $origins = null,
-        public ?DomainFeat $previous = null,
-        public ?DomainFeat $next = null,
+        public ?Feat $previous = null,
+        public ?Feat $next = null,
     ) {}
 
     public function __get(string $name): mixed

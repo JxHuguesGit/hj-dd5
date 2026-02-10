@@ -2,7 +2,7 @@
 namespace src\Utils;
 
 use src\Constant\Language;
-use src\Domain\Weapon as DomainWeapon;
+use src\Domain\Entity\Weapon;
 
 class Utils
 {
@@ -65,7 +65,7 @@ class Utils
         return $strPrix;
     }
 
-    public static function getStrDamage(DomainWeapon $weapon): string
+    public static function getStrDamage(Weapon $weapon): string
     {
         // Cas spécial : dégâts fixes (ex : sarbacane = 1)
         if ($weapon->diceFaces <= 1) {
@@ -80,7 +80,7 @@ class Utils
         );
     }
 
-    public static function getWeaponProperties(DomainWeapon $weapon): string
+    public static function getWeaponProperties(Weapon $weapon): string
     {
         $props = [];
         foreach ($weapon->weaponProficiencies as $prop) {
@@ -89,7 +89,7 @@ class Utils
         return $props ? implode(', ', $props) : '-';
     }
 
-    public static function getWeaponRange(DomainWeapon $weapon): string
+    public static function getWeaponRange(Weapon $weapon): string
     {
         if ($weapon->isMelee()) {
             return '-';

@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\Power as DomainPower;
+use src\Domain\Entity\Power;
 
 class PowerRepository extends Repository implements PowerRepositoryInterface
 {
@@ -10,14 +10,14 @@ class PowerRepository extends Repository implements PowerRepositoryInterface
 
     public function getEntityClass(): string
     {
-        return DomainPower::class;
+        return Power::class;
     }
 
     /**
-     * @return DomainPower
+     * @return Power
      */
-    public function find(int $id): DomainPower
+    public function find(int $id): Power
     {
-        return parent::find($id) ?? new DomainPower();
+        return parent::find($id) ?? new Power();
     }
 }

@@ -4,7 +4,7 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Domain\Feat as DomainFeat;
+use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
 use src\Service\Reader\OriginReader;
@@ -24,7 +24,7 @@ final class FeatListPresenter
     {
         $grouped = [];
         foreach ($feats as $feat) {
-            /** @var DomainFeat $feat */
+            /** @var Feat $feat */
             $grouped[$feat->featTypeId][] = $this->buildRow($feat);
         }
 
@@ -42,7 +42,7 @@ final class FeatListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainFeat $feat): FeatRow
+    private function buildRow(Feat $feat): FeatRow
     {
         [$originLabel, $prerequisite] = $this->resolveFeatDetails($feat);
 
@@ -55,18 +55,18 @@ final class FeatListPresenter
         );
     }
 
-    private function resolveFeatDetails(DomainFeat $feat): array
+    private function resolveFeatDetails(Feat $feat): array
     {
         switch ($feat->featTypeId) {
-            case DomainFeat::TYPE_ORIGIN:
+            case Feat::TYPE_ORIGIN:
                 $origins = $this->originReader->originsByFeat($feat);
                 $parts = [];
                 foreach ($origins as $origin) {
                     $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), Bootstrap::CSS_TEXT_DARK);
                 }
                 return [implode(', ', $parts), '-'];
-            case DomainFeat::TYPE_GENERAL:
-            case DomainFeat::TYPE_EPIC:
+            case Feat::TYPE_GENERAL:
+            case Feat::TYPE_EPIC:
                 $this->wpPostService->getById($feat->postId);
                 $wpPreRequis = $this->wpPostService->getField(Constant::CST_PREREQUIS);
                 return ['-', $wpPreRequis ? ucfirst($wpPreRequis) : '-'];
@@ -78,22 +78,22 @@ final class FeatListPresenter
     private static function getFeatTypes(): array
     {
         return [
-            DomainFeat::TYPE_ORIGIN  => [
+            Feat::TYPE_ORIGIN  => [
                 Constant::CST_SLUG => '-'.Constant::ORIGIN,
                 Constant::CST_LABEL => Language::LG_ORIGIN_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => ''
             ],
-            DomainFeat::TYPE_GENERAL => [
+            Feat::TYPE_GENERAL => [
                 Constant::CST_SLUG => '-'.Constant::GENERAL,
                 Constant::CST_LABEL => Language::LG_GENERAL_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV4.')'
             ],
-            DomainFeat::TYPE_COMBAT  => [
+            Feat::TYPE_COMBAT  => [
                 Constant::CST_SLUG => '-'.Constant::COMBAT,
                 Constant::CST_LABEL => Language::LG_CBT_STYLE_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_ASDC.')'
             ],
-            DomainFeat::TYPE_EPIC    => [
+            Feat::TYPE_EPIC    => [
                 Constant::CST_SLUG => '-'.Constant::EPIC,
                 Constant::CST_LABEL => Language::LG_CBT_STYLE_EPICS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV19.')'

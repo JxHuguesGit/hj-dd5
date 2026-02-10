@@ -1,13 +1,12 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Power as DomainPower;
-use src\Collection\Collection;
+use src\Domain\Entity\Power;
 
 interface PowerRepositoryInterface
 {
     /**
-     * @return ?DomainPower
+     * @return ?Power
      */
-    public function find(int $id): ?DomainPower;
+    public function find(int $id): ?Power;
 }

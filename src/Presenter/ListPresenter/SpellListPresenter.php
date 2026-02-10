@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 use src\Presenter\ViewModel\SpellRow;
 use src\Utils\UrlGenerator;
 
@@ -18,7 +18,7 @@ final class SpellListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainSpell $spell): SpellRow
+    private function buildRow(Spell $spell): SpellRow
     {
         return new SpellRow(
             name: $spell->name,

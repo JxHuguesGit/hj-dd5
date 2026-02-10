@@ -2,8 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
-use src\Domain\Origin as DomainOrigin;
+use src\Domain\Entity\Origin;
 use src\Presenter\ViewModel\OriginGroup;
 use src\Presenter\ViewModel\OriginRow;
 use src\Service\Domain\OriginService;
@@ -27,7 +26,7 @@ final class OriginListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainOrigin $origin): OriginRow
+    private function buildRow(Origin $origin): OriginRow
     {
         return new OriginRow(
             name: $origin->name??'',
@@ -39,13 +38,13 @@ final class OriginListPresenter
         );
     }
 
-    private function originFeatLink(DomainOrigin $origin): string
+    private function originFeatLink(Origin $origin): string
     {
         $feat = $this->originService->getFeat($origin);
         return $feat ? Html::getLink($feat->name, UrlGenerator::feat($feat->getSlug()), Bootstrap::CSS_TEXT_DARK) : '-';
     }
 
-    private function originToolLink(DomainOrigin $origin): string
+    private function originToolLink(Origin $origin): string
     {
         $tool = $this->originService->getTool($origin);
         return $tool ? Html::getLink($tool->name, UrlGenerator::item($tool->getSlug()), Bootstrap::CSS_TEXT_DARK) : '-';

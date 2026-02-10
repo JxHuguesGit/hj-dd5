@@ -3,7 +3,7 @@ namespace src\Service\Formatter;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
-use src\Domain\Weapon;
+use src\Domain\Entity\Weapon;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\WeaponPropertyValueReader;
 use src\Utils\Html;

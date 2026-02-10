@@ -2,11 +2,10 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant;
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillPageView;
 use src\Service\Domain\SkillService;
 use src\Service\Reader\AbilityReader;
-use src\Service\Reader\OriginReader;
 use src\Service\Reader\SkillReader;
 
 final class SkillPageService
@@ -17,7 +16,7 @@ final class SkillPageService
         private AbilityReader $abilityReader,
     ) {}
 
-    public function build(DomainSkill $skill): SkillPageView
+    public function build(Skill $skill): SkillPageView
     {
         $nav = $this->skillReader->getPreviousAndNext($skill);
         $subSkills = $this->skillService->subSkills($skill);

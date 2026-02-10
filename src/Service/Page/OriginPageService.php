@@ -2,7 +2,7 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant;
-use src\Domain\Origin as DomainOrigin;
+use src\Domain\Entity\Origin;
 use src\Presenter\ViewModel\OriginPageView;
 use src\Service\Domain\OriginService;
 use src\Service\Reader\OriginReader;
@@ -14,7 +14,7 @@ final class OriginPageService
         private OriginReader $queryService,
     ) {}
 
-    public function build(DomainOrigin $origin): OriginPageView
+    public function build(Origin $origin): OriginPageView
     {
         $nav = $this->queryService->getPreviousAndNext($origin);
 

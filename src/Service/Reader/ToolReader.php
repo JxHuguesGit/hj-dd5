@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Criteria\ToolCriteria;
-use src\Domain\Tool as DomainTool;
+use src\Domain\Entity\Tool;
 use src\Repository\ToolRepositoryInterface;
 
 final class ToolReader
@@ -13,7 +13,7 @@ final class ToolReader
     ) {}
     
     /**
-     * @return Collection<DomainTool>
+     * @return Collection<Tool>
      */
     public function allTools(): Collection
     {

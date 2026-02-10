@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\Armor as DomainArmor;
+use src\Domain\Entity\Armor;
 use src\Domain\Criteria\ArmorCriteria;
 use src\Query\QueryBuilder;
 
@@ -14,15 +14,15 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
 
     public function getEntityClass(): string
     {
-        return DomainArmor::class;
+        return Armor::class;
     }
 
     /**
-     * @return DomainArmor
+     * @return Armor
      */
-    public function find(int $id): DomainArmor
+    public function find(int $id): Armor
     {
-        return parent::find($id) ?? new DomainArmor();
+        return parent::find($id) ?? new Armor();
     }
 
     /**

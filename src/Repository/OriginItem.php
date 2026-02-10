@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\OriginItem as DomainOriginItem;
+use src\Domain\Entity\OriginItem as DomainOriginItem;
 
 class OriginItem extends Repository
 {

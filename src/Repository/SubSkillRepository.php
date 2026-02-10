@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\SubSkill as DomainSubSkill;
+use src\Domain\Entity\SubSkill;
 
 class SubSkillRepository extends Repository implements SubSkillRepositoryInterface
 {
@@ -10,14 +10,14 @@ class SubSkillRepository extends Repository implements SubSkillRepositoryInterfa
 
     public function getEntityClass(): string
     {
-        return DomainSubSkill::class;
+        return SubSkill::class;
     }
 
     /**
-     * @return DomainSubSkill
+     * @return SubSkill
      */
-    public function find(int $id): DomainSubSkill
+    public function find(int $id): SubSkill
     {
-        return parent::find($id) ?? new DomainSubSkill();
+        return parent::find($id) ?? new SubSkill();
     }
 }

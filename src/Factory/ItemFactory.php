@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory;
 
-use src\Domain\Item;
+use src\Domain\Entity\Item;
 use src\Constant\Field;
 use src\Utils\Session;
 use src\Utils\Utils;

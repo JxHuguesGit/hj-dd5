@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant;
-use src\Domain\Feat as DomainFeat;
+use src\Domain\Entity\Feat;
 use src\Page\PageFeat;
 use src\Presenter\MenuPresenter;
 use src\Presenter\Detail\FeatDetailPresenter;
@@ -11,7 +11,7 @@ use src\Service\Reader\FeatReader;
 
 class PublicFeat extends PublicBase
 {
-    private ?DomainFeat $feat;
+    private ?Feat $feat;
 
     public function __construct(
         private string $slug,

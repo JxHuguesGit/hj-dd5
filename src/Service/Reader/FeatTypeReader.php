@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Criteria\FeatTypeCriteria;
-use src\Domain\FeatType as DomainFeatType;
+use src\Domain\Entity\FeatType;
 use src\Repository\FeatTypeRepositoryInterface;
 
 final class FeatTypeReader
@@ -13,7 +13,7 @@ final class FeatTypeReader
     ) {}
      
     /**
-     * @return Collection<DomainFeatType>
+     * @return Collection<FeatType>
      */
     public function allFeatTypes(): Collection
     {

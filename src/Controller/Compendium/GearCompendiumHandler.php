@@ -3,7 +3,7 @@ namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
 use src\Domain\Criteria\ItemCriteria;
-use src\Domain\Item;
+use src\Domain\Entity\Item;
 use src\Domain\Validator\ItemValidator;
 use src\Factory\ItemFactory;
 use src\Page\PageForm;
@@ -76,7 +76,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     private function handleEditSubmit(string $slug): string
     {
-        $item = $this->itemReader->itemBySlug($slug);
+        $item = $this->itemReader->itemBySlug($slug, null);
         $view = null;
 
         if (!$item) {
@@ -125,7 +125,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     private function renderEdit(string $slug): string
     {
-        $item = $this->itemReader->itemBySlug($slug);
+        $item = $this->itemReader->itemBySlug($slug, null);
 
         $page = new PageForm(
             $this->templateRenderer,

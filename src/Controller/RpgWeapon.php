@@ -5,7 +5,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Domain\Weapon as DomainWeapon;
+use src\Domain\Entity\Weapon;
 use src\Repository\Weapon as RepositoryWeapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -14,7 +14,7 @@ use src\Utils\Utils;
 
 class Weapon extends Utilities
 {
-    protected DomainWeapon $rpgWeapon;
+    protected Weapon $rpgWeapon;
 
     public function __construct()
     {

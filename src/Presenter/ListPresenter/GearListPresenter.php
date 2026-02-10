@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Domain\Item as DomainItem;
+use src\Domain\Entity\Item;
 use src\Presenter\ViewModel\GearRow;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
@@ -18,7 +18,7 @@ final class GearListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainItem $gear): GearRow
+    private function buildRow(Item $gear): GearRow
     {
         return new GearRow(
             name: $gear->name,

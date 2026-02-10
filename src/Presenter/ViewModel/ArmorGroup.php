@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-use src\Domain\Armor as DomainArmor;
+use src\Presenter\ViewModel\ArmorRow;
 
 final class ArmorGroup
 {

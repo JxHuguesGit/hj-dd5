@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-use src\Domain\Weapon;
+use src\Domain\Entity\Weapon;
 
 class WeaponPageView extends ItemPageView
 {

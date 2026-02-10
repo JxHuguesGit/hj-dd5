@@ -2,7 +2,7 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant;
-use src\Domain\Feat as DomainFeat;
+use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\OriginReader;
@@ -14,7 +14,7 @@ final class FeatPageService
         private OriginReader $originReader,
     ) {}
 
-    public function build(DomainFeat $feat): FeatPageView
+    public function build(Feat $feat): FeatPageView
     {
         $nav = $this->queryService->getPreviousAndNext($feat);
 
@@ -26,7 +26,7 @@ final class FeatPageService
         );
     }
 
-    private function getOrigins(DomainFeat $feat): array
+    private function getOrigins(Feat $feat): array
     {
         $data = [];
         $origins = $this->originReader->originsByFeat($feat);

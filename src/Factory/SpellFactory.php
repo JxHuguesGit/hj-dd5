@@ -1,13 +1,13 @@
 <?php
 namespace src\Factory;
 
-use src\Domain\Spell as DomainSpell;
+use src\Domain\Entity\Spell;
 
 class SpellFactory
 {
-    public static function fromWpPost(\WP_Post $post): DomainSpell
+    public static function fromWpPost(\WP_Post $post): Spell
     {
-        return new DomainSpell([
+        return new Spell([
             'id'                     => $post->ID,
             'name'                   => $post->post_title,
             'slug'                   => $post->post_name,

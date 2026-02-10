@@ -1,19 +1,19 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 use src\Collection\Collection;
 use src\Domain\Criteria\SkillCriteria;
 
 interface SkillRepositoryInterface
 {
     /**
-     * @return ?DomainSkill
+     * @return ?Skill
      */
-    public function find(int $id): ?DomainSkill;
+    public function find(int $id): ?Skill;
 
     /**
-     * @return Collection<DomainSkill>
+     * @return Collection<Skill>
      */
     public function findAllWithCriteria(SkillCriteria $criteria): Collection;
 }

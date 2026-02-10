@@ -1,19 +1,19 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Specie as DomainSpecies;
+use src\Domain\Entity\Specie;
 use src\Collection\Collection;
 use src\Domain\Criteria\SpeciesCriteria;
 
 interface SpeciesRepositoryInterface
 {
     /**
-     * @return ?DomainSpecies
+     * @return ?Specie
      */
-    public function find(int $id): ?DomainSpecies;
+    public function find(int $id): ?Specie;
 
     /**
-     * @return Collection<DomainSpecies>
+     * @return Collection<Specie>
      */
     public function findAllWithCriteria(SpeciesCriteria $criteria, array $orderBy = []): Collection;
 }

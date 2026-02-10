@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant;
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 use src\Page\PageSkill;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SkillPageService;
@@ -11,7 +11,7 @@ use src\Service\Reader\SkillReader;
 
 class PublicSkill extends PublicBase
 {
-    private ?DomainSkill $skill;
+    private ?Skill $skill;
 
     public function __construct(
         private string $slug,

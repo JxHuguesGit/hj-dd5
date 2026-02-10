@@ -4,7 +4,7 @@ namespace src\Service\Domain;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
 use src\Repository\SubSkillRepository;
 use src\Service\Reader\OriginReader;
@@ -17,7 +17,7 @@ final class SkillService
         private OriginReader $originReader,
     ) {}
 
-    public function subSkills(DomainSkill $skill): Collection
+    public function subSkills(Skill $skill): Collection
     {
         return $this->subSkillRepository->findBy([
             Field::SKILLID => $skill->id
@@ -26,7 +26,7 @@ final class SkillService
         ]);
     }
 
-    public function getOrigines(DomainSkill $skill): Collection
+    public function getOrigines(Skill $skill): Collection
     {
         $originSkills = $this->originSkillRepository->findBy([
             Field::SKILLID => $skill->id

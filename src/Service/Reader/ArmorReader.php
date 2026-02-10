@@ -4,7 +4,7 @@ namespace src\Service\Reader;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Domain\Criteria\ArmorCriteria;
-use src\Domain\Armor as DomainArmor;
+use src\Domain\Entity\Armor;
 use src\Repository\ArmorRepositoryInterface;
 use src\Utils\Navigation;
 
@@ -15,9 +15,9 @@ final class ArmorReader
     ) {}
 
     /**
-     * @return ?DomainArmor
+     * @return ?Armor
      */
-    public function itemBySlug(string $slug): ?DomainArmor
+    public function itemBySlug(string $slug): ?Armor
     {
         $criteria = new ArmorCriteria();
         $criteria->slug = $slug;
@@ -32,7 +32,7 @@ final class ArmorReader
         return $this->armorRepository->findAllWithItemAndType(new ArmorCriteria());
     }
 
-    public function getPreviousAndNext(DomainArmor $armor): array
+    public function getPreviousAndNext(Armor $armor): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($armor) {

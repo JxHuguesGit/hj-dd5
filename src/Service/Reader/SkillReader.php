@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\SkillCriteria;
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 use src\Repository\SkillRepositoryInterface;
 use src\Utils\Navigation;
 
@@ -16,17 +16,17 @@ final class SkillReader
     ) {}
     
     /**
-     * @return ?DomainSkill
+     * @return ?Skill
      */
-    public function skillById(int $id): ?DomainSkill
+    public function skillById(int $id): ?Skill
     {
         return $this->skillRepository->find($id);
     }
 
     /**
-     * @return ?DomainSkill
+     * @return ?Skill
      */
-    public function skillBySlug(string $slug): ?DomainSkill
+    public function skillBySlug(string $slug): ?Skill
     {
         $criteria = new SkillCriteria();
         $criteria->slug = $slug;
@@ -34,7 +34,7 @@ final class SkillReader
     }
     
     /**
-     * @return Collection<DomainSkill>
+     * @return Collection<Skill>
      */
     public function allSkills(array $orderBy=[Field::NAME => Constant::CST_ASC]): Collection
     {
@@ -43,7 +43,7 @@ final class SkillReader
         return $this->skillRepository->findAllWithCriteria($criteria);
     }
 
-    public function getPreviousAndNext(DomainSkill $skill): array
+    public function getPreviousAndNext(Skill $skill): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($skill) {

@@ -2,11 +2,10 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Criteria\ItemCriteria;
-use src\Domain\Item as DomainItem;
+use src\Domain\Entity\Item;
 use src\Query\QueryBuilder;
 
 class ItemRepository extends Repository implements ItemRepositoryInterface
@@ -15,15 +14,15 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     
     public function getEntityClass(): string
     {
-        return DomainItem::class;
+        return Item::class;
     }
 
     /**
-     * @return DomainItem
+     * @return Item
      */
-    public function find(int $id): DomainItem
+    public function find(int $id): Item
     {
-        return parent::find($id) ?? new DomainItem();
+        return parent::find($id) ?? new Item();
     }
 
     /**

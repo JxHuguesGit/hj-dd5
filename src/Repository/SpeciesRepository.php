@@ -2,9 +2,8 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\Specie as DomainSpecies;
+use src\Domain\Entity\Specie;
 use src\Domain\Criteria\SpeciesCriteria;
 
 class SpeciesRepository extends Repository implements SpeciesRepositoryInterface
@@ -13,15 +12,15 @@ class SpeciesRepository extends Repository implements SpeciesRepositoryInterface
     
     public function getEntityClass(): string
     {
-        return DomainSpecies::class;
+        return Specie::class;
     }
 
     /**
-     * @return DomainSpecies
+     * @return Specie
      */
-    public function find(int $id): DomainSpecies
+    public function find(int $id): Specie
     {
-        return parent::find($id) ?? new DomainSpecies();
+        return parent::find($id) ?? new Specie();
     }
 
     /**

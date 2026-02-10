@@ -3,10 +3,9 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
-use src\Domain\Armor as DomainArmor;
+use src\Domain\Entity\Armor;
 use src\Presenter\ViewModel\ArmorGroup;
 use src\Utils\Table;
-use src\Utils\Utils;
 use src\Constant\Language;
 use src\Utils\Html;
 
@@ -27,7 +26,7 @@ class ArmorTableBuilder extends AbstractTableBuilder
             $this->addGroupRow($table, $group->label, 6);
 
             foreach ($group->rows as $armor) {
-                /** @var DomainArmor $armor */
+                /** @var Armor $armor */
                 $table->addBodyRow([])
                     ->addBodyCell([Constant::CST_CONTENT => Html::getLink($armor->name, $armor->url, Bootstrap::CSS_TEXT_DARK)])
                     ->addBodyCell([Constant::CST_CONTENT => $armor->armorClass])

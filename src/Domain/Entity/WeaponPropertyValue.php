@@ -1,8 +1,9 @@
 <?php
-namespace src\Domain;
+namespace src\Domain\Entity;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Domain\Entity;
 
 final class WeaponPropertyValue extends Entity
 {

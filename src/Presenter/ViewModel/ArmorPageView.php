@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-use src\Domain\Armor;
+use src\Domain\Entity\Armor;
 
 class ArmorPageView extends ItemPageView
 {

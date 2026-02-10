@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Field;
 use src\Constant\Table;
-use src\Domain\Tool as DomainTool;
+use src\Domain\Entity\Tool;
 use src\Domain\Criteria\ToolCriteria;
 
 class ToolRepository extends Repository implements ToolRepositoryInterface
@@ -13,13 +13,13 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     
     public function getEntityClass(): string
     {
-        return DomainTool::class;
+        return Tool::class;
     }
 
     /**
-     * @return ?DomainTool
+     * @return ?Tool
      */
-    public function find(mixed $id, bool $display=false): ?DomainTool
+    public function find(mixed $id, bool $display=false): ?Tool
     {
         $baseQuery = "
             SELECT ".Field::PARENTID."
@@ -42,7 +42,7 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     }
 
     /**
-     * @return Collection<DomainTool>
+     * @return Collection<Tool>
      */
     public function findAll(array $orderBy = []): Collection
     {
@@ -51,7 +51,7 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     }
 
     /**
-     * @return Collection<DomainTool>
+     * @return Collection<Tool>
      */
     public function findAllWithItemAndType(
         ToolCriteria $criteria

@@ -4,7 +4,7 @@ namespace src\Service\Domain;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Domain\Result\SpellResult;
-use src\Domain\Spell;
+use src\Domain\Entity\Spell;
 use src\Factory\SpellFactory;
 
 final class SpellService

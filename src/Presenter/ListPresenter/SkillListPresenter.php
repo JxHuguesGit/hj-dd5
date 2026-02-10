@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Domain\Skill as DomainSkill;
+use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillGroup;
 use src\Presenter\ViewModel\SkillRow;
 use src\Service\Domain\SkillService;
@@ -36,7 +36,7 @@ final class SkillListPresenter
         return $collection;
     }
 
-    private function buildRow(DomainSkill $skill): SkillRow
+    private function buildRow(Skill $skill): SkillRow
     {
         return new SkillRow(
             name: $skill->name,

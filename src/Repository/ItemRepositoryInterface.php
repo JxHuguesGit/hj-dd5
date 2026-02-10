@@ -1,19 +1,19 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Item as DomainItem;
+use src\Domain\Entity\Item;
 use src\Collection\Collection;
 use src\Domain\Criteria\ItemCriteria;
 
 interface ItemRepositoryInterface
 {
     /**
-     * @return ?DomainItem
+     * @return ?Item
      */
-    public function find(int $id): ?DomainItem;
+    public function find(int $id): ?Item;
 
     /**
-     * @return Collection<DomainItem>
+     * @return Collection<Item>
      */
     public function findAllWithItemAndType(ItemCriteria $criteria): Collection;
 

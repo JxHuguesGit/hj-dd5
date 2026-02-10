@@ -1,29 +1,29 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Domain\Entity\WeaponPropertyValue;
 use src\Collection\Collection;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
 
 interface WeaponPropertyValueRepositoryInterface
 {
     /**
-     * @return ?DomainWeaponPropertyValue
+     * @return ?WeaponPropertyValue
      */
-    public function find(int $id): ?DomainWeaponPropertyValue;
+    public function find(int $id): ?WeaponPropertyValue;
 
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function allWeaponPropertyValues(): Collection;
 
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function byWeaponIds(array $weaponIds): Collection;
 
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function findAllWithCriteria(WeaponPropertyValueCriteria $criteria): Collection;
 }

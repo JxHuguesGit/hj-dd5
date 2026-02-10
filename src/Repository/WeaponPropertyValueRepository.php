@@ -2,11 +2,10 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Table;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
-use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Domain\Entity\WeaponPropertyValue;
 use src\Query\QueryBuilder;
 
 class WeaponPropertyValueRepository extends Repository implements WeaponPropertyValueRepositoryInterface
@@ -15,19 +14,19 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
 
     public function getEntityClass(): string
     {
-        return DomainWeaponPropertyValue::class;
+        return WeaponPropertyValue::class;
     }
 
     /**
-     * @return ?DomainWeaponPropertyValue
+     * @return ?WeaponPropertyValue
      */
-    public function find(int $id): ?DomainWeaponPropertyValue
+    public function find(int $id): ?WeaponPropertyValue
     {
         return parent::find($id) ?? null;
     }
 
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function allWeaponPropertyValues(): Collection
     {
@@ -35,7 +34,7 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
     }
 
     /**
-     * @return Collection<DomainWeaponPropertyValue>
+     * @return Collection<WeaponPropertyValue>
      */
     public function findAllWithCriteria(
         WeaponPropertyValueCriteria $criteria

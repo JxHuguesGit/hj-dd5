@@ -3,14 +3,14 @@ namespace src\Service\Formatter;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
-use src\Domain\WeaponPropertyValue as DomainWeaponPropertyValue;
+use src\Domain\Entity\WeaponPropertyValue;
 use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 
 class WeaponPropertiesFormatter
 {
     public function format(
-        DomainWeaponPropertyValue $weaponPropertyValue,
+        WeaponPropertyValue $weaponPropertyValue,
         WpPostService $wpPostService
     ): string
     {
@@ -43,13 +43,13 @@ class WeaponPropertiesFormatter
         return $property;
     }
 
-    private function formatPolyvalente(DomainWeaponPropertyValue $weaponPropertyValue): string
+    private function formatPolyvalente(WeaponPropertyValue $weaponPropertyValue): string
     {
         return " (" . $weaponPropertyValue->diceCount
             . ($weaponPropertyValue->diceFaces > 1 ? "d" . $weaponPropertyValue->diceFaces : "") . ")";
     }
 
-    private function formatLancer(DomainWeaponPropertyValue $weaponPropertyValue): string
+    private function formatLancer(WeaponPropertyValue $weaponPropertyValue): string
     {
         return " (portée " . $this->feetToMeters($weaponPropertyValue->minRange)
             . "/" . $this->feetToMeters($weaponPropertyValue->maxRange) . ")";
@@ -60,13 +60,13 @@ class WeaponPropertiesFormatter
         return 3*$value/10;
     }
 
-    private function formatMunitions(DomainWeaponPropertyValue $weaponPropertyValue): string
+    private function formatMunitions(WeaponPropertyValue $weaponPropertyValue): string
     {
         return substr($this->formatLancer(($weaponPropertyValue)), 0, -1) . " ; " . $weaponPropertyValue->ammunitionName . ")";
     }
 
     private function getLink(
-        DomainWeaponPropertyValue $weaponPropertyValue,
+        WeaponPropertyValue $weaponPropertyValue,
         WpPostService $wpPostService
     ): string
     {

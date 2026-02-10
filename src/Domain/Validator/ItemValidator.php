@@ -2,8 +2,7 @@
 namespace src\Domain\Validator;
 
 use src\Constant\Field;
-use src\Domain\Item;
-use src\Constant\FieldType;
+use src\Domain\Entity\Item;
 
 final class ItemValidator
 {

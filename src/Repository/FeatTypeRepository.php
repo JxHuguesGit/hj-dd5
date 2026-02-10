@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Table;
 use src\Domain\Criteria\FeatTypeCriteria;
-use src\Domain\FeatType as DomainFeatType;
+use src\Domain\Entity\FeatType;
 
 class FeatTypeRepository extends Repository implements FeatTypeRepositoryInterface
 {
@@ -12,11 +12,11 @@ class FeatTypeRepository extends Repository implements FeatTypeRepositoryInterfa
 
     public function getEntityClass(): string
     {
-        return DomainFeatType::class;
+        return FeatType::class;
     }
 
     /**
-     * @return Collection<DomainFeatType>
+     * @return Collection<FeatType>
      */
     public function findAllWithCriteria(
         FeatTypeCriteria $criteria

@@ -1,13 +1,12 @@
 <?php
 namespace src\Repository;
 
-use src\Domain\Ability as DomainAbility;
-use src\Collection\Collection;
+use src\Domain\Entity\Ability;
 
 interface AbilityRepositoryInterface
 {
     /**
-     * @return ?DomainAbility
+     * @return ?Ability
      */
-    public function find(int $id): ?DomainAbility;
+    public function find(int $id): ?Ability;
 }

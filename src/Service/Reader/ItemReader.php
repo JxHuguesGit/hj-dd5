@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Domain\Item as DomainItem;
+use src\Domain\Entity\Item;
 use src\Domain\Criteria\ItemCriteria;
 use src\Repository\ItemRepositoryInterface;
 
@@ -13,17 +13,17 @@ final class ItemReader
     ) {}
 
     /**
-     * @return ?DomainItem
+     * @return ?Item
      */
-    public function itemById(int $id): ?DomainItem
+    public function itemById(int $id): ?Item
     {
         return $this->itemRepository->find($id);
     }
 
     /**
-     * @return ?DomainItem
+     * @return ?Item
      */
-    public function itemBySlug(string $slug, ?ItemCriteria $criteria): ?DomainItem
+    public function itemBySlug(string $slug, ?ItemCriteria $criteria): ?Item
     {
         if ($criteria==null) {
             $criteria = new ItemCriteria();
@@ -33,7 +33,7 @@ final class ItemReader
     }
 
     /**
-     * @return Collection<DomainItem>
+     * @return Collection<Item>
      */
     public function allGears(): Collection
     {

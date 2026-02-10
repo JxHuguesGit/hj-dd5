@@ -4,7 +4,7 @@ namespace src\Controller\Compendium;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\FeatCriteria;
-use src\Domain\Feat;
+use src\Domain\Entity\Feat;
 use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\FeatFormBuilder;

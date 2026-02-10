@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\OriginAbility as DomainOriginAbility;
+use src\Domain\Entity\OriginAbility as DomainOriginAbility;
 
 class OriginAbility extends Repository
 {

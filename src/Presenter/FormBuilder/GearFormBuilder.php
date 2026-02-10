@@ -5,7 +5,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Domain\Item as DomainItem;
+use src\Domain\Entity\Item;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;
 
@@ -17,7 +17,7 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
 
     public function build(object $entity, array $params = []): Form
     {
-        if (!$entity instanceof DomainItem) {
+        if (!$entity instanceof Item) {
             throw new \InvalidArgumentException('Expected DomainItem');
         }
 
