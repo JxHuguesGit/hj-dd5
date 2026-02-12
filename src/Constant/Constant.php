@@ -48,6 +48,7 @@ class Constant
     public const CST_CONTENT = 'content';
     public const CST_DESC       = 'DESC';
     public const CST_TYPE = 'type';
+    public const CST_AJAXACTION = 'ajaxAction';
     public const CST_FEAT = 'feat';
     public const CST_COLSPAN = 'colspan';
     public const CST_ATTRIBUTES = 'attributes';

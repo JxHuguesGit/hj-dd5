@@ -8,7 +8,7 @@ use src\Domain\Criteria\WeaponCriteria;
 interface WeaponRepositoryInterface
 {
     /**
-     * @return Weapon|null
+     * @return ?Weapon
      */
     public function find(int $id): ?Weapon;
 

@@ -13,6 +13,8 @@ function ajaxActionClick(obj, e) {
     for (let oneAction of actions) {
         if (oneAction=='loadMoreSpells') {
             loadMoreSpells('append');
+        } else if (oneAction=='loadMoreMonsters') {
+            loadMoreMonsters('append');
         } else if (oneAction=='openModal') {
             const target = obj.data('target');
             openModal(target);
@@ -77,6 +79,50 @@ function loadMoreSpells(type) {
                     $('div[data-action="loadMoreSpells"] i').show();
                 } else {
                     $('div[data-action="loadMoreSpells"] i').hide();
+                }
+
+            } catch (e) {
+                console.log("error: "+e);
+                console.log(response);
+            }
+        }
+    ).done(function(response) {
+    });    
+}
+
+// Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des monstres
+function loadMoreMonsters(type) {
+    const page = $('#spellMonster tbody tr').length/10 + 1;
+    const data = {
+        'action': 'dealWithAjax',
+        'ajaxAction': 'loadMoreMonsters',
+        'type': type,
+        'page': page,
+        //'spellFilter': $('#formSpellFilter').serialize()
+    };
+    const baseUrl = globalThis.location.origin;
+    const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
+    
+    $.post(
+        ajaxUrl,
+        data,
+        function(response) {
+            try {
+                let obj = JSON.parse(response.data);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(obj.data.html, "text/html");
+                const tbodyContent = doc.querySelector("tbody").innerHTML;
+                if (type=='append') {
+                    $('#spellMonster tbody').append(tbodyContent);
+                } else {
+                    $('#spellMonster tbody').html(tbodyContent);
+                }
+
+                const hasMore = obj.data.hasMore;
+                if (hasMore) {
+                    $('div[data-action="loadMoreMonsters"] i').show();
+                } else {
+                    $('div[data-action="loadMoreMonsters"] i').hide();
                 }
 
             } catch (e) {

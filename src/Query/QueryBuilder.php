@@ -113,10 +113,10 @@ class QueryBuilder
         return $this;
     }
 
-    public function limit(int $limit): self
+    public function limit(int $limit, int $offset = 0): self
     {
         if ($limit > 0) {
-            $this->strLimit = " LIMIT $limit";
+            $this->strLimit = ' LIMIT '.($offset!=0 ? $offset . ', ' : '') . $limit;
         }
         return $this;
     }

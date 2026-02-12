@@ -7,15 +7,15 @@ use src\Utils\Table;
 use src\Utils\Html;
 use src\Constant\Constant;
 use src\Constant\Language;
-use src\Utils\UrlGenerator;
 
 class OriginTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $groups, array $params = []): Table
     {
-        $table = $this->createTable(5, $params);
+        $headers = [Language::LG_ORIGINS, Language::LG_ABILITIES, Language::LG_ORIGIN_FEAT, Language::LG_SKILLS, Language::LG_TOOLS];
+        $table = $this->createTable(count($headers), $params);
 
-        foreach ([Language::LG_ORIGINS, Language::LG_ABILITIES, Language::LG_ORIGIN_FEAT, Language::LG_SKILLS, Language::LG_TOOLS] as $label) {
+        foreach ($headers as $label) {
             $table->addHeaderCell([Constant::CST_CONTENT => $label]);
         }
 

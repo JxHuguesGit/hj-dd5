@@ -12,9 +12,10 @@ class SpeciesTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $rows, array $params = []): Table
     {
-        $table = $this->createTable(4, $params);
+        $headers = [Language::LG_SPECIE, Language::LG_CREATURE_TYPE, Language::LG_SIZE_CATEGORY, Language::LG_SPEED];
+        $table = $this->createTable(count($headers), $params);
 
-        foreach ([Language::LG_SPECIE, Language::LG_CREATURE_TYPE, Language::LG_SIZE_CATEGORY, Language::LG_SPEED] as $label) {
+        foreach ($headers as $label) {
             $table->addHeaderCell([Constant::CST_CONTENT => $label]);
         }
 

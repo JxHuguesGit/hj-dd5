@@ -2,7 +2,6 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Utils\Table;
-use src\Utils\Html;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 

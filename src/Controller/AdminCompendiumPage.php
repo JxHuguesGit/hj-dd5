@@ -33,8 +33,7 @@ class AdminCompendiumPage extends AdminPage
                 $pageContent = $this->compendiumFactory->gear()->render();
             break;
             case Constant::MONSTERS :
-                $pageContent = RpgMonster::getAdminContentPage($this->arrParams);
-                $paddingTop = '';
+                $pageContent = $this->compendiumFactory->monster()->render();
             break;
             case Constant::FEATS :
                 $pageContent = $this->compendiumFactory->feat()->render();

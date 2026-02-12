@@ -4,7 +4,7 @@ namespace src\Repository;
 use src\Constant\Table;
 use src\Domain\Entity\Reference;
 
-class ReferenceRepository extends Repository
+class ReferenceRepository extends Repository implements ReferenceRepositoryInterface
 {
     public const TABLE = Table::REFERENCE;
 

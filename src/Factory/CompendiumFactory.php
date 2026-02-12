@@ -12,8 +12,10 @@ use src\Controller\Compendium\ToolCompendiumHandler;
 use src\Controller\Compendium\WeaponCompendiumHandler;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
+use src\Presenter\ListPresenter\MonsterListPresenter;
 use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\TableBuilder\ArmorTableBuilder;
+use src\Presenter\TableBuilder\MonsterTableBuilder;
 use src\Presenter\TableBuilder\WeaponTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Query\QueryBuilder;
@@ -23,15 +25,20 @@ use src\Repository\ArmorRepository;
 use src\Repository\FeatRepository;
 use src\Repository\FeatTypeRepository;
 use src\Repository\ItemRepository;
+use src\Repository\MonsterRepository;
 use src\Repository\OriginRepository;
+use src\Repository\ReferenceRepository;
 use src\Repository\WeaponPropertyValueRepository;
 use src\Repository\WeaponRepository;
 use src\Service\Domain\WpPostService;
+use src\Service\Formatter\MonsterFormatter;
 use src\Service\Formatter\WeaponPropertiesFormatter;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
+use src\Service\Reader\MonsterReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\ReferenceReader;
 use src\Service\Reader\WeaponPropertyValueReader;
 use src\Service\Reader\WeaponReader;
 
@@ -54,14 +61,20 @@ final class CompendiumFactory
 
     public function monster(): MonsterCompendiumHandler
     {
-        return new MonsterCompendiumHandler();
+        return new MonsterCompendiumHandler(
+            new MonsterReader(new MonsterRepository($this->qb, $this->qe)),
+            new MonsterListPresenter(
+                new MonsterFormatter(),
+                new ReferenceReader(new ReferenceRepository($this->qb, $this->qe))
+            ),
+            new PageList($this->renderer, new MonsterTableBuilder())
+        );
     }
 
     public function weapon(): WeaponCompendiumHandler
     {
-        $weaponRepository = new WeaponRepository($this->qb, $this->qe);
         return new WeaponCompendiumHandler(
-            new WeaponReader($weaponRepository),
+            new WeaponReader(new WeaponRepository($this->qb, $this->qe)),
             new WeaponListPresenter(
                 new WpPostService(),
                 new WeaponPropertiesFormatter(),

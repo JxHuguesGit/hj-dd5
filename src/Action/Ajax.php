@@ -18,7 +18,7 @@ class Ajax{
             'modalSpellCard' => fn() => SpellCard::build(),
         ];
         try {
-            if ($ajaxAction === 'loadMoreSpells') {
+            if (in_array($ajaxAction, ['loadMoreSpells', 'loadMoreMonsters'])) {
                 $router = new AjaxRouter();
                 $response = $router->dispatch($ajaxAction);
                 $response[$ajaxAction] = $response['data'];

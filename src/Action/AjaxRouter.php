@@ -2,12 +2,13 @@
 namespace src\Action;
 
 use src\Action\Ajax\LoadMoreSpellsAction;
-use src\Utils\Session;
+use src\Action\Ajax\LoadMoreMonstersAction;
 
 class AjaxRouter
 {
     private array $actions = [
         'loadMoreSpells' => LoadMoreSpellsAction::class,
+        'loadMoreMonsters' => LoadMoreMonstersAction::class,
     ];
     
     public function dispatch(string $ajaxAction): array

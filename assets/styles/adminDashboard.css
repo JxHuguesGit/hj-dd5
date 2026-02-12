@@ -88,3 +88,7 @@ table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order::before, ta
   opacity: 1;
 
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

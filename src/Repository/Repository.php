@@ -6,7 +6,6 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Domain\Criteria\CriteriaInterface;
 use src\Domain\Entity as DomainEntity;
-use src\Entity\Entity;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 
@@ -180,6 +179,7 @@ class Repository
 
         $this->query = $queryBuilder
             ->orderBy($criteria->orderBy)
+            ->limit($criteria->limit ?? -1, $criteria->offset ?? 0)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(

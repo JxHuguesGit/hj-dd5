@@ -25,7 +25,7 @@ final class ArmorReader
     }
      
     /**
-     * @return Collection<DomainArmor>
+     * @return Collection<Armor>
      */
     public function allArmors(): Collection
     {

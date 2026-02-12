@@ -15,7 +15,9 @@ class Icon
     public const IBOX      = 'box';
     public const IBOOK     = 'book';
     public const IPLUS     = 'plus';
+    public const ISEARCH   = 'search';
 
+    public const ICIRCLEPLUS = 'circle-'.self::IPLUS;
     public const ISQUAREPLUS = 'square-'.self::IPLUS;
     
     public const REGULAR = 'regular';

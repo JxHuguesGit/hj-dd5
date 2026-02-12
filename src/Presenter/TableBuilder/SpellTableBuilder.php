@@ -14,9 +14,6 @@ class SpellTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $rows, array $params = []): Table
     {
-        $params[Constant::CST_ID] = 'spellTable';
-        $table = $this->createTable(8, $params);
-
         $headers = [
             [Constant::CST_LABEL=>Language::LG_SPELLS],
             [Constant::CST_LABEL=>Language::LG_LEVEL, 'filter'=>true],
@@ -31,6 +28,10 @@ class SpellTableBuilder extends AbstractTableBuilder
             [Constant::CST_LABEL=>'R', 'abbr'=>'Rituel']
             */
         ];
+
+        $params[Constant::CST_ID] = 'spellTable';
+        $table = $this->createTable(count($headers), $params);
+
         foreach ($headers as $data) {
             if (isset($data['abbr'])) {
                 $strContent = Html::getBalise('abbr', $data[Constant::CST_LABEL], [Constant::CST_TITLE=>$data['abbr']]);

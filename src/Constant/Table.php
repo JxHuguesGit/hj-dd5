@@ -10,6 +10,7 @@ class Table
     public const FEATTYPE      = 'rpgFeatType';
     public const ITEM          = 'rpgItem';
     public const MSTPROFCY     = 'rpgMasteryProficiency';
+    public const MONSTER       = 'rpgMonster';
     public const ORIGIN        = 'rpgOrigin';
     public const ORIGINABILITY = 'rpgOriginAbility';
     public const ORIGINITEM    = 'rpgOriginItem';
