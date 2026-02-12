@@ -48,7 +48,7 @@ class RpgMonster extends Form
 
         // Vitesses
         $this->addRow()
-            ->addInput(Field::VITESSE, Field::VITESSE, 'Vitesse au sol', $this->rpgMonster->getField(Field::VITESSE))
+            ->addInput(Field::SPEED, Field::SPEED, 'Vitesse au sol', $this->rpgMonster->getField(Field::SPEED))
             ->addFiller(['class'=>'col-1']);
     }
 

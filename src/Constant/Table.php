@@ -4,6 +4,7 @@ namespace src\Constant;
 class Table
 {
     public const ABILITY       = 'rpgAbility';
+    public const ALIGNMENT     = 'rpgAlignement';
     public const ARMOR         = 'rpgArmor';
     public const DMGDIE        = 'rpgDamageDie';
     public const FEAT          = 'rpgFeat';
@@ -11,6 +12,8 @@ class Table
     public const ITEM          = 'rpgItem';
     public const MSTPROFCY     = 'rpgMasteryProficiency';
     public const MONSTER       = 'rpgMonster';
+    public const SSTYPEMONSTRE = 'rpgMonsterSubType';
+    public const TYPEMONSTRE   = 'rpgMonsterType';
     public const ORIGIN        = 'rpgOrigin';
     public const ORIGINABILITY = 'rpgOriginAbility';
     public const ORIGINITEM    = 'rpgOriginItem';
@@ -18,7 +21,6 @@ class Table
     public const POWER         = 'rpgPower';
     public const REFERENCE     = 'rpgReference';
     public const SKILL         = 'rpgSkill';
-    public const SSTYPEMONSTRE = 'rpgMonsterSubType';
     public const SPECIEPOWER   = 'rpgSpeciesPower';
     public const SPECIES       = 'rpgSpecies';
     public const SPELL         = 'rpgSpell';
@@ -26,7 +28,6 @@ class Table
     public const TOOL          = 'rpgTool';
     public const TYPEAMMO      = 'rpgTypeAmmunition';
     public const TYPEDAMAGE    = 'rpgTypeDamage';
-    public const TYPEMONSTRE   = 'rpgMonsterType';
     public const WEAPON        = 'rpgWeapon';
     public const WPNCATEGORY   = 'rpgWeaponCategory';
     public const WPNPROPERTY   = 'rpgWeaponProperty';

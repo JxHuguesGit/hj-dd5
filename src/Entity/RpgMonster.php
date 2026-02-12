@@ -26,7 +26,7 @@ class RpgMonster extends Entity
         Field::ALGNID,
         Field::SCORECA,
         Field::SCOREHP,
-        Field::VITESSE,
+        Field::SPEED,
         Field::INITIATIVE,
         Field::LEGENDARY,
         Field::HABITAT,

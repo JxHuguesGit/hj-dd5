@@ -249,5 +249,5 @@ abstract class Entity
     {
         static::$qb = $qb;
         static::$qe = $qe;
-    }    
+    }
 }

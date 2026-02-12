@@ -35,7 +35,7 @@ class Field
     public const MSTSIZE     = 'monsterSize';
     public const SCORECA     = 'ca';
     public const SCOREHP     = 'hp';
-    public const VITESSE     = 'vitesse';
+    public const SPEED       = 'vitesse';
     public const INITIATIVE  = 'initiative';
     public const LEGENDARY   = 'legendary';
     public const HABITAT     = 'habitat';
@@ -107,14 +107,17 @@ class Field
     public const WPNRANGEID   = 'weaponRangeId';
     public const WPUSERID     = 'wpUserId';
     
+    public const AMMONAME         = 'ammunitionName';
     public const CATEGORYSLUG     = 'categorySlug';
     public const CATEGORYNAME     = 'categoryName';
     public const MASTERYNAME      = 'masteryName';
-    public const TYPDMGNAME       = 'typeDamageName';
-    public const RANGESLUG        = 'rangeSlug';
-    public const RANGENAME        = 'rangeName';
-    public const PROPERTYSLUG     = 'propertySlug';
     public const PROPERTYNAME     = 'propertyName';
-    public const AMMONAME         = 'ammunitionName';
+    public const PROPERTYSLUG     = 'propertySlug';
+    public const RANGENAME        = 'rangeName';
+    public const RANGESLUG        = 'rangeSlug';
+    public const REFNAME          = 'referenceName';
+    public const TYPDMGNAME       = 'typeDamageName';
+    public const TYPMSTNAME       = 'typeMonsterName';
+    public const SSTYPMSTNAME     = 'subTypeMonsterName';
 
 }

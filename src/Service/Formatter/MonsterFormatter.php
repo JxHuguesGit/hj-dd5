@@ -1,8 +1,9 @@
 <?php
 namespace src\Service\Formatter;
 
+use src\Constant\Field;
 use src\Constant\Icon;
-use src\Domain\Entity\Monster;
+use src\Domain\Monster\Monster;
 use src\Helper\SizeHelper;
 use src\Service\Reader\SousTypeMonsterReader;
 use src\Service\Reader\TypeMonsterReader;
@@ -39,6 +40,26 @@ class MonsterFormatter
         return $html;
     }
 
+    public function formatCA(Monster $monster): string
+    {
+        $ca = $monster->combat()->getArmorClass() ?? 10;
+        $extra = $monster->getExtra('ca') ?? '';
+        if ($extra !== '') {
+            $ca .= ' (' . $extra . ')';
+        }
+        return $ca;
+    }
+
+    public function formatHP(Monster $monster): string
+    {
+        $hp = $monster->combat()->getHitPoints() ?? 0;
+        $extra = $monster->getExtra('hp') ?? '';
+        if ($extra !== '') {
+            $hp .= ' ' . $extra;
+        }
+        return $hp;
+    }
+
     public function formatCR(float|int $cr): string
     {
         return match ($cr) {
@@ -53,7 +74,7 @@ class MonsterFormatter
     public function formatType(Monster $monster): string
     {
         $gender = '';
-
+var_dump($monster);
         // Type principal
         $type = $this->typeReader->typeMonsterById($monster->monstreTypeId);
         ['label'=>$typeName, 'gender'=>$gender] = $type?->getNameAndGender();
@@ -77,10 +98,17 @@ class MonsterFormatter
 
     public function formatScore(Monster $monster, string $carac): string
     {
-        $score = $monster->getStats()->{"{$carac}Score"} ?? 0;
+        $score = $monster->stats()->getScore($carac) ?? 0;
         $mod = Utils::getModAbility($score);
-        $bonus = 0;//$monster->getExtra('js'.$carac) ?: 0;
+        $bonus = $monster->getExtra('js'.$carac) ?: 0;
         $modWithBonus = Utils::getModAbility($score, $bonus);
         return sprintf("%d (%+d / %+d)", $score, $mod, $modWithBonus);
+    }
+
+    public function formatTypeAndAlignement(Monster $monster): string
+    {
+        $type = $this->formatType($monster);
+        //$alignment = $monster->getField(Field::ALIGNEMENT) ?? '';
+        return $type ;//. ($alignment ? ', ' . $alignment : '');
     }
 }

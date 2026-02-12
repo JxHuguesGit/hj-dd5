@@ -31,8 +31,8 @@ class MonsterSpeedParser extends AbstractMonsterParser
         $blnHasChanged = false;
         if ($canProceed) {
             $standard = (float) $matches[0][2] * self::FEET_TO_METERS;
-            if ($this->rpgMonster->getField(Field::VITESSE) !== $standard) {
-                $this->rpgMonster->setField(Field::VITESSE, $standard);
+            if ($this->rpgMonster->getField(Field::SPEED) !== $standard) {
+                $this->rpgMonster->setField(Field::SPEED, $standard);
                 $blnHasChanged = true;
             }
         

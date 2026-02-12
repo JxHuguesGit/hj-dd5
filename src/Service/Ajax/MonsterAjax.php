@@ -66,7 +66,7 @@ class MonsterAjax
             new MonsterRepository($qb, $qe),
         );
         $ukTag = Session::fromPost(strtolower(Field::UKTAG), -1);
-        $monster = $reader->originByUkTag($ukTag);
+        $monster = $reader->monsterByUkTag($ukTag);
         if (!$monster) {
             return [
                 'html' => 'Erreur à mettre en forme pour faire joli.',

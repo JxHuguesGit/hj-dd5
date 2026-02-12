@@ -17,6 +17,6 @@ class Reference extends Entity
 
     public function stringify(): string
     {
-        return $this->getName();
+        return $this->name ?? '-';
     }
 }

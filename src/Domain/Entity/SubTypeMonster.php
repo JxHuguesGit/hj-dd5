@@ -5,7 +5,7 @@ use src\Constant\Field;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
-class SousTypeMonster extends Entity
+class SubTypeMonster extends Entity
 {
     public const FIELDS = [
         Field::ID,

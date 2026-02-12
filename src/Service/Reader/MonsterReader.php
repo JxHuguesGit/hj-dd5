@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Criteria\MonsterCriteria;
-use src\Domain\Entity\Monster;
+use src\Domain\Monster\Monster;
 use src\Repository\MonsterRepositoryInterface;
 
 final class MonsterReader
@@ -15,11 +15,11 @@ final class MonsterReader
     /**
      * @return ?Monster
      */
-    public function originByUkTag(string $ukTag): ?Monster
+    public function monsterByUkTag(string $ukTag): ?Monster
     {
         $criteria = new MonsterCriteria();
         $criteria->ukTag = $ukTag;
-        return $this->monsterRepository->findAllWithCriteria($criteria)?->first() ?? null;
+        return $this->monsterRepository->findAllWithJoint($criteria)?->first() ?? null;
     }
 
     /**
@@ -30,7 +30,7 @@ final class MonsterReader
         if (!$criteria) {
             $criteria = new MonsterCriteria();
         }
-        return $this->monsterRepository->findAllWithCriteria($criteria);
+        return $this->monsterRepository->findAllWithJoint($criteria);
     }
 
 }

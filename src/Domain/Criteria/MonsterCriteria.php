@@ -17,7 +17,7 @@ final class MonsterCriteria extends AbstractCriteria implements CriteriaInterfac
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        'CONCAT('.Field::FRNAME.', '.Field::NAME.')' => Constant::CST_ASC
+        'CONCAT('.Field::FRNAME.', m.'.Field::NAME.')' => Constant::CST_ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

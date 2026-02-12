@@ -5,6 +5,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Language;
+use src\Presenter\ViewModel\MonsterRow;
 use src\Utils\Html;
 use src\Utils\Table;
 use src\Utils\UrlGenerator;

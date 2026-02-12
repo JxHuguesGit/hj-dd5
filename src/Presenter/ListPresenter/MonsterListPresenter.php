@@ -2,18 +2,16 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Domain\Entity\Monster;
+use src\Domain\Monster\Monster;
 use src\Presenter\ViewModel\MonsterRow;
 use src\Service\Formatter\MonsterFormatter;
-use src\Service\Reader\ReferenceReader;
 
 final class MonsterListPresenter
 {
     private Monster $monster;
 
     public function __construct(
-        private MonsterFormatter $monsterFormatter,
-        private ReferenceReader $reader
+        private MonsterFormatter $monsterFormatter
     ) {}
 
     public function present(iterable $monsters): Collection
@@ -31,10 +29,10 @@ final class MonsterListPresenter
             name: $this->displayName(),
             ukTag: $this->monster->ukTag,
             cr: $this->monsterFormatter->formatCR($this->monster->cr),
-            type: $this->monsterFormatter->formatType($this->monster),
+            type: $this->formatType(),
             ca: $this->monster->ca,
             hp: $this->monster->hp,
-            reference: ($this->reader->referenceById($this->monster->referenceId))->name ?? '-'
+            reference: $this->monster->reference()->getLabel() ?? '-'
         );
     }
 
@@ -51,5 +49,16 @@ final class MonsterListPresenter
             $this->monster->frTag
         );
     }
+
+    private function formatType(): string
+    {
+        $typeName = $this->monster->type()->getName();
+        $subTypeName = $this->monster->subType()->getName();
+
+        return $subTypeName
+            ? sprintf('%s (%s)', $typeName, $subTypeName)
+            : $typeName;
+    }
+
 }
 
