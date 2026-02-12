@@ -4,7 +4,7 @@ namespace src\Controller;
 use src\Constant\Constant;
 use src\Constant\Template;
 
-use src\Entity\Entity;
+use src\Domain\Entity;
 use src\Factory\CompendiumFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;

@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Template;
@@ -41,13 +42,13 @@ class AdminCharacterCreationPage extends AdminPage
             case 'originFeat' :
                 $this->getOriginFeatInterface($rpgHero, $attributes, $urlTemplate);
             break;
-            case 'species' :
+            case Constant::SPECIES :
                 $this->getSpeciesInterface($rpgHero, $attributes, $urlTemplate);
             break;
-            case 'origin' :
+            case Constant::ORIGIN :
                 $this->getOriginInterface($rpgHero, $attributes, $urlTemplate);
             break;
-            case 'name' :
+            case Constant::CST_NAME :
             default :
                 $this->getNameInterface($rpgHero, $attributes, $urlTemplate);
             break;
@@ -182,11 +183,11 @@ class AdminCharacterCreationPage extends AdminPage
             $this->getSideBarCreation($rpgHero),
             $rpgHero->getFIeld(Field::ID),
             $strRadios,
-            $rpgHero->getField(Field::SPECIESID)==7?'':' d-none',
+            $rpgHero->getField(Field::SPECIESID)==7?'':' '.Bootstrap::CSS_DNONE,
             $strRadios2,
-            $checkedFeatId==5?'':'d-none',
+            $checkedFeatId==5?'':Bootstrap::CSS_DNONE,
             $checkedFeatId==5?$strExtraRadios:'',
-            $secondFeatId==5?'':' d-none',
+            $secondFeatId==5?'':' '.Bootstrap::CSS_DNONE,
             $secondFeatId==5?$strExtraRadios2:'',
         ];
         $urlTemplate = Template::CREATE_FEAT;

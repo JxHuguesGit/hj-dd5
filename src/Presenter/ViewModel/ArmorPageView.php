@@ -3,13 +3,23 @@ namespace src\Presenter\ViewModel;
 
 use src\Domain\Entity\Armor;
 
-class ArmorPageView extends ItemPageView
+class ArmorPageView implements PageViewInterface
 {
     public function __construct(
         public Armor $armor,
-        ?Armor $previous = null,
-        ?Armor $next = null
+        public ?Armor $previous = null,
+        public ?Armor $next = null
     ) {
-        parent::__construct($armor, $previous, $next);
+        //parent::__construct($armor, $previous, $next);
+    }
+
+    public function getSlug(): string
+    {
+        return $this->armor->slug;
+    }
+
+    public function getName(): string
+    {
+        return $this->armor->name;
     }
 }

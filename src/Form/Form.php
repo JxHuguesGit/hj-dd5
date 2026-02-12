@@ -1,6 +1,8 @@
 <?php
 namespace src\Form;
 
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
 use src\Utils\Html;
 
 class Form
@@ -12,7 +14,7 @@ class Form
     public function addRow(array $attributes=[]): self
     {
         $this->nbRows++;
-        $this->formRows[$this->nbRows] = ['attributes'=>$attributes, 'content'=>''];
+        $this->formRows[$this->nbRows] = [Constant::CST_ATTRIBUTES=>$attributes, Constant::CST_CONTENT=>''];
         return $this;
     }
 
@@ -20,21 +22,21 @@ class Form
     {
         $attributes = $this->initAttributes($id, $name, $label, $value);
 
-        if (isset($extraAttributes['class'])) {
-            $attributes['class'] .= ' '.$attributes['class'];
+        if (isset($extraAttributes[Constant::CST_CLASS])) {
+            $attributes[Constant::CST_CLASS] .= ' '.$extraAttributes[Constant::CST_CLASS];
         }
-        $attributes['type'] = $extraAttributes['type'] ?? 'text';
+        $attributes[Constant::CST_TYPE] = $extraAttributes[Constant::CST_TYPE] ?? Bootstrap::CSS_TEXT;
 
         $spanAttributes = [];
-        if (isset($extraAttributes['type']) &&
-            $extraAttributes['type']=='hidden') {
-            $spanAttributes['class'] = 'd-none';
+        if (isset($extraAttributes[Constant::CST_TYPE]) &&
+            $extraAttributes[Constant::CST_TYPE]=='hidden') {
+            $spanAttributes[Constant::CST_CLASS] = Bootstrap::CSS_DNONE;
         }
 
         if ($label!='') {
-            $this->formRows[$this->nbRows]['content'] .= $this->getSpan($id, $label, $spanAttributes);
+            $this->formRows[$this->nbRows][Constant::CST_CONTENT] .= $this->getSpan($id, $label, $spanAttributes);
         }
-        $this->formRows[$this->nbRows]['content'] .= Html::getBalise('input', '', $attributes);
+        $this->formRows[$this->nbRows][Constant::CST_CONTENT] .= Html::getBalise('input', '', $attributes);
 
         return $this;
     }
@@ -44,12 +46,12 @@ class Form
         $strContent = '';
         while (!empty($this->formRows)) {
             $row = array_shift($this->formRows);
-            if (isset($row['attributes']['class'])) {
-                $row['attributes']['class'] .= ' input-group mb-3';
+            if (isset($row[Constant::CST_ATTRIBUTES][Constant::CST_CLASS])) {
+                $row[Constant::CST_ATTRIBUTES][Constant::CST_CLASS] .= ' input-group mb-3';
             } else {
-                $row['attributes']['class'] = ' input-group mb-3';
+                $row[Constant::CST_ATTRIBUTES][Constant::CST_CLASS] = ' input-group mb-3';
             }
-            $strContent .= Html::getDiv($row['content'], $row['attributes']);
+            $strContent .= Html::getDiv($row[Constant::CST_CONTENT], $row[Constant::CST_ATTRIBUTES]);
         }
 
         $formBalise = Html::getBalise(
@@ -61,16 +63,16 @@ class Form
         return Html::getBalise(
             'section',
             $formBalise,
-            ['class'=>'wrapper pt-3 col-12']
+            [Constant::CST_CLASS=>'wrapper pt-3 col-12']
         );
     }
 
     public function addFiller(array $extraAttributes=[]): self
     {
         $attributes = [
-            'class' => $extraAttributes['class'] ?? 'col-8',
+            Constant::CST_CLASS => $extraAttributes[Constant::CST_CLASS] ?? 'col-8',
         ];
-        $this->formRows[$this->nbRows]['content'] .= $this->getSpan('', '', $attributes);
+        $this->formRows[$this->nbRows][Constant::CST_CONTENT] .= $this->getSpan('', '', $attributes);
         return $this;
     }
 
@@ -78,7 +80,7 @@ class Form
     private function getSpan(string $id, string $label, array $extraAttributes=[]): string
     {
         $attributes = [
-            'class' =>'input-group-text '.($extraAttributes['class']??'col-2'),
+            Constant::CST_CLASS =>'input-group-text '.($extraAttributes[Constant::CST_CLASS]??Bootstrap::CSS_COL_2),
             'for' => $id,
         ];
         return Html::getSpan($label, $attributes);
@@ -87,12 +89,14 @@ class Form
     private function initAttributes(string $id, string $name, string $label, $value): array
     {
         return [
-            'class' => 'form-control',
-            'name' => $name,
-            'id' => $id,
-            'aria-label' => $label,
-            'aria-describedby' => $label,
-            'value' => $value,
+            Constant::CST_CLASS => 'form-control',
+            Constant::CST_NAME => $name,
+            Constant::CST_ID => $id,
+            Constant::CST_VALUE => $value,
+            'aria' => [
+                'label' => $label,
+                'describedby' => $label,
+            ]
         ];
     }
 }

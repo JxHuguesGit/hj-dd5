@@ -4,6 +4,7 @@ namespace src\Entity;
 use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Entity as DomainEntity;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\RpgHeros as RepositoryRpgHeros;
@@ -13,7 +14,7 @@ use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
 use src\Utils\Session;
 
-class RpgHeros extends Entity
+class RpgHeros extends DomainEntity
 {
     public const TABLE = 'rpgHeros';
     public const FIELDS = [
@@ -62,6 +63,21 @@ class RpgHeros extends Entity
         $origin = $this->getOrigin()?->getName() ?? '??';
         $species = $this->getSpecies()?->getName() ?? '??';
         return sprintf("%s (%s, %s)", $this->getName(), $origin, $species);
+    }
+
+    public function getId(): ?int { return $this->id; }
+    public function getName(): string { return $this->name; }
+    public function getField(string $field): mixed {
+        return match ($field) {
+            Field::ID => $this->getId(),
+            Field::NAME => $this->getName(),
+            Field::ORIGINID => $this->originId,
+            Field::SPECIESID => $this->speciesId,
+            Field::WPUSERID => $this->wpUserId,
+            Field::CREATESTEP => $this->createStep,
+            Field::LASTUPDATE => $this->lastUpdate,
+            default => throw new \InvalidArgumentException("Champ inconnu: $field"),
+        };
     }
 
     // TODO

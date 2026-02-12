@@ -28,11 +28,11 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $form = $this->createForm($params);
 
         $mock = [
-            ['value'=>'weapon', 'label'=>'Arme'],
-            ['value'=>'armor',  'label'=>'Armure'],
-            ['value'=>'ammo',   'label'=>'Munition'],
-            ['value'=>'tool',   'label'=>'Outil'],
-            ['value'=>'other',  'label'=>'Autre'],
+            [Constant::CST_VALUE=>Constant::CST_WEAPON, Constant::CST_LABEL=>'Arme'],
+            [Constant::CST_VALUE=>Constant::CST_ARMOR,  Constant::CST_LABEL=>'Armure'],
+            [Constant::CST_VALUE=>'ammo',   Constant::CST_LABEL=>'Munition'],
+            [Constant::CST_VALUE=>Constant::CST_TOOL,   Constant::CST_LABEL=>'Outil'],
+            [Constant::CST_VALUE=>'other',  Constant::CST_LABEL=>'Autre'],
         ];
 
         $form->addField(new NumberField(Field::ID, 'ID', $entity->id, true, ['outerDivClass'=>Bootstrap::CSS_COL_MD_3]))
@@ -40,7 +40,7 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ->addField(new TextField(Field::SLUG, 'Slug', $entity->slug, true, ['outerDivClass'=>'col-md-4']))
             ->addField(new TextareaField(Field::DESCRIPTION, Language::LG_DESCRIPTION, $entity->description, false, ['outerDivClass'=>'col-md-12', 'style'=>'height: 200px']));
         if ($this->type==Constant::NEW) {
-            $libelleType = (array_column($mock, 'label'))[array_search($entity->type, array_column($mock, 'value'))];
+            $libelleType = (array_column($mock, Constant::CST_LABEL))[array_search($entity->type, array_column($mock, Constant::CST_VALUE))];
             $form->addField(new TextField(Field::TYPE, "Type d'objet", $libelleType, true, ['outerDivClass'=>'col-md-4']));
         } else {
             $form->addField(new SelectField(Field::TYPE, "Type d'objet", $entity->type, $mock, ['outerDivClass'=>'col-md-4']));

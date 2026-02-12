@@ -3,7 +3,6 @@ namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Language;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\SkillListPresenter;
 use src\Presenter\TableBuilder\SkillTableBuilder;

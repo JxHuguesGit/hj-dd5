@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Field;
 use src\Domain\Tool as DomainTool;
 
 class Tool extends Utilities

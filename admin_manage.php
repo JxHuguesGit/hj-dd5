@@ -8,7 +8,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 <?php
 use src\Controller\AdminPage;
-use src\Entity\Entity;
+use src\Domain\Entity;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Utils\Session;

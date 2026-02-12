@@ -5,7 +5,6 @@ use src\Constant\Constant;
 use src\Constant\Routes;
 use src\Constant\Template;
 use src\Model\PageElement;
-use src\Presenter\ViewModel\ArmorPageView;
 use src\Utils\UrlGenerator;
 
 class PageItemArmor extends PageDetail

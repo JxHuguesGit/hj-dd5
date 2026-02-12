@@ -3,7 +3,8 @@ namespace src\Domain;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
-use src\Utils\Utils;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
 
 /**
  * Classe de base pour toutes les entités Domain.
@@ -25,6 +26,9 @@ abstract class Entity
     /** Cache pour la validation des schémas */
     protected static array $validatedSchemas = [];
     //////////////////////////////////////////////////////////
+
+    public static QueryBuilder $qb;
+    public static QueryExecutor $qe;
 
     /**
      * Constructeur générique : hydrate l’entité depuis un tableau associatif.
@@ -240,4 +244,10 @@ abstract class Entity
         }
         return $value;
     }
+
+    public static function setSharedDependencies(QueryBuilder $qb, QueryExecutor $qe): void
+    {
+        static::$qb = $qb;
+        static::$qe = $qe;
+    }    
 }

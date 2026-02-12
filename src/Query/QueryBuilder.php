@@ -1,6 +1,8 @@
 <?php
 namespace src\Query;
 
+use src\Constant\Constant;
+
 class QueryBuilder
 {
     private string $baseQuery = '';
@@ -18,7 +20,7 @@ class QueryBuilder
 
     public function getInsertQuery(array $fields, string $table): string
     {
-        $filteredFields = array_filter($fields, fn($f) => $f !== 'id');
+        $filteredFields = array_filter($fields, fn($f) => $f !== Constant::CST_ID);
         if (empty($filteredFields)) {
             throw new \InvalidArgumentException("No valid fields to insert.");
         }
@@ -34,7 +36,7 @@ class QueryBuilder
     {
         $targetFields = $fieldsToUpdate ?? $fields;
 
-        $filteredFields = array_filter($targetFields, fn($f) => $f !== 'id');
+        $filteredFields = array_filter($targetFields, fn($f) => $f !== Constant::CST_ID);
         if (empty($filteredFields)) {
             throw new \InvalidArgumentException("No valid fields to update.");
         }
@@ -89,7 +91,7 @@ class QueryBuilder
             } else {
                 $this->strWhere .= " AND `{$cond['field']}` {$cond['operand']} %s";
             }
-            $this->params[] = $cond['value'];
+            $this->params[] = $cond[Constant::CST_VALUE];
         }
         return $this;
     }

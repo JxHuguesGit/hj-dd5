@@ -1,11 +1,13 @@
 <?php
 namespace src\Utils;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Icon;
 
 class Html
 {
-    public const SELF_CLOSING_TAGS = ['img', 'input', 'br', 'hr', 'meta', 'link'];
+    public const SELF_CLOSING_TAGS = ['img', 'input', 'br', 'hr', 'meta', Bootstrap::CSS_LINK];
 
     public static function getBalise(string $balise, string $label='', array $attributes=[]): string
     {
@@ -59,9 +61,9 @@ class Html
     public static function getOption(string $label, array $attributes, bool $isSelected=false): string
     {
         if ($isSelected) {
-            $attributes['selected'] = 'selected';
+            $attributes[Constant::CST_SELECTED] = Constant::CST_SELECTED;
         }
-        return static::getBalise('option', $label, $attributes);
+        return static::getBalise(Constant::PAGE_OPTION, $label, $attributes);
     }
     
     public static function getLi(string $content, array $extraAttributes=[]): string
@@ -83,7 +85,7 @@ class Html
         return static::getBalise('span', $content, $extraAttributes);
     }
     
-    public static function getIcon(string $icon, string $prefix='solid', array $extraAttributes=[]): string
+    public static function getIcon(string $icon, string $prefix=Icon::SOLID, array $extraAttributes=[]): string
     {
         $strClass = self::mergeClasses(
             $extraAttributes,

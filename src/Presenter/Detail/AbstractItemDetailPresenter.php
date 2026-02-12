@@ -11,18 +11,18 @@ abstract class AbstractItemDetailPresenter implements DetailPresenterInterface
     {
         return [
             'title'       => $viewData->item->name,
-            'slug'        => $viewData->item->getSlug(),
+            'slug'        => $viewData->item->slug,
             'description' => $viewData->item->description,
-            'weight'      => Utils::getStrWeight($viewData->item->weight),
-            'goldPrice'   => Utils::getStrPrice($viewData->item->goldPrice),
+            'weight'      => Utils::getStrWeight($viewData->item->weight ?? 0),
+            'goldPrice'   => Utils::getStrPrice($viewData->item->goldPrice ?? 0),
 
             Constant::CST_PREV => $viewData->previous ? [
-                Constant::CST_SLUG => $viewData?->previous->getSlug(),
+                Constant::CST_SLUG => $viewData?->previous->slug,
                 Constant::CST_NAME => $viewData?->previous->name,
             ] : null,
 
             Constant::CST_NEXT => $viewData->next ? [
-                Constant::CST_SLUG => $viewData?->next->getSlug(),
+                Constant::CST_SLUG => $viewData?->next->slug,
                 Constant::CST_NAME => $viewData?->next->name,
             ] : null,
         ];
