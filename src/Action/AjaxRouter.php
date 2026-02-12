@@ -3,12 +3,14 @@ namespace src\Action;
 
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\LoadMoreMonstersAction;
+use src\Action\Ajax\ModalMonsterCard;
 
 class AjaxRouter
 {
     private array $actions = [
         'loadMoreSpells' => LoadMoreSpellsAction::class,
         'loadMoreMonsters' => LoadMoreMonstersAction::class,
+        'modalMonsterCard' => ModalMonsterCard::class,
     ];
     
     public function dispatch(string $ajaxAction): array

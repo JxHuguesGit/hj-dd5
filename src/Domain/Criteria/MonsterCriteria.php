@@ -9,19 +9,23 @@ final class MonsterCriteria extends AbstractCriteria implements CriteriaInterfac
 {
     public int $page = 1;
     public string $type = 'append';
-
-    public int $offset = 1;
+    public int $offset = 0;
     public int $limit = 10;
+
+    public ?string $ukTag = null;
     public ?string $nameLt = null;
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        Field::NAME => Constant::CST_ASC
+        'CONCAT('.Field::FRNAME.', '.Field::NAME.')' => Constant::CST_ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
+        if ($this->ukTag!=null) {
+            $filters[Field::UKTAG] = $this->ukTag;
+        }
         $this->applyEquals($queryBuilder, $filters);
         $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
         $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
@@ -34,7 +38,7 @@ final class MonsterCriteria extends AbstractCriteria implements CriteriaInterfac
         $criteria->orderBy = [Field::NAME => Constant::CST_ASC];
         $criteria->page = (int)($request['page'] ?? 1);
         $criteria->limit = (int)($request['limit'] ?? 10);
-        $criteria->offset = $criteria->page*$criteria->limit+1;
+        $criteria->offset = $criteria->page*$criteria->limit;
         $criteria->type = $request[Constant::CST_TYPE] ?? 'append';
         return $criteria;
     }

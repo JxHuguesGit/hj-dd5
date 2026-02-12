@@ -1,11 +1,13 @@
 <?php
 namespace src\Entity;
 
+use src\Domain\Entity as DomainEntity;
+
 abstract class SubEntity
 {
     protected array $map = [];
 
-    public function __construct(protected Entity $parent) {}
+    public function __construct(protected DomainEntity $parent) {}
 
     public function __call(string $name, array $args)
     {

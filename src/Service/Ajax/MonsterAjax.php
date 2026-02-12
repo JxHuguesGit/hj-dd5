@@ -1,11 +1,15 @@
 <?php
 namespace src\Service\Ajax;
 
+use src\Constant\Field;
+use src\Constant\Template;
 use src\Domain\Criteria\MonsterCriteria;
+use src\Presenter\Detail\MonsterDetailPresenter;
 use src\Presenter\ListPresenter\MonsterListPresenter;
 use src\Presenter\TableBuilder\MonsterTableBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 use src\Repository\MonsterRepository;
 use src\Repository\ReferenceRepository;
 use src\Repository\SousTypeMonsterRepository;
@@ -51,6 +55,28 @@ class MonsterAjax
         return [
             'html' => $objTable->display(),
             'hasMore' => true//$result->hasMore()
+        ];
+    }
+
+    public static function loadModal(): array
+    {
+        $qb = new QueryBuilder();
+        $qe = new QueryExecutor();
+        $reader = new MonsterReader(
+            new MonsterRepository($qb, $qe),
+        );
+        $ukTag = Session::fromPost(strtolower(Field::UKTAG), -1);
+        $monster = $reader->originByUkTag($ukTag);
+        if (!$monster) {
+            return [
+                'html' => 'Erreur à mettre en forme pour faire joli.',
+            ];
+        }
+
+        $presenter = new MonsterDetailPresenter($monster);
+        $templateRenderer = new TemplateRenderer();
+        return [
+            'html' => $templateRenderer->render(Template::MONSTER_CARD, $presenter->present())
         ];
     }
 

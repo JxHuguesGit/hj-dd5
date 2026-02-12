@@ -4,6 +4,7 @@ namespace src\Domain\Entity;
 use src\Constant\Field;
 use src\Constant\FieldType;
 use src\Domain\Entity;
+use src\Entity\CharacterStats;
 use src\Utils\Utils;
 
 final class Monster extends Entity
@@ -22,6 +23,12 @@ final class Monster extends Entity
         Field::SCORECA,
         Field::SCOREHP,
         Field::REFID,
+        Field::STRSCORE,
+        Field::DEXSCORE,
+        Field::CONSCORE,
+        Field::INTSCORE,
+        Field::WISSCORE,
+        Field::CHASCORE,
     ];
     public const FIELD_TYPES = [
         Field::FRNAME     => FieldType::STRING,
@@ -36,8 +43,23 @@ final class Monster extends Entity
         Field::SCORECA    => FieldType::INT,
         Field::SCOREHP    => FieldType::INT,
         Field::REFID      => FieldType::INT,
+        Field::STRSCORE   => FieldType::INT,
+        Field::DEXSCORE   => FieldType::INT,
+        Field::CONSCORE   => FieldType::INT,
+        Field::INTSCORE   => FieldType::INT,
+        Field::WISSCORE   => FieldType::INT,
+        Field::CHASCORE   => FieldType::INT,
     ];
     
+    protected CharacterStats $stats;
+
+    public function __construct(array $attributes=[])
+    {
+        parent::__construct($attributes);
+
+        $this->stats = new CharacterStats($this);
+    }
+
     public function stringify(): string
     {
         return $this->name;
@@ -53,5 +75,10 @@ final class Monster extends Entity
     public function isComplete(): bool
     {
         return $this->incomplet==0;
+    }
+
+    public function getStats(): CharacterStats
+    {
+        return $this->stats;
     }
 }

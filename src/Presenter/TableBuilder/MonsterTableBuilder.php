@@ -55,7 +55,6 @@ class MonsterTableBuilder extends AbstractTableBuilder
                     ),
                     Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER . ' ' . Bootstrap::CSS_COL_1],
                 ]);
-            ;
         }
 
         $table->addFooter([

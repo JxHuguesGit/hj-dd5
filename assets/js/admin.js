@@ -33,12 +33,17 @@ $(document).ready(function(e) {
             url: ajaxUrl,
             data: data,
             success: function (response) {
-                const parsedData = JSON.parse(response.data);
-                $('.modal-header').hide()
-                $('.modal-footer').hide()
-                $('#modalBody').html(parsedData.modalMonsterCard);
-                $('#infoModal').modal('show');
-            },
+                try {
+                    let obj = JSON.parse(response.data);
+                    $('.modal-header').hide()
+                    $('.modal-footer').hide()
+                    $('#modalBody').html(obj.data.html);
+                    $('#infoModal').modal('show');
+                } catch (e) {
+                console.log("error: "+e);
+                console.log(response);
+            }
+        },
             error: function () {
             }
         });

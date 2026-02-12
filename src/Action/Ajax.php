@@ -14,11 +14,17 @@ class Ajax{
             'loadCasteDetail' => fn() => LoadCasteDetail::build(),
             'loadCreationStepSide' => fn() => LoadCreationStepSide::build(Session::fromPost('type'), Session::fromPost('id')),
             'modalFeatCard' => fn() => FeatCard::build(),
-            'modalMonsterCard' => fn() => MonsterCard::build(),
             'modalSpellCard' => fn() => SpellCard::build(),
         ];
         try {
-            if (in_array($ajaxAction, ['loadMoreSpells', 'loadMoreMonsters'])) {
+            if (in_array(
+                $ajaxAction,
+                [
+                    'loadMoreSpells',
+                    'loadMoreMonsters',
+                    'modalMonsterCard'
+                ]
+            )) {
                 $router = new AjaxRouter();
                 $response = $router->dispatch($ajaxAction);
                 $response[$ajaxAction] = $response['data'];

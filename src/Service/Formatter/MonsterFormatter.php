@@ -7,6 +7,7 @@ use src\Helper\SizeHelper;
 use src\Service\Reader\SousTypeMonsterReader;
 use src\Service\Reader\TypeMonsterReader;
 use src\Utils\Html;
+use src\Utils\Utils;
 
 class MonsterFormatter
 {
@@ -15,21 +16,24 @@ class MonsterFormatter
         private SousTypeMonsterReader $sousTypeReader,
     ) {}
 
+    public function formatName(string $ukName, string $frName): string
+    {
+        return $frName!='' ? $frName . ' (' . $ukName . ')' : $ukName;
+    }
+
     public function formatNameWithFlags(
         string $name,
-        int $id,
         bool $isComplete,
         string $ukTag,
         string $frTag
     ): string {
-        $html = '<span class="modal-tooltip" data-modal="monster" data-uktag="id-'.$id.'">'
+        $html = '<span class="modal-tooltip" data-modal="monster" data-uktag="'.$ukTag.'">'
               . $name . ' ' . Html::getIcon(Icon::ISEARCH) . '</span>';
 
         if (!$isComplete) {
-            $html .= '<i class="float-end" data-modal="monster" data-uktag="'.$ukTag.'">🇬🇧</i>';
-
+            $html .= '<i class="float-end">🇬🇧</i>';
             if ($frTag !== 'non') {
-                $html .= '<i class="float-end" data-modal="monster" data-uktag="fr-'.$frTag.'">🇫🇷</i>';
+                $html .= '<i class="float-end">🇫🇷</i>';
             }
         }
         return $html;
@@ -71,4 +75,12 @@ class MonsterFormatter
         return $typeName;
     }
 
+    public function formatScore(Monster $monster, string $carac): string
+    {
+        $score = $monster->getStats()->{"{$carac}Score"} ?? 0;
+        $mod = Utils::getModAbility($score);
+        $bonus = 0;//$monster->getExtra('js'.$carac) ?: 0;
+        $modWithBonus = Utils::getModAbility($score, $bonus);
+        return sprintf("%d (%+d / %+d)", $score, $mod, $modWithBonus);
+    }
 }

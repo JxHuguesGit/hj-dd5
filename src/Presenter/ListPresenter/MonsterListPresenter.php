@@ -46,7 +46,6 @@ final class MonsterListPresenter
 
         return $this->monsterFormatter->formatNameWithFlags(
             $name,
-            $this->monster->id,
             $this->monster->isComplete(),
             $this->monster->ukTag,
             $this->monster->frTag
