@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller\Compendium;
 
-use src\Constant\Language;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;

@@ -4,6 +4,7 @@ namespace src\Factory;
 use src\Controller\Compendium\ArmorCompendiumHandler;
 use src\Controller\Compendium\FeatCompendiumHandler;
 use src\Controller\Compendium\GearCompendiumHandler;
+use src\Controller\Compendium\MonsterCompendiumHandler;
 use src\Controller\Compendium\OriginCompendiumHandler;
 use src\Controller\Compendium\SkillCompendiumHandler;
 use src\Controller\Compendium\SpellCompendiumHandler;
@@ -11,7 +12,9 @@ use src\Controller\Compendium\ToolCompendiumHandler;
 use src\Controller\Compendium\WeaponCompendiumHandler;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
+use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\TableBuilder\ArmorTableBuilder;
+use src\Presenter\TableBuilder\WeaponTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -21,10 +24,16 @@ use src\Repository\FeatRepository;
 use src\Repository\FeatTypeRepository;
 use src\Repository\ItemRepository;
 use src\Repository\OriginRepository;
+use src\Repository\WeaponPropertyValueRepository;
+use src\Repository\WeaponRepository;
+use src\Service\Domain\WpPostService;
+use src\Service\Formatter\WeaponPropertiesFormatter;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\WeaponPropertyValueReader;
+use src\Service\Reader\WeaponReader;
 
 final class CompendiumFactory
 {
@@ -43,9 +52,28 @@ final class CompendiumFactory
         );
     }
 
+    public function monster(): MonsterCompendiumHandler
+    {
+        return new MonsterCompendiumHandler();
+    }
+
     public function weapon(): WeaponCompendiumHandler
     {
-        return new WeaponCompendiumHandler();
+        $weaponRepository = new WeaponRepository($this->qb, $this->qe);
+        return new WeaponCompendiumHandler(
+            new WeaponReader($weaponRepository),
+            new WeaponListPresenter(
+                new WpPostService(),
+                new WeaponPropertiesFormatter(),
+                new WeaponPropertyValueReader(
+                    new WeaponPropertyValueRepository($this->qb, $this->qe)
+                )
+            ),
+            new PageList(
+                new TemplateRenderer(),
+                new WeaponTableBuilder()
+            )
+        );
     }
 
     public function skill(): SkillCompendiumHandler

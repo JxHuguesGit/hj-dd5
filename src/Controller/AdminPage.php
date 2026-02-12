@@ -26,7 +26,8 @@ class AdminPage extends Utilities
         $attributes = [
             'Hugues Joneaux',
             $this->getSidebar(),
-            $content
+            $content,
+            PLUGINS_DD5
         ];
         return $this->getRender(Template::ADMINBASE, $attributes);
     }

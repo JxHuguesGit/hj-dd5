@@ -143,10 +143,6 @@ $(document).ready(function(e) {
         ajaxActionChange($(this), e);
     });
 
-    $('.ajaxAction[data-trigger="click"]').on('click', function(e) {
-        ajaxActionClick($(this), e);
-    });
-
     $('*[data-action="RmbFocus"]').on('blur', function(e) {
         focusRemembered = $(this).attr('id');
     });
@@ -171,6 +167,7 @@ $(document).ready(function(e) {
             $('#subfeats-list div').addClass('d-none');
         }
     });
+
     $('input[name="secondFeatId"').on('click', function() {
         if ($(this).val()==5) {
             $('#subextrafeat-list div').removeClass('d-none');
@@ -284,7 +281,8 @@ function showConfirmModal(type, title, content) {
 }
 
 function ajaxActionClick(obj, e) {
-    if (obj.data('action')=='confirmCharacterDeletion') {
+    const oneAction = obj.data('action');
+    if (oneAction=='confirmCharacterDeletion') {
         e.preventDefault();
         $('#confirmModalButton').off('click').on('click', function() {
             globalThis.location.href = obj.data('url');
@@ -361,3 +359,4 @@ function fdmToolsManagment(obj) {
     }
     
 }
+

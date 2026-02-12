@@ -16,7 +16,7 @@ final class WeaponCriteria extends AbstractCriteria implements CriteriaInterface
     public array $orderBy = [
         Field::WPNCATID   => Constant::CST_ASC,
         Field::WPNRANGEID => Constant::CST_ASC,
-        Field::NAME       => Constant::CST_ASC,
+        'i.'.Field::NAME       => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $qb): void
