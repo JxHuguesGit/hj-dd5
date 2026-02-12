@@ -5,6 +5,7 @@ final class MonsterRow
 {
     public function __construct(
         public string $name,
+        public string $ukTag,
         public string $cr,
         public string $type,
         public string $ca,

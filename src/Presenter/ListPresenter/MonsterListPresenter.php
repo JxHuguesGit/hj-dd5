@@ -29,8 +29,9 @@ final class MonsterListPresenter
     {
         return new MonsterRow(
             name: $this->displayName(),
+            ukTag: $this->monster->ukTag,
             cr: $this->monsterFormatter->formatCR($this->monster->cr),
-            type: '',//$presenter->getStrType(),
+            type: $this->monsterFormatter->formatType($this->monster),
             ca: $this->monster->ca,
             hp: $this->monster->hp,
             reference: ($this->reader->referenceById($this->monster->referenceId))->name ?? '-'

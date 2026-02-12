@@ -7,11 +7,17 @@ use src\Constant\Icon;
 use src\Constant\Language;
 use src\Utils\Html;
 use src\Utils\Table;
+use src\Utils\UrlGenerator;
 
 class MonsterTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $monsters, array $params = []): Table
     {
+        $createLink = Html::getLink(
+            Html::getIcon(Icon::IPLUS),
+            UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, '', Constant::NEW),
+            Bootstrap::CSS_TEXT_WHITE
+        );
         $headers = [
             [Constant::CST_LABEL=>Language::LG_MONSTER],
             [Constant::CST_LABEL=>Language::LG_FP, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
@@ -19,6 +25,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
             [Constant::CST_LABEL=>Language::LG_CA, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
             [Constant::CST_LABEL=>Language::LG_PV, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
             [Constant::CST_LABEL=>Language::LG_REFERENCE, Constant::CST_CLASS => Bootstrap::CSS_COL_2],
+            [Constant::CST_LABEL=>$createLink, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
         ];
 
         $params[Constant::CST_ID] = 'spellMonster';
@@ -40,6 +47,14 @@ class MonsterTableBuilder extends AbstractTableBuilder
                 ->addBodyCell([Constant::CST_CONTENT => $monster->ca, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER]])
                 ->addBodyCell([Constant::CST_CONTENT => $monster->hp, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]])
                 ->addBodyCell([Constant::CST_CONTENT => $monster->reference])
+                ->addBodyCell([
+                    Constant::CST_CONTENT => Html::getLink(
+                        Html::getIcon(Icon::IEDIT),
+                        UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, $monster->ukTag ?? '', Constant::EDIT),
+                        Bootstrap::CSS_TEXT_DARK
+                    ),
+                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER . ' ' . Bootstrap::CSS_COL_1],
+                ]);
             ;
         }
 

@@ -14,15 +14,15 @@ enum SizeEnum: int
     case Huge = 16;
     case Gargantuan = 32;
 
-    public function label(string $gender='f'): string
+    public function label(string $gender='f', bool $plural=false): string
     {
         return match($this) {
-            self::Tiny        => 'Très petit'.($gender=='f'?'e':''),
-            self::Small       => 'Petit'.($gender=='f'?'e':''),
-            self::Medium      => 'Moyen'.($gender=='f'?'ne':''),
-            self::Large       => 'Grand'.($gender=='f'?'e':''),
-            self::Huge        => 'Très grand'.($gender=='f'?'e':''),
-            self::Gargantuan  => 'Gigantesque',
+            self::Tiny        => 'Très petit'.($gender=='f'?'e':'').($plural?'s':''),
+            self::Small       => 'Petit'.($gender=='f'?'e':'').($plural?'s':''),
+            self::Medium      => 'Moyen'.($gender=='f'?'ne':'').($plural?'s':''),
+            self::Large       => 'Grand'.($gender=='f'?'e':'').($plural?'s':''),
+            self::Huge        => 'Très grand'.($gender=='f'?'e':'').($plural?'s':''),
+            self::Gargantuan  => 'Gigantesque'.($plural?'s':''),
         };
     }
 

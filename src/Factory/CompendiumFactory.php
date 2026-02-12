@@ -28,6 +28,8 @@ use src\Repository\ItemRepository;
 use src\Repository\MonsterRepository;
 use src\Repository\OriginRepository;
 use src\Repository\ReferenceRepository;
+use src\Repository\SousTypeMonsterRepository;
+use src\Repository\TypeMonsterRepository;
 use src\Repository\WeaponPropertyValueRepository;
 use src\Repository\WeaponRepository;
 use src\Service\Domain\WpPostService;
@@ -39,6 +41,8 @@ use src\Service\Reader\ItemReader;
 use src\Service\Reader\MonsterReader;
 use src\Service\Reader\OriginReader;
 use src\Service\Reader\ReferenceReader;
+use src\Service\Reader\SousTypeMonsterReader;
+use src\Service\Reader\TypeMonsterReader;
 use src\Service\Reader\WeaponPropertyValueReader;
 use src\Service\Reader\WeaponReader;
 
@@ -64,7 +68,10 @@ final class CompendiumFactory
         return new MonsterCompendiumHandler(
             new MonsterReader(new MonsterRepository($this->qb, $this->qe)),
             new MonsterListPresenter(
-                new MonsterFormatter(),
+                new MonsterFormatter(
+                    new TypeMonsterReader(new TypeMonsterRepository($this->qb, $this->qe)),
+                    new SousTypeMonsterReader(new SousTypeMonsterRepository($this->qb, $this->qe)),
+                ),
                 new ReferenceReader(new ReferenceRepository($this->qb, $this->qe))
             ),
             new PageList($this->renderer, new MonsterTableBuilder())

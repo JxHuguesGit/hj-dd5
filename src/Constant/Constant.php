@@ -40,6 +40,7 @@ class Constant
     public const MUSIC   = 'music';
     public const TOOLS   = 'outils';
     public const ONG_COMPENDIUM = 'compendium';
+    public const TAB_MONSTERS = 'monsters';
 
     public const CST_EXTRA = '-extra';
     public const CST_ASC = 'ASC';

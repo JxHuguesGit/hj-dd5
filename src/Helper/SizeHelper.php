@@ -38,7 +38,7 @@ class SizeHelper
     /**
      * Retourne le libellé combiné en français à partir d’un bitmask
      */
-    public static function toLabelFr(int $bitmask, string $gender='f'): string
+    public static function toLabelFr(int $bitmask, string $gender='f', bool $plural=false): string
     {
         $sizes = SizeEnum::fromBitmask($bitmask);
 
@@ -50,19 +50,19 @@ class SizeHelper
                 $returned = '';
             break;
             case 1 :
-                $returned = $sizes[0]->label($gender);
+                $returned = $sizes[0]->label($gender, $plural);
             break;
             case 2 :
-                $returned = $sizes[0]->label($gender) . ' ou ' . $sizes[1]->label($gender);
+                $returned = $sizes[0]->label($gender, $plural) . ' ou ' . $sizes[1]->label($gender, $plural);
             break;
             default :
                 $min = array_shift($sizes);
                 $max = array_pop($sizes);
                 // Si on a Tiny dans la sélection, on part du principe que c'est "X ou plus petit"
                 if ($min === SizeEnum::Tiny) {
-                    $returned = $max->label($gender) . ' ou plus petit'.($gender=='f'?'e':'');
+                    $returned = $max->label($gender, $plural) . ' ou plus petit'.($gender=='f'?'e':'').($plural?'s':'');
                 } else {
-                    $returned = $min->label($gender) . ' ou plus grand'.($gender=='f'?'e':'');
+                    $returned = $min->label($gender, $plural) . ' ou plus grand'.($gender=='f'?'e':'').($plural?'s':'');
                 }
             break;
         }

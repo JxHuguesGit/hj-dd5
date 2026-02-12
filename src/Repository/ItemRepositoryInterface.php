@@ -8,11 +8,6 @@ use src\Domain\Criteria\ItemCriteria;
 interface ItemRepositoryInterface
 {
     /**
-     * @return ?Item
-     */
-    public function find(int $id): ?Item;
-
-    /**
      * @return Collection<Item>
      */
     public function findAllWithItemAndType(ItemCriteria $criteria): Collection;

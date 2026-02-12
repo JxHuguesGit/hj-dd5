@@ -48,7 +48,9 @@ class Field
     public const PROFBONUS   = 'profBonus';
     public const PERCPASSIVE = 'percPassive';
     public const TYPE        = 'type';
-     
+
+    public const ABBR        = 'abbr';
+    
     public const DESCRIPTION  = 'description';
     public const ENTITYTYPE   = 'entityType';
     public const EXPERTISE    = 'expertise';

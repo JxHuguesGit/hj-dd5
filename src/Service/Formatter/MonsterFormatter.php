@@ -2,10 +2,19 @@
 namespace src\Service\Formatter;
 
 use src\Constant\Icon;
+use src\Domain\Entity\Monster;
+use src\Helper\SizeHelper;
+use src\Service\Reader\SousTypeMonsterReader;
+use src\Service\Reader\TypeMonsterReader;
 use src\Utils\Html;
 
 class MonsterFormatter
 {
+    public function __construct(
+        private TypeMonsterReader $typeReader,
+        private SousTypeMonsterReader $sousTypeReader,
+    ) {}
+
     public function formatNameWithFlags(
         string $name,
         int $id,
@@ -36,4 +45,30 @@ class MonsterFormatter
             default => (string)$cr,
         };
     }
+
+    public function formatType(Monster $monster): string
+    {
+        $gender = '';
+
+        // Type principal
+        $type = $this->typeReader->typeMonsterById($monster->monstreTypeId);
+        ['label'=>$typeName, 'gender'=>$gender] = $type?->getNameAndGender();
+
+        // Nuée
+        if ($monster->swarmSize) {
+            $sizeLabel = SizeHelper::toLabelFr($monster->swarmSize, $gender, true);
+            $typeName = "Nuée de $sizeLabel $typeName" . 's';
+        }
+
+        // Sous-type
+        if ($monster->monsterSubTypeId) {
+            $subType = $this->sousTypeReader->typeMonsterById($monster->monsterSubTypeId);
+            if ($subType) {
+                $typeName .= ' (' . $subType->getStrName() . ')';
+            }
+        }
+
+        return $typeName;
+    }
+
 }
