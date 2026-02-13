@@ -74,7 +74,8 @@ final class CompendiumFactory
                 ),
                 new ReferenceReader(new ReferenceRepository($this->qb, $this->qe))
             ),
-            new PageList($this->renderer, new MonsterTableBuilder())
+            new PageList($this->renderer, new MonsterTableBuilder()),
+            $this->renderer
         );
     }
 

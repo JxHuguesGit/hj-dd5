@@ -2,8 +2,11 @@
 namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
+use src\Page\PageForm;
 use src\Page\PageList;
+use src\Presenter\FormBuilder\MonsterFormBuilder;
 use src\Presenter\ListPresenter\MonsterListPresenter;
+use src\Renderer\TemplateRenderer;
 use src\Service\Reader\MonsterReader;
 use src\Utils\Session;
 
@@ -15,6 +18,7 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
         private MonsterReader $reader,
         private MonsterListPresenter $presenter,
         private PageList $page,
+        private TemplateRenderer $templateRenderer
     ) {}
 
     public function render(): string
@@ -48,18 +52,13 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
     private function renderEdit(string $slug): string
     {
         $monster = $this->reader->monsterByUkTag($slug);
-        var_dump($monster);
-/*
+
         $page = new PageForm(
             $this->templateRenderer,
-            new FeatFormBuilder(
-                new WpPostService(),
-                $this->featTypeReader
-            ),
+            new MonsterFormBuilder(),
             $this->toastContent
         );
-        */
-        return '';//$page->renderAdmin('', $feat);
+        return $page->renderAdmin('', $monster);
     }
 
     private function renderList(): string

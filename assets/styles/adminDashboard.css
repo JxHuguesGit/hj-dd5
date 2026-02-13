@@ -92,3 +92,112 @@ table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order::before, ta
 .cursor-pointer {
     cursor: pointer;
 }
+
+
+
+div.checkbox {
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  height: 58px;
+  cursor:pointer;
+}
+
+div.checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+
+div.checkbox label {
+  transition: all .2s;
+  display: block;
+  padding: 10px 20px 10px 30px;
+  top: 3px;
+  margin: 6px 0 0 10px;
+  line-height:20px;
+  font-size: 14px;
+  transform: scale(.85);
+}
+*, ::before, ::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+div.checkbox label::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "FontAwesome";
+  font-weight: 900;
+  font-size: 20px;
+  padding: 0;
+  content: "\f1db";
+  color: rgba(0, 0, 0, 0.2);
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+  transition: -webkit-transform .3s ease-in-out;
+  -o-transition: transform .3s ease-in-out;
+  transition: transform .3s ease-in-out;
+  transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+  position: absolute;
+  left: 0px;
+  margin-top:2px;
+}
+div.checkbox input[type="checkbox"]:checked + label::before {
+  content: "\f058";
+  -webkit-transform: rotate(-360deg);
+  -ms-transform: rotate(-360deg);
+  transform: rotate(-360deg);
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+  transition: -webkit-transform .3s ease-in-out;
+  -o-transition: transform .3s ease-in-out;
+  transition: transform .3s ease-in-out;
+  transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+}
+
+
+.monster-fieldset {
+    border: 1px solid #ccc;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+}
+
+.monster-fieldset legend {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0 8px;
+}
+
+.monster-fieldset.collapsible legend {
+    cursor: pointer;
+}
+
+.monster-fieldset.collapsible legend::after {
+    content: "▼";
+    float: right;
+    font-size: 0.9rem;
+    transition: transform .3s;
+}
+
+.monster-fieldset.collapsible.collapsed legend::after {
+    transform: rotate(-90deg);
+}
+
+.monster-fieldset.collapsible.collapsed > *:not(legend) {
+    /*display: none;*/
+}
+
+.monster-fieldset > *:not(legend) {
+    overflow: hidden;
+    transition: max-height .3s ease, opacity .3s ease;
+    max-height: 1000px; /* assez grand pour contenir le contenu */
+    opacity: 1;
+}
+
+.monster-fieldset.collapsed > *:not(legend) {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom:0 !important;
+}
+

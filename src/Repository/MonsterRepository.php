@@ -43,7 +43,7 @@ class MonsterRepository extends Repository implements MonsterRepositoryInterface
     {
         $baseQuery = "
             SELECT m.id, m.".Field::NAME.", ".Field::FRNAME.", ".Field::FRTAG.", ".Field::UKTAG.", ".Field::INCOMPLET.", ".Field::SCORECR
-                . ", ".Field::SWARMSIZE.", ".Field::MSTSIZE.", ".Field::SCORECA.", ".Field::SCOREHP.", ".Field::SPEED.", ".Field::INITIATIVE
+                . ", ".Field::SWARMSIZE.", ".Field::MSTSIZE.", ".Field::SCORECA.", ".Field::SCOREHP.", ".Field::INITIATIVE
                 . ", ".Field::LEGENDARY.", ".Field::HABITAT.", ".Field::STRSCORE.", ".Field::DEXSCORE.", ".Field::CONSCORE.", ".Field::INTSCORE
                 . ", ".Field::WISSCORE.", ".Field::CHASCORE.", ".Field::PROFBONUS.", ".Field::PERCPASSIVE.", ".Field::EXTRA
                 . ", tm.".Field::NAME." AS ".Field::TYPMSTNAME.", ".Field::ABBR

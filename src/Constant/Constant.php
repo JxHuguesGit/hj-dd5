@@ -39,6 +39,7 @@ class Constant
     public const GAMES   = 'games';
     public const MUSIC   = 'music';
     public const TOOLS   = 'outils';
+    public const OUTERDIVCLASS = 'outerDivClass';
     public const ONG_COMPENDIUM = 'compendium';
     public const TAB_MONSTERS = 'monsters';
 

@@ -10,6 +10,7 @@ class Bootstrap
     public const CSS_FONT          = 'font';
     public const CSS_ITEM          = 'item';
     public const CSS_ITALIC        = 'italic';
+    public const CSS_MB3           = 'mb-3';
     public const CSS_MT5           = 'mt-5';
     public const CSS_NAV           = 'nav';
     public const CSS_SM            = 'sm';
@@ -34,8 +35,12 @@ class Bootstrap
     
     public const CSS_COL_1         = 'col-1';
     public const CSS_COL_2         = 'col-2';
+    public const CSS_COL_MD_1      = 'col-md-1';
     public const CSS_COL_MD_2      = 'col-md-2';
     public const CSS_COL_MD_3      = 'col-md-3';
+    public const CSS_COL_MD_4      = 'col-md-4';
+    public const CSS_COL_MD_5      = 'col-md-5';
+    public const CSS_COL_MD_6      = 'col-md-6';
     public const CSS_COL_MD_9      = 'col-md-9';
 
 

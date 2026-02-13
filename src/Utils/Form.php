@@ -6,6 +6,7 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Template;
 use src\Presenter\FormBuilder\FormField;
+use src\Presenter\FormBuilder\HrField;
 use src\Renderer\TemplateRenderer;
 
 class Form
@@ -33,6 +34,15 @@ class Form
                 $this->formAttributes[Constant::CST_ACTION],
             ]
         );
+    }
+
+    public function addHr(): self
+    {
+        if ($this->fields === null) {
+            $this->fields = new Collection();
+        }
+        $this->fields->add(new HrField('hr', ''));
+        return $this;
     }
 
     public function addField(FormField $formField): self

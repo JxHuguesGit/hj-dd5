@@ -2,6 +2,7 @@ $(document).ready(function(e) {
     $('.ajaxAction[data-trigger="click"]').on('click', function(e) {
         ajaxActionClick($(this), e);
     })
+
 });
 
 // Gère les data-action des .ajaxAction[data-trigger="click"]
@@ -15,6 +16,11 @@ function ajaxActionClick(obj, e) {
             loadMoreSpells('append');
         } else if (oneAction=='loadMoreMonsters') {
             loadMoreMonsters('append');
+        } else if (oneAction=='toggleCheckbox') {
+            const target = obj.data('target');
+            toggleCheckbox(target);
+        } else if (oneAction=='collapse') {
+            collapse(obj);
         } else if (oneAction=='openModal') {
             const target = obj.data('target');
             openModal(target);
@@ -43,6 +49,19 @@ function openModal(id) {
 function closeModal(id) {
     $('#'+id).removeClass('show').css('display', 'none');
     $('#'+id+' + .modal-backdrop').removeClass('show').addClass('d-none');
+}
+
+// Coche et décoche une case à cocher
+function toggleCheckbox(id) {
+    $('#'+id).prop('checked', !$('#'+id).prop('checked'));
+}
+
+// Plie et déplie un fieldset
+function collapse(obj) {
+    if (obj[0].localName!='legend' || !obj.parent().hasClass('collapsible')) {
+        return false;
+    }
+    obj.parent().toggleClass('collapsed');
 }
 
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des sorts.

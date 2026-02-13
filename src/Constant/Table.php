@@ -23,6 +23,7 @@ class Table
     public const SKILL         = 'rpgSkill';
     public const SPECIEPOWER   = 'rpgSpeciesPower';
     public const SPECIES       = 'rpgSpecies';
+    public const SPEEDTYPE     = 'rpgSpeedType';
     public const SPELL         = 'rpgSpell';
     public const SUBSKILL      = 'rpgSubSkill';
     public const TOOL          = 'rpgTool';
