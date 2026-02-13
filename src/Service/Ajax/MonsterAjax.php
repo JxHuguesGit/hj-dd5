@@ -10,15 +10,9 @@ use src\Presenter\TableBuilder\MonsterTableBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
-use src\Repository\MonsterRepository;
-use src\Repository\ReferenceRepository;
-use src\Repository\SubTypeMonsterRepository;
-use src\Repository\TypeMonsterRepository;
+use src\Repository\{MonsterRepository, MonsterSubTypeRepository, MonsterTypeRepository, ReferenceRepository};
 use src\Service\Formatter\MonsterFormatter;
-use src\Service\Reader\MonsterReader;
-use src\Service\Reader\ReferenceReader;
-use src\Service\Reader\SubTypeMonsterReader;
-use src\Service\Reader\TypeMonsterReader;
+use src\Service\Reader\{MonsterReader, MonsterSubTypeReader, MonsterTypeReader, ReferenceReader};
 use src\Utils\Session;
 
 class MonsterAjax
@@ -32,8 +26,8 @@ class MonsterAjax
         );
         $presenter = new MonsterListPresenter(
             new MonsterFormatter(
-                new TypeMonsterReader(new TypeMonsterRepository($qb, $qe)),
-                new SubTypeMonsterReader(new SubTypeMonsterRepository($qb, $qe)),
+                new MonsterTypeReader(new MonsterTypeRepository($qb, $qe)),
+                new MonsterSubTypeReader(new MonsterSubTypeRepository($qb, $qe)),
             ),
             new ReferenceReader(
                 new ReferenceRepository($qb, $qe)

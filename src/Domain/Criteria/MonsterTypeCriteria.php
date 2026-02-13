@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class TypeMonsterCriteria extends BaseCriteria
+final class MonsterTypeCriteria extends BaseCriteria
 {
     public ?string $abbr = null;
     public ?string $nameLt = null;

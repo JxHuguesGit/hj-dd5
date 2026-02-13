@@ -1,10 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\{Bootstrap, Constant, Field, Language};
 use src\Domain\Entity\Item;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;

@@ -9,9 +9,7 @@ class ArmorPageView implements PageViewInterface
         public Armor $armor,
         public ?Armor $previous = null,
         public ?Armor $next = null
-    ) {
-        //parent::__construct($armor, $previous, $next);
-    }
+    ) {}
 
     public function getSlug(): string
     {

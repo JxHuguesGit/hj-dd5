@@ -3,34 +3,11 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\AbilityRepository;
-use src\Repository\AbilityRepositoryInterface;
-use src\Repository\ArmorRepository;
-use src\Repository\ArmorRepositoryInterface;
-use src\Repository\FeatRepository;
-use src\Repository\FeatRepositoryInterface;
-use src\Repository\FeatTypeRepository;
-use src\Repository\FeatTypeRepositoryInterface;
-use src\Repository\ItemRepository;
-use src\Repository\ItemRepositoryInterface;
-use src\Repository\OriginRepository;
-use src\Repository\OriginRepositoryInterface;
-use src\Repository\PowerRepository;
-use src\Repository\PowerRepositoryInterface;
-use src\Repository\SkillRepository;
-use src\Repository\SkillRepositoryInterface;
-use src\Repository\SubSkillRepository;
-use src\Repository\SubSkillRepositoryInterface;
-use src\Repository\SpeciesRepository;
-use src\Repository\SpeciesRepositoryInterface;
-use src\Repository\SpellRepository;
-use src\Repository\SpellRepositoryInterface;
-use src\Repository\ToolRepository;
-use src\Repository\ToolRepositoryInterface;
-use src\Repository\WeaponPropertyValueRepository;
-use src\Repository\WeaponPropertyValueRepositoryInterface;
-use src\Repository\WeaponRepository;
-use src\Repository\WeaponRepositoryInterface;
+use src\Repository\{AbilityRepository, AbilityRepositoryInterface, ArmorRepository, ArmorRepositoryInterface, FeatRepository, FeatRepositoryInterface};
+use src\Repository\{FeatTypeRepository, FeatTypeRepositoryInterface, ItemRepository, ItemRepositoryInterface, OriginRepository, OriginRepositoryInterface};
+use src\Repository\{PowerRepository, PowerRepositoryInterface, SkillRepository, SkillRepositoryInterface, SubSkillRepository, SubSkillRepositoryInterface};
+use src\Repository\{SpeciesRepository, SpeciesRepositoryInterface, SpellRepository, SpellRepositoryInterface, ToolRepository, ToolRepositoryInterface};
+use src\Repository\{WeaponPropertyValueRepository, WeaponPropertyValueRepositoryInterface, WeaponRepository, WeaponRepositoryInterface};
 
 class RepositoryFactory
 {

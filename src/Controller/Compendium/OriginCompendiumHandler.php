@@ -9,20 +9,9 @@ use src\Presenter\TableBuilder\OriginTableBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
-use src\Repository\AbilityRepository;
-use src\Repository\FeatRepository;
-use src\Repository\ItemRepository;
-use src\Repository\OriginAbilityRepository;
-use src\Repository\OriginItemRepository;
-use src\Repository\OriginRepository;
-use src\Repository\OriginSkillRepository;
-use src\Repository\SkillRepository;
-use src\Repository\ToolRepository;
+use src\Repository\{AbilityRepository, FeatRepository, ItemRepository, OriginAbilityRepository, OriginItemRepository, OriginRepository, OriginSkillRepository, SkillRepository, ToolRepository};
 use src\Service\Domain\OriginService;
-use src\Service\Reader\AbilityReader;
-use src\Service\Reader\ItemReader;
-use src\Service\Reader\OriginReader;
-use src\Service\Reader\SkillReader;
+use src\Service\Reader\{AbilityReader, ItemReader, OriginReader, SkillReader};
 
 class OriginCompendiumHandler implements CompendiumHandlerInterface
 {

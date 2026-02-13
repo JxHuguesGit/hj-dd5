@@ -1,10 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\{Bootstrap, Constant, Field, Language};
 use src\Domain\Entity\Feat;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\FeatTypeReader;

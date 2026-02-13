@@ -1,12 +1,7 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Field;
-use src\Constant\Icon;
-use src\Constant\Language;
-use src\Constant\Template;
+use src\Constant\{Bootstrap, Constant, Field, Icon, Language, Template};
 use src\Repository\RpgHeros as RepositoryRpgHeros;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;

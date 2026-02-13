@@ -1,10 +1,7 @@
 <?php
 namespace src\CharacterCreation;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Field;
-use src\Constant\Template;
+use src\Constant\{Bootstrap, Constant, Field, Template};
 use src\Entity\RpgFeat;
 use src\Entity\RpgHerosFeat;
 use src\Utils\Session;

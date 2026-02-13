@@ -1,38 +1,17 @@
 <?php
 namespace src\Factory;
 
-use src\Controller\Weapon;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\AbilityRepository;
-use src\Repository\FeatRepository;
-use src\Repository\ItemRepository;
-use src\Repository\PowerRepository;
-use src\Repository\OriginRepository;
+use src\Repository\{AbilityRepository, FeatRepository, ItemRepository, PowerRepository, OriginRepository};
 use src\Repository\OriginAbility as RepositoryOriginAbility;
 use src\Repository\OriginItem as RepositoryOriginItem;
 use src\Repository\OriginSkill as RepositoryOriginSkill;
-use src\Repository\SpeciesRepository;
 use src\Repository\SpeciePower as RepositorySpeciePower;
-use src\Repository\SubSkillRepository;
-use src\Repository\SkillRepository;
-use src\Repository\ToolRepository;
-use src\Repository\WeaponRepository;
-use src\Service\Domain\OriginService;
-use src\Service\Domain\SpecieService;
-use src\Service\Domain\SkillService;
-use src\Service\Domain\WpPostService;
+use src\Repository\{SpeciesRepository, SubSkillRepository, SkillRepository, ToolRepository, WeaponRepository};
+use src\Service\Domain\{OriginService, SpecieService, SkillService, WpPostService};
 use src\Service\Formatter\WeaponPropertiesFormatter;
-use src\Service\Reader\AbilityReader;
-use src\Service\Reader\ArmorReader;
-use src\Service\Reader\FeatReader;
-use src\Service\Reader\ItemReader;
-use src\Service\Reader\OriginReader;
-use src\Service\Reader\PowerReader;
-use src\Service\Reader\SkillReader;
-use src\Service\Reader\SpecieReader;
-use src\Service\Reader\ToolReader;
-use src\Service\Reader\WeaponReader;
+use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, ItemReader, OriginReader, PowerReader, SkillReader, SpecieReader, ToolReader, WeaponReader};
 
 final class ServiceFactory
 {

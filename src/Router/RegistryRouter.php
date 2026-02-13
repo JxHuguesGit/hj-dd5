@@ -6,21 +6,13 @@ use src\Controller\Public\PublicBase;
 use src\Controller\Utilities;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
-use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Model\PageRegistry;
 use src\Page\PageList;
-use src\Presenter\ListPresenter\FeatListPresenter;
-use src\Presenter\ListPresenter\OriginListPresenter;
-use src\Presenter\ListPresenter\SkillListPresenter;
-use src\Presenter\ListPresenter\SpeciesListPresenter;
-use src\Presenter\ListPresenter\SpellListPresenter;
+use src\Presenter\ListPresenter\{FeatListPresenter, OriginListPresenter, SkillListPresenter, SpeciesListPresenter, SpellListPresenter};
 use src\Presenter\Modal\SpellFilterModalPresenter;
-use src\Presenter\TableBuilder\FeatTableBuilder;
-use src\Presenter\TableBuilder\OriginTableBuilder;
-use src\Presenter\TableBuilder\SkillTableBuilder;
-use src\Presenter\TableBuilder\SpeciesTableBuilder;
-use src\Presenter\TableBuilder\SpellTableBuilder;
+use src\Presenter\TableBuilder\{FeatTableBuilder, OriginTableBuilder, SkillTableBuilder, SpeciesTableBuilder, SpellTableBuilder};
+use src\Presenter\MenuPresenter;
 use src\Service\Domain\SpellService;
 
 class RegistryRouter

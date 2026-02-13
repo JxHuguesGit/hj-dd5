@@ -1,17 +1,7 @@
 <?php
 namespace src\Model;
 
-use src\Page\PageItems;
-use src\Page\PageFeats;
-use src\Page\PageFeatsCombat;
-use src\Page\PageFeatsEpic;
-use src\Page\PageFeatsGeneral;
-use src\Page\PageFeatsOrigin;
-use src\Page\PageHome;
-use src\Page\PageOrigines;
-use src\Page\PageSkills;
-use src\Page\PageSpecies;
-use src\Page\PageSpells;
+use src\Page\{PageItems, PageFeats, PageFeatsCombat, PageFeatsEpic, PageFeatsGeneral, PageFeatsOrigin, PageHome, PageOrigines, PageSkills, PageSpecies, PageSpells};
 
 class PageRegistry
 {

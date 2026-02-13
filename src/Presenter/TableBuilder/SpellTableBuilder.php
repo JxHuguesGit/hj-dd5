@@ -1,14 +1,11 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\{Bootstrap, Constant, Icon, Language};
 use src\Presenter\ViewModel\SpellRow;
+use src\Service\Formatter\SpellFormatter;
 use src\Utils\Table;
 use src\Utils\Html;
-use src\Constant\Language;
-use src\Service\Formatter\SpellFormatter;
 
 class SpellTableBuilder extends AbstractTableBuilder
 {

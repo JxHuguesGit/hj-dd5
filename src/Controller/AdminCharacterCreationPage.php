@@ -1,10 +1,7 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Field;
-use src\Constant\Template;
+use src\Constant\{Bootstrap, Constant, Field, Template};
 use src\Entity\RpgHeros;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;

@@ -1,14 +1,11 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\{Bootstrap, Constant, Icon, Language};
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
 use src\Utils\Table;
 use src\Utils\Html;
-use src\Constant\Language;
 use src\Utils\UrlGenerator;
 
 class FeatTableBuilder extends AbstractTableBuilder

@@ -1,10 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant;
-use src\Constant\Language;
-use src\Constant\Routes;
-use src\Constant\Template;
+use src\Constant\{Constant, Language, Routes, Template};
 use src\Model\PageElement;
 use src\Model\PageRegistry;
 use src\Presenter\CardPresenter;

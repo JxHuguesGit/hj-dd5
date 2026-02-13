@@ -1,19 +1,20 @@
 <?php
 namespace src\Service\Formatter;
 
+use src\Constant\Field;
 use src\Constant\Icon;
 use src\Domain\Monster\Monster;
 use src\Helper\SizeHelper;
-use src\Service\Reader\SubTypeMonsterReader;
-use src\Service\Reader\TypeMonsterReader;
+use src\Service\Reader\MonsterSubTypeReader;
+use src\Service\Reader\MonsterTypeReader;
 use src\Utils\Html;
 use src\Utils\Utils;
 
 class MonsterFormatter
 {
     public function __construct(
-        private TypeMonsterReader $typeReader,
-        private SubTypeMonsterReader $sousTypeReader,
+        private MonsterTypeReader $typeReader,
+        private MonsterSubTypeReader $subTypeReader,
     ) {}
 
     public function formatName(string $ukName, string $frName): string
@@ -73,9 +74,9 @@ class MonsterFormatter
     public function formatType(Monster $monster): string
     {
         $gender = '';
-var_dump($monster);
+
         // Type principal
-        $type = $this->typeReader->typeMonsterById($monster->monstreTypeId);
+        $type = $this->typeReader->monsterTypeById($monster->monstreTypeId);
         ['label'=>$typeName, 'gender'=>$gender] = $type?->getNameAndGender();
 
         // Nuée
@@ -86,7 +87,7 @@ var_dump($monster);
 
         // Sous-type
         if ($monster->monsterSubTypeId) {
-            $subType = $this->sousTypeReader->typeMonsterById($monster->monsterSubTypeId);
+            $subType = $this->subTypeReader->monsterSubTypeById($monster->monsterSubTypeId);
             if ($subType) {
                 $typeName .= ' (' . $subType->getStrName() . ')';
             }
@@ -107,7 +108,7 @@ var_dump($monster);
     public function formatTypeAndAlignement(Monster $monster): string
     {
         $type = $this->formatType($monster);
-        //$alignment = $monster->getField(Field::ALIGNEMENT) ?? '';
-        return $type ;//. ($alignment ? ', ' . $alignment : '');
+        $alignment = $monster->getField(Field::ALGNID) ?? '';
+        return $type . ($alignment ? ', ' . $alignment : '');
     }
 }

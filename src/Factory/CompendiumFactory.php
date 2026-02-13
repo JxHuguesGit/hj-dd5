@@ -1,15 +1,7 @@
 <?php
 namespace src\Factory;
 
-use src\Controller\Compendium\ArmorCompendiumHandler;
-use src\Controller\Compendium\FeatCompendiumHandler;
-use src\Controller\Compendium\GearCompendiumHandler;
-use src\Controller\Compendium\MonsterCompendiumHandler;
-use src\Controller\Compendium\OriginCompendiumHandler;
-use src\Controller\Compendium\SkillCompendiumHandler;
-use src\Controller\Compendium\SpellCompendiumHandler;
-use src\Controller\Compendium\ToolCompendiumHandler;
-use src\Controller\Compendium\WeaponCompendiumHandler;
+use src\Controller\Compendium\{ArmorCompendiumHandler, FeatCompendiumHandler, GearCompendiumHandler, MonsterCompendiumHandler, OriginCompendiumHandler, SkillCompendiumHandler, SpellCompendiumHandler, ToolCompendiumHandler, WeaponCompendiumHandler};
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
 use src\Presenter\ListPresenter\MonsterListPresenter;
@@ -21,30 +13,11 @@ use src\Presenter\ToastBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
-use src\Repository\ArmorRepository;
-use src\Repository\FeatRepository;
-use src\Repository\FeatTypeRepository;
-use src\Repository\ItemRepository;
-use src\Repository\MonsterRepository;
-use src\Repository\OriginRepository;
-use src\Repository\ReferenceRepository;
-use src\Repository\SubTypeMonsterRepository;
-use src\Repository\TypeMonsterRepository;
-use src\Repository\WeaponPropertyValueRepository;
-use src\Repository\WeaponRepository;
+use src\Repository\{ArmorRepository, FeatRepository, FeatTypeRepository, ItemRepository, MonsterRepository, OriginRepository, ReferenceRepository, MonsterSubTypeRepository, MonsterTypeRepository, WeaponPropertyValueRepository, WeaponRepository};
 use src\Service\Domain\WpPostService;
 use src\Service\Formatter\MonsterFormatter;
 use src\Service\Formatter\WeaponPropertiesFormatter;
-use src\Service\Reader\FeatReader;
-use src\Service\Reader\FeatTypeReader;
-use src\Service\Reader\ItemReader;
-use src\Service\Reader\MonsterReader;
-use src\Service\Reader\OriginReader;
-use src\Service\Reader\ReferenceReader;
-use src\Service\Reader\SubTypeMonsterReader;
-use src\Service\Reader\TypeMonsterReader;
-use src\Service\Reader\WeaponPropertyValueReader;
-use src\Service\Reader\WeaponReader;
+use src\Service\Reader\{FeatReader, FeatTypeReader, ItemReader, MonsterReader, OriginReader, ReferenceReader, MonsterSubTypeReader, MonsterTypeReader, WeaponPropertyValueReader, WeaponReader};
 
 final class CompendiumFactory
 {
@@ -69,8 +42,8 @@ final class CompendiumFactory
             new MonsterReader(new MonsterRepository($this->qb, $this->qe)),
             new MonsterListPresenter(
                 new MonsterFormatter(
-                    new TypeMonsterReader(new TypeMonsterRepository($this->qb, $this->qe)),
-                    new SubTypeMonsterReader(new SubTypeMonsterRepository($this->qb, $this->qe)),
+                    new MonsterTypeReader(new MonsterTypeRepository($this->qb, $this->qe)),
+                    new MonsterSubTypeReader(new MonsterSubTypeRepository($this->qb, $this->qe)),
                 ),
                 new ReferenceReader(new ReferenceRepository($this->qb, $this->qe))
             ),

@@ -47,8 +47,8 @@ class MonsterPresenter
         // Sous-type
         if ($this->monster->monsterSubTypeId) {
             $objSousTypeDao = new SubTypeMonsterRepository($this->queryBuilder, $this->queryExecutor);
-            //$subType = $objSousTypeDao->find($this->monster->getMonsterSubTypeId());
-            //$typeName .= ' (' . ($subType?->getStrName() ?? '') . ')';
+            $subType = $objSousTypeDao->find($this->monster->monsterSubTypeId);
+            $typeName .= ' (' . ($subType?->getStrName() ?? '') . ')';
         }
 
         return $typeName;
@@ -110,12 +110,12 @@ class MonsterPresenter
     // -----------------------
     public function getInitiative(): string
     {
-        return ($this->monster->getInitiative() >= 0 ? '+' : '') . $this->monster->getInitiative();
+        return ($this->monster->initiative >= 0 ? '+' : '') . $this->monster->initiative;
     }
 
     public function getSpeed(): string
     {
-        $value = $this->monster->getVitesse() . ' m';
+        $value = $this->monster->vitesse . ' m';
         // exemple, remplacer par typeSpeed si nécessaire
         $objs = $this->monster->getSenses();
         foreach ($objs as $obj) {

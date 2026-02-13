@@ -1,12 +1,9 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
-use src\Constant\Constant;
-use src\Constant\Icon;
-use src\Utils\Table;
-use src\Constant\Language;
+use src\Constant\{Bootstrap, Constant, Icon, Language};
 use src\Utils\Html;
+use src\Utils\Table;
 use src\Utils\UrlGenerator;
 
 class ItemTableBuilder extends AbstractTableBuilder

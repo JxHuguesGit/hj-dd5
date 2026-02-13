@@ -43,7 +43,9 @@ $constants = []; // "Class::CONST" => valeur
 foreach (glob($constantDir . '/*.php') as $file) {
     $content = file_get_contents($file);
     preg_match('/class\s+(\w+)/', $content, $classMatch);
-    if (!$classMatch) continue;
+    if (!$classMatch) {
+        continue;
+    }
     $className = $classMatch[1];
 
     preg_match_all('/public\s+const\s+([A-Z0-9_]+)\s*=\s*([^;]+);/', $content, $matches, PREG_SET_ORDER);
@@ -65,17 +67,23 @@ $filesData = [];
 $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseDir));
 
 foreach ($iterator as $file) {
-    if (!$file->isFile() || $file->getExtension() !== 'php') continue;
+    if (!$file->isFile() || $file->getExtension() !== 'php') {
+        continue;
+    }
 
     $path = str_replace('\\', '/', $file->getRealPath());
     $constDirNormalized = str_replace('\\', '/', $constantDir);
 
     // Skip Constant dir
-    if (str_starts_with($path, $constDirNormalized)) continue;
+    if (str_starts_with($path, $constDirNormalized)) {
+        continue;
+    }
 
     // Chemin relatif pour exclusion et sortie
     $relativePath = './' . str_replace('\\', '/', substr($path, strlen(dirname($baseDir)) + 1));
-    if ($excludedMode && in_array($relativePath, $excludedFiles, true)) continue;
+    if ($excludedMode && in_array($relativePath, $excludedFiles, true)) {
+        continue;
+    }
 
     $lines = file($path);
 
@@ -91,7 +99,9 @@ foreach ($iterator as $file) {
         if (preg_match_all('/([\'"])(.*?)(?<!\\\\)\1/', $line, $stringMatches)) {
             foreach ($stringMatches[2] as $s) {
                 $s = stripslashes($s);
-                if ($s === '') continue;
+                if ($s === '') {
+                    continue;
+                }
 
                 $fileData['count']++;
 
@@ -196,4 +206,6 @@ if ($jsonOutput) {
 
 echo "Analyse terminée : {$outputFile}\n";
 echo "Nombre de fichiers dans le compte-rendu : {$nbFiles}\n";
-if ($excludedMode) echo "Fichiers exclus : " . count($excludedFiles) . "\n";
+if ($excludedMode) {
+    echo "Fichiers exclus : " . count($excludedFiles) . "\n";
+}
