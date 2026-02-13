@@ -15,5 +15,5 @@ interface ToolRepositoryInterface
     /**
      * @return Collection<Tool>
      */
-    public function findAllWithItemAndType(ToolCriteria $criteria): Collection;
+    public function findAllWithRelations(ToolCriteria $criteria): Collection;
 }

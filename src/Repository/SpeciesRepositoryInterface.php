@@ -15,5 +15,5 @@ interface SpeciesRepositoryInterface
     /**
      * @return Collection<Specie>
      */
-    public function findAllWithCriteria(SpeciesCriteria $criteria, array $orderBy = []): Collection;
+    public function findAllWithCriteria(SpeciesCriteria $criteria): Collection;
 }

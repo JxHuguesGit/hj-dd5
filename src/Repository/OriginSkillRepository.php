@@ -2,14 +2,14 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\Entity\OriginSkill as DomainOriginSkill;
+use src\Domain\Entity\OriginSkill;
 
-class OriginSkill extends Repository
+class OriginSkillRepository extends Repository
 {
     public const TABLE = Table::ORIGINSKILL;
     
     public function getEntityClass(): string
     {
-        return DomainOriginSkill::class;
+        return OriginSkill::class;
     }
 }

@@ -15,5 +15,5 @@ interface WeaponRepositoryInterface
     /**
      * @return Collection<Weapon>
      */
-    public function findAllWithItemAndType(WeaponCriteria $criteria): Collection;
+    public function findAllWithRelations(WeaponCriteria $criteria): Collection;
 }

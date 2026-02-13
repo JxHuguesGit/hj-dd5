@@ -20,9 +20,7 @@ final class ToolCompendiumHandler implements CompendiumHandlerInterface
         $qe = new QueryExecutor();
         $repository = new ToolRepository($qb, $qe);
 
-        $tools = $repository->findAllWithItemAndType(
-            new ToolCriteria()
-        );
+        $tools = $repository->findAllWithRelations(new ToolCriteria());
 
         $presenter = new ToolListPresenter(
             new OriginReader(

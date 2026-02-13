@@ -3,8 +3,14 @@ namespace src\Repository;
 
 use src\Collection\Collection;
 use src\Domain\Criteria\MonsterCriteria;
+use src\Domain\Monster\Monster;
 
 interface MonsterRepositoryInterface
 {
-   public function findAllWithJoint(MonsterCriteria $criteria): Collection;
+   /**
+    * @return ?Monster
+    */
+   public function find(int $id): ?Monster;
+
+   public function findAllWithRelations(MonsterCriteria $criteria): Collection;
 }

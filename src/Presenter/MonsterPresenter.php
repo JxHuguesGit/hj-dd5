@@ -1,25 +1,23 @@
 <?php
 namespace src\Presenter;
 
+use src\Domain\Monster\Monster;
 use src\Domain\Entity\Reference;
-use src\Entity\RpgMonster;
-use src\Entity\RpgReference;
 use src\Utils\Utils;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\ReferenceRepository;
-use src\Repository\TypeMonstreRepository;
-use src\Repository\RpgSousTypeMonstre;
-use src\Repository\RpgReference as RepositoryRpgReference;
+use src\Repository\TypeMonsterRepository;
+use src\Repository\SubTypeMonsterRepository;
 
 class MonsterPresenter
 {
-    private RpgMonster $monster;
+    private Monster $monster;
     private QueryBuilder $queryBuilder;
     private QueryExecutor $queryExecutor;
 
-    public function __construct(RpgMonster $monster)
+    public function __construct(Monster $monster)
     {
         $this->monster = $monster;
         $this->queryBuilder  = new QueryBuilder();
@@ -36,19 +34,19 @@ class MonsterPresenter
 
     public function getStrType(): string
     {
-        $objDao = new TypeMonstreRepository($this->queryBuilder, $this->queryExecutor);
-        $objTypeMonstre = $objDao->find($this->monster->getMonstreTypeId());
+        $objDao = new TypeMonsterRepository($this->queryBuilder, $this->queryExecutor);
+        $objTypeMonstre = $objDao->find($this->monster->monstreTypeId);
         $gender = '';
         $typeName = $objTypeMonstre?->getStrName($gender) ?? '';
 
         // Nuée
-        if ($this->monster->getSwarmSize()) {
-            $typeName = 'Nuée de ' . SizeHelper::toLabelFr($this->monster->getSwarmSize(), $gender) . ' ' . $typeName . 's';
+        if ($this->monster->swarmSize) {
+            $typeName = 'Nuée de ' . SizeHelper::toLabelFr($this->monster->swarmSize, $gender) . ' ' . $typeName . 's';
         }
 
         // Sous-type
-        if ($this->monster->getMonsterSubTypeId()) {
-            $objSousTypeDao = new RpgSousTypeMonstre($this->queryBuilder, $this->queryExecutor);
+        if ($this->monster->monsterSubTypeId) {
+            $objSousTypeDao = new SubTypeMonsterRepository($this->queryBuilder, $this->queryExecutor);
             //$subType = $objSousTypeDao->find($this->monster->getMonsterSubTypeId());
             //$typeName .= ' (' . ($subType?->getStrName() ?? '') . ')';
         }
@@ -61,12 +59,12 @@ class MonsterPresenter
     // -----------------------
     public function getCR(): string
     {
-        return match ($this->monster->getCr()) {
+        return match ($this->monster->cr) {
             -1 => 'aucun',
             0.125 => '1/8',
             0.25 => '1/4',
             0.5 => '1/2',
-            default => (string)$this->monster->getCr(),
+            default => (string)$this->monster->cr,
         };
     }
 

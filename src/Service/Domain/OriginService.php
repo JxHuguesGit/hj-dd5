@@ -5,9 +5,9 @@ use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\Entity\{Ability, Feat, Item, Origin, Skill, Tool};
 use src\Repository\FeatRepository;
-use src\Repository\OriginAbility as RepositoryOriginAbility;
-use src\Repository\OriginItem as RepositoryOriginItem;
-use src\Repository\OriginSkill as RepositoryOriginSkill;
+use src\Repository\OriginAbilityRepository;
+use src\Repository\OriginItemRepository;
+use src\Repository\OriginSkillRepository;
 use src\Repository\ToolRepository;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ItemReader;
@@ -25,9 +25,9 @@ final class OriginService
     public function __construct(
         private FeatRepository $featRepository,
         private ToolRepository $toolRepository,
-        private RepositoryOriginSkill $originSkillRepository,
-        private RepositoryOriginAbility $originAbilityRepository,
-        private RepositoryOriginItem $originItemRepository,
+        private OriginSkillRepository $originSkillRepository,
+        private OriginAbilityRepository $originAbilityRepository,
+        private OriginItemRepository $originItemRepository,
         private SkillReader $skillReader,
         private AbilityReader $abilityReader,
         private ItemReader $itemReader,

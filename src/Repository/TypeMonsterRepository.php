@@ -16,19 +16,18 @@ class TypeMonsterRepository extends Repository implements TypeMonsterRepositoryI
     }
 
     /**
-     * @return TypeMonster
+     * @return ?TypeMonster
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): TypeMonster
+    public function find(int $id): ?TypeMonster
     {
-        return parent::find($id) ?? new TypeMonster();
+        return parent::find($id);
     }
 
     /**
      * @return Collection<TypeMonster>
      */
-    public function findAllWithCriteria(
-        TypeMonsterCriteria $criteria
-    ): Collection
+    public function findAllWithCriteria(TypeMonsterCriteria $criteria): Collection
     {
         return $this->findAllByCriteria($criteria);
     }

@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class OriginCriteria extends AbstractCriteria implements CriteriaInterface
+final class OriginCriteria extends BaseCriteria
 {
     public ?int $featId = null;
     public ?int $toolId = null;

@@ -5,13 +5,12 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class MonsterCriteria extends AbstractCriteria implements CriteriaInterface
+final class MonsterCriteria extends BaseCriteria
 {
     public int $page = 1;
     public string $type = 'append';
-    public int $offset = 0;
-    public int $limit = 10;
 
+    public ?int $id = null;
     public ?string $ukTag = null;
     public ?string $nameLt = null;
     public ?string $nameGt = null;
@@ -23,6 +22,9 @@ final class MonsterCriteria extends AbstractCriteria implements CriteriaInterfac
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
+        if ($this->id!=null) {
+            $filters[Field::ID] = $this->id;
+        }
         if ($this->ukTag!=null) {
             $filters[Field::UKTAG] = $this->ukTag;
         }

@@ -3,8 +3,8 @@ namespace src\Domain\Entity;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
-use src\Utils\Utils;
 use src\Domain\Entity;
+use src\Utils\Utils;
 
 /**
  * @property string $name

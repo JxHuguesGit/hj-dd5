@@ -12,12 +12,12 @@ use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Repository\MonsterRepository;
 use src\Repository\ReferenceRepository;
-use src\Repository\SousTypeMonsterRepository;
+use src\Repository\SubTypeMonsterRepository;
 use src\Repository\TypeMonsterRepository;
 use src\Service\Formatter\MonsterFormatter;
 use src\Service\Reader\MonsterReader;
 use src\Service\Reader\ReferenceReader;
-use src\Service\Reader\SousTypeMonsterReader;
+use src\Service\Reader\SubTypeMonsterReader;
 use src\Service\Reader\TypeMonsterReader;
 use src\Utils\Session;
 
@@ -33,7 +33,7 @@ class MonsterAjax
         $presenter = new MonsterListPresenter(
             new MonsterFormatter(
                 new TypeMonsterReader(new TypeMonsterRepository($qb, $qe)),
-                new SousTypeMonsterReader(new SousTypeMonsterRepository($qb, $qe)),
+                new SubTypeMonsterReader(new SubTypeMonsterRepository($qb, $qe)),
             ),
             new ReferenceReader(
                 new ReferenceRepository($qb, $qe)

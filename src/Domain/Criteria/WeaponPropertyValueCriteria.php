@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class WeaponPropertyValueCriteria extends AbstractCriteria implements CriteriaInterface
+final class WeaponPropertyValueCriteria extends BaseCriteria
 {
     public ?int $weaponId = null;
 

@@ -12,10 +12,10 @@ use src\Renderer\TemplateRenderer;
 use src\Repository\AbilityRepository;
 use src\Repository\FeatRepository;
 use src\Repository\ItemRepository;
-use src\Repository\OriginAbility;
-use src\Repository\OriginItem;
+use src\Repository\OriginAbilityRepository;
+use src\Repository\OriginItemRepository;
 use src\Repository\OriginRepository;
-use src\Repository\OriginSkill;
+use src\Repository\OriginSkillRepository;
 use src\Repository\SkillRepository;
 use src\Repository\ToolRepository;
 use src\Service\Domain\OriginService;
@@ -41,9 +41,9 @@ class OriginCompendiumHandler implements CompendiumHandlerInterface
             new OriginService(
                 new FeatRepository($qb, $qe),
                 new ToolRepository($qb, $qe),
-                new OriginSkill($qb, $qe),
-                new OriginAbility($qb, $qe),
-                new OriginItem($qb, $qe),
+                new OriginSkillRepository($qb, $qe),
+                new OriginAbilityRepository($qb, $qe),
+                new OriginItemRepository($qb, $qe),
                 new SkillReader(
                     new SkillRepository($qb, $qe)
                 ),

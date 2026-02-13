@@ -4,10 +4,10 @@ namespace src\Presenter\Detail;
 use src\Domain\Monster\Monster;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\SousTypeMonsterRepository;
+use src\Repository\SubTypeMonsterRepository;
 use src\Repository\TypeMonsterRepository;
 use src\Service\Formatter\MonsterFormatter;
-use src\Service\Reader\SousTypeMonsterReader;
+use src\Service\Reader\SubTypeMonsterReader;
 use src\Service\Reader\TypeMonsterReader;
 
 class MonsterDetailPresenter
@@ -22,7 +22,7 @@ class MonsterDetailPresenter
         $qe = new QueryExecutor();
         $formatter = new MonsterFormatter(
             new TypeMonsterReader(new TypeMonsterRepository($qb, $qe)),
-            new SousTypeMonsterReader(new SousTypeMonsterRepository($qb, $qe)),
+            new SubTypeMonsterReader(new SubTypeMonsterRepository($qb, $qe)),
         );
 
         $objsTrait = $this->getTraits();

@@ -138,18 +138,13 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     public function renderList(): string
     {
-        $items = $this->itemRepository->findAllWithItemAndType(
-            new ItemCriteria()
-        );
-
+        $items = $this->itemRepository->findAllWithRelations(new ItemCriteria());
         $presenter = new GearListPresenter();
         $content   = $presenter->present($items);
-
         $page = new PageList(
             $this->templateRenderer,
             new ItemTableBuilder(true)
         );
-
         return $page->renderAdmin('', $content, $this->toastContent);
     }
 }

@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class FeatCriteria extends AbstractCriteria implements CriteriaInterface
+final class FeatCriteria extends BaseCriteria
 {
     public ?int $featTypeId = null;
     public ?string $slug    = null;

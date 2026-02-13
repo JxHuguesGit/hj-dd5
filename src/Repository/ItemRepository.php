@@ -18,19 +18,28 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     }
 
     /**
-     * @return Item
+     * @return ?Item
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): Item
+    public function find(int $id): ?Item
     {
-        return parent::find($id) ?? new Item();
+        return parent::find($id);
     }
 
     /**
-     * @return Collection<DomainItem>
+     * @return ?Item
      */
-    public function findAllWithItemAndType(
-        ItemCriteria $criteria
-    ): Collection
+    public function findWithRelations(int $id): ?Item
+    {
+        $criteria = new ItemCriteria();
+        $criteria->id = $id;
+        return $this->findAllWithRelations($criteria)->first() ?? null;
+    }
+
+    /**
+     * @return Collection<Item>
+     */
+    public function findAllWithRelations(ItemCriteria $criteria): Collection
     {
         $baseQuery = "
             SELECT id, ".Field::NAME.", ".Field::SLUG.", ".Field::DESCRIPTION.",

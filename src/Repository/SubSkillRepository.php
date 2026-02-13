@@ -14,10 +14,11 @@ class SubSkillRepository extends Repository implements SubSkillRepositoryInterfa
     }
 
     /**
-     * @return SubSkill
+     * @return ?SubSkill
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): SubSkill
+    public function find(int $id): ?SubSkill
     {
-        return parent::find($id) ?? new SubSkill();
+        return parent::find($id);
     }
 }

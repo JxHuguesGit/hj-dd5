@@ -15,15 +15,5 @@ interface WeaponPropertyValueRepositoryInterface
     /**
      * @return Collection<WeaponPropertyValue>
      */
-    public function allWeaponPropertyValues(): Collection;
-
-    /**
-     * @return Collection<WeaponPropertyValue>
-     */
-    public function byWeaponIds(array $weaponIds): Collection;
-
-    /**
-     * @return Collection<WeaponPropertyValue>
-     */
-    public function findAllWithCriteria(WeaponPropertyValueCriteria $criteria): Collection;
+    public function findAllWithRelations(WeaponPropertyValueCriteria $criteria): Collection;
 }

@@ -18,21 +18,28 @@ class MonsterRepository extends Repository implements MonsterRepositoryInterface
     }
 
     /**
-     * @return Collection<Monster>
+     * @return ?Monster
+     * @SuppressWarnings("php:S1185")
      */
-    public function findAllWithCriteria(
-        MonsterCriteria $criteria
-    ): Collection
+    public function find(int $id): ?Monster
     {
-        return $this->findAllByCriteria($criteria);
+        return parent::find($id);
     }
 
     /**
-     * @return Collection<DomainArmor>
+     * @return ?Monster
      */
-    public function findAllWithJoint(
-        MonsterCriteria $criteria
-    ): Collection
+    public function findWithRelations(int $id): ?Monster
+    {
+        $criteria = new MonsterCriteria();
+        $criteria->id = $id;
+        return $this->findAllWithRelations($criteria)->first() ?? null;
+    }
+
+    /**
+     * @return Collection<Monster>
+     */
+    public function findAllWithRelations(MonsterCriteria $criteria): Collection
     {
         $baseQuery = "
             SELECT m.id, m.".Field::NAME.", ".Field::FRNAME.", ".Field::FRTAG.", ".Field::UKTAG.", ".Field::INCOMPLET.", ".Field::SCORECR

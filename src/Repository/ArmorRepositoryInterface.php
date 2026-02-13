@@ -15,5 +15,5 @@ interface ArmorRepositoryInterface
     /**
      * @return Collection<Armor>
      */
-    public function findAllWithItemAndType(ArmorCriteria $criteria): Collection;
+    public function findAllWithRelations(ArmorCriteria $criteria): Collection;
 }

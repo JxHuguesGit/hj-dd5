@@ -18,19 +18,28 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
     }
 
     /**
-     * @return Armor
+     * @return ?Armor
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): Armor
+    public function find(int $id): ?Armor
     {
-        return parent::find($id) ?? new Armor();
+        return parent::find($id);
     }
 
     /**
-     * @return Collection<DomainArmor>
+     * @return ?Armor
      */
-    public function findAllWithItemAndType(
-        ArmorCriteria $criteria
-    ): Collection
+    public function findWithRelations(int $id): ?Armor
+    {
+        $criteria = new ArmorCriteria();
+        $criteria->id = $id;
+        return $this->findAllWithRelations($criteria)->first() ?? null;
+    }
+
+    /**
+     * @return Collection<Armor>
+     */
+    public function findAllWithRelations(ArmorCriteria $criteria): Collection
     {
         $baseQuery = "
             SELECT a.id, a.".Field::ARMORTYPID.", a.".Field::ARMORCLASS.",

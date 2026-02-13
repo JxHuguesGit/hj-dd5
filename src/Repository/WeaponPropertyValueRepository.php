@@ -19,26 +19,17 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
 
     /**
      * @return ?WeaponPropertyValue
+     * @SuppressWarnings("php:S1185")
      */
     public function find(int $id): ?WeaponPropertyValue
     {
-        return parent::find($id) ?? null;
+        return parent::find($id);
     }
 
     /**
      * @return Collection<WeaponPropertyValue>
      */
-    public function allWeaponPropertyValues(): Collection
-    {
-        return new Collection();
-    }
-
-    /**
-     * @return Collection<WeaponPropertyValue>
-     */
-    public function findAllWithCriteria(
-        WeaponPropertyValueCriteria $criteria
-    ): Collection
+    public function findAllWithRelations(WeaponPropertyValueCriteria $criteria): Collection
     {
         $baseQuery = "
             SELECT " . Field::MINRANGE . ", " . Field::MAXRANGE . "
@@ -66,10 +57,5 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
             $this->resolveEntityClass(),
             $queryBuilder->getParams()
         );
-    }
-
-    public function byWeaponIds(array $weaponIds): Collection
-    {
-        return new Collection();
     }
 }

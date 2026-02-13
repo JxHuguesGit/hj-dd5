@@ -16,11 +16,18 @@ class FeatTypeRepository extends Repository implements FeatTypeRepositoryInterfa
     }
 
     /**
+     * @return ?FeatType
+     * @SuppressWarnings("php:S1185")
+     */
+    public function find(int $id): ?FeatType
+    {
+        return parent::find($id);
+    }
+
+    /**
      * @return Collection<FeatType>
      */
-    public function findAllWithCriteria(
-        FeatTypeCriteria $criteria
-    ): Collection
+    public function findAllWithCriteria(FeatTypeCriteria $criteria): Collection
     {
         return $this->findAllByCriteria($criteria);
     }

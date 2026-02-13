@@ -16,19 +16,18 @@ class SkillRepository extends Repository implements SkillRepositoryInterface
     }
 
     /**
-     * @return Skill
+     * @return ?Skill
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): Skill
+    public function find(int $id): ?Skill
     {
-        return parent::find($id) ?? new Skill();
+        return parent::find($id);
     }
 
     /**
      * @return Collection<Skill>
      */
-    public function findAllWithCriteria(
-        SkillCriteria $criteria
-    ): Collection
+    public function findAllWithCriteria(SkillCriteria $criteria): Collection
     {
         return $this->findAllByCriteria($criteria);
     }

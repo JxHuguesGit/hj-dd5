@@ -17,6 +17,6 @@ final class ToolReader
      */
     public function allTools(): Collection
     {
-        return $this->toolRepository->findAllWithItemAndType(new ToolCriteria());
+        return $this->toolRepository->findAllWithRelations(new ToolCriteria());
     }
 }

@@ -18,14 +18,13 @@ final class ArmorCompendiumHandler implements CompendiumHandlerInterface
 
     public function render(): string
     {
-        $armors = $this->repository->findAllWithItemAndType(
-            new ArmorCriteria(),
-            [
-                Field::ARMORTYPID => Constant::CST_ASC,
-                Field::ARMORCLASS => Constant::CST_ASC,
-                Field::GOLDPRICE  => Constant::CST_ASC,
-            ]
-        );
+        $criteria = new ArmorCriteria();
+        $criteria->orderBy = [
+            Field::ARMORTYPID => Constant::CST_ASC,
+            Field::ARMORCLASS => Constant::CST_ASC,
+            Field::GOLDPRICE  => Constant::CST_ASC,
+        ];
+        $armors = $this->repository->findAllWithRelations($criteria);
         $content   = $this->presenter->present($armors);
         return $this->page->renderAdmin('', $content);
     }

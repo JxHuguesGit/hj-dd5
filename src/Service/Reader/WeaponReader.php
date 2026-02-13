@@ -21,7 +21,7 @@ final class WeaponReader
     {
         $criteria = new WeaponCriteria();
         $criteria->slug = $slug;
-        return $this->weaponRepository->findAllWithItemAndType($criteria)?->first() ?? null;
+        return $this->weaponRepository->findAllWithRelations($criteria)?->first() ?? null;
     }
 
     /**
@@ -29,7 +29,7 @@ final class WeaponReader
      */
     public function allWeapons(): Collection
     {
-        return $this->weaponRepository->findAllWithItemAndType(new WeaponCriteria());
+        return $this->weaponRepository->findAllWithRelations(new WeaponCriteria());
     }
 
     public function getPreviousAndNext(Weapon $weapon): array
@@ -42,7 +42,7 @@ final class WeaponReader
                     : $criteria->nameGt = $weapon->name
                 ;
                 $criteria->orderBy = ['i.'.Field::NAME => $order];
-                return $this->weaponRepository->findAllWithItemAndType($criteria);
+                return $this->weaponRepository->findAllWithRelations($criteria);
             }
         );
     }

@@ -20,27 +20,27 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
 
     /**
      * @return Weapon
+     * @SuppressWarnings("php:S1185")
      */
     public function find(int $id): Weapon
     {
-        return parent::find($id) ?? new Weapon();
+        return parent::find($id);
     }
 
     /**
-     * @return Collection<Weapon>
+     * @return ?Weapon
      */
-    public function findAll(array $orderBy = []): Collection
+    public function findWithRelations(int $id): ?Weapon
     {
         $criteria = new WeaponCriteria();
-        return $this->findAllWithItemAndType($criteria, $orderBy);
+        $criteria->id = $id;
+        return $this->findAllWithRelations($criteria)->first() ?? null;
     }
 
     /**
      * @return Collection<Weapon>
      */
-    public function findAllWithItemAndType(
-        WeaponCriteria $criteria
-    ): Collection
+    public function findAllWithRelations(WeaponCriteria $criteria): Collection
     {
         $baseQuery = "
             SELECT a.id

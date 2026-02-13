@@ -1,11 +1,10 @@
 <?php
 namespace src\Service\Formatter;
 
-use src\Constant\Field;
 use src\Constant\Icon;
 use src\Domain\Monster\Monster;
 use src\Helper\SizeHelper;
-use src\Service\Reader\SousTypeMonsterReader;
+use src\Service\Reader\SubTypeMonsterReader;
 use src\Service\Reader\TypeMonsterReader;
 use src\Utils\Html;
 use src\Utils\Utils;
@@ -14,7 +13,7 @@ class MonsterFormatter
 {
     public function __construct(
         private TypeMonsterReader $typeReader,
-        private SousTypeMonsterReader $sousTypeReader,
+        private SubTypeMonsterReader $sousTypeReader,
     ) {}
 
     public function formatName(string $ukName, string $frName): string

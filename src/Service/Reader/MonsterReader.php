@@ -19,7 +19,7 @@ final class MonsterReader
     {
         $criteria = new MonsterCriteria();
         $criteria->ukTag = $ukTag;
-        return $this->monsterRepository->findAllWithJoint($criteria)?->first() ?? null;
+        return $this->monsterRepository->findAllWithRelations($criteria)?->first() ?? null;
     }
 
     /**
@@ -29,8 +29,9 @@ final class MonsterReader
     {
         if (!$criteria) {
             $criteria = new MonsterCriteria();
+            $criteria->limit = 10;
         }
-        return $this->monsterRepository->findAllWithJoint($criteria);
+        return $this->monsterRepository->findAllWithRelations($criteria);
     }
 
 }

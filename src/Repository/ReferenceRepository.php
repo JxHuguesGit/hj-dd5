@@ -14,10 +14,11 @@ class ReferenceRepository extends Repository implements ReferenceRepositoryInter
     }
 
     /**
-     * @return Reference
+     * @return ?Reference
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): Reference
+    public function find(int $id): ?Reference
     {
-        return parent::find($id) ?? new Reference();
+        return parent::find($id);
     }
 }

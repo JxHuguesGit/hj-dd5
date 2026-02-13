@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class SkillCriteria extends AbstractCriteria implements CriteriaInterface
+final class SkillCriteria extends BaseCriteria
 {
     public ?string $slug = null;
     public ?int $abilityId = null;

@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Query\QueryBuilder;
 
-final class SpeciesCriteria extends AbstractCriteria implements CriteriaInterface
+final class SpeciesCriteria extends BaseCriteria
 {
     public ?string $slug = null;
     public ?int $parentId = null;

@@ -17,20 +17,18 @@ class SpeciesRepository extends Repository implements SpeciesRepositoryInterface
 
     /**
      * @return Specie
+     * @SuppressWarnings("php:S1185")
      */
     public function find(int $id): Specie
     {
-        return parent::find($id) ?? new Specie();
+        return parent::find($id);
     }
 
     /**
-     * @return Collection<DomainOrigin>
+     * @return Collection<Specie>
      */
-    public function findAllWithCriteria(
-        SpeciesCriteria $criteria,
-        array $orderBy = []
-    ): Collection
+    public function findAllWithCriteria(SpeciesCriteria $criteria): Collection
     {
-        return $this->findAllByCriteria($criteria, $orderBy);
+        return $this->findAllByCriteria($criteria);
     }
 }

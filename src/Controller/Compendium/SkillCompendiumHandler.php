@@ -10,7 +10,7 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Repository\OriginRepository;
-use src\Repository\OriginSkill as RepositoryOriginSkill;
+use src\Repository\OriginSkillRepository;
 use src\Repository\SkillRepository;
 use src\Repository\SubSkillRepository;
 use src\Service\Domain\SkillService;
@@ -23,7 +23,7 @@ class SkillCompendiumHandler implements CompendiumHandlerInterface
     {
         $qb = new QueryBuilder();
         $qe = new QueryExecutor();
-        $originSkillRepository = new RepositoryOriginSkill($qb, $qe);
+        $originSkillRepository = new OriginSkillRepository($qb, $qe);
         $subRepository = new SubSkillRepository($qb, $qe);
         $repository = new SkillRepository($qb, $qe);
         $reader = new SkillReader($repository);

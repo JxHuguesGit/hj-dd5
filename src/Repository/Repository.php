@@ -51,10 +51,7 @@ class Repository
         }
     }
 
-    /**
-     * @return ?DomainEntity
-     */
-    public function find(int $id): ?DomainEntity
+    public function find(int $id)
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)

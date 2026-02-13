@@ -29,7 +29,7 @@ final class ItemReader
             $criteria = new ItemCriteria();
         }
         $criteria->slug = $slug;
-        return $this->itemRepository->findAllWithItemAndType($criteria)?->first() ?? null;
+        return $this->itemRepository->findAllWithRelations($criteria)?->first() ?? null;
     }
 
     /**
@@ -37,6 +37,6 @@ final class ItemReader
      */
     public function allGears(): Collection
     {
-        return $this->itemRepository->findAllWithItemAndType(new ItemCriteria());
+        return $this->itemRepository->findAllWithRelations(new ItemCriteria());
     }
 }

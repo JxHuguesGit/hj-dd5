@@ -28,7 +28,7 @@ final class WeaponPropertyValueReader
     {
         $criteria = new WeaponPropertyValueCriteria();
         $criteria->orderBy = $orderBy;
-        return $this->wpnPropValueRepository->findAllWithCriteria($criteria);
+        return $this->wpnPropValueRepository->findAllWithRelations($criteria);
     }
 
     /**
@@ -39,6 +39,6 @@ final class WeaponPropertyValueReader
         $criteria = new WeaponPropertyValueCriteria();
         $criteria->weaponId = $weaponId;
         $criteria->orderBy  = ['wp.name'=>Constant::CST_ASC];
-        return $this->wpnPropValueRepository->findAllWithCriteria($criteria);
+        return $this->wpnPropValueRepository->findAllWithRelations($criteria);
     }
 }

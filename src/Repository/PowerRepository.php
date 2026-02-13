@@ -14,10 +14,11 @@ class PowerRepository extends Repository implements PowerRepositoryInterface
     }
 
     /**
-     * @return Power
+     * @return ?Power
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(int $id): Power
+    public function find(int $id): ?Power
     {
-        return parent::find($id) ?? new Power();
+        return parent::find($id);
     }
 }

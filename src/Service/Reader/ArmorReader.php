@@ -21,7 +21,7 @@ final class ArmorReader
     {
         $criteria = new ArmorCriteria();
         $criteria->slug = $slug;
-        return $this->armorRepository->findAllWithItemAndType($criteria)?->first() ?? null;
+        return $this->armorRepository->findAllWithRelations($criteria)?->first() ?? null;
     }
      
     /**
@@ -29,7 +29,7 @@ final class ArmorReader
      */
     public function allArmors(): Collection
     {
-        return $this->armorRepository->findAllWithItemAndType(new ArmorCriteria());
+        return $this->armorRepository->findAllWithRelations(new ArmorCriteria());
     }
 
     public function getPreviousAndNext(Armor $armor): array
@@ -42,7 +42,7 @@ final class ArmorReader
                     : $criteria->nameGt = $armor->name
                 ;
                 $criteria->orderBy = [Field::NAME => $order];
-                return $this->armorRepository->findAllWithItemAndType($criteria);
+                return $this->armorRepository->findAllWithRelations($criteria);
             }
         );
     }

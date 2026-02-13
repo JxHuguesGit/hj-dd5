@@ -18,44 +18,27 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
 
     /**
      * @return ?Tool
+     * @SuppressWarnings("php:S1185")
      */
-    public function find(mixed $id, bool $display=false): ?Tool
+    public function find(int $id): ?Tool
     {
-        $baseQuery = "
-            SELECT ".Field::PARENTID."
-                , ".Field::NAME.", ".Field::SLUG.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
-            FROM " . Table::TOOL . " t
-            INNER JOIN " . Table::ITEM . " i ON i.id = t.id
-            WHERE i.id = " . $id
-        ;
-
-        $this->query = $this->queryBuilder->reset()
-            ->setBaseQuery($baseQuery)
-            ->getQuery();
-
-        return $this->queryExecutor->fetchOne(
-            $this->query,
-            $this->resolveEntityClass(),
-            $this->queryBuilder->getParams(),
-            $display
-        );
+        return parent::find($id);
     }
 
     /**
-     * @return Collection<Tool>
+     * @return ?Tool
      */
-    public function findAll(array $orderBy = []): Collection
+    public function findWithRelations(int $id): ?Tool
     {
         $criteria = new ToolCriteria();
-        return $this->findAllWithItemAndType($criteria, $orderBy);
+        $criteria->id = $id;
+        return $this->findAllWithRelations($criteria)->first() ?? null;
     }
 
     /**
      * @return Collection<Tool>
      */
-    public function findAllWithItemAndType(
-        ToolCriteria $criteria
-    ): Collection
+    public function findAllWithRelations(ToolCriteria $criteria): Collection
     {
         $baseQuery = "
             SELECT i.".Field::ID." as ".Field::ID.", ".Field::PARENTID."

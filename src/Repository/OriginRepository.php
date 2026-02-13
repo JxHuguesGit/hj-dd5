@@ -17,18 +17,17 @@ class OriginRepository extends Repository implements OriginRepositoryInterface
 
     /**
      * @return ?Origin
+     * @SuppressWarnings("php:S1185")
      */
     public function find(int $id): ?Origin
     {
-        return parent::find($id) ?? new Origin();
+        return parent::find($id);
     }
 
     /**
      * @return Collection<Origin>
      */
-    public function findAllWithCriteria(
-        OriginCriteria $criteria
-    ): Collection
+    public function findAllWithCriteria(OriginCriteria $criteria): Collection
     {
         return $this->findAllByCriteria($criteria);
     }

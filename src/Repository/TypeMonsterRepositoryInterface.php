@@ -8,6 +8,11 @@ use src\Collection\Collection;
 interface TypeMonsterRepositoryInterface
 {
     /**
+    * @return ?TypeMonster
+    */
+    public function find(int $id): ?TypeMonster;
+    
+    /**
      * @return Collection<TypeMonster>
      */
     public function findAllWithCriteria(TypeMonsterCriteria $criteria): Collection;

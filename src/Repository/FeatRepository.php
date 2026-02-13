@@ -17,18 +17,17 @@ class FeatRepository extends Repository implements FeatRepositoryInterface
 
     /**
      * @return ?Feat
+     * @SuppressWarnings("php:S1185")
      */
     public function find(int $id): ?Feat
     {
-        return parent::find($id) ?? new Feat();
+        return parent::find($id);
     }
 
     /**
      * @return Collection<Feat>
      */
-    public function findAllWithCriteria(
-        FeatCriteria $criteria,
-    ): Collection
+    public function findAllWithCriteria(FeatCriteria $criteria): Collection
     {
         return $this->findAllByCriteria($criteria);
     }
