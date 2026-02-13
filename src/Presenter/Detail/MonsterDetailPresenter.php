@@ -43,15 +43,19 @@ class MonsterDetailPresenter
             $formatter->formatScore($this->monster, 'cha'),
             '',
             // d-none si pas de Traits
-            '',//empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '',
+            //empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '',
+            '',
             //$this->getSpecialAbilitiesList($objsTrait), // Liste des traits
             '',
             // d-none si pas d'Actions
-            '',//empty($objsActions) ? ' '.Bootstrap::CSS_DNONE : '',
-             // Liste des actions
-            '',//$this->getSpecialAbilitiesList($objsActions),
+            //empty($objsActions) ? ' '.Bootstrap::CSS_DNONE : '',
+            '',
+            // Liste des actions
+            //$this->getSpecialAbilitiesList($objsActions),
+            '',
             // d-none si pas de Bonus actions
-            '',//empty($objsBonusActions) ? ' '.Bootstrap::CSS_DNONE : '',
+            //empty($objsBonusActions) ? ' '.Bootstrap::CSS_DNONE : '',
+            '',
             //$this->getSpecialAbilitiesList($objsBonusActions), // Liste des Bonus actions
             '',
             // d-none si pas de Réactions
