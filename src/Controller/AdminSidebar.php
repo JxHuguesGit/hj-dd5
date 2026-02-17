@@ -128,8 +128,8 @@ class AdminSidebar extends Utilities
         foreach ($children as $child) {
             $attributes = [
                 '',
-                '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id='.$child['id'],
-                $this->currentTab==Constant::ONG_COMPENDIUM && $this->currentId==$child['id'] ? Constant::CST_ACTIVE : '',
+                '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=compendium&id='.$child[Constant::CST_ID],
+                $this->currentTab==Constant::ONG_COMPENDIUM && $this->currentId==$child[Constant::CST_ID] ? Constant::CST_ACTIVE : '',
                 $child['icon'],
                 $child[Constant::CST_LABEL],
                 Bootstrap::CSS_DNONE,

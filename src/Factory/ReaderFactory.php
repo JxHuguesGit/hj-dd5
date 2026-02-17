@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory;
 
-use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, FeatTypeReader, ItemReader, OriginReader, PowerReader, SkillReader, SpecieReader, SpellReader, ToolReader, WeaponPropertyValueReader, WeaponReader};
+use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, FeatTypeReader, ItemReader, OriginReader, PowerReader, ReferenceReader, SkillReader, SpecieReader, SpeedTypeReader, SpellReader, ToolReader, WeaponPropertyValueReader, WeaponReader};
 
 final class ReaderFactory
 {
@@ -44,9 +44,19 @@ final class ReaderFactory
         return new PowerReader($this->repositories->power());
     }
 
+    public function reference(): ReferenceReader
+    {
+        return new ReferenceReader($this->repositories->reference());
+    }
+
     public function skill(): SkillReader
     {
         return new SkillReader($this->repositories->skill());
+    }
+
+    public function speedType(): SpeedTypeReader
+    {
+        return new SpeedTypeReader($this->repositories->speedType());
     }
 
     public function spell(): SpellReader

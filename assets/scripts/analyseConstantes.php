@@ -18,6 +18,7 @@ if (!$baseDir || !is_dir($constantDir)) {
 // ---------------------
 $jsonOutput   = in_array('-json', $argv);
 $excludedMode = in_array('-excluded', $argv);
+$withConstantOnly = in_array('-with', $argv);
 
 // Nombre de fichiers à afficher
 $nbFiles = 20;
@@ -139,6 +140,13 @@ unset($f);
 
 // Trier par refactorScore décroissant
 usort($filesData, fn($a, $b) => $b['refactorScore'] <=> $a['refactorScore']);
+
+// Filtrer uniquement les fichiers ayant au moins une constante trouvée
+if ($withConstantOnly) {
+    $filesData = array_filter($filesData, function($f) {
+        return !empty($f['stringsWithConstant']);
+    });
+}
 
 // Limiter au top N fichiers
 $topFiles = array_slice($filesData, 0, $nbFiles, true);

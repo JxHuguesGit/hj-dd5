@@ -1,6 +1,7 @@
 <?php
 namespace src\Service\Formatter;
 
+use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Icon;
 use src\Domain\Monster\Monster;
@@ -43,7 +44,7 @@ class MonsterFormatter
     public function formatCA(Monster $monster): string
     {
         $ca = $monster->combat()->getArmorClass() ?? 10;
-        $extra = $monster->getExtra('ca') ?? '';
+        $extra = $monster->getExtra(Field::SCORECA) ?? '';
         if ($extra !== '') {
             $ca .= ' (' . $extra . ')';
         }
@@ -53,7 +54,7 @@ class MonsterFormatter
     public function formatHP(Monster $monster): string
     {
         $hp = $monster->combat()->getHitPoints() ?? 0;
-        $extra = $monster->getExtra('hp') ?? '';
+        $extra = $monster->getExtra(Field::SCOREHP) ?? '';
         if ($extra !== '') {
             $hp .= ' ' . $extra;
         }
@@ -77,7 +78,7 @@ class MonsterFormatter
 
         // Type principal
         $type = $this->typeReader->monsterTypeById($monster->monstreTypeId);
-        ['label'=>$typeName, 'gender'=>$gender] = $type?->getNameAndGender();
+        [Constant::CST_LABEL=>$typeName, 'gender'=>$gender] = $type?->getNameAndGender();
 
         // Nuée
         if ($monster->swarmSize) {

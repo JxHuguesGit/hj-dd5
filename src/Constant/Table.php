@@ -12,6 +12,7 @@ class Table
     public const ITEM          = 'rpgItem';
     public const MSTPROFCY     = 'rpgMasteryProficiency';
     public const MONSTER       = 'rpgMonster';
+    public const MSTSPEED      = 'rpgMonsterTypeSpeed';
     public const SSTYPEMONSTRE = 'rpgMonsterSubType';
     public const TYPEMONSTRE   = 'rpgMonsterType';
     public const ORIGIN        = 'rpgOrigin';

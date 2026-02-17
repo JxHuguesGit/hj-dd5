@@ -2,14 +2,14 @@
 namespace src\Repository;
 
 use src\Constant\Table;
-use src\Domain\Entity\SpeciePower as DomainSpeciePower;
+use src\Domain\Entity\SpeciePower;
 
-class SpeciePower extends Repository
+class SpeciePowerRepository extends Repository
 {
     public const TABLE = Table::SPECIEPOWER;
     
     public function getEntityClass(): string
     {
-        return DomainSpeciePower::class;
+        return SpeciePower::class;
     }
 }

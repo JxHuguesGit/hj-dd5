@@ -2,26 +2,33 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\{Bootstrap, Constant, Field, Language};
+use src\Domain\Entity\SpeedType;
 use src\Domain\Monster\Monster;
+use src\Domain\Monster\MonsterSpeedType;
+use src\Factory\ReaderFactory;
 
 class MonsterCombatFormBuilder
 {
+    public function __construct(
+        private ReaderFactory $readerFactory
+    ) {}
+
     public function addFields(FieldsetField $fieldset, Monster $monster)
     {
         $fieldset
-            ->addField(new ExtraTextField(
+            ->addField(new ExtraNumberField(
                 Field::SCORECA, Language::LG_CA, $monster->ca, false,
                 ['extraValue' => $monster->getExtra(Field::SCORECA)]
             ))
-            ->addField(new ExtraTextField(
+            ->addField(new ExtraNumberField(
                 Field::SCOREHP, Language::LG_PV, $monster->hp, false,
                 ['extraValue' => $monster->getExtra(Field::SCOREHP)]
             ))
-            ->addField(new TextField(
+            ->addField(new NumberField(
                 Field::SCORECR, Language::LG_FP, $monster->cr, false,
                 [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_2.' '.Bootstrap::CSS_MB3]
             ))
-            ->addField(new TextField(
+            ->addField(new NumberField(
                 Field::INITIATIVE, 'Initiative', $monster->initiative, false,
                 [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_2.' '.Bootstrap::CSS_MB3]
             ))
@@ -37,29 +44,33 @@ class MonsterCombatFormBuilder
 
         // Ici on devrait récupérer les types de vitesse
         // et boucler dessus pour passer à chaque fois un objet TypeSpeed
-        $this->addSpeedSection($fieldset, $monster, 'marche');
-        $this->addSpeedSection($fieldset, $monster, 'vol');
-        $this->addSpeedSection($fieldset, $monster, 'nage');
-        $this->addSpeedSection($fieldset, $monster, 'escalade');
-        $this->addSpeedSection($fieldset, $monster, 'fouissement');
-
+        $speedTypeReader = $this->readerFactory->speedType();
+        $speedTypes = $speedTypeReader->allSpeedTypes([Field::ID=>Constant::CST_ASC]);
+        foreach ($speedTypes as $speedType) {
+            $this->addSpeedSection($fieldset, $monster, $speedType);
+        }
     }
 
-    private function addSpeedSection(FieldsetField $fieldset, Monster $monster, string $slugSpeed)
+    private function addSpeedSection(FieldsetField $fieldset, Monster $monster, SpeedType $speedType)
     {
         // Ici, on devrait récupérer un objet TypeSpeed et utiliser slug et nom.
         // Où récupérer les données ?
+        $monsterSpeed = $monster->speed($speedType->id);
+        $frTag = $speedType->frTag;
+
         $fieldset
             ->addField(new CheckboxField(
-                "speed_$slugSpeed", ucfirst($slugSpeed), '', false,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_3.' '.Bootstrap::CSS_MB3]
+                "speed_$frTag", ucfirst($frTag), $monsterSpeed->id ? 1 : 0, false,
+                [
+                    Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_3.' '.Bootstrap::CSS_MB3
+                ]
             ))
             ->addField(new TextField(
-                "value['$slugSpeed']", 'Distance (m)', '', false,
+                "value['$frTag']", 'Distance (m)', $monsterSpeed->value ?? '', false,
                 [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_2.' '.Bootstrap::CSS_MB3]
             ))
             ->addField(new TextField(
-                "extra['$slugSpeed']", 'Complément', '', false,
+                "extra['$frTag']", 'Complément', $monsterSpeed->extra ?? '', false,
                 [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
             ))
             ->addField(new FillerField(

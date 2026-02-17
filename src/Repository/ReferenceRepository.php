@@ -1,7 +1,9 @@
 <?php
 namespace src\Repository;
 
+use src\Collection\Collection;
 use src\Constant\Table;
+use src\Domain\Criteria\ReferenceCriteria;
 use src\Domain\Entity\Reference;
 
 class ReferenceRepository extends Repository implements ReferenceRepositoryInterface
@@ -20,5 +22,13 @@ class ReferenceRepository extends Repository implements ReferenceRepositoryInter
     public function find(int $id): ?Reference
     {
         return parent::find($id);
+    }
+
+    /**
+     * @return Collection<Reference>
+     */
+    public function findAllWithCriteria(ReferenceCriteria $criteria): Collection
+    {
+        return $this->findAllByCriteria($criteria);
     }
 }

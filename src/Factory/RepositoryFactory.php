@@ -5,7 +5,7 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\{AbilityRepository, AbilityRepositoryInterface, ArmorRepository, ArmorRepositoryInterface, FeatRepository, FeatRepositoryInterface};
 use src\Repository\{FeatTypeRepository, FeatTypeRepositoryInterface, ItemRepository, ItemRepositoryInterface, OriginRepository, OriginRepositoryInterface};
-use src\Repository\{PowerRepository, PowerRepositoryInterface, SkillRepository, SkillRepositoryInterface, SubSkillRepository, SubSkillRepositoryInterface};
+use src\Repository\{PowerRepository, PowerRepositoryInterface, ReferenceRepository, ReferenceRepositoryInterface, SkillRepository, SkillRepositoryInterface, SpeedTypeRepository, SpeedTypeRepositoryInterface, SubSkillRepository, SubSkillRepositoryInterface};
 use src\Repository\{SpeciesRepository, SpeciesRepositoryInterface, SpellRepository, SpellRepositoryInterface, ToolRepository, ToolRepositoryInterface};
 use src\Repository\{WeaponPropertyValueRepository, WeaponPropertyValueRepositoryInterface, WeaponRepository, WeaponRepositoryInterface};
 
@@ -55,10 +55,20 @@ class RepositoryFactory
     {
         return $this->make(PowerRepository::class);
     }
+
+    public function reference(): ReferenceRepositoryInterface
+    {
+        return $this->make(ReferenceRepository::class);
+    }
     
     public function skill(): SkillRepositoryInterface
     {
         return $this->make(SkillRepository::class);
+    }
+    
+    public function speedType(): SpeedTypeRepositoryInterface
+    {
+        return $this->make(SpeedTypeRepository::class);
     }
     
     public function spell(): SpellRepositoryInterface

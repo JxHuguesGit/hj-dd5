@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter;
 
+use src\Constant\Constant;
 use src\Domain\Monster\Monster;
 use src\Domain\Entity\Reference;
 use src\Utils\Utils;
@@ -8,8 +9,8 @@ use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\ReferenceRepository;
-use src\Repository\TypeMonsterRepository;
-use src\Repository\SubTypeMonsterRepository;
+use src\Repository\MonsterTypeRepository;
+use src\Repository\MonsterSubTypeRepository;
 
 class MonsterPresenter
 {
@@ -34,7 +35,7 @@ class MonsterPresenter
 
     public function getStrType(): string
     {
-        $objDao = new TypeMonsterRepository($this->queryBuilder, $this->queryExecutor);
+        $objDao = new MonsterTypeRepository($this->queryBuilder, $this->queryExecutor);
         $objTypeMonstre = $objDao->find($this->monster->monstreTypeId);
         $gender = '';
         $typeName = $objTypeMonstre?->getStrName($gender) ?? '';
@@ -46,7 +47,7 @@ class MonsterPresenter
 
         // Sous-type
         if ($this->monster->monsterSubTypeId) {
-            $objSousTypeDao = new SubTypeMonsterRepository($this->queryBuilder, $this->queryExecutor);
+            $objSousTypeDao = new MonsterSubTypeRepository($this->queryBuilder, $this->queryExecutor);
             $subType = $objSousTypeDao->find($this->monster->monsterSubTypeId);
             $typeName .= ' (' . ($subType?->getStrName() ?? '') . ')';
         }
@@ -121,7 +122,7 @@ class MonsterPresenter
         foreach ($objs as $obj) {
             $value .= ', ' . $obj->getController()->getFormatString();
         }
-        $extra = $this->monster->getExtra('vitesse');
+        $extra = $this->monster->getExtra(Constant::CST_SPEED);
         if ($extra) {
             $value .= $extra;
         }

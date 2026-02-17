@@ -1,6 +1,7 @@
 <?php
 namespace src\Parser;
 
+use src\Constant\Constant;
 use src\Constant\Field;
 use src\Utils\Utils;
 
@@ -13,7 +14,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
         $sections = [
             'physiques' => [
                 'xpath' => "//div[contains(@class, 'car2') or contains(@class, 'car3')]",
-                'abilities' => [
+                Constant::CST_ABILITIES => [
                     ['score' => Field::STRSCORE, 'jsonCar' => 'carstr', 'jsonSave' => 'jsstr'],
                     ['score' => Field::DEXSCORE, 'jsonCar' => 'cardex', 'jsonSave' => 'jsdex'],
                     ['score' => Field::CONSCORE, 'jsonCar' => 'carcon', 'jsonSave' => 'jscon'],
@@ -21,7 +22,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
             ],
             'mentales' => [
                 'xpath' => "//div[contains(@class, 'car5') or contains(@class, 'car6')]",
-                'abilities' => [
+                Constant::CST_ABILITIES => [
                     ['score' => Field::INTSCORE, 'jsonCar' => 'carint', 'jsonSave' => 'jsint'],
                     ['score' => Field::WISSCORE, 'jsonCar' => 'carwis', 'jsonSave' => 'jswis'],
                     ['score' => Field::CHASCORE, 'jsonCar' => 'carcha', 'jsonSave' => 'jscha'],
@@ -30,7 +31,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
         ];
 
         foreach ($sections as $config) {
-            if ($this->parseCaracSection($config['xpath'], $config['abilities'])) {
+            if ($this->parseCaracSection($config['xpath'], $config[Constant::CST_ABILITIES])) {
                 $hasChanged = true;
             }
         }

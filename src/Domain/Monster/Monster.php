@@ -1,9 +1,16 @@
 <?php
 namespace src\Domain\Monster;
 
+use src\Collection\Collection;
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Domain\Criteria\MonsterSpeedTypeCriteria;
 use src\Domain\Entity;
+use src\Domain\Entity\MonsterSpeedType as EntityMonsterSpeedType;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Repository\MonsterSpeedTypeRepository;
+use src\Service\Reader\MonsterSpeedTypeReader;
 
 final class Monster extends Entity
 {
@@ -100,6 +107,8 @@ final class Monster extends Entity
     private ?MonsterType $typeEntity = null;
     private ?MonsterSubType $subTypeEntity = null;
     private ?MonsterReference $referenceEntity = null;
+    // Relations 1-N
+    private ?Collection $speedTypeEntities = null;
 
     private function lazy(string $property, string $class): object
     {
@@ -169,6 +178,25 @@ final class Monster extends Entity
             $this->referenceEntity = new MonsterReference($this);
         }
         return $this->referenceEntity;
+    }
+
+    // -------------------------------------------------
+    // Façades 1-N
+    // -------------------------------------------------
+    public function speed(int $speedTypeId): ?EntityMonsterSpeedType
+    {
+        if ($this->speedTypeEntities === null) {
+            $reader = new MonsterSpeedTypeReader(
+                new MonsterSpeedTypeRepository(
+                    new QueryBuilder(),
+                    new QueryExecutor()
+                )
+            );
+            $criteria = new MonsterSpeedTypeCriteria();
+            $criteria->monsterId = $this->id;
+            $this->speedTypeEntities = $reader->allMonsterSpeedTypes($criteria);
+        }
+        return $this->speedTypeEntities->find(fn($item) => $item->typeSpeedId === $speedTypeId) ?? null;
     }
 
     // -------------------------------------------------

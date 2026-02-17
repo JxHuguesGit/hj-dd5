@@ -48,6 +48,9 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
         ";
 
         $filters = [];
+        if ($criteria->id !== null) {
+            $filters['i.'.Field::ID] = $criteria->id;
+        }
         if ($criteria->type !== null) {
             $filters[Field::TYPE] = $criteria->type;
         }

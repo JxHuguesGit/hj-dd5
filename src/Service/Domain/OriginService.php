@@ -43,8 +43,7 @@ final class OriginService
         if ($origin->toolId <= 0) {
             return null;
         }
-
-        return $this->toolRepository->find($origin->toolId);
+        return $this->toolRepository->findWithRelations($origin->toolId);
     }
 
     public function getSkills(Origin $origin): Collection

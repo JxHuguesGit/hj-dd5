@@ -1,7 +1,10 @@
 <?php
 namespace src\Page;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Field;
+use src\Constant\Language;
 use src\Constant\Routes;
 use src\Constant\Template;
 use src\Model\PageElement;
@@ -17,13 +20,13 @@ class PageItemArmor extends PageDetail
     public function getPageElement(): PageElement
     {
         return new PageElement([
-            'slug' => 'items-armor',
+            Constant::CST_SLUG => 'items-armor',
             'icon' => 'fa-solid fa-shield-halved',
-            'title' => 'Armures',
-            'description' => 'Les armures disponibles pour les aventuriers.',
+            Bootstrap::CSS_TITLE => Language::LG_ARMORS,
+            Constant::CST_DESCRIPTION => 'Les armures disponibles pour les aventuriers.',
             'url' => Routes::ITEMS_PREFIX.Constant::CST_ARMOR,
             'order' => 51,
-            'parent' => 'items',
+            Constant::CST_PARENT => Constant::CST_ITEMS,
         ]);
     }
 
@@ -35,12 +38,12 @@ class PageItemArmor extends PageDetail
             Template::ARMOR_CARD,
             [
                 $title,
-                $viewData['armorTypeId'],
-                $viewData['armorClass'],
-                $viewData['strengthPenalty'],
-                $viewData['stealthDisadvantage'],
-                $viewData['weight'],
-                $viewData['goldPrice'],
+                $viewData[Field::ARMORTYPID],
+                $viewData[Field::ARMORCLASS],
+                $viewData[Field::STRPENALTY],
+                $viewData[Field::STHDISADV],
+                $viewData[Field::WEIGHT],
+                $viewData[Field::GOLDPRICE],
             ]
         );
     }

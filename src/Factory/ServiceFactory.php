@@ -4,10 +4,10 @@ namespace src\Factory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\{AbilityRepository, FeatRepository, ItemRepository, PowerRepository, OriginRepository};
-use src\Repository\OriginAbility as RepositoryOriginAbility;
-use src\Repository\OriginItem as RepositoryOriginItem;
-use src\Repository\OriginSkill as RepositoryOriginSkill;
-use src\Repository\SpeciePower as RepositorySpeciePower;
+use src\Repository\OriginAbilityRepository;
+use src\Repository\OriginItemRepository;
+use src\Repository\OriginSkillRepository;
+use src\Repository\SpeciePowerRepository;
 use src\Repository\{SpeciesRepository, SubSkillRepository, SkillRepository, ToolRepository, WeaponRepository};
 use src\Service\Domain\{OriginService, SpecieService, SkillService, WpPostService};
 use src\Service\Formatter\WeaponPropertiesFormatter;
@@ -77,9 +77,9 @@ final class ServiceFactory
     {
         $featRepo     = new FeatRepository($this->queryBuilder, $this->queryExecutor);
         $toolRepo     = new ToolRepository($this->queryBuilder, $this->queryExecutor);
-        $originSkillRepo    = new RepositoryOriginSkill($this->queryBuilder, $this->queryExecutor);
-        $originAbilityRepo  = new RepositoryOriginAbility($this->queryBuilder, $this->queryExecutor);
-        $originItemRepo     = new RepositoryOriginItem($this->queryBuilder, $this->queryExecutor);
+        $originSkillRepo    = new OriginSkillRepository($this->queryBuilder, $this->queryExecutor);
+        $originAbilityRepo  = new OriginAbilityRepository($this->queryBuilder, $this->queryExecutor);
+        $originItemRepo     = new OriginItemRepository($this->queryBuilder, $this->queryExecutor);
 
         $skillRepo    = new SkillRepository($this->queryBuilder, $this->queryExecutor);
         $skillQueryService   = new SkillReader($skillRepo);
@@ -102,7 +102,7 @@ final class ServiceFactory
 
     public function specie(): SpecieService
     {
-        $speciePowerRepo  = new RepositorySpeciePower($this->queryBuilder, $this->queryExecutor);
+        $speciePowerRepo  = new SpeciePowerRepository($this->queryBuilder, $this->queryExecutor);
         $powerRepo  = new PowerRepository($this->queryBuilder, $this->queryExecutor);
         $powerReader = new PowerReader($powerRepo);
 
@@ -111,7 +111,7 @@ final class ServiceFactory
 
     public function skill(): SkillService
     {
-        $originSkillRepository  = new RepositoryOriginSkill($this->queryBuilder, $this->queryExecutor);
+        $originSkillRepository  = new OriginSkillRepository($this->queryBuilder, $this->queryExecutor);
         $subSkillRepo  = new SubSkillRepository($this->queryBuilder, $this->queryExecutor);
         $originRepo  = new OriginRepository($this->queryBuilder, $this->queryExecutor);
         $originReader = new OriginReader($originRepo);

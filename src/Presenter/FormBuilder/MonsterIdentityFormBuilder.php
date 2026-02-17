@@ -4,16 +4,24 @@ namespace src\Presenter\FormBuilder;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Domain\Criteria\ReferenceCriteria;
 use src\Domain\Monster\Monster;
+use src\Factory\ReaderFactory;
 
 class MonsterIdentityFormBuilder
 {
+    public function __construct(
+        private ReaderFactory $readerFactory
+    ) {}
+
     public function addFields(FieldsetField $fieldset, Monster $monster)
     {
-        $options = [
-            ['valeur'=>1, 'label'=>'Manuel des Monstres 2024'],
-            ['valeur'=>2, 'label'=>'Manuel des Joueurs 2024'],
-        ];
+        $reader = $this->readerFactory->reference();
+        $references = $reader->allReferences();
+        $options = [];
+        foreach ($references as $reference) {
+            $options[] = ['valeur'=>$reference->id, 'label'=>$reference->name];
+        }
         $fieldset
             ->addField(new NumberField(
                 Field::ID,

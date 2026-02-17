@@ -5,6 +5,8 @@ use src\Collection\Collection;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicHome;
 use src\Controller\Public\PublicNotFound;
+use src\Factory\FeatControllerFactory;
+use src\Factory\PublicControllerFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
@@ -26,9 +28,9 @@ class Router
             new SpecieRouter($this->readerFactory, $this->serviceFactory),
             new SpellRouter($this->serviceFactory),
             new SkillRouter($this->readerFactory, $this->serviceFactory),
-            new FeatRouter($this->readerFactory, $this->serviceFactory),
+            new FeatRouter(new FeatControllerFactory($this->readerFactory, $this->serviceFactory)),
             new ItemRouter($this->readerFactory, $this->serviceFactory),
-            new RegistryRouter($this->readerFactory, $this->serviceFactory),
+            new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory)),
         ]);
     }
 

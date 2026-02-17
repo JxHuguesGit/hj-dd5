@@ -6,7 +6,6 @@ use src\Collection\Collection;
 
 interface SpellRepositoryInterface
 {
-    public function find(int $id): ?Spell;
     /**
      * @return Collection<Spell>
      */

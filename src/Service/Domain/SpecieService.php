@@ -5,7 +5,7 @@ use src\Constant\Field;
 use src\Collection\Collection;
 use src\Domain\Entity\Power;
 use src\Domain\Entity\Specie;
-use src\Repository\SpeciePower as RepositorySpeciePower;
+use src\Repository\SpeciePowerRepository;
 use src\Service\Reader\PowerReader;
 
 final class SpecieService
@@ -14,7 +14,7 @@ final class SpecieService
     private array $powerCache = [];
     
     public function __construct(
-        private RepositorySpeciePower $speciePowerRepository,
+        private SpeciePowerRepository $speciePowerRepository,
         private PowerReader $powerReader,
     ) {}
 
