@@ -42,32 +42,38 @@ class SizeHelper
     {
         $sizes = SizeEnum::fromBitmask($bitmask);
 
-        // Trier les tailles selon leur ordre numérique croissant
-        usort($sizes, fn($a, $b) => $a->value <=> $b->value);
-
-        switch (count($sizes)) {
-            case 0 :
-                $returned = '';
-            break;
-            case 1 :
-                $returned = $sizes[0]->label($gender, $plural);
-            break;
-            case 2 :
-                $returned = $sizes[0]->label($gender, $plural) . ' ou ' . $sizes[1]->label($gender, $plural);
-            break;
-            default :
-                $min = array_shift($sizes);
-                $max = array_pop($sizes);
-                // Si on a Tiny dans la sélection, on part du principe que c'est "X ou plus petit"
-                if ($min === SizeEnum::Tiny) {
-                    $returned = $max->label($gender, $plural) . ' ou plus petit'.($gender=='f'?'e':'').($plural?'s':'');
-                } else {
-                    $returned = $min->label($gender, $plural) . ' ou plus grand'.($gender=='f'?'e':'').($plural?'s':'');
-                }
-            break;
+        if (empty($sizes)) {
+            return '';
         }
 
-        return $returned;
-    }
+        // Tri naturel
+        usort($sizes, fn($a, $b) => $a->value <=> $b->value);
 
+        // Cas simple : 1 seule taille
+        if (count($sizes) === 1) {
+            return $sizes[0]->label($gender, $plural);
+        }
+
+        // Cas simple : 2 tailles → "X ou Y"
+        if (count($sizes) === 2) {
+            return $sizes[0]->label($gender, $plural)
+                . ' ou '
+                . $sizes[1]->label($gender, $plural);
+        }
+
+        // Cas complexe : plus de 2 tailles
+        $min = $sizes[0];
+        $max = $sizes[count($sizes) - 1];
+
+        // Déterminer suffixe genre/pluriel
+        $suffix = ($gender === 'f' ? 'e' : '') . ($plural ? 's' : '');
+
+        // Tiny → "X ou plus petit(e)(s)"
+        if ($min === SizeEnum::Tiny) {
+            return $max->label($gender, $plural) . " ou plus petit$suffix";
+        }
+
+        // Sinon → "X ou plus grand(e)(s)"
+        return $min->label($gender, $plural) . " ou plus grand$suffix";
+    }
 }
