@@ -1,9 +1,9 @@
 <?php
 namespace src\Router;
 
-use src\Factory\PublicControllerFactory;
-use src\Model\PageRegistry;
 use src\Controller\Public\PublicBase;
+use src\Factory\Controller\PublicControllerFactory;
+use src\Model\PageRegistry;
 
 class RegistryRouter
 {

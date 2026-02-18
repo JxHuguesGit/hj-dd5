@@ -1,26 +1,16 @@
 <?php
 namespace src\Router;
 
-use src\Constant\Constant;
 use src\Constant\Routes;
 use src\Controller\Public\PublicBase;
-use src\Controller\Public\PublicSpecie;
-use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
-use src\Model\PageRegistry;
-use src\Page\PageSpecie;
-use src\Presenter\MenuPresenter;
-use src\Presenter\Detail\SpeciesDetailPresenter;
-use src\Renderer\TemplateRenderer;
-use src\Service\Page\SpeciePageService;
+use src\Factory\Controller\SpecieControllerFactory;
 
 class SpecieRouter
 {
     public function __construct(
-        private ReaderFactory $factory,
-        private ServiceFactory $serviceFactory
+        private SpecieControllerFactory $factory
     ) {}
-    
+
     public function match(string $path): ?PublicBase
     {
         ////////////////////////////////////////////////////////////
@@ -29,15 +19,6 @@ class SpecieRouter
             return null;
         }
 
-        return new PublicSpecie(
-            $matches[1] ?? '',
-            $this->factory->species(),
-            new SpeciePageService($this->serviceFactory->specie(), $this->factory->species()),
-            new SpeciesDetailPresenter(
-                $this->serviceFactory->wordPress()
-            ),
-            new PageSpecie(new TemplateRenderer()),
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES),
-        );
+        return $this->factory->createDetailController($matches[1]);
     }
 }

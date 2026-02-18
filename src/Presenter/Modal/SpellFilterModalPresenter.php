@@ -3,15 +3,15 @@ namespace src\Presenter\Modal;
 
 use src\Constant\Constant;
 use src\Constant\Template;
-use src\Controller\Utilities;
 use src\Enum\ClassEnum;
 use src\Enum\MagicSchoolEnum;
+use src\Renderer\TemplateRenderer;
 use src\Utils\Html;
 
 class SpellFilterModalPresenter implements ModalPresenter
 {
     public function __construct(
-        private Utilities $utilities,
+        private TemplateRenderer $renderer,
     ) {}
 
     public function render(): string
@@ -87,7 +87,7 @@ class SpellFilterModalPresenter implements ModalPresenter
             $strConcentration,
         ];
 
-        $modalContent = $this->utilities->getRender(
+        $modalContent = $this->renderer->getRender(
             Template::SPELL_FILTER_MODAL,
             $attrContent
         );
@@ -99,7 +99,7 @@ class SpellFilterModalPresenter implements ModalPresenter
             'Filtrer'
         ];
 
-        return $this->utilities->getRender(
+        return $this->renderer->getRender(
             Template::MAIN_MODAL,
             $attributes
         );

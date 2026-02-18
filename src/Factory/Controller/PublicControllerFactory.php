@@ -1,5 +1,5 @@
 <?php
-namespace src\Factory;
+namespace src\Factory\Controller;
 
 use src\Constant\Constant;
 use src\Controller\Public\{
@@ -33,13 +33,13 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
 use src\Service\Domain\SpellService;
-use src\Controller\Utilities;
 
 final class PublicControllerFactory
 {
     public function __construct(
         private ReaderFactory $readerFactory,
-        private ServiceFactory $serviceFactory
+        private ServiceFactory $serviceFactory,
+        private TemplateRenderer $renderer
     ) {}
 
     public function create(string $slug): ?PublicBase
@@ -52,7 +52,7 @@ final class PublicControllerFactory
                     $this->serviceFactory->origin()
                 ),
                 new PageList(
-                    new TemplateRenderer(),
+                    $this->renderer,
                     new OriginTableBuilder(
                         $this->serviceFactory->origin(),
                         $this->readerFactory->origin()
@@ -67,7 +67,7 @@ final class PublicControllerFactory
                     $this->serviceFactory->wordPress()
                 ),
                 new PageList(
-                    new TemplateRenderer(),
+                    $this->renderer,
                     new SpeciesTableBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES)
@@ -79,7 +79,7 @@ final class PublicControllerFactory
                     $this->serviceFactory->skill()
                 ),
                 new PageList(
-                    new TemplateRenderer(),
+                    $this->renderer,
                     new SkillTableBuilder(
                         $this->serviceFactory->skill()
                     )
@@ -94,7 +94,7 @@ final class PublicControllerFactory
                     $this->serviceFactory->wordPress()
                 ),
                 new PageList(
-                    new TemplateRenderer(),
+                    $this->renderer,
                     new FeatTableBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
@@ -109,15 +109,13 @@ final class PublicControllerFactory
                     $this->serviceFactory->wordPress()
                 ),
                 new PageList(
-                    new TemplateRenderer(),
+                    $this->renderer,
                     new SpellTableBuilder(
                         $this->readerFactory->spell()
                     )
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS),
-                new SpellFilterModalPresenter(
-                    new Utilities()
-                )
+                new SpellFilterModalPresenter($this->renderer)
             ),
 
             Constant::CST_ITEMS => new PublicItems(),

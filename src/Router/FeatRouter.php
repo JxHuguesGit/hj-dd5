@@ -1,9 +1,9 @@
 <?php
 namespace src\Router;
 
-use src\Factory\FeatControllerFactory;
-use src\Controller\Public\PublicBase;
 use src\Constant\Routes;
+use src\Controller\Public\PublicBase;
+use src\Factory\Controller\FeatControllerFactory;
 
 class FeatRouter
 {

@@ -1,24 +1,14 @@
 <?php
 namespace src\Router;
 
-use src\Constant\Constant;
 use src\Constant\Routes;
 use src\Controller\Public\PublicBase;
-use src\Controller\Public\PublicOrigine;
-use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
-use src\Page\PageOrigine;
-use src\Presenter\MenuPresenter;
-use src\Presenter\Detail\OriginDetailPresenter;
-use src\Renderer\TemplateRenderer;
-use src\Model\PageRegistry;
-use src\Service\Page\OriginPageService;
+use src\Factory\Controller\OriginControllerFactory;
 
 class OriginRouter
 {
     public function __construct(
-        private ReaderFactory $factory,
-        private ServiceFactory $serviceFactory
+        private OriginControllerFactory $factory
     ) {}
 
     public function match(string $path): ?PublicBase
@@ -27,15 +17,6 @@ class OriginRouter
             return null;
         }
 
-        return new PublicOrigine(
-            $matches[1],
-            $this->factory->origin(),
-            new OriginPageService($this->serviceFactory->origin(), $this->factory->origin()),
-            new OriginDetailPresenter(
-                $this->serviceFactory->wordPress()
-            ),
-            new PageOrigine(new TemplateRenderer()),
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ORIGINES)
-        );
+        return $this->factory->createDetailController($matches[1]);
     }
 }

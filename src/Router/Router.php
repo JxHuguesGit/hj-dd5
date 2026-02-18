@@ -5,8 +5,13 @@ use src\Collection\Collection;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicHome;
 use src\Controller\Public\PublicNotFound;
-use src\Factory\FeatControllerFactory;
-use src\Factory\PublicControllerFactory;
+use src\Factory\Controller\FeatControllerFactory;
+use src\Factory\Controller\ItemControllerFactory;
+use src\Factory\Controller\OriginControllerFactory;
+use src\Factory\Controller\PublicControllerFactory;
+use src\Factory\Controller\SkillControllerFactory;
+use src\Factory\Controller\SpecieControllerFactory;
+use src\Factory\Controller\SpellControllerFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
@@ -21,16 +26,17 @@ class Router
 
     public function __construct(
         private ReaderFactory $readerFactory,
-        private ServiceFactory $serviceFactory
+        private ServiceFactory $serviceFactory,
+        private TemplateRenderer $renderer
     ) {
         $this->handlers = new Collection([
-            new OriginRouter($this->readerFactory, $this->serviceFactory),
-            new SpecieRouter($this->readerFactory, $this->serviceFactory),
-            new SpellRouter($this->serviceFactory),
-            new SkillRouter($this->readerFactory, $this->serviceFactory),
-            new FeatRouter(new FeatControllerFactory($this->readerFactory, $this->serviceFactory)),
-            new ItemRouter($this->readerFactory, $this->serviceFactory),
-            new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory)),
+            new OriginRouter(new OriginControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new SpecieRouter(new SpecieControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new SpellRouter(new SpellControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new SkillRouter(new SkillControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new FeatRouter(new FeatControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new ItemRouter(new ItemControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
         ]);
     }
 
