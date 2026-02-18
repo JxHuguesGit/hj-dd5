@@ -1,8 +1,8 @@
 <?php
 namespace src\Controller\Compendium;
 
-use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Page\PageList;
+use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Service\Reader\WeaponReader;
 
 final class WeaponCompendiumHandler implements CompendiumHandlerInterface
@@ -12,6 +12,7 @@ final class WeaponCompendiumHandler implements CompendiumHandlerInterface
         private WeaponListPresenter $presenter,
         private PageList $page,
     ) {}
+
     public function render(): string
     {
         $weapons = $this->weaponReader->allWeapons();
