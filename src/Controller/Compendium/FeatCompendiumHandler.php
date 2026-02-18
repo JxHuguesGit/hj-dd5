@@ -52,7 +52,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
     {
         return match ($action) {
             Constant::EDIT => $this->handleEditSubmit($slug),
-            //Constant::NEW  => $this->handleNewSubmit(),
+            //TODO : Constant::NEW  => $this->handleNewSubmit(),
             default        => $this->renderList(),
         };
     }
@@ -99,7 +99,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
             ),
             $this->toastContent
         );
-        
+
         return $page->renderAdmin('', $feat);
     }
 

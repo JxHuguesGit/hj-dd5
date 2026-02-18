@@ -6,6 +6,7 @@ use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\MonsterFormBuilder;
 use src\Presenter\ListPresenter\MonsterListPresenter;
+use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Reader\MonsterReader;
 use src\Utils\Session;
@@ -18,6 +19,7 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
         private MonsterReader $reader,
         private MonsterListPresenter $presenter,
         private PageList $page,
+        private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
     ) {}
 
@@ -39,14 +41,18 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
 
     private function handleSubmit(string $action, string $slug): string
     {
-        return '';
-        /*
         return match ($action) {
             Constant::EDIT => $this->handleEditSubmit($slug),
-            //Constant::NEW  => $this->handleNewSubmit(),
+            //TODO : Constant::NEW  => $this->handleNewSubmit(),
             default        => $this->renderList(),
         };
-        */
+    }
+
+    private function handleEditSubmit(string $slug): string
+    {
+        // Aucune valeur n'a été modifiée pour être enregistrée
+        $this->toastContent = $this->toastBuilder->info("Non développé pour le moment.");
+        return $this->renderEdit($slug);
     }
 
     private function renderEdit(string $slug): string

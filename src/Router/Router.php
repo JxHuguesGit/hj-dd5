@@ -15,7 +15,7 @@ use src\Factory\Controller\SpellControllerFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
-use src\Page\PageNotFound;
+use src\Page\Renderer\PageNotFound;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
@@ -80,9 +80,7 @@ class Router
 
         return $this->fromHome($path)
             ?? new PublicNotFound(
-                new PageNotFound(
-                    new TemplateRenderer()
-                ),
+                new PageNotFound($this->renderer),
                 new MenuPresenter(PageRegistry::getInstance()->all(), '')
             );
     }

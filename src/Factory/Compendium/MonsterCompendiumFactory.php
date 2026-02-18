@@ -4,6 +4,7 @@ namespace src\Factory\Compendium;
 use src\Controller\Compendium\MonsterCompendiumHandler;
 use src\Presenter\ListPresenter\MonsterListPresenter;
 use src\Presenter\TableBuilder\MonsterTableBuilder;
+use src\Presenter\ToastBuilder;
 use src\Repository\{MonsterRepository, MonsterSubTypeRepository, MonsterTypeRepository,  ReferenceRepository};
 use src\Service\Formatter\MonsterFormatter;
 use src\Service\Reader\{MonsterReader, MonsterSubTypeReader, MonsterTypeReader,  ReferenceReader};
@@ -22,6 +23,7 @@ class MonsterCompendiumFactory extends AbstractCompendiumFactory
                 $this->reader(ReferenceReader::class, ReferenceRepository::class)
             ),
             $this->page(new MonsterTableBuilder()),
+            new ToastBuilder($this->renderer),
             $this->renderer
         );
     }

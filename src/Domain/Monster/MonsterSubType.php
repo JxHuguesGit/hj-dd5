@@ -2,7 +2,7 @@
 namespace src\Domain\Monster;
 
 use src\Constant\Field;
-use src\Domain\Entity\SubTypeMonster;
+use src\Domain\Entity\MonsterSubType as EntityMonsterSubType;
 
 
 final class MonsterSubType
@@ -11,9 +11,9 @@ final class MonsterSubType
         private Monster $monster
     ) {}
 
-    public function getEntity(): SubTypeMonster
+    public function getEntity(): EntityMonsterSubType
     {
-        return new SubTypeMonster([
+        return new EntityMonsterSubType([
             Field::NAME => $this->monster->getField(Field::SSTYPMSTNAME) ?? ''
         ]);
     }

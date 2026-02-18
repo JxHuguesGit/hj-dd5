@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Page\PageNotFound;
+use src\Page\Renderer\PageNotFound;
 use src\Presenter\MenuPresenter;
 
 class PublicNotFound extends PublicBase

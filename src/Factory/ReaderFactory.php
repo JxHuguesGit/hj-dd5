@@ -56,6 +56,11 @@ final class ReaderFactory
         return new SkillReader($this->repositories->skill());
     }
 
+    public function species(): SpecieReader
+    {
+        return new SpecieReader($this->repositories->species());
+    }
+
     public function speedType(): SpeedTypeReader
     {
         return new SpeedTypeReader($this->repositories->speedType());
@@ -64,11 +69,6 @@ final class ReaderFactory
     public function spell(): SpellReader
     {
         return new SpellReader($this->repositories->spell());
-    }
-
-    public function species(): SpecieReader
-    {
-        return new SpecieReader($this->repositories->species());
     }
 
     public function tool(): ToolReader

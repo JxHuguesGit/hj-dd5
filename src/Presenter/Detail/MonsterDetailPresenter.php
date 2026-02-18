@@ -25,7 +25,7 @@ class MonsterDetailPresenter
             new MonsterSubTypeReader(new MonsterSubTypeRepository($qb, $qe)),
         );
 
-        $objsTrait = $this->getTraits();
+        //$objsTrait = $this->getTraits();
 
 
         return [
@@ -77,7 +77,8 @@ class MonsterDetailPresenter
 
     public function getTraits(): array
     {
-        return [];//$this->monster->getAbilities()->getTraits()->toArray();
+        //TODO : $this->monster->getAbilities()->getTraits()->toArray();
+        return [];
     }
 
 }
