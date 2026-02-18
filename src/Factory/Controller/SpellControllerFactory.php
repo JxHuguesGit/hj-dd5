@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Controller\Public\PublicSpell;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
-use src\Page\PageSpell;
+use src\Page\Renderer\PageSpell;
 use src\Presenter\Detail\SpellDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;

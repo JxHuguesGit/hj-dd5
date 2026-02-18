@@ -9,14 +9,16 @@ class Constant
     public const ABLINT = 'Intelligence';
     public const ABLWIS = 'Sagesse';
     public const ABLCHA = 'Charisme';
-    
+
     public const FORMNAME = 'formName';
     public const HEROSELECTION = 'heroSelection';
     public const ONGLET = 'onglet';
     public const EDIT = 'edit';
     public const NEW = 'new';
     public const CREATE = 'create';
-    
+
+    public const CLASSES  = 'classes';
+    public const HOME     = 'home';
     public const ARMORS   = 'armors';
     public const WEAPONS  = 'weapons';
     public const SPECIES  = 'species';
@@ -26,6 +28,7 @@ class Constant
     public const COMBAT   = 'combat';
     public const SKILLS   = 'skills';
     public const FEATS    = 'feats';
+    public const GEAR     = 'gear';
     public const MONSTERS = 'monsters';
     public const ORIGIN   = 'origin';
     public const ORIGINES = 'origines';
@@ -39,6 +42,7 @@ class Constant
     public const GAMES   = 'games';
     public const MUSIC   = 'music';
     public const TOOLS   = 'outils';
+    public const RULES    = 'rules';
     public const OUTERDIVCLASS = 'outerDivClass';
     public const ONG_COMPENDIUM = 'compendium';
     public const TAB_MONSTERS = 'monsters';
@@ -106,7 +110,7 @@ class Constant
 
     public const CST_EMPTY_SPAN = '<span></span>';
     public const CST_VIDE       = '&nbsp;';
-    
+
     /////////////////////////////////////////////////
     // Pagination
     public const CST_CURPAGE            = 'curpage';

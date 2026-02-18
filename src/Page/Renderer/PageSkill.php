@@ -1,15 +1,15 @@
 <?php
-namespace src\Page;
+namespace src\Page\Renderer;
 
 use src\Constant\Constant;
 use src\Constant\Template;
 use src\Utils\UrlGenerator;
 
-class PageFeat extends PageDetail
+class PageSkill extends PageDetail
 {
     protected function getEntityUrl(string $slug): string
     {
-        return UrlGenerator::feat($slug);
+        return UrlGenerator::skill($slug);
     }
 
     public function render(string $menuHtml, array $data): string
@@ -17,13 +17,13 @@ class PageFeat extends PageDetail
         return $this->renderDetail(
             $menuHtml,
             $data,
-            Template::FEAT_DETAIL_CARD,
+            Template::SKILL_DETAIL_CARD,
             [
-                '',
                 $data[Constant::CST_TITLE] ?? '',
+                $data[Constant::CST_ABILITIES] ?? '',
                 $data[Constant::CST_DESCRIPTION] ?? '',
-                $data[Constant::CST_FEATTYPE] ?? '-',
-                $data[Constant::ORIGINES] ?? '',
+                $data[Constant::ORIGINES] ?? [],
+                $data[Constant::CST_SUBSKILLS] ?? [],
             ]
         );
     }

@@ -14,7 +14,7 @@ use src\Controller\Public\{
 use src\Domain\Criteria\ItemCriteria;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
-use src\Page\{PageItemArmor, PageItemWeapon};
+use src\Page\Renderer\{PageItemArmor, PageItemWeapon};
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Page\PageList;

@@ -3,10 +3,10 @@ namespace src\Controller\Public;
 
 use src\Constant\Constant;
 use src\Domain\Entity\Skill;
-use src\Page\PageSkill;
+use src\Page\Renderer\PageSkill;
+use src\Presenter\Detail\SkillDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SkillPageService;
-use src\Presenter\Detail\SkillDetailPresenter;
 use src\Service\Reader\SkillReader;
 
 class PublicSkill extends PublicBase

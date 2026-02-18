@@ -1,5 +1,5 @@
 <?php
-namespace src\Page;
+namespace src\Page\Renderer;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap;

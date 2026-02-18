@@ -3,9 +3,9 @@ namespace src\Controller\Public;
 
 use src\Constant\Constant;
 use src\Domain\Entity\Feat;
-use src\Page\PageFeat;
-use src\Presenter\MenuPresenter;
+use src\Page\Renderer\PageFeat;
 use src\Presenter\Detail\FeatDetailPresenter;
+use src\Presenter\MenuPresenter;
 use src\Service\Page\FeatPageService;
 use src\Service\Reader\FeatReader;
 
@@ -29,7 +29,7 @@ class PublicFeat extends PublicBase
     {
         return $this->title;
     }
-    
+
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render(Constant::FEATS);

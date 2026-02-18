@@ -11,7 +11,8 @@ use src\Repository\SpeciePowerRepository;
 use src\Repository\{SpeciesRepository, SubSkillRepository, SkillRepository, ToolRepository, WeaponRepository};
 use src\Service\Domain\{OriginService, SpecieService, SkillService, WpPostService};
 use src\Service\Formatter\WeaponPropertiesFormatter;
-use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, ItemReader, OriginReader, PowerReader, SkillReader, SpecieReader, ToolReader, WeaponReader};
+use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, ItemReader, OriginReader, PowerReader,
+    SkillReader, SpecieReader, ToolReader, WeaponReader};
 
 final class ServiceFactory
 {
@@ -40,7 +41,7 @@ final class ServiceFactory
         $speciesRepo = new SpeciesRepository($this->queryBuilder, $this->queryExecutor);
         return new SpecieReader($speciesRepo);
     }
-    
+
     public function getArmorReader(): ArmorReader
     {
         $repositoryFactory = new RepositoryFactory($this->queryBuilder, $this->queryExecutor);
@@ -53,7 +54,7 @@ final class ServiceFactory
         $repo = new ToolRepository($this->queryBuilder, $this->queryExecutor);
         return new ToolReader($repo);
     }
-    
+
     public function getWeaponReader(): WeaponReader
     {
         $repo = new WeaponRepository($this->queryBuilder, $this->queryExecutor);
@@ -87,7 +88,7 @@ final class ServiceFactory
         $abilityQueryService = new AbilityReader($abilityRepo);
         $itemRepo  = new ItemRepository($this->queryBuilder, $this->queryExecutor);
         $itemQueryService = new ItemReader($itemRepo);
-        
+
         return new OriginService(
             $featRepo,
             $toolRepo,

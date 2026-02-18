@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Controller\Public\PublicSpecie;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
-use src\Page\PageSpecie;
+use src\Page\Renderer\PageSpecie;
 use src\Presenter\Detail\SpeciesDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;

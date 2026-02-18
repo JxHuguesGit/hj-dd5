@@ -16,12 +16,13 @@ class Language
     public const LG_ARM_MDM         = 'Armure intermédiaire';
     public const LG_ARM_HVY         = 'Armure lourde';
     public const LG_ARM_SHD         = 'Bouclier';
-     
+
     public const LG_WEAPON_MARTIAL  = ' de guerre';
     public const LG_WEAPON_SIMPLE   = ' courantes';
     public const LG_WEAPON_MELEE    = ' de corps à corps';
     public const LG_WEAPON_RANGED   = ' à distance';
-    
+
+    public const LG_HOME            = 'Accueil';
     public const LG_WEAPONS         = 'Armes';
     public const LG_ARMORS          = 'Armures';
     public const LG_WEAPON_PROP     = 'Botte d\'arme';
@@ -50,7 +51,9 @@ class Language
     public const LG_GENERAL_FEATS   = 'Dons généraux';
     public const LG_DURATION        = 'Durée';
     public const LG_SCHOOL          = 'Ecole';
+    public const LG_EQUIPMENT       = 'Équipement';
     public const LG_SPECIE          = 'Espèce';
+    public const LG_SPECIES         = 'Espèces';
     public const LG_CBT_STYLE_EPICS = 'Faveurs épiques';
     public const LG_FORCE           = 'Force';
     public const LG_FP              = 'FP';
@@ -76,6 +79,7 @@ class Language
     public const LG_PROPERTIES      = 'Propriétés';
     public const LG_PV              = 'PV';
     public const LG_REFERENCE       = 'Référence';
+    public const LG_RULES           = 'Règles';
     public const LG_SAGESSE         = 'Sagesse';
     public const LG_SPELLS          = 'Sorts';
     public const LG_CBT_STYLE_FEATS = 'Styles de combat';

@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Controller\Public\PublicSkill;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
-use src\Page\PageSkill;
+use src\Page\Renderer\PageSkill;
 use src\Presenter\Detail\SkillDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;

@@ -69,7 +69,7 @@ final class FeatControllerFactory
             new \src\Presenter\Detail\FeatDetailPresenter(
                 $this->serviceFactory->wordPress()
             ),
-            new \src\Page\PageFeat($this->renderer),
+            new \src\Page\Renderer\PageFeat($this->renderer),
             new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
         );
     }

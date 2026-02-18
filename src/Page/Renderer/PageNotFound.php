@@ -1,5 +1,5 @@
 <?php
-namespace src\Page;
+namespace src\Page\Renderer;
 
 use src\Constant\Template;
 
@@ -9,7 +9,7 @@ class PageNotFound extends PageDetail
     {
         return '#';
     }
-    
+
     public function render(string $menuHtml, array $data = []): string
     {
         return $this->renderDetail(

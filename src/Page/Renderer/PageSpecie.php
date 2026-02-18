@@ -1,5 +1,5 @@
 <?php
-namespace src\Page;
+namespace src\Page\Renderer;
 
 use src\Constant\Constant;
 use src\Constant\Template;
@@ -11,7 +11,7 @@ class PageSpecie extends PageDetail
     {
         return UrlGenerator::specie($slug);
     }
-    
+
     public function render(string $menuHtml, array $data): string
     {
         return $this->renderDetail(

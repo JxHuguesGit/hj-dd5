@@ -3,11 +3,11 @@ namespace src\Controller\Public;
 
 use src\Constant\Constant;
 use src\Domain\Entity\Specie;
-use src\Page\PageSpecie;
+use src\Page\Renderer\PageSpecie;
+use src\Presenter\Detail\SpeciesDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SpeciePageService;
 use src\Service\Reader\SpecieReader;
-use src\Presenter\Detail\SpeciesDetailPresenter;
 
 class PublicSpecie extends PublicBase
 {

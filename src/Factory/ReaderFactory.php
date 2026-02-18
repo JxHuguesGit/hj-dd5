@@ -1,7 +1,9 @@
 <?php
 namespace src\Factory;
 
-use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, FeatTypeReader, ItemReader, OriginReader, PowerReader, ReferenceReader, SkillReader, SpecieReader, SpeedTypeReader, SpellReader, ToolReader, WeaponPropertyValueReader, WeaponReader};
+use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, FeatTypeReader, ItemReader, OriginReader,
+    PowerReader, ReferenceReader, SkillReader, SpecieReader, SpeedTypeReader, SpellReader, ToolReader,
+    WeaponPropertyValueReader, WeaponReader};
 
 final class ReaderFactory
 {

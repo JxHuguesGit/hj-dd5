@@ -1,5 +1,5 @@
 <?php
-namespace src\Page;
+namespace src\Page\Renderer;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
@@ -16,7 +16,7 @@ class PageSpell extends PageDetail
     {
         return UrlGenerator::spell($slug);
     }
-    
+
     public function render(string $menuHtml, SpellPageView $view): string
     {
         $spell = $view->spell;

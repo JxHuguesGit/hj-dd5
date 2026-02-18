@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Constant\Constant;
 use src\Domain\Entity\Spell;
-use src\Page\PageSpell;
+use src\Page\Renderer\PageSpell;
 use src\Presenter\MenuPresenter;
 use src\Service\Domain\SpellService;
 use src\Service\Page\SpellPageService;

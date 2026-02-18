@@ -1,7 +1,19 @@
 <?php
 namespace src\Model;
 
-use src\Page\{PageItems, PageFeats, PageFeatsCombat, PageFeatsEpic, PageFeatsGeneral, PageFeatsOrigin, PageHome, PageOrigines, PageSkills, PageSpecies, PageSpells};
+use src\Page\Metadata\{
+    PageItems,
+    PageFeats,
+    PageFeatsCombat,
+    PageFeatsEpic,
+    PageFeatsGeneral,
+    PageFeatsOrigin,
+    PageHome,
+    PageOrigines,
+    PageSkills,
+    PageSpecies,
+    PageSpells
+};
 
 class PageRegistry
 {
@@ -23,7 +35,7 @@ class PageRegistry
         }
         return self::$instance;
     }
-    
+
     private function loadStaticPages(): void
     {
         // Page Home
@@ -65,7 +77,7 @@ class PageRegistry
         $this->register($spellsPage);
 
     }
-    
+
     public function register($elements): void
     {
         if (is_array($elements)) {

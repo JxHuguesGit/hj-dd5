@@ -1,5 +1,5 @@
 <?php
-namespace src\Page;
+namespace src\Page\Renderer;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
@@ -12,7 +12,7 @@ abstract class PageDetail
     public function __construct(
         protected TemplateRenderer $renderer
     ) {}
-    
+
      protected function renderDetail(
         string $menuHtml,
         array $data,
@@ -45,6 +45,6 @@ abstract class PageDetail
             implode(' ', [Bootstrap::CSS_BTN, Bootstrap::CSS_BTN_SM, Bootstrap::CSS_BTN_OUTLINE_DARK])
         );
     }
-    
+
     abstract protected function getEntityUrl(string $slug): string;
 }

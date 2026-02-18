@@ -5,7 +5,7 @@ use src\Constant\Constant;
 use src\Controller\Public\PublicOrigine;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
-use src\Page\PageOrigine;
+use src\Page\Renderer\PageOrigine;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;

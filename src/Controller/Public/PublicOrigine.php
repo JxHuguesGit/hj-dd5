@@ -3,11 +3,11 @@ namespace src\Controller\Public;
 
 use src\Constant\Constant;
 use src\Domain\Entity\Origin;
-use src\Page\PageOrigine;
+use src\Page\Renderer\PageOrigine;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
-use src\Service\Reader\OriginReader;
 use src\Service\Page\OriginPageService;
+use src\Service\Reader\OriginReader;
 
 class PublicOrigine extends PublicBase
 {

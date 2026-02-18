@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant;
-use src\Page\PageDetail;
+use src\Page\Renderer\PageDetail;
 use src\Presenter\Detail\ArmorDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ViewModel\ArmorPageView;
