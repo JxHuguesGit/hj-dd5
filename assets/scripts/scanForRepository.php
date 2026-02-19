@@ -7,6 +7,7 @@ $ignoredDirs = [
     'Repository',
     'RepositoryInterface',
     'Reader',
+    'Writer',
 ];
 
 $ignoredFiles = [
