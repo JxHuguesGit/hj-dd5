@@ -29,13 +29,9 @@ class DD5Base
         $errorPanel = '';
         $queryBuilder = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
-        $router = new Router(
-            new ReaderFactory(
-                new RepositoryFactory($queryBuilder, $queryExecutor)
-            ),
-            new ServiceFactory($queryBuilder, $queryExecutor),
-            new TemplateRenderer()
-        );
+        $repository = new RepositoryFactory($queryBuilder, $queryExecutor);
+        $reader = new ReaderFactory($repository);
+        $router = new Router($reader, new ServiceFactory($reader, $repository), new TemplateRenderer());
         $controller = $router->getController();
 
         if (DD5_URL=='http://localhost/') {
