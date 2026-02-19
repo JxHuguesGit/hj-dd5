@@ -3,8 +3,9 @@ namespace src\Service\Domain;
 
 use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Entity\{Ability, Feat, Item, Origin, Skill, Tool};
-use src\Repository\{FeatRepository, OriginAbilityRepository, OriginItemRepository, OriginSkillRepository, ToolRepository};
+use src\Domain\Entity\{Feat, Origin, Tool};
+use src\Repository\{FeatRepositoryInterface, OriginAbilityRepositoryInterface, OriginItemRepositoryInterface,
+    OriginSkillRepositoryInterface, ToolRepositoryInterface};
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ItemReader;
 use src\Service\Reader\SkillReader;
@@ -17,18 +18,18 @@ final class OriginService
     private array $itemCache = [];
     /** @var array<int, Skill> */
     private array $skillCache = [];
-    
+
     public function __construct(
-        private FeatRepository $featRepository,
-        private ToolRepository $toolRepository,
-        private OriginSkillRepository $originSkillRepository,
-        private OriginAbilityRepository $originAbilityRepository,
-        private OriginItemRepository $originItemRepository,
+        private FeatRepositoryInterface $featRepository,
+        private ToolRepositoryInterface $toolRepository,
+        private OriginSkillRepositoryInterface $originSkillRepository,
+        private OriginAbilityRepositoryInterface $originAbilityRepository,
+        private OriginItemRepositoryInterface $originItemRepository,
         private SkillReader $skillReader,
         private AbilityReader $abilityReader,
         private ItemReader $itemReader,
     ) {}
-    
+
     public function getFeat(Origin $origin): ?Feat
     {
         if ($origin->featId <= 0) {

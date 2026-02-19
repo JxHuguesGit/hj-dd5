@@ -4,12 +4,13 @@ namespace src\Factory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\{AbilityRepository, AbilityRepositoryInterface, ArmorRepository, ArmorRepositoryInterface,
-    FeatRepository, FeatRepositoryInterface};
+    FeatRepository, FeatRepositoryInterface, OriginAbilityRepository, OriginAbilityRepositoryInterface,
+    OriginItemRepository, OriginItemRepositoryInterface, OriginSkillRepository, OriginSkillRepositoryInterface};
 use src\Repository\{FeatTypeRepository, FeatTypeRepositoryInterface, ItemRepository, ItemRepositoryInterface,
     OriginRepository, OriginRepositoryInterface};
 use src\Repository\{PowerRepository, PowerRepositoryInterface, ReferenceRepository, ReferenceRepositoryInterface,
-    SkillRepository, SkillRepositoryInterface, SpeedTypeRepository, SpeedTypeRepositoryInterface, SubSkillRepository,
-    SubSkillRepositoryInterface};
+    SkillRepository, SkillRepositoryInterface, SpeciePowerRepository, SpeciePowerRepositoryInterface,
+    SpeedTypeRepository, SpeedTypeRepositoryInterface, SubSkillRepository, SubSkillRepositoryInterface};
 use src\Repository\{SpeciesRepository, SpeciesRepositoryInterface, SpellRepository, SpellRepositoryInterface,
     ToolRepository, ToolRepositoryInterface};
 use src\Repository\{WeaponPropertyValueRepository, WeaponPropertyValueRepositoryInterface, WeaponRepository,
@@ -57,6 +58,21 @@ class RepositoryFactory
         return $this->make(OriginRepository::class);
     }
 
+    public function originAbility(): OriginAbilityRepositoryInterface
+    {
+        return $this->make(OriginAbilityRepository::class);
+    }
+
+    public function originItem(): OriginItemRepositoryInterface
+    {
+        return $this->make(OriginItemRepository::class);
+    }
+
+    public function originSkill(): OriginSkillRepositoryInterface
+    {
+        return $this->make(OriginSkillRepository::class);
+    }
+
     public function power(): PowerRepositoryInterface
     {
         return $this->make(PowerRepository::class);
@@ -85,6 +101,11 @@ class RepositoryFactory
     public function subSkill(): SubSkillRepositoryInterface
     {
         return $this->make(SubSkillRepository::class);
+    }
+
+    public function speciePower(): SpeciePowerRepositoryInterface
+    {
+        return $this->make(SpeciePowerRepository::class);
     }
 
     public function species(): SpeciesRepositoryInterface

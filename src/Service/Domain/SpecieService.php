@@ -1,20 +1,19 @@
 <?php
 namespace src\Service\Domain;
 
-use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Entity\Power;
+use src\Constant\Field;
 use src\Domain\Entity\Specie;
-use src\Repository\SpeciePowerRepository;
+use src\Repository\SpeciePowerRepositoryInterface;
 use src\Service\Reader\PowerReader;
 
 final class SpecieService
 {
     /** @var array<int, Power> */
     private array $powerCache = [];
-    
+
     public function __construct(
-        private SpeciePowerRepository $speciePowerRepository,
+        private SpeciePowerRepositoryInterface $speciePowerRepository,
         private PowerReader $powerReader,
     ) {}
 

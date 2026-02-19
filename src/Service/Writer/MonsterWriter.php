@@ -1,5 +1,5 @@
 <?php
-namespace App\Service\Writer;
+namespace src\Service\Writer;
 
 use src\Repository\MonsterRepositoryInterface;
 
