@@ -11,79 +11,32 @@ final class ReaderFactory
         private RepositoryFactory $repositories
     ) {}
 
-    public function ability(): AbilityReader
-    {
-        return new AbilityReader($this->repositories->ability());
-    }
+    private array $map = [
+        'ability'             => AbilityReader::class,
+        'armor'               => ArmorReader::class,
+        'feat'                => FeatReader::class,
+        'featType'            => FeatTypeReader::class,
+        'item'                => ItemReader::class,
+        'origin'              => OriginReader::class,
+        'power'               => PowerReader::class,
+        'reference'           => ReferenceReader::class,
+        'skill'               => SkillReader::class,
+        'species'             => SpecieReader::class,
+        'speedType'           => SpeedTypeReader::class,
+        'spell'               => SpellReader::class,
+        'tool'                => ToolReader::class,
+        'weapon'              => WeaponReader::class,
+        'weaponPropertyValue' => WeaponPropertyValueReader::class,
+    ];
 
-    public function armor(): ArmorReader
+    public function __call(string $name, array $args): object
     {
-        return new ArmorReader($this->repositories->armor());
-    }
+        if (!isset($this->map[$name])) {
+            throw new \BadMethodCallException("Reader inconnu : '$name'");
+        }
 
-    public function feat(): FeatReader
-    {
-        return new FeatReader($this->repositories->feat());
+        $readerClass = $this->map[$name];
+        return new $readerClass($this->repositories->$name());
     }
-
-    public function featType(): FeatTypeReader
-    {
-        return new FeatTypeReader($this->repositories->featType());
-    }
-
-    public function item(): ItemReader
-    {
-        return new ItemReader($this->repositories->item());
-    }
-
-    public function origin(): OriginReader
-    {
-        return new OriginReader($this->repositories->origin());
-    }
-
-    public function power(): PowerReader
-    {
-        return new PowerReader($this->repositories->power());
-    }
-
-    public function reference(): ReferenceReader
-    {
-        return new ReferenceReader($this->repositories->reference());
-    }
-
-    public function skill(): SkillReader
-    {
-        return new SkillReader($this->repositories->skill());
-    }
-
-    public function species(): SpecieReader
-    {
-        return new SpecieReader($this->repositories->species());
-    }
-
-    public function speedType(): SpeedTypeReader
-    {
-        return new SpeedTypeReader($this->repositories->speedType());
-    }
-
-    public function spell(): SpellReader
-    {
-        return new SpellReader($this->repositories->spell());
-    }
-
-    public function tool(): ToolReader
-    {
-        return new ToolReader($this->repositories->tool());
-    }
-
-    public function weapon(): WeaponReader
-    {
-        return new WeaponReader($this->repositories->weapon());
-    }
-
-    public function weaponPropertyValue(): WeaponPropertyValueReader
-    {
-        return new WeaponPropertyValueReader($this->repositories->weaponPropertyValue());
-    }
-
 }
+
