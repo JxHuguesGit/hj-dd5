@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller;
 
+/*
 use src\Constant\{Bootstrap, Constant, Field, Template};
 use src\Entity\RpgHeros;
 use src\Query\QueryBuilder;
@@ -11,6 +12,7 @@ use src\Repository\RpgOrigin as RepositoryRpgOrigin;
 use src\Repository\RpgSpecies as RepositoryRpgSpecies;
 use src\Repository\RpgFeat as RepositoryRpgFeat;
 use src\Utils\Session;
+*/
 
 class AdminCharacterCreationPage extends AdminPage
 {
@@ -18,6 +20,8 @@ class AdminCharacterCreationPage extends AdminPage
     {
         $this->arrParams = $params;
     }
+
+    /*
 
     public function getAdminContentPage(string $content=''): string
     {
@@ -72,7 +76,7 @@ class AdminCharacterCreationPage extends AdminPage
             $feats[] = $objHeroFeat->getFullName();
             $objsHeroFeat->next();
         }
-        
+
         $attributes = [
             '/wp-admin/admin.php?page=hj-dd5/admin_manage.php&onglet=character&id='.$rpgHero->getField(Field::ID).'&step=',
             $rpgHero->getField(Field::NAME),
@@ -91,7 +95,7 @@ class AdminCharacterCreationPage extends AdminPage
         $queryExecutor = new QueryExecutor();
         $objDao = new RepositoryRpgClasse($queryBuilder, $queryExecutor);
         $objsClasse = $objDao->findAll([Field::NAME=>Constant::CST_ASC]);
-        
+
         $checkedId = 0;
         $strRadios = '';
         $objsClasse->rewind();
@@ -270,5 +274,6 @@ class AdminCharacterCreationPage extends AdminPage
         ];
         $urlTemplate = Template::CREATE_NAME;
     }
+    */
 
 }

@@ -11,7 +11,7 @@ class Field
     public const LASTUPDATE  = 'lastUpdate';
     public const NAME        = 'name';
     public const VALUE       = 'value';
- 
+
     public const DAMAGE      = 'damage';
     public const WEIGHT      = 'weight';
     public const GOLDPRICE   = 'goldPrice';
@@ -21,11 +21,11 @@ class Field
     public const ARMORCLASS  = 'armorClass';
     public const STRPENALTY  = 'strengthPenalty';
     public const STHDISADV   = 'stealthDisadvantage';
- 
+
     public const MINRANGE    = 'minRange';
     public const MAXRANGE    = 'maxRange';
     public const POLYDMG     = 'versatileDamage';
- 
+
     public const FRNAME      = 'frName';
     public const FRTAG       = 'frTag';
     public const UKTAG       = 'ukTag';
@@ -50,7 +50,7 @@ class Field
     public const TYPE        = 'type';
 
     public const ABBR        = 'abbr';
-    
+
     public const DESCRIPTION  = 'description';
     public const ENTITYTYPE   = 'entityType';
     public const EXPERTISE    = 'expertise';
@@ -66,7 +66,8 @@ class Field
     public const LEVEL        = 'niveau';
     public const SCHOOL       = 'ecole';
     public const CLASSES      = 'classes';
-        
+    public const DATA         = 'data';
+
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';
     public const ARMORTYPID   = 'armorTypeId';
@@ -106,7 +107,7 @@ class Field
     public const WPNPROPID    = 'weaponPropertyId';
     public const WPNRANGEID   = 'weaponRangeId';
     public const WPUSERID     = 'wpUserId';
-    
+
     public const AMMONAME         = 'ammunitionName';
     public const CATEGORYSLUG     = 'categorySlug';
     public const CATEGORYNAME     = 'categoryName';

@@ -1,31 +1,24 @@
 <?php
 namespace src\Controller;
 
-use src\CharacterCreation\CharacterCreationFlow;
-use src\Constant\Field;
-use src\Constant\Template;
-use src\Entity\Entity;
-use src\Entity\RpgHeros;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\RpgClasse as RepositoryRpgClasse;
-use src\Repository\RpgClasseSkill as RepositoryRpgClasseSkill;
-use src\Repository\RpgFeat as RepositoryRpgFeat;
-use src\Repository\RpgHeros as RepositoryRpgHeros;
-use src\Repository\RpgHerosClasse as RepositoryRpgHerosClasse;
-use src\Repository\RpgHerosFeat as RepositoryRpgHerosFeat;
-use src\Repository\RpgHerosSkill as RepositoryRpgHerosSkill;
-use src\Repository\RpgOrigin as RepositoryRpgOrigin;
-use src\Repository\RpgOriginSkill as RepositoryRpgOriginSkill;
-use src\Repository\RpgSkill as RepositoryRpgSkill;
-use src\Repository\RpgSpecies as RepositoryRpgSpecies;
-use src\Repository\Tool as RepositoryTool;
-use src\Utils\Session;
+use src\Factory\CharacterFactory;
 
 class AdminCharacterPage extends AdminPage
 {
+    public function __construct(
+        private array $uri,
+        private CharacterFactory $characterFactory
+    ) {
+        parent::__construct($this->uri);
+    }
 
     public function getAdminContentPage(string $content=''): string
+    {
+        return 'wip';
+    }
+}
+/*
+    public function oldgetAdminContentPage(string $content=''): string
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
@@ -92,3 +85,4 @@ class AdminCharacterPage extends AdminPage
         ];
     }
 }
+*/
