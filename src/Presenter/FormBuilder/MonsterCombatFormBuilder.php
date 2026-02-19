@@ -44,7 +44,7 @@ class MonsterCombatFormBuilder
         // Ici on devrait récupérer les types de vitesse
         // et boucler dessus pour passer à chaque fois un objet TypeSpeed
         $speedTypeReader = $this->readerFactory->speedType();
-        $speedTypes = $speedTypeReader->allSpeedTypes([Field::ID=>Constant::CST_ASC]);
+        $speedTypes = $speedTypeReader->allSpeedTypes();
         foreach ($speedTypes as $speedType) {
             $this->addSpeedSection($fieldset, $monster, $speedType);
         }

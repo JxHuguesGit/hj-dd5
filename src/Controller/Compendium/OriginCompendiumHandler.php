@@ -17,12 +17,8 @@ class OriginCompendiumHandler implements CompendiumHandlerInterface
 
     public function render(): string
     {
-        $origins = $this->reader->allOrigins([
-            Field::NAME      => Constant::CST_ASC
-        ]);
-
+        $origins = $this->reader->allOrigins();
         $presentContent = $this->presenter->present($origins);
-
         return $this->page->renderAdmin('', $presentContent);
     }
 }

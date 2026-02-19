@@ -36,21 +36,23 @@ final class FeatReader
     /**
      * @return Collection<Feat>
      */
-    public function allFeats(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    public function featsByCategory(int $featTypeId): Collection
     {
         $criteria = new FeatCriteria();
-        $criteria->orderBy = $order;
+        $criteria->featTypeId = $featTypeId;
+        $criteria->orderBy    = [Field::NAME=>Constant::CST_ASC];
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 
     /**
      * @return Collection<Feat>
      */
-    public function featsByCategory(int $categoryId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    public function allFeats(?FeatCriteria $criteria=null): Collection
     {
-        $criteria = new FeatCriteria();
-        $criteria->featTypeId = $categoryId;
-        $criteria->orderBy    = $order;
+        if (!$criteria) {
+            $criteria = new FeatCriteria();
+            $criteria->orderBy = [Field::FEATTYPEID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC];
+        }
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 

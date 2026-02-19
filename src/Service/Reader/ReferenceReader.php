@@ -13,7 +13,7 @@ final class ReferenceReader
     public function __construct(
         private ReferenceRepositoryInterface $repository
     ) {}
-    
+
     /**
      * @return ?Reference
      */
@@ -21,14 +21,16 @@ final class ReferenceReader
     {
         return $this->repository->find($id);
     }
-    
+
     /**
      * @return Collection<Reference>
      */
-    public function allReferences(array $orderBy=[Field::NAME => Constant::CST_ASC]): Collection
+    public function allReferences(?ReferenceCriteria $criteria=null): Collection
     {
-        $criteria = new ReferenceCriteria();
-        $criteria->orderBy = $orderBy;
+        if (!$criteria) {
+            $criteria = new ReferenceCriteria();
+            $criteria->orderBy = [Field::NAME => Constant::CST_ASC];
+        }
         return $this->repository->findAllWithCriteria($criteria);
     }
 }

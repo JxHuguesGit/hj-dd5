@@ -36,16 +36,6 @@ final class SpecieReader
     /**
      * @return Collection<Specie>
      */
-    public function allSpecies(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
-    {
-        $criteria = new SpeciesCriteria();
-        $criteria->orderBy = $order;
-        return $this->speciesRepository->findAllWithCriteria($criteria);
-    }
-
-    /**
-     * @return Collection<Specie>
-     */
     public function speciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
     {
         $criteria = new SpeciesCriteria();
@@ -53,6 +43,19 @@ final class SpecieReader
         $criteria->orderBy = $order;
         return $this->speciesRepository->findAllWithCriteria($criteria);
     }
+
+    /**
+     * @return Collection<Specie>
+     */
+    public function allSpecies(?SpeciesCriteria $criteria): Collection
+    {
+        if (!$criteria) {
+            $criteria = new SpeciesCriteria();
+            $criteria->orderBy = [Field::NAME=>Constant::CST_ASC];
+        }
+        return $this->speciesRepository->findAllWithCriteria($criteria);
+    }
+
 
     public function getPreviousAndNext(Specie $species): array
     {

@@ -21,14 +21,16 @@ final class SpeedTypeReader
     {
         return $this->repository->find($id);
     }
-    
+
     /**
      * @return Collection<SpeedType>
      */
-    public function allSpeedTypes(array $orderBy=[Field::NAME => Constant::CST_ASC]): Collection
+    public function allSpeedTypes(?SpeedTypeCriteria $criteria=null): Collection
     {
-        $criteria = new SpeedTypeCriteria();
-        $criteria->orderBy = $orderBy;
+        if (!$criteria) {
+            $criteria = new SpeedTypeCriteria();
+            $criteria->orderBy = [Field::ID=>Constant::CST_ASC];
+        }
         return $this->repository->findAllWithCriteria($criteria);
     }
 }

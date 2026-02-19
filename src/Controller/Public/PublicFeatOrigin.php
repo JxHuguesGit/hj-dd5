@@ -5,9 +5,9 @@ use src\Collection\Collection;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
-use src\Presenter\MenuPresenter;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\FeatListPresenter;
+use src\Presenter\MenuPresenter;
 use src\Service\Reader\FeatReader;
 
 class PublicFeatOrigin extends PublicBase
@@ -20,7 +20,7 @@ class PublicFeatOrigin extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->featsByCategory(1, [Field::NAME=>Constant::CST_ASC]);
+        $this->feats = $this->featReader->featsByCategory(1);
         $this->title = Language::LG_ORIGIN_FEATS;
     }
 

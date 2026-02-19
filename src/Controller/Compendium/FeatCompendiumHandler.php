@@ -102,22 +102,16 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
 
     private function renderList(): string
     {
-        $feats = $this->featReader->allFeats([
-            Field::FEATTYPEID => Constant::CST_ASC,
-            Field::NAME       => Constant::CST_ASC
-        ]);
-
+        $feats = $this->featReader->allFeats();
         $presenter = new FeatListPresenter(
             $this->originReader,
             new WpPostService()
         );
         $presentContent = $presenter->present($feats);
-
         $page = new PageList(
             $this->templateRenderer,
             new FeatTableBuilder(true)
         );
-
         return $page->renderAdmin('', $presentContent, $this->toastContent);
     }
 }

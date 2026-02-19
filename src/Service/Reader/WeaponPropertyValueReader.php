@@ -20,16 +20,6 @@ final class WeaponPropertyValueReader
     {
         return $this->wpnPropValueRepository->find($id);
     }
-    
-    /**
-     * @return Collection<WeaponPropertyValue>
-     */
-    public function allWeaponPropertyValues(array $orderBy=[]): Collection
-    {
-        $criteria = new WeaponPropertyValueCriteria();
-        $criteria->orderBy = $orderBy;
-        return $this->wpnPropValueRepository->findAllWithRelations($criteria);
-    }
 
     /**
      * @return Collection<WeaponPropertyValue>

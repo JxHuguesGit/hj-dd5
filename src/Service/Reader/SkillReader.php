@@ -14,7 +14,7 @@ final class SkillReader
     public function __construct(
         private SkillRepositoryInterface $skillRepository
     ) {}
-    
+
     /**
      * @return ?Skill
      */
@@ -32,14 +32,16 @@ final class SkillReader
         $criteria->slug = $slug;
         return $this->skillRepository->findAllWithCriteria($criteria)?->first() ?? null;
     }
-    
+
     /**
      * @return Collection<Skill>
      */
-    public function allSkills(array $orderBy=[Field::NAME => Constant::CST_ASC]): Collection
+    public function allSkills(?SkillCriteria $criteria=null): Collection
     {
-        $criteria = new SkillCriteria();
-        $criteria->orderBy = $orderBy;
+        if (!$criteria) {
+            $criteria = new SkillCriteria();
+            $criteria->orderBy = [Field::ABILITYID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC];
+        }
         return $this->skillRepository->findAllWithCriteria($criteria);
     }
 

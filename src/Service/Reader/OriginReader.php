@@ -38,16 +38,6 @@ final class OriginReader
     /**
      * @return Collection<Origin>
      */
-    public function allOrigins(array $order=[Field::NAME=>Constant::CST_ASC]): Collection
-    {
-        $criteria = new OriginCriteria();
-        $criteria->orderBy = $order;
-        return $this->originRepository->findAllWithCriteria($criteria);
-    }
-
-    /**
-     * @return Collection<Origin>
-     */
     public function originsByFeat(Feat $feat): Collection
     {
         $criteria = new OriginCriteria();
@@ -56,12 +46,24 @@ final class OriginReader
     }
 
     /**
-     * @return Collection<DomainOrigin>
+     * @return Collection<Origin>
      */
     public function originsByTool(Tool $tool): Collection
     {
         $criteria = new OriginCriteria();
         $criteria->toolId = $tool->id;
+        return $this->originRepository->findAllWithCriteria($criteria);
+    }
+
+    /**
+     * @return Collection<Origin>
+     */
+    public function allOrigins(?OriginCriteria $criteria=null): Collection
+    {
+        if (!$criteria) {
+            $criteria = new OriginCriteria();
+            $criteria->orderBy = [Field::NAME=>Constant::CST_ASC];
+        }
         return $this->originRepository->findAllWithCriteria($criteria);
     }
 

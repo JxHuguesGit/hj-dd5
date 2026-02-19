@@ -3,11 +3,10 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
 use src\Constant\Language;
 use src\Page\PageList;
-use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
+use src\Presenter\MenuPresenter;
 use src\Service\Reader\SkillReader;
 
 class PublicSkills extends PublicBase
@@ -20,7 +19,7 @@ class PublicSkills extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->skills = $this->skillReader->allSkills([Field::ABILITYID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC]);
+        $this->skills = $this->skillReader->allSkills();
         $this->title = Language::LG_SKILLS_TITLE;
     }
 
