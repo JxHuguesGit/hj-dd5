@@ -49,31 +49,27 @@ class SizeHelper
         // Tri naturel
         usort($sizes, fn($a, $b) => $a->value <=> $b->value);
 
-        // Cas simple : 1 seule taille
         if (count($sizes) === 1) {
-            return $sizes[0]->label($gender, $plural);
-        }
-
-        // Cas simple : 2 tailles → "X ou Y"
-        if (count($sizes) === 2) {
-            return $sizes[0]->label($gender, $plural)
+            $result = $sizes[0]->label($gender, $plural);
+        } elseif (count($sizes) === 2) {
+            $result = $sizes[0]->label($gender, $plural)
                 . ' ou '
                 . $sizes[1]->label($gender, $plural);
+        } else {
+            $min = $sizes[0];
+            $max = $sizes[count($sizes) - 1];
+
+            // Déterminer suffixe genre/pluriel
+            $suffix = ($gender === 'f' ? 'e' : '') . ($plural ? 's' : '');
+
+            if ($min === SizeEnum::Tiny) {
+                // Tiny → "X ou plus petit(e)(s)"
+                $result = $max->label($gender, $plural) . " ou plus petit$suffix";
+            } else {
+                // Sinon → "X ou plus grand(e)(s)"
+                $result = $min->label($gender, $plural) . " ou plus grand$suffix";
+            }
         }
-
-        // Cas complexe : plus de 2 tailles
-        $min = $sizes[0];
-        $max = $sizes[count($sizes) - 1];
-
-        // Déterminer suffixe genre/pluriel
-        $suffix = ($gender === 'f' ? 'e' : '') . ($plural ? 's' : '');
-
-        // Tiny → "X ou plus petit(e)(s)"
-        if ($min === SizeEnum::Tiny) {
-            return $max->label($gender, $plural) . " ou plus petit$suffix";
-        }
-
-        // Sinon → "X ou plus grand(e)(s)"
-        return $min->label($gender, $plural) . " ou plus grand$suffix";
+        return $result;
     }
 }
