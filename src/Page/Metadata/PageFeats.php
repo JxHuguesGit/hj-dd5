@@ -13,7 +13,7 @@ class PageFeats extends PageMetadata
         return [
             Constant::CST_SLUG        => Constant::FEATS,
             'icon'                    => Icon::ISCROLL,
-            Constant::CST_TITLE       => Language::LG_FEATS,
+            Constant::CST_TITLE       => Language::LG_FEATS_TITLE,
             Constant::CST_DESCRIPTION => "Les dons sont des capacités spéciales que votre personnage peut acquérir, offrant des avantages uniques et personnalisant davantage son style de jeu.",
             'url'                     => Routes::FEATS_PREFIX,
             'order'                   => 20,

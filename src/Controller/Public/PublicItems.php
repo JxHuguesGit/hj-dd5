@@ -23,15 +23,15 @@ class PublicItems extends PublicBase
         $data = [];
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_ARMOR,
-            Constant::CST_TITLE => Language::LG_ARMORS,
+            Constant::CST_TITLE => Language::LG_ARMORS_TITLE,
         ]);
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_WEAPON,
-            Constant::CST_TITLE => Language::LG_WEAPONS,
+            Constant::CST_TITLE => Language::LG_WEAPONS_TITLE,
         ]);
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_TOOL,
-            Constant::CST_TITLE => Language::LG_TOOLS,
+            Constant::CST_TITLE => Language::LG_TOOLS_TITLE,
         ]);
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_GEAR,
@@ -42,7 +42,7 @@ class PublicItems extends PublicBase
         $contentHtml = $cardPresenter->render();
 
         $contentSection = $this->getRender(Template::CATEGORY_PAGE, [$this->getTitle(), $contentHtml]);
-        
+
         return $this->getRender(Template::MAIN_PAGE, [$menuHtml, $contentSection]);
     }
 }

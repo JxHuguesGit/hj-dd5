@@ -12,7 +12,7 @@ class SpellTableBuilder extends AbstractTableBuilder
     public function build(iterable $rows, array $params = []): Table
     {
         $headers = [
-            [Constant::CST_LABEL=>Language::LG_SPELLS],
+            [Constant::CST_LABEL=>Language::LG_NAMES],
             [Constant::CST_LABEL=>Language::LG_LEVEL, 'filter'=>true],
             [Constant::CST_LABEL=>Language::LG_SCHOOL, 'filter'=>true],
             [Constant::CST_LABEL=>Language::LG_CLASSES, 'filter'=>true],

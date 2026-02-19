@@ -13,7 +13,7 @@ class PageItemArmor extends PageMetadata
         return [
             Constant::CST_SLUG        => Constant::CST_ITEMS.'-'.Constant::CST_ARMOR,
             'icon'                    => Icon::ISHIELD,
-            Constant::CST_TITLE       => Language::LG_ARMORS,
+            Constant::CST_TITLE       => Language::LG_ARMORS_TITLE,
             Constant::CST_DESCRIPTION => 'Les armures disponibles pour les aventuriers.',
             'url'                     => Routes::ITEMS_PREFIX.Constant::CST_ARMOR,
             'order'                   => 5,

@@ -13,7 +13,7 @@ class PageSkills extends PageMetadata
         return [
             Constant::CST_SLUG        => Constant::SKILLS,
             'icon'                    => Icon::ISTAR,
-            Constant::CST_TITLE       => Language::LG_SKILLS,
+            Constant::CST_TITLE       => Language::LG_SKILLS_TITLE,
             Constant::CST_DESCRIPTION => "Les compétences sont des aptitudes liées aux caractéristiques qui permettent d'accomplir certaines actions spécifiques.",
             'url'                     => Routes::SKILLS_PREFIX,
             'order'                   => 10,

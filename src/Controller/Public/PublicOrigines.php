@@ -6,8 +6,8 @@ use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
 use src\Page\PageList;
-use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\OriginListPresenter;
+use src\Presenter\MenuPresenter;
 use src\Service\Reader\OriginReader;
 
 class PublicOrigines extends PublicBase
@@ -21,7 +21,7 @@ class PublicOrigines extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->origins = $this->originReader->allOrigins([Field::NAME=>Constant::CST_ASC]);
-        $this->title = Language::LG_HISTORIQUES;
+        $this->title = Language::LG_HISTO_TITLE;
     }
 
     public function getContentPage(): string

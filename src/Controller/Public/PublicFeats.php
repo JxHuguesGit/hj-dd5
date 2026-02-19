@@ -21,7 +21,7 @@ class PublicFeats extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->feats = $this->featReader->allFeats([Field::FEATTYPEID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC]);
-        $this->title = Language::LG_FEATS;
+        $this->title = Language::LG_FEATS_TITLE;
     }
 
     public function getContentPage(): string

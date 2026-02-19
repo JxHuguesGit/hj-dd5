@@ -2,17 +2,23 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
-use src\Presenter\ViewModel\OriginRow;
-use src\Utils\Table;
-use src\Utils\Html;
 use src\Constant\Constant;
 use src\Constant\Language;
+use src\Presenter\ViewModel\OriginRow;
+use src\Utils\Html;
+use src\Utils\Table;
 
 class OriginTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $groups, array $params = []): Table
     {
-        $headers = [Language::LG_ORIGINS, Language::LG_ABILITIES, Language::LG_ORIGIN_FEAT, Language::LG_SKILLS, Language::LG_TOOLS];
+        $headers = [
+            Language::LG_NAMES,
+            Language::LG_ABILITIES,
+            Language::LG_ORIGIN_FEAT,
+            Language::LG_SKILLS,
+            Language::LG_TOOL
+        ];
         $table = $this->createTable(count($headers), $params);
 
         foreach ($headers as $label) {

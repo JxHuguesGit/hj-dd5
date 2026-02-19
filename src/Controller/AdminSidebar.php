@@ -12,14 +12,14 @@ class AdminSidebar extends Utilities
     private array $allowedTabs;
     private string $currentTab;
     private string $currentId;
-    
+
     public function setAttributes(array $allowedTabs, string $currentTab='', string $currentId='')
     {
         $this->allowedTabs = $allowedTabs;
         $this->currentTab = $currentTab;
         $this->currentId = $currentId;
     }
-    
+
     public function getContent(): string
     {
         $strSidebarMenuItems = '';
@@ -29,14 +29,14 @@ class AdminSidebar extends Utilities
         $strSidebarMenuItems .= $this->getTimelineItem();
         // On ajoute le menu "Compendium";
         $strSidebarMenuItems .= $this->getCompendiumItem();
-        
+
         $attributes = [
             !in_array($this->currentTab, $this->allowedTabs)||$this->currentTab=='home' ? Constant::CST_ACTIVE : '',
             $strSidebarMenuItems
         ];
         return $this->getRender(Template::ADMINSIDEBAR, $attributes);
     }
-    
+
     private function getCharacterItem(): string
     {
         // On a toujours des enfants. Potentiellement, aucun héros, mais a minima le lien pour en créer un.
@@ -74,9 +74,9 @@ class AdminSidebar extends Utilities
             ];
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         }
-        
+
         $strChildren .= '</ul>';
-        
+
         $attributes = [
             $this->currentTab=='character' ? 'menu-open' : '',
             '#',
@@ -87,10 +87,10 @@ class AdminSidebar extends Utilities
             $strChildren,
             '', '',
         ];
-        
+
         return $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
     }
-    
+
     private function getTimelineItem(): string
     {
         $attributes = [
@@ -104,7 +104,7 @@ class AdminSidebar extends Utilities
             '',
             '', '',
         ];
-        
+
         return $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
     }
 
@@ -112,15 +112,15 @@ class AdminSidebar extends Utilities
     {
         // Liste des sous menus existants
         $children = [
-            [Constant::CST_ID => Constant::WEAPONS,  Constant::CST_LABEL => Language::LG_WEAPONS,  'icon' => Icon::IGAVEL],
-            [Constant::CST_ID => Constant::ARMORS,   Constant::CST_LABEL => Language::LG_ARMORS,   'icon' => Icon::ISHIELD],
-            [Constant::CST_ID => Constant::SKILLS,   Constant::CST_LABEL => Language::LG_SKILLS,   'icon' => Icon::IBRAIN],
-            [Constant::CST_ID => Constant::FEATS,    Constant::CST_LABEL => Language::LG_FEATS,    'icon' => Icon::IMEDAL],
-            [Constant::CST_ID => Constant::CST_GEAR, Constant::CST_LABEL => Language::LG_GEAR,     'icon' => Icon::IBOX],
+            [Constant::CST_ID => Constant::WEAPONS,  Constant::CST_LABEL => Language::LG_WEAPONS_TITLE,  'icon' => Icon::IGAVEL],
+            [Constant::CST_ID => Constant::ARMORS,   Constant::CST_LABEL => Language::LG_ARMORS_TITLE,   'icon' => Icon::ISHIELD],
+            [Constant::CST_ID => Constant::SKILLS,   Constant::CST_LABEL => Language::LG_SKILLS_TITLE,   'icon' => Icon::IBRAIN],
+            [Constant::CST_ID => Constant::FEATS,    Constant::CST_LABEL => Language::LG_FEATS_TITLE,    'icon' => Icon::IMEDAL],
+            [Constant::CST_ID => Constant::CST_GEAR, Constant::CST_LABEL => Language::LG_GEAR_TITLE,     'icon' => Icon::IBOX],
             [Constant::CST_ID => Constant::MONSTERS, Constant::CST_LABEL => 'Monstres',    'icon' => Icon::IDRAGON],
-            [Constant::CST_ID => Constant::ORIGINS,  Constant::CST_LABEL => Language::LG_ORIGINS,  'icon' => Icon::ICOMPASS],
-            [Constant::CST_ID => Constant::TOOLS,    Constant::CST_LABEL => Language::LG_TOOLS,    'icon' => Icon::IGAVEL],
-            [Constant::CST_ID => Constant::SPELLS,   Constant::CST_LABEL => Language::LG_SPELLS,   'icon' => Icon::ISCROLL],
+            [Constant::CST_ID => Constant::ORIGINS,  Constant::CST_LABEL => Language::LG_HISTO_TITLE,  'icon' => Icon::ICOMPASS],
+            [Constant::CST_ID => Constant::TOOLS,    Constant::CST_LABEL => Language::LG_TOOLS_TITLE,    'icon' => Icon::IGAVEL],
+            [Constant::CST_ID => Constant::SPELLS,   Constant::CST_LABEL => Language::LG_SPELLS_TITLE,   'icon' => Icon::ISCROLL],
         ];
 
         // Construction du menu
@@ -139,7 +139,7 @@ class AdminSidebar extends Utilities
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         }
         $strChildren .= '</ul>';
-        
+
         // Attribution au template
         $attributes = [
             $this->currentTab==Constant::ONG_COMPENDIUM ? 'menu-open' : '',
@@ -151,7 +151,7 @@ class AdminSidebar extends Utilities
             $strChildren,
             '', '',
         ];
-        
+
         return $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
     }
 }

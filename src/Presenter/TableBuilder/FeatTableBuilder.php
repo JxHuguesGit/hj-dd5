@@ -16,7 +16,7 @@ class FeatTableBuilder extends AbstractTableBuilder
 
     public function build(iterable $groups, array $params = []): Table
     {
-        $headers = [Language::LG_FEATS, Language::LG_ORIGIN, Language::LG_PREQUISITE];
+        $headers = [Language::LG_NAMES, Language::LG_ORIGINS, Language::LG_PREQUISITE];
         if ($this->isAdmin) {
             $headers[] = Constant::CST_VIDE;
         }
@@ -39,7 +39,9 @@ class FeatTableBuilder extends AbstractTableBuilder
             foreach ($group->rows as $row) {
                 /** @var FeatRow $row */
                 $table->addBodyRow([])
-                    ->addBodyCell([Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)])
+                    ->addBodyCell([
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)
+                    ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->originLabel])
                     ->addBodyCell([Constant::CST_CONTENT => $row->prerequisite]);
                 if ($this->isAdmin) {

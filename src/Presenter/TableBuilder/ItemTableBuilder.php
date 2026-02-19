@@ -14,7 +14,7 @@ class ItemTableBuilder extends AbstractTableBuilder
 
     public function build(iterable $rows, array $params = []): Table
     {
-        $headers = [Language::LG_GEAR, Language::LG_DESCRIPTION, Language::LG_WEIGHT, Language::LG_PRICE];
+        $headers = [Language::LG_NAMES, Language::LG_DESCRIPTION, Language::LG_WEIGHT, Language::LG_PRICE];
         if ($this->isAdmin) {
             $createLink = Html::getLink(
                 Html::getIcon(Icon::IPLUS),
