@@ -87,7 +87,7 @@ class SpellFilterModalPresenter implements ModalPresenter
             $strConcentration,
         ];
 
-        $modalContent = $this->renderer->getRender(
+        $modalContent = $this->renderer->render(
             Template::SPELL_FILTER_MODAL,
             $attrContent
         );
@@ -99,7 +99,7 @@ class SpellFilterModalPresenter implements ModalPresenter
             'Filtrer'
         ];
 
-        return $this->renderer->getRender(
+        return $this->renderer->render(
             Template::MAIN_MODAL,
             $attributes
         );

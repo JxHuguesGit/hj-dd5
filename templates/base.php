@@ -7,6 +7,7 @@ use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 use src\Router\Router;
 
 if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
@@ -32,7 +33,8 @@ class DD5Base
             new ReaderFactory(
                 new RepositoryFactory($queryBuilder, $queryExecutor)
             ),
-            new ServiceFactory($queryBuilder, $queryExecutor)
+            new ServiceFactory($queryBuilder, $queryExecutor),
+            new TemplateRenderer()
         );
         $controller = $router->getController();
 
