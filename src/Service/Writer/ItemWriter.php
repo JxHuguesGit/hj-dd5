@@ -2,12 +2,12 @@
 namespace src\Service\Writer;
 
 use src\Domain\Entity\Item;
-use src\Repository\FeatRepositoryInterface;
+use src\Repository\ItemRepositoryInterface;
 
 class ItemWriter
 {
     public function __construct(
-        private FeatRepositoryInterface $repository
+        private ItemRepositoryInterface $repository
     ) {}
 
     public function insert(Item $item): void

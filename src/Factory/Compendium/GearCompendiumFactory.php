@@ -5,13 +5,14 @@ use src\Controller\Compendium\GearCompendiumHandler;
 use src\Presenter\ToastBuilder;
 use src\Repository\ItemRepository;
 use src\Service\Reader\ItemReader;
+use src\Service\Writer\ItemWriter;
 
 class GearCompendiumFactory extends AbstractCompendiumFactory
 {
     public function create(): GearCompendiumHandler
     {
         return new GearCompendiumHandler(
-            $this->writer(ItemReader::class, ItemRepository::class),
+            $this->writer(ItemWriter::class, ItemRepository::class),
             $this->reader(ItemReader::class, ItemRepository::class),
             new ToastBuilder($this->renderer),
             $this->renderer

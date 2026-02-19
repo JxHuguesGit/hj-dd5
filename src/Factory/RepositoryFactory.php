@@ -3,128 +3,48 @@ namespace src\Factory;
 
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\{AbilityRepository, AbilityRepositoryInterface, ArmorRepository, ArmorRepositoryInterface,
-    FeatRepository, FeatRepositoryInterface, OriginAbilityRepository, OriginAbilityRepositoryInterface,
-    OriginItemRepository, OriginItemRepositoryInterface, OriginSkillRepository, OriginSkillRepositoryInterface};
-use src\Repository\{FeatTypeRepository, FeatTypeRepositoryInterface, ItemRepository, ItemRepositoryInterface,
-    OriginRepository, OriginRepositoryInterface};
-use src\Repository\{PowerRepository, PowerRepositoryInterface, ReferenceRepository, ReferenceRepositoryInterface,
-    SkillRepository, SkillRepositoryInterface, SpeciePowerRepository, SpeciePowerRepositoryInterface,
-    SpeedTypeRepository, SpeedTypeRepositoryInterface, SubSkillRepository, SubSkillRepositoryInterface};
-use src\Repository\{SpeciesRepository, SpeciesRepositoryInterface, SpellRepository, SpellRepositoryInterface,
-    ToolRepository, ToolRepositoryInterface};
-use src\Repository\{WeaponPropertyValueRepository, WeaponPropertyValueRepositoryInterface, WeaponRepository,
-    WeaponRepositoryInterface};
+use src\Repository\{AbilityRepository, ArmorRepository, FeatRepository, OriginAbilityRepository, OriginItemRepository,
+    OriginSkillRepository, FeatTypeRepository, ItemRepository, OriginRepository, PowerRepository, ReferenceRepository,
+    SkillRepository, SpeciePowerRepository, SpeedTypeRepository, SubSkillRepository, SpeciesRepository, SpellRepository,
+    ToolRepository, WeaponPropertyValueRepository, WeaponRepository};
 
 class RepositoryFactory
 {
+    private array $map = [
+        'ability'             => AbilityRepository::class,
+        'armor'               => ArmorRepository::class,
+        'feat'                => FeatRepository::class,
+        'featType'            => FeatTypeRepository::class,
+        'item'                => ItemRepository::class,
+        'origin'              => OriginRepository::class,
+        'originAbility'       => OriginAbilityRepository::class,
+        'originItem'          => OriginItemRepository::class,
+        'originSkill'         => OriginSkillRepository::class,
+        'power'               => PowerRepository::class,
+        'reference'           => ReferenceRepository::class,
+        'skill'               => SkillRepository::class,
+        'speedType'           => SpeedTypeRepository::class,
+        'spell'               => SpellRepository::class,
+        'subSkill'            => SubSkillRepository::class,
+        'speciePower'         => SpeciePowerRepository::class,
+        'species'             => SpeciesRepository::class,
+        'tool'                => ToolRepository::class,
+        'weapon'              => WeaponRepository::class,
+        'weaponPropertyValue' => WeaponPropertyValueRepository::class,
+    ];
+
     public function __construct(
         private QueryBuilder $builder,
         private QueryExecutor $executor
     ) {}
 
-    private function make(string $repositoryClass): object
+    public function __call(string $name, array $args): object
     {
-        return new $repositoryClass($this->builder, $this->executor);
-    }
+        if (!isset($this->map[$name])) {
+            throw new \BadMethodCallException("Repository inconnu : '$name'");
+        }
 
-    public function ability(): AbilityRepositoryInterface
-    {
-        return $this->make(AbilityRepository::class);
-    }
-
-    public function armor(): ArmorRepositoryInterface
-    {
-        return $this->make(ArmorRepository::class);
-    }
-
-    public function feat(): FeatRepositoryInterface
-    {
-        return $this->make(FeatRepository::class);
-    }
-
-    public function featType(): FeatTypeRepositoryInterface
-    {
-        return $this->make(FeatTypeRepository::class);
-    }
-
-    public function item(): ItemRepositoryInterface
-    {
-        return $this->make(ItemRepository::class);
-    }
-
-    public function origin(): OriginRepositoryInterface
-    {
-        return $this->make(OriginRepository::class);
-    }
-
-    public function originAbility(): OriginAbilityRepositoryInterface
-    {
-        return $this->make(OriginAbilityRepository::class);
-    }
-
-    public function originItem(): OriginItemRepositoryInterface
-    {
-        return $this->make(OriginItemRepository::class);
-    }
-
-    public function originSkill(): OriginSkillRepositoryInterface
-    {
-        return $this->make(OriginSkillRepository::class);
-    }
-
-    public function power(): PowerRepositoryInterface
-    {
-        return $this->make(PowerRepository::class);
-    }
-
-    public function reference(): ReferenceRepositoryInterface
-    {
-        return $this->make(ReferenceRepository::class);
-    }
-
-    public function skill(): SkillRepositoryInterface
-    {
-        return $this->make(SkillRepository::class);
-    }
-
-    public function speedType(): SpeedTypeRepositoryInterface
-    {
-        return $this->make(SpeedTypeRepository::class);
-    }
-
-    public function spell(): SpellRepositoryInterface
-    {
-        return $this->make(SpellRepository::class);
-    }
-
-    public function subSkill(): SubSkillRepositoryInterface
-    {
-        return $this->make(SubSkillRepository::class);
-    }
-
-    public function speciePower(): SpeciePowerRepositoryInterface
-    {
-        return $this->make(SpeciePowerRepository::class);
-    }
-
-    public function species(): SpeciesRepositoryInterface
-    {
-        return $this->make(SpeciesRepository::class);
-    }
-
-    public function tool(): ToolRepositoryInterface
-    {
-        return $this->make(ToolRepository::class);
-    }
-
-    public function weapon(): WeaponRepositoryInterface
-    {
-        return $this->make(WeaponRepository::class);
-    }
-
-    public function weaponPropertyValue(): WeaponPropertyValueRepositoryInterface
-    {
-        return $this->make(WeaponPropertyValueRepository::class);
+        $class = $this->map[$name];
+        return new $class($this->builder, $this->executor);
     }
 }
