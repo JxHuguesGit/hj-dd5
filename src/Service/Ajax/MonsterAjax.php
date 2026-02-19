@@ -67,7 +67,13 @@ class MonsterAjax
             ];
         }
 
-        $presenter = new MonsterDetailPresenter($monster);
+        $presenter = new MonsterDetailPresenter(
+            new MonsterFormatter(
+                new MonsterTypeReader(new MonsterTypeRepository($qb, $qe)),
+                new MonsterSubTypeReader(new MonsterSubTypeRepository($qb, $qe)),
+            ),
+            $monster
+        );
         $templateRenderer = new TemplateRenderer();
         return [
             'html' => $templateRenderer->render(Template::MONSTER_CARD, $presenter->present())

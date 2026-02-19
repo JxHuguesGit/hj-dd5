@@ -2,7 +2,6 @@
 namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
-use src\Domain\Criteria\ItemCriteria;
 use src\Domain\Entity\Item;
 use src\Domain\Validator\ItemValidator;
 use src\Factory\ItemFactory;
@@ -13,8 +12,8 @@ use src\Presenter\ListPresenter\GearListPresenter;
 use src\Presenter\TableBuilder\ItemTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
-use src\Repository\ItemRepository;
 use src\Service\Reader\ItemReader;
+use src\Service\Writer\ItemWriter;
 use src\Utils\Session;
 
 final class GearCompendiumHandler implements CompendiumHandlerInterface
@@ -22,7 +21,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
     private string $toastContent = '';
 
     public function __construct(
-        private ItemRepository $itemRepository,
+        private ItemWriter $itemWriter,
         private ItemReader $itemReader,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
@@ -62,14 +61,14 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             if ($item->type=='Autre') {
                 $item->type = 'other';
             }
-        
+
             $errors = ItemValidator::validate($item);
             if (!empty($errors)) {
                 $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
                 return $this->renderCreate($item);
             }
 
-            $this->itemRepository->insert($item);
+            $this->itemWriter->insert($item);
             $this->toastContent = $this->toastBuilder->success("L'objet <strong>".$item->name."</strong> a été correctement créé.");
             return $this->renderList();
     }
@@ -100,7 +99,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
                     $view = $this->renderEdit($slug);
                 } else {
                     // On sauvegarde le changement
-                    $this->itemRepository->updatePartial($item, $changedFields);
+                    $this->itemWriter->updatePartial($item, $changedFields);
                     $this->toastContent = $this->toastBuilder->success("L'objet <strong>".$item->name."</strong> a été correctement mis à jour.");
                     $view = $this->renderList();
                 }
@@ -119,7 +118,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             new GearFormBuilder(Constant::NEW),
             $this->toastContent
         );
-        
+
         return $page->renderAdmin('', $item);
     }
 
@@ -132,13 +131,13 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             new GearFormBuilder(),
             $this->toastContent
         );
-        
+
         return $page->renderAdmin('', $item);
     }
 
     public function renderList(): string
     {
-        $items = $this->itemRepository->findAllWithRelations(new ItemCriteria());
+        $items = $this->itemReader->allGears();
         $presenter = new GearListPresenter();
         $content   = $presenter->present($items);
         $page = new PageList(

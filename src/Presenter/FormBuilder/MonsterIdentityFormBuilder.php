@@ -4,7 +4,6 @@ namespace src\Presenter\FormBuilder;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\Criteria\ReferenceCriteria;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
 

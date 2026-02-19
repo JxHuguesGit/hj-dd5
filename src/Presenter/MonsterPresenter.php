@@ -2,15 +2,15 @@
 namespace src\Presenter;
 
 use src\Constant\Constant;
-use src\Domain\Monster\Monster;
 use src\Domain\Entity\Reference;
-use src\Utils\Utils;
+use src\Domain\Monster\Monster;
 use src\Helper\SizeHelper;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\ReferenceRepository;
-use src\Repository\MonsterTypeRepository;
 use src\Repository\MonsterSubTypeRepository;
+use src\Repository\MonsterTypeRepository;
+use src\Repository\ReferenceRepository;
+use src\Utils\Utils;
 
 class MonsterPresenter
 {

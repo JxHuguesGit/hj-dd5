@@ -23,13 +23,16 @@ final class ArmorReader
         $criteria->slug = $slug;
         return $this->armorRepository->findAllWithRelations($criteria)?->first() ?? null;
     }
-     
+
     /**
      * @return Collection<Armor>
      */
-    public function allArmors(): Collection
+    public function allArmors(?ArmorCriteria $criteria = null): Collection
     {
-        return $this->armorRepository->findAllWithRelations(new ArmorCriteria());
+        if (!$criteria) {
+            $criteria = new ArmorCriteria();
+        }
+        return $this->armorRepository->findAllWithRelations($criteria);
     }
 
     public function getPreviousAndNext(Armor $armor): array

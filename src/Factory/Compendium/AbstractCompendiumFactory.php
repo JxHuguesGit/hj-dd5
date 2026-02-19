@@ -27,4 +27,9 @@ abstract class AbstractCompendiumFactory
     {
         return new PageList($this->renderer, $tableBuilder);
     }
+
+    protected function writer(string $readerClass, string $repoClass): object
+    {
+        return new $readerClass($this->repo($repoClass));
+    }
 }

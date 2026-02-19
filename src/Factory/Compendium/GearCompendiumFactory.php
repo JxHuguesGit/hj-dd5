@@ -11,7 +11,7 @@ class GearCompendiumFactory extends AbstractCompendiumFactory
     public function create(): GearCompendiumHandler
     {
         return new GearCompendiumHandler(
-            $this->repo(ItemRepository::class),
+            $this->writer(ItemReader::class, ItemRepository::class),
             $this->reader(ItemReader::class, ItemRepository::class),
             new ToastBuilder($this->renderer),
             $this->renderer

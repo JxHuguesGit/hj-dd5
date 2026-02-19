@@ -11,7 +11,7 @@ class FeatCompendiumFactory extends AbstractCompendiumFactory
     public function create(): FeatCompendiumHandler
     {
         return new FeatCompendiumHandler(
-            $this->repo(FeatRepository::class),
+            $this->writer(FeatReader::class, FeatRepository::class),
             $this->reader(FeatReader::class, FeatRepository::class),
             $this->reader(FeatTypeReader::class, FeatTypeRepository::class),
             $this->reader(OriginReader::class, OriginRepository::class),

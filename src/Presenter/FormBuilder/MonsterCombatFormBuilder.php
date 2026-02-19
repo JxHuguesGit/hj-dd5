@@ -4,7 +4,6 @@ namespace src\Presenter\FormBuilder;
 use src\Constant\{Bootstrap, Constant, Field, Language};
 use src\Domain\Entity\SpeedType;
 use src\Domain\Monster\Monster;
-use src\Domain\Monster\MonsterSpeedType;
 use src\Factory\ReaderFactory;
 
 class MonsterCombatFormBuilder

@@ -3,7 +3,6 @@ namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Entity\Feat;
 use src\Page\PageForm;
 use src\Page\PageList;
@@ -12,11 +11,11 @@ use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
-use src\Repository\FeatRepository;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Writer\FeatWriter;
 use src\Utils\Session;
 
 class FeatCompendiumHandler implements CompendiumHandlerInterface
@@ -24,7 +23,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
     private string $toastContent = '';
 
     public function __construct(
-        private FeatRepository $featRepository,
+        private FeatWriter $featWriter,
         private FeatReader $featReader,
         private FeatTypeReader $featTypeReader,
         private OriginReader $originReader,
@@ -59,9 +58,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
 
     private function handleEditSubmit(string $slug): string
     {
-        $criteria = new FeatCriteria();
-        $criteria->slug = $slug;
-        $feat = $this->featRepository->findAllWithCriteria($criteria)?->first();
+        $feat = $this->featReader->featBySlug($slug);
         if (!$feat) {
             $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
             return $this->renderList($slug);
@@ -78,7 +75,7 @@ class FeatCompendiumHandler implements CompendiumHandlerInterface
 
         if (!empty($changedFields)) {
             // On sauvegarde le changement
-            $this->featRepository->updatePartial($feat, $changedFields);
+            $this->featWriter->updatePartial($feat, $changedFields);
             $this->toastContent = $this->toastBuilder->success("Le don <strong>".$feat->name."</strong> a été correctement mis à jour.");
             return $this->renderList($slug);
         } else {

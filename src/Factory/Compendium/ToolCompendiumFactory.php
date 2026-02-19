@@ -5,14 +5,14 @@ use src\Controller\Compendium\ToolCompendiumHandler;
 use src\Presenter\ListPresenter\ToolListPresenter;
 use src\Presenter\TableBuilder\ToolTableBuilder;
 use src\Repository\{OriginRepository, ToolRepository};
-use src\Service\Reader\OriginReader;
+use src\Service\Reader\{OriginReader, ToolReader};
 
 class ToolCompendiumFactory extends AbstractCompendiumFactory
 {
     public function create(): ToolCompendiumHandler
     {
         return new ToolCompendiumHandler(
-            $this->repo(ToolRepository::class),
+            $this->reader(ToolReader::class, ToolRepository::class),
             new ToolListPresenter($this->reader(OriginReader::class, OriginRepository::class)),
             $this->page(new ToolTableBuilder())
         );

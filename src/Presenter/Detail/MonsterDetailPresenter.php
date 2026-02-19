@@ -2,42 +2,30 @@
 namespace src\Presenter\Detail;
 
 use src\Domain\Monster\Monster;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Repository\MonsterSubTypeRepository;
-use src\Repository\MonsterTypeRepository;
 use src\Service\Formatter\MonsterFormatter;
-use src\Service\Reader\MonsterSubTypeReader;
-use src\Service\Reader\MonsterTypeReader;
 
 class MonsterDetailPresenter
 {
     public function __construct(
+        private MonsterFormatter $formatter,
         private Monster $monster
     ) {}
 
     public function present(): array
     {
-        $qb = new QueryBuilder();
-        $qe = new QueryExecutor();
-        $formatter = new MonsterFormatter(
-            new MonsterTypeReader(new MonsterTypeRepository($qb, $qe)),
-            new MonsterSubTypeReader(new MonsterSubTypeRepository($qb, $qe)),
-        );
-
         return [
-            $formatter->formatName($this->monster->name, $this->monster->frName),
-            $formatter->formatTypeAndAlignement($this->monster),
-            $formatter->formatCA($this->monster),
+            $this->formatter->formatName($this->monster->name, $this->monster->frName),
+            $this->formatter->formatTypeAndAlignement($this->monster),
+            $this->formatter->formatCA($this->monster),
             $this->monster->combat()->getInitiative(),
-            $formatter->formatHP($this->monster),
+            $this->formatter->formatHP($this->monster),
             '',//Speed,
-            $formatter->formatScore($this->monster, 'str'),
-            $formatter->formatScore($this->monster, 'dex'),
-            $formatter->formatScore($this->monster, 'con'),
-            $formatter->formatScore($this->monster, 'int'),
-            $formatter->formatScore($this->monster, 'wis'),
-            $formatter->formatScore($this->monster, 'cha'),
+            $this->formatter->formatScore($this->monster, 'str'),
+            $this->formatter->formatScore($this->monster, 'dex'),
+            $this->formatter->formatScore($this->monster, 'con'),
+            $this->formatter->formatScore($this->monster, 'int'),
+            $this->formatter->formatScore($this->monster, 'wis'),
+            $this->formatter->formatScore($this->monster, 'cha'),
             '',
             // d-none si pas de Traits
             //empty($objsTrait) ? ' '.Bootstrap::CSS_DNONE : '',
