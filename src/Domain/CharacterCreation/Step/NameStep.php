@@ -23,7 +23,7 @@ class NameStep implements StepInterface
     public function render(CharacterDraft $draft): array
     {
         return [
-            '',
+            $this->sidebar(),
             $draft->id ?? 0,
             htmlspecialchars($draft->name ?? ''),
             ''
@@ -48,11 +48,16 @@ class NameStep implements StepInterface
         $draft->name = trim($input['characterName']);
         $draft->originId = null;
         $draft->speciesId = null;
-        $draft->data = json_encode([]);
+        $draft->donnees = json_encode([]);
     }
 
     public function isComplete(CharacterDraft $draft): bool
     {
         return $draft->name !== null && trim($draft->name) !== '';
+    }
+
+    public function sidebar(): array
+    {
+        return ['', '', '', '', '', '', '', '', '', '', '', '', '', ''];
     }
 }

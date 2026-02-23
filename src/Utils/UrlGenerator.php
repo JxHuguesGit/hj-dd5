@@ -11,9 +11,9 @@ final class UrlGenerator
         return $absolute ? DD5_URL . ltrim($url, '/') : $url;
     }
 
-    public static function admin(string $onglet, string $subOnglet, string $slug='', string $action=''): string
+    public static function admin(string $onglet, string $subOnglet, string $slug='', string $action='', array $params=[]): string
     {
-        $url = '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php'
+        $url = '/wp-admin/admin.php?page=hj-dd5/admin_manage.php'
             . '&onglet='.$onglet
             . '&id='.$subOnglet;
         if ($slug!='') {
@@ -21,6 +21,9 @@ final class UrlGenerator
         }
         if ($action!='') {
             $url .= '&action='.$action;
+        }
+        foreach ($params as $key=>$value) {
+            $url .= '&'.$key.'='.$value;
         }
         return $url;
     }

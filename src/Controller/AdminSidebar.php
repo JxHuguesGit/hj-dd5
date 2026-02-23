@@ -2,10 +2,13 @@
 namespace src\Controller;
 
 use src\Constant\{Bootstrap, Constant, Field, Icon, Language, Template};
-use src\Repository\RpgHeros as RepositoryRpgHeros;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Repository\CharacterDraftRepository;
+use src\Repository\RpgHeros as RepositoryRpgHeros;
+use src\Service\Reader\CharacterDraftReader;
 use src\Utils\Session;
+use src\Utils\UrlGenerator;
 
 class AdminSidebar extends Utilities
 {
@@ -41,10 +44,13 @@ class AdminSidebar extends Utilities
     {
         // On a toujours des enfants. Potentiellement, aucun héros, mais a minima le lien pour en créer un.
         $strChildren = '<ul class="nav nav-treeview">';
+        $url = UrlGenerator::admin(Constant::ONG_CHARACTER, '%d', '', '', ['step'=>'%s']);
+        $blnActiveTab = $this->currentTab==Constant::ONG_CHARACTER;
+
         $attributes = [
             '',
-            '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id=0&step=name',
-            $this->currentTab=='character' && $this->currentId==0 ? Constant::CST_ACTIVE : '',
+            sprintf($url, 0, 'name'),
+            $blnActiveTab && $this->currentId==0 ? Constant::CST_ACTIVE : '',
             Icon::IPLUS,
             'Nouveau',
             Bootstrap::CSS_DNONE,
@@ -55,22 +61,23 @@ class AdminSidebar extends Utilities
 
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
-        $objDaoHeros = new RepositoryRpgHeros($queryBuilder, $queryExecutor);
-        $rpgHeros = $objDaoHeros->findBy([Field::WPUSERID=>Session::getWpUser()->data->ID]);
-        foreach ($rpgHeros as $rpgHero) {
-            $id = $rpgHero->getId();
-            $name = $rpgHero->getName();
+        $reader = new CharacterDraftReader(new CharacterDraftRepository($queryBuilder, $queryExecutor));
+        $heroes = $reader->characterDraftByWpUser(Session::getWpUser()->data->ID);
+        foreach ($heroes as $hero) {
+            $id = $hero->id;
+            $name = $hero->name;
             $parts = explode(' ', $name);
             $initiales = substr($parts[0], 0, 1).substr($parts[1]??'', 0, 1);
             $attributes = [
                 '',
-                '/wp-admin/admin.php?page=hj-dd5%2Fadmin_manage.php&onglet=character&id='.$id.'&step='.$rpgHero->getField(Field::CREATESTEP),
-                $this->currentTab=='character' && $this->currentId==$id ? Constant::CST_ACTIVE : '',
+                sprintf($url, $id, $hero->createStep),
+                $blnActiveTab && $this->currentId==$id ? Constant::CST_ACTIVE : '',
                 'user',
                 $name,
                 Bootstrap::CSS_DNONE,
                 '',
-                '', $initiales,
+                '',
+                $initiales,
             ];
             $strChildren .= $this->getRender(Template::ADMINSIDEBARITEM, $attributes);
         }
@@ -78,9 +85,9 @@ class AdminSidebar extends Utilities
         $strChildren .= '</ul>';
 
         $attributes = [
-            $this->currentTab=='character' ? 'menu-open' : '',
+            $blnActiveTab ? 'menu-open' : '',
             '#',
-            $this->currentTab=='character' ? Constant::CST_ACTIVE : '',
+            $blnActiveTab ? Constant::CST_ACTIVE : '',
             'users',
             'Personnages',
             '',

@@ -25,7 +25,7 @@ final class CharacterDraftReader
     /**
      * @return Collection<CharacterDraft>
      */
-    public function characterDraftByWpUser(int $wpUserId): CharacterDraft
+    public function characterDraftByWpUser(int $wpUserId): Collection
     {
         $criteria = new CharacterDraftCriteria();
         $criteria->wpUserId = $wpUserId;

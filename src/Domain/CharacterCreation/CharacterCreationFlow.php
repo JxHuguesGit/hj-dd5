@@ -1,6 +1,7 @@
 <?php
 namespace src\Domain\CharacterCreation;
 
+use src\Constant\Template;
 use src\Domain\CharacterCreation\Step\NameStep;
 use src\Domain\CharacterCreation\Step\OriginStep;
 use src\Renderer\TemplateRenderer;
@@ -102,7 +103,13 @@ class CharacterCreationFlow
             return '<div class="alert alert-success">Personnage créé ✅</div>';
         }
         $step = $this->getStep($stepId);
-        return $this->renderer->render($step->template, $step->render($this->draft));
+        return $this->renderer->render(
+            $step->template,
+            array_merge(
+                [$this->renderer->render(Template::CREATE_SIDEBAR, $step->sidebar($this->draft))],
+                $step->render($this->draft)
+            )
+        );
     }
 
     public function getDraft(): CharacterDraft

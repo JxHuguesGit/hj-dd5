@@ -67,6 +67,7 @@ class Field
     public const SCHOOL       = 'ecole';
     public const CLASSES      = 'classes';
     public const DATA         = 'data';
+    public const DONNEES      = 'donnees';
 
     public const ABILITYID    = 'abilityId';
     public const ALGNID       = 'alignmentId';

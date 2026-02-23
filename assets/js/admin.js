@@ -5,7 +5,7 @@ $(document).ready(function(e) {
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalFeatCard', 'postId': postId};
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
         const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
-        
+
         $.post({
             url: ajaxUrl,
             data: data,
@@ -21,14 +21,14 @@ $(document).ready(function(e) {
         });
         return false;
     });
-    
+
     $('[data-modal="monster"]').on('click', function(e) {
         e.preventDefault();
         const uktag = $(this).data('uktag');
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalMonsterCard', 'uktag': uktag};
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
         const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
-        
+
         $.post({
             url: ajaxUrl,
             data: data,
@@ -49,14 +49,14 @@ $(document).ready(function(e) {
         });
         return false;
     });
-    
+
     $('[data-modal="spell"]').on('click', function(e) {
         e.preventDefault();
         const id = $(this).data('uktag');
         const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalSpellCard', 'id': id};
         const baseUrl = globalThis.location.origin + globalThis.location.pathname;
         const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
-        
+
         $.post({
             url: ajaxUrl,
             data: data,
@@ -72,7 +72,7 @@ $(document).ready(function(e) {
         });
         return false;
     });
-    
+
     $('i[data-source="aidedd"]').on('click', function(e) {
         e.preventDefault();
         const source = $(this).data('source');
@@ -116,7 +116,7 @@ $(document).ready(function(e) {
 
         $(this).toggleClass('fa-square-plus fa-square-minus');
     });
-    
+
     $('th[data-sortable]').on('click', function(){
         let ordre = 'asc';
         if ($(this).hasClass('dt-ordering-asc')) {
@@ -183,21 +183,162 @@ $(document).ready(function(e) {
 
     $('#createProcess').on('click', function(e) {
         e.preventDefault();
-        const step = $('#herosForm').val();
-        const characterId = $('#characterId').val();
-        let blnOk = true;
-        let msgError = '';
+        return createProcess();
+    });
 
-        if (characterId==0 && step!='name') {
-            blnOk = false;
-            msgError += "Vous devez forcément commencer par la saisie du nom et le valider.<br>";
-        } else {
+    $('div.toast.show').each(function() {
+        const toast = bootstrap.Toast.getOrCreateInstance(this);
+        setTimeout(function() {
+                toast.hide();
+            },
+            3000
+        );
+    });
+});
+
+let focusRemembered = '';
+
+function showModal(type, title, content) {
+    $('.modal-content').addClass('bg-'+type);
+    $('#infoModalLabel').html(title);
+    $('#modalBody').html(content);
+    $('#infoModal').modal('show');
+}
+function showConfirmModal(type, title, content) {
+    $('#confirmModal .modal-content').removeClass('border-*').addClass('border-'+type);
+    $('#confirmModalLabel').html(title);
+    $('#confirmModalBody').removeClass('bg-*').addClass('bg-'+type).html(content);
+    $('#confirmModal').modal('show');
+}
+function showToast(type, title, content) {
+    $('.toast.fade').removeClass('bg-danger bg-info bg-warning bg-success').removeClass('hide');
+    $('.toast.fade').addClass('bg-'+type).addClass('show');
+    $('.toast.fade strong').html(title);
+    $('.toast.fade .toast-body').html(content);
+
+    $('div.toast.show').each(function() {
+        const toast = bootstrap.Toast.getOrCreateInstance(this);
+        setTimeout(function() {
+                toast.hide();
+            },
+            3000
+        );
+    });
+}
+
+function ajaxActionClick(obj, e) {
+    const oneAction = obj.data('action');
+    if (oneAction=='confirmCharacterDeletion') {
+        e.preventDefault();
+        $('#confirmModalButton').off('click').on('click', function() {
+            globalThis.location.href = obj.data('url');
+        });
+        showConfirmModal('danger', "Suppression d'un personnage", "Confirmez-vous la suppression définitive de ce personnage ?");
+    } else {
+        loadCreationStepSide(obj.data('type'), obj.val());
+    }
+    return false;
+}
+
+function loadCreationStepSide(type, id) {
+    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadCreationStepSide', 'type' : type, 'id': id};
+    const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+    const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
+
+    $.post({
+        url: ajaxUrl,
+        data: data,
+        success: function (response) {
+            const parsedData = JSON.parse(response.data);
+            $('#creationStepSideBody').html(parsedData.loadCreationStepSide);
+        },
+        error: function () {
+        }
+    });
+}
+
+function ajaxActionChange(obj, e) {
+    e.preventDefault();
+    let actions = obj.data('action').split(',');
+    for (let oneAction of actions) {
+        if (oneAction=='loadMonsterPage') {
+            loadMonsterPage(obj.val());
+        } else if (oneAction=='loadTablePage') {
+            loadTablePage(obj.val());
+        }
+    }
+    return false;
+}
+
+function loadMonsterPage(newNbPerPage) {
+    const newParams = {
+        nbPerPage: newNbPerPage,
+        refElementId: $('#firstElementId').val()
+    };
+    const url = new URL(globalThis.location.href);
+    for (const key in newParams) {
+        url.searchParams.set(key, newParams[key]);
+    }
+    globalThis.location.href = url.toString();
+}
+
+function loadTablePage(newNbPerPage) {
+    $('#nbPerPage').val(newNbPerPage);
+    $('#formFilter').submit();
+}
+
+function fdmToolsManagment(obj) {
+    let val = obj.data('val');
+    let id = focusRemembered.split('-')[2];
+
+    if (val==undefined) {
+        let ref = obj.data('ref');
+
+        if ($('#'+ref+'Name').length>0) {
+            $('#mab-name-'+id).val($('#'+ref+'Name').val());
+        }
+        if ($('#'+ref+'Description').length>0) {
+            $('#mab-description-'+id).val($('#mab-description-'+id).val()+$('#'+ref+'Description').val());
+        }
+    } else {
+        $('#mab-description-'+id).val($('#mab-description-'+id).val()+val);
+    }
+
+}
+
+
+
+
+
+
+
+function createProcess() {
+    const step = $('#herosForm').val();
+    const characterId = $('#characterId').val();
+    let blnOk = true;
+    let msgError = '';
+
+    if (characterId==0 && step!='name') {
+        blnOk = false;
+        msgError += "Vous devez forcément commencer par la saisie du nom et le valider.<br>";
+        showToast('danger', 'Formulaire invalide', '<p>'+msgError+'</p>');
+        return blnOk;
+    }
+
+    switch (step) {
+        case 'name' :
+            if ($('#characterName').val()=='') {
+                blnOk = false;
+                msgError += "Vous devez saisir un nom.<br>";
+            }
+            break;
+        default :
+            msgError += "WIP.<br>";
+            break;
+    }
+    /*
             switch (step) {
                 case 'name' :
-                    if ($('#characterName').val()=='') {
-                        blnOk = false;
-                        msgError += "Vous devez saisir un nom.<br>";
-                    }
                 break;
                 case 'origin' :
                     if ($('input[name="characterOriginId"]:checked').length==0) {
@@ -252,116 +393,10 @@ $(document).ready(function(e) {
                 break;
             }
         }
-
-        if (blnOk) {
-            $('form').submit();
-        } else {
-            showModal('danger', 'Formulaire invalide', '<p class="p-5 m-0 bg-light">'+msgError+'</p>');
-        }
-    });
-    
-    $('div.toast.show').each(function() {
-        const toast = bootstrap.Toast.getOrCreateInstance(this);
-        setTimeout(function() {
-                toast.hide();
-            },
-            3000
-        );
-    });
-});
-
-let focusRemembered = '';
-
-function showModal(type, title, content) {
-    $('.modal-content').addClass('bg-'+type);
-    $('#infoModalLabel').html(title);
-    $('#modalBody').html(content);
-    $('#infoModal').modal('show');
-}
-function showConfirmModal(type, title, content) {
-    $('#confirmModal .modal-content').removeClass('border-*').addClass('border-'+type);
-    $('#confirmModalLabel').html(title);
-    $('#confirmModalBody').removeClass('bg-*').addClass('bg-'+type).html(content);
-    $('#confirmModal').modal('show');
-}
-
-function ajaxActionClick(obj, e) {
-    const oneAction = obj.data('action');
-    if (oneAction=='confirmCharacterDeletion') {
-        e.preventDefault();
-        $('#confirmModalButton').off('click').on('click', function() {
-            globalThis.location.href = obj.data('url');
-        });
-        showConfirmModal('danger', "Suppression d'un personnage", "Confirmez-vous la suppression définitive de ce personnage ?");
+            */
+    if (blnOk) {
+        $('form').submit();
     } else {
-        loadCreationStepSide(obj.data('type'), obj.val());
+        showToast('danger', 'Formulaire invalide', '<p>'+msgError+'</p>');
     }
-    return false;
 }
-
-function loadCreationStepSide(type, id) {
-    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadCreationStepSide', 'type' : type, 'id': id};
-    const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-    const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
-
-    $.post({
-        url: ajaxUrl,
-        data: data,
-        success: function (response) {
-            const parsedData = JSON.parse(response.data);
-            $('#creationStepSideBody').html(parsedData.loadCreationStepSide);
-        },
-        error: function () {
-        }
-    });
-}
-
-function ajaxActionChange(obj, e) {
-    e.preventDefault();
-    let actions = obj.data('action').split(',');
-    for (let oneAction of actions) {
-        if (oneAction=='loadMonsterPage') {
-            loadMonsterPage(obj.val());
-        } else if (oneAction=='loadTablePage') {
-            loadTablePage(obj.val());
-        }
-    }
-    return false;
-}
-
-function loadMonsterPage(newNbPerPage) {
-    const newParams = {
-        nbPerPage: newNbPerPage,
-        refElementId: $('#firstElementId').val()
-    };
-    const url = new URL(globalThis.location.href);  
-    for (const key in newParams) {
-        url.searchParams.set(key, newParams[key]);
-    }
-    globalThis.location.href = url.toString();
-}
-
-function loadTablePage(newNbPerPage) {
-    $('#nbPerPage').val(newNbPerPage);
-    $('#formFilter').submit();
-}
-
-function fdmToolsManagment(obj) {
-    let val = obj.data('val');
-    let id = focusRemembered.split('-')[2];
-    
-    if (val==undefined) {
-        let ref = obj.data('ref');
-
-        if ($('#'+ref+'Name').length>0) {
-            $('#mab-name-'+id).val($('#'+ref+'Name').val());
-        }
-        if ($('#'+ref+'Description').length>0) {
-            $('#mab-description-'+id).val($('#mab-description-'+id).val()+$('#'+ref+'Description').val());
-        }
-    } else {
-        $('#mab-description-'+id).val($('#mab-description-'+id).val()+val);
-    }
-    
-}
-

@@ -45,6 +45,7 @@ class Constant
     public const RULES    = 'rules';
     public const OUTERDIVCLASS = 'outerDivClass';
     public const ONG_COMPENDIUM = 'compendium';
+    public const ONG_CHARACTER  = 'character';
     public const TAB_MONSTERS = 'monsters';
 
     public const CST_EXTRA = '-extra';

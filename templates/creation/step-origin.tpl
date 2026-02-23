@@ -2,7 +2,8 @@
     <div class="row">
         %1$s
         <!-- Zone principale -->
-        <div class="col-md-6">
+
+        <div class="col-md-6 mx-auto">
             <div class="card bg-light shadow-sm p-0 mw-100">
                 <div class="card-header bg-dark text-white">
                     <h5 class="mb-0">Choisir l'origine</h5>
@@ -33,5 +34,15 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="toast-container top-0 end-0">
+    <div class="toast fade" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <strong class="me-auto"></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body"></div>
     </div>
 </div>
