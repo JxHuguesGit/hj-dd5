@@ -3,9 +3,17 @@ namespace src\Domain\CharacterCreation;
 
 use src\Domain\CharacterCreation\Step\NameStep;
 use src\Domain\CharacterCreation\Step\OriginStep;
+use src\Renderer\TemplateRenderer;
+use src\Service\Writer\CharacterDraftWriter;
 
 class CharacterCreationFlow
 {
+    public function __construct(
+        private CharacterDraft $draft,
+        private CharacterDraftWriter $writer,
+        private TemplateRenderer $renderer
+    ) {}
+
     public function steps(): array
     {
         return [
@@ -17,6 +25,12 @@ class CharacterCreationFlow
     public function firstStep(): string
     {
         return array_key_first($this->steps());
+    }
+
+    public function getCurrentStepId(): string
+    {
+        $current = $this->draft->createStep ?: $this->firstStep();
+        return $this->hasStep($current) ? $current : $this->firstStep();
     }
 
     public function nextStep(string $current): ?string
@@ -65,5 +79,36 @@ class CharacterCreationFlow
         }
         return $instances;
     }
+
+    public function handle(array $post): string
+    {
+        $current = $this->getCurrentStepId();
+        $step = $this->getStep($current);
+        if (!empty($post) && $step->validate($post)) {
+            $step->save($this->draft, $post);
+            $this->draft->createStep = $this->nextStep($current) ?? 'done';
+            $this->draft->touch();
+            $this->writer->save($this->draft);
+            return $this->draft->createStep === 'done' ? 'done' : $this->draft->createStep;
+        }
+
+        return $current;
+    }
+
+    public function render(?string $stepId = null): string
+    {
+        $stepId = $stepId ?? $this->getCurrentStepId();
+        if ($stepId === 'done') {
+            return '<div class="alert alert-success">Personnage créé ✅</div>';
+        }
+        $step = $this->getStep($stepId);
+        return $this->renderer->render($step->template, $step->render($this->draft));
+    }
+
+    public function getDraft(): CharacterDraft
+    {
+        return $this->draft;
+    }
+
 
 }

@@ -3,12 +3,15 @@ namespace src\Controller;
 
 use src\Constant\Constant;
 use src\Constant\Template;
-
 use src\Domain\Entity;
+use src\Factory\CharacterDraftFactory;
 use src\Factory\CompendiumFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
+use src\Repository\CharacterDraftRepository;
+use src\Service\Reader\CharacterDraftReader;
+use src\Service\Writer\CharacterDraftWriter;
 
 class AdminPage extends Utilities
 {
@@ -18,7 +21,7 @@ class AdminPage extends Utilities
         'timeline',
         'compendium',
     ];
-    
+
     public function getAdminContentPage(string $content): string
     {
         Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
@@ -31,7 +34,7 @@ class AdminPage extends Utilities
         ];
         return $this->getRender(Template::ADMINBASE, $attributes);
     }
-    
+
     protected function getSidebar(): string
     {
         $currentTab = $this->getArrParams(Constant::ONGLET, 'home');
@@ -48,12 +51,20 @@ class AdminPage extends Utilities
     public static function getAdminController(array $arrUri): mixed
     {
         Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
-        
+
         $controller = new AdminPage($arrUri);
         $currentTab = $controller->getArrParams(Constant::ONGLET, 'home');
         switch ($currentTab) {
             case 'character' :
-                $controller = new AdminCharacterPage($arrUri);
+                $repo = new CharacterDraftRepository(new QueryBuilder(), new QueryExecutor());
+                $controller = new AdminCharacterPage(
+                    $arrUri,
+                    new CharacterDraftFactory(
+                        new CharacterDraftReader($repo),
+                        new CharacterDraftWriter($repo),
+                        new TemplateRenderer()
+                    )
+                );
             break;
             case 'compendium' :
                 $controller = new AdminCompendiumPage(

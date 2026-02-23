@@ -1,12 +1,15 @@
 <?php
 namespace src\Domain\CharacterCreation\Step;
 
+use src\Constant\Template;
 use src\Domain\CharacterCreation\CharacterDraft;
 use src\Domain\CharacterCreation\StepInterface;
-use src\Repository\CharacterDraftRepository;
+use src\Utils\Session;
 
 class NameStep implements StepInterface
 {
+    public string $template = Template::CREATE_NAME;
+
     public function getId(): string
     {
         return 'name';
@@ -17,35 +20,35 @@ class NameStep implements StepInterface
         return 'Nom du personnage';
     }
 
-    public function render(CharacterDraft $draft): string
+    public function render(CharacterDraft $draft): array
     {
-        $name = htmlspecialchars($draft->name ?? '');
-
-        return "
-            <h2>Nom du personnage</h2>
-            <form method='post'>
-                <label for='name'>Nom :</label>
-                <input type='text' id='name' name='name' value='{$name}'>
-                <button type='submit'>Continuer</button>
-            </form>
-        ";
+        return [
+            '',
+            $draft->id ?? 0,
+            htmlspecialchars($draft->name ?? ''),
+            ''
+        ];
     }
 
     public function validate(array $input): bool
     {
-        if (!isset($input['name'])) {
+        if (!isset($input['characterName'])) {
             return false;
         }
 
-        $name = trim($input['name']);
+        $name = trim($input['characterName']);
 
         return $name !== '' && strlen($name) <= 32;
     }
 
-    public function save(CharacterDraft $draft, array $input, CharacterDraftRepository $repo): void
+    public function save(CharacterDraft $draft, array $input): void
     {
-        $draft->name = trim($input['name']);
-        $repo->save($draft);
+        $draft->id   = trim($input['characterId']);
+        $draft->wpUserId = Session::getWpUser()->data->ID;
+        $draft->name = trim($input['characterName']);
+        $draft->originId = null;
+        $draft->speciesId = null;
+        $draft->data = json_encode([]);
     }
 
     public function isComplete(CharacterDraft $draft): bool

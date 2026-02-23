@@ -81,6 +81,11 @@ class Constant
     public const CST_MELEE      = 'melee';
     public const CST_RANGED     = 'ranged';
     public const CST_EXTRA_PREREQUIS = 'extraprerequis';
+    public const CST_VUE        = 'vue';
+    public const CST_CONTACT    = 'contact';
+    public const CST_ILLIM      = 'illim';
+    public const CST_PERSO      = 'perso';
+    public const CST_SPECIALES  = 'spec';
 
     public const CST_ABILITIES   = 'abilities';
     public const CST_SKILLS      = 'skills';

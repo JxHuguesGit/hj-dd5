@@ -2,6 +2,7 @@
 namespace src\Service\Formatter;
 
 use src\Constant\Constant;
+use src\Constant\Language;
 use src\Enum\ClassEnum;
 use src\Enum\MagicSchoolEnum;
 
@@ -9,29 +10,32 @@ class SpellFormatter
 {
     public static function formatEcole(string $schoolSlug, int $level): string
     {
-        return MagicSchoolEnum::from($schoolSlug)->label() . ' - Sort ' . ($level==0 ? 'mineur' : ' de niveau ' . $level);
+        return MagicSchoolEnum::from($schoolSlug)->label() .
+            $level==0
+            ? Language::LG_SORT_MINEUR
+            : sprintf(Language::LG_SORT_NIVEAU_X, $level)
+        ;
     }
 
     public static function formatComposantes(array $composantes, string $composanteMaterielle='', bool $detail=true): string
     {
         $str = implode(',', $composantes);
-        if (in_array('M', $composantes)) {
-            if ($detail) {
-                $str .= ' ('.$composanteMaterielle.')';
-            } else {
-                $str = str_replace('M', '<abbr title="'.$composanteMaterielle.'">M</abbr>', $str);
-            }
+        if (!in_array('M', $composantes)) {
+            return $str;
         }
-        return $str;
+
+        return $detail
+            ? $str . ' ('.$composanteMaterielle.')'
+            : str_replace('M', '<abbr title="'.$composanteMaterielle.'">M</abbr>', $str)
+        ;
     }
 
     public static function formatDuree(string $value, bool $isConcentration, bool $detail=true): string
     {
-        $prefix = ($isConcentration && $detail)
-            ? "Concentration, jusqu'à "
-            : '';
-
-        return $prefix . self::formatDureeConvertie($value);
+        return ($isConcentration && $detail)
+            ? sprintf(Language::LG_CONC_UNTIL_X, self::formatDureeConvertie($value))
+            : self::formatDureeConvertie($value)
+        ;
     }
 
     public static function formatDistance(string $value): string
@@ -42,14 +46,14 @@ class SpellFormatter
 
         return str_replace('.', ',', $returned);
     }
-    
+
     public static function formatPortee(string $value): string
     {
         return match ($value) {
             'vue', 'contact' => ucwords($value),
-            'illim'   => 'Illimitée',
-            'perso'   => 'Personnelle',
-            'spec'    => 'Spéciale',
+            'illim'   => Language::LG_UNLIMITED,
+            'perso'   => Language::LG_PERSO,
+            'spec'    => Language::LG_SPECIALES,
             default   => self::formatDistance($value),
         };
     }

@@ -54,6 +54,7 @@ class Language
     public const LG_FORCE           = 'Force';
     public const LG_FP              = 'FP';
     public const LG_HISTORIQUES     = 'Historiques';
+    public const LG_UNLIMITED       = 'Illimitée';
     public const LG_INTELLIGENCE    = 'Intelligence';
     public const LG_GEAR_TITLE      = 'Le Matériel';
     public const LG_WEAPONS_TITLE   = 'Les Armes';
@@ -71,6 +72,7 @@ class Language
     public const LG_ORIGIN          = 'Origine';
     public const LG_ORIGINS         = 'Origines';
     public const LG_TOOL            = 'Outil';
+    public const LG_PERSO           = 'Personnelle';
     public const LG_WEIGHT          = 'Poids';
     public const LG_RANGE           = 'Portée';
     public const LG_PREQUISITE      = 'Pré-requis';
@@ -79,6 +81,7 @@ class Language
     public const LG_PV              = 'PV';
     public const LG_REFERENCE       = 'Référence';
     public const LG_RULES           = 'Règles';
+    public const LG_SPECIALES       = 'Spéciales';
     public const LG_SAGESSE         = 'Sagesse';
     public const LG_SPELLS          = 'Sorts';
     public const LG_CBT_STYLE_FEATS = 'Styles de combat';
@@ -91,6 +94,10 @@ class Language
     public const LG_TOOL_GAMES      = 'Boîte de jeux';
     public const LG_TOOL_MUSIC      = 'Instruments de Musique';
     public const LG_TOOL_TOOLS      = 'Outils d\'artisan';
+
+    public const LG_SORT_MINEUR     = ' - Sort mineur';
+    public const LG_SORT_NIVEAU_X   = ' - Sort de niveau %d';
+    public const LG_CONC_UNTIL_X    = 'Concentration, jusqu\'à %s';
 
 
 }
