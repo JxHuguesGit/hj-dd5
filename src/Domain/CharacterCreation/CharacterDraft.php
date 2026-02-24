@@ -24,7 +24,7 @@ final class CharacterDraft extends Entity
         Field::ORIGINID   => FieldType::INTNULLABLE,
         Field::SPECIESID  => FieldType::INTNULLABLE,
         Field::CREATESTEP => FieldType::STRING,
-        Field::DONNEES    => FieldType::ARRAY,
+        Field::DONNEES    => FieldType::STRINGNULLABLE,
         Field::LASTUPDATE => FieldType::DATETIME,
     ];
 

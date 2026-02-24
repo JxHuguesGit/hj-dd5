@@ -30,6 +30,7 @@ class PageOrigine extends PageDetail
                 $this->formatLink($data[Constant::CST_FEAT], fn($slug) => UrlGenerator::feat($slug)),
                 $this->formatLink($data[Constant::CST_TOOL], fn($slug) => UrlGenerator::item($slug)),
                 implode(', ', $data[Constant::CST_EQUIPMENT]),
+                'col-width' => 'col-sm-6',
             ]
         );
     }

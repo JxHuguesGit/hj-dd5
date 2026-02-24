@@ -2,6 +2,12 @@
 namespace src\Action;
 
 use src\Constant\Constant;
+use src\Factory\ReaderFactory;
+use src\Factory\RepositoryFactory;
+use src\Factory\ServiceFactory;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 class Ajax{
@@ -13,7 +19,6 @@ class Ajax{
         $actions = [
             'downloadFile' => fn() => DownloadFile::start(),
             'loadCasteDetail' => fn() => LoadCasteDetail::build(),
-            'loadCreationStepSide' => fn() => LoadCreationStepSide::build(Session::fromPost(Constant::CST_TYPE), Session::fromPost(Constant::CST_ID)),
             'modalFeatCard' => fn() => FeatCard::build(),
             'modalSpellCard' => fn() => SpellCard::build(),
         ];
@@ -23,10 +28,15 @@ class Ajax{
                 [
                     'loadMoreSpells',
                     'loadMoreMonsters',
-                    'modalMonsterCard'
+                    'modalMonsterCard',
+                    'loadCreationStepSide'
                 ]
             )) {
-                $router = new AjaxRouter();
+                $queryBuilder = new QueryBuilder();
+                $queryExecutor = new QueryExecutor();
+                $repository = new RepositoryFactory($queryBuilder, $queryExecutor);
+                $reader = new ReaderFactory($repository);
+                $router = new AjaxRouter($reader, new ServiceFactory($reader, $repository), new TemplateRenderer());
                 $response = $router->dispatch($ajaxAction);
                 $response[$ajaxAction] = $response[Constant::CST_DATA];
             } elseif (isset($actions[$ajaxAction])) {
@@ -61,5 +71,5 @@ class Ajax{
 
         return json_encode($response);
     }
-    
+
 }

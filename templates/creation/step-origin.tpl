@@ -6,7 +6,7 @@
         <div class="col-md-6 mx-auto">
             <div class="card bg-light shadow-sm p-0 mw-100">
                 <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">Choisir l'origine</h5>
+                    <h5 class="mb-0">Choisir l'historique</h5>
                 </div>
                 <div class="card-body">
 
@@ -28,7 +28,7 @@
         <div class="col-md-3">
             <div class="card bg-light shadow-sm p-0">
                 <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">Origine choisie</h5>
+                    <h5 class="mb-0">Historique choisi</h5>
                 </div>
                 <div id="creationStepSideBody" class="card-body">%4$s</div>
             </div>

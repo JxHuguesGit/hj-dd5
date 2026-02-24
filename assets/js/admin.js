@@ -240,23 +240,6 @@ function ajaxActionClick(obj, e) {
     return false;
 }
 
-function loadCreationStepSide(type, id) {
-    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadCreationStepSide', 'type' : type, 'id': id};
-    const baseUrl = globalThis.location.origin + globalThis.location.pathname;
-    const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
-
-    $.post({
-        url: ajaxUrl,
-        data: data,
-        success: function (response) {
-            const parsedData = JSON.parse(response.data);
-            $('#creationStepSideBody').html(parsedData.loadCreationStepSide);
-        },
-        error: function () {
-        }
-    });
-}
-
 function ajaxActionChange(obj, e) {
     e.preventDefault();
     let actions = obj.data('action').split(',');
@@ -332,20 +315,18 @@ function createProcess() {
                 msgError += "Vous devez saisir un nom.<br>";
             }
             break;
+            case 'origin' :
+                if ($('input[name="characterOriginId"]:checked').length==0) {
+                    blnOk = false;
+                    msgError += "Vous devez sélectionner un historique.<br>";
+                }
+            break;
         default :
             msgError += "WIP.<br>";
             break;
     }
     /*
             switch (step) {
-                case 'name' :
-                break;
-                case 'origin' :
-                    if ($('input[name="characterOriginId"]:checked').length==0) {
-                        blnOk = false;
-                        msgError += "Vous devez sélectionner une origine.<br>";
-                    }
-                break;
                 case 'species' :
                     if ($('input[name="characterSpeciesId"]:checked').length==0) {
                         blnOk = false;

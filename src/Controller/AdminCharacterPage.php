@@ -15,7 +15,14 @@ class AdminCharacterPage extends AdminPage
 
     public function getAdminContentPage(string $content=''): string
     {
-        $id = Session::fromPost('characterId', $this->arrParams['id']??0);
+        $nextStepId = '';
+        if (Session::isPostSubmitted()) {
+            $id = Session::fromPost('characterId', $this->arrParams['id']??0);
+        } else {
+            $id = Session::fromGet('characterId', $this->arrParams['id']??0);
+            $nextStepId = Session::fromGet('step', '');
+        }
+
         if ($id!=0) {
             // Si on a une Session relative à un personnage, on récupère ce personnage.
             $characterCreationFlow = $this->characterDraftFactory->load((int)$id);
@@ -24,8 +31,9 @@ class AdminCharacterPage extends AdminPage
             $characterCreationFlow = $this->characterDraftFactory->init();
         }
 
-
-        $nextStepId = $characterCreationFlow->handle($_POST ?? []);
+        if ($nextStepId=='') {
+            $nextStepId = $characterCreationFlow->handle($_POST ?? []);
+        }
         $html = $characterCreationFlow->render($nextStepId);
 
         return parent::getAdminContentPage($html);

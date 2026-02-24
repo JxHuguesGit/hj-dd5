@@ -7,11 +7,11 @@
 
             <hr>
 
-            <div class="col-12 col-sm-6">
+            <div class="col-12 %9$s mb-3">
                    <p class="card-text">%3$s</p>
             </div>
 
-            <div class="col-12 col-sm-6">
+            <div class="col-12 %9$s">
                 <p><strong>Caractéristiques</strong> : %4$s</p>
 
                 <p><strong>Compétences</strong> : %5$s</p>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            %9$s
-			%10$s
+            %10$s
+			%11$s
         </div>
     </div>

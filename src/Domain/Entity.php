@@ -240,7 +240,7 @@ abstract class Entity
     protected function validateArray(string $field, mixed $value): array
     {
         if (!is_array($value)) {
-            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne. ");
+            throw new \InvalidArgumentException("Le champ '$field' doit être un tableau. ");
         }
         return $value;
     }

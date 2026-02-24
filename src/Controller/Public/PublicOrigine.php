@@ -28,9 +28,14 @@ class PublicOrigine extends PublicBase
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render(Constant::ORIGINS);
-        $pageView = $this->pageService->build($this->origin);
-        $viewData = $this->presenter->present($pageView);
+        $viewData = $this->getViewData();
         $viewData[Constant::CST_TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
+    }
+
+    public function getViewData()
+    {
+        $pageView = $this->pageService->build($this->origin);
+        return $this->presenter->present($pageView);
     }
 }

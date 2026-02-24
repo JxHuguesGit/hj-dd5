@@ -9,19 +9,23 @@ $(document).ready(function(e) {
 // Pour l'heure, ça inclut :
 // liadMoreSpells, openModal
 function ajaxActionClick(obj, e) {
-    e.preventDefault();
     let actions = obj.data('action').split(',');
     for (let oneAction of actions) {
         if (oneAction=='loadMoreSpells') {
+            e.preventDefault();
             loadMoreSpells('append');
         } else if (oneAction=='loadMoreMonsters') {
+            e.preventDefault();
             loadMoreMonsters('append');
         } else if (oneAction=='toggleCheckbox') {
+            e.preventDefault();
             const target = obj.data('target');
             toggleCheckbox(target);
         } else if (oneAction=='collapse') {
+            e.preventDefault();
             collapse(obj);
         } else if (oneAction=='openModal') {
+            e.preventDefault();
             const target = obj.data('target');
             openModal(target);
             $('#'+target+' button.btn-primary').unbind().on('click', function() {
@@ -30,6 +34,8 @@ function ajaxActionClick(obj, e) {
                 }
                 closeModal(target);
             });
+        } else if (oneAction=='loadOrigin') {
+            loadCreationStepSide('origin', obj.val())
         }
     }
     return false;
@@ -77,7 +83,7 @@ function loadMoreSpells(type) {
     };
     const baseUrl = globalThis.location.origin;
     const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
-    
+
     $.post(
         ajaxUrl,
         data,
@@ -106,7 +112,7 @@ function loadMoreSpells(type) {
             }
         }
     ).done(function(response) {
-    });    
+    });
 }
 
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des monstres
@@ -121,7 +127,7 @@ function loadMoreMonsters(type) {
     };
     const baseUrl = globalThis.location.origin;
     const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
-    
+
     $.post(
         ajaxUrl,
         data,
@@ -150,5 +156,22 @@ function loadMoreMonsters(type) {
             }
         }
     ).done(function(response) {
-    });    
+    });
+}
+
+function loadCreationStepSide(type, id) {
+    const data = {'action': 'dealWithAjax', 'ajaxAction': 'loadCreationStepSide', 'type' : type, 'id': id};
+    const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+    const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
+
+    $.post({
+        url: ajaxUrl,
+        data: data,
+        success: function (response) {
+            const parsedData = JSON.parse(response.data);
+            $('#creationStepSideBody').html(parsedData.data.html);
+        },
+        error: function () {
+        }
+    });
 }
