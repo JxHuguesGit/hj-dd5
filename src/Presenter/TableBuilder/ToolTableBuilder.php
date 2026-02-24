@@ -14,11 +14,8 @@ class ToolTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [Language::LG_NAMES, Language::LG_HISTORIQUES, Language::LG_WEIGHT, Language::LG_PRICE];
-        $table = $this->createTable(count($headers), $params);
-
-        foreach ($headers as $label) {
-            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
-        }
+        $table   = $this->createTable(count($headers), $params);
+        $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
             /** @var ToolGroup $group */
@@ -28,16 +25,16 @@ class ToolTableBuilder extends AbstractTableBuilder
                 /** @var ToolRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->originLabel])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => $row->weight,
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
+                        Constant::CST_CONTENT    => $row->weight,
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END],
                     ])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => $row->price,
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]
+                        Constant::CST_CONTENT    => $row->price,
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END],
                     ]);
             }
         }

@@ -17,13 +17,10 @@ class OriginTableBuilder extends AbstractTableBuilder
             Language::LG_ABILITIES,
             Language::LG_ORIGIN_FEAT,
             Language::LG_SKILLS,
-            Language::LG_TOOL
+            Language::LG_TOOL,
         ];
         $table = $this->createTable(count($headers), $params);
-
-        foreach ($headers as $label) {
-            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
-        }
+        $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
             foreach ($group->rows as $row) {

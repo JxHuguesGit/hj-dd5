@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller\Compendium;
 
-use src\Constant\Constant;
 use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\MonsterFormBuilder;
@@ -9,13 +8,12 @@ use src\Presenter\ListPresenter\MonsterListPresenter;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Reader\MonsterReader;
-use src\Utils\Session;
 
-class MonsterCompendiumHandler implements CompendiumHandlerInterface
+class MonsterCompendiumHandler extends AbstractCompendiumHandler implements CompendiumHandlerInterface
 {
     private string $toastContent = '';
 
-    public function __construct (
+    public function __construct(
         private MonsterReader $reader,
         private MonsterListPresenter $presenter,
         private PageList $page,
@@ -23,39 +21,14 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
         private TemplateRenderer $templateRenderer
     ) {}
 
-    public function render(): string
-    {
-        $action = Session::fromGet(Constant::CST_ACTION);
-        $slug   = Session::fromGet(Constant::CST_SLUG);
-
-        if (Session::isPostSubmitted()) {
-            return $this->handleSubmit($action, $slug);
-        }
-
-        return match(true) {
-            $action === Constant::EDIT && $slug !== '' => $this->renderEdit($slug),
-            //$action === Constant::NEW => $this->renderCreate(new Item()),
-            default => $this->renderList(),
-        };
-    }
-
-    private function handleSubmit(string $action, string $slug): string
-    {
-        return match ($action) {
-            Constant::EDIT => $this->handleEditSubmit($slug),
-            //TODO : Constant::NEW  => $this->handleNewSubmit(),
-            default        => $this->renderList(),
-        };
-    }
-
-    private function handleEditSubmit(string $slug): string
+    protected function handleEditSubmit(string $slug): string
     {
         // Aucune valeur n'a été modifiée pour être enregistrée
         $this->toastContent = $this->toastBuilder->info("Non développé pour le moment.");
         return $this->renderEdit($slug);
     }
 
-    private function renderEdit(string $slug): string
+    protected function renderEdit(string $slug): string
     {
         $monster = $this->reader->monsterByUkTag($slug);
 
@@ -67,9 +40,9 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
         return $page->renderAdmin('', $monster);
     }
 
-    private function renderList(): string
+    protected function renderList(): string
     {
-        $monsters = $this->reader->allMonsters();
+        $monsters       = $this->reader->allMonsters();
         $presentContent = $this->presenter->present($monsters);
         return $this->page->renderAdmin('', $presentContent, $this->toastContent);
     }

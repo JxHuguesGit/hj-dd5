@@ -19,13 +19,10 @@ class WeaponTableBuilder extends AbstractTableBuilder
             Language::LG_PROPERTIES,
             Language::LG_WEAPON_PROP,
             Language::LG_WEIGHT,
-            Language::LG_PRICE
+            Language::LG_PRICE,
         ];
         $table = $this->createTable(count($headers), $params);
-
-        foreach ($headers as $label) {
-            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
-        }
+        $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
             /** @var WeaponGroup $group */
@@ -39,7 +36,7 @@ class WeaponTableBuilder extends AbstractTableBuilder
                             $row->name,
                             $row->url,
                             Bootstrap::CSS_TEXT_DARK
-                        )
+                        ),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->damage])
                     ->addBodyCell([Constant::CST_CONTENT => $row->properties])

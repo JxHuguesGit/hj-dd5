@@ -1,22 +1,22 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Utils\Form;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Renderer\TemplateRenderer;
+use src\Utils\Form;
 
 abstract class AbstractFormBuilder implements FormBuilderInterface
 {
     protected function createForm(array $params = []): Form
     {
         $formAttributes = [
-            Constant::CST_CLASS => implode(' ', [
+            Constant::CST_CLASS  => implode(' ', [
                 Bootstrap::CSS_MX_AUTO,
                 Bootstrap::CSS_MY4,
-                $params[Constant::CST_CLASS] ?? ''
+                $params[Constant::CST_CLASS] ?? '',
             ]),
-            Constant::CST_TITLE => $params[Constant::CST_TITLE],
+            Constant::CST_TITLE  => $params[Constant::CST_TITLE],
             Constant::CST_ACTION => $params[Constant::CST_ACTION] ?? '',
         ];
 

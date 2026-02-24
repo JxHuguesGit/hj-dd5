@@ -1,21 +1,21 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Utils\Table;
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Utils\Table;
 
 abstract class AbstractTableBuilder implements TableBuilderInterface
 {
     protected function createTable(int $colCount, array $params = []): Table
     {
-        $withMarginTop = $params[Bootstrap::CSS_WITH_MRGNTOP] ?? true;
+        $withMarginTop   = $params[Bootstrap::CSS_WITH_MRGNTOP] ?? true;
         $tableAttributes = [
             Constant::CST_CLASS => implode(' ', [
                 Bootstrap::CSS_TABLE_SM,
                 Bootstrap::CSS_TABLE_STRIPED,
-                $withMarginTop ? Bootstrap::CSS_MT5 : ''
-            ])
+                $withMarginTop ? Bootstrap::CSS_MT5 : '',
+            ]),
         ];
         if (isset($params[Constant::CST_ID])) {
             $tableAttributes[Constant::CST_ID] = $params[Constant::CST_ID];
@@ -25,8 +25,8 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
             ->addHeader([
                 Constant::CST_CLASS => implode(' ', [
                     Bootstrap::CSS_TABLE_DARK,
-                    Bootstrap::CSS_TEXT_CENTER
-                ])
+                    Bootstrap::CSS_TEXT_CENTER,
+                ]),
             ])
             ->addHeaderRow();
     }
@@ -35,11 +35,19 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
     {
         $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
             ->addBodyCell([
-                Constant::CST_CONTENT => $label,
+                Constant::CST_CONTENT    => $label,
                 Constant::CST_ATTRIBUTES => [
                     Constant::CST_COLSPAN => $colspan,
-                    Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC
-                ]
+                    Constant::CST_CLASS   => Bootstrap::CSS_FONT_ITALIC,
+                ],
             ]);
+    }
+
+    protected function addHeader(Table $table, array $headers): self
+    {
+        foreach ($headers as $label) {
+            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
+        }
+        return $this;
     }
 }

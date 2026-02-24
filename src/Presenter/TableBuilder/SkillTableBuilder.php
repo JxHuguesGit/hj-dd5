@@ -14,11 +14,8 @@ class SkillTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [Language::LG_NAMES, Language::LG_DESCRIPTION, 'Sous-compétences'];
-        $table = $this->createTable(count($headers), $params);
-
-        foreach ($headers as $label) {
-            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
-        }
+        $table   = $this->createTable(count($headers), $params);
+        $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
             /** @var SkillGroup $group */
@@ -28,7 +25,7 @@ class SkillTableBuilder extends AbstractTableBuilder
                 /** @var SkillRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->description])
                     ->addBodyCell([Constant::CST_CONTENT => $row->subSkills]);

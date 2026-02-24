@@ -1,17 +1,19 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\{Bootstrap, Constant, Icon, Language};
-use src\Presenter\ViewModel\FeatGroup;
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
+use src\Constant\Icon;
+use src\Constant\Language;
 use src\Presenter\ViewModel\FeatRow;
-use src\Utils\Table;
 use src\Utils\Html;
+use src\Utils\Table;
 use src\Utils\UrlGenerator;
 
 class FeatTableBuilder extends AbstractTableBuilder
 {
     public function __construct(
-        private bool $isAdmin=false
+        private bool $isAdmin = false
     ) {}
 
     public function build(iterable $groups, array $params = []): Table
@@ -22,10 +24,7 @@ class FeatTableBuilder extends AbstractTableBuilder
         }
 
         $table = $this->createTable(count($headers), $params);
-
-        foreach ($headers as $label) {
-            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
-        }
+        $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
             $url = Html::getLink(
@@ -40,7 +39,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                 /** @var FeatRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->originLabel])
                     ->addBodyCell([Constant::CST_CONTENT => $row->prerequisite]);
@@ -50,7 +49,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                             Html::getIcon(Icon::IEDIT),
                             UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::FEATS, $row->slug, Constant::EDIT),
                             Bootstrap::CSS_TEXT_DARK
-                        )
+                        ),
                     ]);
                 }
             }
