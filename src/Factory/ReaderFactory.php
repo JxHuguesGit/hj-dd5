@@ -1,12 +1,17 @@
 <?php
 namespace src\Factory;
 
+use src\Constant\Constant;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
+use src\Service\Reader\MonsterReader;
+use src\Service\Reader\MonsterSubTypeReader;
+use src\Service\Reader\MonsterTypeReader;
 use src\Service\Reader\OriginAbilityReader;
+use src\Service\Reader\OriginItemReader;
 use src\Service\Reader\OriginReader;
 use src\Service\Reader\OriginSkillReader;
 use src\Service\Reader\PowerReader;
@@ -28,25 +33,29 @@ final class ReaderFactory
     ) {}
 
     private array $map = [
-        'ability'             => AbilityReader::class,
-        'armor'               => ArmorReader::class,
-        'feat'                => FeatReader::class,
-        'featType'            => FeatTypeReader::class,
-        'item'                => ItemReader::class,
-        'origin'              => OriginReader::class,
-        'originAbility'       => OriginAbilityReader::class,
-        'originSkill'         => OriginSkillReader::class,
-        'power'               => PowerReader::class,
-        'reference'           => ReferenceReader::class,
-        'skill'               => SkillReader::class,
-        'speciePower'         => SpeciePowerReader::class,
-        'species'             => SpecieReader::class,
-        'speedType'           => SpeedTypeReader::class,
-        'spell'               => SpellReader::class,
-        'subSkill'            => SubSkillReader::class,
-        'tool'                => ToolReader::class,
-        'weapon'              => WeaponReader::class,
-        'weaponPropertyValue' => WeaponPropertyValueReader::class,
+        'ability'              => AbilityReader::class,
+        Constant::CST_ARMOR    => ArmorReader::class,
+        Constant::CST_FEAT     => FeatReader::class,
+        Constant::CST_FEATTYPE => FeatTypeReader::class,
+        'item'                 => ItemReader::class,
+        'monster'              => MonsterReader::class,
+        'monsterType'          => MonsterTypeReader::class,
+        'monsterSubType'       => MonsterSubTypeReader::class,
+        Constant::ORIGIN       => OriginReader::class,
+        'originAbility'        => OriginAbilityReader::class,
+        'originItem'           => OriginItemReader::class,
+        'originSkill'          => OriginSkillReader::class,
+        'power'                => PowerReader::class,
+        'reference'            => ReferenceReader::class,
+        'skill'                => SkillReader::class,
+        'speciePower'          => SpeciePowerReader::class,
+        Constant::SPECIES      => SpecieReader::class,
+        'speedType'            => SpeedTypeReader::class,
+        'spell'                => SpellReader::class,
+        'subSkill'             => SubSkillReader::class,
+        Constant::CST_TOOL     => ToolReader::class,
+        Constant::CST_WEAPON   => WeaponReader::class,
+        'weaponPropertyValue'  => WeaponPropertyValueReader::class,
     ];
 
     public function __call(string $name, array $args): object

@@ -1,36 +1,59 @@
 <?php
 namespace src\Factory;
 
+use src\Constant\Constant;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\{AbilityRepository, ArmorRepository, FeatRepository, OriginAbilityRepository, OriginItemRepository,
-    OriginSkillRepository, FeatTypeRepository, ItemRepository, OriginRepository, PowerRepository, ReferenceRepository,
-    SkillRepository, SpeciePowerRepository, SpeedTypeRepository, SubSkillRepository, SpeciesRepository, SpellRepository,
-    ToolRepository, WeaponPropertyValueRepository, WeaponRepository};
+use src\Repository\AbilityRepository;
+use src\Repository\ArmorRepository;
+use src\Repository\FeatRepository;
+use src\Repository\FeatTypeRepository;
+use src\Repository\ItemRepository;
+use src\Repository\MonsterRepository;
+use src\Repository\MonsterSubTypeRepository;
+use src\Repository\MonsterTypeRepository;
+use src\Repository\OriginAbilityRepository;
+use src\Repository\OriginItemRepository;
+use src\Repository\OriginRepository;
+use src\Repository\OriginSkillRepository;
+use src\Repository\PowerRepository;
+use src\Repository\ReferenceRepository;
+use src\Repository\SkillRepository;
+use src\Repository\SpeciePowerRepository;
+use src\Repository\SpeciesRepository;
+use src\Repository\SpeedTypeRepository;
+use src\Repository\SpellRepository;
+use src\Repository\SubSkillRepository;
+use src\Repository\ToolRepository;
+use src\Repository\WeaponPropertyValueRepository;
+use src\Repository\WeaponRepository;
 
 class RepositoryFactory
 {
     private array $map = [
-        'ability'             => AbilityRepository::class,
-        'armor'               => ArmorRepository::class,
-        'feat'                => FeatRepository::class,
-        'featType'            => FeatTypeRepository::class,
-        'item'                => ItemRepository::class,
-        'origin'              => OriginRepository::class,
-        'originAbility'       => OriginAbilityRepository::class,
-        'originItem'          => OriginItemRepository::class,
-        'originSkill'         => OriginSkillRepository::class,
-        'power'               => PowerRepository::class,
-        'reference'           => ReferenceRepository::class,
-        'skill'               => SkillRepository::class,
-        'speedType'           => SpeedTypeRepository::class,
-        'spell'               => SpellRepository::class,
-        'subSkill'            => SubSkillRepository::class,
-        'speciePower'         => SpeciePowerRepository::class,
-        'species'             => SpeciesRepository::class,
-        'tool'                => ToolRepository::class,
-        'weapon'              => WeaponRepository::class,
-        'weaponPropertyValue' => WeaponPropertyValueRepository::class,
+        'ability'              => AbilityRepository::class,
+        Constant::CST_ARMOR    => ArmorRepository::class,
+        Constant::CST_FEAT     => FeatRepository::class,
+        Constant::CST_FEATTYPE => FeatTypeRepository::class,
+        'item'                 => ItemRepository::class,
+        'monster'              => MonsterRepository::class,
+        'monsterType'          => MonsterTypeRepository::class,
+        'monsterSubType'       => MonsterSubTypeRepository::class,
+        Constant::ORIGIN       => OriginRepository::class,
+        'originAbility'        => OriginAbilityRepository::class,
+        'originItem'           => OriginItemRepository::class,
+        'originSkill'          => OriginSkillRepository::class,
+        'power'                => PowerRepository::class,
+        'reference'            => ReferenceRepository::class,
+        'skill'                => SkillRepository::class,
+        'speciePower'          => SpeciePowerRepository::class,
+        Constant::SPECIES      => SpeciesRepository::class,
+        'speedType'            => SpeedTypeRepository::class,
+        'spell'                => SpellRepository::class,
+        'subSkill'             => SubSkillRepository::class,
+        Constant::CST_TOOL     => ToolRepository::class,
+        Constant::CST_WEAPON   => WeaponRepository::class,
+        'weaponPropertyValue'  => WeaponPropertyValueRepository::class,
     ];
 
     public function __construct(
@@ -40,7 +63,7 @@ class RepositoryFactory
 
     public function __call(string $name, array $args): object
     {
-        if (!isset($this->map[$name])) {
+        if (! isset($this->map[$name])) {
             throw new \BadMethodCallException("Repository inconnu : '$name'");
         }
 
