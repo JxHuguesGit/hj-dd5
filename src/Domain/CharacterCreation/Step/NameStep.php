@@ -1,37 +1,34 @@
 <?php
 namespace src\Domain\CharacterCreation\Step;
 
+use src\Constant\Constant;
+use src\Constant\Language;
 use src\Constant\Template;
-use src\Domain\CharacterCreation\CharacterDraft;
 use src\Domain\CharacterCreation\StepInterface;
-use src\Utils\Session;
+use src\Domain\Character\Character;
+use src\Service\Domain\CharacterServices;
 
-class NameStep implements StepInterface
+final class NameStep extends AbstractBaseStep implements StepInterface
 {
-    public string $template = Template::CREATE_NAME;
-
-    public function getId(): string
+    public function __construct()
     {
-        return 'name';
+        $this->id       = Constant::CST_NAME;
+        $this->title    = Language::LG_CHAR_NAME_TITLE;
+        $this->template = Template::CREATE_NAME;
     }
 
-    public function getTitle(): string
-    {
-        return 'Nom du personnage';
-    }
-
-    public function render(CharacterDraft $draft): array
+    public function render(Character $character): array
     {
         return [
-            $draft->id ?? 0,
-            htmlspecialchars($draft->name ?? ''),
-            ''
+            $character->id ?? 0,
+            htmlspecialchars($character->name ?? ''),
+            '',
         ];
     }
 
     public function validate(array $input): bool
     {
-        if (!isset($input['characterName'])) {
+        if (! isset($input['characterName'])) {
             return false;
         }
 
@@ -40,26 +37,25 @@ class NameStep implements StepInterface
         return $name !== '' && strlen($name) <= 32;
     }
 
-    public function save(CharacterDraft $draft, array $input): void
+    public function save(CharacterServices $services, Character $character, array $input): void
     {
-        $draft->id   = trim($input['characterId']);
-        $draft->wpUserId = Session::getWpUser()->data->ID;
-        $draft->name = trim($input['characterName']);
-        $draft->originId = null;
-        $draft->speciesId = null;
-        $draft->donnees = json_encode([]);
+        // Initialisation
+        $input['characterOriginId'] = null;
+        $character->initialize($input);
+        // Sauvegarde
+        $services->writer()->save($character);
     }
 
-    public function isComplete(CharacterDraft $draft): bool
+    public function isComplete(Character $character): bool
     {
-        return $draft->name !== null && trim($draft->name) !== '';
+        return $character->name !== null && trim($character->name) !== '';
     }
 
-    public function sidebar(CharacterDraft $draft): array
+    public function sidebar(Character $character): array
     {
         return [
-            $draft->id,
-            ''
+            $character->id,
+            '',
         ];
     }
 }

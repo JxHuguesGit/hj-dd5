@@ -1,14 +1,18 @@
 <?php
 namespace src\Service\Domain;
 
-use src\Constant\Field;
 use src\Collection\Collection;
-use src\Domain\Entity\{Feat, Origin, Tool};
-use src\Repository\{FeatRepositoryInterface, OriginAbilityRepositoryInterface, OriginItemRepositoryInterface,
-    OriginSkillRepositoryInterface, ToolRepositoryInterface};
+use src\Domain\Entity\Feat;
+use src\Domain\Entity\Origin;
+use src\Domain\Entity\Tool;
 use src\Service\Reader\AbilityReader;
+use src\Service\Reader\FeatReader;
 use src\Service\Reader\ItemReader;
+use src\Service\Reader\OriginAbilityReader;
+use src\Service\Reader\OriginItemReader;
+use src\Service\Reader\OriginSkillReader;
 use src\Service\Reader\SkillReader;
+use src\Service\Reader\ToolReader;
 
 final class OriginService
 {
@@ -20,11 +24,11 @@ final class OriginService
     private array $skillCache = [];
 
     public function __construct(
-        private FeatRepositoryInterface $featRepository,
-        private ToolRepositoryInterface $toolRepository,
-        private OriginSkillRepositoryInterface $originSkillRepository,
-        private OriginAbilityRepositoryInterface $originAbilityRepository,
-        private OriginItemRepositoryInterface $originItemRepository,
+        private FeatReader $featReader,
+        private ToolReader $toolReader,
+        private OriginSkillReader $originSkillReader,
+        private OriginAbilityReader $originAbilityReader,
+        private OriginItemReader $originItemReader,
         private SkillReader $skillReader,
         private AbilityReader $abilityReader,
         private ItemReader $itemReader,
@@ -36,7 +40,7 @@ final class OriginService
             return null;
         }
 
-        return $this->featRepository->find($origin->featId);
+        return $this->featReader->featById($origin->featId);
     }
 
     public function getTool(Origin $origin): ?Tool
@@ -44,19 +48,16 @@ final class OriginService
         if ($origin->toolId <= 0) {
             return null;
         }
-        return $this->toolRepository->findWithRelations($origin->toolId);
+        return $this->toolReader->findWithRelations($origin->toolId);
     }
 
     public function getSkills(Origin $origin): Collection
     {
-        $originSkills = $this->originSkillRepository->findBy([
-            Field::ORIGINID => $origin->id
-        ]);
-
-        $collection = new Collection();
+        $originSkills = $this->originSkillReader->originSkillsByOrigin($origin->id);
+        $collection   = new Collection();
         foreach ($originSkills as $originSkill) {
             $skillId = $originSkill->skillId;
-            $skill = $this->skillReader->skillById($skillId);
+            $skill   = $this->skillReader->skillById($skillId);
             $this->skillCache[$skillId] ??= $skill;
             $collection->add($this->skillCache[$skillId]);
         }
@@ -65,14 +66,11 @@ final class OriginService
 
     public function getAbilities(Origin $origin): Collection
     {
-        $originAbilities = $this->originAbilityRepository->findBy([
-            Field::ORIGINID => $origin->id
-        ]);
-
-        $collection = new Collection();
+        $originAbilities = $this->originAbilityReader->originAbilitysByOrigin($origin->id);
+        $collection      = new Collection();
         foreach ($originAbilities as $originAbility) {
             $abilityId = $originAbility->abilityId;
-            $ability = $this->abilityReader->abilityById($abilityId);
+            $ability   = $this->abilityReader->abilityById($abilityId);
             $this->abilityCache[$abilityId] ??= $ability;
             $collection->add($this->abilityCache[$abilityId]);
         }
@@ -81,17 +79,14 @@ final class OriginService
 
     public function getItems(Origin $origin): Collection
     {
-        $originItems = $this->originItemRepository->findBy([
-            Field::ORIGINID => $origin->id
-        ]);
-
-        $collection = new Collection();
+        $originItems = $this->originItemReader->originItemByOrigin($origin->id);
+        $collection  = new Collection();
         foreach ($originItems as $originItem) {
             $itemId = $originItem->itemId;
-            $item = $this->itemReader->itemById($itemId);
+            $item   = $this->itemReader->itemById($itemId);
             $this->itemCache[$itemId] ??= $item;
-            if ($item!==null) {
-                for ($i=0; $i<$originItem->quantity; $i++) {
+            if ($item !== null) {
+                for ($i = 0; $i < $originItem->quantity; $i++) {
                     $collection->add($this->itemCache[$itemId]);
                 }
             }

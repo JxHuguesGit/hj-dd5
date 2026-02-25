@@ -4,14 +4,15 @@ namespace src\Controller;
 use src\Constant\Constant;
 use src\Constant\Template;
 use src\Domain\Entity;
-use src\Factory\CharacterDraftFactory;
+use src\Factory\CharacterFactory;
 use src\Factory\CompendiumFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
-use src\Repository\CharacterDraftRepository;
-use src\Service\Reader\CharacterDraftReader;
-use src\Service\Writer\CharacterDraftWriter;
+use src\Repository\CharacterRepository;
+use src\Service\Domain\CharacterServices;
+use src\Service\Reader\CharacterReader;
+use src\Service\Writer\CharacterWriter;
 
 class AdminPage extends Utilities
 {
@@ -30,7 +31,7 @@ class AdminPage extends Utilities
             'Hugues Joneaux',
             $this->getSidebar(),
             $content,
-            PLUGINS_DD5
+            PLUGINS_DD5,
         ];
         return $this->getRender(Template::ADMINBASE, $attributes);
     }
@@ -38,8 +39,8 @@ class AdminPage extends Utilities
     protected function getSidebar(): string
     {
         $currentTab = $this->getArrParams(Constant::ONGLET, 'home');
-        $currentId = $this->getArrParams('id', '');
-        $sidebar = new AdminSidebar();
+        $currentId  = $this->getArrParams('id', '');
+        $sidebar    = new AdminSidebar();
         $sidebar->setAttributes(
             $this->allowedOnglets,
             $currentTab,
@@ -55,18 +56,20 @@ class AdminPage extends Utilities
         $controller = new AdminPage($arrUri);
         $currentTab = $controller->getArrParams(Constant::ONGLET, 'home');
         switch ($currentTab) {
-            case 'character' :
-                $repo = new CharacterDraftRepository(new QueryBuilder(), new QueryExecutor());
+            case 'character':
+                $repo       = new CharacterRepository(new QueryBuilder(), new QueryExecutor());
                 $controller = new AdminCharacterPage(
                     $arrUri,
-                    new CharacterDraftFactory(
-                        new CharacterDraftReader($repo),
-                        new CharacterDraftWriter($repo),
+                    new CharacterFactory(
+                        new CharacterServices(
+                            new CharacterReader($repo),
+                            new CharacterWriter($repo),
+                        ),
                         new TemplateRenderer()
                     )
                 );
-            break;
-            case 'compendium' :
+                break;
+            case 'compendium':
                 $controller = new AdminCompendiumPage(
                     $arrUri,
                     new CompendiumFactory(
@@ -75,11 +78,11 @@ class AdminPage extends Utilities
                         new TemplateRenderer()
                     )
                 );
-            break;
-            case 'home' :
-            default :
+                break;
+            case 'home':
+            default:
                 $controller = new AdminHomePage($arrUri);
-            break;
+                break;
         }
         return $controller;
     }

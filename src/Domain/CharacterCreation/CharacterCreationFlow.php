@@ -1,25 +1,28 @@
 <?php
 namespace src\Domain\CharacterCreation;
 
+use src\Constant\Constant;
 use src\Constant\Template;
 use src\Domain\CharacterCreation\Step\NameStep;
 use src\Domain\CharacterCreation\Step\OriginStep;
+use src\Domain\Character\Character;
+use src\Exception\InterfaceException;
 use src\Renderer\TemplateRenderer;
-use src\Service\Writer\CharacterDraftWriter;
+use src\Service\Domain\CharacterServices;
 
 class CharacterCreationFlow
 {
     public function __construct(
-        private CharacterDraft $draft,
-        private CharacterDraftWriter $writer,
+        private Character $character,
+        private CharacterServices $services,
         private TemplateRenderer $renderer
     ) {}
 
     public function steps(): array
     {
         return [
-            'name'    => NameStep::class,
-            'origin'  => OriginStep::class,
+            Constant::CST_NAME => NameStep::class,
+            Constant::ORIGIN   => OriginStep::class,
         ];
     }
 
@@ -30,13 +33,13 @@ class CharacterCreationFlow
 
     public function getCurrentStepId(): string
     {
-        $current = $this->draft->createStep ?: $this->firstStep();
+        $current = $this->character->createStep ?: $this->firstStep();
         return $this->hasStep($current) ? $current : $this->firstStep();
     }
 
     public function nextStep(string $current): ?string
     {
-        $keys = array_keys($this->steps());
+        $keys  = array_keys($this->steps());
         $index = array_search($current, $keys, true);
 
         return $keys[$index + 1] ?? null;
@@ -44,7 +47,7 @@ class CharacterCreationFlow
 
     public function previousStep(string $current): ?string
     {
-        $keys = array_keys($this->steps());
+        $keys  = array_keys($this->steps());
         $index = array_search($current, $keys, true);
 
         return $index > 0 ? $keys[$index - 1] : null;
@@ -54,15 +57,15 @@ class CharacterCreationFlow
     {
         $steps = $this->steps();
 
-        if (!isset($steps[$stepId])) {
+        if (! isset($steps[$stepId])) {
             throw new \InvalidArgumentException("Unknown step '$stepId'");
         }
 
         $class = $steps[$stepId];
-        $step = new $class();
+        $step  = new $class();
 
-        if (!$step instanceof StepInterface) {
-            throw new \RuntimeException("$class must implement StepInterface");
+        if (! $step instanceof StepInterface) {
+            throw new InterfaceException($class);
         }
 
         return $step;
@@ -73,7 +76,8 @@ class CharacterCreationFlow
         return array_key_exists($stepId, $this->steps());
     }
 
-    public function getAllStepInstances(): array {
+    public function getAllStepInstances(): array
+    {
         $instances = [];
         foreach ($this->steps() as $id => $class) {
             $instances[$id] = new $class();
@@ -84,13 +88,13 @@ class CharacterCreationFlow
     public function handle(array $post): string
     {
         $current = $this->getCurrentStepId();
-        $step = $this->getStep($current);
-        if (!empty($post) && $step->validate($post)) {
-            $step->save($this->draft, $post);
-            $this->draft->createStep = $this->nextStep($current) ?? 'done';
-            $this->draft->touch();
-            $this->writer->save($this->draft);
-            return $this->draft->createStep === 'done' ? 'done' : $this->draft->createStep;
+        $step    = $this->getStep($current);
+        if (! empty($post) && $step->validate($post)) {
+            // A terme, mettre 'done' et non $current si on a atteint la dernière étape.
+            $this->character->createStep = $this->nextStep($current) ?? $current;
+            $this->character->touch();
+            $step->save($this->services, $this->character, $post);
+            return $this->character->createStep;
         }
 
         return $current;
@@ -106,16 +110,15 @@ class CharacterCreationFlow
         return $this->renderer->render(
             $step->template,
             array_merge(
-                [$this->renderer->render(Template::CREATE_SIDEBAR, $step->sidebar($this->draft))],
-                $step->render($this->draft)
+                [$this->renderer->render(Template::CREATE_SIDEBAR, $step->sidebar($this->character))],
+                $step->render($this->character)
             )
         );
     }
 
-    public function getDraft(): CharacterDraft
+    public function getCharacter(): Character
     {
-        return $this->draft;
+        return $this->character;
     }
-
 
 }

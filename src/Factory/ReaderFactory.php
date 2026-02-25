@@ -1,9 +1,25 @@
 <?php
 namespace src\Factory;
 
-use src\Service\Reader\{AbilityReader, ArmorReader, FeatReader, FeatTypeReader, ItemReader, OriginReader,
-    PowerReader, ReferenceReader, SkillReader, SpecieReader, SpeedTypeReader, SpellReader, ToolReader,
-    WeaponPropertyValueReader, WeaponReader};
+use src\Service\Reader\AbilityReader;
+use src\Service\Reader\ArmorReader;
+use src\Service\Reader\FeatReader;
+use src\Service\Reader\FeatTypeReader;
+use src\Service\Reader\ItemReader;
+use src\Service\Reader\OriginAbilityReader;
+use src\Service\Reader\OriginReader;
+use src\Service\Reader\OriginSkillReader;
+use src\Service\Reader\PowerReader;
+use src\Service\Reader\ReferenceReader;
+use src\Service\Reader\SkillReader;
+use src\Service\Reader\SpeciePowerReader;
+use src\Service\Reader\SpecieReader;
+use src\Service\Reader\SpeedTypeReader;
+use src\Service\Reader\SpellReader;
+use src\Service\Reader\SubSkillReader;
+use src\Service\Reader\ToolReader;
+use src\Service\Reader\WeaponPropertyValueReader;
+use src\Service\Reader\WeaponReader;
 
 final class ReaderFactory
 {
@@ -18,12 +34,16 @@ final class ReaderFactory
         'featType'            => FeatTypeReader::class,
         'item'                => ItemReader::class,
         'origin'              => OriginReader::class,
+        'originAbility'       => OriginAbilityReader::class,
+        'originSkill'         => OriginSkillReader::class,
         'power'               => PowerReader::class,
         'reference'           => ReferenceReader::class,
         'skill'               => SkillReader::class,
+        'speciePower'         => SpeciePowerReader::class,
         'species'             => SpecieReader::class,
         'speedType'           => SpeedTypeReader::class,
         'spell'               => SpellReader::class,
+        'subSkill'            => SubSkillReader::class,
         'tool'                => ToolReader::class,
         'weapon'              => WeaponReader::class,
         'weaponPropertyValue' => WeaponPropertyValueReader::class,
@@ -31,7 +51,7 @@ final class ReaderFactory
 
     public function __call(string $name, array $args): object
     {
-        if (!isset($this->map[$name])) {
+        if (! isset($this->map[$name])) {
             throw new \BadMethodCallException("Reader inconnu : '$name'");
         }
 
@@ -39,4 +59,3 @@ final class ReaderFactory
         return new $readerClass($this->repositories->$name());
     }
 }
-

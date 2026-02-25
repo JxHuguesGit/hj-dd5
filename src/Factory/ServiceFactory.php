@@ -1,14 +1,16 @@
 <?php
 namespace src\Factory;
 
-use src\Service\Domain\{OriginService, SpecieService, SkillService, WpPostService};
+use src\Service\Domain\OriginService;
+use src\Service\Domain\SkillService;
+use src\Service\Domain\SpecieService;
+use src\Service\Domain\WpPostService;
 use src\Service\Formatter\WeaponPropertiesFormatter;
 
 final class ServiceFactory
 {
     public function __construct(
-        private ReaderFactory $readerFactory,
-        private RepositoryFactory $repositoryFactory
+        private ReaderFactory $readerFactory
     ) {}
 
     public function wordPress(): WpPostService
@@ -24,11 +26,11 @@ final class ServiceFactory
     public function origin(): OriginService
     {
         return new OriginService(
-            $this->repositoryFactory->feat(),
-            $this->repositoryFactory->tool(),
-            $this->repositoryFactory->originSkill(),
-            $this->repositoryFactory->originAbility(),
-            $this->repositoryFactory->originItem(),
+            $this->readerFactory->feat(),
+            $this->readerFactory->tool(),
+            $this->readerFactory->originSkill(),
+            $this->readerFactory->originAbility(),
+            $this->readerFactory->originItem(),
             $this->readerFactory->skill(),
             $this->readerFactory->ability(),
             $this->readerFactory->item()
@@ -38,8 +40,8 @@ final class ServiceFactory
     public function skill(): SkillService
     {
         return new SkillService(
-            $this->repositoryFactory->originSkill(),
-            $this->repositoryFactory->subSkill(),
+            $this->readerFactory->originSkill(),
+            $this->readerFactory->subSkill(),
             $this->readerFactory->origin()
         );
     }
@@ -47,7 +49,7 @@ final class ServiceFactory
     public function specie(): SpecieService
     {
         return new SpecieService(
-            $this->repositoryFactory->speciePower(),
+            $this->readerFactory->speciePower(),
             $this->readerFactory->power()
         );
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace src\Domain\Monster;
 
 use src\Constant\Field;
@@ -13,12 +12,12 @@ final class CharacterStats
     public function getScore(string $carac): int
     {
         return match ($carac) {
-            'str' => $this->getStrength(),
-            'dex' => $this->getDexterity(),
-            'con' => $this->getConstitution(),
-            'int' => $this->getIntelligence(),
-            'wis' => $this->getWisdom(),
-            'cha' => $this->getCharisma(),
+            'str'   => $this->getStrength(),
+            'dex'   => $this->getDexterity(),
+            'con'   => $this->getConstitution(),
+            'int'   => $this->getIntelligence(),
+            'wis'   => $this->getWisdom(),
+            'cha'   => $this->getCharisma(),
             default => 0,
         };
     }

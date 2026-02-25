@@ -5,8 +5,8 @@ use src\Query\QueryBuilder;
 
 abstract class BaseCriteria extends AbstractCriteria implements CriteriaInterface
 {
-    public ?int $limit = -1;
-    public ?int $offset = 0;
+    public ?int $limit    = -1;
+    public ?int $offset   = 0;
     public array $orderBy = [];
 
     /**

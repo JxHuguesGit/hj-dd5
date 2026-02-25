@@ -10,7 +10,7 @@ class FieldType
     public const INT            = 'int';
     public const INTNULLABLE    = 'intNullable';
     public const INTPOSITIVE    = 'intPositive';
-    public const JSON           = 'json';
+    public const JSONNULLABLE   = 'jsonNullable';
     public const STRING         = 'string';
     public const STRINGNULLABLE = 'stringNullable';
 }

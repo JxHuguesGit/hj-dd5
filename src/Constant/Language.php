@@ -17,10 +17,10 @@ class Language
     public const LG_ARM_HVY         = 'Armure lourde';
     public const LG_ARM_SHD         = 'Bouclier';
 
-    public const LG_WEAPON_MARTIAL  = ' de guerre';
-    public const LG_WEAPON_SIMPLE   = ' courantes';
-    public const LG_WEAPON_MELEE    = ' de corps à corps';
-    public const LG_WEAPON_RANGED   = ' à distance';
+    public const LG_WEAPON_MARTIAL = ' de guerre';
+    public const LG_WEAPON_SIMPLE  = ' courantes';
+    public const LG_WEAPON_MELEE   = ' de corps à corps';
+    public const LG_WEAPON_RANGED  = ' à distance';
 
     public const LG_HOME            = 'Accueil';
     public const LG_WEAPON_PROP     = 'Botte d\'arme';
@@ -53,6 +53,7 @@ class Language
     public const LG_CBT_STYLE_EPICS = 'Faveurs épiques';
     public const LG_FORCE           = 'Force';
     public const LG_FP              = 'FP';
+    public const LG_CHAR_HIST_TITLE = 'Historique du personnage';
     public const LG_HISTORIQUES     = 'Historiques';
     public const LG_UNLIMITED       = 'Illimitée';
     public const LG_INTELLIGENCE    = 'Intelligence';
@@ -67,6 +68,7 @@ class Language
     public const LG_SPELLS_TITLE    = 'Les Sorts';
     public const LG_GEAR            = 'Matériel';
     public const LG_MONSTER         = 'Monstre';
+    public const LG_CHAR_NAME_TITLE = 'Nom du personnage';
     public const LG_NAMES           = 'Noms';
     public const LG_LEVEL           = 'Niveau';
     public const LG_ORIGIN          = 'Origine';
@@ -89,15 +91,13 @@ class Language
     public const LG_CREATURE_TYPE   = 'Type de créature';
     public const LG_SPEED           = 'Vitesse';
 
+    public const LG_TOOL_DIVERS = 'Outils divers';
+    public const LG_TOOL_GAMES  = 'Boîte de jeux';
+    public const LG_TOOL_MUSIC  = 'Instruments de Musique';
+    public const LG_TOOL_TOOLS  = 'Outils d\'artisan';
 
-    public const LG_TOOL_DIVERS     = 'Outils divers';
-    public const LG_TOOL_GAMES      = 'Boîte de jeux';
-    public const LG_TOOL_MUSIC      = 'Instruments de Musique';
-    public const LG_TOOL_TOOLS      = 'Outils d\'artisan';
-
-    public const LG_SORT_MINEUR     = ' - Sort mineur';
-    public const LG_SORT_NIVEAU_X   = ' - Sort de niveau %d';
-    public const LG_CONC_UNTIL_X    = 'Concentration, jusqu\'à %s';
-
+    public const LG_SORT_MINEUR   = ' - Sort mineur';
+    public const LG_SORT_NIVEAU_X = ' - Sort de niveau %d';
+    public const LG_CONC_UNTIL_X  = 'Concentration, jusqu\'à %s';
 
 }

@@ -48,19 +48,18 @@ abstract class Entity
 
         // Compléter avec les champs manquants
         foreach (static::FIELDS as $field) {
-            if (!array_key_exists($field, $this->data)) {
+            if (! array_key_exists($field, $this->data)) {
                 $this->data[$field] = null;
             }
         }
     }
-
 
     /**
      * Magic getter pour accéder aux champs via $entity->field
      */
     public function __get(string $name)
     {
-        if ($name===Field::ID) {
+        if ($name === Field::ID) {
             return $this->id;
         }
 
@@ -76,7 +75,7 @@ abstract class Entity
      */
     public function __set(string $name, mixed $value): void
     {
-        if (!in_array($name, static::FIELDS, true)) {
+        if (! in_array($name, static::FIELDS, true)) {
             throw new \InvalidArgumentException("Propriété '$name' inconnue dans " . static::class);
         }
 
@@ -104,7 +103,7 @@ abstract class Entity
      */
     public function toArray(): array
     {
-        return array_merge([Field::ID=>$this->id], $this->data);
+        return array_merge([Field::ID => $this->id], $this->data);
     }
 
     /**
@@ -122,10 +121,10 @@ abstract class Entity
         }
 
         foreach (static::FIELDS as $field) {
-            if ($field===Field::ID) {
+            if ($field === Field::ID) {
                 continue;
             }
-            if (!array_key_exists($field, static::FIELD_TYPES)) {
+            if (! array_key_exists($field, static::FIELD_TYPES)) {
                 throw new \LogicException("Le champ '$field' doit avoir un type défini dans FIELD_TYPES pour $class");
             }
         }
@@ -143,7 +142,7 @@ abstract class Entity
         }
 
         return implode(' - ', array_map(
-            fn($field) => (string)($this->__get($field) ?? 'Non défini'),
+            fn($field) => (string) ($this->__get($field) ?? 'Non défini'),
             static::FIELDS
         ));
     }
@@ -153,37 +152,61 @@ abstract class Entity
      */
     protected function validateField(string $field, mixed $value): mixed
     {
-        $types = static::FIELD_TYPES;
+        $types        = static::FIELD_TYPES;
         $expectedType = $types[$field] ?? null;
 
-        if (!$expectedType) {
+        if (! $expectedType) {
             return $value;
         }
 
         return match ($expectedType) {
-            FieldType::ARRAY => $this->validateArray($field, $value),
-            FieldType::BOOL => $this->validateBool($field, $value),
-            FieldType::FLOAT => $this->validateFloat($field, $value),
-            FieldType::INT => $this->validateInt($field, $value),
-            FieldType::INTNULLABLE  => $this->validateIntNullable($field, $value),
-            FieldType::INTPOSITIVE  => $this->validateIntPositive($field, $value),
-            FieldType::STRING => $this->validateString($field, $value),
+            FieldType::ARRAY          => $this->validateArray($field, $value),
+            FieldType::BOOL           => $this->validateBool($field, $value),
+            FieldType::FLOAT          => $this->validateFloat($field, $value),
+            FieldType::INT            => $this->validateInt($field, $value),
+            FieldType::INTNULLABLE    => $this->validateIntNullable($field, $value),
+            FieldType::INTPOSITIVE    => $this->validateIntPositive($field, $value),
+            FieldType::JSONNULLABLE   => $this->validateJsonNullable($field, $value),
+            FieldType::STRING         => $this->validateString($field, $value),
             FieldType::STRINGNULLABLE => $this->validateStringNullable($field, $value),
-            default => $value,
+            default                   => $value,
         };
+    }
+
+    protected function validateJsonNullable(string $field, mixed $value): string
+    {
+        if ($value === null) {
+            return '';
+        }
+
+        if (! is_string($value)) {
+            throw new \InvalidArgumentException(
+                "Le champ '$field' doit être une chaîne JSON (" . gettype($value) . ")."
+            );
+        }
+
+        json_decode($value, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException(
+                "Le champ '$field' doit contenir un JSON valide : " . json_last_error_msg()
+            );
+        }
+
+        return $value;
     }
 
     protected function validateInt(string $field, mixed $value): int
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             throw new \InvalidArgumentException("Le champ '$field' doit être un entier.");
         }
-        return (int)$value;
+        return (int) $value;
     }
 
     protected function validateIntNullable(string $field, mixed $value): int
     {
-        if ($value===null) {
+        if ($value === null) {
             return 0;
         }
         if ($value < 0) {
@@ -203,10 +226,10 @@ abstract class Entity
 
     protected function validateFloat(string $field, mixed $value): float
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             throw new \InvalidArgumentException("Le champ '$field' doit être un nombre.");
         }
-        return (float)$value;
+        return (float) $value;
     }
 
     protected function validateBool(string $field, mixed $value): bool
@@ -220,18 +243,18 @@ abstract class Entity
 
     protected function validateString(string $field, mixed $value): string
     {
-        if (!is_string($value)) {
-            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne (".gettype($value)."). ");
+        if (! is_string($value)) {
+            throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne (" . gettype($value) . "). ");
         }
         return trim($value);
     }
 
     protected function validateStringNullable(string $field, mixed $value): string
     {
-        if ($value===null) {
+        if ($value === null) {
             return '';
         }
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             throw new \InvalidArgumentException("Le champ '$field' doit être une chaîne.");
         }
         return trim($value);
@@ -239,7 +262,7 @@ abstract class Entity
 
     protected function validateArray(string $field, mixed $value): array
     {
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             throw new \InvalidArgumentException("Le champ '$field' doit être un tableau. ");
         }
         return $value;

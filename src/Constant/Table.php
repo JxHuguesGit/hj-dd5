@@ -6,7 +6,8 @@ class Table
     public const ABILITY        = 'rpgAbility';
     public const ALIGNMENT      = 'rpgAlignement';
     public const ARMOR          = 'rpgArmor';
-    public const CHARACTERDRAFT = 'rpgCharacterDraft';
+    public const CHARACTER      = 'rpgCharacter';
+    public const CHARACTERSKILL = 'rpgCharacterSkill';
     public const DMGDIE         = 'rpgDamageDie';
     public const FEAT           = 'rpgFeat';
     public const FEATTYPE       = 'rpgFeatType';

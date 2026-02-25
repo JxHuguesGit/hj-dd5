@@ -11,7 +11,15 @@ final class ToolReader
     public function __construct(
         private ToolRepositoryInterface $toolRepository
     ) {}
-    
+
+    /**
+     * @return ?Tool
+     */
+    public function findWithRelations(int $id): ?Tool
+    {
+        return $this->findWithRelations($id);
+    }
+
     /**
      * @return Collection<Tool>
      */

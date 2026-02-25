@@ -1,14 +1,17 @@
 <?php
 namespace src\Domain\CharacterCreation;
 
+use src\Domain\Character\Character;
+use src\Service\Domain\CharacterServices;
+
 interface StepInterface
 {
     public function getId(): string;
     public function getTitle(): string;
 
-    public function render(CharacterDraft $draft): array;
+    public function render(Character $character): array;
     public function validate(array $input): bool;
-    public function save(CharacterDraft $draft, array $input): void;
+    public function save(CharacterServices $services, Character $character, array $input): void;
 
-    public function isComplete(CharacterDraft $draft): bool;
+    public function isComplete(Character $character): bool;
 }

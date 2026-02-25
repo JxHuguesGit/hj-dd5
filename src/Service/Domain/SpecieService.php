@@ -2,10 +2,9 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
-use src\Constant\Field;
 use src\Domain\Entity\Specie;
-use src\Repository\SpeciePowerRepositoryInterface;
 use src\Service\Reader\PowerReader;
+use src\Service\Reader\SpeciePowerReader;
 
 final class SpecieService
 {
@@ -13,21 +12,18 @@ final class SpecieService
     private array $powerCache = [];
 
     public function __construct(
-        private SpeciePowerRepositoryInterface $speciePowerRepository,
+        private SpeciePowerReader $speciePowerReader,
         private PowerReader $powerReader,
     ) {}
 
-
     public function getAbilities(Specie $specie): Collection
     {
-        $speciePowers = $this->speciePowerRepository->findBy([
-            Field::SPECIESID => $specie->id
-        ]);
+        $speciePowers = $this->speciePowerReader->specialPowerBySpecie($specie->id);
 
         $collection = new Collection();
         foreach ($speciePowers as $speciePower) {
             $powerId = $speciePower->powerId;
-            $power = $this->powerReader->powerById($powerId);
+            $power   = $this->powerReader->powerById($powerId);
             $this->powerCache[$powerId] ??= $power;
             $collection->add($this->powerCache[$powerId]);
         }

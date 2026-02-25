@@ -6,21 +6,21 @@ use src\Collection\Collection;
 class QueryExecutor
 {
 
-    public function fetchOne(string $sql, string $entityClass, array $params = [], bool $display=false): ?object
+    public function fetchOne(string $sql, string $entityClass, array $params = [], bool $display = false): ?object
     {
         $collection = $this->fetchAll($sql, $entityClass, $params, $display);
         return $collection->first() ?: null;
     }
 
-    public function fetchAll(string $sql, string $entityClass, array $params = [], bool $display=false): Collection
+    public function fetchAll(string $sql, string $entityClass, array $params = [], bool $display = false): Collection
     {
         global $wpdb;
         $prepared = $wpdb->prepare($sql, $params);
         if ($display) {
-            echo '[['.$prepared.']]';
+            echo '[[' . $prepared . ']]';
         }
 
-        $results = $wpdb->get_results($prepared, 'ARRAY_A');
+        $results    = $wpdb->get_results($prepared, 'ARRAY_A');
         $collection = new Collection();
         foreach ($results as $result) {
             $entity = method_exists($entityClass, 'factory')
@@ -39,7 +39,7 @@ class QueryExecutor
         $wpdb->query($prepared);
         return (int) $wpdb->insert_id;
     }
-    
+
     public function update(string $sql, array $params = []): int
     {
         global $wpdb;
