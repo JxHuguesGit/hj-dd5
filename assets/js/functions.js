@@ -3,6 +3,8 @@ $(document).ready(function(e) {
         ajaxActionClick($(this), e);
     })
 
+    addOpenMonsterModal();
+
 });
 
 // Gère les data-action des .ajaxAction[data-trigger="click"]
@@ -156,6 +158,7 @@ function loadMoreMonsters(type) {
             }
         }
     ).done(function(response) {
+        addOpenMonsterModal();
     });
 }
 
@@ -173,5 +176,36 @@ function loadCreationStepSide(type, id) {
         },
         error: function () {
         }
+    });
+}
+
+
+function addOpenMonsterModal() {
+    $('[data-modal="monster"]').unbind().on('click', function(e) {
+        e.preventDefault();
+        const uktag = $(this).data('uktag');
+        const data = {'action': 'dealWithAjax', 'ajaxAction': 'modalMonsterCard', 'uktag': uktag};
+        const baseUrl = globalThis.location.origin + globalThis.location.pathname;
+        const ajaxUrl = baseUrl.slice(0, -4) + '-ajax.php';
+
+        $.post({
+            url: ajaxUrl,
+            data: data,
+            success: function (response) {
+                try {
+                    let obj = JSON.parse(response.data);
+                    $('.modal-header').hide()
+                    $('.modal-footer').hide()
+                    $('#modalBody').html(obj.data.html);
+                    $('#infoModal').modal('show');
+                } catch (e) {
+                console.log("error: "+e);
+                console.log(response);
+            }
+        },
+            error: function () {
+            }
+        });
+        return false;
     });
 }

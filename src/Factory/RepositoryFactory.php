@@ -6,9 +6,12 @@ use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\AbilityRepository;
 use src\Repository\ArmorRepository;
+use src\Repository\ConditionRepository;
+use src\Repository\DamageTypeRepository;
 use src\Repository\FeatRepository;
 use src\Repository\FeatTypeRepository;
 use src\Repository\ItemRepository;
+use src\Repository\MonsterConditionRepository;
 use src\Repository\MonsterRepository;
 use src\Repository\MonsterSubTypeRepository;
 use src\Repository\MonsterTypeRepository;
@@ -33,12 +36,15 @@ class RepositoryFactory
     private array $map = [
         'ability'              => AbilityRepository::class,
         Constant::CST_ARMOR    => ArmorRepository::class,
+        'condition'            => ConditionRepository::class,
+        'damageType'           => DamageTypeRepository::class,
         Constant::CST_FEAT     => FeatRepository::class,
         Constant::CST_FEATTYPE => FeatTypeRepository::class,
         'item'                 => ItemRepository::class,
         'monster'              => MonsterRepository::class,
-        'monsterType'          => MonsterTypeRepository::class,
+        'monsterCondition'     => MonsterConditionRepository::class,
         'monsterSubType'       => MonsterSubTypeRepository::class,
+        'monsterType'          => MonsterTypeRepository::class,
         Constant::ORIGIN       => OriginRepository::class,
         'originAbility'        => OriginAbilityRepository::class,
         'originItem'           => OriginItemRepository::class,

@@ -23,12 +23,8 @@ class MonsterAjax
 
     public function loadMoreMonsters(): array
     {
-        $reader    = $this->reader->monster();
         $presenter = new MonsterListPresenter(
-            new MonsterFormatter(
-                $this->reader->monsterType(),
-                $this->reader->monsterSubType()
-            ),
+            new MonsterFormatter($this->reader),
             $this->reader->reference()
         );
         $builder = new MonsterTableBuilder();
@@ -40,6 +36,7 @@ class MonsterAjax
             ...$fromPost,
         ]);
 
+        $reader   = $this->reader->monster();
         $result   = $reader->allMonsters($criteria);
         $viewData = $presenter->present($result);
         $objTable = $builder->build($viewData);
@@ -62,10 +59,8 @@ class MonsterAjax
         }
 
         $presenter = new MonsterDetailPresenter(
-            new MonsterFormatter(
-                $this->reader->monsterType(),
-                $this->reader->monsterSubType()
-            ),
+            $this->reader,
+            new MonsterFormatter($this->reader),
             $monster
         );
         return [

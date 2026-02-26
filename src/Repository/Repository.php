@@ -17,7 +17,7 @@ class Repository
     protected string $query = '';
     protected string $table;
     protected array $fields;
-    
+
     public function __construct(
         protected QueryBuilder $queryBuilder,
         protected QueryExecutor $queryExecutor,
@@ -31,14 +31,14 @@ class Repository
             $this->fields = $entityClass::FIELDS;
 
             // Pour la table, on préfère la constante static::TABLE si elle existe
-            if (defined('static::TABLE') && static::TABLE!='') {
+            if (defined('static::TABLE') && static::TABLE != '') {
                 $this->table = static::TABLE;
             } elseif ($table !== null) {
                 $this->table = $table;
             } else {
                 $entityClass = $this->getEntityClass();
-                if ($entityClass!==null) {
-                    $this->table = $entityClass::TABLE;
+                if ($entityClass !== null) {
+                    $this->table  = $entityClass::TABLE;
                     $this->fields = $entityClass::FIELDS;
                 } else {
                     throw new \LogicException("Le Repository " . static::class . " doit définir une table.");
@@ -46,7 +46,7 @@ class Repository
             }
         } else {
             // Ancien Repository qui ne retourne pas d'entité Domain
-            $this->table = $table ?? '';
+            $this->table  = $table ?? '';
             $this->fields = $fields ?? [];
         }
     }
@@ -55,7 +55,7 @@ class Repository
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
-            ->where([Field::ID=>$id])
+            ->where([Field::ID => $id])
             ->getQuery();
         return $this->queryExecutor->fetchOne(
             $this->query,
@@ -64,12 +64,12 @@ class Repository
         );
     }
 
-    public function findAll(array $orderBy=[Field::ID=>Constant::CST_ASC]): Collection
+    public function findAll(array $orderBy = [Field::ID => Constant::CST_ASC]): Collection
     {
         return $this->findBy([], $orderBy, -1);
     }
 
-    public function findBy(array $criteria, array $orderBy=[], int $limit=-1, bool $display=false): Collection
+    public function findBy(array $criteria, array $orderBy = [], int $limit = -1, bool $display = false): Collection
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
@@ -85,13 +85,13 @@ class Repository
             $display
         );
     }
-    
+
     protected function resolveEntityClass(): string
     {
         $entityClass = $this->getEntityClass();
 
         // Si la classe fille n'a pas encore migré → fallback
-        if (!$entityClass) {
+        if (! $entityClass) {
             // Ancienne règle d’inférence : remplacer Repository par Entity
             return str_replace('Repository', 'Entity', get_class($this));
         }
@@ -126,7 +126,7 @@ class Repository
         $this->query = $this->queryBuilder->reset()
             ->getInsertQuery($this->fields, $this->table);
 
-        $values = $this->getEntityValues($entity, true);
+        $values   = $this->getEntityValues($entity, true);
         $insertId = $this->queryExecutor->insert($this->query, $values);
         $entity->assignId($insertId);
     }
@@ -136,7 +136,7 @@ class Repository
         $this->query = $this->queryBuilder->reset()
             ->getUpdateQuery($this->fields, $this->table);
 
-        $values = $this->getEntityValues($entity, true);
+        $values   = $this->getEntityValues($entity, true);
         $values[] = $this->getEntityId($entity);
         $this->queryExecutor->update($this->query, $values);
     }

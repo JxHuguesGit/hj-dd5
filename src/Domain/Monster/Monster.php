@@ -10,6 +10,7 @@ use src\Domain\Entity\MonsterSpeedType as EntityMonsterSpeedType;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\MonsterSpeedTypeRepository;
+use src\Service\Domain\MonsterAbilitiesService;
 use src\Service\Reader\MonsterSpeedTypeReader;
 
 final class Monster extends Entity
@@ -85,7 +86,7 @@ final class Monster extends Entity
 
         Field::REFNAME      => FieldType::STRINGNULLABLE,
     ];
-    
+
     /**
      * @SuppressWarnings("php:S1068")
      */
@@ -102,13 +103,23 @@ final class Monster extends Entity
      * @SuppressWarnings("php:S1068")
      */
     private ?CharacterStats $stats = null;
-    
+
+    // Service
+    private ?MonsterAbilitiesService $services = null;
     // Relations 1-1
-    private ?MonsterType $typeEntity = null;
-    private ?MonsterSubType $subTypeEntity = null;
+    private ?MonsterType $typeEntity           = null;
+    private ?MonsterSubType $subTypeEntity     = null;
     private ?MonsterReference $referenceEntity = null;
     // Relations 1-N
     private ?Collection $speedTypeEntities = null;
+    private ?Collection $traits            = null;
+    private ?Collection $actions           = null;
+    private ?Collection $bonusActions      = null;
+    private ?Collection $reactions         = null;
+    private ?Collection $legendaryActions  = null;
+    private ?Collection $skills            = null;
+    private ?Collection $conditions        = null;
+    private ?Collection $resistances       = null;
 
     private function lazy(string $property, string $class): object
     {
@@ -146,7 +157,7 @@ final class Monster extends Entity
 
     public function getField(string $field): mixed
     {
-        if (!in_array($field, self::FIELDS, true)) {
+        if (! in_array($field, self::FIELDS, true)) {
             throw new \InvalidArgumentException("Champ invalide : $field");
         }
         return $this->{$field} ?? null;
@@ -171,7 +182,6 @@ final class Monster extends Entity
         return $this->subTypeEntity;
     }
 
-
     public function reference(): MonsterReference
     {
         if ($this->referenceEntity === null) {
@@ -192,11 +202,99 @@ final class Monster extends Entity
                     new QueryExecutor()
                 )
             );
-            $criteria = new MonsterSpeedTypeCriteria();
-            $criteria->monsterId = $this->id;
+            $criteria                = new MonsterSpeedTypeCriteria();
+            $criteria->monsterId     = $this->id;
             $this->speedTypeEntities = $reader->allMonsterSpeedTypes($criteria);
         }
         return $this->speedTypeEntities->find(fn($item) => $item->typeSpeedId === $speedTypeId) ?? null;
+    }
+
+    public function traits(): Collection
+    {
+        if ($this->traits === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->traits = $this->services->getTraits();
+        }
+        return $this->traits;
+    }
+
+    public function actions(): Collection
+    {
+        if ($this->actions === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->actions = $this->services->getActions();
+        }
+        return $this->actions;
+    }
+
+    public function bonusActions(): Collection
+    {
+        if ($this->bonusActions === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->bonusActions = $this->services->getBonusActions();
+        }
+        return $this->bonusActions;
+    }
+
+    public function reactions(): Collection
+    {
+        if ($this->reactions === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->reactions = $this->services->getReactions();
+        }
+        return $this->reactions;
+    }
+
+    public function legendaryActions(): Collection
+    {
+        if ($this->legendaryActions === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->legendaryActions = $this->services->getLegendaryActions();
+        }
+        return $this->legendaryActions;
+    }
+
+    public function skills(): Collection
+    {
+        if ($this->skills === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->skills = $this->services->getSkills();
+        }
+        return $this->skills;
+    }
+
+    public function conditions(): Collection
+    {
+        if ($this->conditions === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->conditions = $this->services->getConditions();
+        }
+        return $this->conditions;
+    }
+
+    public function resistances(): Collection
+    {
+        if ($this->resistances === null) {
+            if ($this->services === null) {
+                $this->services = new MonsterAbilitiesService($this->id);
+            }
+            $this->resistances = $this->services->getResistances();
+        }
+        return $this->resistances;
     }
 
     // -------------------------------------------------

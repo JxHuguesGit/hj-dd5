@@ -4,9 +4,12 @@ namespace src\Factory;
 use src\Constant\Constant;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
+use src\Service\Reader\ConditionReader;
+use src\Service\Reader\DamageTypeReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
+use src\Service\Reader\MonsterConditionReader;
 use src\Service\Reader\MonsterReader;
 use src\Service\Reader\MonsterSubTypeReader;
 use src\Service\Reader\MonsterTypeReader;
@@ -35,12 +38,15 @@ final class ReaderFactory
     private array $map = [
         'ability'              => AbilityReader::class,
         Constant::CST_ARMOR    => ArmorReader::class,
+        'condition'            => ConditionReader::class,
+        'damageType'           => DamageTypeReader::class,
         Constant::CST_FEAT     => FeatReader::class,
         Constant::CST_FEATTYPE => FeatTypeReader::class,
         'item'                 => ItemReader::class,
         'monster'              => MonsterReader::class,
-        'monsterType'          => MonsterTypeReader::class,
+        'monsterCondition'     => MonsterConditionReader::class,
         'monsterSubType'       => MonsterSubTypeReader::class,
+        'monsterType'          => MonsterTypeReader::class,
         Constant::ORIGIN       => OriginReader::class,
         'originAbility'        => OriginAbilityReader::class,
         'originItem'           => OriginItemReader::class,
