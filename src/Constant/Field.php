@@ -35,6 +35,8 @@ class Field
     public const MSTSIZE     = 'monsterSize';
     public const SCORECA     = 'ca';
     public const SCOREHP     = 'hp';
+    public const SCOREXP     = 'xp';
+    public const SCOREPB     = 'pb';
     public const SPEED       = 'vitesse';
     public const INITIATIVE  = 'initiative';
     public const LEGENDARY   = 'legendary';

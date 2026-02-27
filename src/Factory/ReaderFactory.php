@@ -9,7 +9,10 @@ use src\Service\Reader\DamageTypeReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
+use src\Service\Reader\LanguageReader;
+use src\Service\Reader\MonsterAbilityReader;
 use src\Service\Reader\MonsterConditionReader;
+use src\Service\Reader\MonsterLanguageReader;
 use src\Service\Reader\MonsterReader;
 use src\Service\Reader\MonsterSubTypeReader;
 use src\Service\Reader\MonsterTypeReader;
@@ -43,8 +46,11 @@ final class ReaderFactory
         Constant::CST_FEAT     => FeatReader::class,
         Constant::CST_FEATTYPE => FeatTypeReader::class,
         'item'                 => ItemReader::class,
+        'language'             => LanguageReader::class,
         'monster'              => MonsterReader::class,
+        'monsterAbility'       => MonsterAbilityReader::class,
         'monsterCondition'     => MonsterConditionReader::class,
+        'monsterLanguage'      => MonsterLanguageReader::class,
         'monsterSubType'       => MonsterSubTypeReader::class,
         'monsterType'          => MonsterTypeReader::class,
         Constant::ORIGIN       => OriginReader::class,

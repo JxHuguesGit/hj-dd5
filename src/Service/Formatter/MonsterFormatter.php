@@ -232,40 +232,26 @@ class MonsterFormatter
         return $str;
     }
 
-    public function formatLanguages(): string
+    public function formatLanguages(Monster $monster): string
     {
+        $languageReader        = $this->readerFactory->language();
+        $monsterLanguageReader = $this->readerFactory->monsterLanguage();
+        $monsterLanguages      = $monsterLanguageReader->monsterLanguagesByMonsterId($monster->id);
+        $languages             = [];
+        foreach ($monsterLanguages as $monsterLanguage) {
+            $language    = $languageReader->languageById($monsterLanguage->languageId);
+            $languages[] = $language->name . ($monsterLanguage->value != 0 ? ' ' . $monsterLanguage->value . ' m' : '');
+        }
         return Html::getDiv(
-            Html::getBalise('strong', 'Langues') . ' ' . 'Aucune',
+            Html::getBalise('strong', 'Langues') . ' ' . (empty($languages) ? 'Aucune' : implode(', ', $languages)),
             [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
         );
-        $objs       = $this->rpgMonster->getLanguages();
-        $languages  = $this->rpgMonster->getExtra('languages');
-        $str       .= '<div class="col-12"><strong>Langues</strong> ';
-        if (! $objs->isEmpty() || $languages != '') {
-            $comma = false;
-            $objs->rewind();
-            while ($objs->valid()) {
-                if ($comma) {
-                    $str .= ', ';
-                }
-                $obj    = $objs->current();
-                $str   .= $obj->getController()->getStrLanguage();
-                $comma  = true;
-                $objs->next();
-            }
-            if ($languages != '') {
-                $str .= ($comma ? ', ' : '') . $languages;
-            }
-        } else {
-            $str .= 'Aucune';
-        }
-        $str .= '</div>';
     }
 
     public function formatFpXpBm(Monster $monster): string
     {
-        $extraPx = '';
-        $extraPb = '';
+        $extraPx = $monster->getExtra(Field::SCOREXP) ?? '';
+        $extraPb = $monster->getExtra(Field::SCOREPB) ?? '';
         $bm      = $monster->profBonus;
 
         $content  = $this->formatCR($monster->cr);
@@ -276,8 +262,13 @@ class MonsterFormatter
             Html::getBalise('strong', 'FP') . ' ' . $content,
             [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
         );
+    }
 
-        $extraPx = $this->rpgMonster->getExtra('xp');
-        $extraPb = $this->rpgMonster->getExtra('pb');
+    public function formatAbility(string $name, string $description): string
+    {
+        $strContent = Utils::formatBBCode($description);
+        return $name == 'legend'
+            ? sprintf('<p>%s</p>', $strContent)
+            : sprintf('<p><strong><em>%s</em></strong>. %s</p>', $name, $strContent);
     }
 }

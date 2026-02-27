@@ -7,9 +7,12 @@ use src\Domain\Entity\MonsterResistance;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
 use src\Service\Formatter\MonsterFormatter;
+use src\Service\Reader\PowerReader;
 
 class MonsterDetailPresenter
 {
+    private ?PowerReader $powerReader = null;
+
     public function __construct(
         private ReaderFactory $readerFactory,
         private MonsterFormatter $formatter,
@@ -64,9 +67,13 @@ class MonsterDetailPresenter
 
     private function getSpecialAbilitiesList(Collection $objs): string
     {
+        if ($this->powerReader === null) {
+            $this->powerReader = $this->readerFactory->power();
+        }
         $str = '';
         foreach ($objs as $obj) {
-            $str .= $obj->getController()->getFormatString();
+            $power  = $this->powerReader->powerById($obj->powerId);
+            $str   .= $this->formatter->formatAbility($power->name, $power->description);
         }
         return $str;
     }
@@ -89,7 +96,7 @@ class MonsterDetailPresenter
         // Gestion des sens du monstre
         $str .= $this->formatter->formatSenses($this->monster);
         // Gestion des langues du monstre
-        $str .= $this->formatter->formatLanguages();
+        $str .= $this->formatter->formatLanguages($this->monster);
         // Gestion du FP, des XPs et du BM
         $str .= $this->formatter->formatFpXpBm($this->monster);
         return $str;

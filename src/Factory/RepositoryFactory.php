@@ -11,7 +11,10 @@ use src\Repository\DamageTypeRepository;
 use src\Repository\FeatRepository;
 use src\Repository\FeatTypeRepository;
 use src\Repository\ItemRepository;
+use src\Repository\LanguageRepository;
+use src\Repository\MonsterAbilityRepository;
 use src\Repository\MonsterConditionRepository;
+use src\Repository\MonsterLanguageRepository;
 use src\Repository\MonsterRepository;
 use src\Repository\MonsterSubTypeRepository;
 use src\Repository\MonsterTypeRepository;
@@ -41,8 +44,11 @@ class RepositoryFactory
         Constant::CST_FEAT     => FeatRepository::class,
         Constant::CST_FEATTYPE => FeatTypeRepository::class,
         'item'                 => ItemRepository::class,
+        'language'             => LanguageRepository::class,
         'monster'              => MonsterRepository::class,
+        'monsterAbility'       => MonsterAbilityRepository::class,
         'monsterCondition'     => MonsterConditionRepository::class,
+        'monsterLanguage'      => MonsterLanguageRepository::class,
         'monsterSubType'       => MonsterSubTypeRepository::class,
         'monsterType'          => MonsterTypeRepository::class,
         Constant::ORIGIN       => OriginRepository::class,

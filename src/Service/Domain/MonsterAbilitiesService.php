@@ -3,12 +3,14 @@ namespace src\Service\Domain;
 
 use src\Collection\Collection;
 use src\Constant\Field;
+use src\Domain\Criteria\MonsterAbilityCriteria;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Repository\MonsterAbilityRepository;
 use src\Repository\MonsterConditionRepository;
 use src\Repository\MonsterResistanceRepository;
 use src\Repository\MonsterSkillRepository;
-use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
+use src\Service\Reader\MonsterAbilityReader;
 use src\Service\Reader\MonsterConditionReader;
 use src\Service\Reader\MonsterResistanceReader;
 use src\Service\Reader\MonsterSkillReader;
@@ -24,10 +26,16 @@ class MonsterAbilitiesService
 
     private function getAbilities(array $params): Collection
     {
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $repo          = new RepositoryRpgMonsterAbility($queryBuilder, $queryExecutor);
-        return $repo->findBy($params, [Field::RANK => 'ASC']);
+        $reader = new MonsterAbilityReader(
+            new MonsterAbilityRepository(
+                new QueryBuilder(),
+                new QueryExecutor()
+            )
+        );
+        $criteria            = new MonsterAbilityCriteria();
+        $criteria->typeId    = $params[Field::TYPEID];
+        $criteria->monsterId = $params[Field::MONSTERID];
+        return $reader->allMonsterAbilities($criteria);
     }
 
     public function getTraits(): Collection

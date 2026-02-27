@@ -14,9 +14,12 @@ class Table
     public const FEAT           = 'rpgFeat';
     public const FEATTYPE       = 'rpgFeatType';
     public const ITEM           = 'rpgItem';
+    public const LANGUAGE       = 'rpgLanguage';
     public const MSTPROFCY      = 'rpgMasteryProficiency';
     public const MONSTER        = 'rpgMonster';
+    public const MSTABILITY     = 'rpgMonsterAbility';
     public const MSTCONDITION   = 'rpgMonsterCondition';
+    public const MSTLANGUAGE    = 'rpgMonsterLanguage';
     public const MSTRESISTANCE  = 'rpgMonsterResistance';
     public const MSTSKILL       = 'rpgMonsterSkill';
     public const SSTYPEMONSTRE  = 'rpgMonsterSubType';
