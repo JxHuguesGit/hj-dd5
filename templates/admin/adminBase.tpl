@@ -1,3 +1,4 @@
+  <link rel='stylesheet' href='%4$sassets/styles/dd5.css' type="text/css" media='all' />
   <link rel='stylesheet' href='%4$sassets/styles/adminReset.css' type="text/css" media='all' />
   <link rel='stylesheet' href='%4$sassets/styles/adminBase.css' type="text/css" media='all' />
   <link rel='stylesheet' href='%4$sassets/styles/characterSheet.css' type="text/css" media='all' />
@@ -15,7 +16,7 @@
       </li>
     </ul>
   </nav>
-  
+
   <aside style="" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/wp-admin/admin.php?page=hj-dd5/admin_manage.php" class="brand-link">
@@ -44,7 +45,7 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-  
+
   <div class="content-wrapper">%3$s</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -57,4 +58,4 @@
   <script src="%4$sassets/js/Treeview.js"></script>
 
   <script src="%4$sassets/js/admin.js"></script>
-  <script src="%4$sassets/js/functions.js"></script>    
+  <script src="%4$sassets/js/functions.js"></script>

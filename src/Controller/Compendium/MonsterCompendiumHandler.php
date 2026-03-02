@@ -5,6 +5,7 @@ use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\MonsterFormBuilder;
 use src\Presenter\ListPresenter\MonsterListPresenter;
+use src\Presenter\Modal\MonsterFilterModalPresenter;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Reader\MonsterReader;
@@ -17,6 +18,7 @@ class MonsterCompendiumHandler extends AbstractCompendiumHandler implements Comp
         private MonsterReader $reader,
         private MonsterListPresenter $presenter,
         private PageList $page,
+        private MonsterFilterModalPresenter $modalPresenter,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
     ) {}

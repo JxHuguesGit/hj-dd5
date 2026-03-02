@@ -201,3 +201,9 @@ div.checkbox input[type="checkbox"]:checked + label::before {
     margin-bottom:0 !important;
 }
 
+.sections {
+    padding-top: 0;
+}
+.hero {
+    padding: 0;
+}

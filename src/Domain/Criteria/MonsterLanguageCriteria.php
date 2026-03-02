@@ -10,7 +10,7 @@ final class MonsterLanguageCriteria extends BaseCriteria
     public ?int $monsterId = null;
 
     public array $orderBy = [
-        Field::ID => Constant::CST_ASC,
+        Field::VALUE => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

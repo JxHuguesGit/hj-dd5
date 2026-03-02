@@ -5,6 +5,7 @@ use src\Controller\Compendium\MonsterCompendiumHandler;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Presenter\ListPresenter\MonsterListPresenter;
+use src\Presenter\Modal\MonsterFilterModalPresenter;
 use src\Presenter\TableBuilder\MonsterTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Repository\MonsterRepository;
@@ -26,6 +27,7 @@ class MonsterCompendiumFactory extends AbstractCompendiumFactory
                 $this->reader(ReferenceReader::class, ReferenceRepository::class)
             ),
             $this->page(new MonsterTableBuilder()),
+            new MonsterFilterModalPresenter($this->renderer),
             new ToastBuilder($this->renderer),
             $this->renderer
         );

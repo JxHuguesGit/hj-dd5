@@ -79,7 +79,7 @@ class MonsterFormatter
         };
     }
 
-    public function formatType(Monster $monster): string
+    public function formatTypeAndAlignement(Monster $monster): string
     {
         $gender = '';
 
@@ -92,7 +92,6 @@ class MonsterFormatter
             $sizeLabel = SizeHelper::toLabelFr($monster->swarmSize, $gender, true);
             $typeName  = "Nuée de $sizeLabel $typeName" . 's';
         }
-
         // Sous-type
         if ($monster->monsterSubTypeId) {
             $subType = $this->readerFactory->monsterSubType()->monsterSubTypeById($monster->monsterSubTypeId);
@@ -101,7 +100,11 @@ class MonsterFormatter
             }
         }
 
-        return $typeName;
+        $typeName .= ' de taille ' . SizeHelper::toLabelFr($monster->monsterSize, $gender, false);
+
+        $alignment = $monster->getField(Field::ALGNID) ?? '';
+
+        return $typeName . ($alignment ? ', ' . $alignment : '');
     }
 
     public function formatScore(Monster $monster, string $carac): string
@@ -118,13 +121,6 @@ class MonsterFormatter
             'car' . (3 + 3 * $mentalStats), $modWithBonus
         );
         //return sprintf("%d (%+d / %+d)", $score, $mod, $modWithBonus);
-    }
-
-    public function formatTypeAndAlignement(Monster $monster): string
-    {
-        $type      = $this->formatType($monster);
-        $alignment = $monster->getField(Field::ALGNID) ?? '';
-        return $type . ' de taille xx' . ($alignment ? ', ' . $alignment : '');
     }
 
     public function formatSkills(Collection $monsterSkills): string
@@ -158,9 +154,16 @@ class MonsterFormatter
             $conditions[] = $condition->name;
         }
 
+        if (empty($resistances)) {
+            $content = implode(', ', $conditions);
+        } elseif (empty($conditions)) {
+            $content = implode(', ', $resistances);
+        } else {
+            $content = implode('; ', [implode(', ', $resistances), implode(', ', $conditions)]);
+        }
+
         return Html::getDiv(
-            Html::getBalise('strong', 'Immunités') . ' '
-            . implode('; ', [implode(', ', $resistances), implode(', ', $conditions)]),
+            Html::getBalise('strong', 'Immunités') . ' ' . $content,
             [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
         );
     }

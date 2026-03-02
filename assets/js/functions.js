@@ -9,7 +9,7 @@ $(document).ready(function(e) {
 
 // Gère les data-action des .ajaxAction[data-trigger="click"]
 // Pour l'heure, ça inclut :
-// liadMoreSpells, openModal
+// loadMoreSpells, openModal
 function ajaxActionClick(obj, e) {
     let actions = obj.data('action').split(',');
     for (let oneAction of actions) {
@@ -45,6 +45,7 @@ function ajaxActionClick(obj, e) {
 
 // Ouvre la modale dont on passe l'identifiant
 function openModal(id) {
+    console.log(id);
     $('#'+id).addClass('show').css('display', 'block');
     $('#'+id+' + .modal-backdrop').addClass('show').removeClass('d-none');
 
@@ -75,7 +76,7 @@ function collapse(obj) {
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des sorts.
 // Présent côté admin et public.
 function loadMoreSpells(type) {
-    const page = $('#spellTable tbody tr').length/10 + 1;
+    const page = $('#spellTable tbody tr').length/10 + (type=='append' ? 1 : 0);
     const data = {
         'action': 'dealWithAjax',
         'ajaxAction': 'loadMoreSpells',

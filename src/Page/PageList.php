@@ -25,7 +25,7 @@ class PageList
 
     public function renderAdmin(string $title, Collection $viewData, ?string $toastContent = null): string
     {
-        // Construire le tableau des armures
+        // Construire le tableau
         $tableHtml = $this->tableBuilder->build(
             $viewData,
             [Bootstrap::CSS_WITH_MRGNTOP => false]

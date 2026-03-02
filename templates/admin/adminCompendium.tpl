@@ -25,7 +25,7 @@
                 </div>
 
                 <!-- Corps de la modale -->
-                <div id="modalBody" class="modal-body">
+                <div id="modalBody" class="modal-body" style="padding:0;">
                     Voici l'information que vous souhaitez afficher.
                 </div>
 
@@ -59,4 +59,4 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>

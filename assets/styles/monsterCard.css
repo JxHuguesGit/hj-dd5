@@ -1,7 +1,7 @@
 @media (min-width: 576px) {
     .modal-dialog { max-width: 600px !important; }
 }
-.modal-body {
+#monsterCard .modal-body {
     padding: 0;
 }
 
