@@ -16,6 +16,7 @@ use src\Service\Reader\MonsterLanguageReader;
 use src\Service\Reader\MonsterReader;
 use src\Service\Reader\MonsterSubTypeReader;
 use src\Service\Reader\MonsterTypeReader;
+use src\Service\Reader\MonsterVisionTypeReader;
 use src\Service\Reader\OriginAbilityReader;
 use src\Service\Reader\OriginItemReader;
 use src\Service\Reader\OriginReader;
@@ -29,6 +30,7 @@ use src\Service\Reader\SpeedTypeReader;
 use src\Service\Reader\SpellReader;
 use src\Service\Reader\SubSkillReader;
 use src\Service\Reader\ToolReader;
+use src\Service\Reader\VisionTypeReader;
 use src\Service\Reader\WeaponPropertyValueReader;
 use src\Service\Reader\WeaponReader;
 
@@ -53,6 +55,7 @@ final class ReaderFactory
         'monsterLanguage'      => MonsterLanguageReader::class,
         'monsterSubType'       => MonsterSubTypeReader::class,
         'monsterType'          => MonsterTypeReader::class,
+        'monsterVisionType'    => MonsterVisionTypeReader::class,
         Constant::ORIGIN       => OriginReader::class,
         'originAbility'        => OriginAbilityReader::class,
         'originItem'           => OriginItemReader::class,
@@ -66,6 +69,7 @@ final class ReaderFactory
         'spell'                => SpellReader::class,
         'subSkill'             => SubSkillReader::class,
         Constant::CST_TOOL     => ToolReader::class,
+        'visionType'           => VisionTypeReader::class,
         Constant::CST_WEAPON   => WeaponReader::class,
         'weaponPropertyValue'  => WeaponPropertyValueReader::class,
     ];

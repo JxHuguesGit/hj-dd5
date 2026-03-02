@@ -25,6 +25,7 @@ class Table
     public const SSTYPEMONSTRE  = 'rpgMonsterSubType';
     public const TYPEMONSTRE    = 'rpgMonsterType';
     public const MSTSPEED       = 'rpgMonsterTypeSpeed';
+    public const MSTVISION      = 'rpgMonsterTypeVision';
     public const ORIGIN         = 'rpgOrigin';
     public const ORIGINABILITY  = 'rpgOriginAbility';
     public const ORIGINITEM     = 'rpgOriginItem';
@@ -40,6 +41,7 @@ class Table
     public const TOOL           = 'rpgTool';
     public const TYPEAMMO       = 'rpgTypeAmmunition';
     public const TYPEDAMAGE     = 'rpgTypeDamage';
+    public const VISIONTYPE     = 'rpgTypeVision'; // A renommer en rpgVisionType
     public const WEAPON         = 'rpgWeapon';
     public const WPNCATEGORY    = 'rpgWeaponCategory';
     public const WPNPROPERTY    = 'rpgWeaponProperty';

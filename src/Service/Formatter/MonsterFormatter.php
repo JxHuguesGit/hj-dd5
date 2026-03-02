@@ -198,38 +198,25 @@ class MonsterFormatter
 
     public function formatSenses(Monster $monster): string
     {
-        $str    = '';
-        $comma  = false;
+        $visionTypeReader        = $this->readerFactory->visionType();
+        $monsterVisionTypeReader = $this->readerFactory->monsterVisionType();
+        $monsterVisionTypes      = $monsterVisionTypeReader->monsterVisionTypesByMonsterId($monster->id);
+
+        $comma = false;
         //////////////////////////////////////////////////////////////
         // Gestion des sens du monstre
-        $str .= '<div class="col-12"><strong>Sens</strong> ';
-
-        // Perception passive.
-        $str .= ($comma ? ', ' : '') . 'Perception passive ' . $monster->percPassive;
-
-        $str .= '</div>';
+        $senses = [];
+        foreach ($monsterVisionTypes as $monsterVisionType) {
+            $visionType = $visionTypeReader->visionTypeById($monsterVisionType->typeVisionId);
+            $senses[]   = $visionType->name . ' ' . $monsterVisionType->value . ' m';
+            $comma      = true;
+        }
         //////////////////////////////////////////////////////////////
-        return $str;
-        $objs  = $this->rpgMonster->getSenses();
-        if (! $objs->isEmpty()) {
-            $comma = false;
-            $objs->rewind();
-            while ($objs->valid()) {
-                if ($comma) {
-                    $str .= ', ';
-                }
-                $obj    = $objs->current();
-                $str   .= $obj->getController()->getFormatString();
-                $comma  = true;
-                $objs->next();
-            }
-        }
-        $senses = $this->rpgMonster->getExtra('senses');
-        if ($senses != '') {
-            $str   .= ($comma ? ', ' : '') . $senses;
-            $comma  = true;
-        }
-        return $str;
+        return Html::getDiv(
+            Html::getBalise('strong', 'Sens') . ' ' . implode(', ', $senses) .
+            ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
+            [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
+        );
     }
 
     public function formatLanguages(Monster $monster): string

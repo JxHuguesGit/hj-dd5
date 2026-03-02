@@ -18,6 +18,7 @@ use src\Repository\MonsterLanguageRepository;
 use src\Repository\MonsterRepository;
 use src\Repository\MonsterSubTypeRepository;
 use src\Repository\MonsterTypeRepository;
+use src\Repository\MonsterVisionTypeRepository;
 use src\Repository\OriginAbilityRepository;
 use src\Repository\OriginItemRepository;
 use src\Repository\OriginRepository;
@@ -31,6 +32,7 @@ use src\Repository\SpeedTypeRepository;
 use src\Repository\SpellRepository;
 use src\Repository\SubSkillRepository;
 use src\Repository\ToolRepository;
+use src\Repository\VisionTypeRepository;
 use src\Repository\WeaponPropertyValueRepository;
 use src\Repository\WeaponRepository;
 
@@ -51,6 +53,7 @@ class RepositoryFactory
         'monsterLanguage'      => MonsterLanguageRepository::class,
         'monsterSubType'       => MonsterSubTypeRepository::class,
         'monsterType'          => MonsterTypeRepository::class,
+        'monsterVisionType'    => MonsterVisionTypeRepository::class,
         Constant::ORIGIN       => OriginRepository::class,
         'originAbility'        => OriginAbilityRepository::class,
         'originItem'           => OriginItemRepository::class,
@@ -64,6 +67,7 @@ class RepositoryFactory
         'spell'                => SpellRepository::class,
         'subSkill'             => SubSkillRepository::class,
         Constant::CST_TOOL     => ToolRepository::class,
+        'visionType'           => VisionTypeRepository::class,
         Constant::CST_WEAPON   => WeaponRepository::class,
         'weaponPropertyValue'  => WeaponPropertyValueRepository::class,
     ];
