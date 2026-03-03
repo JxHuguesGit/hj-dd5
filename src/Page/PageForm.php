@@ -15,12 +15,12 @@ class PageForm
         private string $toastContent = '',
     ) {}
 
-    public function render(string $menuHtml, string $title, DomainEntity $entity, ?string $modalContent = null): string
+    public function render(string $menuHtml, string $title, DomainEntity $entity): string
     {
         // Page complète avec menu
         return $this->renderer->render(
             Template::MAIN_PAGE,
-            [$menuHtml, $this->renderAdmin($title, $entity), $modalContent]
+            [$menuHtml, $this->renderAdmin($title, $entity), '']
         );
     }
 
@@ -35,7 +35,7 @@ class PageForm
         // Section centrale (titre + formulaire)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $formHtml->display(), $this->toastContent]
+            [$title, $formHtml->display(), $this->toastContent, '']
         );
     }
 }

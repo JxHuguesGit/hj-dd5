@@ -89,6 +89,7 @@ class Language
     public const LG_CBT_STYLE_FEATS = 'Styles de combat';
     public const LG_INCTIME         = 'Temps d\'incantation';
     public const LG_CREATURE_TYPE   = 'Type de créature';
+    public const LG_FEAT_TYPE       = 'Type de don';
     public const LG_SPEED           = 'Vitesse';
 
     public const LG_TOOL_DIVERS = 'Outils divers';

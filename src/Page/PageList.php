@@ -14,12 +14,12 @@ class PageList
         private TableBuilderInterface $tableBuilder
     ) {}
 
-    public function render(string $menuHtml, string $title, Collection $viewData, ?string $modalContent = null): string
+    public function render(string $menuHtml, string $title, Collection $viewData): string
     {
         // Page complète avec menu
         return $this->renderer->render(
             Template::MAIN_PAGE,
-            [$menuHtml, $this->renderAdmin($title, $viewData), $modalContent]
+            [$menuHtml, $this->renderAdmin($title, $viewData), '']
         );
     }
 
@@ -34,7 +34,7 @@ class PageList
         // Section centrale (titre + tableau)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $tableHtml->display(), $toastContent]
+            [$title, $tableHtml->display(), $toastContent, '']
         );
     }
 }

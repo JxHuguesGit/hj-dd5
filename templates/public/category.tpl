@@ -13,3 +13,4 @@
 </section>
 
 <div class="toast-container top-0 end-0">%3$s</div>
+<div class="modal">%4$s</div>

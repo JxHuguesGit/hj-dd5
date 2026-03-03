@@ -10,6 +10,8 @@ use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Domain\WpPostService;
+use src\Service\Reader\AbilityReader;
+use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
@@ -25,6 +27,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         private FeatReader $featReader,
         private FeatTypeReader $featTypeReader,
         private OriginReader $originReader,
+        private FeatAbilityReader $featAbilityReader,
+        private AbilityReader $abilityReader,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
     ) {}
@@ -65,7 +69,9 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             $this->templateRenderer,
             new FeatFormBuilder(
                 new WpPostService(),
-                $this->featTypeReader
+                $this->featTypeReader,
+                $this->abilityReader,
+                $this->featAbilityReader
             ),
             $this->toastContent
         );
@@ -78,6 +84,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         $feats     = $this->featReader->allFeats();
         $presenter = new FeatListPresenter(
             $this->originReader,
+            $this->featAbilityReader,
+            $this->abilityReader,
             new WpPostService()
         );
         $presentContent = $presenter->present($feats);

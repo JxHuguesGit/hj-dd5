@@ -2,36 +2,30 @@
 namespace src\Factory\Controller;
 
 use src\Constant\Constant;
-use src\Controller\Public\{
-    PublicOrigines,
-    PublicSpecies,
-    PublicSkills,
-    PublicFeats,
-    PublicSpells,
-    PublicBase,
-    PublicItems
-};
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicFeats;
+use src\Controller\Public\PublicItems;
+use src\Controller\Public\PublicOrigines;
+use src\Controller\Public\PublicSkills;
+use src\Controller\Public\PublicSpecies;
+use src\Controller\Public\PublicSpells;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
-use src\Presenter\ListPresenter\{
-    FeatListPresenter,
-    OriginListPresenter,
-    SkillListPresenter,
-    SpeciesListPresenter,
-    SpellListPresenter
-};
-use src\Presenter\Modal\SpellFilterModalPresenter;
-use src\Presenter\TableBuilder\{
-    FeatTableBuilder,
-    OriginTableBuilder,
-    SkillTableBuilder,
-    SpeciesTableBuilder,
-    SpellTableBuilder
-};
-use src\Presenter\MenuPresenter;
-use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
+use src\Presenter\ListPresenter\FeatListPresenter;
+use src\Presenter\ListPresenter\OriginListPresenter;
+use src\Presenter\ListPresenter\SkillListPresenter;
+use src\Presenter\ListPresenter\SpeciesListPresenter;
+use src\Presenter\ListPresenter\SpellListPresenter;
+use src\Presenter\MenuPresenter;
+use src\Presenter\Modal\SpellFilterModalPresenter;
+use src\Presenter\TableBuilder\FeatTableBuilder;
+use src\Presenter\TableBuilder\OriginTableBuilder;
+use src\Presenter\TableBuilder\SkillTableBuilder;
+use src\Presenter\TableBuilder\SpeciesTableBuilder;
+use src\Presenter\TableBuilder\SpellTableBuilder;
+use src\Renderer\TemplateRenderer;
 use src\Service\Domain\SpellService;
 
 final class PublicControllerFactory
@@ -46,7 +40,7 @@ final class PublicControllerFactory
     {
         return match ($slug) {
 
-            Constant::ORIGINES => new PublicOrigines(
+            Constant::ORIGINES  => new PublicOrigines(
                 $this->readerFactory->origin(),
                 new OriginListPresenter(
                     $this->serviceFactory->origin()
@@ -61,7 +55,7 @@ final class PublicControllerFactory
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ORIGINES)
             ),
 
-            Constant::SPECIES => new PublicSpecies(
+            Constant::SPECIES   => new PublicSpecies(
                 $this->readerFactory->species(),
                 new SpeciesListPresenter(
                     $this->serviceFactory->wordPress()
@@ -73,7 +67,7 @@ final class PublicControllerFactory
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES)
             ),
 
-            Constant::SKILLS => new PublicSkills(
+            Constant::SKILLS    => new PublicSkills(
                 $this->readerFactory->skill(),
                 new SkillListPresenter(
                     $this->serviceFactory->skill()
@@ -87,10 +81,12 @@ final class PublicControllerFactory
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SKILLS)
             ),
 
-            Constant::FEATS => new PublicFeats(
+            Constant::FEATS     => new PublicFeats(
                 $this->readerFactory->feat(),
                 new FeatListPresenter(
                     $this->readerFactory->origin(),
+                    $this->readerFactory->featAbility(),
+                    $this->readerFactory->ability(),
                     $this->serviceFactory->wordPress()
                 ),
                 new PageList(
@@ -100,7 +96,7 @@ final class PublicControllerFactory
                 new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
             ),
 
-            Constant::SPELLS => new PublicSpells(
+            Constant::SPELLS    => new PublicSpells(
                 new SpellService(
                     $this->serviceFactory->wordPress()
                 ),
@@ -120,7 +116,7 @@ final class PublicControllerFactory
 
             Constant::CST_ITEMS => new PublicItems(),
 
-            default => null,
+            default             => null,
         };
     }
 }

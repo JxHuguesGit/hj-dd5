@@ -8,6 +8,7 @@ use src\Repository\AbilityRepository;
 use src\Repository\ArmorRepository;
 use src\Repository\ConditionRepository;
 use src\Repository\DamageTypeRepository;
+use src\Repository\FeatAbilityRepository;
 use src\Repository\FeatRepository;
 use src\Repository\FeatTypeRepository;
 use src\Repository\ItemRepository;
@@ -44,6 +45,7 @@ class RepositoryFactory
         'condition'            => ConditionRepository::class,
         'damageType'           => DamageTypeRepository::class,
         Constant::CST_FEAT     => FeatRepository::class,
+        'featAbility'          => FeatAbilityRepository::class,
         Constant::CST_FEATTYPE => FeatTypeRepository::class,
         'item'                 => ItemRepository::class,
         'language'             => LanguageRepository::class,

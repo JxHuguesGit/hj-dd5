@@ -3,6 +3,8 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap;
 use src\Constant\Constant;
+use src\Constant\Icon;
+use src\Utils\Html;
 use src\Utils\Table;
 
 abstract class AbstractTableBuilder implements TableBuilderInterface
@@ -19,6 +21,9 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
         ];
         if (isset($params[Constant::CST_ID])) {
             $tableAttributes[Constant::CST_ID] = $params[Constant::CST_ID];
+        }
+        if (isset($params[Constant::CST_TARGET])) {
+            $tableAttributes[Constant::CST_TARGET] = $params[Constant::CST_TARGET];
         }
         return (new Table())
             ->setTable($tableAttributes)
@@ -45,8 +50,36 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
 
     protected function addHeader(Table $table, array $headers): self
     {
-        foreach ($headers as $label) {
-            $table->addHeaderCell([Constant::CST_CONTENT => $label]);
+        foreach ($headers as $data) {
+            if (! is_array($data)) {
+                $table->addHeaderCell([Constant::CST_CONTENT => $data]);
+            } else {
+                if (isset($data['abbr'])) {
+                    $strContent = Html::getBalise('abbr', $data[Constant::CST_LABEL], [Constant::CST_TITLE => $data['abbr']]);
+                } else {
+                    $strContent = $data[Constant::CST_LABEL];
+                }
+
+                if ($data['filter'] ?? false) {
+                    $strContent = Html::getDiv(
+                        $strContent . ' ' . Html::getIcon(
+                            Icon::IFITLER,
+                            Icon::SOLID,
+                            [
+                                Constant::CST_CLASS => 'modal-tooltip ajaxAction',
+                                Constant::CST_DATA  => [
+                                    Constant::CST_TRIGGER => Constant::CST_CLICK,
+                                    Constant::CST_ACTION  => Constant::CST_OPENMODAL,
+                                    Constant::CST_TARGET  => $table->attributes[Constant::CST_TARGET],
+                                ],
+                            ]
+                        ),
+                        [Constant::CST_CLASS => Bootstrap::CSS_TEXT_NOWRAP]
+                    );
+                }
+                $table->addHeaderCell([Constant::CST_CONTENT => $strContent]);
+
+            }
         }
         return $this;
     }

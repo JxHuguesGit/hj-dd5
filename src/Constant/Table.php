@@ -12,6 +12,7 @@ class Table
     public const DMGDIE         = 'rpgDamageDie';
     public const DAMAGETYPE     = 'rpgTypeDamage'; // A renommer en rpgDamageType
     public const FEAT           = 'rpgFeat';
+    public const FEATABILITY    = 'rpgFeatAbility';
     public const FEATTYPE       = 'rpgFeatType';
     public const ITEM           = 'rpgItem';
     public const LANGUAGE       = 'rpgLanguage';

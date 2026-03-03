@@ -33,16 +33,18 @@ class Bootstrap
     public const CSS_ROW_PRIMARY_STRIPED_ODD  = 'row-primary-striped-odd';
     public const CSS_ROW_DARK_STRIPED         = 'row-dark-striped';
 
-    public const CSS_COL_1    = 'col-1';
-    public const CSS_COL_2    = 'col-2';
-    public const CSS_COL_12   = 'col-12';
-    public const CSS_COL_MD_1 = 'col-md-1';
-    public const CSS_COL_MD_2 = 'col-md-2';
-    public const CSS_COL_MD_3 = 'col-md-3';
-    public const CSS_COL_MD_4 = 'col-md-4';
-    public const CSS_COL_MD_5 = 'col-md-5';
-    public const CSS_COL_MD_6 = 'col-md-6';
-    public const CSS_COL_MD_9 = 'col-md-9';
+    public const CSS_COL_1     = 'col-1';
+    public const CSS_COL_2     = 'col-2';
+    public const CSS_COL_12    = 'col-12';
+    public const CSS_COL_MD_1  = 'col-md-1';
+    public const CSS_COL_MD_2  = 'col-md-2';
+    public const CSS_COL_MD_3  = 'col-md-3';
+    public const CSS_COL_MD_4  = 'col-md-4';
+    public const CSS_COL_MD_5  = 'col-md-5';
+    public const CSS_COL_MD_6  = 'col-md-6';
+    public const CSS_COL_MD_8  = 'col-md-8';
+    public const CSS_COL_MD_9  = 'col-md-9';
+    public const CSS_COL_MD_12 = 'col-md-12';
 
     public const CSS_MX_AUTO = self::CSS_MX . '-' . self::CSS_AUTO;
     public const CSS_MY4     = self::CSS_MY . '-4';

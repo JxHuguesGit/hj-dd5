@@ -6,6 +6,7 @@ use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\ConditionReader;
 use src\Service\Reader\DamageTypeReader;
+use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\ItemReader;
@@ -46,6 +47,7 @@ final class ReaderFactory
         'condition'            => ConditionReader::class,
         'damageType'           => DamageTypeReader::class,
         Constant::CST_FEAT     => FeatReader::class,
+        'featAbility'          => FeatAbilityReader::class,
         Constant::CST_FEATTYPE => FeatTypeReader::class,
         'item'                 => ItemReader::class,
         'language'             => LanguageReader::class,

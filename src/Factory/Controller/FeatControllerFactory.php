@@ -2,22 +2,20 @@
 namespace src\Factory\Controller;
 
 use src\Constant\Constant;
-use src\Controller\Public\{
-    PublicBase,
-    PublicFeat,
-    PublicFeatCombat,
-    PublicFeatEpic,
-    PublicFeatGeneral,
-    PublicFeatOrigin,
-};
+use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicFeat;
+use src\Controller\Public\PublicFeatCombat;
+use src\Controller\Public\PublicFeatEpic;
+use src\Controller\Public\PublicFeatGeneral;
+use src\Controller\Public\PublicFeatOrigin;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
-use src\Presenter\MenuPresenter;
+use src\Page\PageList;
 use src\Presenter\ListPresenter\FeatListPresenter;
+use src\Presenter\MenuPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Renderer\TemplateRenderer;
-use src\Page\PageList;
 
 final class FeatControllerFactory
 {
@@ -37,13 +35,15 @@ final class FeatControllerFactory
     public function createCategoryController(string $slug): ?PublicBase
     {
         $controllerClass = self::CATEGORY_CONTROLLERS[$slug] ?? null;
-        if (!$controllerClass) {
+        if (! $controllerClass) {
             return null;
         }
 
         $featReader = $this->readerFactory->feat();
-        $presenter = new FeatListPresenter(
+        $presenter  = new FeatListPresenter(
             $this->readerFactory->origin(),
+            $this->readerFactory->featAbility(),
+            $this->readerFactory->ability(),
             $this->serviceFactory->wordPress()
         );
         $page = new PageList(
