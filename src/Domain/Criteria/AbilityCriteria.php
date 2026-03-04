@@ -7,6 +7,7 @@ use src\Query\QueryBuilder;
 
 final class AbilityCriteria extends BaseCriteria
 {
+    public ?string $name   = null;
     public ?string $nameLt = null;
     public ?string $nameGt = null;
 
@@ -17,6 +18,9 @@ final class AbilityCriteria extends BaseCriteria
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
+        if ($this->name != null) {
+            $filters[Field::NAME] = $this->name;
+        }
         $this->applyEquals($queryBuilder, $filters);
         $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
         $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);

@@ -101,6 +101,9 @@ div.checkbox {
   height: 58px;
   cursor:pointer;
 }
+div.checkbox-sm {
+  height: 40px;
+}
 
 div.checkbox input[type="checkbox"] {
   position: absolute;

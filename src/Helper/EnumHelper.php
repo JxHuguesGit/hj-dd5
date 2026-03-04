@@ -17,4 +17,15 @@ trait EnumHelper
     {
         return static::tryFrom($value)?->label();
     }
+
+    public static function fromLabel(string $label): ?self
+    {
+        foreach (static::cases() as $case) {
+            if ($case->label() === $label) {
+                return $case;
+            }
+        }
+        return null;
+    }
+
 }

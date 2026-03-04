@@ -13,6 +13,7 @@ use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Writer\FeatAbilityWriter;
 use src\Service\Writer\FeatWriter;
 
 class FeatCompendiumFactory extends AbstractCompendiumFactory
@@ -21,6 +22,7 @@ class FeatCompendiumFactory extends AbstractCompendiumFactory
     {
         return new FeatCompendiumHandler(
             $this->writer(FeatWriter::class, FeatRepository::class),
+            $this->writer(FeatAbilityWriter::class, FeatAbilityRepository::class),
             $this->reader(FeatReader::class, FeatRepository::class),
             $this->reader(FeatTypeReader::class, FeatTypeRepository::class),
             $this->reader(OriginReader::class, OriginRepository::class),

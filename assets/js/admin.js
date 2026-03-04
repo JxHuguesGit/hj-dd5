@@ -166,6 +166,16 @@ $(document).ready(function(e) {
             3000
         );
     });
+
+
+    // Formulaire de mise à jour d'un don, selon le type on affiche les cases à cocher des caractéristiques
+    $('select#id_featTypeId').on('change', function() {
+        if ($(this).val()=='2') {
+            $('.ability-fieldset').show();
+        } else {
+            $('.ability-fieldset').hide();
+        }
+    });
 });
 
 let focusRemembered = '';

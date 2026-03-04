@@ -9,11 +9,12 @@ class CheckboxField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            'type' => 'checkbox',
-            'id'   => $this->getId(),
-            'name' => $this->name,
+            'type'  => 'checkbox',
+            'id'    => $this->getId(),
+            'name'  => $this->name,
+            'value' => $this->value,
         ];
-        if ($this->value==1) {
+        if ($this->params['checked']) {
             $attrs['checked'] = 'checked';
         }
 
@@ -23,21 +24,21 @@ class CheckboxField extends FormField
     public function display(): string
     {
         $strBalise = $this->renderInput();
-        $strLabel = Html::getBalise(
+        $strLabel  = Html::getBalise(
             'label',
             htmlspecialchars($this->label),
-            [Constant::CST_CLASS=>'w-100', 'for' => $this->getId()]
+            [Constant::CST_CLASS => 'w-100 py-0', 'for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise.$strLabel, [Constant::CST_CLASS=>'form-floating h-100']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CST_CLASS => 'form-floating h-100']);
         $innerDiv = Html::getDiv(
             $innerDiv,
             [
-                Constant::CST_CLASS => 'checkbox ajaxAction',
+                Constant::CST_CLASS => 'checkbox checkbox-sm ajaxAction w-100',
                 Constant::CST_DATA  => [
                     Constant::CST_TRIGGER => 'click',
                     Constant::CST_ACTION  => 'toggleCheckbox',
-                    Constant::CST_TARGET  => $this->getId()
-                ]
+                    Constant::CST_TARGET  => $this->getId(),
+                ],
             ]
         );
         return Html::getDiv(
@@ -46,4 +47,3 @@ class CheckboxField extends FormField
         );
     }
 }
-

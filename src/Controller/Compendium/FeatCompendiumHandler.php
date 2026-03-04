@@ -1,7 +1,11 @@
 <?php
 namespace src\Controller\Compendium;
 
+use src\Constant\Field;
+use src\Domain\Criteria\AbilityCriteria;
 use src\Domain\Entity\Feat;
+use src\Domain\Entity\FeatAbility;
+use src\Enum\AbilityEnum;
 use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\FeatFormBuilder;
@@ -15,6 +19,7 @@ use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Writer\FeatAbilityWriter;
 use src\Service\Writer\FeatWriter;
 use src\Utils\Session;
 
@@ -24,6 +29,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
 
     public function __construct(
         private FeatWriter $featWriter,
+        private FeatAbilityWriter $featAbilityWriter,
         private FeatReader $featReader,
         private FeatTypeReader $featTypeReader,
         private OriginReader $originReader,
@@ -40,6 +46,35 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
             return $this->renderList($slug);
         }
+        $hasAbilityLinked = false;
+
+        if (Session::fromPost(Field::FEATTYPEID) == 2) {
+            $selectedAbilities = [];
+            foreach (AbilityEnum::cases() as $ability) {
+                $val = Session::fromPost($ability->value);
+                if ($val) {
+                    $case                = AbilityEnum::tryFrom($ability->value);
+                    $selectedAbilities[] = $case;
+                }
+
+            }
+            if (empty($selectedAbilities)) {
+                $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
+                return $this->renderEdit($slug);
+            }
+
+            $currentAbilities = $this->featAbilityReader->featAbilitiesByFeatId($feat->id);
+            $currentValues    = [];
+            foreach ($currentAbilities as $fa) {
+                $ability = $this->abilityReader->abilityById($fa->abilityId);
+                $enum    = AbilityEnum::fromLabel($ability->name);
+                if ($enum) {
+                    $currentValues[] = $enum->value;
+                }
+            }
+            $newValues        = array_map(fn($a) => $a->value, $selectedAbilities);
+            $hasAbilityLinked = $currentValues !== $newValues;
+        }
 
         $changedFields = [];
         foreach (Feat::EDITABLE_FIELDS as $field) {
@@ -50,15 +85,30 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             }
         }
 
-        if (! empty($changedFields)) {
-            // On sauvegarde le changement
-            $this->featWriter->updatePartial($feat, $changedFields);
-            $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
-            return $this->renderList($slug);
-        } else {
+        if (empty($changedFields) && ! $hasAbilityLinked) {
             $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
             return $this->renderEdit($slug);
         }
+
+        if ($hasAbilityLinked) {
+            // On sauvegarde les liens
+            $this->featAbilityWriter->deleteFeatAbilities($currentAbilities);
+            // On créé les nouveaux liens
+            $featAbility = new FeatAbility([Field::FEATID => $feat->id]);
+            $criteria    = new AbilityCriteria();
+            foreach ($selectedAbilities as $abilityEnum) {
+                $criteria->name         = $abilityEnum->label();
+                $ability                = $this->abilityReader->allAbilities($criteria)?->first();
+                $featAbility->abilityId = $ability->id;
+                $this->featAbilityWriter->insert($featAbility);
+            }
+        }
+        if (! empty($changedFields)) {
+            // On sauvegarde le changement
+            $this->featWriter->updatePartial($feat, $changedFields);
+        }
+        $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
+        return $this->renderList($slug);
     }
 
     protected function renderEdit(string $slug): string

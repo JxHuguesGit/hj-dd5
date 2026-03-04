@@ -1,7 +1,10 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\{Bootstrap, Constant, Field, Language};
+use src\Constant\Bootstrap;
+use src\Constant\Constant;
+use src\Constant\Field;
+use src\Constant\Language;
 use src\Domain\Entity\SpeedType;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
@@ -25,26 +28,29 @@ class MonsterCombatFormBuilder
             ))
             ->addField(new NumberField(
                 Field::SCORECR, Language::LG_FP, $monster->cr, false,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_2.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_2 . ' ' . Bootstrap::CSS_MB3]
             ))
             ->addField(new NumberField(
                 Field::INITIATIVE, 'Initiative', $monster->initiative, false,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_2.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_2 . ' ' . Bootstrap::CSS_MB3]
             ))
-            ->addField(new CheckboxField(
-                Field::LEGENDARY, 'Légendaire', $monster->legendary, false,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_3.' '.Bootstrap::CSS_MB3]
-            ))
+        ;
+        $checkBoxAttributes = [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3 . ' ' . Bootstrap::CSS_MB3];
+        if ($monster->legendary) {
+            $checkBoxAttributes['checked'] = 'checked';
+        }
+        $fieldset
+            ->addField(new CheckboxField(Field::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
             ->addField(new FillerField(
                 '', '', '', '',
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_5.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_5 . ' ' . Bootstrap::CSS_MB3]
             ))
         ;
 
         // Ici on devrait récupérer les types de vitesse
         // et boucler dessus pour passer à chaque fois un objet TypeSpeed
         $speedTypeReader = $this->readerFactory->speedType();
-        $speedTypes = $speedTypeReader->allSpeedTypes();
+        $speedTypes      = $speedTypeReader->allSpeedTypes();
         foreach ($speedTypes as $speedType) {
             $this->addSpeedSection($fieldset, $monster, $speedType);
         }
@@ -55,26 +61,28 @@ class MonsterCombatFormBuilder
         // Ici, on devrait récupérer un objet TypeSpeed et utiliser slug et nom.
         // Où récupérer les données ?
         $monsterSpeed = $monster->speed($speedType->id);
-        $frTag = $speedType->frTag;
+        $frTag        = $speedType->frTag;
+
+        $checkBoxAttributes = [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3 . ' ' . Bootstrap::CSS_MB3];
+        if ($monsterSpeed->id) {
+            $checkBoxAttributes['checked'] = 'checked';
+        }
 
         $fieldset
             ->addField(new CheckboxField(
-                "speed_$frTag", ucfirst($frTag), $monsterSpeed->id ? 1 : 0, false,
-                [
-                    Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_3.' '.Bootstrap::CSS_MB3
-                ]
+                "speed_$frTag", ucfirst($frTag), $monsterSpeed->id, false, $checkBoxAttributes
             ))
             ->addField(new TextField(
                 "value['$frTag']", 'Distance (m)', $monsterSpeed->value ?? '', false,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_2.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_2 . ' ' . Bootstrap::CSS_MB3]
             ))
             ->addField(new TextField(
                 "extra['$frTag']", 'Complément', $monsterSpeed->extra ?? '', false,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4 . ' ' . Bootstrap::CSS_MB3]
             ))
             ->addField(new FillerField(
                 '', '', '', '',
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_3.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3 . ' ' . Bootstrap::CSS_MB3]
             ))
         ;
     }

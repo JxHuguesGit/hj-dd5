@@ -8,6 +8,7 @@ use src\Constant\Field;
 use src\Constant\Language;
 use src\Domain\Criteria\FeatAbilityCriteria;
 use src\Domain\Entity\Feat;
+use src\Enum\AbilityEnum;
 use src\Presenter\ViewModel\FeatAbilityView;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
@@ -53,7 +54,9 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         foreach ($abilities as $ability) {
             $criteria->abilityId = $ability->id;
             $featAbilities       = $this->featAbilityReader->allFeatAbilities($criteria);
-            $featAbilitiesSel->add(new FeatAbilityView($ability->id, $ability->name, ! $featAbilities->isEmpty()));
+            $featAbilitiesSel->add(new FeatAbilityView(
+                $ability->id, AbilityEnum::fromLabel($ability->name), $ability->name, ! $featAbilities->isEmpty()
+            ));
         }
 
         $fieldset = new FieldsetField('');
@@ -97,7 +100,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4]
             ))
             ->addField(new CheckboxGroupField(
-                'score',
+                'ability',
                 $featAbilitiesSel,
                 [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_8]
             ))
