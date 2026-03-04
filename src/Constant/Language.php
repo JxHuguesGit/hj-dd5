@@ -104,4 +104,10 @@ class Language
     public const LG_SORT_NIVEAU_X = ' - Sort de niveau %d';
     public const LG_CONC_UNTIL_X  = 'Concentration, jusqu\'à %s';
 
+    public const LG_UNKNOWN_ENTRY         = "L'entrée n'existe pas.";
+    public const LG_SUCCESS_EDIT_ENTRY    = "L'entrée <strong>%s</strong> a été correctement mise à jour.";
+    public const LG_SUCCESS_DEL_ENTRY     = "L'entrée <strong>%s</strong> a été correctement supprimée.";
+    public const LG_NO_MODIFICATION_ENTRY = "Aucune valeur n'a été modifiée pour être enregistrée.";
+    public const LG_FORM_ERROR            = "Le formulaire contient des erreurs : %s";
+
 }

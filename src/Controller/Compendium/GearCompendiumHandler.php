@@ -1,7 +1,8 @@
 <?php
 namespace src\Controller\Compendium;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
+use src\Constant\Language as L;
 use src\Domain\Entity\Item;
 use src\Domain\Validator\ItemValidator;
 use src\Factory\ItemFactory;
@@ -29,8 +30,8 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     public function render(): string
     {
-        $action = Session::fromGet(Constant::CST_ACTION);
-        $slug   = Session::fromGet(Constant::CST_SLUG);
+        $action = Session::fromGet(C::CST_ACTION);
+        $slug   = Session::fromGet(C::CST_SLUG);
 
         if (Session::isPostSubmitted()) {
             return $this->handleSubmit($action, $slug);
@@ -40,19 +41,19 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
         $newItem->type = 'other';
 
         return match (true) {
-            $action === Constant::EDIT && $slug !== ''  => $this->renderEdit($slug),
-            $action === Constant::DELETE && $slug != '' => $this->renderDelete($slug),
-            $action === Constant::NEW                   => $this->renderCreate($newItem),
-            default                                     => $this->renderList(),
+            $action === C::EDIT && $slug !== ''  => $this->renderEdit($slug),
+            $action === C::DELETE && $slug != '' => $this->renderDelete($slug),
+            $action === C::NEW                   => $this->renderCreate($newItem),
+            default                              => $this->renderList(),
         };
     }
 
     private function handleSubmit(string $action, string $slug): string
     {
         return match ($action) {
-            Constant::EDIT => $this->handleEditSubmit($slug),
-            Constant::NEW  => $this->handleNewSubmit(),
-            default        => $this->renderList(),
+            C::EDIT => $this->handleEditSubmit($slug),
+            C::NEW  => $this->handleNewSubmit(),
+            default => $this->renderList(),
         };
     }
 
@@ -80,7 +81,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
         $view = null;
 
         if (! $item) {
-            $this->toastContent = $this->toastBuilder->error("L'objet modifié n'existe pas.");
+            $this->toastContent = $this->toastBuilder->error(L::LG_UNKNOWN_ENTRY);
             $view               = $this->renderList($slug);
         } else {
             $changedFields = [];
@@ -96,16 +97,16 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             if (! empty($changedFields)) {
                 $errors = ItemValidator::validate($item);
                 if (! empty($errors)) {
-                    $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
+                    $this->toastContent = $this->toastBuilder->error(sprintf(L::LG_FORM_ERROR, implode(', ', $errors)));
                     $view               = $this->renderEdit($slug);
                 } else {
                     // On sauvegarde le changement
                     $this->itemWriter->updatePartial($item, $changedFields);
-                    $this->toastContent = $this->toastBuilder->success("L'objet <strong>" . $item->name . "</strong> a été correctement mis à jour.");
+                    $this->toastContent = $this->toastBuilder->success(sprintf(L::LG_SUCCESS_EDIT_ENTRY, $item->name));
                     $view               = $this->renderList();
                 }
             } else {
-                $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
+                $this->toastContent = $this->toastBuilder->info(L::LG_NO_MODIFICATION_ENTRY);
                 $view               = $this->renderEdit($slug);
             }
         }
@@ -116,7 +117,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
     {
         $page = new PageForm(
             $this->templateRenderer,
-            new GearFormBuilder(Constant::NEW ),
+            new GearFormBuilder(C::NEW ),
             $this->toastContent
         );
 
@@ -152,9 +153,9 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
     {
         $item = $this->itemReader->itemBySlug($slug, null);
         if (! $item) {
-            $this->toastContent = $this->toastBuilder->error("L'objet supprimé n'existe pas.");
+            $this->toastContent = $this->toastBuilder->error(L::LG_UNKNOWN_ENTRY);
         } else {
-            $this->toastContent = $this->toastBuilder->success("L'objet <strong>" . $item->name . "</strong> a été correctement supprimé.");
+            $this->toastContent = $this->toastBuilder->success(sprintf(L::LG_SUCCESS_DEL_ENTRY, $item->name));
             // TODO : Supprimer l'objet dans les table de jointures
             $this->itemWriter->delete($item);
         }
