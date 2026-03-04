@@ -36,6 +36,7 @@
             </div>
         </div>
     </div>
+    <div class="modal-backdrop d-none"></div>
 
     <!-- Modale -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -54,9 +55,10 @@
 
                 <!-- Pied de la modale -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" id="confirmModalButton">Confirmer</button>
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="confirmModalButton">Confirmer</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal-backdrop d-none"></div>

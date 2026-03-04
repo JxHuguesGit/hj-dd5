@@ -6,6 +6,9 @@ use src\Constant\Template;
 use src\Domain\Entity;
 use src\Factory\CharacterFactory;
 use src\Factory\CompendiumFactory;
+use src\Presenter\MenuPresenter\CharacterMenuPresenter;
+use src\Presenter\MenuPresenter\CompendiumMenuPresenter;
+use src\Presenter\MenuPresenter\TimelineMenuPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
@@ -17,10 +20,10 @@ use src\Service\Writer\CharacterWriter;
 class AdminPage extends Utilities
 {
     private array $allowedOnglets = [
-        'home',
-        'character',
-        'timeline',
-        'compendium',
+        Constant::HOME,
+        Constant::ONG_CHARACTER,
+        Constant::ONG_TIMELINE,
+        Constant::ONG_COMPENDIUM,
     ];
 
     public function getAdminContentPage(string $content): string
@@ -38,10 +41,17 @@ class AdminPage extends Utilities
 
     protected function getSidebar(): string
     {
-        $currentTab = $this->getArrParams(Constant::ONGLET, 'home');
-        $currentId  = $this->getArrParams('id', '');
-        $sidebar    = new AdminSidebar();
-        $sidebar->setAttributes(
+        $currentTab = $this->getArrParams(Constant::ONGLET, Constant::HOME);
+        $currentId  = $this->getArrParams(Constant::CST_ID, '');
+
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $reader        = new CharacterReader(new CharacterRepository($queryBuilder, $queryExecutor));
+        $sidebar       = new AdminSidebar(
+            new CharacterMenuPresenter($reader),
+            new TimelineMenuPresenter(),
+            new CompendiumMenuPresenter(),
+            fn($tpl, $attr) => $this->getRender($tpl, $attr),
             $this->allowedOnglets,
             $currentTab,
             $currentId
@@ -51,13 +61,16 @@ class AdminPage extends Utilities
 
     public static function getAdminController(array $arrUri): mixed
     {
-        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
+        $qb       = new QueryBuilder();
+        $qe       = new QueryExecutor();
+        $renderer = new TemplateRenderer();
+        Entity::setSharedDependencies($qb, $qe);
 
         $controller = new AdminPage($arrUri);
-        $currentTab = $controller->getArrParams(Constant::ONGLET, 'home');
+        $currentTab = $controller->getArrParams(Constant::ONGLET, Constant::HOME);
         switch ($currentTab) {
-            case 'character':
-                $repo       = new CharacterRepository(new QueryBuilder(), new QueryExecutor());
+            case Constant::ONG_CHARACTER:
+                $repo       = new CharacterRepository($qb, $qe);
                 $controller = new AdminCharacterPage(
                     $arrUri,
                     new CharacterFactory(
@@ -65,21 +78,21 @@ class AdminPage extends Utilities
                             new CharacterReader($repo),
                             new CharacterWriter($repo),
                         ),
-                        new TemplateRenderer()
+                        $renderer
                     )
                 );
                 break;
-            case 'compendium':
+            case Constant::ONG_COMPENDIUM:
                 $controller = new AdminCompendiumPage(
                     $arrUri,
                     new CompendiumFactory(
-                        new QueryBuilder(),
-                        new QueryExecutor(),
-                        new TemplateRenderer()
+                        $qb,
+                        $qe,
+                        $renderer
                     )
                 );
                 break;
-            case 'home':
+            case Constant::HOME:
             default:
                 $controller = new AdminHomePage($arrUri);
                 break;

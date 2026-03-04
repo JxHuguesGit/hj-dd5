@@ -36,13 +36,14 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             return $this->handleSubmit($action, $slug);
         }
 
-        $newItem = ItemFactory::createEmpty();
+        $newItem       = ItemFactory::createEmpty();
         $newItem->type = 'other';
 
-        return match(true) {
-            $action === Constant::EDIT && $slug !== '' => $this->renderEdit($slug),
-            $action === Constant::NEW => $this->renderCreate($newItem),
-            default => $this->renderList(),
+        return match (true) {
+            $action === Constant::EDIT && $slug !== ''  => $this->renderEdit($slug),
+            $action === Constant::DELETE && $slug != '' => $this->renderDelete($slug),
+            $action === Constant::NEW                   => $this->renderCreate($newItem),
+            default                                     => $this->renderList(),
         };
     }
 
@@ -57,20 +58,20 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     private function handleNewSubmit(): string
     {
-            $item = ItemFactory::fromPost();
-            if ($item->type=='Autre') {
-                $item->type = 'other';
-            }
+        $item = ItemFactory::fromPost();
+        if ($item->type == 'Autre') {
+            $item->type = 'other';
+        }
 
-            $errors = ItemValidator::validate($item);
-            if (!empty($errors)) {
-                $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
-                return $this->renderCreate($item);
-            }
+        $errors = ItemValidator::validate($item);
+        if (! empty($errors)) {
+            $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
+            return $this->renderCreate($item);
+        }
 
-            $this->itemWriter->insert($item);
-            $this->toastContent = $this->toastBuilder->success("L'objet <strong>".$item->name."</strong> a été correctement créé.");
-            return $this->renderList();
+        $this->itemWriter->insert($item);
+        $this->toastContent = $this->toastBuilder->success("L'objet <strong>" . $item->name . "</strong> a été correctement créé.");
+        return $this->renderList();
     }
 
     private function handleEditSubmit(string $slug): string
@@ -78,34 +79,34 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
         $item = $this->itemReader->itemBySlug($slug, null);
         $view = null;
 
-        if (!$item) {
+        if (! $item) {
             $this->toastContent = $this->toastBuilder->error("L'objet modifié n'existe pas.");
-            $view = $this->renderList($slug);
+            $view               = $this->renderList($slug);
         } else {
             $changedFields = [];
             foreach (Item::EDITABLE_FIELDS as $field) {
                 $value = Session::fromPost($field, 'err');
                 $value = str_replace("\\'", "'", $value);
                 if ($value != 'err' && $item->$field != $value) {
-                    $item->$field = $value;
+                    $item->$field    = $value;
                     $changedFields[] = $field;
                 }
             }
 
-            if (!empty($changedFields)) {
+            if (! empty($changedFields)) {
                 $errors = ItemValidator::validate($item);
-                if (!empty($errors)) {
+                if (! empty($errors)) {
                     $this->toastContent = $this->toastBuilder->error("Le formulaire contient des erreurs : " . implode(', ', $errors));
-                    $view = $this->renderEdit($slug);
+                    $view               = $this->renderEdit($slug);
                 } else {
                     // On sauvegarde le changement
                     $this->itemWriter->updatePartial($item, $changedFields);
-                    $this->toastContent = $this->toastBuilder->success("L'objet <strong>".$item->name."</strong> a été correctement mis à jour.");
-                    $view = $this->renderList();
+                    $this->toastContent = $this->toastBuilder->success("L'objet <strong>" . $item->name . "</strong> a été correctement mis à jour.");
+                    $view               = $this->renderList();
                 }
             } else {
                 $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
-                $view = $this->renderEdit($slug);
+                $view               = $this->renderEdit($slug);
             }
         }
         return $view;
@@ -115,7 +116,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
     {
         $page = new PageForm(
             $this->templateRenderer,
-            new GearFormBuilder(Constant::NEW),
+            new GearFormBuilder(Constant::NEW ),
             $this->toastContent
         );
 
@@ -137,13 +138,27 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     public function renderList(): string
     {
-        $items = $this->itemReader->allGears();
+        $items     = $this->itemReader->allGears();
         $presenter = new GearListPresenter();
         $content   = $presenter->present($items);
-        $page = new PageList(
+        $page      = new PageList(
             $this->templateRenderer,
             new ItemTableBuilder(true)
         );
         return $page->renderAdmin('', $content, $this->toastContent);
+    }
+
+    public function renderDelete(string $slug): string
+    {
+        $item = $this->itemReader->itemBySlug($slug, null);
+        if (! $item) {
+            $this->toastContent = $this->toastBuilder->error("L'objet supprimé n'existe pas.");
+        } else {
+            $this->toastContent = $this->toastBuilder->success("L'objet <strong>" . $item->name . "</strong> a été correctement supprimé.");
+            // TODO : Supprimer l'objet dans les table de jointures
+            $this->itemWriter->delete($item);
+        }
+
+        return $this->renderList();
     }
 }

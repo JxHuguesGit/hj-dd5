@@ -47,4 +47,22 @@ class QueryExecutor
         $wpdb->query($prepared);
         return (int) $wpdb->rows_affected;
     }
+
+    public function beginTransaction(): void
+    {
+        global $wpdb;
+        $wpdb->query('START TRANSACTION');
+    }
+
+    public function commit(): void
+    {
+        global $wpdb;
+        $wpdb->query('COMMIT');
+    }
+
+    public function rollBack(): void
+    {
+        global $wpdb;
+        $wpdb->query('ROLLBACK');
+    }
 }

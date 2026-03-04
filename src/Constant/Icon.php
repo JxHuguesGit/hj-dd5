@@ -20,11 +20,12 @@ class Icon
     public const IPLUS     = 'plus';
     public const IUSERS    = 'users';
     public const ISEARCH   = 'search';
+    public const ITRASH    = 'trash';
     public const IHOUSE    = 'house';
     public const ISPARKLES = 'spell-sparkles';
 
-    public const ICIRCLEPLUS = 'circle-'.self::IPLUS;
-    public const ISQUAREPLUS = 'square-'.self::IPLUS;
+    public const ICIRCLEPLUS = 'circle-' . self::IPLUS;
+    public const ISQUAREPLUS = 'square-' . self::IPLUS;
 
     public const REGULAR = 'regular';
     public const SOLID   = 'solid';

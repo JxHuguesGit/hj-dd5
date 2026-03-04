@@ -1,7 +1,10 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\{Bootstrap, Constant, Field, Language};
+use src\Constant\Bootstrap as B;
+use src\Constant\Constant as C;
+use src\Constant\Field as F;
+use src\Constant\Language as L;
 use src\Domain\Entity\Item;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;
@@ -9,69 +12,71 @@ use src\Utils\UrlGenerator;
 class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterface
 {
     public function __construct(
-        private string $type = Constant::EDIT,
+        private string $type = C::EDIT,
     ) {}
 
     public function build(object $entity, array $params = []): Form
     {
-        if (!$entity instanceof Item) {
+        if (! $entity instanceof Item) {
             throw new \InvalidArgumentException('Expected DomainItem');
         }
 
-        $params[Constant::CST_TITLE] = 'Matériel : ' . $entity->name;
-        $params[Constant::CST_TYPE] = $this->type;
-        $params['cancelUrl'] = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR);
-        $params[Constant::CST_ACTION] = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $entity->slug, $this->type);
-        $form = $this->createForm($params);
+        $params[C::CST_TITLE]  = 'Matériel : ' . $entity->name;
+        $params[C::CST_TYPE]   = $this->type;
+        $params['cancelUrl']   = UrlGenerator::admin(C::ONG_COMPENDIUM, C::CST_GEAR);
+        $params[C::CST_ACTION] = UrlGenerator::admin(C::ONG_COMPENDIUM, C::CST_GEAR, $entity->slug, $this->type);
+        $form                  = $this->createForm($params);
 
         $mock = [
-            [Constant::CST_VALUE=>Constant::CST_WEAPON, Constant::CST_LABEL=>'Arme'],
-            [Constant::CST_VALUE=>Constant::CST_ARMOR,  Constant::CST_LABEL=>'Armure'],
-            [Constant::CST_VALUE=>'ammo',   Constant::CST_LABEL=>'Munition'],
-            [Constant::CST_VALUE=>Constant::CST_TOOL,   Constant::CST_LABEL=>'Outil'],
-            [Constant::CST_VALUE=>'other',  Constant::CST_LABEL=>'Autre'],
+            [C::CST_VALUE => C::CST_WEAPON, C::CST_LABEL => 'Arme'],
+            [C::CST_VALUE => C::CST_ARMOR, C::CST_LABEL => 'Armure'],
+            [C::CST_VALUE => 'ammo', C::CST_LABEL => 'Munition'],
+            [C::CST_VALUE => C::CST_TOOL, C::CST_LABEL => 'Outil'],
+            [C::CST_VALUE => 'other', C::CST_LABEL => 'Autre'],
         ];
 
         $fieldset = new FieldsetField('');
 
         $fieldset
             ->addField(new NumberField(
-                Field::ID, 'ID', $entity->id, true,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_3.' '.Bootstrap::CSS_MB3]
+                F::ID, 'ID', $entity->id, true,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_3 . ' ' . B::CSS_MB3]
             ))
             ->addField(new TextField(
-                Field::NAME, 'Nom', $entity->name, $this->type==Constant::EDIT,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_5]
+                F::NAME, 'Nom', $entity->name, $this->type == C::EDIT,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_5]
             ))
             ->addField(new TextField(
-                Field::SLUG, 'Slug', $entity->slug, true,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4]
+                F::SLUG, 'Slug', $entity->slug, true,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_4]
             ))
             ->addField(new TextareaField(
-                Field::DESCRIPTION, Language::LG_DESCRIPTION, $entity->description, false,
-                [Constant::OUTERDIVCLASS=>'col-md-12'.' '.Bootstrap::CSS_MB3, 'style'=>'height: 200px']
-            ));
+                F::DESCRIPTION, L::LG_DESCRIPTION, $entity->description, false,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_12 . ' ' . B::CSS_MB3, 'style' => 'height: 200px']
+            ))
+        ;
 
-        if ($this->type==Constant::NEW) {
-            $libelleType = (array_column($mock, Constant::CST_LABEL))[array_search($entity->type, array_column($mock, Constant::CST_VALUE))];
+        if ($this->type == C::NEW ) {
+            $libelleType = (array_column($mock, C::CST_LABEL))[array_search($entity->type, array_column($mock, C::CST_VALUE))];
             $fieldset->addField(new TextField(
-                Field::TYPE, "Type d'objet", $libelleType, true,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                F::TYPE, "Type d'objet", $libelleType, true,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_4 . ' ' . B::CSS_MB3]
             ));
         } else {
             $fieldset->addField(new SelectField(
-                Field::TYPE, "Type d'objet", $entity->type, $mock,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                F::TYPE, "Type d'objet", $entity->type, $mock,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_4 . ' ' . B::CSS_MB3]
             ));
         }
+
         $fieldset
             ->addField(new NumberField(
-                Field::GOLDPRICE, 'Prix (po)', $entity->goldPrice, false,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4, 'step'=>'0.01']
+                F::GOLDPRICE, 'Prix (po)', $entity->goldPrice, false,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_4, 'step' => '0.01']
             ))
             ->addField(new NumberField(
-                Field::WEIGHT, 'Poids (kg)', $entity->weight, false,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4, 'step'=>'0.01']
+                F::WEIGHT, 'Poids (kg)', $entity->weight, false,
+                [C::OUTERDIVCLASS => B::CSS_COL_MD_4, 'step' => '0.01']
             ))
         ;
 

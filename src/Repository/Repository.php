@@ -185,4 +185,19 @@ class Repository
             $queryBuilder->getParams()
         );
     }
+
+    public function beginTransaction(): void
+    {
+        $this->queryExecutor->beginTransaction();
+    }
+
+    public function commit(): void
+    {
+        $this->queryExecutor->commit();
+    }
+
+    public function rollBack(): void
+    {
+        $this->queryExecutor->rollBack();
+    }
 }

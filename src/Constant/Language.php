@@ -31,6 +31,7 @@ class Language
     public const LG_CHARISME        = 'Charisme';
     public const LG_CA_LONG         = 'Classe d\'armure (CA)';
     public const LG_CLASSES         = 'Classes';
+    public const LG_COMPENDIUM      = 'Compendium';
     public const LG_SKILLS          = 'Compétences';
     public const LG_COMPONENTS      = 'Composantes';
     public const LG_CONSTITUTION    = 'Constitution';
@@ -56,6 +57,7 @@ class Language
     public const LG_CHAR_HIST_TITLE = 'Historique du personnage';
     public const LG_HISTORIQUES     = 'Historiques';
     public const LG_UNLIMITED       = 'Illimitée';
+    public const LG_INITIATIVE      = 'Initiative';
     public const LG_INTELLIGENCE    = 'Intelligence';
     public const LG_GEAR_TITLE      = 'Le Matériel';
     public const LG_WEAPONS_TITLE   = 'Les Armes';
@@ -63,6 +65,7 @@ class Language
     public const LG_SKILLS_TITLE    = 'Les Compétences';
     public const LG_FEATS_TITLE     = 'Les Dons';
     public const LG_HISTO_TITLE     = 'Les Historiques';
+    public const LG_MONSTERS_TITLE  = 'Les Monstres';
     public const LG_TOOLS_TITLE     = 'Les Outils';
     public const LG_SPECIES_TITLE   = 'Les Espèces';
     public const LG_SPELLS_TITLE    = 'Les Sorts';

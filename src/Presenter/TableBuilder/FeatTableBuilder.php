@@ -22,7 +22,7 @@ class FeatTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [
-            [Constant::CST_LABEL => Language::LG_NAMES, 'filter' => true],
+            [Constant::CST_LABEL => Language::LG_NAMES],
             [Constant::CST_LABEL => Constant::CST_VIDE],
             [Constant::CST_LABEL => Language::LG_PREQUISITE],
         ];

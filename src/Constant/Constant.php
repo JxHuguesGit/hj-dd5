@@ -14,6 +14,7 @@ class Constant
     public const HEROSELECTION = 'heroSelection';
     public const ONGLET        = 'onglet';
     public const EDIT          = 'edit';
+    public const DELETE        = 'delete';
     public const NEW           = 'new';
     public const CREATE        = 'create';
 
@@ -46,6 +47,7 @@ class Constant
     public const OUTERDIVCLASS  = 'outerDivClass';
     public const ONG_COMPENDIUM = 'compendium';
     public const ONG_CHARACTER  = 'character';
+    public const ONG_TIMELINE   = 'timeline';
     public const TAB_MONSTERS   = 'monsters';
 
     public const CST_EXTRA           = '-extra';

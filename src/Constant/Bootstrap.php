@@ -3,31 +3,34 @@ namespace src\Constant;
 
 class Bootstrap
 {
-    public const CSS_CENTER  = 'center';
-    public const CSS_DARK    = 'dark';
-    public const CSS_LINK    = 'link';
-    public const CSS_END     = 'end';
-    public const CSS_FONT    = 'font';
-    public const CSS_ITEM    = 'item';
-    public const CSS_ITALIC  = 'italic';
-    public const CSS_MB3     = 'mb-3';
-    public const CSS_MT5     = 'mt-5';
-    public const CSS_NAV     = 'nav';
-    public const CSS_SM      = 'sm';
-    public const CSS_STRIPED = 'striped';
-    public const CSS_TABLE   = 'table';
-    public const CSS_TEXT    = 'text';
-    public const CSS_AUTO    = 'auto';
-    public const CSS_DNONE   = 'd-none';
-    public const CSS_BTN     = 'btn';
-    public const CSS_BG      = 'bg';
-    public const CSS_MX      = 'mx';
-    public const CSS_MY      = 'my';
-    public const CSS_BADGE   = 'badge';
-    public const CSS_OUTLINE = 'outline';
-    public const CSS_WHITE   = 'white';
-    public const CSS_TITLE   = 'title';
-    public const CSS_NOWRAP  = 'nowrap';
+    public const CSS_CENTER    = 'center';
+    public const CSS_DARK      = 'dark';
+    public const CSS_DANGER    = 'danger';
+    public const CSS_LINK      = 'link';
+    public const CSS_END       = 'end';
+    public const CSS_FONT      = 'font';
+    public const CSS_ITEM      = 'item';
+    public const CSS_ITALIC    = 'italic';
+    public const CSS_MB3       = 'mb-3';
+    public const CSS_MT5       = 'mt-5';
+    public const CSS_NAV       = 'nav';
+    public const CSS_SM        = 'sm';
+    public const CSS_STRIPED   = 'striped';
+    public const CSS_TABLE     = 'table';
+    public const CSS_TEXT      = 'text';
+    public const CSS_AUTO      = 'auto';
+    public const CSS_DNONE     = 'd-none';
+    public const CSS_BTN       = 'btn';
+    public const CSS_BG        = 'bg';
+    public const CSS_MX        = 'mx';
+    public const CSS_MY        = 'my';
+    public const CSS_BADGE     = 'badge';
+    public const CSS_OUTLINE   = 'outline';
+    public const CSS_WHITE     = 'white';
+    public const CSS_TITLE     = 'title';
+    public const CSS_NOWRAP    = 'nowrap';
+    public const CSS_TREEVIEW  = 'treeview';
+    public const CSS_MENU_OPEN = 'menu-open';
 
     public const CSS_ROW_PRIMARY_STRIPED_EVEN = 'row-primary-striped-even';
     public const CSS_ROW_PRIMARY_STRIPED_ODD  = 'row-primary-striped-odd';
@@ -51,6 +54,7 @@ class Bootstrap
 
     public const CSS_NAV_LINK       = self::CSS_NAV . '-' . self::CSS_LINK;
     public const CSS_NAV_ITEM       = self::CSS_NAV . '-' . self::CSS_ITEM;
+    public const CSS_NAV_TREEVIEW   = self::CSS_NAV . '-' . self::CSS_TREEVIEW;
     public const CSS_NAV_LINK_TITLE = self::CSS_NAV . '-' . self::CSS_LINK . '-' . self::CSS_TITLE;
 
     public const CSS_FONT_ITALIC = self::CSS_FONT . '-' . self::CSS_ITALIC;
@@ -62,6 +66,7 @@ class Bootstrap
     public const CSS_TEXT_CENTER = self::CSS_TEXT . '-' . self::CSS_CENTER;
     public const CSS_TEXT_DARK   = self::CSS_TEXT . '-' . self::CSS_DARK;
     public const CSS_TEXT_WHITE  = self::CSS_TEXT . '-' . self::CSS_WHITE;
+    public const CSS_TEXT_DANGER = self::CSS_TEXT . '-' . self::CSS_DANGER;
     public const CSS_TEXT_END    = self::CSS_TEXT . '-' . self::CSS_END;
     public const CSS_TEXT_NOWRAP = self::CSS_TEXT . '-' . self::CSS_NOWRAP;
 

@@ -52,12 +52,27 @@ class ItemTableBuilder extends AbstractTableBuilder
                     ],
                 ]);
             if ($this->isAdmin) {
+                $btnEdit = Html::getLink(
+                    Html::getIcon(Icon::IEDIT),
+                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::EDIT),
+                    Bootstrap::CSS_TEXT_DARK
+                );
+                $btnDelete = Html::getLink(
+                    Html::getIcon(Icon::ITRASH),
+                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::DELETE),
+                    Bootstrap::CSS_TEXT_DANGER . ' ' . Constant::CST_AJAXACTION,
+                    [
+                        Constant::CST_DATA => [
+                            Constant::CST_TRIGGER     => 'click',
+                            Constant::CST_ACTION      => 'openConfirm',
+                            Constant::CST_TARGET      => 'confirmModal',
+                            Constant::CST_TITLE       => 'Suppression de l\'objet ' . $item->name,
+                            Constant::CST_DESCRIPTION => 'Confirmez-vous la suppression de l\'objet <strong>' . $item->name . '</strong> ?',
+                        ],
+                    ]
+                );
                 $table->addBodyCell([
-                    Constant::CST_CONTENT    => Html::getLink(
-                        Html::getIcon(Icon::IEDIT),
-                        UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::EDIT),
-                        Bootstrap::CSS_TEXT_DARK
-                    ),
+                    Constant::CST_CONTENT    => $btnEdit . ' ' . $btnDelete,
                     Constant::CST_ATTRIBUTES => [
                         Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER . ' ' . Bootstrap::CSS_COL_1]
                     ,

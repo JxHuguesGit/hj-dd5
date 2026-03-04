@@ -22,6 +22,18 @@ class ItemWriter
         }
     }
 
+    public function delete(Item $item): void
+    {
+        $this->repository->beginTransaction();
+        try {
+            $this->repository->delete($item);
+            $this->repository->commit();
+        } catch (\Throwable $e) {
+            $this->repository->rollBack();
+            throw $e;
+        }
+    }
+
     public function updatePartial(Item $item, array $changedFields): void
     {
         $this->repository->beginTransaction();
