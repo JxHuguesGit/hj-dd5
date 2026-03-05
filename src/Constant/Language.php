@@ -5,9 +5,8 @@ class Language
 {
     public const LG_GP              = ' po';
     public const LG_KG              = ' kg';
-    public const LG_FORCE_SHORT     = 'For';
-    public const LG_MOD_DEX_MAX2    = '+ modificateur de Dex (max 2)';
-    public const LG_MOD_DEX         = '+ modificateur de Dex';
+    public const LG_MOD_DEX_MAX2    = ' + Dex (max 2)';
+    public const LG_MOD_DEX         = ' + Dex';
     public const LG_ARM_LGT_DONDOFF = 'Armures légères (s\'enfile ou se retire en 1 minute)';
     public const LG_ARM_MDM_DONDOFF = 'Armures intermédiaires (s\'enfile en 5 minutes, se retire en 1 minute)';
     public const LG_ARM_HVY_DONDOFF = 'Armures lourdes (s\'enfile en 10 minutes, se retire en 5 minutes)';
@@ -29,7 +28,6 @@ class Language
     public const LG_CATEGORY        = 'Catégorie';
     public const LG_SIZE_CATEGORY   = 'Catégorie de taille';
     public const LG_CHARISME        = 'Charisme';
-    public const LG_CA_LONG         = 'Classe d\'armure (CA)';
     public const LG_CLASSES         = 'Classes';
     public const LG_COMPENDIUM      = 'Compendium';
     public const LG_SKILLS          = 'Compétences';
@@ -69,7 +67,6 @@ class Language
     public const LG_TOOLS_TITLE     = 'Les Outils';
     public const LG_SPECIES_TITLE   = 'Les Espèces';
     public const LG_SPELLS_TITLE    = 'Les Sorts';
-    public const LG_GEAR            = 'Matériel';
     public const LG_MONSTER         = 'Monstre';
     public const LG_CHAR_NAME_TITLE = 'Nom du personnage';
     public const LG_NAMES           = 'Noms';
@@ -88,7 +85,6 @@ class Language
     public const LG_RULES           = 'Règles';
     public const LG_SPECIALES       = 'Spéciales';
     public const LG_SAGESSE         = 'Sagesse';
-    public const LG_SPELLS          = 'Sorts';
     public const LG_CBT_STYLE_FEATS = 'Styles de combat';
     public const LG_INCTIME         = 'Temps d\'incantation';
     public const LG_CREATURE_TYPE   = 'Type de créature';

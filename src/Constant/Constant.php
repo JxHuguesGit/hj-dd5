@@ -10,20 +10,16 @@ class Constant
     public const ABLWIS = 'Sagesse';
     public const ABLCHA = 'Charisme';
 
-    public const FORMNAME      = 'formName';
-    public const HEROSELECTION = 'heroSelection';
     public const ONGLET        = 'onglet';
     public const EDIT          = 'edit';
     public const DELETE        = 'delete';
     public const NEW           = 'new';
-    public const CREATE        = 'create';
 
     public const CLASSES        = 'classes';
     public const HOME           = 'home';
     public const ARMORS         = 'armors';
     public const WEAPONS        = 'weapons';
     public const SPECIES        = 'species';
-    public const SPECIE         = 'specie';
     public const GENERAL        = 'general';
     public const EPIC           = 'epic';
     public const COMBAT         = 'combat';
@@ -98,14 +94,8 @@ class Constant
     public const CST_GEAR            = 'gear';
     public const CST_ARMOR           = 'armor';
     public const CST_WEAPON          = 'weapon';
-    public const CST_TOOLS           = 'tools';
     public const CST_SUBSKILLS       = 'subSkills';
-    public const CST_FEATNAME        = 'featname';
-    public const CST_TOOLNAME        = 'toolname';
-    public const CST_TOOLSLUG        = 'toolSlug';
-    public const CST_FEATSLUG        = 'featSlug';
     public const CST_FEATTYPE        = 'featType';
-    public const CST_TYPELABEL       = 'typeLabel';
     public const CST_EQUIPMENT       = 'equipement';
     public const CST_DESCRIPTION     = 'description';
     public const CST_CREATURE_TYPE   = 'type_de_creature';
@@ -135,7 +125,6 @@ class Constant
     public const PAGE_DEFAULT_NBPERPAGE = '10';
     public const PAGE_OPTION            = 'option';
     public const PAGE_OBJS              = 'objs';
-    public const PAGE_QUERY_ARG         = 'queryArg';
     public const PAGE_PREVIOUS          = '&lsaquo;';
     public const PAGE_NEXT              = '&rsaquo;';
     public const PAGE_FIRST             = '&laquo;';

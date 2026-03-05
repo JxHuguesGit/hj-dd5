@@ -3,6 +3,7 @@ namespace src\Domain\Entity;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
+use src\Constant\Language;
 use src\Utils\Utils;
 use src\Domain\Entity\Item;
 
@@ -22,7 +23,7 @@ final class Armor extends Item
     public const TYPE_MEDIUM = 2;
     public const TYPE_HEAVY = 3;
     public const TYPE_SHIELD = 4;
-    
+
     public const SPECIFIC_FIELDS = [
         Field::ARMORTYPID,
         Field::ARMORCLASS,
@@ -63,8 +64,8 @@ final class Armor extends Item
     {
         return match ($this->armorTypeId) {
             self::TYPE_SHIELD => '+' . $this->armorClass,
-            self::TYPE_MEDIUM => $this->armorClass . ' + Dex (max 2)',
-            self::TYPE_LIGHT => $this->armorClass . ' + Dex',
+            self::TYPE_MEDIUM => $this->armorClass . Language::LG_MOD_DEX_MAX2,
+            self::TYPE_LIGHT => $this->armorClass . Language::LG_MOD_DEX,
             self::TYPE_HEAVY => (string)$this->armorClass,
             default => (string)$this->armorClass,
         };

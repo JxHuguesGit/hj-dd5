@@ -3,6 +3,7 @@ namespace src\CharacterCreation;
 
 use src\Constant\Constant;
 use src\Constant\Field;
+use src\Constant\Language;
 use src\Constant\Template;
 use src\Entity\RpgHerosSkill;
 use src\Entity\RpgOrigin;
@@ -16,7 +17,7 @@ class OriginStep extends AbstractStep
             // Rien à valider
             return;
         }
-        
+
         // On récupère et nettoie la valeur
         $originId = (int) trim(Session::fromPost('characterOriginId', ''));
         if ($originId <= 0) {
@@ -79,7 +80,7 @@ class OriginStep extends AbstractStep
             ],
         ];
     }
-    
+
     private function getDescription(?RpgOrigin $origin): string
     {
         if ($origin===null) {
@@ -91,13 +92,13 @@ class OriginStep extends AbstractStep
 
             return $returned;
         }
-        
+
         return $origin->getController()->getDescription();
     }
 
     public static function getSidebarLabel(): string
     {
-        return 'Origine';
+        return Language::LG_ORIGIN;
     }
 
     public function getSidebarValue(): string
