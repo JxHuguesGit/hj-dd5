@@ -2,17 +2,18 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap;
 use src\Domain\Entity\Origin;
 use src\Presenter\ViewModel\OriginGroup;
 use src\Presenter\ViewModel\OriginRow;
 use src\Service\Domain\OriginService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
-use src\Constant\Bootstrap;
 
 final class OriginListPresenter
 {
-    public function __construct(private OriginService $originService) {}
+    public function __construct(private OriginService $originService)
+    {}
 
     public function present(iterable $origins): Collection
     {
@@ -29,8 +30,8 @@ final class OriginListPresenter
     private function buildRow(Origin $origin): OriginRow
     {
         return new OriginRow(
-            name: $origin->name??'',
-            url: UrlGenerator::origin($origin->slug)??'',
+            name: $origin->name ?? '',
+            url: UrlGenerator::origin($origin->slug) ?? '',
             abilities: implode(', ', array_map(fn($a) => $a->name, $this->originService->getAbilities($origin)->toArray())),
             skills: implode(', ', array_map(fn($s) => Html::getLink($s->name, UrlGenerator::skill($s->slug), Bootstrap::CSS_TEXT_DARK), $this->originService->getSkills($origin)->toArray())),
             originFeat: $this->originFeatLink($origin),

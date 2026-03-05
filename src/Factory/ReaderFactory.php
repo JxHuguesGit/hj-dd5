@@ -37,52 +37,80 @@ use src\Service\Reader\WeaponReader;
 
 final class ReaderFactory
 {
+    private array $builders = [];
+    private array $cache    = [];
+
     public function __construct(
         private RepositoryFactory $repositories
     ) {}
 
-    private array $map = [
-        'ability'              => AbilityReader::class,
-        Constant::CST_ARMOR    => ArmorReader::class,
-        'condition'            => ConditionReader::class,
-        'damageType'           => DamageTypeReader::class,
-        Constant::CST_FEAT     => FeatReader::class,
-        'featAbility'          => FeatAbilityReader::class,
-        Constant::CST_FEATTYPE => FeatTypeReader::class,
-        'item'                 => ItemReader::class,
-        'language'             => LanguageReader::class,
-        'monster'              => MonsterReader::class,
-        'monsterAbility'       => MonsterAbilityReader::class,
-        'monsterCondition'     => MonsterConditionReader::class,
-        'monsterLanguage'      => MonsterLanguageReader::class,
-        'monsterSubType'       => MonsterSubTypeReader::class,
-        'monsterType'          => MonsterTypeReader::class,
-        'monsterVisionType'    => MonsterVisionTypeReader::class,
-        Constant::ORIGIN       => OriginReader::class,
-        'originAbility'        => OriginAbilityReader::class,
-        'originItem'           => OriginItemReader::class,
-        'originSkill'          => OriginSkillReader::class,
-        'power'                => PowerReader::class,
-        'reference'            => ReferenceReader::class,
-        'skill'                => SkillReader::class,
-        'speciePower'          => SpeciePowerReader::class,
-        Constant::SPECIES      => SpecieReader::class,
-        'speedType'            => SpeedTypeReader::class,
-        'spell'                => SpellReader::class,
-        'subSkill'             => SubSkillReader::class,
-        Constant::CST_TOOL     => ToolReader::class,
-        'visionType'           => VisionTypeReader::class,
-        Constant::CST_WEAPON   => WeaponReader::class,
-        'weaponPropertyValue'  => WeaponPropertyValueReader::class,
-    ];
-
     public function __call(string $name, array $args): object
     {
-        if (! isset($this->map[$name])) {
-            throw new \BadMethodCallException("Reader inconnu : '$name'");
+        if (isset($this->cache[$name])) {
+            return $this->cache[$name];
         }
 
-        $readerClass = $this->map[$name];
-        return new $readerClass($this->repositories->$name());
+        $builder                   = $this->builders[$name] ??= $this->resolveBuilder($name);
+        return $this->cache[$name] = $builder();
     }
+
+    private function resolveBuilder(string $name): callable
+    {
+        return match ($name) {
+            // ----- Ability / Armor / Condition / DamageType -----
+            'ability'              => fn()              => new AbilityReader($this->repositories->ability()),
+            Constant::CST_ARMOR    => fn()    => new ArmorReader($this->repositories->armor()),
+            'condition'            => fn()            => new ConditionReader($this->repositories->condition()),
+            'damageType'           => fn()           => new DamageTypeReader($this->repositories->damageType()),
+
+            // ----- Feat / FeatAbility / FeatType -----
+            Constant::CST_FEAT     => fn()     => new FeatReader($this->repositories->feat()),
+            'featAbility'          => fn()          => new FeatAbilityReader($this->repositories->featAbility()),
+            Constant::CST_FEATTYPE => fn() => new FeatTypeReader($this->repositories->featType()),
+
+            // ----- Item / Language -----
+            'item'                 => fn()                 => new ItemReader($this->repositories->item()),
+            'language'             => fn()             => new LanguageReader($this->repositories->language()),
+
+            // ----- Monster & Co -----
+            'monster'              => fn()              => new MonsterReader($this->repositories->monster()),
+            'monsterAbility'       => fn()       => new MonsterAbilityReader($this->repositories->monsterAbility()),
+            'monsterCondition'     => fn()     => new MonsterConditionReader($this->repositories->monsterCondition()),
+            'monsterLanguage'      => fn()      => new MonsterLanguageReader($this->repositories->monsterLanguage()),
+            'monsterSubType'       => fn()       => new MonsterSubTypeReader($this->repositories->monsterSubType()),
+            'monsterType'          => fn()          => new MonsterTypeReader($this->repositories->monsterType()),
+            'monsterVisionType'    => fn()    => new MonsterVisionTypeReader($this->repositories->monsterVisionType()),
+
+            // ----- Origin & Co -----
+            Constant::ORIGIN       => fn()       => new OriginReader($this->repositories->origin()),
+            'originAbility'        => fn()        => new OriginAbilityReader($this->repositories->originAbility()),
+            'originItem'           => fn()           => new OriginItemReader($this->repositories->originItem()),
+            'originSkill'          => fn()          => new OriginSkillReader($this->repositories->originSkill()),
+
+            // ----- Power / Reference / Skill -----
+            'power'                => fn()                => new PowerReader($this->repositories->power()),
+            'reference'            => fn()            => new ReferenceReader($this->repositories->reference()),
+            'skill'                => fn()                => new SkillReader($this->repositories->skill()),
+
+            // ----- Specie & Co -----
+            'speciePower'          => fn()          => new SpeciePowerReader($this->repositories->speciePower()),
+            Constant::SPECIES      => fn()      => new SpecieReader($this->repositories->specie()),
+            'speedType'            => fn()            => new SpeedTypeReader($this->repositories->speedType()),
+
+            // ----- Spell / SubSkill -----
+            'spell'                => fn()                => new SpellReader($this->repositories->spell()),
+            'subSkill'             => fn()             => new SubSkillReader($this->repositories->subSkill()),
+
+            // ----- Tool / VisionType / Weapon / WeaponPropertyValue -----
+            Constant::CST_TOOL     => fn()     => new ToolReader($this->repositories->tool()),
+            'visionType'           => fn()           => new VisionTypeReader($this->repositories->visionType()),
+            Constant::CST_WEAPON   => fn()   => new WeaponReader($this->repositories->weapon()),
+            'weaponPropertyValue'  => fn()  => new WeaponPropertyValueReader($this->repositories->weaponPropertyValue()),
+
+            default                => throw new \BadMethodCallException(
+                "Reader inconnu: '$name'. Disponibles: " . implode(', ', $this->availableKeys())
+            ),
+        };
+    }
+
 }

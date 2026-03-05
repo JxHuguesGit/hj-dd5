@@ -26,14 +26,7 @@ final class ServiceFactory
     public function origin(): OriginService
     {
         return new OriginService(
-            $this->readerFactory->feat(),
-            $this->readerFactory->tool(),
-            $this->readerFactory->originSkill(),
-            $this->readerFactory->originAbility(),
-            $this->readerFactory->originItem(),
-            $this->readerFactory->skill(),
-            $this->readerFactory->ability(),
-            $this->readerFactory->item()
+            $this->readerFactory,
         );
     }
 

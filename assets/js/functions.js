@@ -36,6 +36,15 @@ function ajaxActionClick(obj, e) {
                 }
                 closeModal(target);
             });
+        } else if (oneAction=='openConfirm') {
+            e.preventDefault();
+            const target = 'confirmModal';
+            $('#' + target + ' h5').html(obj.data('title'));
+            $('#' + target + ' .modal-body').html(obj.data('description'));
+            openModal(target);
+            $('#' + target + ' button.btn-primary').unbind().on('click', function() {
+                window.location.href = obj.attr('href');
+            });
         } else if (oneAction=='loadOrigin') {
             loadCreationStepSide('origin', obj.val())
         }
@@ -45,10 +54,8 @@ function ajaxActionClick(obj, e) {
 
 // Ouvre la modale dont on passe l'identifiant
 function openModal(id) {
-    console.log(id);
     $('#'+id).addClass('show').css('display', 'block');
     $('#'+id+' + .modal-backdrop').addClass('show').removeClass('d-none');
-
     $('button[data-bs-dismiss="modal"]').on('click', function() {
         closeModal(id);
     });

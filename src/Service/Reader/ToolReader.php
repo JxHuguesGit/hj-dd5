@@ -17,7 +17,7 @@ final class ToolReader
      */
     public function findWithRelations(int $id): ?Tool
     {
-        return $this->findWithRelations($id);
+        return $this->toolRepository->findWithRelations($id);
     }
 
     /**
