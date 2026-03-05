@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Language;
@@ -39,7 +39,7 @@ class FeatTableBuilder extends AbstractTableBuilder
             $url = Html::getLink(
                 $group->label,
                 UrlGenerator::feats($group->slug),
-                Bootstrap::CSS_TEXT_WHITE
+                B::TEXT_WHITE
             ) . $group->extraPrerequis;
             switch ($group->slug) {
                 case '-origin':
@@ -59,7 +59,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                 /** @var FeatRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->originLabel])
                     ->addBodyCell([Constant::CST_CONTENT => $row->prerequisite]);
@@ -68,7 +68,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                         Constant::CST_CONTENT => Html::getLink(
                             Html::getIcon(Icon::IEDIT),
                             UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::FEATS, $row->slug, Constant::EDIT),
-                            Bootstrap::CSS_TEXT_DARK
+                            B::TEXT_DARK
                         ),
                     ]);
                 }
@@ -80,11 +80,11 @@ class FeatTableBuilder extends AbstractTableBuilder
 
     protected function addGroupRow(Table $table, string $label, int $colspan): void
     {
-        $table->addBodyRow([Constant::CST_CLASS => Bootstrap::CSS_ROW_DARK_STRIPED])
+        $table->addBodyRow([Constant::CST_CLASS => B::ROW_DARK_STRIPED])
             ->addBodyCell([
                 Constant::CST_CONTENT    => $label,
                 Constant::CST_ATTRIBUTES => [
-                    Constant::CST_CLASS => Bootstrap::CSS_FONT_ITALIC,
+                    Constant::CST_CLASS => B::FONT_ITALIC,
                 ],
             ])
             ->addBodyCell([

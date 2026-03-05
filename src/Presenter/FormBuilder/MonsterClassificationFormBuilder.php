@@ -1,7 +1,9 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\{Bootstrap, Constant, Field};
+use src\Constant\Bootstrap as B;
+use src\Constant\Constant;
+use src\Constant\Field;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
 
@@ -16,10 +18,10 @@ class MonsterClassificationFormBuilder
 
     public function addFields(FieldsetField $fieldset, Monster $monster)
     {
-        $optionTypes = [];
-        $optionSubTypes = [];
+        $optionTypes       = [];
+        $optionSubTypes    = [];
         $optionAlignements = [];
-        $optionSizes = [];
+        $optionSizes       = [];
 
         $fieldset
             ->addField(new SelectField(
@@ -27,28 +29,28 @@ class MonsterClassificationFormBuilder
                 'Type',
                 $monster->monstreTypeId,
                 $optionTypes,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
                 Field::MSTSSTYPID,
                 'Sous Type',
                 $monster->monsterSubTypeId,
                 $optionSubTypes,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
                 Field::ALGNID,
                 'Alignement',
                 $monster->alignmentId,
                 $optionAlignements,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
                 Field::MSTSIZE,
                 'Taille',
                 $monster->monsterSize,
                 $optionSizes,
-                [Constant::OUTERDIVCLASS=>Bootstrap::CSS_COL_MD_4.' '.Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
         ;
     }

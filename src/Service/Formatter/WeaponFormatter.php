@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Formatter;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Domain\Entity\Weapon;
 use src\Service\Domain\WpPostService;
@@ -22,7 +22,7 @@ final class WeaponFormatter
         if ($weaponPropertyValues->isEmpty()) {
             return '-';
         }
-        
+
         $parts = [];
         foreach ($weaponPropertyValues as $weaponPropertyValue) {
             $parts[] = $this->formatter->format($weaponPropertyValue, $this->wpPostService);
@@ -35,7 +35,7 @@ final class WeaponFormatter
         $this->wpPostService->getById($weapon->masteryPostId);
         $postContent = $this->wpPostService->getPostContent();
         $linkContent = $weapon->masteryName
-            . Html::getSpan($postContent ?? '', [Constant::CST_CLASS=>'tooltip-text']);
-        return Html::getLink($linkContent, '#', Bootstrap::CSS_TEXT_DARK.' tooltip-trigger');
+        . Html::getSpan($postContent ?? '', [Constant::CST_CLASS => 'tooltip-text']);
+        return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
     }
 }

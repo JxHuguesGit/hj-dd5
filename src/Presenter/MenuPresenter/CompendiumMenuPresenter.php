@@ -2,7 +2,7 @@
 namespace src\Presenter\MenuPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Language;
@@ -43,12 +43,12 @@ class CompendiumMenuPresenter
 
         $ul = Html::getUl(
             $childrenHtml,
-            [Constant::CST_CLASS => implode(' ', [Bootstrap::CSS_NAV, Bootstrap::CSS_NAV_TREEVIEW])]
+            [Constant::CST_CLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]
         );
 
         // ---------- 3) Item parent ----------
         $parentAttributes = [
-            $isActiveTab ? Bootstrap::CSS_MENU_OPEN : '',
+            $isActiveTab ? B::MENU_OPEN : '',
             '#',
             $isActiveTab ? Constant::CST_ACTIVE : '',
             Icon::IBOOK,

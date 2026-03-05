@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Formatter;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Domain\Entity\WeaponPropertyValue;
 use src\Service\Domain\WpPostService;
@@ -12,33 +12,32 @@ class WeaponPropertiesFormatter
     public function format(
         WeaponPropertyValue $weaponPropertyValue,
         WpPostService $wpPostService
-    ): string
-    {
+    ): string {
         $property = $this->getLink($weaponPropertyValue, $wpPostService);
         switch ($weaponPropertyValue->propertySlug) {
-            case 'polyvalente' :
+            case 'polyvalente':
                 $property .= $this->formatPolyvalente($weaponPropertyValue);
-            break;
-            case 'lancer' :
+                break;
+            case 'lancer':
                 $property .= $this->formatLancer($weaponPropertyValue);
-            break;
-            case 'munitions' :
+                break;
+            case 'munitions':
                 $property .= $this->formatMunitions($weaponPropertyValue);
-            break;
-            case 'finesse' :
-            case 'legere' :
-            case 'deux_mains' :
-            case 'chargement' :
-            case 'lourde' :
-            case 'allonge' :
+                break;
+            case 'finesse':
+            case 'legere':
+            case 'deux_mains':
+            case 'chargement':
+            case 'lourde':
+            case 'allonge':
                 // Rien à ajouter
-            break;
-            default :
-        var_dump($weaponPropertyValue);
-        echo '<br>';
-        echo $weaponPropertyValue->propertySlug;
-        echo '<br>';
-            break;
+                break;
+            default:
+                var_dump($weaponPropertyValue);
+                echo '<br>';
+                echo $weaponPropertyValue->propertySlug;
+                echo '<br>';
+                break;
         }
         return $property;
     }
@@ -52,12 +51,12 @@ class WeaponPropertiesFormatter
     private function formatLancer(WeaponPropertyValue $weaponPropertyValue): string
     {
         return " (portée " . $this->feetToMeters($weaponPropertyValue->minRange)
-            . "/" . $this->feetToMeters($weaponPropertyValue->maxRange) . ")";
+        . "/" . $this->feetToMeters($weaponPropertyValue->maxRange) . ")";
     }
 
     private function feetToMeters(float $value)
     {
-        return 3*$value/10;
+        return 3 * $value / 10;
     }
 
     private function formatMunitions(WeaponPropertyValue $weaponPropertyValue): string
@@ -68,12 +67,11 @@ class WeaponPropertiesFormatter
     private function getLink(
         WeaponPropertyValue $weaponPropertyValue,
         WpPostService $wpPostService
-    ): string
-    {
+    ): string {
         $wpPostService->getById($weaponPropertyValue->postId);
         $linkContent = $weaponPropertyValue->propertyName
-            . Html::getSpan($wpPostService->getPostContent() ?? '', [Constant::CST_CLASS=>'tooltip-text']);
-        return Html::getLink($linkContent, '#', Bootstrap::CSS_TEXT_DARK.' tooltip-trigger');
+        . Html::getSpan($wpPostService->getPostContent() ?? '', [Constant::CST_CLASS => 'tooltip-text']);
+        return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
     }
-    
+
 }

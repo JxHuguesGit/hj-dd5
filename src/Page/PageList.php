@@ -2,7 +2,7 @@
 namespace src\Page;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Template;
 use src\Presenter\TableBuilder\TableBuilderInterface;
 use src\Renderer\TemplateRenderer;
@@ -28,7 +28,7 @@ class PageList
         // Construire le tableau
         $tableHtml = $this->tableBuilder->build(
             $viewData,
-            [Bootstrap::CSS_WITH_MRGNTOP => false]
+            [B::WITH_MRGNTOP => false]
         );
 
         // Section centrale (titre + tableau)

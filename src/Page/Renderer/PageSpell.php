@@ -1,7 +1,7 @@
 <?php
 namespace src\Page\Renderer;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Template;
 use src\Presenter\ViewModel\SpellDetail;
@@ -19,7 +19,7 @@ class PageSpell extends PageDetail
 
     public function render(string $menuHtml, SpellPageView $view): string
     {
-        $spell = $view->spell;
+        $spell    = $view->spell;
         $prevHtml = $this->renderNavLink($view->previous, true);
         $nextHtml = $this->renderNavLink($view->next, false);
 
@@ -29,7 +29,7 @@ class PageSpell extends PageDetail
             [
                 $spell->name,
                 SpellFormatter::formatEcole($spell->ecole, $spell->niveau) .
-                    '<br>' . SpellFormatter::formatClasses($spell->classes),
+                '<br>' . SpellFormatter::formatClasses($spell->classes),
 
                 SpellFormatter::formatDuree($spell->duree, $spell->concentration),
                 SpellFormatter::formatPortee($spell->portee),
@@ -51,8 +51,7 @@ class PageSpell extends PageDetail
         string $menuHtml,
         string $detailTemplate,
         array $detailFields
-    ): string
-    {
+    ): string {
         $detailCard = $this->renderer->render(
             $detailTemplate,
             $detailFields
@@ -72,9 +71,8 @@ class PageSpell extends PageDetail
     private function renderNavLink(
         ?SpellDetail $navData,
         bool $isPrev
-    ): string
-    {
-        if (!$navData) {
+    ): string {
+        if (! $navData) {
             return Constant::CST_EMPTY_SPAN;
         }
 
@@ -86,9 +84,9 @@ class PageSpell extends PageDetail
             $label,
             $navData->url,
             implode(' ', [
-                Bootstrap::CSS_BTN,
-                Bootstrap::CSS_BTN_SM,
-                Bootstrap::CSS_BTN_OUTLINE_DARK
+                B::BTN,
+                B::BTN_SM,
+                B::BTN_OUTLINE_DARK,
             ])
         );
     }

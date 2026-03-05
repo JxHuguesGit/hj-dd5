@@ -2,7 +2,7 @@
 namespace src\Service\Formatter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Icon;
@@ -166,7 +166,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', 'Immunités') . ' ' . $content,
-            [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
+            [Constant::CST_CLASS => B::COL_12]
         );
     }
 
@@ -197,7 +197,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', $label) . ' ' . implode(', ', $resistances),
-            [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
+            [Constant::CST_CLASS => B::COL_12]
         );
     }
 
@@ -220,7 +220,7 @@ class MonsterFormatter
         return Html::getDiv(
             Html::getBalise('strong', 'Sens') . ' ' . implode(', ', $senses) .
             ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
-            [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
+            [Constant::CST_CLASS => B::COL_12]
         );
     }
 
@@ -236,7 +236,7 @@ class MonsterFormatter
         }
         return Html::getDiv(
             Html::getBalise('strong', 'Langues') . ' ' . (empty($languages) ? 'Aucune' : implode(', ', $languages)),
-            [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
+            [Constant::CST_CLASS => B::COL_12]
         );
     }
 
@@ -252,7 +252,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', Language::LG_FP) . ' ' . $content,
-            [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
+            [Constant::CST_CLASS => B::COL_12]
         );
     }
 

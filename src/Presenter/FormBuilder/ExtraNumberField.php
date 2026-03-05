@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 
 class ExtraNumberField extends FormField
@@ -16,8 +16,8 @@ class ExtraNumberField extends FormField
         protected array $params = []
     ) {
         $this->params = array_merge([
-            'valueWidth' => Bootstrap::CSS_COL_MD_2.' mb-3',
-            'extraWidth' => Bootstrap::CSS_COL_MD_4.' mb-3',
+            'valueWidth' => B::COL_MD_2 . ' mb-3',
+            'extraWidth' => B::COL_MD_4 . ' mb-3',
         ]);
         $this->extraValue = $params['extraValue'] ?? null;
     }
@@ -25,20 +25,19 @@ class ExtraNumberField extends FormField
     public function display(): string
     {
         return
-            (new NumberField(
-                $this->name,
-                $this->label,
-                $this->value,
-                $this->readonly,
-                [Constant::OUTERDIVCLASS=>$this->params['valueWidth']]
-            ))->display().
-            (new TextField(
-                'extra['.$this->name.']',
-                'Complément',
-                $this->extraValue,
-                $this->readonly,
-                [Constant::OUTERDIVCLASS=>$this->params['extraWidth']]
-            ))->display();
+        (new NumberField(
+            $this->name,
+            $this->label,
+            $this->value,
+            $this->readonly,
+            [Constant::OUTERDIVCLASS => $this->params['valueWidth']]
+        ))->display() .
+        (new TextField(
+            'extra[' . $this->name . ']',
+            'Complément',
+            $this->extraValue,
+            $this->readonly,
+            [Constant::OUTERDIVCLASS => $this->params['extraWidth']]
+        ))->display();
     }
 }
-

@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Presenter\ViewModel\ToolGroup;
@@ -25,16 +25,16 @@ class ToolTableBuilder extends AbstractTableBuilder
                 /** @var ToolRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->originLabel])
                     ->addBodyCell([
                         Constant::CST_CONTENT    => $row->weight,
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END],
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_END],
                     ])
                     ->addBodyCell([
                         Constant::CST_CONTENT    => $row->price,
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END],
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_END],
                     ]);
             }
         }

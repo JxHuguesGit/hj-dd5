@@ -2,7 +2,7 @@
 namespace src\Presenter\Detail;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Domain\Entity\MonsterResistance;
 use src\Domain\Monster\Monster;
 use src\Enum\AbilityEnum;
@@ -53,15 +53,15 @@ class MonsterDetailPresenter
             $this->formatter->formatScore($this->monster, AbilityEnum::Wis),
             $this->formatter->formatScore($this->monster, AbilityEnum::Cha),
             $this->getSkillsToCR(),
-            $objsTrait->isEmpty() ? ' ' . Bootstrap::CSS_DNONE : '',
+            $objsTrait->isEmpty() ? ' ' . B::DNONE : '',
             $this->getSpecialAbilitiesList($objsTrait),
-            $objsActions->isEmpty() ? ' ' . Bootstrap::CSS_DNONE : '',
+            $objsActions->isEmpty() ? ' ' . B::DNONE : '',
             $this->getSpecialAbilitiesList($objsActions),
-            $objsBonusActions->isEmpty() ? ' ' . Bootstrap::CSS_DNONE : '',
+            $objsBonusActions->isEmpty() ? ' ' . B::DNONE : '',
             $this->getSpecialAbilitiesList($objsBonusActions),
-            $objsReactions->isEmpty() ? ' ' . Bootstrap::CSS_DNONE : '',
+            $objsReactions->isEmpty() ? ' ' . B::DNONE : '',
             $this->getSpecialAbilitiesList($objsReactions),
-            $objsActionsLegendaires->isEmpty() ? ' ' . Bootstrap::CSS_DNONE : '',
+            $objsActionsLegendaires->isEmpty() ? ' ' . B::DNONE : '',
             $this->getSpecialAbilitiesList($objsActionsLegendaires),
         ];
     }

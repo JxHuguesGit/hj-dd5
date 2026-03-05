@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Presenter\ViewModel\SpeciesRow;
@@ -20,13 +20,13 @@ class SpeciesTableBuilder extends AbstractTableBuilder
             /** @var SpeciesRow $row */
             $table->addBodyRow([])
                 ->addBodyCell([
-                    Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
+                    Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                 ])
                 ->addBodyCell([Constant::CST_CONTENT => $row->creatureType])
                 ->addBodyCell([Constant::CST_CONTENT => $row->sizeCategory])
                 ->addBodyCell([
                     Constant::CST_CONTENT    => $row->speed,
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER],
+                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER],
                 ]);
         }
 

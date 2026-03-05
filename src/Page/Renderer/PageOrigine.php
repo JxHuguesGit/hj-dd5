@@ -2,7 +2,7 @@
 namespace src\Page\Renderer;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Template;
 use src\Utils\Html;
@@ -42,7 +42,7 @@ class PageOrigine extends PageDetail
             $parts[] = Html::getLink(
                 $skill->name,
                 UrlGenerator::skill($skill->getSlug()),
-                Bootstrap::CSS_TEXT_DARK
+                B::TEXT_DARK
             );
         }
         return implode(', ', $parts);
@@ -50,14 +50,14 @@ class PageOrigine extends PageDetail
 
     private function formatLink(?array $entityData, callable $urlGenerator): string
     {
-        if (!$entityData) {
+        if (! $entityData) {
             return '-';
         }
 
         return Html::getLink(
             $entityData[Constant::CST_NAME],
             $urlGenerator($entityData[Constant::CST_SLUG]),
-            Bootstrap::CSS_TEXT_DARK
+            B::TEXT_DARK
         );
     }
 }

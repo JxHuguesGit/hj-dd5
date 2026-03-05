@@ -1,7 +1,7 @@
 <?php
 namespace src\Page;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Template;
 use src\Domain\Entity as DomainEntity;
 use src\Presenter\FormBuilder\FormBuilderInterface;
@@ -29,7 +29,7 @@ class PageForm
         // Construire le formulaire
         $formHtml = $this->formBuilder->build(
             $entity,
-            [Bootstrap::CSS_WITH_MRGNTOP => false]
+            [B::WITH_MRGNTOP => false]
         );
 
         // Section centrale (titre + formulaire)

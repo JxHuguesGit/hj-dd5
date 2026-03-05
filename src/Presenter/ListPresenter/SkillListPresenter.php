@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Entity\Skill;
@@ -14,7 +14,8 @@ use src\Utils\UrlGenerator;
 
 final class SkillListPresenter
 {
-    public function __construct(private SkillService $skillService) {}
+    public function __construct(private SkillService $skillService)
+    {}
 
     public function present(iterable $skills): Collection
     {
@@ -23,7 +24,7 @@ final class SkillListPresenter
             $grouped[$skill->abilityId][] = $this->buildRow($skill);
         }
 
-        $types = self::getSkillTypes();
+        $types      = self::getSkillTypes();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new SkillGroup(
@@ -46,9 +47,9 @@ final class SkillListPresenter
                 '<br>',
                 array_map(
                     fn($s) => Html::getLink(
-                        $s->name??'',
+                        $s->name ?? '',
                         $s->slug ? UrlGenerator::skill($s->slug) : '#',
-                        Bootstrap::CSS_TEXT_DARK
+                        B::TEXT_DARK
                     ),
                     $this->skillService->subSkills($skill)->toArray()
                 )
@@ -68,4 +69,3 @@ final class SkillListPresenter
         ];
     }
 }
-

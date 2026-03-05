@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\MenuPresenter;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Template;
@@ -50,7 +50,7 @@ class CharacterMenuPresenter
 
         // ----- 3) Item parent -----
         $attributes = [
-            $isActiveTab ? Bootstrap::CSS_MENU_OPEN : '',
+            $isActiveTab ? B::MENU_OPEN : '',
             '#',
             $isActiveTab ? Constant::CST_ACTIVE : '',
             'users',

@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Language;
@@ -23,7 +23,7 @@ class ItemTableBuilder extends AbstractTableBuilder
             $createLink = Html::getLink(
                 Html::getIcon(Icon::IPLUS),
                 UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, '', Constant::NEW ),
-                Bootstrap::CSS_TEXT_WHITE
+                B::TEXT_WHITE
             );
             $headers[] = $createLink;
         }
@@ -35,32 +35,32 @@ class ItemTableBuilder extends AbstractTableBuilder
             /** @var Item $item */
             $table->addBodyRow([])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => Html::getLink($item->name, $item->url, Bootstrap::CSS_TEXT_DARK),
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_COL_2],
+                    Constant::CST_CONTENT    => Html::getLink($item->name, $item->url, B::TEXT_DARK),
+                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::COL_2],
                 ])
                 ->addBodyCell([Constant::CST_CONTENT => $item->description])
                 ->addBodyCell([
                     Constant::CST_CONTENT    => $item->weight,
                     Constant::CST_ATTRIBUTES => [
-                        Constant::CST_CLASS => Bootstrap::CSS_TEXT_END . ' ' . Bootstrap::CSS_COL_1,
+                        Constant::CST_CLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ])
                 ->addBodyCell([
                     Constant::CST_CONTENT    => $item->price,
                     Constant::CST_ATTRIBUTES => [
-                        Constant::CST_CLASS => Bootstrap::CSS_TEXT_END . ' ' . Bootstrap::CSS_COL_1,
+                        Constant::CST_CLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ]);
             if ($this->isAdmin) {
                 $btnEdit = Html::getLink(
                     Html::getIcon(Icon::IEDIT),
                     UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::EDIT),
-                    Bootstrap::CSS_TEXT_DARK
+                    B::TEXT_DARK
                 );
                 $btnDelete = Html::getLink(
                     Html::getIcon(Icon::ITRASH),
                     UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::DELETE),
-                    Bootstrap::CSS_TEXT_DANGER . ' ' . Constant::CST_AJAXACTION,
+                    B::TEXT_DANGER . ' ' . Constant::CST_AJAXACTION,
                     [
                         Constant::CST_DATA => [
                             Constant::CST_TRIGGER     => Constant::CST_CLICK,
@@ -74,7 +74,7 @@ class ItemTableBuilder extends AbstractTableBuilder
                 $table->addBodyCell([
                     Constant::CST_CONTENT    => $btnEdit . ' ' . $btnDelete,
                     Constant::CST_ATTRIBUTES => [
-                        Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER . ' ' . Bootstrap::CSS_COL_1]
+                        Constant::CST_CLASS => B::TEXT_CENTER . ' ' . B::COL_1]
                     ,
                 ]);
             }

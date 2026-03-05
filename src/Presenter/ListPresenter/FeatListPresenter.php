@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Entity\Feat;
@@ -66,7 +66,7 @@ final class FeatListPresenter
                 $origins = $this->originReader->originsByFeat($feat);
                 $parts   = [];
                 foreach ($origins as $origin) {
-                    $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), Bootstrap::CSS_TEXT_DARK);
+                    $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), B::TEXT_DARK);
                 }
                 $returned = [implode(', ', $parts), '-'];
                 break;

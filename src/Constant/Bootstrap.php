@@ -3,72 +3,72 @@ namespace src\Constant;
 
 class Bootstrap
 {
-    public const CSS_CENTER    = 'center';
-    public const CSS_DARK      = 'dark';
-    public const CSS_DANGER    = 'danger';
-    public const CSS_LINK      = 'link';
-    public const CSS_END       = 'end';
-    public const CSS_FONT      = 'font';
-    public const CSS_ITEM      = 'item';
-    public const CSS_ITALIC    = 'italic';
-    public const CSS_MB3       = 'mb-3';
-    public const CSS_MT5       = 'mt-5';
-    public const CSS_NAV       = 'nav';
-    public const CSS_SM        = 'sm';
-    public const CSS_STRIPED   = 'striped';
-    public const CSS_TABLE     = 'table';
-    public const CSS_TEXT      = 'text';
-    public const CSS_AUTO      = 'auto';
-    public const CSS_DNONE     = 'd-none';
-    public const CSS_BTN       = 'btn';
-    public const CSS_BG        = 'bg';
-    public const CSS_MX        = 'mx';
-    public const CSS_MY        = 'my';
-    public const CSS_BADGE     = 'badge';
-    public const CSS_OUTLINE   = 'outline';
-    public const CSS_WHITE     = 'white';
-    public const CSS_TITLE     = 'title';
-    public const CSS_NOWRAP    = 'nowrap';
-    public const CSS_TREEVIEW  = 'treeview';
-    public const CSS_MENU_OPEN = 'menu-open';
+    public const CENTER    = 'center';
+    public const DARK      = 'dark';
+    public const DANGER    = 'danger';
+    public const LINK      = 'link';
+    public const END       = 'end';
+    public const FONT      = 'font';
+    public const ITEM      = 'item';
+    public const ITALIC    = 'italic';
+    public const MB3       = 'mb-3';
+    public const MT5       = 'mt-5';
+    public const NAV       = 'nav';
+    public const SM        = 'sm';
+    public const STRIPED   = 'striped';
+    public const TABLE     = 'table';
+    public const TEXT      = 'text';
+    public const AUTO      = 'auto';
+    public const DNONE     = 'd-none';
+    public const BTN       = 'btn';
+    public const BG        = 'bg';
+    public const MX        = 'mx';
+    public const MY        = 'my';
+    public const BADGE     = 'badge';
+    public const OUTLINE   = 'outline';
+    public const WHITE     = 'white';
+    public const TITLE     = 'title';
+    public const NOWRAP    = 'nowrap';
+    public const TREEVIEW  = 'treeview';
+    public const MENU_OPEN = 'menu-open';
 
-    public const CSS_ROW_DARK_STRIPED         = 'row-dark-striped';
+    public const ROW_DARK_STRIPED = 'row-dark-striped';
 
-    public const CSS_COL_1     = 'col-1';
-    public const CSS_COL_2     = 'col-2';
-    public const CSS_COL_12    = 'col-12';
-    public const CSS_COL_MD_2  = 'col-md-2';
-    public const CSS_COL_MD_3  = 'col-md-3';
-    public const CSS_COL_MD_4  = 'col-md-4';
-    public const CSS_COL_MD_5  = 'col-md-5';
-    public const CSS_COL_MD_8  = 'col-md-8';
-    public const CSS_COL_MD_12 = 'col-md-12';
+    public const COL_1     = 'col-1';
+    public const COL_2     = 'col-2';
+    public const COL_12    = 'col-12';
+    public const COL_MD_2  = 'col-md-2';
+    public const COL_MD_3  = 'col-md-3';
+    public const COL_MD_4  = 'col-md-4';
+    public const COL_MD_5  = 'col-md-5';
+    public const COL_MD_8  = 'col-md-8';
+    public const COL_MD_12 = 'col-md-12';
 
-    public const CSS_MX_AUTO = self::CSS_MX . '-' . self::CSS_AUTO;
-    public const CSS_MY4     = self::CSS_MY . '-4';
+    public const MX_AUTO = self::MX . '-' . self::AUTO;
+    public const MY4     = self::MY . '-4';
 
-    public const CSS_NAV_LINK       = self::CSS_NAV . '-' . self::CSS_LINK;
-    public const CSS_NAV_ITEM       = self::CSS_NAV . '-' . self::CSS_ITEM;
-    public const CSS_NAV_TREEVIEW   = self::CSS_NAV . '-' . self::CSS_TREEVIEW;
-    public const CSS_NAV_LINK_TITLE = self::CSS_NAV . '-' . self::CSS_LINK . '-' . self::CSS_TITLE;
+    public const NAV_LINK       = self::NAV . '-' . self::LINK;
+    public const NAV_ITEM       = self::NAV . '-' . self::ITEM;
+    public const NAV_TREEVIEW   = self::NAV . '-' . self::TREEVIEW;
+    public const NAV_LINK_TITLE = self::NAV . '-' . self::LINK . '-' . self::TITLE;
 
-    public const CSS_FONT_ITALIC = self::CSS_FONT . '-' . self::CSS_ITALIC;
+    public const FONT_ITALIC = self::FONT . '-' . self::ITALIC;
 
-    public const CSS_TABLE_SM      = self::CSS_TABLE . '-' . self::CSS_SM;
-    public const CSS_TABLE_STRIPED = self::CSS_TABLE . '-' . self::CSS_STRIPED;
-    public const CSS_TABLE_DARK    = self::CSS_TABLE . '-' . self::CSS_DARK;
+    public const TABLE_SM      = self::TABLE . '-' . self::SM;
+    public const TABLE_STRIPED = self::TABLE . '-' . self::STRIPED;
+    public const TABLE_DARK    = self::TABLE . '-' . self::DARK;
 
-    public const CSS_TEXT_CENTER = self::CSS_TEXT . '-' . self::CSS_CENTER;
-    public const CSS_TEXT_DARK   = self::CSS_TEXT . '-' . self::CSS_DARK;
-    public const CSS_TEXT_WHITE  = self::CSS_TEXT . '-' . self::CSS_WHITE;
-    public const CSS_TEXT_DANGER = self::CSS_TEXT . '-' . self::CSS_DANGER;
-    public const CSS_TEXT_END    = self::CSS_TEXT . '-' . self::CSS_END;
-    public const CSS_TEXT_NOWRAP = self::CSS_TEXT . '-' . self::CSS_NOWRAP;
+    public const TEXT_CENTER = self::TEXT . '-' . self::CENTER;
+    public const TEXT_DARK   = self::TEXT . '-' . self::DARK;
+    public const TEXT_WHITE  = self::TEXT . '-' . self::WHITE;
+    public const TEXT_DANGER = self::TEXT . '-' . self::DANGER;
+    public const TEXT_END    = self::TEXT . '-' . self::END;
+    public const TEXT_NOWRAP = self::TEXT . '-' . self::NOWRAP;
 
-    public const CSS_BG_DARK = self::CSS_TEXT . '-' . self::CSS_BG . '-' . self::CSS_DARK;
+    public const BG_DARK = self::TEXT . '-' . self::BG . '-' . self::DARK;
 
-    public const CSS_BTN_SM           = self::CSS_BTN . '-' . self::CSS_SM;
-    public const CSS_BTN_OUTLINE_DARK = self::CSS_BTN . '-' . self::CSS_OUTLINE . '-' . self::CSS_DARK;
+    public const BTN_SM           = self::BTN . '-' . self::SM;
+    public const BTN_OUTLINE_DARK = self::BTN . '-' . self::OUTLINE . '-' . self::DARK;
 
-    public const CSS_WITH_MRGNTOP = 'withMarginTop';
+    public const WITH_MRGNTOP = 'withMarginTop';
 }

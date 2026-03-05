@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Presenter\ViewModel\SkillGroup;
@@ -25,7 +25,7 @@ class SkillTableBuilder extends AbstractTableBuilder
                 /** @var SkillRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK),
+                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->description])
                     ->addBodyCell([Constant::CST_CONTENT => $row->subSkills]);

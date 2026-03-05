@@ -1,7 +1,6 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
@@ -28,35 +27,35 @@ class MonsterIdentityFormBuilder
                 'ID',
                 $monster->id,
                 true,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_2 . ' ' . Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
                 Field::FRNAME,
                 'Nom français',
                 $monster->frName,
                 false,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4]
+                [Constant::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextField(
                 Field::NAME,
                 'Nom anglais',
                 $monster->name,
                 true,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_3]
             ))
             ->addField(new TextField(
                 Field::UKTAG,
                 'Slug',
                 $monster->ukTag,
                 true,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_3]
             ))
             ->addField(new SelectField(
                 Field::REFID,
                 Language::LG_REFERENCE,
                 $monster->ukTag,
                 $options,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_4 . ' ' . Bootstrap::CSS_MB3]
+                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
         ;
     }

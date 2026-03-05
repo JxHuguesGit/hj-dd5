@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Form;
@@ -12,8 +12,8 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
     {
         $formAttributes = [
             Constant::CST_CLASS  => implode(' ', [
-                Bootstrap::CSS_MX_AUTO,
-                Bootstrap::CSS_MY4,
+                B::MX_AUTO,
+                B::MY4,
                 $params[Constant::CST_CLASS] ?? '',
             ]),
             Constant::CST_TITLE  => $params[Constant::CST_TITLE],

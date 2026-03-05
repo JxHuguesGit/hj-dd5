@@ -1,7 +1,7 @@
 <?php
 namespace src\CharacterCreation;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Language;
@@ -87,11 +87,11 @@ class OriginFeatStep extends AbstractStep
                 'sidebar'                 => $sidebar,
                 'heroId'                  => $this->hero->getField(Field::ID),
                 'radioBtns'               => $primaryFeatHtml,
-                'secondChoice'            => $isHuman ? '' : ' ' . Bootstrap::CSS_DNONE,
+                'secondChoice'            => $isHuman ? '' : ' ' . B::DNONE,
                 'radioBtns2nd'            => $secondaryFeatHtml,
-                'showExtra1st'            => $firstFeatId == self::SPECIAL_FEAT_ID ? '' : ' ' . Bootstrap::CSS_DNONE,
+                'showExtra1st'            => $firstFeatId == self::SPECIAL_FEAT_ID ? '' : ' ' . B::DNONE,
                 'extraRadioBtns'          => $primaryExtraFeatHtml,
-                'showExtra2nd'            => $isHuman && $secondFeatId == self::SPECIAL_FEAT_ID ? '' : ' ' . Bootstrap::CSS_DNONE,
+                'showExtra2nd'            => $isHuman && $secondFeatId == self::SPECIAL_FEAT_ID ? '' : ' ' . B::DNONE,
                 'extraRadioBtns2nd'       => $secondaryExtraFeatHtml,
                 Constant::CST_DESCRIPTION => $this->getDescription($firstFeat?->featById()),
             ],

@@ -1,7 +1,7 @@
 <?php
 namespace src\Utils;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 
 class Table
@@ -22,7 +22,7 @@ class Table
     public function __construct()
     {
         $this->attributes = [
-            Constant::CST_CLASS => Bootstrap::CSS_TABLE,
+            Constant::CST_CLASS => B::TABLE,
             'aria-describedby'  => '',
         ];
 
@@ -55,7 +55,7 @@ class Table
             $arrNbPerPage = [10, 25, 50, 100];
         }
         // On modifie le margin-top pour pouvoir inclure cette ligne dans le header
-        $this->attributes[Constant::CST_CLASS] = str_replace(Bootstrap::CSS_MT5, 'mt-2', $this->attributes[Constant::CST_CLASS]);
+        $this->attributes[Constant::CST_CLASS] = str_replace(B::MT5, 'mt-2', $this->attributes[Constant::CST_CLASS]);
 
         // On construit le contenu de la sélection
         $selectContent = '';
@@ -151,7 +151,7 @@ class Table
         $footContent = $this->getFootContent();
 
         return Html::getBalise(
-            Bootstrap::CSS_TABLE,
+            B::TABLE,
             Html::getBalise('thead', $headContent, [Constant::CST_CLASS => $this->header[Constant::CST_CLASS]]) .
             Html::getBalise('tbody', $bodyContent) .
             Html::getBalise('tfoot', $footContent, [Constant::CST_CLASS => $this->foot[Constant::CST_CLASS]]),

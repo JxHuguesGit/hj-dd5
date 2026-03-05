@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Language;
@@ -16,16 +16,16 @@ class MonsterTableBuilder extends AbstractTableBuilder
         $createLink = Html::getLink(
             Html::getIcon(Icon::IPLUS),
             UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, '', Constant::NEW ),
-            Bootstrap::CSS_TEXT_WHITE
+            B::TEXT_WHITE
         );
         $headers = [
             [Constant::CST_LABEL => Language::LG_MONSTER],
-            [Constant::CST_LABEL => Language::LG_FP, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
-            [Constant::CST_LABEL => Language::LG_CREATURE_TYPE, Constant::CST_CLASS => Bootstrap::CSS_COL_2],
-            [Constant::CST_LABEL => Language::LG_CA, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
-            [Constant::CST_LABEL => Language::LG_PV, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
-            [Constant::CST_LABEL => Language::LG_REFERENCE, Constant::CST_CLASS => Bootstrap::CSS_COL_2],
-            [Constant::CST_LABEL => $createLink, Constant::CST_CLASS => Bootstrap::CSS_COL_1],
+            [Constant::CST_LABEL => Language::LG_FP, Constant::CST_CLASS => B::COL_1],
+            [Constant::CST_LABEL => Language::LG_CREATURE_TYPE, Constant::CST_CLASS => B::COL_2],
+            [Constant::CST_LABEL => Language::LG_CA, Constant::CST_CLASS => B::COL_1],
+            [Constant::CST_LABEL => Language::LG_PV, Constant::CST_CLASS => B::COL_1],
+            [Constant::CST_LABEL => Language::LG_REFERENCE, Constant::CST_CLASS => B::COL_2],
+            [Constant::CST_LABEL => $createLink, Constant::CST_CLASS => B::COL_1],
         ];
 
         $params[Constant::CST_ID] = 'monsterFilter';
@@ -42,25 +42,25 @@ class MonsterTableBuilder extends AbstractTableBuilder
             /** @var MonsterRow $row */
             $table->addBodyRow([])
                 ->addBodyCell([Constant::CST_CONTENT => $monster->name])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->cr, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER]])
+                ->addBodyCell([Constant::CST_CONTENT => $monster->cr, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER]])
                 ->addBodyCell([Constant::CST_CONTENT => $monster->type])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->ca, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER]])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->hp, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END]])
+                ->addBodyCell([Constant::CST_CONTENT => $monster->ca, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER]])
+                ->addBodyCell([Constant::CST_CONTENT => $monster->hp, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_END]])
                 ->addBodyCell([Constant::CST_CONTENT => $monster->reference])
                 ->addBodyCell([
                     Constant::CST_CONTENT    => Html::getLink(
                         Html::getIcon(Icon::IEDIT),
                         UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, $monster->ukTag ?? '', Constant::EDIT),
-                        Bootstrap::CSS_TEXT_DARK
+                        B::TEXT_DARK
                     ),
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER . ' ' . Bootstrap::CSS_COL_1],
+                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER . ' ' . B::COL_1],
                 ]);
         }
 
         $table->addFooter([
             Constant::CST_CLASS => implode(' ', [
-                Bootstrap::CSS_TABLE_DARK,
-                Bootstrap::CSS_TEXT_CENTER,
+                B::TABLE_DARK,
+                B::TEXT_CENTER,
             ]),
         ])
             ->addFootRow()

@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\CharacterCreation\Step;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Constant\Template;
@@ -102,7 +102,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
         $url = UrlGenerator::admin(Constant::ONG_CHARACTER, $character->id, '', '', ['step' => '%s']);
         return [
             $character->id,
-            Html::getLink('Nom', sprintf($url, 'name'), Bootstrap::CSS_TEXT_DARK) . ' : ' . $character->name,
+            Html::getLink('Nom', sprintf($url, 'name'), B::TEXT_DARK) . ' : ' . $character->name,
         ];
     }
 }

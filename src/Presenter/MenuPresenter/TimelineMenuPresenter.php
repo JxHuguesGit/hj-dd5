@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\MenuPresenter;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Constant\Template;
@@ -26,7 +26,7 @@ class TimelineMenuPresenter
             $isActive ? Constant::CST_ACTIVE : '',
             $item->icon,
             $item->label,
-            Bootstrap::CSS_DNONE,
+            B::DNONE,
             '',
             '', '',
         ];

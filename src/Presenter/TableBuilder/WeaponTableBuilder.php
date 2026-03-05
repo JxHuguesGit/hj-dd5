@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Presenter\ViewModel\WeaponGroup;
@@ -35,7 +35,7 @@ class WeaponTableBuilder extends AbstractTableBuilder
                         Constant::CST_CONTENT => Html::getLink(
                             $row->name,
                             $row->url,
-                            Bootstrap::CSS_TEXT_DARK
+                            B::TEXT_DARK
                         ),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $row->damage])

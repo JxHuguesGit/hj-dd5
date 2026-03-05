@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Domain\Entity\Origin;
 use src\Presenter\ViewModel\OriginGroup;
 use src\Presenter\ViewModel\OriginRow;
@@ -33,7 +33,7 @@ final class OriginListPresenter
             name: $origin->name ?? '',
             url: UrlGenerator::origin($origin->slug) ?? '',
             abilities: implode(', ', array_map(fn($a) => $a->name, $this->originService->getAbilities($origin)->toArray())),
-            skills: implode(', ', array_map(fn($s) => Html::getLink($s->name, UrlGenerator::skill($s->slug), Bootstrap::CSS_TEXT_DARK), $this->originService->getSkills($origin)->toArray())),
+            skills: implode(', ', array_map(fn($s) => Html::getLink($s->name, UrlGenerator::skill($s->slug), B::TEXT_DARK), $this->originService->getSkills($origin)->toArray())),
             originFeat: $this->originFeatLink($origin),
             tool: $this->originToolLink($origin)
         );
@@ -42,12 +42,12 @@ final class OriginListPresenter
     private function originFeatLink(Origin $origin): string
     {
         $feat = $this->originService->getFeat($origin);
-        return $feat ? Html::getLink($feat->name, UrlGenerator::feat($feat->getSlug()), Bootstrap::CSS_TEXT_DARK) : '-';
+        return $feat ? Html::getLink($feat->name, UrlGenerator::feat($feat->getSlug()), B::TEXT_DARK) : '-';
     }
 
     private function originToolLink(Origin $origin): string
     {
         $tool = $this->originService->getTool($origin);
-        return $tool ? Html::getLink($tool->name, UrlGenerator::item($tool->getSlug()), Bootstrap::CSS_TEXT_DARK) : '-';
+        return $tool ? Html::getLink($tool->name, UrlGenerator::item($tool->getSlug()), B::TEXT_DARK) : '-';
     }
 }

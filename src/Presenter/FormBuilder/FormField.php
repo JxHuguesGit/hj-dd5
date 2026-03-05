@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Utils\Html;
 
@@ -29,7 +29,7 @@ abstract class FormField
         $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CST_CLASS => 'form-floating']);
         return Html::getDiv(
             $innerDiv,
-            [Constant::CST_CLASS => $this->params[Constant::OUTERDIVCLASS] ?? Bootstrap::CSS_COL_12]
+            [Constant::CST_CLASS => $this->params[Constant::OUTERDIVCLASS] ?? B::COL_12]
         );
     }
 }

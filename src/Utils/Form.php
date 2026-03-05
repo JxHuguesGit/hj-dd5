@@ -2,7 +2,6 @@
 namespace src\Utils;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Template;
 use src\Presenter\FormBuilder\FormField;
@@ -59,13 +58,13 @@ class Form
         $this->formAttributes['buttons'][] = Html::getLink(
             'Annuler',
             $cancelUrl,
-            'btn btn-sm btn-secondary ' . Bootstrap::CSS_TEXT_WHITE);
+            'btn btn-sm btn-secondary ' . B::TEXT_WHITE);
         return $this;
     }
     public function addButton(string $label, string $type, array $params): self
     {
         $params['type'] = $type;
-        if (!isset($this->formAttributes['buttons'])) {
+        if (! isset($this->formAttributes['buttons'])) {
             $this->formAttributes['buttons'] = [];
         }
         $this->formAttributes['buttons'][] = Html::getBalise('button', $label, $params);

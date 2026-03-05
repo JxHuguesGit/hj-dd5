@@ -1,13 +1,13 @@
 <?php
 namespace src\Utils;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon;
 
 class Html
 {
-    public const SELF_CLOSING_TAGS = ['img', 'input', 'br', 'hr', 'meta', Bootstrap::CSS_LINK];
+    public const SELF_CLOSING_TAGS = ['img', 'input', 'br', 'hr', 'meta', B::LINK];
 
     public static function getBalise(string $balise, string $label = '', array $attributes = []): string
     {

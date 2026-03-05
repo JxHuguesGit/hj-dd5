@@ -1,7 +1,6 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Presenter\ViewModel\SpellRow;
@@ -33,10 +32,10 @@ class SpellTableBuilder extends AbstractTableBuilder
         foreach ($rows as $row) {
             /** @var SpellRow $row */
             $table->addBodyRow([])
-                ->addBodyCell([Constant::CST_CONTENT => Html::getLink($row->name, $row->url, Bootstrap::CSS_TEXT_DARK)])
+                ->addBodyCell([Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK)])
                 ->addBodyCell([
                     Constant::CST_CONTENT    => $row->niveau,
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER],
+                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER],
                 ])
                 ->addBodyCell([Constant::CST_CONTENT => $row->ecole])
                 ->addBodyCell([Constant::CST_CONTENT => SpellFormatter::formatClasses($row->classes, false)])
@@ -49,8 +48,8 @@ class SpellTableBuilder extends AbstractTableBuilder
 
         $table->addFooter([
             Constant::CST_CLASS => implode(' ', [
-                Bootstrap::CSS_TABLE_DARK,
-                Bootstrap::CSS_TEXT_CENTER,
+                B::TABLE_DARK,
+                B::TEXT_CENTER,
             ]),
         ])
             ->addFootRow()

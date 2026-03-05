@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Entity\Tool;
@@ -27,7 +27,7 @@ final class ToolListPresenter
             $grouped[$tool->parentId][] = $this->buildRow($tool);
         }
 
-        $types = self::getToolTypes();
+        $types      = self::getToolTypes();
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ToolGroup(
@@ -62,7 +62,7 @@ final class ToolListPresenter
 
         $parts = [];
         foreach ($origins as $origin) {
-            $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), Bootstrap::CSS_TEXT_DARK);
+            $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), B::TEXT_DARK);
         }
         return implode(', ', $parts);
     }
@@ -71,19 +71,19 @@ final class ToolListPresenter
     {
         return [
             Tool::TYPE_DIVERS => [
-                Constant::CST_SLUG => Constant::DIVERS,
+                Constant::CST_SLUG  => Constant::DIVERS,
                 Constant::CST_LABEL => Language::LG_TOOL_DIVERS,
             ],
-            Tool::TYPE_GAMES => [
-                Constant::CST_SLUG => Constant::GAMES,
+            Tool::TYPE_GAMES  => [
+                Constant::CST_SLUG  => Constant::GAMES,
                 Constant::CST_LABEL => Language::LG_TOOL_GAMES,
             ],
-            Tool::TYPE_MUSIC => [
-                Constant::CST_SLUG => Constant::MUSIC,
+            Tool::TYPE_MUSIC  => [
+                Constant::CST_SLUG  => Constant::MUSIC,
                 Constant::CST_LABEL => Language::LG_TOOL_MUSIC,
             ],
-            Tool::TYPE_TOOL => [
-                Constant::CST_SLUG => Constant::TOOLS,
+            Tool::TYPE_TOOL   => [
+                Constant::CST_SLUG  => Constant::TOOLS,
                 Constant::CST_LABEL => Language::LG_TOOL_TOOLS,
             ],
         ];

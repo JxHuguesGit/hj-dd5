@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\MenuPresenter;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Presenter\ViewModel\MenuItem;
 use src\Utils\UrlGenerator;
@@ -26,7 +26,7 @@ class MenuItemPresenter
         string $icon,
         string $label,
         string $show,
-        string $initales = ''
+        string $initiales = ''
     ): array {
         return [
             '',
@@ -37,7 +37,7 @@ class MenuItemPresenter
             $show,
             '',
             '',
-            $initales,
+            $initiales,
         ];
     }
 
@@ -48,7 +48,7 @@ class MenuItemPresenter
             $this->isActive(),
             $this->item->icon,
             $this->item->label,
-            Bootstrap::CSS_DNONE,
+            B::DNONE,
         );
     }
 
@@ -59,7 +59,7 @@ class MenuItemPresenter
             $this->isActive() && $this->item->id == 0,
             $this->item->icon,
             $this->item->label,
-            Bootstrap::CSS_DNONE,
+            B::DNONE,
         );
     }
 
@@ -73,7 +73,7 @@ class MenuItemPresenter
             $this->isActive(),
             $this->item->icon,
             $name,
-            Bootstrap::CSS_DNONE,
+            B::DNONE,
             $initiales
         );
     }
@@ -85,7 +85,7 @@ class MenuItemPresenter
             $this->isActive(),
             $this->item->icon,
             $this->item->label,
-            Bootstrap::CSS_DNONE,
+            B::DNONE,
         );
     }
 }

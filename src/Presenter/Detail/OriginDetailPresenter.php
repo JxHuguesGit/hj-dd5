@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Presenter\ViewModel\OriginPageView;
 use src\Service\Domain\WpPostService;
@@ -20,11 +20,11 @@ class OriginDetailPresenter
         $wpPost = $this->wpPostService->getById($viewData->origin->postId ?? 0);
 
         return [
-            Constant::CST_TITLE => $viewData->origin->name,
-            Constant::CST_SLUG  => $viewData->origin->getSlug(),
+            Constant::CST_TITLE       => $viewData->origin->name,
+            Constant::CST_SLUG        => $viewData->origin->getSlug(),
 
-            Constant::CST_ABILITIES => $this->formatAbilities($viewData->abilities),
-            Constant::CST_SKILLS    => $viewData->skills,
+            Constant::CST_ABILITIES   => $this->formatAbilities($viewData->abilities),
+            Constant::CST_SKILLS      => $viewData->skills,
 
             Constant::CST_DESCRIPTION => $this->cleanContent($wpPost->post_content),
             Constant::CST_FEAT        => $viewData->feat ? [
@@ -37,11 +37,11 @@ class OriginDetailPresenter
             ] : null,
             Constant::CST_EQUIPMENT   => $this->formatItems($viewData->items),
 
-            Constant::CST_PREV => $viewData->previous ? [
+            Constant::CST_PREV        => $viewData->previous ? [
                 Constant::CST_NAME => $viewData->previous->name,
                 Constant::CST_SLUG => $viewData->previous->getSlug(),
             ] : null,
-            Constant::CST_NEXT => $viewData->next ? [
+            Constant::CST_NEXT        => $viewData->next ? [
                 Constant::CST_NAME => $viewData->next->name,
                 Constant::CST_SLUG => $viewData->next->getSlug(),
             ] : null,
@@ -53,9 +53,9 @@ class OriginDetailPresenter
         $cache = [];
         foreach ($items as $item) {
             $cache[$item->slug]['quantity'] = ($cache[$item->slug]['quantity'] ?? 0) + 1;
-            $cache[$item->slug]['item'] = $item;
+            $cache[$item->slug]['item']     = $item;
         }
-        return array_map(fn($data) => $data['quantity'].' '.Html::getLink( $data['item']->name, UrlGenerator::item($data['item']->slug), Bootstrap::CSS_TEXT_DARK ), $cache);
+        return array_map(fn($data) => $data['quantity'] . ' ' . Html::getLink($data['item']->name, UrlGenerator::item($data['item']->slug), B::TEXT_DARK), $cache);
     }
 
     private function formatAbilities(iterable $abilities): array

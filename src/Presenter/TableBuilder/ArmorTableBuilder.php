@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
-use src\Constant\Bootstrap;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language;
 use src\Domain\Entity\Armor;
@@ -34,21 +34,21 @@ class ArmorTableBuilder extends AbstractTableBuilder
                 /** @var Armor $armor */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($armor->name, $armor->url, Bootstrap::CSS_TEXT_DARK),
+                        Constant::CST_CONTENT => Html::getLink($armor->name, $armor->url, B::TEXT_DARK),
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $armor->armorClass])
                     ->addBodyCell([
                         Constant::CST_CONTENT    => $armor->strengthPenalty ?: '-',
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_CENTER],
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER],
                     ])
                     ->addBodyCell([Constant::CST_CONTENT => $armor->stealth])
                     ->addBodyCell([
                         Constant::CST_CONTENT    => $armor->weight,
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END],
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_END],
                     ])
                     ->addBodyCell([
                         Constant::CST_CONTENT    => $armor->price,
-                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => Bootstrap::CSS_TEXT_END],
+                        Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_END],
                     ]);
             }
         }
