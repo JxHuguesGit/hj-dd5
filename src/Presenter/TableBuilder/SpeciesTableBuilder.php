@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\SpeciesRow;
 use src\Utils\Html;
 use src\Utils\Table;
@@ -12,7 +12,7 @@ class SpeciesTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $rows, array $params = []): Table
     {
-        $headers = [Language::LG_NAMES, Language::LG_CREATURE_TYPE, Language::LG_SIZE_CATEGORY, Language::LG_SPEED];
+        $headers = [L::NAMES, L::CREATURE_TYPE, L::SIZE_CATEGORY, L::SPEED];
         $table   = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);
 

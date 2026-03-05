@@ -3,7 +3,7 @@ namespace src\Page\Metadata;
 
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Routes;
 
 class PageFeatsGeneral extends PageMetadata
@@ -13,7 +13,7 @@ class PageFeatsGeneral extends PageMetadata
         return [
             Constant::CST_SLUG        => 'feats-general',
             'icon'                    => I::SCROLL,
-            Constant::CST_TITLE       => Language::LG_GENERAL_FEATS,
+            Constant::CST_TITLE       => L::GENERAL_FEATS,
             Constant::CST_DESCRIPTION => "Les dons accessibles au cours de la carrière d'un personnage.",
             'url'                     => Routes::FEAT_PREFIX . '-' . Constant::GENERAL,
             'order'                   => 42,

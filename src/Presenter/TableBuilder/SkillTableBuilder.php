@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\SkillGroup;
 use src\Presenter\ViewModel\SkillRow;
 use src\Utils\Html;
@@ -13,7 +13,7 @@ class SkillTableBuilder extends AbstractTableBuilder
 {
     public function build(iterable $groups, array $params = []): Table
     {
-        $headers = [Language::LG_NAMES, Language::LG_DESCRIPTION, 'Sous-compétences'];
+        $headers = [L::NAMES, L::DESCRIPTION, 'Sous-compétences'];
         $table   = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);
 

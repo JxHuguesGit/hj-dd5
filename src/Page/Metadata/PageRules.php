@@ -3,7 +3,7 @@ namespace src\Page\Metadata;
 
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Routes;
 
 class PageRules extends PageMetadata
@@ -13,7 +13,7 @@ class PageRules extends PageMetadata
         return [
             Constant::CST_SLUG        => Constant::RULES,
             'icon'                    => I::BOOK,
-            Constant::CST_TITLE       => Language::LG_RULES,
+            Constant::CST_TITLE       => L::RULES,
             Constant::CST_DESCRIPTION => 'Découvrez les règles du jeu.',
             'url'                     => Routes::RULES_PREFIX,
             'order'                   => 70,

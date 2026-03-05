@@ -3,7 +3,7 @@ namespace src\Presenter\MenuPresenter;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Presenter\ViewModel\MenuItem;
 use src\Utils\UrlGenerator;
@@ -14,7 +14,7 @@ class TimelineMenuPresenter
     {
         $item = new MenuItem(
             id: Constant::ONG_TIMELINE,
-            label: Language::LG_INITIATIVE,
+            label: L::INITIATIVE,
             icon: Constant::ONG_TIMELINE
         );
 

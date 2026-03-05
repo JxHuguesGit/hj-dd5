@@ -3,7 +3,7 @@ namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Armor;
 use src\Presenter\ViewModel\ArmorGroup;
 use src\Presenter\ViewModel\ArmorRow;
@@ -40,7 +40,7 @@ final class ArmorListPresenter
             url: UrlGenerator::item($armor->slug),
             armorClass: $armor->displayArmorClass(),
             strengthPenalty: $armor->strengthPenalty,
-            stealth: $armor->stealthDisadvantage ? Language::LG_DISADVANTAGE : '-',
+            stealth: $armor->stealthDisadvantage ? L::DISADVANTAGE : '-',
             weight: Utils::getStrWeight($armor->weight),
             price: Utils::getStrPrice($armor->goldPrice)
         );
@@ -51,23 +51,23 @@ final class ArmorListPresenter
         return [
             Armor::TYPE_LIGHT => [
                 Constant::CST_SLUG  => Constant::LIGHT,
-                Constant::CST_LABEL => Language::LG_ARM_LGT_DONDOFF,
-                Constant::CST_NAME  => Language::LG_ARM_LGT,
+                Constant::CST_LABEL => L::ARM_LGT_DONDOFF,
+                Constant::CST_NAME  => L::ARM_LGT,
             ],
             Armor::TYPE_MEDIUM => [
                 Constant::CST_SLUG => Constant::MEDIUM,
-                Constant::CST_LABEL => Language::LG_ARM_MDM_DONDOFF,
-                Constant::CST_NAME  => Language::LG_ARM_MDM,
+                Constant::CST_LABEL => L::ARM_MDM_DONDOFF,
+                Constant::CST_NAME  => L::ARM_MDM,
             ],
             Armor::TYPE_HEAVY => [
                 Constant::CST_SLUG => Constant::HEAVY,
-                Constant::CST_LABEL => Language::LG_ARM_HVY_DONDOFF,
-                Constant::CST_NAME  => Language::LG_ARM_HVY,
+                Constant::CST_LABEL => L::ARM_HVY_DONDOFF,
+                Constant::CST_NAME  => L::ARM_HVY,
             ],
             Armor::TYPE_SHIELD => [
                 Constant::CST_SLUG => Constant::SHIELD,
-                Constant::CST_LABEL => Language::LG_ARM_SHD_DONDOFF,
-                Constant::CST_NAME  => Language::LG_ARM_SHD,
+                Constant::CST_LABEL => L::ARM_SHD_DONDOFF,
+                Constant::CST_NAME  => L::ARM_SHD,
             ],
         ];
     }

@@ -3,7 +3,7 @@ namespace src\Domain\CharacterCreation\Step;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Domain\CharacterCreation\StepInterface;
 use src\Domain\Character\Character;
@@ -20,7 +20,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
     public function __construct()
     {
         $this->id       = Constant::ORIGIN;
-        $this->title    = Language::LG_CHAR_HIST_TITLE;
+        $this->title    = L::CHAR_HIST_TITLE;
         $this->template = Template::CREATE_ORIGIN;
     }
 

@@ -4,7 +4,7 @@ namespace src\Presenter\FormBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\SpeedType;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
@@ -19,19 +19,19 @@ class MonsterCombatFormBuilder
     {
         $fieldset
             ->addField(new ExtraNumberField(
-                Field::SCORECA, Language::LG_CA, $monster->ca, false,
+                Field::SCORECA, L::CA, $monster->ca, false,
                 ['extraValue' => $monster->getExtra(Field::SCORECA)]
             ))
             ->addField(new ExtraNumberField(
-                Field::SCOREHP, Language::LG_PV, $monster->hp, false,
+                Field::SCOREHP, L::PV, $monster->hp, false,
                 ['extraValue' => $monster->getExtra(Field::SCOREHP)]
             ))
             ->addField(new NumberField(
-                Field::SCORECR, Language::LG_FP, $monster->cr, false,
+                Field::SCORECR, L::FP, $monster->cr, false,
                 [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new NumberField(
-                Field::INITIATIVE, Language::LG_INITIATIVE, $monster->initiative, false,
+                Field::INITIATIVE, L::INITIATIVE, $monster->initiative, false,
                 [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
         ;

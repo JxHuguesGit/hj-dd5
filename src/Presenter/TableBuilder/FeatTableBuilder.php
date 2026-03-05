@@ -4,7 +4,7 @@ namespace src\Presenter\TableBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
 use src\Utils\Html;
@@ -22,9 +22,9 @@ class FeatTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [
-            [Constant::CST_LABEL => Language::LG_NAMES],
+            [Constant::CST_LABEL => L::NAMES],
             [Constant::CST_LABEL => Constant::CST_VIDE],
-            [Constant::CST_LABEL => Language::LG_PREQUISITE],
+            [Constant::CST_LABEL => L::PREQUISITE],
         ];
         if ($this->isAdmin) {
             $headers[] = [Constant::CST_LABEL => Constant::CST_VIDE];
@@ -43,10 +43,10 @@ class FeatTableBuilder extends AbstractTableBuilder
             ) . $group->extraPrerequis;
             switch ($group->slug) {
                 case '-origin':
-                    $this->intermediateLabel = Language::LG_ORIGINS;
+                    $this->intermediateLabel = L::ORIGINS;
                     break;
                 case '-general':
-                    $this->intermediateLabel = Language::LG_ABILITIES;
+                    $this->intermediateLabel = L::ABILITIES;
                     break;
                 default:
                     $this->intermediateLabel = Constant::CST_VIDE;

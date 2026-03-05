@@ -3,7 +3,7 @@ namespace src\Presenter\FormBuilder;
 
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
 
@@ -52,7 +52,7 @@ class MonsterIdentityFormBuilder
             ))
             ->addField(new SelectField(
                 Field::REFID,
-                Language::LG_REFERENCE,
+                L::REFERENCE,
                 $monster->ukTag,
                 $options,
                 [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]

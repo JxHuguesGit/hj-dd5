@@ -4,7 +4,7 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillGroup;
 use src\Presenter\ViewModel\SkillRow;
@@ -60,12 +60,12 @@ final class SkillListPresenter
     private static function getSkillTypes(): array
     {
         return [
-            1 => [Constant::CST_SLUG => Constant::ABLSTR, Constant::CST_LABEL => Language::LG_FORCE],
-            2 => [Constant::CST_SLUG => Constant::ABLDEX, Constant::CST_LABEL => Language::LG_DEXTERITE],
-            3 => [Constant::CST_SLUG => Constant::ABLCON, Constant::CST_LABEL => Language::LG_CONSTITUTION],
-            4 => [Constant::CST_SLUG => Constant::ABLINT, Constant::CST_LABEL => Language::LG_INTELLIGENCE],
-            5 => [Constant::CST_SLUG => Constant::ABLWIS, Constant::CST_LABEL => Language::LG_SAGESSE],
-            6 => [Constant::CST_SLUG => Constant::ABLCHA, Constant::CST_LABEL => Language::LG_CHARISME],
+            1 => [Constant::CST_SLUG => Constant::ABLSTR, Constant::CST_LABEL => L::FORCE],
+            2 => [Constant::CST_SLUG => Constant::ABLDEX, Constant::CST_LABEL => L::DEXTERITE],
+            3 => [Constant::CST_SLUG => Constant::ABLCON, Constant::CST_LABEL => L::CONSTITUTION],
+            4 => [Constant::CST_SLUG => Constant::ABLINT, Constant::CST_LABEL => L::INTELLIGENCE],
+            5 => [Constant::CST_SLUG => Constant::ABLWIS, Constant::CST_LABEL => L::SAGESSE],
+            6 => [Constant::CST_SLUG => Constant::ABLCHA, Constant::CST_LABEL => L::CHARISME],
         ];
     }
 }

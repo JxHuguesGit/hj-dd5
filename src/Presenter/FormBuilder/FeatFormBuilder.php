@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Criteria\FeatAbilityCriteria;
 use src\Domain\Entity\Feat;
 use src\Enum\AbilityEnum;
@@ -82,7 +82,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [Constant::OUTERDIVCLASS => B::COL_MD_8,
                 ]))
             ->addField(new TextareaField(
-                Field::DESCRIPTION, Language::LG_DESCRIPTION, $this->wpPostService->getPostContent(), true,
+                Field::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
                 [
                     Constant::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3,
                     'style'                 => 'height: 200px',
@@ -90,13 +90,13 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ))
             ->addField(new TextField(
                 Constant::CST_PREREQUIS,
-                Language::LG_PREQUISITE,
+                L::PREQUISITE,
                 $this->wpPostService->getField(Constant::CST_PREREQUIS),
                 true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
-                Field::FEATTYPEID, Language::LG_FEAT_TYPE, $entity->featTypeId, $selectElements,
+                Field::FEATTYPEID, L::FEAT_TYPE, $entity->featTypeId, $selectElements,
                 [Constant::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new CheckboxGroupField(

@@ -2,7 +2,7 @@
 namespace src\Presenter\Detail;
 
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ListPresenter\ArmorListPresenter;
 use src\Presenter\ViewModel\PageViewInterface;
 
@@ -16,7 +16,7 @@ class ArmorDetailPresenter extends AbstractItemDetailPresenter
         $base['armorTypeId']         = (ArmorListPresenter::getTypesLabel())[$viewData->armor->armorTypeId][Constant::CST_NAME];
         $base['armorClass']          = $viewData->armor->displayArmorClass();
         $base['strengthPenalty']     = $viewData->armor->strengthPenalty != 0 ? $viewData->armor->strengthPenalty : '-';
-        $base['stealthDisadvantage'] = $viewData->armor->stealthDisadvantage ? Language::LG_DISADVANTAGE : '-';
+        $base['stealthDisadvantage'] = $viewData->armor->stealthDisadvantage ? L::DISADVANTAGE : '-';
 
         return $base;
     }

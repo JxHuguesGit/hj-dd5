@@ -2,7 +2,7 @@
 namespace src\Service\Formatter;
 
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Enum\ClassEnum;
 use src\Enum\MagicSchoolEnum;
 
@@ -12,8 +12,8 @@ class SpellFormatter
     {
         return MagicSchoolEnum::from($schoolSlug)->label() .
         $level == 0
-            ? Language::LG_SORT_MINEUR
-            : sprintf(Language::LG_SORT_NIVEAU_X, $level)
+            ? L::SORT_MINEUR
+            : sprintf(L::SORT_NIVEAU_X, $level)
         ;
     }
 
@@ -33,7 +33,7 @@ class SpellFormatter
     public static function formatDuree(string $value, bool $isConcentration, bool $detail = true): string
     {
         return ($isConcentration && $detail)
-            ? sprintf(Language::LG_CONC_UNTIL_X, self::formatDureeConvertie($value))
+            ? sprintf(L::CONC_UNTIL_X, self::formatDureeConvertie($value))
             : self::formatDureeConvertie($value)
         ;
     }
@@ -51,9 +51,9 @@ class SpellFormatter
     {
         return match ($value) {
             Constant::CST_VUE, Constant::CST_CONTACT => ucwords($value),
-            Constant::CST_ILLIM     => Language::LG_UNLIMITED,
-            Constant::CST_PERSO     => Language::LG_PERSO,
-            Constant::CST_SPECIALES => Language::LG_SPECIALES,
+            Constant::CST_ILLIM     => L::UNLIMITED,
+            Constant::CST_PERSO     => L::PERSO,
+            Constant::CST_SPECIALES => L::SPECIALES,
             default                 => self::formatDistance($value),
         };
     }

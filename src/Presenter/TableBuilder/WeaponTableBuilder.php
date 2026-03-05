@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\WeaponGroup;
 use src\Presenter\ViewModel\WeaponRow;
 use src\Utils\Html;
@@ -14,12 +14,12 @@ class WeaponTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [
-            Language::LG_NAMES,
-            Language::LG_DAMAGES,
-            Language::LG_PROPERTIES,
-            Language::LG_WEAPON_PROP,
-            Language::LG_WEIGHT,
-            Language::LG_PRICE,
+            L::NAMES,
+            L::DAMAGES,
+            L::PROPERTIES,
+            L::WEAPON_PROP,
+            L::WEIGHT,
+            L::PRICE,
         ];
         $table = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);

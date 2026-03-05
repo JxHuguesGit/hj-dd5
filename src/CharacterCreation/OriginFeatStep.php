@@ -4,7 +4,7 @@ namespace src\CharacterCreation;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Entity\RpgHerosFeat;
 use src\Utils\Session;
@@ -100,7 +100,7 @@ class OriginFeatStep extends AbstractStep
 
     public static function getSidebarLabel(): string
     {
-        return Language::LG_ORIGIN_FEAT;
+        return L::ORIGIN_FEAT;
     }
 
     public function getSidebarValue(): string

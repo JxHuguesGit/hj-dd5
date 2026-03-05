@@ -1,7 +1,7 @@
 <?php
 namespace src\Utils;
 
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Weapon;
 
 class Utils
@@ -11,17 +11,17 @@ class Utils
         $strReturned = $value < 0 ? 'moins ' : 'plus ';
         return $strReturned . abs($value);
     }
-    
+
     public static function formatStringModAbility(int $value): string
     {
         return ($value >= 0 ? '+' : '').$value;
     }
-    
+
     public static function getModAbility(int $value, $bonus=0): int
     {
         return floor($value/2)-5+$bonus;
     }
-    
+
 
     public static function getUnformatCr(mixed $cr): mixed
     {
@@ -33,7 +33,7 @@ class Utils
         ];
         return $crMap[$cr] ?? $cr;
     }
-    
+
     public static function getStrWeight(float $value): string
     {
         switch ($value) {
@@ -47,12 +47,12 @@ class Utils
                 $strPoids = '250 g';
             break;
             default :
-                $strPoids = $value.Language::LG_KG;
+                $strPoids = $value.L::KG;
             break;
         }
         return $strPoids;
     }
-    
+
     public static function getStrPrice(float $value): string
     {
         if ($value<0.1) {
@@ -60,7 +60,7 @@ class Utils
         } elseif ($value<1) {
             $strPrix = ($value*10).' pa';
         } else {
-            $strPrix = $value.Language::LG_GP;
+            $strPrix = $value.L::GP;
         }
         return $strPrix;
     }
@@ -118,7 +118,7 @@ class Utils
         $replace = ['<strong>', '</strong>', '<em>', '</em>', '<u>', '</u>', '<br/>', '<br/>'];
         return str_ireplace($search, $replace, $str);
     }
-    
+
     public static function slugify(string $text): string
     {
         // Supprimer les accents

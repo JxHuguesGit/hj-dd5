@@ -6,7 +6,7 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Monster\Monster;
 use src\Enum\AbilityEnum;
 use src\Factory\ReaderFactory;
@@ -251,7 +251,7 @@ class MonsterFormatter
         $content .= ' ; BM ' . ($bm == 0 ? '' : '+' . $bm) . $extraPb . ')</div>';
 
         return Html::getDiv(
-            Html::getBalise('strong', Language::LG_FP) . ' ' . $content,
+            Html::getBalise('strong', L::FP) . ' ' . $content,
             [Constant::CST_CLASS => B::COL_12]
         );
     }

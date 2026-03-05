@@ -3,7 +3,7 @@ namespace src\CharacterCreation;
 
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Entity\RpgHerosSkill;
 use src\Entity\RpgOrigin;
@@ -98,7 +98,7 @@ class OriginStep extends AbstractStep
 
     public static function getSidebarLabel(): string
     {
-        return Language::LG_ORIGIN;
+        return L::ORIGIN;
     }
 
     public function getSidebarValue(): string

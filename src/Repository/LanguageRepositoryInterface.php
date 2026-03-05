@@ -3,7 +3,7 @@ namespace src\Repository;
 
 use src\Collection\Collection;
 use src\Domain\Criteria\LanguageCriteria;
-use src\Domain\Entity\Language;
+use src\Domain\Entity\Language as L;
 
 interface LanguageRepositoryInterface
 {

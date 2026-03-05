@@ -2,7 +2,7 @@
 namespace src\Domain\CharacterCreation\Step;
 
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Domain\CharacterCreation\StepInterface;
 use src\Domain\Character\Character;
@@ -13,7 +13,7 @@ final class NameStep extends AbstractBaseStep implements StepInterface
     public function __construct()
     {
         $this->id       = Constant::CST_NAME;
-        $this->title    = Language::LG_CHAR_NAME_TITLE;
+        $this->title    = L::CHAR_NAME_TITLE;
         $this->template = Template::CREATE_NAME;
     }
 

@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\OriginRow;
 use src\Utils\Html;
 use src\Utils\Table;
@@ -13,11 +13,11 @@ class OriginTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [
-            Language::LG_NAMES,
-            Language::LG_ABILITIES,
-            Language::LG_ORIGIN_FEAT,
-            Language::LG_SKILLS,
-            Language::LG_TOOL,
+            L::NAMES,
+            L::ABILITIES,
+            L::ORIGIN_FEAT,
+            L::SKILLS,
+            L::TOOL,
         ];
         $table = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);

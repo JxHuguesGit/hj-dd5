@@ -4,7 +4,7 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Tool;
 use src\Presenter\ViewModel\ToolGroup;
 use src\Presenter\ViewModel\ToolRow;
@@ -72,19 +72,19 @@ final class ToolListPresenter
         return [
             Tool::TYPE_DIVERS => [
                 Constant::CST_SLUG  => Constant::DIVERS,
-                Constant::CST_LABEL => Language::LG_TOOL_DIVERS,
+                Constant::CST_LABEL => L::TOOL_DIVERS,
             ],
             Tool::TYPE_GAMES  => [
                 Constant::CST_SLUG  => Constant::GAMES,
-                Constant::CST_LABEL => Language::LG_TOOL_GAMES,
+                Constant::CST_LABEL => L::TOOL_GAMES,
             ],
             Tool::TYPE_MUSIC  => [
                 Constant::CST_SLUG  => Constant::MUSIC,
-                Constant::CST_LABEL => Language::LG_TOOL_MUSIC,
+                Constant::CST_LABEL => L::TOOL_MUSIC,
             ],
             Tool::TYPE_TOOL   => [
                 Constant::CST_SLUG  => Constant::TOOLS,
-                Constant::CST_LABEL => Language::LG_TOOL_TOOLS,
+                Constant::CST_LABEL => L::TOOL_TOOLS,
             ],
         ];
     }

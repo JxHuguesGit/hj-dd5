@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Armor;
 use src\Presenter\ViewModel\ArmorGroup;
 use src\Utils\Html;
@@ -14,12 +14,12 @@ class ArmorTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [
-            Language::LG_NAMES,
-            Language::LG_CA,
-            Language::LG_FORCE,
-            Language::LG_STEALTH,
-            Language::LG_WEIGHT,
-            Language::LG_PRICE,
+            L::NAMES,
+            L::CA,
+            L::FORCE,
+            L::STEALTH,
+            L::WEIGHT,
+            L::PRICE,
         ];
 
         $table = $this->createTable(count($headers), $params);

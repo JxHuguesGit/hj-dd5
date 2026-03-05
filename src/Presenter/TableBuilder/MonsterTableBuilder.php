@@ -4,7 +4,7 @@ namespace src\Presenter\TableBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Utils\Html;
 use src\Utils\Table;
 use src\Utils\UrlGenerator;
@@ -19,12 +19,12 @@ class MonsterTableBuilder extends AbstractTableBuilder
             B::TEXT_WHITE
         );
         $headers = [
-            [Constant::CST_LABEL => Language::LG_MONSTER],
-            [Constant::CST_LABEL => Language::LG_FP, Constant::CST_CLASS => B::COL_1],
-            [Constant::CST_LABEL => Language::LG_CREATURE_TYPE, Constant::CST_CLASS => B::COL_2],
-            [Constant::CST_LABEL => Language::LG_CA, Constant::CST_CLASS => B::COL_1],
-            [Constant::CST_LABEL => Language::LG_PV, Constant::CST_CLASS => B::COL_1],
-            [Constant::CST_LABEL => Language::LG_REFERENCE, Constant::CST_CLASS => B::COL_2],
+            [Constant::CST_LABEL => L::MONSTER],
+            [Constant::CST_LABEL => L::FP, Constant::CST_CLASS => B::COL_1],
+            [Constant::CST_LABEL => L::CREATURE_TYPE, Constant::CST_CLASS => B::COL_2],
+            [Constant::CST_LABEL => L::CA, Constant::CST_CLASS => B::COL_1],
+            [Constant::CST_LABEL => L::PV, Constant::CST_CLASS => B::COL_1],
+            [Constant::CST_LABEL => L::REFERENCE, Constant::CST_CLASS => B::COL_2],
             [Constant::CST_LABEL => $createLink, Constant::CST_CLASS => B::COL_1],
         ];
 

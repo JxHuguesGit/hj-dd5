@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\SpellRow;
 use src\Service\Formatter\SpellFormatter;
 use src\Utils\Html;
@@ -13,14 +13,14 @@ class SpellTableBuilder extends AbstractTableBuilder
     public function build(iterable $rows, array $params = []): Table
     {
         $headers = [
-            [Constant::CST_LABEL => Language::LG_NAMES],
-            [Constant::CST_LABEL => Language::LG_LEVEL, 'filter' => true],
-            [Constant::CST_LABEL => Language::LG_SCHOOL, 'filter' => true],
-            [Constant::CST_LABEL => Language::LG_CLASSES, 'filter' => true],
-            [Constant::CST_LABEL => 'TI', 'abbr' => Language::LG_INCTIME],
-            [Constant::CST_LABEL => Language::LG_RANGE],
-            [Constant::CST_LABEL => Language::LG_DURATION],
-            [Constant::CST_LABEL => 'V,S,M', 'abbr' => Language::LG_COMPONENTS],
+            [Constant::CST_LABEL => L::NAMES],
+            [Constant::CST_LABEL => L::LEVEL, 'filter' => true],
+            [Constant::CST_LABEL => L::SCHOOL, 'filter' => true],
+            [Constant::CST_LABEL => L::CLASSES, 'filter' => true],
+            [Constant::CST_LABEL => 'TI', 'abbr' => L::INCTIME],
+            [Constant::CST_LABEL => L::RANGE],
+            [Constant::CST_LABEL => L::DURATION],
+            [Constant::CST_LABEL => 'V,S,M', 'abbr' => L::COMPONENTS],
         ];
 
         $params[Constant::CST_ID]     = 'spellTable';

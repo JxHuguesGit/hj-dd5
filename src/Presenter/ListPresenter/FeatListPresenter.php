@@ -4,7 +4,7 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
@@ -99,22 +99,22 @@ final class FeatListPresenter
         return [
             Feat::TYPE_ORIGIN  => [
                 Constant::CST_SLUG            => '-' . Constant::ORIGIN,
-                Constant::CST_LABEL           => Language::LG_ORIGIN_FEATS,
+                Constant::CST_LABEL           => L::ORIGIN_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => '',
             ],
             Feat::TYPE_GENERAL => [
                 Constant::CST_SLUG            => '-' . Constant::GENERAL,
-                Constant::CST_LABEL           => Language::LG_GENERAL_FEATS,
+                Constant::CST_LABEL           => L::GENERAL_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV4 . ')',
             ],
             Feat::TYPE_COMBAT  => [
                 Constant::CST_SLUG            => '-' . Constant::COMBAT,
-                Constant::CST_LABEL           => Language::LG_CBT_STYLE_FEATS,
+                Constant::CST_LABEL           => L::CBT_STYLE_FEATS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_ASDC . ')',
             ],
             Feat::TYPE_EPIC    => [
                 Constant::CST_SLUG            => '-' . Constant::EPIC,
-                Constant::CST_LABEL           => Language::LG_CBT_STYLE_EPICS,
+                Constant::CST_LABEL           => L::CBT_STYLE_EPICS,
                 Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV19 . ')',
             ],
         ];

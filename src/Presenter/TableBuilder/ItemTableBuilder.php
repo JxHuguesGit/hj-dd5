@@ -4,7 +4,7 @@ namespace src\Presenter\TableBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Domain\Entity\Item;
 use src\Utils\Html;
 use src\Utils\Table;
@@ -18,7 +18,7 @@ class ItemTableBuilder extends AbstractTableBuilder
 
     public function build(iterable $rows, array $params = []): Table
     {
-        $headers = [Language::LG_NAMES, Language::LG_DESCRIPTION, Language::LG_WEIGHT, Language::LG_PRICE];
+        $headers = [L::NAMES, L::DESCRIPTION, L::WEIGHT, L::PRICE];
         if ($this->isAdmin) {
             $createLink = Html::getLink(
                 Html::getIcon(I::PLUS),

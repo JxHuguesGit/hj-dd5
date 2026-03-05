@@ -3,7 +3,7 @@ namespace src\Page\Metadata;
 
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Routes;
 
 class PageSpells extends PageMetadata
@@ -13,7 +13,7 @@ class PageSpells extends PageMetadata
         return [
             Constant::CST_SLUG        => Constant::SPELLS,
             'icon'                    => I::SPARKLES,
-            Constant::CST_TITLE       => Language::LG_SPELLS_TITLE,
+            Constant::CST_TITLE       => L::SPELLS_TITLE,
             Constant::CST_DESCRIPTION => 'Les sorts auxquels ont accès les différentes classes.',
             'url'                     => Routes::SPELLS_PREFIX,
             'order'                   => 60,

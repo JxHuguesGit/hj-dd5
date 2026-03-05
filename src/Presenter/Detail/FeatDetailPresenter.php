@@ -3,7 +3,7 @@ namespace src\Presenter\Detail;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Service\Domain\WpPostService;
 use src\Utils\Html;
@@ -66,14 +66,14 @@ class FeatDetailPresenter
         switch ($viewData->feat->featTypeId) {
             case 1:
                 $featType = Html::getLink(
-                    Language::LG_ORIGIN_FEAT,
+                    L::ORIGIN_FEAT,
                     UrlGenerator::feats(Constant::ORIGIN),
                     B::TEXT_DARK
                 );
                 break;
             case 2:
                 $featType = Html::getLink(
-                    Language::LG_GENERAL_FEAT,
+                    L::GENERAL_FEAT,
                     UrlGenerator::feats(Constant::GENERAL),
                     B::TEXT_DARK
                 ) . Constant::CST_PREREQUIS_NIV4;
@@ -85,14 +85,14 @@ class FeatDetailPresenter
                 break;
             case 3:
                 $featType  = Html::getLink(
-                    Language::LG_CBT_STYLE_FEAT,
+                    L::CBT_STYLE_FEAT,
                     UrlGenerator::feats(Constant::COMBAT),
                     B::TEXT_DARK
                 ) . Constant::CST_PREREQUIS_ASDC;
                 break;
             case 4:
                 $featType  = Html::getLink(
-                    Language::LG_CBT_STYLE_EPIC,
+                    L::CBT_STYLE_EPIC,
                     UrlGenerator::feats(Constant::EPIC),
                     B::TEXT_DARK
                 ) . Constant::CST_PREREQUIS_NIV19;

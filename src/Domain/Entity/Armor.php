@@ -3,7 +3,7 @@ namespace src\Domain\Entity;
 
 use src\Constant\Field;
 use src\Constant\FieldType;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Utils\Utils;
 use src\Domain\Entity\Item;
 
@@ -64,8 +64,8 @@ final class Armor extends Item
     {
         return match ($this->armorTypeId) {
             self::TYPE_SHIELD => '+' . $this->armorClass,
-            self::TYPE_MEDIUM => $this->armorClass . Language::LG_MOD_DEX_MAX2,
-            self::TYPE_LIGHT => $this->armorClass . Language::LG_MOD_DEX,
+            self::TYPE_MEDIUM => $this->armorClass . L::MOD_DEX_MAX2,
+            self::TYPE_LIGHT => $this->armorClass . L::MOD_DEX,
             self::TYPE_HEAVY => (string)$this->armorClass,
             default => (string)$this->armorClass,
         };

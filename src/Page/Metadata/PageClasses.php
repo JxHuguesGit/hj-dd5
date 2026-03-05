@@ -3,7 +3,7 @@ namespace src\Page\Metadata;
 
 use src\Constant\Constant;
 use src\Constant\Icon as I;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Constant\Routes;
 
 class PageClasses extends PageMetadata
@@ -13,7 +13,7 @@ class PageClasses extends PageMetadata
         return [
             Constant::CST_SLUG        => Constant::CLASSES,
             'icon'                    => I::SHIELD,
-            Constant::CST_TITLE       => Language::LG_CLASSES,
+            Constant::CST_TITLE       => L::CLASSES,
             Constant::CST_DESCRIPTION => 'Découvrez les classes jouables.',
             'url'                     => Routes::CLASSES_PREFIX,
             'order'                   => 30,
