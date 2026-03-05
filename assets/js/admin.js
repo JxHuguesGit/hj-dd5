@@ -171,9 +171,9 @@ $(document).ready(function(e) {
     // Formulaire de mise à jour d'un don, selon le type on affiche les cases à cocher des caractéristiques
     $('select#id_featTypeId').on('change', function() {
         if ($(this).val()=='2') {
-            $('.ability-fieldset').show();
+            $('.ability-fieldset').removeClass('d-none');
         } else {
-            $('.ability-fieldset').hide();
+            $('.ability-fieldset').addClass('d-none');
         }
     });
 });

@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\ArmorReader;
 use src\Service\Reader\ConditionReader;
@@ -57,59 +57,46 @@ final class ReaderFactory
     private function resolveBuilder(string $name): callable
     {
         return match ($name) {
-            // ----- Ability / Armor / Condition / DamageType -----
-            'ability'              => fn()              => new AbilityReader($this->repositories->ability()),
-            Constant::CST_ARMOR    => fn()    => new ArmorReader($this->repositories->armor()),
-            'condition'            => fn()            => new ConditionReader($this->repositories->condition()),
-            'damageType'           => fn()           => new DamageTypeReader($this->repositories->damageType()),
+            C::CST_FEAT           => fn()           => new FeatReader($this->repositories->feat()),
+            'featAbility'         => fn()         => new FeatAbilityReader($this->repositories->featAbility()),
+            C::CST_FEATTYPE       => fn()       => new FeatTypeReader($this->repositories->featType()),
 
-            // ----- Feat / FeatAbility / FeatType -----
-            Constant::CST_FEAT     => fn()     => new FeatReader($this->repositories->feat()),
-            'featAbility'          => fn()          => new FeatAbilityReader($this->repositories->featAbility()),
-            Constant::CST_FEATTYPE => fn() => new FeatTypeReader($this->repositories->featType()),
+            'monster'             => fn()             => new MonsterReader($this->repositories->monster()),
+            'monsterAbility'      => fn()      => new MonsterAbilityReader($this->repositories->monsterAbility()),
+            'monsterCondition'    => fn()    => new MonsterConditionReader($this->repositories->monsterCondition()),
+            'monsterLanguage'     => fn()     => new MonsterLanguageReader($this->repositories->monsterLanguage()),
+            'monsterSubType'      => fn()      => new MonsterSubTypeReader($this->repositories->monsterSubType()),
+            'monsterType'         => fn()         => new MonsterTypeReader($this->repositories->monsterType()),
+            'monsterVisionType'   => fn()   => new MonsterVisionTypeReader($this->repositories->monsterVisionType()),
 
-            // ----- Item / Language -----
-            'item'                 => fn()                 => new ItemReader($this->repositories->item()),
-            'language'             => fn()             => new LanguageReader($this->repositories->language()),
+            C::ORIGIN             => fn()             => new OriginReader($this->repositories->origin()),
+            'originAbility'       => fn()       => new OriginAbilityReader($this->repositories->originAbility()),
+            'originItem'          => fn()          => new OriginItemReader($this->repositories->originItem()),
+            'originSkill'         => fn()         => new OriginSkillReader($this->repositories->originSkill()),
 
-            // ----- Monster & Co -----
-            'monster'              => fn()              => new MonsterReader($this->repositories->monster()),
-            'monsterAbility'       => fn()       => new MonsterAbilityReader($this->repositories->monsterAbility()),
-            'monsterCondition'     => fn()     => new MonsterConditionReader($this->repositories->monsterCondition()),
-            'monsterLanguage'      => fn()      => new MonsterLanguageReader($this->repositories->monsterLanguage()),
-            'monsterSubType'       => fn()       => new MonsterSubTypeReader($this->repositories->monsterSubType()),
-            'monsterType'          => fn()          => new MonsterTypeReader($this->repositories->monsterType()),
-            'monsterVisionType'    => fn()    => new MonsterVisionTypeReader($this->repositories->monsterVisionType()),
+            'skill'               => fn()               => new SkillReader($this->repositories->skill()),
+            'subSkill'            => fn()            => new SubSkillReader($this->repositories->subSkill()),
 
-            // ----- Origin & Co -----
-            Constant::ORIGIN       => fn()       => new OriginReader($this->repositories->origin()),
-            'originAbility'        => fn()        => new OriginAbilityReader($this->repositories->originAbility()),
-            'originItem'           => fn()           => new OriginItemReader($this->repositories->originItem()),
-            'originSkill'          => fn()          => new OriginSkillReader($this->repositories->originSkill()),
+            'speciePower'         => fn()         => new SpeciePowerReader($this->repositories->speciePower()),
+            C::SPECIES            => fn()            => new SpecieReader($this->repositories->specie()),
 
-            // ----- Power / Reference / Skill -----
-            'power'                => fn()                => new PowerReader($this->repositories->power()),
-            'reference'            => fn()            => new ReferenceReader($this->repositories->reference()),
-            'skill'                => fn()                => new SkillReader($this->repositories->skill()),
+            C::CST_ARMOR          => fn()          => new ArmorReader($this->repositories->armor()),
+            'item'                => fn()                => new ItemReader($this->repositories->item()),
+            C::CST_TOOL           => fn()           => new ToolReader($this->repositories->tool()),
+            C::CST_WEAPON         => fn()         => new WeaponReader($this->repositories->weapon()),
+            'weaponPropertyValue' => fn() => new WeaponPropertyValueReader($this->repositories->weaponPropertyValue()),
 
-            // ----- Specie & Co -----
-            'speciePower'          => fn()          => new SpeciePowerReader($this->repositories->speciePower()),
-            Constant::SPECIES      => fn()      => new SpecieReader($this->repositories->specie()),
-            'speedType'            => fn()            => new SpeedTypeReader($this->repositories->speedType()),
+            'ability'             => fn()             => new AbilityReader($this->repositories->ability()),
+            'condition'           => fn()           => new ConditionReader($this->repositories->condition()),
+            'damageType'          => fn()          => new DamageTypeReader($this->repositories->damageType()),
+            'language'            => fn()            => new LanguageReader($this->repositories->language()),
+            'power'               => fn()               => new PowerReader($this->repositories->power()),
+            'reference'           => fn()           => new ReferenceReader($this->repositories->reference()),
+            'speedType'           => fn()           => new SpeedTypeReader($this->repositories->speedType()),
+            'spell'               => fn()               => new SpellReader($this->repositories->spell()),
+            'visionType'          => fn()          => new VisionTypeReader($this->repositories->visionType()),
 
-            // ----- Spell / SubSkill -----
-            'spell'                => fn()                => new SpellReader($this->repositories->spell()),
-            'subSkill'             => fn()             => new SubSkillReader($this->repositories->subSkill()),
-
-            // ----- Tool / VisionType / Weapon / WeaponPropertyValue -----
-            Constant::CST_TOOL     => fn()     => new ToolReader($this->repositories->tool()),
-            'visionType'           => fn()           => new VisionTypeReader($this->repositories->visionType()),
-            Constant::CST_WEAPON   => fn()   => new WeaponReader($this->repositories->weapon()),
-            'weaponPropertyValue'  => fn()  => new WeaponPropertyValueReader($this->repositories->weaponPropertyValue()),
-
-            default                => throw new \BadMethodCallException(
-                "Reader inconnu: '$name'. Disponibles: " . implode(', ', $this->availableKeys())
-            ),
+            default               => throw new \BadMethodCallException("Reader inconnu: '$name'."),
         };
     }
 

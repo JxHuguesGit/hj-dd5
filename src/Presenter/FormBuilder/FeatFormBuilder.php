@@ -102,7 +102,10 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ->addField(new CheckboxGroupField(
                 'ability',
                 $featAbilitiesSel,
-                [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_8]
+                [
+                    Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_8,
+                    'extraClass' => $entity->featTypeId!=2 ? Bootstrap::CSS_DNONE : '',
+                ]
             ))
         ;
         $form->addField($fieldset);

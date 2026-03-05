@@ -5,6 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap;
 use src\Domain\Entity\MonsterResistance;
 use src\Domain\Monster\Monster;
+use src\Enum\AbilityEnum;
 use src\Factory\ReaderFactory;
 use src\Service\Formatter\MonsterFormatter;
 use src\Service\Reader\PowerReader;
@@ -45,12 +46,12 @@ class MonsterDetailPresenter
             $this->formatter->formatInitiative($this->monster),
             $this->formatter->formatHP($this->monster),
             implode(', ', $speeds),
-            $this->formatter->formatScore($this->monster, 'str'),
-            $this->formatter->formatScore($this->monster, 'dex'),
-            $this->formatter->formatScore($this->monster, 'con'),
-            $this->formatter->formatScore($this->monster, 'int'),
-            $this->formatter->formatScore($this->monster, 'wis'),
-            $this->formatter->formatScore($this->monster, 'cha'),
+            $this->formatter->formatScore($this->monster, AbilityEnum::Str),
+            $this->formatter->formatScore($this->monster, AbilityEnum::Dex),
+            $this->formatter->formatScore($this->monster, AbilityEnum::Con),
+            $this->formatter->formatScore($this->monster, AbilityEnum::Int),
+            $this->formatter->formatScore($this->monster, AbilityEnum::Wis),
+            $this->formatter->formatScore($this->monster, AbilityEnum::Cha),
             $this->getSkillsToCR(),
             $objsTrait->isEmpty() ? ' ' . Bootstrap::CSS_DNONE : '',
             $this->getSpecialAbilitiesList($objsTrait),

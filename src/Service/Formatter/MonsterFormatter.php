@@ -6,7 +6,9 @@ use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Field;
 use src\Constant\Icon;
+use src\Constant\Language;
 use src\Domain\Monster\Monster;
+use src\Enum\AbilityEnum;
 use src\Factory\ReaderFactory;
 use src\Helper\SizeHelper;
 use src\Service\Calculator\MonsterCalculator;
@@ -107,13 +109,13 @@ class MonsterFormatter
         return $typeName . ($alignment ? ', ' . $alignment : '');
     }
 
-    public function formatScore(Monster $monster, string $carac): string
+    public function formatScore(Monster $monster, AbilityEnum $carac): string
     {
-        $score        = $monster->stats()->getScore($carac) ?? 0;
+        $score        = $monster->stats()->getScore($carac->value) ?? 0;
         $mod          = Utils::getModAbility($score);
-        $bonus        = $monster->getExtra('js' . $carac) ?: 0;
+        $bonus        = $monster->getExtra('js' . $carac->value) ?: 0;
         $modWithBonus = Utils::getModAbility($score, $bonus);
-        $mentalStats  = in_array($carac, ['int', 'wis', 'cha']);
+        $mentalStats  = in_array($carac, AbilityEnum::group('mental'), true);
         return sprintf(
             '<div class="col %s">%d</div><div class="col %s">%+d</div><div class="col %s">%+d</div>',
             'car' . (2 + 3 * $mentalStats), $score,
@@ -249,7 +251,7 @@ class MonsterFormatter
         $content .= ' ; BM ' . ($bm == 0 ? '' : '+' . $bm) . $extraPb . ')</div>';
 
         return Html::getDiv(
-            Html::getBalise('strong', 'FP') . ' ' . $content,
+            Html::getBalise('strong', Language::LG_FP) . ' ' . $content,
             [Constant::CST_CLASS => Bootstrap::CSS_COL_12]
         );
     }

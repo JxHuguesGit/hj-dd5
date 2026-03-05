@@ -35,7 +35,10 @@ class CheckboxGroupField extends FormField
             $i++;
         }
 
-        $div = Html::getDiv($content, [Constant::CST_CLASS => 'row']);
-        return Html::getBalise('fieldset', $div, [Constant::CST_CLASS => 'fieldset ' . $this->name . '-fieldset px-3 py-0']);
+        return Html::getBalise(
+            'fieldset',
+            Html::getDiv($content, [Constant::CST_CLASS => 'row']),
+            [Constant::CST_CLASS => 'fieldset ' . $this->name . '-fieldset px-3 py-0 ' . ($this->params['extraClass'] ?? '')]
+        );
     }
 }
