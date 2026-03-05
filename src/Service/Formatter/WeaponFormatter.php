@@ -35,7 +35,7 @@ final class WeaponFormatter
         $this->wpPostService->getById($weapon->masteryPostId);
         $postContent = $this->wpPostService->getPostContent();
         $linkContent = $weapon->masteryName
-        . Html::getSpan($postContent ?? '', [Constant::CLASS => 'tooltip-text']);
+        . Html::getSpan($postContent ?? '', [Constant::CSSCLASS => 'tooltip-text']);
         return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
     }
 }

@@ -26,7 +26,7 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
 
         $params[Constant::TITLE] = 'Monstre : ' . $entity->name;
         $params[Constant::TYPE] = Constant::EDIT;
-        $params[Constant::CLASS] = 'pt-3';
+        $params[Constant::CSSCLASS] = 'pt-3';
         $params['cancelUrl'] = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::MONSTERS);
         $form = $this->createForm($params);
 

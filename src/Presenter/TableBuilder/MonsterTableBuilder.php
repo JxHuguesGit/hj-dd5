@@ -20,12 +20,12 @@ class MonsterTableBuilder extends AbstractTableBuilder
         );
         $headers = [
             [Constant::LABEL => L::MONSTER],
-            [Constant::LABEL => L::FP, Constant::CLASS => B::COL_1],
-            [Constant::LABEL => L::CREATURE_TYPE, Constant::CLASS => B::COL_2],
-            [Constant::LABEL => L::CA, Constant::CLASS => B::COL_1],
-            [Constant::LABEL => L::PV, Constant::CLASS => B::COL_1],
-            [Constant::LABEL => L::REFERENCE, Constant::CLASS => B::COL_2],
-            [Constant::LABEL => $createLink, Constant::CLASS => B::COL_1],
+            [Constant::LABEL => L::FP, Constant::CSSCLASS => B::COL_1],
+            [Constant::LABEL => L::CREATURE_TYPE, Constant::CSSCLASS => B::COL_2],
+            [Constant::LABEL => L::CA, Constant::CSSCLASS => B::COL_1],
+            [Constant::LABEL => L::PV, Constant::CSSCLASS => B::COL_1],
+            [Constant::LABEL => L::REFERENCE, Constant::CSSCLASS => B::COL_2],
+            [Constant::LABEL => $createLink, Constant::CSSCLASS => B::COL_1],
         ];
 
         $params[Constant::ID] = 'monsterFilter';
@@ -34,7 +34,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
         foreach ($headers as $data) {
             $table->addHeaderCell([
                 Constant::CONTENT    => $data[Constant::LABEL],
-                Constant::ATTRIBUTES => [Constant::CLASS => $data[Constant::CLASS] ?? ''],
+                Constant::ATTRIBUTES => [Constant::CSSCLASS => $data[Constant::CSSCLASS] ?? ''],
             ]);
         }
 
@@ -42,10 +42,10 @@ class MonsterTableBuilder extends AbstractTableBuilder
             /** @var MonsterRow $row */
             $table->addBodyRow([])
                 ->addBodyCell([Constant::CONTENT => $monster->name])
-                ->addBodyCell([Constant::CONTENT => $monster->cr, Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER]])
+                ->addBodyCell([Constant::CONTENT => $monster->cr, Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER]])
                 ->addBodyCell([Constant::CONTENT => $monster->type])
-                ->addBodyCell([Constant::CONTENT => $monster->ca, Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER]])
-                ->addBodyCell([Constant::CONTENT => $monster->hp, Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_END]])
+                ->addBodyCell([Constant::CONTENT => $monster->ca, Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER]])
+                ->addBodyCell([Constant::CONTENT => $monster->hp, Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END]])
                 ->addBodyCell([Constant::CONTENT => $monster->reference])
                 ->addBodyCell([
                     Constant::CONTENT    => Html::getLink(
@@ -53,12 +53,12 @@ class MonsterTableBuilder extends AbstractTableBuilder
                         UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, $monster->ukTag ?? '', Constant::EDIT),
                         B::TEXT_DARK
                     ),
-                    Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER . ' ' . B::COL_1],
+                    Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1],
                 ]);
         }
 
         $table->addFooter([
-            Constant::CLASS => implode(' ', [
+            Constant::CSSCLASS => implode(' ', [
                 B::TABLE_DARK,
                 B::TEXT_CENTER,
             ]),
@@ -68,7 +68,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
                 Constant::CONTENT    => Html::getDiv(
                     Html::getIcon(I::CIRCLEPLUS),
                     [
-                        Constant::CLASS => Constant::AJAXACTION . ' cursor-pointer',
+                        Constant::CSSCLASS => Constant::AJAXACTION . ' cursor-pointer',
                         Constant::DATA  => [
                             Constant::TRIGGER => Constant::CLICK,
                             Constant::ACTION  => 'loadMoreMonsters',

@@ -22,7 +22,7 @@ class Table
     public function __construct()
     {
         $this->attributes = [
-            Constant::CLASS => B::TABLE,
+            Constant::CSSCLASS => B::TABLE,
             'aria-describedby'  => '',
         ];
 
@@ -30,9 +30,9 @@ class Table
 
     public function setTable(array $extraAttributes): self
     {
-        if (isset($extraAttributes[Constant::CLASS])) {
-            $this->attributes[Constant::CLASS] .= ' ' . $extraAttributes[Constant::CLASS];
-            unset($extraAttributes[Constant::CLASS]);
+        if (isset($extraAttributes[Constant::CSSCLASS])) {
+            $this->attributes[Constant::CSSCLASS] .= ' ' . $extraAttributes[Constant::CSSCLASS];
+            unset($extraAttributes[Constant::CSSCLASS]);
         }
         $this->attributes = array_merge($this->attributes, $extraAttributes);
         return $this;
@@ -55,7 +55,7 @@ class Table
             $arrNbPerPage = [10, 25, 50, 100];
         }
         // On modifie le margin-top pour pouvoir inclure cette ligne dans le header
-        $this->attributes[Constant::CLASS] = str_replace(B::MT5, 'mt-2', $this->attributes[Constant::CLASS]);
+        $this->attributes[Constant::CSSCLASS] = str_replace(B::MT5, 'mt-2', $this->attributes[Constant::CSSCLASS]);
 
         // On construit le contenu de la sélection
         $selectContent = '';
@@ -68,15 +68,15 @@ class Table
                 )
             );
         }
-        $strDivDivContent = Html::getBalise(Constant::LABEL, 'Afficher', ['for' => Constant::PAGE_NBPERPAGE, Constant::CLASS => 'col-1 me-2 mb-0 text-end"'])
-        . Html::getBalise('select', $selectContent, [Constant::CLASS => 'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger' => 'change', 'data-action' => 'loadTablePage'])
-        . Html::getSpan('entrées', [Constant::CLASS => 'ms-2 col-9 text-start'])
+        $strDivDivContent = Html::getBalise(Constant::LABEL, 'Afficher', ['for' => Constant::PAGE_NBPERPAGE, Constant::CSSCLASS => 'col-1 me-2 mb-0 text-end"'])
+        . Html::getBalise('select', $selectContent, [Constant::CSSCLASS => 'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger' => 'change', 'data-action' => 'loadTablePage'])
+        . Html::getSpan('entrées', [Constant::CSSCLASS => 'ms-2 col-9 text-start'])
         . Html::getBalise('input', '', [Constant::TYPE => 'hidden', Constant::VALUE => $refElementId, Constant::ID => 'firstElementId', Constant::NAME => 'firstElementId']);
 
         $strDivContent = '<!-- Choix du nombre d\'entrées -->'
-        . Html::getDiv($strDivDivContent, [Constant::CLASS => 'row col align-items-center']);
+        . Html::getDiv($strDivDivContent, [Constant::CSSCLASS => 'row col align-items-center']);
 
-        $strContent = Html::getDiv($strDivContent, [Constant::CLASS => 'row mx-2 d-flex justify-content-between align-items-center']);
+        $strContent = Html::getDiv($strDivContent, [Constant::CSSCLASS => 'row mx-2 d-flex justify-content-between align-items-center']);
         $this->addHeaderRow()
             ->addHeaderCell([Constant::CONTENT => $strContent, Constant::ATTRIBUTES => [Constant::COLSPAN => $cols]]);
         return $this;
@@ -152,9 +152,9 @@ class Table
 
         return Html::getBalise(
             B::TABLE,
-            Html::getBalise('thead', $headContent, [Constant::CLASS => $this->header[Constant::CLASS]]) .
+            Html::getBalise('thead', $headContent, [Constant::CSSCLASS => $this->header[Constant::CSSCLASS]]) .
             Html::getBalise('tbody', $bodyContent) .
-            Html::getBalise('tfoot', $footContent, [Constant::CLASS => $this->foot[Constant::CLASS]]),
+            Html::getBalise('tfoot', $footContent, [Constant::CSSCLASS => $this->foot[Constant::CSSCLASS]]),
             $this->attributes
         );
     }
@@ -205,7 +205,7 @@ class Table
     <li><a class="dropdown-item" href="#">Humanoïde</a></li>
   </ul>';
 
-        $filterTitle = Html::getDiv($button . $dropdown, [Constant::CLASS => 'dropdown']);
+        $filterTitle = Html::getDiv($button . $dropdown, [Constant::CSSCLASS => 'dropdown']);
 
         $cell[Constant::CONTENT] = $filterTitle;
 
@@ -216,7 +216,7 @@ class Table
     public function addBodyRows(mixed $objs, int $colspan = 1, array $arrParams = []): self
     {
         if ($this->blnFilter) {
-            $this->addFootRow([Constant::CLASS => 'table-dark text-center']);
+            $this->addFootRow([Constant::CSSCLASS => 'table-dark text-center']);
             for ($i = 1; $i <= $colspan; $i++) {
                 if (isset($this->filters[$i])) {
                     $filterBlock = $this->filters[$i]->getFilterBlock();
@@ -243,9 +243,9 @@ class Table
         $cpt   = 1;
         foreach ($objs as $obj) {
             if ($cpt % 2 == 0) {
-                $arrParams[Constant::CLASS] = 'row-striped-even';
-            } elseif (isset($arrParams[Constant::CLASS])) {
-                unset($arrParams[Constant::CLASS]);
+                $arrParams[Constant::CSSCLASS] = 'row-striped-even';
+            } elseif (isset($arrParams[Constant::CSSCLASS])) {
+                unset($arrParams[Constant::CSSCLASS]);
             } else {
                 //SONAR
             }

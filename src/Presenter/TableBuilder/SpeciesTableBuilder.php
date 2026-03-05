@@ -26,7 +26,7 @@ class SpeciesTableBuilder extends AbstractTableBuilder
                 ->addBodyCell([Constant::CONTENT => $row->sizeCategory])
                 ->addBodyCell([
                     Constant::CONTENT    => $row->speed,
-                    Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER],
+                    Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER],
                 ]);
         }
 

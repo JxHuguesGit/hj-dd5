@@ -55,7 +55,7 @@ class FeatDetailPresenter
                     UrlGenerator::origin($slug),
                     B::TEXT_WHITE
                 ),
-                [Constant::CLASS => implode(' ', [B::BADGE, B::BG_DARK])]
+                [Constant::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
             ) . ' ';
         }
         return $html;

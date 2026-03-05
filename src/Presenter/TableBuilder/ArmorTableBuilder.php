@@ -39,16 +39,16 @@ class ArmorTableBuilder extends AbstractTableBuilder
                     ->addBodyCell([Constant::CONTENT => $armor->armorClass])
                     ->addBodyCell([
                         Constant::CONTENT    => $armor->strengthPenalty ?: '-',
-                        Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER],
+                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER],
                     ])
                     ->addBodyCell([Constant::CONTENT => $armor->stealth])
                     ->addBodyCell([
                         Constant::CONTENT    => $armor->weight,
-                        Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_END],
+                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END],
                     ])
                     ->addBodyCell([
                         Constant::CONTENT    => $armor->price,
-                        Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_END],
+                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END],
                     ]);
             }
         }

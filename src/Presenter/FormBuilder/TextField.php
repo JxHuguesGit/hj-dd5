@@ -13,7 +13,7 @@ class TextField extends FormField
             Constant::ID    => $this->getId(),
             Constant::NAME  => $this->name,
             Constant::VALUE => $this->value,
-            Constant::CLASS => 'form-control',
+            Constant::CSSCLASS => 'form-control',
         ];
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';

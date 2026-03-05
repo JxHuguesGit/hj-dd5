@@ -13,7 +13,7 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
     {
         $withMarginTop   = $params[B::WITH_MRGNTOP] ?? true;
         $tableAttributes = [
-            Constant::CLASS => implode(' ', [
+            Constant::CSSCLASS => implode(' ', [
                 B::TABLE_SM,
                 B::TABLE_STRIPED,
                 $withMarginTop ? B::MT5 : '',
@@ -28,7 +28,7 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
         return (new Table())
             ->setTable($tableAttributes)
             ->addHeader([
-                Constant::CLASS => implode(' ', [
+                Constant::CSSCLASS => implode(' ', [
                     B::TABLE_DARK,
                     B::TEXT_CENTER,
                 ]),
@@ -38,12 +38,12 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
 
     protected function addGroupRow(Table $table, string $label, int $colspan): void
     {
-        $table->addBodyRow([Constant::CLASS => B::ROW_DARK_STRIPED])
+        $table->addBodyRow([Constant::CSSCLASS => B::ROW_DARK_STRIPED])
             ->addBodyCell([
                 Constant::CONTENT    => $label,
                 Constant::ATTRIBUTES => [
                     Constant::COLSPAN => $colspan,
-                    Constant::CLASS   => B::FONT_ITALIC,
+                    Constant::CSSCLASS   => B::FONT_ITALIC,
                 ],
             ]);
     }
@@ -66,7 +66,7 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                             I::FITLER,
                             I::SOLID,
                             [
-                                Constant::CLASS => 'modal-tooltip ajaxAction',
+                                Constant::CSSCLASS => 'modal-tooltip ajaxAction',
                                 Constant::DATA  => [
                                     Constant::TRIGGER => Constant::CLICK,
                                     Constant::ACTION  => Constant::OPENMODAL,
@@ -74,7 +74,7 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                                 ],
                             ]
                         ),
-                        [Constant::CLASS => B::TEXT_NOWRAP]
+                        [Constant::CSSCLASS => B::TEXT_NOWRAP]
                     );
                 }
                 $table->addHeaderCell([Constant::CONTENT => $strContent]);

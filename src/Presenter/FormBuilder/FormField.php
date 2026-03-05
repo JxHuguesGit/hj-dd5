@@ -26,10 +26,10 @@ abstract class FormField
             htmlspecialchars($this->label),
             ['for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CLASS => 'form-floating']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CSSCLASS => 'form-floating']);
         return Html::getDiv(
             $innerDiv,
-            [Constant::CLASS => $this->params[Constant::OUTERDIVCLASS] ?? B::COL_12]
+            [Constant::CSSCLASS => $this->params[Constant::OUTERDIVCLASS] ?? B::COL_12]
         );
     }
 }

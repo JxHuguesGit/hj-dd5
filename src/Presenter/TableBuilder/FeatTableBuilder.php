@@ -80,11 +80,11 @@ class FeatTableBuilder extends AbstractTableBuilder
 
     protected function addGroupRow(Table $table, string $label, int $colspan): void
     {
-        $table->addBodyRow([Constant::CLASS => B::ROW_DARK_STRIPED])
+        $table->addBodyRow([Constant::CSSCLASS => B::ROW_DARK_STRIPED])
             ->addBodyCell([
                 Constant::CONTENT    => $label,
                 Constant::ATTRIBUTES => [
-                    Constant::CLASS => B::FONT_ITALIC,
+                    Constant::CSSCLASS => B::FONT_ITALIC,
                 ],
             ])
             ->addBodyCell([

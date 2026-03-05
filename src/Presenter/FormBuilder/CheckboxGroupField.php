@@ -30,15 +30,15 @@ class CheckboxGroupField extends FormField
             $checkboxField  = new CheckboxField($choice->slug->value, $choice->label, $choice->id, false, $params);
             $content       .= Html::getDiv(
                 $checkboxField->display(),
-                [Constant::CLASS => 'col-4' . ($i >= 3 ? ' mt-2' : '')]
+                [Constant::CSSCLASS => 'col-4' . ($i >= 3 ? ' mt-2' : '')]
             );
             $i++;
         }
 
         return Html::getBalise(
             'fieldset',
-            Html::getDiv($content, [Constant::CLASS => 'row']),
-            [Constant::CLASS => 'fieldset ' . $this->name . '-fieldset px-3 py-0 ' . ($this->params['extraClass'] ?? '')]
+            Html::getDiv($content, [Constant::CSSCLASS => 'row']),
+            [Constant::CSSCLASS => 'fieldset ' . $this->name . '-fieldset px-3 py-0 ' . ($this->params['extraClass'] ?? '')]
         );
     }
 }

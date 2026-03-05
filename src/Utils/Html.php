@@ -47,7 +47,7 @@ class Html
         // Les attributs par défaut d'un bouton.
         $defaultAttributes = [
             Constant::TYPE  => 'button',
-            Constant::CLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
+            Constant::CSSCLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
         ];
         $attributes = array_merge($defaultAttributes, $extraAttributes);
         return static::getBalise('button', $label, $attributes);
@@ -79,7 +79,7 @@ class Html
     public static function getLink(string $label, string $href, string $classe = '', array $extraAttributes = []): string
     {
         $attributes = array_merge(
-            [Constant::HREF => $href, Constant::CLASS => $classe],
+            [Constant::HREF => $href, Constant::CSSCLASS => $classe],
             $extraAttributes
         );
         return static::getBalise('a', $label, $attributes);
@@ -96,7 +96,7 @@ class Html
             $extraAttributes,
             'fa-' . $prefix . ' fa-' . $icon
         );
-        $attributes = array_merge([Constant::CLASS => $strClass], $extraAttributes);
+        $attributes = array_merge([Constant::CSSCLASS => $strClass], $extraAttributes);
         return static::getBalise('i', '', $attributes);
     }
 
@@ -115,9 +115,9 @@ class Html
 
     private static function mergeClasses(array &$attributes, string $defaultClass): string
     {
-        if (isset($attributes[Constant::CLASS])) {
-            $defaultClass .= ' ' . $attributes[Constant::CLASS];
-            unset($attributes[Constant::CLASS]);
+        if (isset($attributes[Constant::CSSCLASS])) {
+            $defaultClass .= ' ' . $attributes[Constant::CSSCLASS];
+            unset($attributes[Constant::CSSCLASS]);
         }
         if (isset($attributes['replaceclass'])) {
             $defaultClass = $attributes['replaceclass'];

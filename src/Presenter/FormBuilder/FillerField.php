@@ -16,7 +16,7 @@ class FillerField extends FormField
         $strBalise = $this->renderInput();
         return Html::getDiv(
             $strBalise,
-            [Constant::CLASS => $this->params['outerDivClass'] ?? 'col-12']
+            [Constant::CSSCLASS => $this->params['outerDivClass'] ?? 'col-12']
         );
     }
 }

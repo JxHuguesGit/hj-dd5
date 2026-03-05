@@ -36,19 +36,19 @@ class ItemTableBuilder extends AbstractTableBuilder
             $table->addBodyRow([])
                 ->addBodyCell([
                     Constant::CONTENT    => Html::getLink($item->name, $item->url, B::TEXT_DARK),
-                    Constant::ATTRIBUTES => [Constant::CLASS => B::COL_2],
+                    Constant::ATTRIBUTES => [Constant::CSSCLASS => B::COL_2],
                 ])
                 ->addBodyCell([Constant::CONTENT => $item->description])
                 ->addBodyCell([
                     Constant::CONTENT    => $item->weight,
                     Constant::ATTRIBUTES => [
-                        Constant::CLASS => B::TEXT_END . ' ' . B::COL_1,
+                        Constant::CSSCLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ])
                 ->addBodyCell([
                     Constant::CONTENT    => $item->price,
                     Constant::ATTRIBUTES => [
-                        Constant::CLASS => B::TEXT_END . ' ' . B::COL_1,
+                        Constant::CSSCLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ]);
             if ($this->isAdmin) {
@@ -74,7 +74,7 @@ class ItemTableBuilder extends AbstractTableBuilder
                 $table->addBodyCell([
                     Constant::CONTENT    => $btnEdit . ' ' . $btnDelete,
                     Constant::ATTRIBUTES => [
-                        Constant::CLASS => B::TEXT_CENTER . ' ' . B::COL_1]
+                        Constant::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1]
                     ,
                 ]);
             }

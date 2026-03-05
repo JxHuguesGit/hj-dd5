@@ -28,13 +28,13 @@ class CheckboxField extends FormField
         $strLabel  = Html::getBalise(
             Constant::LABEL,
             htmlspecialchars($this->label),
-            [Constant::CLASS => 'w-100 py-0', 'for' => $this->getId()]
+            [Constant::CSSCLASS => 'w-100 py-0', 'for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CLASS => 'form-floating h-100']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CSSCLASS => 'form-floating h-100']);
         $innerDiv = Html::getDiv(
             $innerDiv,
             [
-                Constant::CLASS => 'checkbox checkbox-sm ajaxAction w-100',
+                Constant::CSSCLASS => 'checkbox checkbox-sm ajaxAction w-100',
                 Constant::DATA  => [
                     Constant::TRIGGER => Constant::CLICK,
                     Constant::ACTION  => 'toggleCheckbox',
@@ -44,7 +44,7 @@ class CheckboxField extends FormField
         );
         return Html::getDiv(
             $innerDiv,
-            [Constant::CLASS => ($this->params[Constant::OUTERDIVCLASS] ?? B::COL_12)]
+            [Constant::CSSCLASS => ($this->params[Constant::OUTERDIVCLASS] ?? B::COL_12)]
         );
     }
 }

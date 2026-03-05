@@ -35,7 +35,7 @@ class SelectField extends FormField
         $attrs = [
             Constant::ID    => $this->getId(),
             Constant::NAME  => $this->name,
-            Constant::CLASS => 'form-select',
+            Constant::CSSCLASS => 'form-select',
         ];
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';

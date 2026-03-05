@@ -57,7 +57,7 @@ class Paginate
         $firstElement = ($this->curPage-1)*$this->nbPerPage*1+1;
         $lastElement  = min($this->nbElements, $this->curPage*$this->nbPerPage);
         $divContent = "Entrées $firstElement à $lastElement sur ".$this->nbElements;
-        $navContent = Html::getSpan($divContent, [Constant::CLASS => $strClass]);
+        $navContent = Html::getSpan($divContent, [Constant::CSSCLASS => $strClass]);
 
         if ($this->nbPages<=1) {
             return $navContent;
@@ -138,8 +138,8 @@ class Paginate
         }
 
         $strClass = 'pagination pagination-sm justify-content-end mb-0 col-6';
-        $navContent .= Html::getBalise('ul', $ulContent, [Constant::CLASS => $strClass]);
-        $navAttributes = [Constant::CLASS => 'row mx-2', 'aria-label' => 'Pagination liste'];
+        $navContent .= Html::getBalise('ul', $ulContent, [Constant::CSSCLASS => $strClass]);
+        $navAttributes = [Constant::CSSCLASS => 'row mx-2', 'aria-label' => 'Pagination liste'];
         return Html::getBalise('nav', $navContent, $navAttributes);
     }
 
@@ -155,7 +155,7 @@ class Paginate
             $strLink = Html::getLink($label, $href, $this->cssPageLink);
         }
 
-        return Html::getLi($strLink, [Constant::CLASS=>'page-item'.$addClass]);
+        return Html::getLi($strLink, [Constant::CSSCLASS=>'page-item'.$addClass]);
     }
 
     private function dealWithFilterParams(string &$href): void

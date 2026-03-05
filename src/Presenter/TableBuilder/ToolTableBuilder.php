@@ -30,11 +30,11 @@ class ToolTableBuilder extends AbstractTableBuilder
                     ->addBodyCell([Constant::CONTENT => $row->originLabel])
                     ->addBodyCell([
                         Constant::CONTENT    => $row->weight,
-                        Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_END],
+                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END],
                     ])
                     ->addBodyCell([
                         Constant::CONTENT    => $row->price,
-                        Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_END],
+                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END],
                     ]);
             }
         }

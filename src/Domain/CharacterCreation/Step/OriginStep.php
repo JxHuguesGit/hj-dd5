@@ -48,9 +48,9 @@ class OriginStep extends AbstractBaseStep implements StepInterface
 
     public function getRadioForm(int $id, string $name, bool $checked = false): string
     {
-        $strLabel   = Html::getBalise('label', $name, [Constant::CLASS => 'form-check-label', 'for' => 'origin' . $id]);
+        $strLabel   = Html::getBalise('label', $name, [Constant::CSSCLASS => 'form-check-label', 'for' => 'origin' . $id]);
         $attributes = [
-            Constant::CLASS => Constant::AJAXACTION,
+            Constant::CSSCLASS => Constant::AJAXACTION,
             Constant::TYPE  => 'radio',
             Constant::NAME  => 'characterOriginId',
             Constant::ID    => 'origin' . $id,
@@ -64,7 +64,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
             $attributes['checked'] = 'checked';
         }
         $strInput = Html::getBalise('input', '', $attributes);
-        return Html::getDiv($strInput . $strLabel, [Constant::CLASS => 'form-check']);
+        return Html::getDiv($strInput . $strLabel, [Constant::CSSCLASS => 'form-check']);
     }
 
     public function validate(array $input): bool

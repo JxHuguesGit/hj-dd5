@@ -47,13 +47,13 @@ class CharacterMenuPresenter
         }
 
         // UL contenant les enfants
-        $ul = Html::getUl($childrenHtml, [C::CST_CLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]);
+        $ul = Html::getUl($childrenHtml, [C::CSSCLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]);
 
         // ----- 3) Item parent -----
         $attributes = [
             $isActiveTab ? B::MENU_OPEN : '',
             '#',
-            $isActiveTab ? C::CST_ACTIVE : '',
+            $isActiveTab ? C::ACTIVE : '',
             C::USERS,
             L::CHARACTERS,
             '',

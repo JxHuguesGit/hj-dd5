@@ -21,18 +21,18 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             throw new \InvalidArgumentException('Expected DomainItem');
         }
 
-        $params[C::CST_TITLE]  = 'Matériel : ' . $entity->name;
-        $params[C::CST_TYPE]   = $this->type;
-        $params['cancelUrl']   = UrlGenerator::admin(C::ONG_COMPENDIUM, C::CST_GEAR);
-        $params[C::CST_ACTION] = UrlGenerator::admin(C::ONG_COMPENDIUM, C::CST_GEAR, $entity->slug, $this->type);
+        $params[C::TITLE]  = 'Matériel : ' . $entity->name;
+        $params[C::TYPE]   = $this->type;
+        $params['cancelUrl']   = UrlGenerator::admin(C::ONG_COMPENDIUM, C::GEAR);
+        $params[C::ACTION] = UrlGenerator::admin(C::ONG_COMPENDIUM, C::GEAR, $entity->slug, $this->type);
         $form                  = $this->createForm($params);
 
         $mock = [
-            [C::CST_VALUE => C::CST_WEAPON, C::CST_LABEL => 'Arme'],
-            [C::CST_VALUE => C::CST_ARMOR, C::CST_LABEL => 'Armure'],
-            [C::CST_VALUE => 'ammo', C::CST_LABEL => 'Munition'],
-            [C::CST_VALUE => C::CST_TOOL, C::CST_LABEL => L::TOOL],
-            [C::CST_VALUE => 'other', C::CST_LABEL => 'Autre'],
+            [C::VALUE => C::WEAPON, C::LABEL => 'Arme'],
+            [C::VALUE => C::ARMOR, C::LABEL => 'Armure'],
+            [C::VALUE => 'ammo', C::LABEL => 'Munition'],
+            [C::VALUE => C::TOOL, C::LABEL => L::TOOL],
+            [C::VALUE => 'other', C::LABEL => 'Autre'],
         ];
 
         $fieldset = new FieldsetField('');
@@ -57,7 +57,7 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         ;
 
         if ($this->type == C::NEW ) {
-            $libelleType = (array_column($mock, C::CST_LABEL))[array_search($entity->type, array_column($mock, C::CST_VALUE))];
+            $libelleType = (array_column($mock, C::LABEL))[array_search($entity->type, array_column($mock, C::VALUE))];
             $fieldset->addField(new TextField(
                 F::TYPE, "Type d'objet", $libelleType, true,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]

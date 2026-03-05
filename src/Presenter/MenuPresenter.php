@@ -40,14 +40,14 @@ class MenuPresenter
                 continue;
             }
             $activeClass  = ($el->getSlug() === $this->currentSlug) ? ' ' . Constant::ACTIVE : '';
-            $strSpan      = Html::getSpan(htmlspecialchars($el->getTitle()), [Constant::CLASS => B::NAV_LINK_TITLE]);
+            $strSpan      = Html::getSpan(htmlspecialchars($el->getTitle()), [Constant::CSSCLASS => B::NAV_LINK_TITLE]);
             $strLink      = Html::getLink($strSpan, trim($el->getUrl(), '-'), implode(' ', [B::NAV_LINK, B::TEXT_DARK]));
-            $html        .= Html::getLi($strLink, [Constant::CLASS => B::NAV_ITEM . $activeClass]);
+            $html        .= Html::getLi($strLink, [Constant::CSSCLASS => B::NAV_ITEM . $activeClass]);
         }
 
-        $strUl  = Html::getBalise('ul', $html, [Constant::CLASS => 'navbar-nav']);
-        $strDiv = Html::getDiv($strUl, [Constant::CLASS => 'container-xl']);
-        return Html::getBalise('nav', $strDiv, [Constant::CLASS => 'navbar navbar-expand-md navbar-light pb-0']);
+        $strUl  = Html::getBalise('ul', $html, [Constant::CSSCLASS => 'navbar-nav']);
+        $strDiv = Html::getDiv($strUl, [Constant::CSSCLASS => 'container-xl']);
+        return Html::getBalise('nav', $strDiv, [Constant::CSSCLASS => 'navbar navbar-expand-md navbar-light pb-0']);
     }
 
     /**

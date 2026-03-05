@@ -57,9 +57,9 @@ final class ReaderFactory
     private function resolveBuilder(string $name): callable
     {
         return match ($name) {
-            C::CST_FEAT           => fn()           => new FeatReader($this->repositories->feat()),
+            C::FEAT           => fn()           => new FeatReader($this->repositories->feat()),
             'featAbility'         => fn()         => new FeatAbilityReader($this->repositories->featAbility()),
-            C::CST_FEATTYPE       => fn()       => new FeatTypeReader($this->repositories->featType()),
+            C::FEATTYPE       => fn()       => new FeatTypeReader($this->repositories->featType()),
 
             'monster'             => fn()             => new MonsterReader($this->repositories->monster()),
             'monsterAbility'      => fn()      => new MonsterAbilityReader($this->repositories->monsterAbility()),
@@ -80,10 +80,10 @@ final class ReaderFactory
             'speciePower'         => fn()         => new SpeciePowerReader($this->repositories->speciePower()),
             C::SPECIES            => fn()            => new SpecieReader($this->repositories->specie()),
 
-            C::CST_ARMOR          => fn()          => new ArmorReader($this->repositories->armor()),
+            C::ARMOR          => fn()          => new ArmorReader($this->repositories->armor()),
             'item'                => fn()                => new ItemReader($this->repositories->item()),
-            C::CST_TOOL           => fn()           => new ToolReader($this->repositories->tool()),
-            C::CST_WEAPON         => fn()         => new WeaponReader($this->repositories->weapon()),
+            C::TOOL           => fn()           => new ToolReader($this->repositories->tool()),
+            C::WEAPON         => fn()         => new WeaponReader($this->repositories->weapon()),
             'weaponPropertyValue' => fn() => new WeaponPropertyValueReader($this->repositories->weaponPropertyValue()),
 
             'ability'             => fn()             => new AbilityReader($this->repositories->ability()),

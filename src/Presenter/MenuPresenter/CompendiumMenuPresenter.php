@@ -43,7 +43,7 @@ class CompendiumMenuPresenter
 
         $ul = Html::getUl(
             $childrenHtml,
-            [Constant::CLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]
+            [Constant::CSSCLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]
         );
 
         // ---------- 3) Item parent ----------

@@ -30,8 +30,8 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
 
     public function render(): string
     {
-        $action = Session::fromGet(C::CST_ACTION);
-        $slug   = Session::fromGet(C::CST_SLUG);
+        $action = Session::fromGet(C::ACTION);
+        $slug   = Session::fromGet(C::SLUG);
 
         if (Session::isPostSubmitted()) {
             return $this->handleSubmit($action, $slug);

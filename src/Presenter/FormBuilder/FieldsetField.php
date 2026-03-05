@@ -32,16 +32,16 @@ class FieldsetField extends FormField
         }
 
         $legend = Html::getBalise('legend', htmlspecialchars($this->title), [
-            Constant::CLASS => Constant::AJAXACTION,
+            Constant::CSSCLASS => Constant::AJAXACTION,
             Constant::DATA  => [
                 Constant::TRIGGER => Constant::CLICK,
                 Constant::ACTION  => 'collapse',
             ],
         ]);
 
-        $attrs = [Constant::CLASS => 'monster-fieldset row mb-4'];
+        $attrs = [Constant::CSSCLASS => 'monster-fieldset row mb-4'];
         if ($this->collapsible) {
-            $attrs[Constant::CLASS] .= ' collapsible';
+            $attrs[Constant::CSSCLASS] .= ' collapsible';
         }
 
         return Html::getBalise('fieldset', $legend . $content, $attrs);

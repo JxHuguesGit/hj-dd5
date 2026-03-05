@@ -45,7 +45,7 @@ class SkillDetailPresenter
                     UrlGenerator::origin($origin->slug),
                     B::TEXT_WHITE
                 ),
-                [Constant::CLASS => implode(' ', [B::BADGE, B::BG_DARK])]
+                [Constant::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
             ) . ' ';
         }
         return $html;
@@ -62,6 +62,6 @@ class SkillDetailPresenter
             $desc    = $subSkill->description ?? '';
             $parts[] = Html::getBalise('dt', $name) . Html::getBalise('dd', $desc);
         }
-        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CLASS => 'my-0']) : '-';
+        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CSSCLASS => 'my-0']) : '-';
     }
 }

@@ -36,7 +36,7 @@ class SpellTableBuilder extends AbstractTableBuilder
                 ->addBodyCell([Constant::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK)])
                 ->addBodyCell([
                     Constant::CONTENT    => $row->niveau,
-                    Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER],
+                    Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER],
                 ])
                 ->addBodyCell([Constant::CONTENT => $row->ecole])
                 ->addBodyCell([Constant::CONTENT => SpellFormatter::formatClasses($row->classes, false)])
@@ -48,7 +48,7 @@ class SpellTableBuilder extends AbstractTableBuilder
         }
 
         $table->addFooter([
-            Constant::CLASS => implode(' ', [
+            Constant::CSSCLASS => implode(' ', [
                 B::TABLE_DARK,
                 B::TEXT_CENTER,
             ]),

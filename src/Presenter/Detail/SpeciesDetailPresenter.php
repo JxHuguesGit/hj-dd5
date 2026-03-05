@@ -47,7 +47,7 @@ class SpeciesDetailPresenter
             $desc = $ability->description ?? '';
             $parts[] = Html::getBalise('dt', $name).Html::getBalise('dd', $desc);
         }
-        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CLASS=>'my-0']) : '-';
+        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CSSCLASS=>'my-0']) : '-';
     }
 
     private function cleanContent(string $content): string

@@ -11,7 +11,7 @@ class PageClasses extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::SLUG        => Constant::CLASSES,
+            Constant::SLUG        => Constant::CSSCLASSES,
             'icon'                    => I::SHIELD,
             Constant::TITLE       => L::CLASSES,
             Constant::DESCRIPTION => 'Découvrez les classes jouables.',

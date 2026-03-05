@@ -166,7 +166,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', 'Immunités') . ' ' . $content,
-            [Constant::CLASS => B::COL_12]
+            [Constant::CSSCLASS => B::COL_12]
         );
     }
 
@@ -197,7 +197,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', $label) . ' ' . implode(', ', $resistances),
-            [Constant::CLASS => B::COL_12]
+            [Constant::CSSCLASS => B::COL_12]
         );
     }
 
@@ -220,7 +220,7 @@ class MonsterFormatter
         return Html::getDiv(
             Html::getBalise('strong', 'Sens') . ' ' . implode(', ', $senses) .
             ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
-            [Constant::CLASS => B::COL_12]
+            [Constant::CSSCLASS => B::COL_12]
         );
     }
 
@@ -236,7 +236,7 @@ class MonsterFormatter
         }
         return Html::getDiv(
             Html::getBalise('strong', 'Langues') . ' ' . (empty($languages) ? 'Aucune' : implode(', ', $languages)),
-            [Constant::CLASS => B::COL_12]
+            [Constant::CSSCLASS => B::COL_12]
         );
     }
 
@@ -252,7 +252,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', L::FP) . ' ' . $content,
-            [Constant::CLASS => B::COL_12]
+            [Constant::CSSCLASS => B::COL_12]
         );
     }
 

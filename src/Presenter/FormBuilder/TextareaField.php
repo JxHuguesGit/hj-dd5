@@ -11,7 +11,7 @@ class TextareaField extends FormField
         $attrs = [
             Constant::ID    => $this->getId(),
             Constant::NAME  => $this->name,
-            Constant::CLASS => 'form-control',
+            Constant::CSSCLASS => 'form-control',
             'style'             => $this->params['style'],
         ];
         if ($this->readonly) {

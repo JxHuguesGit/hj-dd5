@@ -58,7 +58,7 @@ class Constant
 
     public const EXTRA           = '-extra';
     public const ASC             = 'ASC';
-    public const CLASS           = 'class';
+    public const CSSCLASS           = 'class';
     public const ACTIVE          = 'active';
     public const CONTENT         = 'content';
     public const DESC            = 'DESC';

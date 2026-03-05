@@ -22,15 +22,15 @@ class Form
     {
         $attributes = $this->initAttributes($id, $name, $label, $value);
 
-        if (isset($extraAttributes[Constant::CLASS])) {
-            $attributes[Constant::CLASS] .= ' ' . $extraAttributes[Constant::CLASS];
+        if (isset($extraAttributes[Constant::CSSCLASS])) {
+            $attributes[Constant::CSSCLASS] .= ' ' . $extraAttributes[Constant::CSSCLASS];
         }
         $attributes[Constant::TYPE] = $extraAttributes[Constant::TYPE] ?? B::TEXT;
 
         $spanAttributes = [];
         if (isset($extraAttributes[Constant::TYPE]) &&
             $extraAttributes[Constant::TYPE] == 'hidden') {
-            $spanAttributes[Constant::CLASS] = B::DNONE;
+            $spanAttributes[Constant::CSSCLASS] = B::DNONE;
         }
 
         if ($label != '') {
@@ -46,10 +46,10 @@ class Form
         $strContent = '';
         while (! empty($this->formRows)) {
             $row = array_shift($this->formRows);
-            if (isset($row[Constant::ATTRIBUTES][Constant::CLASS])) {
-                $row[Constant::ATTRIBUTES][Constant::CLASS] .= ' input-group mb-3';
+            if (isset($row[Constant::ATTRIBUTES][Constant::CSSCLASS])) {
+                $row[Constant::ATTRIBUTES][Constant::CSSCLASS] .= ' input-group mb-3';
             } else {
-                $row[Constant::ATTRIBUTES][Constant::CLASS] = ' input-group mb-3';
+                $row[Constant::ATTRIBUTES][Constant::CSSCLASS] = ' input-group mb-3';
             }
             $strContent .= Html::getDiv($row[Constant::CONTENT], $row[Constant::ATTRIBUTES]);
         }
@@ -63,14 +63,14 @@ class Form
         return Html::getBalise(
             'section',
             $formBalise,
-            [Constant::CLASS => 'wrapper pt-3 col-12']
+            [Constant::CSSCLASS => 'wrapper pt-3 col-12']
         );
     }
 
     public function addFiller(array $extraAttributes = []): self
     {
         $attributes  = [
-            Constant::CLASS => $extraAttributes[Constant::CLASS] ?? 'col-8',
+            Constant::CSSCLASS => $extraAttributes[Constant::CSSCLASS] ?? 'col-8',
         ];
         $this->formRows[$this->nbRows][Constant::CONTENT] .= $this->getSpan('', '', $attributes);
         return $this;
@@ -79,7 +79,7 @@ class Form
     private function getSpan(string $id, string $label, array $extraAttributes = []): string
     {
         $attributes = [
-            Constant::CLASS => 'input-group-text ' . ($extraAttributes[Constant::CLASS] ?? B::COL_2),
+            Constant::CSSCLASS => 'input-group-text ' . ($extraAttributes[Constant::CSSCLASS] ?? B::COL_2),
             'for'               => $id,
         ];
         return Html::getSpan($label, $attributes);
@@ -88,7 +88,7 @@ class Form
     private function initAttributes(string $id, string $name, string $label, $value): array
     {
         return [
-            Constant::CLASS => 'form-control',
+            Constant::CSSCLASS => 'form-control',
             Constant::NAME  => $name,
             Constant::ID    => $id,
             Constant::VALUE => $value,
