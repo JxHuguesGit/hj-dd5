@@ -40,19 +40,19 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $fieldset
             ->addField(new NumberField(
                 F::ID, 'ID', $entity->id, true,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_3 . ' ' . B::CSS_MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
                 F::NAME, 'Nom', $entity->name, $this->type == C::EDIT,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_5]
+                [C::OUTERDIVCLASS => B::COL_MD_5]
             ))
             ->addField(new TextField(
                 F::SLUG, 'Slug', $entity->slug, true,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_4]
+                [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextareaField(
                 F::DESCRIPTION, L::LG_DESCRIPTION, $entity->description, false,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_12 . ' ' . B::CSS_MB3, 'style' => 'height: 200px']
+                [C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3, 'style' => 'height: 200px']
             ))
         ;
 
@@ -60,23 +60,23 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             $libelleType = (array_column($mock, C::CST_LABEL))[array_search($entity->type, array_column($mock, C::CST_VALUE))];
             $fieldset->addField(new TextField(
                 F::TYPE, "Type d'objet", $libelleType, true,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_4 . ' ' . B::CSS_MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ));
         } else {
             $fieldset->addField(new SelectField(
                 F::TYPE, "Type d'objet", $entity->type, $mock,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_4 . ' ' . B::CSS_MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ));
         }
 
         $fieldset
             ->addField(new NumberField(
                 F::GOLDPRICE, 'Prix (po)', $entity->goldPrice, false,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_4, 'step' => '0.01']
+                [C::OUTERDIVCLASS => B::COL_MD_4, 'step' => '0.01']
             ))
             ->addField(new NumberField(
                 F::WEIGHT, 'Poids (kg)', $entity->weight, false,
-                [C::OUTERDIVCLASS => B::CSS_COL_MD_4, 'step' => '0.01']
+                [C::OUTERDIVCLASS => B::COL_MD_4, 'step' => '0.01']
             ))
         ;
 
