@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\SkillListPresenter;
 use src\Presenter\MenuPresenter;
@@ -20,7 +20,7 @@ class PublicSkills extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->skills = $this->skillReader->allSkills();
-        $this->title = Language::LG_SKILLS_TITLE;
+        $this->title = L::SKILLS_TITLE;
     }
 
     public function getContentPage(): string

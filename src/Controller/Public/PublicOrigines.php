@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\OriginListPresenter;
 use src\Presenter\MenuPresenter;
@@ -20,7 +20,7 @@ class PublicOrigines extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->origins = $this->originReader->allOrigins();
-        $this->title   = Language::LG_HISTO_TITLE;
+        $this->title   = L::HISTO_TITLE;
     }
 
     public function getContentPage(): string

@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\SpellListPresenter;
@@ -22,7 +22,7 @@ class PublicSpells extends PublicBase
         private SpellFilterModalPresenter $filterModalPresenter,
     ) {
         $this->spells = ($this->spellService->allSpells())->collection;
-        $this->title = Language::LG_SPELLS_TITLE;
+        $this->title = L::SPELLS_TITLE;
     }
 
     public function getContentPage(): string

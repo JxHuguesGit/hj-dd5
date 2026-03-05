@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\ToolListPresenter;
@@ -20,7 +20,7 @@ final class PublicItemTool extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->tools = $this->toolQueryService->allTools();
-        $this->title = Language::LG_TOOLS_TITLE;
+        $this->title = L::TOOLS_TITLE;
     }
 
     public function getContentPage(): string

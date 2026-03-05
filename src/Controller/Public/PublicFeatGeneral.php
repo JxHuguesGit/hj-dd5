@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\MenuPresenter;
@@ -20,7 +20,7 @@ class PublicFeatGeneral extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->feats = $this->featReader->featsByCategory(2);
-        $this->title = Language::LG_GENERAL_FEATS;
+        $this->title = L::GENERAL_FEATS;
     }
 
     public function getContentPage(): string

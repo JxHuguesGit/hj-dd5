@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\GearListPresenter;
 use src\Presenter\MenuPresenter;
@@ -20,7 +20,7 @@ final class PublicItemGear extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->gears = $this->itemReader->allGears();
-        $this->title = Language::LG_GEAR_TITLE;
+        $this->title = L::GEAR_TITLE;
     }
 
     public function getContentPage(): string

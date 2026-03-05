@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Language;
+use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
 use src\Presenter\MenuPresenter;
@@ -20,7 +20,7 @@ final class PublicItemArmor extends PublicBase
         private MenuPresenter $menuPresenter,
     ) {
         $this->armors = $this->armorReader->allArmors();
-        $this->title = Language::LG_ARMORS_TITLE;
+        $this->title = L::ARMORS_TITLE;
     }
 
     public function getContentPage(): string

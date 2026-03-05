@@ -23,19 +23,19 @@ class PublicItems extends PublicBase
         $data = [];
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_ARMOR,
-            Constant::CST_TITLE => Language::LG_ARMORS_TITLE,
+            Constant::CST_TITLE => L::ARMORS_TITLE,
         ]);
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_WEAPON,
-            Constant::CST_TITLE => Language::LG_WEAPONS_TITLE,
+            Constant::CST_TITLE => L::WEAPONS_TITLE,
         ]);
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_TOOL,
-            Constant::CST_TITLE => Language::LG_TOOLS_TITLE,
+            Constant::CST_TITLE => L::TOOLS_TITLE,
         ]);
         $data[] = new PageElement([
             'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_GEAR,
-            Constant::CST_TITLE => Language::LG_DIVERS,
+            Constant::CST_TITLE => L::DIVERS,
         ]);
 
         $cardPresenter = new CardPresenter($data);
