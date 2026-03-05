@@ -2,7 +2,7 @@
 
 namespace src\Domain\Monster;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 
 final class MonsterClassification
 {
@@ -12,22 +12,22 @@ final class MonsterClassification
 
     public function getTypeId(): int
     {
-        return $this->monster->getField(Field::MSTTYPEID);
+        return $this->monster->getField(F::MSTTYPEID);
     }
 
     public function getSubTypeId(): ?int
     {
-        return $this->monster->getField(Field::MSTSSTYPID);
+        return $this->monster->getField(F::MSTSSTYPID);
     }
 
     public function getSize(): int
     {
-        return $this->monster->getField(Field::MSTSIZE);
+        return $this->monster->getField(F::MSTSIZE);
     }
 
     public function getSwarmSize(): ?int
     {
-        return $this->monster->getField(Field::SWARMSIZE);
+        return $this->monster->getField(F::SWARMSIZE);
     }
 
     public function isSwarm(): bool
@@ -37,11 +37,11 @@ final class MonsterClassification
 
     public function getAlignmentId(): int
     {
-        return $this->monster->getField(Field::ALGNID);
+        return $this->monster->getField(F::ALGNID);
     }
 
     public function getHabitat(): ?string
     {
-        return $this->monster->getField(Field::HABITAT);
+        return $this->monster->getField(F::HABITAT);
     }
 }

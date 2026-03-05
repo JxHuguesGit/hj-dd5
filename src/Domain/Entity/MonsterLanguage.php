@@ -1,22 +1,22 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 class MonsterLanguage extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::MONSTERID,
-        Field::LANGUAGEID,
-        Field::VALUE,
+        F::ID,
+        F::MONSTERID,
+        F::LANGUAGEID,
+        F::VALUE,
     ];
 
     public const FIELD_TYPES = [
-        Field::MONSTERID  => FieldType::INTPOSITIVE,
-        Field::LANGUAGEID => FieldType::INTPOSITIVE,
-        Field::VALUE      => FieldType::INTPOSITIVE,
+        F::MONSTERID  => FieldType::INTPOSITIVE,
+        F::LANGUAGEID => FieldType::INTPOSITIVE,
+        F::VALUE      => FieldType::INTPOSITIVE,
     ];
 }

@@ -2,7 +2,7 @@
 namespace src\Domain\Entity;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -14,11 +14,11 @@ use src\Utils\Utils;
 final class Spell extends Entity
 {
     public const FIELDS = [
-        Field::NAME,
-        Field::SLUG,
-        Field::LEVEL,
-        Field::SCHOOL,
-        Field::CLASSES,
+        F::NAME,
+        F::SLUG,
+        F::NIVEAU,
+        F::SCHOOL,
+        F::CLASSES,
         Constant::CST_CONTENT,
         'tempsIncantation',
         'portee',
@@ -31,11 +31,11 @@ final class Spell extends Entity
         'ameliorationDescription',
     ];
     public const FIELD_TYPES = [
-        Field::NAME               => FieldType::STRING,
-        Field::SLUG               => FieldType::STRING,
-        Field::LEVEL              => FieldType::STRING,
-        Field::SCHOOL             => FieldType::STRING,
-        Field::CLASSES            => FieldType::ARRAY,
+        F::NAME               => FieldType::STRING,
+        F::SLUG               => FieldType::STRING,
+        F::NIVEAU              => FieldType::STRING,
+        F::SCHOOL             => FieldType::STRING,
+        F::CLASSES            => FieldType::ARRAY,
 
         Constant::CST_CONTENT     => FieldType::STRING,
         'tempsIncantation'        => FieldType::STRING,

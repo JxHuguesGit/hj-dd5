@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -15,17 +15,17 @@ use src\Utils\Utils;
 final class Specie extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::SLUG,
-        Field::PARENTID,
-        Field::POSTID,
+        F::ID,
+        F::NAME,
+        F::SLUG,
+        F::PARENTID,
+        F::POSTID,
     ];
     public const FIELD_TYPES = [
-        Field::NAME =>     FieldType::STRING,
-        Field::SLUG =>     FieldType::STRING,
-        Field::PARENTID => FieldType::INTPOSITIVE,
-        Field::POSTID =>   FieldType::INTPOSITIVE,
+        F::NAME =>     FieldType::STRING,
+        F::SLUG =>     FieldType::STRING,
+        F::PARENTID => FieldType::INTPOSITIVE,
+        F::POSTID =>   FieldType::INTPOSITIVE,
     ];
 
     /**

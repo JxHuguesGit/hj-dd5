@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class OriginItemCriteria extends BaseCriteria
@@ -11,17 +11,17 @@ final class OriginItemCriteria extends BaseCriteria
     public ?int $itemId   = null;
 
     public array $orderBy = [
-        Field::ID => Constant::CST_ASC,
+        F::ID => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         if ($this->originId != null) {
-            $filters[Field::ORIGINID] = $this->originId;
+            $filters[F::ORIGINID] = $this->originId;
         }
         if ($this->itemId != null) {
-            $filters[Field::ITEMID] = $this->itemId;
+            $filters[F::ITEMID] = $this->itemId;
         }
         $this->applyEquals($queryBuilder, $filters);
     }

@@ -2,7 +2,7 @@
 namespace src\Domain\Monster;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Entity\MonsterType as EntityMonsterType;
 
 final class MonsterType
@@ -14,7 +14,7 @@ final class MonsterType
     public function getEntity(): ?EntityMonsterType
     {
         return new EntityMonsterType([
-            Field::NAME => $this->monster->getField(Field::TYPMSTNAME) ?? ''
+            F::NAME => $this->monster->getField(F::TYPMSTNAME) ?? ''
         ]);
     }
 

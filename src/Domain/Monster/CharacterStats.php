@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Monster;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 
 final class CharacterStats
 {
@@ -24,42 +24,42 @@ final class CharacterStats
 
     public function getStrength(): int
     {
-        return $this->monster->getField(Field::STRSCORE);
+        return $this->monster->getField(F::STRSCORE);
     }
 
     public function getDexterity(): int
     {
-        return $this->monster->getField(Field::DEXSCORE);
+        return $this->monster->getField(F::DEXSCORE);
     }
 
     public function getConstitution(): int
     {
-        return $this->monster->getField(Field::CONSCORE);
+        return $this->monster->getField(F::CONSCORE);
     }
 
     public function getIntelligence(): int
     {
-        return $this->monster->getField(Field::INTSCORE);
+        return $this->monster->getField(F::INTSCORE);
     }
 
     public function getWisdom(): int
     {
-        return $this->monster->getField(Field::WISSCORE);
+        return $this->monster->getField(F::WISSCORE);
     }
 
     public function getCharisma(): int
     {
-        return $this->monster->getField(Field::CHASCORE);
+        return $this->monster->getField(F::CHASCORE);
     }
 
     public function getProficiencyBonus(): int
     {
-        return $this->monster->getField(Field::PROFBONUS);
+        return $this->monster->getField(F::PROFBONUS);
     }
 
     public function getPassivePerception(): int
     {
-        return $this->monster->getField(Field::PERCPASSIVE);
+        return $this->monster->getField(F::PERCPASSIVE);
     }
 
     /* =========================

@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class MonsterAbilityCriteria extends BaseCriteria
@@ -12,20 +12,20 @@ final class MonsterAbilityCriteria extends BaseCriteria
     public ?int $powerId   = null;
 
     public array $orderBy = [
-        Field::RANK => Constant::CST_ASC,
+        F::RANK => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         if ($this->typeId != null) {
-            $filters[Field::TYPEID] = $this->typeId;
+            $filters[F::TYPEID] = $this->typeId;
         }
         if ($this->monsterId != null) {
-            $filters[Field::MONSTERID] = $this->monsterId;
+            $filters[F::MONSTERID] = $this->monsterId;
         }
         if ($this->powerId != null) {
-            $filters[Field::POWERID] = $this->powerId;
+            $filters[F::POWERID] = $this->powerId;
         }
         $this->applyEquals($queryBuilder, $filters);
     }

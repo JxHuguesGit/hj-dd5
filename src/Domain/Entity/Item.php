@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -17,46 +17,46 @@ use src\Utils\Utils;
 class Item extends Entity
 {
     public const FIELDS = [
-        Field::NAME,
-        Field::SLUG,
-        Field::DESCRIPTION,
-        Field::WEIGHT,
-        Field::GOLDPRICE,
-        Field::TYPE,
+        F::NAME,
+        F::SLUG,
+        F::DESCRIPTION,
+        F::WEIGHT,
+        F::GOLDPRICE,
+        F::TYPE,
     ];
 
     public const COMMON_FIELDS = [
-        Field::NAME,
-        Field::SLUG,
-        Field::DESCRIPTION,
-        Field::WEIGHT,
-        Field::GOLDPRICE,
-        Field::TYPE,
+        F::NAME,
+        F::SLUG,
+        F::DESCRIPTION,
+        F::WEIGHT,
+        F::GOLDPRICE,
+        F::TYPE,
     ];
 
     public const FIELD_TYPES = [
-        Field::NAME =>        FieldType::STRING,
-        Field::SLUG =>        FieldType::STRING,
-        Field::DESCRIPTION => FieldType::STRING,
-        Field::WEIGHT =>      FieldType::FLOAT,
-        Field::GOLDPRICE =>   FieldType::FLOAT,
-        Field::TYPE =>        FieldType::STRING,
+        F::NAME =>        FieldType::STRING,
+        F::SLUG =>        FieldType::STRING,
+        F::DESCRIPTION => FieldType::STRING,
+        F::WEIGHT =>      FieldType::FLOAT,
+        F::GOLDPRICE =>   FieldType::FLOAT,
+        F::TYPE =>        FieldType::STRING,
     ];
 
     public const COMMON_FIELD_TYPES = [
-        Field::NAME =>        FieldType::STRING,
-        Field::SLUG =>        FieldType::STRING,
-        Field::DESCRIPTION => FieldType::STRING,
-        Field::WEIGHT =>      FieldType::FLOAT,
-        Field::GOLDPRICE =>   FieldType::FLOAT,
-        Field::TYPE =>        FieldType::STRING,
+        F::NAME =>        FieldType::STRING,
+        F::SLUG =>        FieldType::STRING,
+        F::DESCRIPTION => FieldType::STRING,
+        F::WEIGHT =>      FieldType::FLOAT,
+        F::GOLDPRICE =>   FieldType::FLOAT,
+        F::TYPE =>        FieldType::STRING,
     ];
 
     public const EDITABLE_FIELDS = [
-        Field::DESCRIPTION,
-        Field::WEIGHT,
-        Field::GOLDPRICE,
-        Field::TYPE,
+        F::DESCRIPTION,
+        F::WEIGHT,
+        F::GOLDPRICE,
+        F::TYPE,
     ];
 
     public function stringify(): string

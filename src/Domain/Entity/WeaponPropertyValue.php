@@ -1,45 +1,45 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 final class WeaponPropertyValue extends Entity
 {
     public const FIELDS = [
-        Field::WEAPONID,
-        Field::WPNPROPID,
-        Field::MINRANGE,
-        Field::MAXRANGE,
-        Field::TYPEAMMID,
-        Field::DMGDIEID,
+        F::WEAPONID,
+        F::WPNPROPID,
+        F::MINRANGE,
+        F::MAXRANGE,
+        F::TYPEAMMID,
+        F::DMGDIEID,
 
-        Field::PROPERTYNAME,
-        Field::PROPERTYSLUG,
-        Field::POSTID,
+        F::PROPERTYNAME,
+        F::PROPERTYSLUG,
+        F::POSTID,
 
-        Field::AMMONAME,
+        F::AMMONAME,
 
-        Field::DICECOUNT,
-        Field::DICEFACES,
+        F::DICECOUNT,
+        F::DICEFACES,
     ];
 
     public const FIELD_TYPES = [
-        Field::WEAPONID  => FieldType::INTPOSITIVE,
-        Field::WPNPROPID => FieldType::INTPOSITIVE,
-        Field::MINRANGE  => FieldType::INTNULLABLE,
-        Field::MAXRANGE  => FieldType::INTNULLABLE,
-        Field::TYPEAMMID => FieldType::INTNULLABLE,
-        Field::DMGDIEID  => FieldType::INTNULLABLE,
+        F::WEAPONID  => FieldType::INTPOSITIVE,
+        F::WPNPROPID => FieldType::INTPOSITIVE,
+        F::MINRANGE  => FieldType::INTNULLABLE,
+        F::MAXRANGE  => FieldType::INTNULLABLE,
+        F::TYPEAMMID => FieldType::INTNULLABLE,
+        F::DMGDIEID  => FieldType::INTNULLABLE,
 
-        Field::PROPERTYNAME => FieldType::STRINGNULLABLE,
-        Field::PROPERTYSLUG => FieldType::STRINGNULLABLE,
-        Field::POSTID       => FieldType::INTPOSITIVE,
+        F::PROPERTYNAME => FieldType::STRINGNULLABLE,
+        F::PROPERTYSLUG => FieldType::STRINGNULLABLE,
+        F::POSTID       => FieldType::INTPOSITIVE,
 
-        Field::AMMONAME     => FieldType::STRINGNULLABLE,
+        F::AMMONAME     => FieldType::STRINGNULLABLE,
 
-        Field::DICECOUNT  => FieldType::INTNULLABLE,
-        Field::DICEFACES  => FieldType::INTNULLABLE,
+        F::DICECOUNT  => FieldType::INTNULLABLE,
+        F::DICEFACES  => FieldType::INTNULLABLE,
     ];
 }

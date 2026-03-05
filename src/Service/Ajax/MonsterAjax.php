@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Ajax;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Template;
 use src\Domain\Criteria\MonsterCriteria;
 use src\Factory\ReaderFactory;
@@ -50,7 +50,7 @@ class MonsterAjax
     public function loadModal(): array
     {
         $reader  = $this->reader->monster();
-        $ukTag   = Session::fromPost(strtolower(Field::UKTAG), -1);
+        $ukTag   = Session::fromPost(strtolower(F::UKTAG), -1);
         $monster = $reader->monsterByUkTag($ukTag);
         if (! $monster) {
             return [

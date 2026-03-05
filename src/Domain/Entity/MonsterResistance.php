@@ -1,22 +1,22 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 class MonsterResistance extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::MONSTERID,
-        Field::TYPEDMGID,
-        Field::TYPERESID,
+        F::ID,
+        F::MONSTERID,
+        F::TYPEDMGID,
+        F::TYPERESID,
     ];
 
     public const FIELD_TYPES = [
-        Field::MONSTERID => FieldType::INTPOSITIVE,
-        Field::TYPEDMGID => FieldType::INTPOSITIVE,
-        Field::TYPERESID => FieldType::STRING,
+        F::MONSTERID => FieldType::INTPOSITIVE,
+        F::TYPEDMGID => FieldType::INTPOSITIVE,
+        F::TYPERESID => FieldType::STRING,
     ];
 }

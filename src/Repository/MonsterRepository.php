@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Table;
 use src\Domain\Criteria\MonsterCriteria;
 use src\Domain\Monster\Monster;
@@ -42,20 +42,20 @@ class MonsterRepository extends Repository implements MonsterRepositoryInterface
     public function findAllWithRelations(MonsterCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT m.id, m." . Field::NAME . ", " . Field::FRNAME . ", " . Field::FRTAG . ", " . Field::UKTAG . ", "
-        . Field::INCOMPLET . ", " . Field::SCORECR . ", " . Field::SWARMSIZE . ", " . Field::MSTSIZE . ", "
-        . Field::SCORECA . ", " . Field::SCOREHP . ", " . Field::INITIATIVE . ", " . Field::LEGENDARY . ", "
-        . Field::HABITAT . ", " . Field::STRSCORE . ", " . Field::DEXSCORE . ", " . Field::CONSCORE . ", "
-        . Field::INTSCORE . ", " . Field::WISSCORE . ", " . Field::CHASCORE . ", " . Field::PROFBONUS . ", "
-        . Field::PERCPASSIVE . ", " . Field::EXTRA
-        . ", tm." . Field::NAME . " AS " . Field::TYPMSTNAME . ", " . Field::ABBR . ", tm.id AS " . Field::MSTTYPEID
-        . ", stm." . Field::NAME . " AS " . Field::SSTYPMSTNAME
-        . ", r." . Field::NAME . " AS " . Field::REFNAME
+            SELECT m.id, m." . F::NAME . ", " . F::FRNAME . ", " . F::FRTAG . ", " . F::UKTAG . ", "
+        . F::INCOMPLET . ", " . F::SCORECR . ", " . F::SWARMSIZE . ", " . F::MSTSIZE . ", "
+        . F::SCORECA . ", " . F::SCOREHP . ", " . F::INITIATIVE . ", " . F::LEGENDARY . ", "
+        . F::HABITAT . ", " . F::STRSCORE . ", " . F::DEXSCORE . ", " . F::CONSCORE . ", "
+        . F::INTSCORE . ", " . F::WISSCORE . ", " . F::CHASCORE . ", " . F::PROFBONUS . ", "
+        . F::PERCPASSIVE . ", " . F::EXTRA
+        . ", tm." . F::NAME . " AS " . F::TYPMSTNAME . ", " . F::ABBR . ", tm.id AS " . F::MSTTYPEID
+        . ", stm." . F::NAME . " AS " . F::SSTYPMSTNAME
+        . ", r." . F::NAME . " AS " . F::REFNAME
         . " FROM " . Table::MONSTER . " m
-            INNER JOIN " . Table::TYPEMONSTRE . " tm ON tm.id = " . Field::MSTTYPEID . "
-            LEFT JOIN " . Table::SSTYPEMONSTRE . " stm ON stm.id = " . Field::MSTSSTYPID . "
-            INNER JOIN " . Table::ALIGNMENT . " a ON a.id = " . Field::ALGNID . "
-            LEFT JOIN " . Table::REFERENCE . " r ON r.id = " . Field::REFID . "
+            INNER JOIN " . Table::TYPEMONSTRE . " tm ON tm.id = " . F::MSTTYPEID . "
+            LEFT JOIN " . Table::SSTYPEMONSTRE . " stm ON stm.id = " . F::MSTSSTYPID . "
+            INNER JOIN " . Table::ALIGNMENT . " a ON a.id = " . F::ALGNID . "
+            LEFT JOIN " . Table::REFERENCE . " r ON r.id = " . F::REFID . "
         ";
 
         $queryBuilder = new QueryBuilder();

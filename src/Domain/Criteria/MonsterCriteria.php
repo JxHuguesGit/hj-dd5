@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class MonsterCriteria extends BaseCriteria
@@ -16,28 +16,28 @@ final class MonsterCriteria extends BaseCriteria
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        'CONCAT('.Field::FRNAME.', m.'.Field::NAME.')' => Constant::CST_ASC
+        'CONCAT('.F::FRNAME.', m.'.F::NAME.')' => Constant::CST_ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         if ($this->id!=null) {
-            $filters[Field::ID] = $this->id;
+            $filters[F::ID] = $this->id;
         }
         if ($this->ukTag!=null) {
-            $filters[Field::UKTAG] = $this->ukTag;
+            $filters[F::UKTAG] = $this->ukTag;
         }
         $this->applyEquals($queryBuilder, $filters);
-        $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
-        $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
+        $this->applyLt($queryBuilder, F::NAME, $this->nameLt);
+        $this->applyGt($queryBuilder, F::NAME, $this->nameGt);
     }
 
     public static function fromRequest(array $request): self
     {
         // Voir SpellCriteria pour informations complémentaires.
         $criteria = new self();
-        $criteria->orderBy = [Field::NAME => Constant::CST_ASC];
+        $criteria->orderBy = [F::NAME => Constant::CST_ASC];
         $criteria->page = (int)($request['page'] ?? 1);
         $criteria->limit = (int)($request['limit'] ?? 10);
         $criteria->offset = $criteria->page*$criteria->limit;

@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Monster;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Entity\Reference;
 
 final class MonsterReference
@@ -12,13 +12,13 @@ final class MonsterReference
 
     public function getId(): int
     {
-        return $this->monster->getField(Field::REFID) ?? 0;
+        return $this->monster->getField(F::REFID) ?? 0;
     }
 
     public function getEntity(): ?Reference
     {
         return new Reference([
-            Field::NAME => $this->monster->getField(Field::REFNAME) ?? ''
+            F::NAME => $this->monster->getField(F::REFNAME) ?? ''
         ]);
     }
 

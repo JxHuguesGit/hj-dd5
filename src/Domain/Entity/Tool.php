@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity\Item;
 use src\Utils\Utils;
@@ -17,11 +17,11 @@ final class Tool extends Item
     public const TYPE_TOOL = 4;
 
     public const SPECIFIC_FIELDS = [
-        Field::PARENTID,
+        F::PARENTID,
     ];
 
     public const SPECIFIC_FIELD_TYPES = [
-        Field::PARENTID => FieldType::INT,
+        F::PARENTID => FieldType::INT,
     ];
 
     public const FIELDS = [

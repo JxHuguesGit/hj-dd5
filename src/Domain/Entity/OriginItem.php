@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
@@ -13,15 +13,15 @@ use src\Domain\Entity;
 final class OriginItem extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::ORIGINID,
-        Field::ITEMID,
-        Field::QUANTITY,
+        F::ID,
+        F::ORIGINID,
+        F::ITEMID,
+        F::QUANTITY,
     ];
     public const FIELD_TYPES = [
-        Field::ORIGINID =>  FieldType::INTPOSITIVE,
-        Field::ITEMID   => FieldType::INTPOSITIVE,
-        Field::QUANTITY => FieldType::INTPOSITIVE,
+        F::ORIGINID =>  FieldType::INTPOSITIVE,
+        F::ITEMID   => FieldType::INTPOSITIVE,
+        F::QUANTITY => FieldType::INTPOSITIVE,
     ];
 
     /**

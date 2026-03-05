@@ -4,7 +4,7 @@ namespace src\Service\Formatter;
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Domain\Monster\Monster;
@@ -47,7 +47,7 @@ class MonsterFormatter
     public function formatCA(Monster $monster): string
     {
         $ca    = $monster->combat()->getArmorClass() ?? 10;
-        $extra = $monster->getExtra(Field::SCORECA) ?? '';
+        $extra = $monster->getExtra(F::SCORECA) ?? '';
         if ($extra !== '') {
             $ca .= ' (' . $extra . ')';
         }
@@ -63,7 +63,7 @@ class MonsterFormatter
     public function formatHP(Monster $monster): string
     {
         $hp    = $monster->combat()->getHitPoints() ?? 0;
-        $extra = $monster->getExtra(Field::SCOREHP) ?? '';
+        $extra = $monster->getExtra(F::SCOREHP) ?? '';
         if ($extra !== '') {
             $hp .= ' ' . $extra;
         }
@@ -104,7 +104,7 @@ class MonsterFormatter
 
         $typeName .= ' de taille ' . SizeHelper::toLabelFr($monster->monsterSize, $gender, false);
 
-        $alignment = $monster->getField(Field::ALGNID) ?? '';
+        $alignment = $monster->getField(F::ALGNID) ?? '';
 
         return $typeName . ($alignment ? ', ' . $alignment : '');
     }
@@ -242,8 +242,8 @@ class MonsterFormatter
 
     public function formatFpXpBm(Monster $monster): string
     {
-        $extraPx = $monster->getExtra(Field::SCOREXP) ?? '';
-        $extraPb = $monster->getExtra(Field::SCOREPB) ?? '';
+        $extraPx = $monster->getExtra(F::SCOREXP) ?? '';
+        $extraPb = $monster->getExtra(F::SCOREPB) ?? '';
         $bm      = $monster->profBonus;
 
         $content  = $this->formatCR($monster->cr);

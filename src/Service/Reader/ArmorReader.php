@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\ArmorCriteria;
 use src\Domain\Entity\Armor;
 use src\Repository\ArmorRepositoryInterface;
@@ -44,7 +44,7 @@ final class ArmorReader
                     ? $criteria->nameLt = $armor->name
                     : $criteria->nameGt = $armor->name
                 ;
-                $criteria->orderBy = [Field::NAME => $order];
+                $criteria->orderBy = [F::NAME => $order];
                 return $this->armorRepository->findAllWithRelations($criteria);
             }
         );

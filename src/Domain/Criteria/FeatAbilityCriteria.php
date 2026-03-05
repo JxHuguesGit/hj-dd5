@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class FeatAbilityCriteria extends BaseCriteria
@@ -11,17 +11,17 @@ final class FeatAbilityCriteria extends BaseCriteria
     public ?int $abilityId = null;
 
     public array $orderBy = [
-        Field::ID => Constant::CST_ASC,
+        F::ID => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         if ($this->featId != null) {
-            $filters[Field::FEATID] = $this->featId;
+            $filters[F::FEATID] = $this->featId;
         }
         if ($this->abilityId != null) {
-            $filters[Field::ABILITYID] = $this->abilityId;
+            $filters[F::ABILITYID] = $this->abilityId;
         }
         $this->applyEquals($queryBuilder, $filters);
     }

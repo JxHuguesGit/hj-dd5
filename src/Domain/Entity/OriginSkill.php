@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
@@ -12,13 +12,13 @@ use src\Domain\Entity;
 final class OriginSkill extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::ORIGINID,
-        Field::SKILLID,
+        F::ID,
+        F::ORIGINID,
+        F::SKILLID,
     ];
     public const FIELD_TYPES = [
-        Field::ORIGINID =>  FieldType::INTPOSITIVE,
-        Field::SKILLID => FieldType::INTPOSITIVE,
+        F::ORIGINID =>  FieldType::INTPOSITIVE,
+        F::SKILLID => FieldType::INTPOSITIVE,
     ];
 
     /**

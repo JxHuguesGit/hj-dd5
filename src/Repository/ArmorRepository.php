@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Table;
 use src\Domain\Entity\Armor;
 use src\Domain\Criteria\ArmorCriteria;
@@ -42,10 +42,10 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
     public function findAllWithRelations(ArmorCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT a.id, a.".Field::ARMORTYPID.", a.".Field::ARMORCLASS.",
-                a.".Field::STRPENALTY.", a.".Field::STHDISADV.",
-                i.".Field::NAME.", i.".Field::SLUG." AS ".Field::SLUG.",
-                i.".Field::WEIGHT.", i.".Field::GOLDPRICE.", i.".Field::TYPE."
+            SELECT a.id, a.".F::ARMORTYPID.", a.".F::ARMORCLASS.",
+                a.".F::STRPENALTY.", a.".F::STHDISADV.",
+                i.".F::NAME.", i.".F::SLUG." AS ".F::SLUG.",
+                i.".F::WEIGHT.", i.".F::GOLDPRICE.", i.".F::TYPE."
             FROM " . Table::ARMOR . " a
             INNER JOIN " . Table::ITEM . " i ON i.id = a.id
         ";

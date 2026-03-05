@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
@@ -13,15 +13,15 @@ use src\Domain\Entity;
 final class CharacterSkill extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::CHARACTERID,
-        Field::SKILLID,
-        Field::EXPERTISE,
+        F::ID,
+        F::CHARACTERID,
+        F::SKILLID,
+        F::EXPERTISE,
     ];
     public const FIELD_TYPES = [
-        Field::CHARACTERID => FieldType::INTPOSITIVE,
-        Field::SKILLID     => FieldType::INTPOSITIVE,
-        Field::EXPERTISE   => FieldType::INTPOSITIVE,
+        F::CHARACTERID => FieldType::INTPOSITIVE,
+        F::SKILLID     => FieldType::INTPOSITIVE,
+        F::EXPERTISE   => FieldType::INTPOSITIVE,
     ];
 
     /**

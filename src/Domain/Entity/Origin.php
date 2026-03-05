@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -16,19 +16,19 @@ use src\Utils\Utils;
 final class Origin extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::FEATID,
-        Field::TOOLID,
-        Field::SLUG,
-        Field::POSTID,
+        F::ID,
+        F::NAME,
+        F::FEATID,
+        F::TOOLID,
+        F::SLUG,
+        F::POSTID,
     ];
     public const FIELD_TYPES = [
-        Field::NAME =>    FieldType::STRING,
-        Field::FEATID =>  FieldType::INTPOSITIVE,
-        Field::TOOLID =>  FieldType::INTPOSITIVE,
-        Field::SLUG =>    FieldType::STRING,
-        Field::POSTID =>  FieldType::INTPOSITIVE,
+        F::NAME =>    FieldType::STRING,
+        F::FEATID =>  FieldType::INTPOSITIVE,
+        F::TOOLID =>  FieldType::INTPOSITIVE,
+        F::SLUG =>    FieldType::STRING,
+        F::POSTID =>  FieldType::INTPOSITIVE,
     ];
 
     /**

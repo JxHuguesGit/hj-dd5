@@ -4,7 +4,7 @@ namespace src\Presenter\FormBuilder;
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Criteria\FeatAbilityCriteria;
 use src\Domain\Entity\Feat;
@@ -62,11 +62,11 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $fieldset = new FieldsetField('');
         $fieldset
             ->addField(new NumberField(
-                Field::ID, 'ID', $entity->id, true,
+                F::ID, 'ID', $entity->id, true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
-                Field::NAME, Constant::CST_NAME, $entity->name, true,
+                F::NAME, Constant::CST_NAME, $entity->name, true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_5]
             ))
             ->addField(new FillerField(
@@ -74,15 +74,15 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [Constant::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new NumberField(
-                Field::POSTID, 'Post ID', $entity->postId, false,
+                F::POSTID, 'Post ID', $entity->postId, false,
                 [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
-                Field::SLUG, Constant::CST_SLUG, $entity->slug, true,
+                F::SLUG, Constant::CST_SLUG, $entity->slug, true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_8,
                 ]))
             ->addField(new TextareaField(
-                Field::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
+                F::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
                 [
                     Constant::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3,
                     'style'                 => 'height: 200px',
@@ -96,7 +96,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [Constant::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
-                Field::FEATTYPEID, L::FEAT_TYPE, $entity->featTypeId, $selectElements,
+                F::FEATTYPEID, L::FEAT_TYPE, $entity->featTypeId, $selectElements,
                 [Constant::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new CheckboxGroupField(

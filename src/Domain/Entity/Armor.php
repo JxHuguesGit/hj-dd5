@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Constant\Language as L;
 use src\Utils\Utils;
@@ -25,16 +25,16 @@ final class Armor extends Item
     public const TYPE_SHIELD = 4;
 
     public const SPECIFIC_FIELDS = [
-        Field::ARMORTYPID,
-        Field::ARMORCLASS,
-        Field::STRPENALTY,
-        Field::STHDISADV,
+        F::ARMORTYPID,
+        F::ARMORCLASS,
+        F::STRPENALTY,
+        F::STHDISADV,
     ];
     public const SPECIFIC_FIELD_TYPES = [
-        Field::ARMORTYPID => FieldType::INT,
-        Field::ARMORCLASS => FieldType::INT,
-        Field::STRPENALTY => FieldType::INT,
-        Field::STHDISADV =>  FieldType::BOOL,
+        F::ARMORTYPID => FieldType::INT,
+        F::ARMORCLASS => FieldType::INT,
+        F::STRPENALTY => FieldType::INT,
+        F::STHDISADV =>  FieldType::BOOL,
     ];
     public const FIELDS = [
         ...self::COMMON_FIELDS,

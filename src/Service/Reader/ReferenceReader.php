@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\ReferenceCriteria;
 use src\Domain\Entity\Reference;
 use src\Repository\ReferenceRepositoryInterface;
@@ -29,7 +29,7 @@ final class ReferenceReader
     {
         if (!$criteria) {
             $criteria = new ReferenceCriteria();
-            $criteria->orderBy = [Field::NAME => Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME => Constant::CST_ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

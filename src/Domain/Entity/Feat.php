@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -20,23 +20,23 @@ final class Feat extends Entity
     public const TYPE_EPIC = 4;
 
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::FEATTYPEID,
-        Field::POSTID,
-        Field::SLUG,
+        F::ID,
+        F::NAME,
+        F::FEATTYPEID,
+        F::POSTID,
+        F::SLUG,
     ];
 
     public const FIELD_TYPES = [
-        Field::NAME =>       FieldType::STRING,
-        Field::FEATTYPEID => FieldType::INTPOSITIVE,
-        Field::POSTID =>     FieldType::INTPOSITIVE,
-        Field::SLUG =>       FieldType::STRING,
+        F::NAME =>       FieldType::STRING,
+        F::FEATTYPEID => FieldType::INTPOSITIVE,
+        F::POSTID =>     FieldType::INTPOSITIVE,
+        F::SLUG =>       FieldType::STRING,
     ];
 
     public const EDITABLE_FIELDS = [
-        Field::FEATTYPEID,
-        Field::POSTID,
+        F::FEATTYPEID,
+        F::POSTID,
     ];
 
     /**

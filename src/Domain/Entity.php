@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -39,7 +39,7 @@ abstract class Entity
 
         // Assigner les valeurs fournies
         foreach ($attributes as $field => $value) {
-            if ($field === Field::ID) {
+            if ($field === F::ID) {
                 $this->assignId($value);
             } else {
                 $this->__set($field, $value);
@@ -59,7 +59,7 @@ abstract class Entity
      */
     public function __get(string $name)
     {
-        if ($name === Field::ID) {
+        if ($name === F::ID) {
             return $this->id;
         }
 
@@ -103,7 +103,7 @@ abstract class Entity
      */
     public function toArray(): array
     {
-        return array_merge([Field::ID => $this->id], $this->data);
+        return array_merge([F::ID => $this->id], $this->data);
     }
 
     /**
@@ -121,7 +121,7 @@ abstract class Entity
         }
 
         foreach (static::FIELDS as $field) {
-            if ($field === Field::ID) {
+            if ($field === F::ID) {
                 continue;
             }
             if (! array_key_exists($field, static::FIELD_TYPES)) {

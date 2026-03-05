@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Compendium;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Criteria\AbilityCriteria;
 use src\Domain\Entity\Feat;
@@ -49,7 +49,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
         $hasAbilityLinked = false;
 
-        if (Session::fromPost(Field::FEATTYPEID) == 2) {
+        if (Session::fromPost(F::FEATTYPEID) == 2) {
             $selectedAbilities = [];
             foreach (AbilityEnum::cases() as $ability) {
                 $val = Session::fromPost($ability->value);
@@ -95,7 +95,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             // On sauvegarde les liens
             $this->featAbilityWriter->deleteFeatAbilities($currentAbilities);
             // On créé les nouveaux liens
-            $featAbility = new FeatAbility([Field::FEATID => $feat->id]);
+            $featAbility = new FeatAbility([F::FEATID => $feat->id]);
             $criteria    = new AbilityCriteria();
             foreach ($selectedAbilities as $abilityEnum) {
                 $criteria->name         = $abilityEnum->label();

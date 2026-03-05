@@ -2,7 +2,7 @@
 namespace src\Controller\Compendium;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\ArmorCriteria;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\ArmorListPresenter;
@@ -20,9 +20,9 @@ final class ArmorCompendiumHandler implements CompendiumHandlerInterface
     {
         $criteria = new ArmorCriteria();
         $criteria->orderBy = [
-            Field::ARMORTYPID => Constant::CST_ASC,
-            Field::ARMORCLASS => Constant::CST_ASC,
-            Field::GOLDPRICE  => Constant::CST_ASC,
+            F::ARMORTYPID => Constant::CST_ASC,
+            F::ARMORCLASS => Constant::CST_ASC,
+            F::GOLDPRICE  => Constant::CST_ASC,
         ];
         $armors = $this->reader->allArmors($criteria);
         $content   = $this->presenter->present($armors);

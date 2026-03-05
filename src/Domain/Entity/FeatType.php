@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -13,15 +13,15 @@ use src\Utils\Utils;
 final class FeatType extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::SLUG,
+        F::ID,
+        F::NAME,
+        F::SLUG,
     ];
     public const FIELD_TYPES = [
-        Field::NAME => FieldType::STRING,
-        Field::SLUG => FieldType::STRING,
+        F::NAME => FieldType::STRING,
+        F::SLUG => FieldType::STRING,
     ];
-    
+
     public function stringify(): string
     {
         return $this->name;

@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
@@ -13,15 +13,15 @@ use src\Domain\Entity;
 final class SpeciePower extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::SPECIESID,
-        Field::POWERID,
-        Field::RANK
+        F::ID,
+        F::SPECIESID,
+        F::POWERID,
+        F::RANK
     ];
     public const FIELD_TYPES = [
-        Field::SPECIESID =>  FieldType::INTPOSITIVE,
-        Field::POWERID => FieldType::INTPOSITIVE,
-        Field::RANK => FieldType::INTPOSITIVE,
+        F::SPECIESID =>  FieldType::INTPOSITIVE,
+        F::POWERID => FieldType::INTPOSITIVE,
+        F::RANK => FieldType::INTPOSITIVE,
     ];
 
     /**

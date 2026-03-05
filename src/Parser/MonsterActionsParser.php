@@ -1,7 +1,7 @@
 <?php
 namespace src\Parser;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Entity\RpgMonsterAbility as EntityRpgMonsterAbility;
 use src\Repository\RpgMonsterAbility as RepositoryRpgMonsterAbility;
 
@@ -39,7 +39,7 @@ class MonsterActionsParser extends AbstractMonsterParser
     {
         $hasChanged = false;
         $current = $node->nextSibling;
-        $monsterId = $this->rpgMonster->getField(Field::ID);
+        $monsterId = $this->rpgMonster->getField(F::ID);
 
         while ($current) {
             // Fin de section
@@ -96,9 +96,9 @@ class MonsterActionsParser extends AbstractMonsterParser
     private function insertLegendaryHeader(string $typeId, int $monsterId, \DOMNode $node): void
     {
         $params = [
-            Field::TYPEID => $typeId,
-            Field::MONSTERID => $monsterId,
-            Field::NAME => 'legend',
+            F::TYPEID => $typeId,
+            F::MONSTERID => $monsterId,
+            F::NAME => 'legend',
         ];
         $objs = $this->abilityRepo->findBy($params);
 
@@ -106,9 +106,9 @@ class MonsterActionsParser extends AbstractMonsterParser
             return;
         }
 
-        $params[Field::ID] = 0;
-        $params[Field::DESCRIPTION] = trim($node->textContent);
-        $params[Field::RANK] = 0;
+        $params[F::ID] = 0;
+        $params[F::DESCRIPTION] = trim($node->textContent);
+        $params[F::RANK] = 0;
 
         $obj = new EntityRpgMonsterAbility(...$params);
         $this->abilityRepo->insert($obj);
@@ -131,9 +131,9 @@ class MonsterActionsParser extends AbstractMonsterParser
         }
 
         $params = [
-            Field::TYPEID => $typeId,
-            Field::MONSTERID => $monsterId,
-            Field::NAME => $matches[1],
+            F::TYPEID => $typeId,
+            F::MONSTERID => $monsterId,
+            F::NAME => $matches[1],
         ];
 
         $existing = $this->abilityRepo->findBy($params);
@@ -141,9 +141,9 @@ class MonsterActionsParser extends AbstractMonsterParser
             return false;
         }
 
-        $params[Field::ID] = 0;
-        $params[Field::DESCRIPTION] = $matches[2];
-        $params[Field::RANK] = 0;
+        $params[F::ID] = 0;
+        $params[F::DESCRIPTION] = $matches[2];
+        $params[F::RANK] = 0;
         $obj = new EntityRpgMonsterAbility(...$params);
         $this->abilityRepo->insert($obj);
         return true;
@@ -176,16 +176,16 @@ class MonsterActionsParser extends AbstractMonsterParser
 
             $name = rtrim($line, '.');
             $params = [
-                Field::TYPEID => $typeId,
-                Field::MONSTERID => $monsterId,
-                Field::NAME => $name,
+                F::TYPEID => $typeId,
+                F::MONSTERID => $monsterId,
+                F::NAME => $name,
             ];
 
             $existing = $this->abilityRepo->findBy($params);
             if ($existing->isEmpty()) {
-                $params[Field::ID] = 0;
-                $params[Field::DESCRIPTION] = '';
-                $params[Field::RANK] = 0;
+                $params[F::ID] = 0;
+                $params[F::DESCRIPTION] = '';
+                $params[F::RANK] = 0;
                 $obj = new EntityRpgMonsterAbility(...$params);
                 $this->abilityRepo->insert($obj);
                 $hasChanged = true;

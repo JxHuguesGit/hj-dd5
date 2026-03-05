@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\TableBuilder;
 
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\SpellRow;

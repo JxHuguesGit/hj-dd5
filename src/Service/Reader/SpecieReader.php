@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\SpeciesCriteria;
 use src\Domain\Entity\Specie;
 use src\Repository\SpeciesRepositoryInterface;
@@ -36,7 +36,7 @@ final class SpecieReader
     /**
      * @return Collection<Specie>
      */
-    public function speciesByParent(int $parentId, array $order=[Field::NAME=>Constant::CST_ASC]): Collection
+    public function speciesByParent(int $parentId, array $order=[F::NAME=>Constant::CST_ASC]): Collection
     {
         $criteria = new SpeciesCriteria();
         $criteria->parentId = $parentId;
@@ -51,7 +51,7 @@ final class SpecieReader
     {
         if (!$criteria) {
             $criteria = new SpeciesCriteria();
-            $criteria->orderBy = [Field::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME=>Constant::CST_ASC];
         }
         return $this->speciesRepository->findAllWithCriteria($criteria);
     }
@@ -67,7 +67,7 @@ final class SpecieReader
                     ? $criteria->nameLt = $species->name
                     : $criteria->nameGt = $species->name
                 ;
-                $criteria->orderBy = [Field::NAME => $order];
+                $criteria->orderBy = [F::NAME => $order];
                 return $this->speciesRepository->findAllWithCriteria($criteria);
             }
         );

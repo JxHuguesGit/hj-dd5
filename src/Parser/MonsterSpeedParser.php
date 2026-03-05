@@ -1,7 +1,7 @@
 <?php
 namespace src\Parser;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Entity\RpgMonsterTypeSpeed as EntityRpgMonsterTypeSpeed;
 use src\Repository\RpgMonsterTypeSpeed as RepositoryRpgMonsterTypeSpeed;
 use src\Repository\RpgTypeSpeed as RepositoryRpgTypeSpeed;
@@ -12,7 +12,7 @@ class MonsterSpeedParser extends AbstractMonsterParser
     {
         $nodes = (new \DOMXPath($this->dom))->query("//strong[normalize-space(text())='Speed']");
         $canProceed = $nodes->length > 0;
-        
+
         if ($canProceed) {
             $speedNode = $nodes->item(0);
             $canProceed = $speedNode && $speedNode->nextSibling;
@@ -31,11 +31,11 @@ class MonsterSpeedParser extends AbstractMonsterParser
         $blnHasChanged = false;
         if ($canProceed) {
             $standard = (float) $matches[0][2] * self::FEET_TO_METERS;
-            if ($this->rpgMonster->getField(Field::SPEED) !== $standard) {
-                $this->rpgMonster->setField(Field::SPEED, $standard);
+            if ($this->rpgMonster->getField(F::SPEED) !== $standard) {
+                $this->rpgMonster->setField(F::SPEED, $standard);
                 $blnHasChanged = true;
             }
-        
+
             $this->processExtraSpeeds(array_slice($matches, 1));
         }
         return $blnHasChanged;
@@ -45,7 +45,7 @@ class MonsterSpeedParser extends AbstractMonsterParser
     {
         $objDaoTS  = new RepositoryRpgTypeSpeed($this->queryBuilder, $this->queryExecutor);
         $objDaoJMTS = new RepositoryRpgMonsterTypeSpeed($this->queryBuilder, $this->queryExecutor);
-        $monsterId  = $this->rpgMonster->getField(Field::ID);
+        $monsterId  = $this->rpgMonster->getField(F::ID);
 
         foreach ($matches as $m) {
             [, $type, $value, $extra] = $m;
@@ -53,16 +53,16 @@ class MonsterSpeedParser extends AbstractMonsterParser
             $value = (float) $value * self::FEET_TO_METERS;
             $extra = trim($extra ?? '');
 
-            $objs = $objDaoTS->findBy([Field::UKTAG => $type]);
+            $objs = $objDaoTS->findBy([F::UKTAG => $type]);
             $obj = $objs->current();
             if (!$obj) {
                 continue;
             }
 
-            $typeSpeedId = $obj->getField(Field::ID);
+            $typeSpeedId = $obj->getField(F::ID);
             $existing = $objDaoJMTS->findBy([
-                Field::MONSTERID   => $monsterId,
-                Field::TYPESPEEDID => $typeSpeedId
+                F::MONSTERID   => $monsterId,
+                F::TYPESPEEDID => $typeSpeedId
             ])->current();
 
             if (!$existing) {
@@ -70,8 +70,8 @@ class MonsterSpeedParser extends AbstractMonsterParser
                 continue;
             }
 
-            $this->updateIfChanged($objDaoJMTS, $existing, Field::VALUE, $value);
-            $this->updateIfChanged($objDaoJMTS, $existing, Field::EXTRA, $extra);
+            $this->updateIfChanged($objDaoJMTS, $existing, F::VALUE, $value);
+            $this->updateIfChanged($objDaoJMTS, $existing, F::EXTRA, $extra);
         }
     }
 

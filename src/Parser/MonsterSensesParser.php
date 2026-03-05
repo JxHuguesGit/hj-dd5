@@ -1,14 +1,14 @@
 <?php
 namespace src\Parser;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Entity\RpgMonsterTypeVision as EntityRpgMonsterTypeVision;
 use src\Repository\RpgMonsterTypeVision as RepositoryRpgMonsterTypeVision;
 use src\Repository\RpgTypeVision as RepositoryRpgTypeVision;
 
 class MonsterSensesParser extends AbstractMonsterParser
 {
-    
+
     protected function doParse(): bool
     {
         $xpath = new \DOMXPath($this->dom);
@@ -61,12 +61,12 @@ class MonsterSensesParser extends AbstractMonsterParser
 
     private function handlePassivePerception(int $value): bool
     {
-        $current = $this->rpgMonster->getField(Field::PERCPASSIVE);
+        $current = $this->rpgMonster->getField(F::PERCPASSIVE);
         if ($current === $value) {
             return false;
         }
 
-        $this->rpgMonster->setField(Field::PERCPASSIVE, $value);
+        $this->rpgMonster->setField(F::PERCPASSIVE, $value);
         return true;
     }
 
@@ -79,13 +79,13 @@ class MonsterSensesParser extends AbstractMonsterParser
         $typeRepo = new RepositoryRpgTypeVision($this->queryBuilder, $this->queryExecutor);
         $linkRepo = new RepositoryRpgMonsterTypeVision($this->queryBuilder, $this->queryExecutor);
 
-        $typeObj = $typeRepo->findBy([Field::UKTAG => $type])->current();
+        $typeObj = $typeRepo->findBy([F::UKTAG => $type])->current();
         if ($typeObj) {
-            $typeId = $typeObj->getField(Field::ID);
-            $monsterId = $this->rpgMonster->getField(Field::ID);
+            $typeId = $typeObj->getField(F::ID);
+            $monsterId = $this->rpgMonster->getField(F::ID);
             $existing = $linkRepo->findBy([
-                Field::MONSTERID => $monsterId,
-                Field::TYPEVISIONID => $typeId
+                F::MONSTERID => $monsterId,
+                F::TYPEVISIONID => $typeId
             ]);
 
             if ($existing->isEmpty()) {
@@ -94,10 +94,10 @@ class MonsterSensesParser extends AbstractMonsterParser
                 $hasChanged = true;
             } else {
                 $entity = $existing->current();
-                $storedValue = $entity->getField(Field::VALUE);
+                $storedValue = $entity->getField(F::VALUE);
 
                 if ($storedValue !== $value) {
-                    $entity->setField(Field::VALUE, $value);
+                    $entity->setField(F::VALUE, $value);
                     $linkRepo->update($entity);
                     $hasChanged = true;
                 }

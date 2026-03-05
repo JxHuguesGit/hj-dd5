@@ -2,20 +2,20 @@
 namespace src\Domain\Entity;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 class MonsterType extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
+        F::ID,
+        F::NAME,
     ];
     public const FIELD_TYPES = [
-        Field::NAME => FieldType::STRING,
+        F::NAME => FieldType::STRING,
     ];
-    
+
     public function stringify(): string
     {
         return ($this->getNameAndGender())[Constant::CST_LABEL];

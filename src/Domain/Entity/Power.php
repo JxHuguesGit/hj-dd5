@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
@@ -13,17 +13,17 @@ use src\Domain\Entity;
 final class Power extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::DESCRIPTION,
-        Field::PARENTID,
+        F::ID,
+        F::NAME,
+        F::DESCRIPTION,
+        F::PARENTID,
     ];
     public const FIELD_TYPES = [
-        Field::NAME => FieldType::STRING,
-        Field::DESCRIPTION => FieldType::STRING,
-        Field::PARENTID => FieldType::INTPOSITIVE,
+        F::NAME => FieldType::STRING,
+        F::DESCRIPTION => FieldType::STRING,
+        F::PARENTID => FieldType::INTPOSITIVE,
     ];
-    
+
     public function stringify(): string
     {
         return $this->name;

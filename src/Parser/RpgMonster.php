@@ -1,7 +1,7 @@
 <?php
 namespace src\Parser;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Entity\RpgMonsterSkill as EntityRpgMonsterSkill;
 use src\Enum\SkillEnum;
 use src\Repository\RpgMonster as RepositoryRpgMonster;
@@ -30,8 +30,8 @@ class RpgMonster extends AbstractMonsterParser
         MonsterActionsParser::parse($this->rpgMonster, $this->dom);
 
         // Initialise EXTRA si vide
-        if ($this->rpgMonster->getField(Field::EXTRA) === '') {
-            $this->rpgMonster->setField(Field::EXTRA, json_encode([], JSON_UNESCAPED_UNICODE));
+        if ($this->rpgMonster->getField(F::EXTRA) === '') {
+            $this->rpgMonster->setField(F::EXTRA, json_encode([], JSON_UNESCAPED_UNICODE));
             $hasChanged = true;
         }
 
@@ -83,7 +83,7 @@ class RpgMonster extends AbstractMonsterParser
 
         [$score] = explode(' ', $text);
         $score = str_replace('+', '', $score);
-        return $this->updateIfChanged(Field::INITIATIVE, $score);
+        return $this->updateIfChanged(F::INITIATIVE, $score);
     }
 
     private function parseCrBm(): bool
@@ -98,8 +98,8 @@ class RpgMonster extends AbstractMonsterParser
             $pb = $matches[2];
 
             $changed = false;
-            $changed |= $this->updateIfChanged(Field::SCORECR, $cr);
-            $changed |= $this->updateIfChanged(Field::PROFBONUS, $pb);
+            $changed |= $this->updateIfChanged(F::SCORECR, $cr);
+            $changed |= $this->updateIfChanged(F::PROFBONUS, $pb);
             return $changed;
         }
         return false;
@@ -113,17 +113,17 @@ class RpgMonster extends AbstractMonsterParser
         }
 
         $value = '(' . $matches[1] . ')';
-        $extra = json_decode($this->rpgMonster->getField(Field::EXTRA), true) ?: [];
+        $extra = json_decode($this->rpgMonster->getField(F::EXTRA), true) ?: [];
         $stored = $extra['hp'] ?? null;
 
         if ($stored !== $value) {
             $extra['hp'] = $value;
-            $this->rpgMonster->setField(Field::EXTRA, json_encode($extra, JSON_UNESCAPED_UNICODE));
+            $this->rpgMonster->setField(F::EXTRA, json_encode($extra, JSON_UNESCAPED_UNICODE));
             return true;
         }
         return false;
     }
-    
+
     private function parseSkills(): void
     {
         $text = $this->getTextAfterLabel('Skills');
@@ -132,7 +132,7 @@ class RpgMonster extends AbstractMonsterParser
         }
 
         $skills = explode(',', $text);
-        $monsterId = $this->rpgMonster->getField(Field::ID);
+        $monsterId = $this->rpgMonster->getField(F::ID);
         $daoSkill = new RepositoryRpgSkill($this->queryBuilder, $this->queryExecutor);
         $daoJoin  = new RepositoryRpgMonsterSkill($this->queryBuilder, $this->queryExecutor);
 
@@ -149,26 +149,26 @@ class RpgMonster extends AbstractMonsterParser
                 continue;
             }
 
-            $skillObjs = $daoSkill->findBy([Field::NAME => $enum->label()]);
+            $skillObjs = $daoSkill->findBy([F::NAME => $enum->label()]);
             $skill = $skillObjs->current();
             if (!$skill) {
                 continue;
             }
 
             $params = [
-                Field::MONSTERID => $monsterId,
-                Field::SKILLID   => $skill->getField(Field::ID)
+                F::MONSTERID => $monsterId,
+                F::SKILLID   => $skill->getField(F::ID)
             ];
             $joins = $daoJoin->findBy($params);
 
             if ($joins->isEmpty()) {
-                $params[Field::ID] = 0;
-                $params[Field::VALUE] = $bonus;
+                $params[F::ID] = 0;
+                $params[F::VALUE] = $bonus;
                 $daoJoin->insert(new EntityRpgMonsterSkill(...$params));
             } else {
                 $join = $joins->current();
-                if ($join->getField(Field::VALUE) != $bonus) {
-                    $join->setField(Field::VALUE, $bonus);
+                if ($join->getField(F::VALUE) != $bonus) {
+                    $join->setField(F::VALUE, $bonus);
                     $daoJoin->update($join);
                 }
             }

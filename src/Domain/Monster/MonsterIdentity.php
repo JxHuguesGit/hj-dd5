@@ -2,7 +2,7 @@
 
 namespace src\Domain\Monster;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Utils\Utils;
 
 final class MonsterIdentity
@@ -13,42 +13,42 @@ final class MonsterIdentity
 
     public function getId(): int
     {
-        return $this->monster->getField(Field::ID);
+        return $this->monster->getField(F::ID);
     }
 
     public function getName(): string
     {
-        return $this->monster->getField(Field::NAME);
+        return $this->monster->getField(F::NAME);
     }
 
     public function getFrenchName(): string
     {
-        return $this->monster->getField(Field::FRNAME);
+        return $this->monster->getField(F::FRNAME);
     }
 
     public function getTag(): ?string
     {
-        return $this->monster->getField(Field::UKTAG);
+        return $this->monster->getField(F::UKTAG);
     }
 
     public function getFrenchTag(): ?string
     {
-        return $this->monster->getField(Field::FRTAG);
+        return $this->monster->getField(F::FRTAG);
     }
 
     public function getReferenceId(): int
     {
-        return $this->monster->getField(Field::REFID);
+        return $this->monster->getField(F::REFID);
     }
 
     public function isComplete(): bool
     {
-        return $this->monster->getField(Field::INCOMPLET) == 0;
+        return $this->monster->getField(F::INCOMPLET) == 0;
     }
 
     public function getSlug(): string
     {
-        $slug = $this->monster->getField(Field::SLUG) ?? '';
+        $slug = $this->monster->getField(F::SLUG) ?? '';
 
         if ($slug !== '') {
             return $slug;

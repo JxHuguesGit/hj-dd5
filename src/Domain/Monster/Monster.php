@@ -2,7 +2,7 @@
 namespace src\Domain\Monster;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Criteria\MonsterSpeedTypeCriteria;
 use src\Domain\Entity;
@@ -16,75 +16,75 @@ use src\Service\Reader\MonsterSpeedTypeReader;
 final class Monster extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::FRNAME,
-        Field::NAME,
-        Field::FRTAG,
-        Field::UKTAG,
-        Field::INCOMPLET,
-        Field::SCORECR,
-        Field::MSTTYPEID,
-        Field::MSTSSTYPID,
-        Field::SWARMSIZE,
-        Field::MSTSIZE,
-        Field::ALGNID,
-        Field::SCORECA,
-        Field::SCOREHP,
-        Field::INITIATIVE,
-        Field::LEGENDARY,
-        Field::HABITAT,
-        Field::REFID,
-        Field::STRSCORE,
-        Field::DEXSCORE,
-        Field::CONSCORE,
-        Field::INTSCORE,
-        Field::WISSCORE,
-        Field::CHASCORE,
-        Field::PROFBONUS,
-        Field::PERCPASSIVE,
-        Field::EXTRA,
+        F::ID,
+        F::FRNAME,
+        F::NAME,
+        F::FRTAG,
+        F::UKTAG,
+        F::INCOMPLET,
+        F::SCORECR,
+        F::MSTTYPEID,
+        F::MSTSSTYPID,
+        F::SWARMSIZE,
+        F::MSTSIZE,
+        F::ALGNID,
+        F::SCORECA,
+        F::SCOREHP,
+        F::INITIATIVE,
+        F::LEGENDARY,
+        F::HABITAT,
+        F::REFID,
+        F::STRSCORE,
+        F::DEXSCORE,
+        F::CONSCORE,
+        F::INTSCORE,
+        F::WISSCORE,
+        F::CHASCORE,
+        F::PROFBONUS,
+        F::PERCPASSIVE,
+        F::EXTRA,
 
-        Field::TYPMSTNAME,
-        Field::ABBR,
+        F::TYPMSTNAME,
+        F::ABBR,
 
-        Field::SSTYPMSTNAME,
+        F::SSTYPMSTNAME,
 
-        Field::REFNAME,
+        F::REFNAME,
     ];
     public const FIELD_TYPES = [
-        Field::FRNAME       => FieldType::STRING,
-        Field::NAME         => FieldType::STRING,
-        Field::FRTAG        => FieldType::STRING,
-        Field::UKTAG        => FieldType::STRING,
-        Field::INCOMPLET    => FieldType::INTNULLABLE,
-        Field::SCORECR      => FieldType::FLOAT,
-        Field::MSTTYPEID    => FieldType::INT,
-        Field::MSTSSTYPID   => FieldType::INTNULLABLE,
-        Field::SWARMSIZE    => FieldType::INTNULLABLE,
-        Field::MSTSIZE      => FieldType::INT,
-        Field::ALGNID       => FieldType::INT,
-        Field::SCORECA      => FieldType::INT,
-        Field::SCOREHP      => FieldType::INT,
-        Field::INITIATIVE   => FieldType::INT,
-        Field::LEGENDARY    => FieldType::INT,
-        Field::HABITAT      => FieldType::STRING,
-        Field::REFID        => FieldType::INT,
-        Field::STRSCORE     => FieldType::INT,
-        Field::DEXSCORE     => FieldType::INT,
-        Field::CONSCORE     => FieldType::INT,
-        Field::INTSCORE     => FieldType::INT,
-        Field::WISSCORE     => FieldType::INT,
-        Field::CHASCORE     => FieldType::INT,
-        Field::PROFBONUS    => FieldType::INT,
-        Field::PERCPASSIVE  => FieldType::INT,
-        Field::EXTRA        => FieldType::STRINGNULLABLE,
+        F::FRNAME       => FieldType::STRING,
+        F::NAME         => FieldType::STRING,
+        F::FRTAG        => FieldType::STRING,
+        F::UKTAG        => FieldType::STRING,
+        F::INCOMPLET    => FieldType::INTNULLABLE,
+        F::SCORECR      => FieldType::FLOAT,
+        F::MSTTYPEID    => FieldType::INT,
+        F::MSTSSTYPID   => FieldType::INTNULLABLE,
+        F::SWARMSIZE    => FieldType::INTNULLABLE,
+        F::MSTSIZE      => FieldType::INT,
+        F::ALGNID       => FieldType::INT,
+        F::SCORECA      => FieldType::INT,
+        F::SCOREHP      => FieldType::INT,
+        F::INITIATIVE   => FieldType::INT,
+        F::LEGENDARY    => FieldType::INT,
+        F::HABITAT      => FieldType::STRING,
+        F::REFID        => FieldType::INT,
+        F::STRSCORE     => FieldType::INT,
+        F::DEXSCORE     => FieldType::INT,
+        F::CONSCORE     => FieldType::INT,
+        F::INTSCORE     => FieldType::INT,
+        F::WISSCORE     => FieldType::INT,
+        F::CHASCORE     => FieldType::INT,
+        F::PROFBONUS    => FieldType::INT,
+        F::PERCPASSIVE  => FieldType::INT,
+        F::EXTRA        => FieldType::STRINGNULLABLE,
 
-        Field::TYPMSTNAME   => FieldType::STRING,
-        Field::ABBR         => FieldType::STRING,
+        F::TYPMSTNAME   => FieldType::STRING,
+        F::ABBR         => FieldType::STRING,
 
-        Field::SSTYPMSTNAME => FieldType::STRINGNULLABLE,
+        F::SSTYPMSTNAME => FieldType::STRINGNULLABLE,
 
-        Field::REFNAME      => FieldType::STRINGNULLABLE,
+        F::REFNAME      => FieldType::STRINGNULLABLE,
     ];
 
     /**
@@ -314,6 +314,6 @@ final class Monster extends Entity
 
     public function isComplete(): bool
     {
-        return ($this->getField(Field::INCOMPLET) ?? 0) === 0;
+        return ($this->getField(F::INCOMPLET) ?? 0) === 0;
     }
 }

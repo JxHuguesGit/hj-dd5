@@ -3,7 +3,7 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 
 final class SpellCriteria
 {
@@ -40,7 +40,7 @@ final class SpellCriteria
         // Filtre niveau
         if ($this->minLevel !== null && $this->maxLevel !== null) {
             $args['meta_query'][] = [
-                'key'               => Field::NIVEAU,
+                'key'               => F::NIVEAU,
                 Constant::CST_VALUE => [$this->minLevel, $this->maxLevel],
                 Constant::CST_TYPE  => 'NUMERIC',
                 'compare'           => 'BETWEEN',
@@ -52,7 +52,7 @@ final class SpellCriteria
             $classConditions = [];
             foreach ($this->classes as $class) {
                 $classConditions[] = [
-                    'key'               => Field::CLASSES,
+                    'key'               => F::CLASSES,
                     Constant::CST_VALUE => '"' . $class . '"',
                     'compare'           => 'LIKE',
                 ];
@@ -66,7 +66,7 @@ final class SpellCriteria
         // Filtre écoles
         if (! empty($this->schools) && count($this->schools) < 8) {
             $args['meta_query'][] = [
-                'key'               => Field::SCHOOL,
+                'key'               => F::SCHOOL,
                 Constant::CST_VALUE => $this->schools,
                 'compare'           => 'IN',
             ];

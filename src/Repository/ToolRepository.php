@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Table;
 use src\Domain\Entity\Tool;
 use src\Domain\Criteria\ToolCriteria;
@@ -10,7 +10,7 @@ use src\Domain\Criteria\ToolCriteria;
 class ToolRepository extends Repository implements ToolRepositoryInterface
 {
     public const TABLE = Table::TOOL;
-    
+
     public function getEntityClass(): string
     {
         return Tool::class;
@@ -41,18 +41,18 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     public function findAllWithRelations(ToolCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT i.".Field::ID." as ".Field::ID.", ".Field::PARENTID."
-                , ".Field::NAME.", ".Field::SLUG.", ".Field::WEIGHT.", ".Field::GOLDPRICE."
+            SELECT i.".F::ID." as ".F::ID.", ".F::PARENTID."
+                , ".F::NAME.", ".F::SLUG.", ".F::WEIGHT.", ".F::GOLDPRICE."
             FROM " . Table::TOOL . " t
             INNER JOIN " . Table::ITEM . " i ON i.id = t.id
         ";
 
         $filters = [];
         if ($criteria->id !== null) {
-            $filters['i.'.Field::ID] = $criteria->id;
+            $filters['i.'.F::ID] = $criteria->id;
         }
         if ($criteria->type !== null) {
-            $filters[Field::TYPE] = $criteria->type;
+            $filters[F::TYPE] = $criteria->type;
         }
 
         $this->query = $this->queryBuilder->reset()

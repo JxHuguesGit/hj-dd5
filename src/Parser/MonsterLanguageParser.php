@@ -1,7 +1,7 @@
 <?php
 namespace src\Parser;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Entity\RpgMonsterLanguage as EntityRpgMonsterLanguage;
 use src\Enum\LanguageEnum;
 use src\Repository\RpgMonsterLanguage as RepositoryRpgMonsterLanguage;
@@ -45,7 +45,7 @@ class MonsterLanguageParser extends AbstractMonsterParser
     private function handleLanguage(string $element): bool
     {
         $hasChanged = false;
-        $monsterId = $this->rpgMonster->getField(Field::ID);
+        $monsterId = $this->rpgMonster->getField(F::ID);
         $parts = preg_split('/\s+/', trim($element));
 
         // Format : "Primordial (aérien)" ou "Telepathy 120 ft."
@@ -67,20 +67,20 @@ class MonsterLanguageParser extends AbstractMonsterParser
         $langRepo = new RepositoryRpgLanguage($this->queryBuilder, $this->queryExecutor);
         $linkRepo = new RepositoryRpgMonsterLanguage($this->queryBuilder, $this->queryExecutor);
 
-        $objs = $langRepo->findBy([Field::NAME => $enum->label()]);
+        $objs = $langRepo->findBy([F::NAME => $enum->label()]);
         $langObj = $objs->current();
         if ($langObj === null) {
             // Tu pourrais ici logger ou lever une alerte plutôt que d’afficher
             return false;
         }
 
-        $languageId = $langObj->getField(Field::ID);
-        $params = [Field::MONSTERID => $monsterId, Field::LANGUAGEID => $languageId];
+        $languageId = $langObj->getField(F::ID);
+        $params = [F::MONSTERID => $monsterId, F::LANGUAGEID => $languageId];
         $existing = $linkRepo->findBy($params);
 
         if ($existing->isEmpty()) {
-            $params[Field::ID] = 0;
-            $params[Field::VALUE] = $value;
+            $params[F::ID] = 0;
+            $params[F::VALUE] = $value;
             $entity = new EntityRpgMonsterLanguage(...$params);
             $linkRepo->insert($entity);
             $hasChanged = true;

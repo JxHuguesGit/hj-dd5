@@ -2,7 +2,7 @@
 namespace src\Parser;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Utils\Utils;
 
 class MonsterCaracsParser extends AbstractMonsterParser
@@ -15,17 +15,17 @@ class MonsterCaracsParser extends AbstractMonsterParser
             'physiques' => [
                 'xpath' => "//div[contains(@class, 'car2') or contains(@class, 'car3')]",
                 Constant::CST_ABILITIES => [
-                    ['score' => Field::STRSCORE, 'jsonCar' => 'carstr', 'jsonSave' => 'jsstr'],
-                    ['score' => Field::DEXSCORE, 'jsonCar' => 'cardex', 'jsonSave' => 'jsdex'],
-                    ['score' => Field::CONSCORE, 'jsonCar' => 'carcon', 'jsonSave' => 'jscon'],
+                    ['score' => F::STRSCORE, 'jsonCar' => 'carstr', 'jsonSave' => 'jsstr'],
+                    ['score' => F::DEXSCORE, 'jsonCar' => 'cardex', 'jsonSave' => 'jsdex'],
+                    ['score' => F::CONSCORE, 'jsonCar' => 'carcon', 'jsonSave' => 'jscon'],
                 ],
             ],
             'mentales' => [
                 'xpath' => "//div[contains(@class, 'car5') or contains(@class, 'car6')]",
                 Constant::CST_ABILITIES => [
-                    ['score' => Field::INTSCORE, 'jsonCar' => 'carint', 'jsonSave' => 'jsint'],
-                    ['score' => Field::WISSCORE, 'jsonCar' => 'carwis', 'jsonSave' => 'jswis'],
-                    ['score' => Field::CHASCORE, 'jsonCar' => 'carcha', 'jsonSave' => 'jscha'],
+                    ['score' => F::INTSCORE, 'jsonCar' => 'carint', 'jsonSave' => 'jsint'],
+                    ['score' => F::WISSCORE, 'jsonCar' => 'carwis', 'jsonSave' => 'jswis'],
+                    ['score' => F::CHASCORE, 'jsonCar' => 'carcha', 'jsonSave' => 'jscha'],
                 ],
             ],
         ];
@@ -38,7 +38,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
 
         return $hasChanged;
     }
-    
+
     /**
      * Parse une section de caractéristiques (physiques ou mentales)
      */
@@ -52,7 +52,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
             return false;
         }
 
-        $extra = json_decode($this->rpgMonster->getField(Field::EXTRA), true) ?: [];
+        $extra = json_decode($this->rpgMonster->getField(F::EXTRA), true) ?: [];
         $hasChanged = false;
 
         foreach ($abilities as $i => $ability) {
@@ -66,7 +66,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
         }
 
         if ($hasChanged) {
-            $this->rpgMonster->setField(Field::EXTRA, json_encode($extra, JSON_UNESCAPED_UNICODE));
+            $this->rpgMonster->setField(F::EXTRA, json_encode($extra, JSON_UNESCAPED_UNICODE));
         }
 
         return $hasChanged;
@@ -79,7 +79,7 @@ class MonsterCaracsParser extends AbstractMonsterParser
     {
         return (int)str_replace(['+', '–'], ['', '-'], $value);
     }
-    
+
     /**
      * Met à jour un score principal si besoin
      */

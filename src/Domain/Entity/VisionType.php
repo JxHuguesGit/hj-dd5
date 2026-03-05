@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -13,13 +13,13 @@ use src\Utils\Utils;
 final class VisionType extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::UKTAG,
+        F::ID,
+        F::NAME,
+        F::UKTAG,
     ];
     public const FIELD_TYPES = [
-        Field::NAME  => FieldType::STRING,
-        Field::UKTAG => FieldType::STRING,
+        F::NAME  => FieldType::STRING,
+        F::UKTAG => FieldType::STRING,
     ];
 
     public function stringify(): string

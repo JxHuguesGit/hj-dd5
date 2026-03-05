@@ -3,7 +3,7 @@ namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Entity\SpeedType;
 use src\Domain\Monster\Monster;
@@ -19,19 +19,19 @@ class MonsterCombatFormBuilder
     {
         $fieldset
             ->addField(new ExtraNumberField(
-                Field::SCORECA, L::CA, $monster->ca, false,
-                ['extraValue' => $monster->getExtra(Field::SCORECA)]
+                F::SCORECA, L::CA, $monster->ca, false,
+                ['extraValue' => $monster->getExtra(F::SCORECA)]
             ))
             ->addField(new ExtraNumberField(
-                Field::SCOREHP, L::PV, $monster->hp, false,
-                ['extraValue' => $monster->getExtra(Field::SCOREHP)]
+                F::SCOREHP, L::PV, $monster->hp, false,
+                ['extraValue' => $monster->getExtra(F::SCOREHP)]
             ))
             ->addField(new NumberField(
-                Field::SCORECR, L::FP, $monster->cr, false,
+                F::SCORECR, L::FP, $monster->cr, false,
                 [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new NumberField(
-                Field::INITIATIVE, L::INITIATIVE, $monster->initiative, false,
+                F::INITIATIVE, L::INITIATIVE, $monster->initiative, false,
                 [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
         ;
@@ -40,7 +40,7 @@ class MonsterCombatFormBuilder
             $checkBoxAttributes[Constant::CST_CHECKED] = Constant::CST_CHECKED;
         }
         $fieldset
-            ->addField(new CheckboxField(Field::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
+            ->addField(new CheckboxField(F::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
             ->addField(new FillerField(
                 '', '', '', '',
                 [Constant::OUTERDIVCLASS => B::COL_MD_5 . ' ' . B::MB3]

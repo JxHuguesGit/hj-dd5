@@ -2,7 +2,7 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\MonsterAbilityCriteria;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -33,34 +33,34 @@ class MonsterAbilitiesService
             )
         );
         $criteria            = new MonsterAbilityCriteria();
-        $criteria->typeId    = $params[Field::TYPEID];
-        $criteria->monsterId = $params[Field::MONSTERID];
+        $criteria->typeId    = $params[F::TYPEID];
+        $criteria->monsterId = $params[F::MONSTERID];
         return $reader->allMonsterAbilities($criteria);
     }
 
     public function getTraits(): Collection
     {
-        return $this->getAbilities([Field::TYPEID => 'T', Field::MONSTERID => $this->monsterId]);
+        return $this->getAbilities([F::TYPEID => 'T', F::MONSTERID => $this->monsterId]);
     }
 
     public function getActions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID => 'A', Field::MONSTERID => $this->monsterId]);
+        return $this->getAbilities([F::TYPEID => 'A', F::MONSTERID => $this->monsterId]);
     }
 
     public function getBonusActions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID => 'B', Field::MONSTERID => $this->monsterId]);
+        return $this->getAbilities([F::TYPEID => 'B', F::MONSTERID => $this->monsterId]);
     }
 
     public function getReactions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID => 'R', Field::MONSTERID => $this->monsterId]);
+        return $this->getAbilities([F::TYPEID => 'R', F::MONSTERID => $this->monsterId]);
     }
 
     public function getLegendaryActions(): Collection
     {
-        return $this->getAbilities([Field::TYPEID => 'L', Field::MONSTERID => $this->monsterId]);
+        return $this->getAbilities([F::TYPEID => 'L', F::MONSTERID => $this->monsterId]);
     }
 
     public function getSkills(): Collection

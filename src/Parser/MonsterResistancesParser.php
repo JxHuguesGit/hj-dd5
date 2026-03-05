@@ -1,7 +1,7 @@
 <?php
 namespace src\Parser;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Enum\ConditionEnum;
 use src\Enum\DamageEnum;
 use src\Entity\RpgMonster as EntityRpgMonster;
@@ -53,7 +53,7 @@ class MonsterResistancesParser extends AbstractMonsterParser
             return false;
         }
 
-        $rpgMonsterId = $this->rpgMonster->getField(Field::ID);
+        $rpgMonsterId = $this->rpgMonster->getField(F::ID);
         $objDaoDamage = new RepositoryRpgTypeDamage($this->queryBuilder, $this->queryExecutor);
         $objDaoCond   = new RepositoryRpgCondition($this->queryBuilder, $this->queryExecutor);
         $objDaoJoin   = new RepositoryRpgMonsterResistance($this->queryBuilder, $this->queryExecutor);
@@ -96,22 +96,22 @@ class MonsterResistancesParser extends AbstractMonsterParser
         RepositoryRpgTypeDamage $daoDamage,
         RepositoryRpgMonsterResistance $daoJoin
     ): bool {
-        $objs = $daoDamage->findBy([Field::NAME => $enum->label()]);
+        $objs = $daoDamage->findBy([F::NAME => $enum->label()]);
         $obj = $objs->current();
         if (!$obj) {
             return false;
         }
 
-        $typeDamageId = $obj->getField(Field::ID);
+        $typeDamageId = $obj->getField(F::ID);
         $params = [
-            Field::MONSTERID => $monsterId,
-            Field::TYPEDMGID => $typeDamageId,
-            Field::TYPERESID => $type,
+            F::MONSTERID => $monsterId,
+            F::TYPEDMGID => $typeDamageId,
+            F::TYPERESID => $type,
         ];
         $existing = $daoJoin->findBy($params);
 
         if ($existing->isEmpty()) {
-            $params[Field::ID] = 0;
+            $params[F::ID] = 0;
             $daoJoin->insert(new EntityRpgMonsterResistance(...$params));
             return true;
         }
@@ -128,21 +128,21 @@ class MonsterResistancesParser extends AbstractMonsterParser
         RepositoryRpgCondition $daoCond,
         RepositoryRpgMonsterCondition $daoJoinCond
     ): bool {
-        $objs = $daoCond->findBy([Field::NAME => $enum->label()]);
+        $objs = $daoCond->findBy([F::NAME => $enum->label()]);
         $obj = $objs->current();
         if (!$obj) {
             return false;
         }
 
-        $typeConditionId = $obj->getField(Field::ID);
+        $typeConditionId = $obj->getField(F::ID);
         $params = [
-            Field::MONSTERID => $monsterId,
-            Field::CONDITIONID => $typeConditionId,
+            F::MONSTERID => $monsterId,
+            F::CONDITIONID => $typeConditionId,
         ];
         $existing = $daoJoinCond->findBy($params);
 
         if ($existing->isEmpty()) {
-            $params[Field::ID] = 0;
+            $params[F::ID] = 0;
             $daoJoinCond->insert(new EntityRpgMonsterCondition(...$params));
             return true;
         }

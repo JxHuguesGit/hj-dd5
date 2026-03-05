@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\SpeedTypeCriteria;
 use src\Domain\Entity\SpeedType;
 use src\Repository\SpeedTypeRepositoryInterface;
@@ -29,7 +29,7 @@ final class SpeedTypeReader
     {
         if (!$criteria) {
             $criteria = new SpeedTypeCriteria();
-            $criteria->orderBy = [Field::ID=>Constant::CST_ASC];
+            $criteria->orderBy = [F::ID=>Constant::CST_ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

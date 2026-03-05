@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity\Item;
 use src\Utils\Utils;
@@ -29,71 +29,71 @@ use src\Utils\Utils;
 final class Weapon extends Item
 {
     public const SPECIFIC_FIELDS = [
-        Field::TYPEDMGID,
-        Field::MSTPROFID,
-        Field::WPNCATID,
-        Field::WPNRANGEID,
-        Field::DMGDIEID,
+        F::TYPEDMGID,
+        F::MSTPROFID,
+        F::WPNCATID,
+        F::WPNRANGEID,
+        F::DMGDIEID,
 
-        Field::CATEGORYSLUG,
-        Field::CATEGORYNAME,
+        F::CATEGORYSLUG,
+        F::CATEGORYNAME,
 
-        Field::MASTERYNAME,
-        Field::MASTERYPOSTID,
+        F::MASTERYNAME,
+        F::MASTERYPOSTID,
 
-        Field::DICECOUNT,
-        Field::DICEFACES,
+        F::DICECOUNT,
+        F::DICEFACES,
 
-        Field::TYPDMGNAME,
+        F::TYPDMGNAME,
 
-        Field::RANGESLUG,
-        Field::RANGENAME,
+        F::RANGESLUG,
+        F::RANGENAME,
     ];
 
     public const SPECIFIC_FIELD_TYPES = [
-        Field::TYPEDMGID => FieldType::INT,
-        Field::MSTPROFID => FieldType::INT,
-        Field::WPNCATID => FieldType::INT,
-        Field::WPNRANGEID => FieldType::INT,
-        Field::DMGDIEID => FieldType::INT,
+        F::TYPEDMGID => FieldType::INT,
+        F::MSTPROFID => FieldType::INT,
+        F::WPNCATID => FieldType::INT,
+        F::WPNRANGEID => FieldType::INT,
+        F::DMGDIEID => FieldType::INT,
 
-        Field::CATEGORYSLUG => FieldType::STRING,
-        Field::CATEGORYNAME => FieldType::STRING,
+        F::CATEGORYSLUG => FieldType::STRING,
+        F::CATEGORYNAME => FieldType::STRING,
 
-        Field::MASTERYNAME => FieldType::STRING,
-        Field::MASTERYPOSTID => FieldType::INT,
+        F::MASTERYNAME => FieldType::STRING,
+        F::MASTERYPOSTID => FieldType::INT,
 
-        Field::DICECOUNT => FieldType::INT,
-        Field::DICEFACES => FieldType::INT,
+        F::DICECOUNT => FieldType::INT,
+        F::DICEFACES => FieldType::INT,
 
-        Field::TYPDMGNAME => FieldType::STRING,
+        F::TYPDMGNAME => FieldType::STRING,
 
-        Field::RANGESLUG => FieldType::STRING,
-        Field::RANGENAME => FieldType::STRING,
+        F::RANGESLUG => FieldType::STRING,
+        F::RANGENAME => FieldType::STRING,
     ];
 
     public const FIELDS = [
         ...self::COMMON_FIELDS,
         ...self::SPECIFIC_FIELDS,
         /*
-        Field::ID,
-        Field::NAME,
-        Field::WEIGHT,
-        Field::GOLDPRICE,
-        Field::TYPEDMGID,
-        Field::MSTPROFID,
-        Field::WPNCATID,
-        Field::WPNRANGEID,
-        Field::DMGDIEID,
+        F::ID,
+        F::NAME,
+        F::WEIGHT,
+        F::GOLDPRICE,
+        F::TYPEDMGID,
+        F::MSTPROFID,
+        F::WPNCATID,
+        F::WPNRANGEID,
+        F::DMGDIEID,
         */
     ];
     public const FIELD_TYPES = [
         ...self::COMMON_FIELD_TYPES,
         ...self::SPECIFIC_FIELD_TYPES,
         /*
-        Field::NAME =>       FieldType::STRING,
-        Field::WEIGHT =>     FieldType::FLOAT,
-        Field::GOLDPRICE =>  FieldType::FLOAT,
+        F::NAME =>       FieldType::STRING,
+        F::WEIGHT =>     FieldType::FLOAT,
+        F::GOLDPRICE =>  FieldType::FLOAT,
         */
     ];
 

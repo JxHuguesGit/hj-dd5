@@ -1,8 +1,9 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
@@ -23,35 +24,35 @@ class MonsterIdentityFormBuilder
         }
         $fieldset
             ->addField(new NumberField(
-                Field::ID,
+                F::ID,
                 'ID',
                 $monster->id,
                 true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
-                Field::FRNAME,
+                F::FRNAME,
                 'Nom français',
                 $monster->frName,
                 false,
                 [Constant::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextField(
-                Field::NAME,
+                F::NAME,
                 'Nom anglais',
                 $monster->name,
                 true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_3]
             ))
             ->addField(new TextField(
-                Field::UKTAG,
+                F::UKTAG,
                 'Slug',
                 $monster->ukTag,
                 true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_3]
             ))
             ->addField(new SelectField(
-                Field::REFID,
+                F::REFID,
                 L::REFERENCE,
                 $monster->ukTag,
                 $options,

@@ -1,21 +1,21 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 class MonsterSubType extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::MSTTYPEID,
-        Field::NAME,
+        F::ID,
+        F::MSTTYPEID,
+        F::NAME,
     ];
 
     public const FIELD_TYPES = [
-        Field::MSTTYPEID => FieldType::INTPOSITIVE,
-        Field::NAME => FieldType::STRING,
+        F::MSTTYPEID => FieldType::INTPOSITIVE,
+        F::NAME => FieldType::STRING,
     ];
 
     private const TRANSLATIONS = [

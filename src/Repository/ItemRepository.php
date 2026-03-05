@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Table;
 use src\Domain\Criteria\ItemCriteria;
 use src\Domain\Entity\Item;
@@ -11,7 +11,7 @@ use src\Query\QueryBuilder;
 class ItemRepository extends Repository implements ItemRepositoryInterface
 {
     public const TABLE = Table::ITEM;
-    
+
     public function getEntityClass(): string
     {
         return Item::class;
@@ -42,8 +42,8 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     public function findAllWithRelations(ItemCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT id, ".Field::NAME.", ".Field::SLUG.", ".Field::DESCRIPTION.",
-                ".Field::WEIGHT.", ".Field::GOLDPRICE.", ".Field::TYPE."
+            SELECT id, ".F::NAME.", ".F::SLUG.", ".F::DESCRIPTION.",
+                ".F::WEIGHT.", ".F::GOLDPRICE.", ".F::TYPE."
             FROM " . Table::ITEM . " ";
 
         $queryBuilder = new QueryBuilder();

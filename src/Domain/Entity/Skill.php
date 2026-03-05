@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Utils;
@@ -15,19 +15,19 @@ use src\Utils\Utils;
 final class Skill extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::SLUG,
-        Field::ABILITYID,
-        Field::DESCRIPTION,
+        F::ID,
+        F::NAME,
+        F::SLUG,
+        F::ABILITYID,
+        F::DESCRIPTION,
     ];
     public const FIELD_TYPES = [
-        Field::NAME => FieldType::STRING,
-        Field::SLUG => FieldType::STRING,
-        Field::ABILITYID => FieldType::INTPOSITIVE,
-        Field::DESCRIPTION => FieldType::STRING,
+        F::NAME => FieldType::STRING,
+        F::SLUG => FieldType::STRING,
+        F::ABILITYID => FieldType::INTPOSITIVE,
+        F::DESCRIPTION => FieldType::STRING,
     ];
-    
+
     public function stringify(): string
     {
         return $this->name;

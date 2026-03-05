@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Monster;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Entity\MonsterSubType as EntityMonsterSubType;
 
 
@@ -14,7 +14,7 @@ final class MonsterSubType
     public function getEntity(): EntityMonsterSubType
     {
         return new EntityMonsterSubType([
-            Field::NAME => $this->monster->getField(Field::SSTYPMSTNAME) ?? ''
+            F::NAME => $this->monster->getField(F::SSTYPMSTNAME) ?? ''
         ]);
     }
 

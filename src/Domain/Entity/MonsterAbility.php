@@ -1,29 +1,29 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 class MonsterAbility extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::TYPEID,
-        Field::MONSTERID,
-        Field::POWERID,
-        Field::NAME,
-        Field::DESCRIPTION,
-        Field::RANK,
+        F::ID,
+        F::TYPEID,
+        F::MONSTERID,
+        F::POWERID,
+        F::NAME,
+        F::DESCRIPTION,
+        F::RANK,
     ];
 
     public const FIELD_TYPES = [
-        Field::TYPEID      => FieldType::STRING,
-        Field::MONSTERID   => FieldType::INTPOSITIVE,
-        Field::POWERID     => FieldType::INTPOSITIVE,
-        Field::NAME        => FieldType::STRING,
-        Field::DESCRIPTION => FieldType::STRING,
-        Field::RANK        => FieldType::INTPOSITIVE,
+        F::TYPEID      => FieldType::STRING,
+        F::MONSTERID   => FieldType::INTPOSITIVE,
+        F::POWERID     => FieldType::INTPOSITIVE,
+        F::NAME        => FieldType::STRING,
+        F::DESCRIPTION => FieldType::STRING,
+        F::RANK        => FieldType::INTPOSITIVE,
     ];
 
     public function stringify(): string

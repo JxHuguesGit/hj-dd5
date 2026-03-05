@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Character\Character;
 use src\Domain\Criteria\CharacterCriteria;
 use src\Repository\CharacterRepositoryInterface;
@@ -29,7 +29,7 @@ final class CharacterReader
     {
         $criteria           = new CharacterCriteria();
         $criteria->wpUserId = $wpUserId;
-        $criteria->orderBy  = [Field::NAME => Constant::CST_ASC];
+        $criteria->orderBy  = [F::NAME => Constant::CST_ASC];
         return $this->repo->findAllWithCriteria($criteria);
     }
 
@@ -40,7 +40,7 @@ final class CharacterReader
     {
         if (! $criteria) {
             $criteria          = new CharacterCriteria();
-            $criteria->orderBy = [Field::NAME => Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME => Constant::CST_ASC];
         }
         return $this->repo->findAllWithCriteria($criteria);
     }

@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Table;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
 use src\Domain\Entity\WeaponPropertyValue;
@@ -32,15 +32,15 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
     public function findAllWithRelations(WeaponPropertyValueCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT " . Field::MINRANGE . ", " . Field::MAXRANGE . "
-                , wp." . Field::NAME . " AS " . Field::PROPERTYNAME . ", wp." . Field::SLUG . " AS " . Field::PROPERTYSLUG . "
-                , " . Field::POSTID . "
-                , ta." . Field::NAME . " AS " . Field::AMMONAME . "
-                , " . Field::DICECOUNT . ", " . Field::DICEFACES . "
+            SELECT " . F::MINRANGE . ", " . F::MAXRANGE . "
+                , wp." . F::NAME . " AS " . F::PROPERTYNAME . ", wp." . F::SLUG . " AS " . F::PROPERTYSLUG . "
+                , " . F::POSTID . "
+                , ta." . F::NAME . " AS " . F::AMMONAME . "
+                , " . F::DICECOUNT . ", " . F::DICEFACES . "
             FROM " . Table::WPNPROPVALUE . " wpv
-            INNER JOIN " . Table::WPNPROPERTY . " wp ON wp.id = wpv." . Field::WPNPROPID . "
-            LEFT JOIN " . Table::TYPEAMMO . " ta ON ta.id = wpv." . Field::TYPEAMMID . "
-            LEFT JOIN " . Table::DMGDIE . " dd ON dd.id = wpv." . Field::DMGDIEID . "
+            INNER JOIN " . Table::WPNPROPERTY . " wp ON wp.id = wpv." . F::WPNPROPID . "
+            LEFT JOIN " . Table::TYPEAMMO . " ta ON ta.id = wpv." . F::TYPEAMMID . "
+            LEFT JOIN " . Table::DMGDIE . " dd ON dd.id = wpv." . F::DMGDIEID . "
         ";
 
         $queryBuilder = new QueryBuilder();

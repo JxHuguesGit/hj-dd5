@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class FeatCriteria extends BaseCriteria
@@ -14,23 +14,23 @@ final class FeatCriteria extends BaseCriteria
     public ?string $nameGt  = null;
 
     public array $orderBy   = [
-        Field::NAME         => Constant::CST_ASC,
+        F::NAME         => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         if ($this->featTypeId!=null) {
-            $filters[Field::FEATTYPEID] = $this->featTypeId;
+            $filters[F::FEATTYPEID] = $this->featTypeId;
         }
         if ($this->slug!=null) {
-            $filters[Field::SLUG] = $this->slug;
+            $filters[F::SLUG] = $this->slug;
         }
         if ($this->name!=null) {
-            $filters[Field::NAME] = $this->name;
+            $filters[F::NAME] = $this->name;
         }
         $this->applyEquals($queryBuilder, $filters);
-        $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
-        $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
+        $this->applyLt($queryBuilder, F::NAME, $this->nameLt);
+        $this->applyGt($queryBuilder, F::NAME, $this->nameGt);
     }
 }

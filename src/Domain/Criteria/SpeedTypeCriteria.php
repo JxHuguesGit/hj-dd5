@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class SpeedTypeCriteria extends BaseCriteria
@@ -11,14 +11,14 @@ final class SpeedTypeCriteria extends BaseCriteria
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        Field::NAME => Constant::CST_ASC
+        F::NAME => Constant::CST_ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         $this->applyEquals($queryBuilder, $filters);
-        $this->applyLt($queryBuilder, Field::NAME, $this->nameLt);
-        $this->applyGt($queryBuilder, Field::NAME, $this->nameGt);
+        $this->applyLt($queryBuilder, F::NAME, $this->nameLt);
+        $this->applyGt($queryBuilder, F::NAME, $this->nameGt);
     }
 }

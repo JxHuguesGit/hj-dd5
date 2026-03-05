@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\VisionTypeCriteria;
 use src\Domain\Entity\VisionType;
 use src\Repository\VisionTypeRepositoryInterface;
@@ -29,7 +29,7 @@ final class VisionTypeReader
     {
         if (! $criteria) {
             $criteria          = new VisionTypeCriteria();
-            $criteria->orderBy = [Field::ID => Constant::CST_ASC];
+            $criteria->orderBy = [F::ID => Constant::CST_ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

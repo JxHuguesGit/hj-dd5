@@ -81,7 +81,7 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
         $view = null;
 
         if (! $item) {
-            $this->toastContent = $this->toastBuilder->error(L::LG_UNKNOWN_ENTRY);
+            $this->toastContent = $this->toastBuilder->error(L::UNKNOWN_ENTRY);
             $view               = $this->renderList($slug);
         } else {
             $changedFields = [];
@@ -97,16 +97,16 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
             if (! empty($changedFields)) {
                 $errors = ItemValidator::validate($item);
                 if (! empty($errors)) {
-                    $this->toastContent = $this->toastBuilder->error(sprintf(L::LG_FORM_ERROR, implode(', ', $errors)));
+                    $this->toastContent = $this->toastBuilder->error(sprintf(L::FORM_ERROR, implode(', ', $errors)));
                     $view               = $this->renderEdit($slug);
                 } else {
                     // On sauvegarde le changement
                     $this->itemWriter->updatePartial($item, $changedFields);
-                    $this->toastContent = $this->toastBuilder->success(sprintf(L::LG_SUCCESS_EDIT_ENTRY, $item->name));
+                    $this->toastContent = $this->toastBuilder->success(sprintf(L::SUCCESS_EDIT_ENTRY, $item->name));
                     $view               = $this->renderList();
                 }
             } else {
-                $this->toastContent = $this->toastBuilder->info(L::LG_NO_MODIFICATION_ENTRY);
+                $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
                 $view               = $this->renderEdit($slug);
             }
         }
@@ -153,9 +153,9 @@ final class GearCompendiumHandler implements CompendiumHandlerInterface
     {
         $item = $this->itemReader->itemBySlug($slug, null);
         if (! $item) {
-            $this->toastContent = $this->toastBuilder->error(L::LG_UNKNOWN_ENTRY);
+            $this->toastContent = $this->toastBuilder->error(L::UNKNOWN_ENTRY);
         } else {
-            $this->toastContent = $this->toastBuilder->success(sprintf(L::LG_SUCCESS_DEL_ENTRY, $item->name));
+            $this->toastContent = $this->toastBuilder->success(sprintf(L::SUCCESS_DEL_ENTRY, $item->name));
             // TODO : Supprimer l'objet dans les table de jointures
             $this->itemWriter->delete($item);
         }

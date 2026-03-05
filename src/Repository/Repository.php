@@ -3,7 +3,7 @@ namespace src\Repository;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\CriteriaInterface;
 use src\Domain\Entity as DomainEntity;
 use src\Query\QueryBuilder;
@@ -55,7 +55,7 @@ class Repository
     {
         $this->query = $this->queryBuilder->reset()
             ->select($this->fields, $this->table)
-            ->where([Field::ID => $id])
+            ->where([F::ID => $id])
             ->getQuery();
         return $this->queryExecutor->fetchOne(
             $this->query,
@@ -64,7 +64,7 @@ class Repository
         );
     }
 
-    public function findAll(array $orderBy = [Field::ID => Constant::CST_ASC]): Collection
+    public function findAll(array $orderBy = [F::ID => Constant::CST_ASC]): Collection
     {
         return $this->findBy([], $orderBy, -1);
     }
@@ -108,7 +108,7 @@ class Repository
     {
         $values = [];
         foreach ($this->fields as $field) {
-            if ($skipId && $field === Field::ID) {
+            if ($skipId && $field === F::ID) {
                 continue;
             }
             $values[] = $entity->$field;

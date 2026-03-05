@@ -2,7 +2,7 @@
 namespace src\Factory;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Entity\Spell;
 
 class SpellFactory
@@ -17,9 +17,9 @@ class SpellFactory
             'tempsIncantation'        => get_field('temps_dincantation', $post->ID),
             'portee'                  => get_field('portee', $post->ID),
             'duree'                   => get_field('duree', $post->ID),
-            Field::NIVEAU             => get_field(Field::NIVEAU, $post->ID),
-            Field::SCHOOL             => get_field(Field::SCHOOL, $post->ID),
-            Field::CLASSES            => get_field(Field::CLASSES, $post->ID),
+            F::NIVEAU             => get_field(F::NIVEAU, $post->ID),
+            F::SCHOOL             => get_field(F::SCHOOL, $post->ID),
+            F::CLASSES            => get_field(F::CLASSES, $post->ID),
             'composantes'             => get_field('composantes', $post->ID),
             'composanteMaterielle'    => get_field('composante_materielle', $post->ID),
             'concentration'           => !empty(get_field('concentration', $post->ID)),

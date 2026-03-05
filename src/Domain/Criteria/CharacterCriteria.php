@@ -2,7 +2,7 @@
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class CharacterCriteria extends BaseCriteria
@@ -11,17 +11,17 @@ final class CharacterCriteria extends BaseCriteria
     public ?int $wpUserId = null;
 
     public array $orderBy = [
-        Field::NAME => Constant::CST_ASC,
+        F::NAME => Constant::CST_ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
     {
         $filters = [];
         if ($this->wpUserId != null) {
-            $filters[Field::WPUSERID] = $this->wpUserId;
+            $filters[F::WPUSERID] = $this->wpUserId;
         }
         if ($this->name != null) {
-            $filters[Field::NAME] = $this->name;
+            $filters[F::NAME] = $this->name;
         }
         $this->applyEquals($queryBuilder, $filters);
     }

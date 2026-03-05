@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\WeaponCriteria;
 use src\Domain\Entity\Weapon;
 use src\Repository\WeaponRepositoryInterface;
@@ -41,7 +41,7 @@ final class WeaponReader
                     ? $criteria->nameLt = $weapon->name
                     : $criteria->nameGt = $weapon->name
                 ;
-                $criteria->orderBy = ['i.'.Field::NAME => $order];
+                $criteria->orderBy = ['i.'.F::NAME => $order];
                 return $this->weaponRepository->findAllWithRelations($criteria);
             }
         );

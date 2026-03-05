@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Monster;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Entity\Alignement;
 
 final class MonsterAlignment
@@ -12,7 +12,7 @@ final class MonsterAlignment
 
     public function getId(): int
     {
-        return $this->monster->getField(Field::ALGNID);
+        return $this->monster->getField(F::ALGNID);
     }
 
     public function getEntity(): ?Alignement
@@ -21,7 +21,7 @@ final class MonsterAlignment
         if ($id === 0) {
             return null;
         }
-        return new Alignement([Field::ID => $id]);
+        return new Alignement([F::ID => $id]);
     }
 
     public function getName(): string

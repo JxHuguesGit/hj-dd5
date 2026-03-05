@@ -1,18 +1,18 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
 class Alignement extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
+        F::ID,
+        F::NAME,
     ];
     public const FIELD_TYPES = [
-        Field::NAME => FieldType::STRING,
+        F::NAME => FieldType::STRING,
     ];
 
     protected const ALIGNEMENT_MAP = [

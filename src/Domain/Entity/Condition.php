@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 
@@ -12,13 +12,13 @@ use src\Domain\Entity;
 final class Condition extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::NAME,
-        Field::DESCRIPTION,
+        F::ID,
+        F::NAME,
+        F::DESCRIPTION,
     ];
     public const FIELD_TYPES = [
-        Field::NAME        => FieldType::STRING,
-        Field::DESCRIPTION => FieldType::STRING,
+        F::NAME        => FieldType::STRING,
+        F::DESCRIPTION => FieldType::STRING,
     ];
 
     public function stringify(): string

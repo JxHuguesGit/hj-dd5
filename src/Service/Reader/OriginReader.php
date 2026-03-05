@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\OriginCriteria;
 use src\Domain\Entity\Feat;
 use src\Domain\Entity\Origin;
@@ -62,7 +62,7 @@ final class OriginReader
     {
         if (!$criteria) {
             $criteria = new OriginCriteria();
-            $criteria->orderBy = [Field::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME=>Constant::CST_ASC];
         }
         return $this->originRepository->findAllWithCriteria($criteria);
     }
@@ -76,7 +76,7 @@ final class OriginReader
                     ? $criteria->nameLt = $origin->name
                     : $criteria->nameGt = $origin->name
                 ;
-                $criteria->orderBy = [Field::NAME => $order];
+                $criteria->orderBy = [F::NAME => $order];
                 return $this->originRepository->findAllWithCriteria($criteria);
             }
         );

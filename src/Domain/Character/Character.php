@@ -2,7 +2,7 @@
 namespace src\Domain\Character;
 
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
 use src\Utils\Session;
@@ -10,24 +10,24 @@ use src\Utils\Session;
 final class Character extends Entity
 {
     public const FIELDS = [
-        Field::ID,
-        Field::WPUSERID,
-        Field::NAME,
-        Field::ORIGINID,
-        Field::SPECIESID,
-        Field::CREATESTEP,
-        Field::DONNEES,
-        Field::LASTUPDATE,
+        F::ID,
+        F::WPUSERID,
+        F::NAME,
+        F::ORIGINID,
+        F::SPECIESID,
+        F::CREATESTEP,
+        F::DONNEES,
+        F::LASTUPDATE,
     ];
 
     public const FIELD_TYPES = [
-        Field::WPUSERID   => FieldType::INT,
-        Field::NAME       => FieldType::STRINGNULLABLE,
-        Field::ORIGINID   => FieldType::INTNULLABLE,
-        Field::SPECIESID  => FieldType::INTNULLABLE,
-        Field::CREATESTEP => FieldType::STRING,
-        Field::DONNEES    => FieldType::JSONNULLABLE,
-        Field::LASTUPDATE => FieldType::DATETIME,
+        F::WPUSERID   => FieldType::INT,
+        F::NAME       => FieldType::STRINGNULLABLE,
+        F::ORIGINID   => FieldType::INTNULLABLE,
+        F::SPECIESID  => FieldType::INTNULLABLE,
+        F::CREATESTEP => FieldType::STRING,
+        F::DONNEES    => FieldType::JSONNULLABLE,
+        F::LASTUPDATE => FieldType::DATETIME,
     ];
 
     public function initialize(array $input = []): self

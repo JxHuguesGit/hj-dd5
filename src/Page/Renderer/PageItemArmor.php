@@ -1,7 +1,7 @@
 <?php
 namespace src\Page\Renderer;
 
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Constant\Template;
 use src\Utils\UrlGenerator;
 
@@ -20,12 +20,12 @@ class PageItemArmor extends PageDetail
             Template::ARMOR_CARD,
             [
                 $title,
-                $viewData[Field::ARMORTYPID],
-                $viewData[Field::ARMORCLASS],
-                $viewData[Field::STRPENALTY],
-                $viewData[Field::STHDISADV],
-                $viewData[Field::WEIGHT],
-                $viewData[Field::GOLDPRICE],
+                $viewData[F::ARMORTYPID],
+                $viewData[F::ARMORCLASS],
+                $viewData[F::STRPENALTY],
+                $viewData[F::STHDISADV],
+                $viewData[F::WEIGHT],
+                $viewData[F::GOLDPRICE],
             ]
         );
     }

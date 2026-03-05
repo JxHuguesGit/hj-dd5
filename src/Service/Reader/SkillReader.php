@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Domain\Criteria\SkillCriteria;
 use src\Domain\Entity\Skill;
 use src\Repository\SkillRepositoryInterface;
@@ -40,7 +40,7 @@ final class SkillReader
     {
         if (!$criteria) {
             $criteria = new SkillCriteria();
-            $criteria->orderBy = [Field::ABILITYID=>Constant::CST_ASC, Field::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::ABILITYID=>Constant::CST_ASC, F::NAME=>Constant::CST_ASC];
         }
         return $this->skillRepository->findAllWithCriteria($criteria);
     }
@@ -55,7 +55,7 @@ final class SkillReader
                     ? $criteria->nameLt = $skill->name
                     : $criteria->nameGt = $skill->name
                 ;
-                $criteria->orderBy = [Field::NAME => $order];
+                $criteria->orderBy = [F::NAME => $order];
                 return $this->skillRepository->findAllWithCriteria($criteria);
             }
         );
