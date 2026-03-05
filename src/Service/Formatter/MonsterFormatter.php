@@ -122,7 +122,6 @@ class MonsterFormatter
             'car' . (3 + 3 * $mentalStats), $mod,
             'car' . (3 + 3 * $mentalStats), $modWithBonus
         );
-        //return sprintf("%d (%+d / %+d)", $score, $mod, $modWithBonus);
     }
 
     public function formatSkills(Collection $monsterSkills): string

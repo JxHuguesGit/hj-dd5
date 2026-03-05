@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller\Compendium;
 
+use src\Collection\Collection;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Criteria\AbilityCriteria;
@@ -47,34 +48,10 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
             return $this->renderList($slug);
         }
-        $hasAbilityLinked = false;
-
+        $selectedAbilities = [];
+        $currentAbilities = new Collection();
         if (Session::fromPost(F::FEATTYPEID) == 2) {
-            $selectedAbilities = [];
-            foreach (AbilityEnum::cases() as $ability) {
-                $val = Session::fromPost($ability->value);
-                if ($val) {
-                    $case                = AbilityEnum::tryFrom($ability->value);
-                    $selectedAbilities[] = $case;
-                }
-
-            }
-            if (empty($selectedAbilities)) {
-                $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
-                return $this->renderEdit($slug);
-            }
-
-            $currentAbilities = $this->featAbilityReader->featAbilitiesByFeatId($feat->id);
-            $currentValues    = [];
-            foreach ($currentAbilities as $fa) {
-                $ability = $this->abilityReader->abilityById($fa->abilityId);
-                $enum    = AbilityEnum::fromLabel($ability->name);
-                if ($enum) {
-                    $currentValues[] = $enum->value;
-                }
-            }
-            $newValues        = array_map(fn($a) => $a->value, $selectedAbilities);
-            $hasAbilityLinked = $currentValues !== $newValues;
+            $hasAbilityLinked = $this->handleFeatAbilities($selectedAbilities, $currentAbilities, $feat->id);
         }
 
         $changedFields = [];
@@ -86,8 +63,12 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             }
         }
 
-        if (empty($changedFields) && ! $hasAbilityLinked) {
-            $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
+        if (! $hasAbilityLinked) {
+            if (Session::fromPost(F::FEATTYPEID) == 2 && $currentAbilities->isEmpty()) {
+                $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
+            } elseif (empty($changedFields)) {
+                $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
+            }
             return $this->renderEdit($slug);
         }
 
@@ -110,6 +91,37 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
         $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
         return $this->renderList($slug);
+    }
+
+    private function handleFeatAbilities(
+        array &$selectedAbilities,
+        Collection &$currentAbilities,
+        int $featId
+    )
+    {
+        foreach (AbilityEnum::cases() as $ability) {
+            $val = Session::fromPost($ability->value);
+            if ($val) {
+                $case                = AbilityEnum::tryFrom($ability->value);
+                $selectedAbilities[] = $case;
+            }
+
+        }
+        if (empty($selectedAbilities)) {
+            return false;
+        }
+
+        $currentAbilities = $this->featAbilityReader->featAbilitiesByFeatId($featId);
+        $currentValues    = [];
+        foreach ($currentAbilities as $fa) {
+            $ability = $this->abilityReader->abilityById($fa->abilityId);
+            $enum    = AbilityEnum::fromLabel($ability->name);
+            if ($enum) {
+                $currentValues[] = $enum->value;
+            }
+        }
+        $newValues        = array_map(fn($a) => $a->value, $selectedAbilities);
+        return $currentValues !== $newValues;
     }
 
     protected function renderEdit(string $slug): string

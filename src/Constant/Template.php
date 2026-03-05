@@ -23,7 +23,7 @@ final class Template
     public const ADMINBASE           = self::ADMIN_PATH.'adminBase.tpl';
     public const ADMINSIDEBAR        = self::ADMIN_PATH.'adminSidebar.tpl';
     public const ADMINSIDEBARITEM    = self::ADMIN_PATH.'adminSidebarItem.tpl';
-    
+
     public const ADMINCHARACTER      = self::ADMIN_PATH.'adminCharacter.tpl';
     public const ADMINQUICKINFO      = self::ADMIN_PATH.'adminCharacterQuickInfo.tpl';
     public const ADMINCHARABILITY    = self::ADMIN_PATH.'adminCharacterAbility.tpl';
@@ -38,7 +38,7 @@ final class Template
     public const ADMINCHARSUBSECSKL  = self::ADMIN_PATH.'adminCharacterSubsectionSkill.tpl';
     public const ADMINCHARSUBSECPSV  = self::ADMIN_PATH.'adminCharacterSubsectionPassive.tpl';
     public const ADMINCHARSUBSECMLG  = self::ADMIN_PATH.'adminCharacterSubsectionMaterielLangue.tpl';
-    
+
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
@@ -62,7 +62,7 @@ final class Template
     public const CASTE_DETAIL_FIG    = self::CASTE_PATH.'casteDetailFIG.tpl';
     public const CASTE_DETAIL_ROG    = self::CASTE_PATH.'casteDetailROG.tpl';
     public const CASTE_DETAIL_WIZ    = self::CASTE_PATH.'casteDetailWIZ.tpl';
-    
+
     public const FORM_PATH           = self::TEMPLATE_PATH.'form/';
     public const FORM_CARD           = self::FORM_PATH.'formCard.tpl';
     public const FILTER_MONSTER      = self::FORM_PATH.'monsterFilter.tpl';
@@ -86,7 +86,7 @@ final class Template
     public const UTILITIES_PATH      = self::TEMPLATE_PATH.'utilities/';
     public const CASTE_SELECT_BTN    = self::UTILITIES_PATH.'casteSelectionButton.tpl';
     public const HERO_SELECTION_LINE = self::UTILITIES_PATH.'heroSelectionLine.tpl';
-    
+
     public const CREATE_PATH         = self::TEMPLATE_PATH.'creation/';
     public const CREATE_CLASSE       = self::CREATE_PATH.'step-classe.tpl';
     public const CREATE_NAME         = self::CREATE_PATH.'step-name.tpl';
@@ -100,5 +100,6 @@ final class Template
     public const MAIN_MODAL          = self::MODAL_PATH.'modal.tpl';
     public const MAIN_TOAST          = self::MODAL_PATH.'toast.tpl';
     public const SPELL_FILTER_MODAL  = self::MODAL_PATH.'spellFilter.tpl';
+    public const MONSTER_FILTER_MODAL = self::MODAL_PATH.'monsterFilter.tpl';
 
 }

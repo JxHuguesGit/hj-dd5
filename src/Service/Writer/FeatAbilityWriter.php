@@ -20,12 +20,12 @@ class FeatAbilityWriter
 
     public function insert(FeatAbility $featAbility): void
     {
-        //$this->repository->beginTransaction();
+        $this->repository->beginTransaction();
         try {
             $this->repository->insert($featAbility);
-            //$this->repository->commit();
+            $this->repository->commit();
         } catch (\Throwable $e) {
-            //$this->repository->rollBack();
+            $this->repository->rollBack();
             throw $e;
         }
     }

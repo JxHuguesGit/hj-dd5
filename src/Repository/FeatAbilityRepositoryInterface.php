@@ -7,6 +7,13 @@ use src\Domain\Entity\FeatAbility;
 
 interface FeatAbilityRepositoryInterface
 {
+    public function beginTransaction(): void;
+    public function commit(): void;
+    public function rollBack(): void;
+
+    public function insert(FeatAbility $featAbility): void;
+    public function delete(FeatAbility $featAbility): void;
+
     /**
      * @return Collection<FeatAbility>
      */

@@ -128,7 +128,7 @@ class Repository
 
         $values   = $this->getEntityValues($entity, true);
         $insertId = $this->queryExecutor->insert($this->query, $values);
-        //$entity->assignId($insertId);
+        // TODO : Vérifier si je peux remettre ce code : $entity->assignId($insertId);
     }
 
     public function update(DomainEntity $entity): void

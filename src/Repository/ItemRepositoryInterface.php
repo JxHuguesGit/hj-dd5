@@ -11,6 +11,11 @@ interface ItemRepositoryInterface
     public function commit(): void;
     public function rollBack(): void;
 
+
+    public function insert(Item $item): void;
+    public function delete(Item $item): void;
+    public function updatePartial(Item $item, array $changedFields): void;
+
     /**
      * @return ?Item
      */
