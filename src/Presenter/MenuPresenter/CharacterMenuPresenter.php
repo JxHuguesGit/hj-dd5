@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\MenuPresenter;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Constant\Icon;
 use src\Constant\Template;
@@ -45,11 +46,11 @@ class CharacterMenuPresenter
         }
 
         // UL contenant les enfants
-        $ul = Html::getBalise('ul', $childrenHtml, ['class' => 'nav nav-treeview']);
+        $ul = Html::getBalise('ul', $childrenHtml, [Constant::CST_CLASS => 'nav nav-treeview']);
 
         // ----- 3) Item parent -----
         $attributes = [
-            $isActiveTab ? 'menu-open' : '',
+            $isActiveTab ? Bootstrap::CSS_MENU_OPEN : '',
             '#',
             $isActiveTab ? Constant::CST_ACTIVE : '',
             'users',

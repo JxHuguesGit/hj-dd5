@@ -84,13 +84,13 @@ class SpellFormatter
             $returned = intval($value) . ' jour' . (intval($value) > 1 ? 's' : '');
         } else {
             $returned = match ($value) {
-                'diss'               => "Jusqu'à dissipation",
-                'inst'               => 'Instantanée',
-                'spec'               => 'Spéciale',
-                'bonus'              => 'Action Bonus',
-                Constant::CST_ACTION => 'Action',
-                'reaction'           => 'Réaction',
-                default              => $value,
+                'diss'                  => "Jusqu'à dissipation",
+                'inst'                  => 'Instantanée',
+                Constant::CST_SPECIALES => 'Spéciale',
+                'bonus'                 => 'Action Bonus',
+                Constant::CST_ACTION    => 'Action',
+                'reaction'              => 'Réaction',
+                default                 => $value,
             };
         }
         return $returned;

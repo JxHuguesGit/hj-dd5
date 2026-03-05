@@ -5,6 +5,7 @@ use src\Action\Ajax\LoadCreationStepSide;
 use src\Action\Ajax\LoadMoreMonstersAction;
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\ModalMonsterCard;
+use src\Constant\Constant;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
@@ -12,9 +13,9 @@ use src\Renderer\TemplateRenderer;
 class AjaxRouter
 {
     private array $actions = [
-        'loadMoreSpells' => LoadMoreSpellsAction::class,
-        'loadMoreMonsters' => LoadMoreMonstersAction::class,
-        'modalMonsterCard' => ModalMonsterCard::class,
+        'loadMoreSpells'       => LoadMoreSpellsAction::class,
+        'loadMoreMonsters'     => LoadMoreMonstersAction::class,
+        'modalMonsterCard'     => ModalMonsterCard::class,
         'loadCreationStepSide' => LoadCreationStepSide::class,
     ];
 
@@ -26,21 +27,21 @@ class AjaxRouter
 
     public function dispatch(string $ajaxAction): array
     {
-        if (!isset($this->actions[$ajaxAction])) {
+        if (! isset($this->actions[$ajaxAction])) {
             return [
-                'status' => 'error',
-                'action' => $ajaxAction,
-                'message' => 'Unknown action'
+                'status'             => 'error',
+                Constant::CST_ACTION => $ajaxAction,
+                'message'            => 'Unknown action',
             ];
         }
 
         $className = $this->actions[$ajaxAction];
-        $action = new $className($this->readerFactory, $this->serviceFactory, $this->renderer);
+        $action    = new $className($this->readerFactory, $this->serviceFactory, $this->renderer);
 
         return [
-            'status' => 'success',
-            'action' => $ajaxAction,
-            'data' => $action->execute()
+            'status'             => 'success',
+            Constant::CST_ACTION => $ajaxAction,
+            Constant::CST_DATA   => $action->execute(),
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Utils\Html;
 
@@ -9,13 +10,13 @@ class CheckboxField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            'type'  => 'checkbox',
-            'id'    => $this->getId(),
-            'name'  => $this->name,
-            'value' => $this->value,
+            Constant::CST_TYPE  => 'checkbox',
+            Constant::CST_ID    => $this->getId(),
+            Constant::CST_NAME  => $this->name,
+            Constant::CST_VALUE => $this->value,
         ];
-        if ($this->params['checked']) {
-            $attrs['checked'] = 'checked';
+        if ($this->params[Constant::CST_CHECKED]) {
+            $attrs[Constant::CST_CHECKED] = Constant::CST_CHECKED;
         }
 
         return Html::getBalise('input', '', $attrs);
@@ -25,7 +26,7 @@ class CheckboxField extends FormField
     {
         $strBalise = $this->renderInput();
         $strLabel  = Html::getBalise(
-            'label',
+            Constant::CST_LABEL,
             htmlspecialchars($this->label),
             [Constant::CST_CLASS => 'w-100 py-0', 'for' => $this->getId()]
         );
@@ -35,7 +36,7 @@ class CheckboxField extends FormField
             [
                 Constant::CST_CLASS => 'checkbox checkbox-sm ajaxAction w-100',
                 Constant::CST_DATA  => [
-                    Constant::CST_TRIGGER => 'click',
+                    Constant::CST_TRIGGER => Constant::CST_CLICK,
                     Constant::CST_ACTION  => 'toggleCheckbox',
                     Constant::CST_TARGET  => $this->getId(),
                 ],
@@ -43,7 +44,7 @@ class CheckboxField extends FormField
         );
         return Html::getDiv(
             $innerDiv,
-            [Constant::CST_CLASS => ($this->params['outerDivClass'] ?? 'col-12')]
+            [Constant::CST_CLASS => ($this->params[Constant::OUTERDIVCLASS] ?? Bootstrap::CSS_COL_12)]
         );
     }
 }

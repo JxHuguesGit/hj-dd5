@@ -19,13 +19,13 @@ class CheckboxGroupField extends FormField
     {
         $content = '';
 
-        $params = ['outerDivClass' => 'form-check d-flex align-items-center gap-2'];
+        $params = [Constant::OUTERDIVCLASS => 'form-check d-flex align-items-center gap-2'];
         $i      = 0;
         foreach ($this->choices as $choice) {
             if ($choice->checked) {
-                $params['checked'] = 'checked';
+                $params[Constant::CST_CHECKED] = Constant::CST_CHECKED;
             } else {
-                unset($params['checked']);
+                unset($params[Constant::CST_CHECKED]);
             }
             $checkboxField  = new CheckboxField($choice->slug->value, $choice->label, $choice->id, false, $params);
             $content       .= Html::getDiv(

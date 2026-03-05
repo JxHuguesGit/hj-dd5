@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
+use src\Constant\Constant;
 use src\Utils\Html;
 
 class TextareaField extends FormField
@@ -8,10 +9,10 @@ class TextareaField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            'id'   => $this->getId(),
-            'name' => $this->name,
-            'class' => 'form-control',
-            'style' => $this->params['style'],
+            Constant::CST_ID    => $this->getId(),
+            Constant::CST_NAME  => $this->name,
+            Constant::CST_CLASS => 'form-control',
+            'style'             => $this->params['style'],
         ];
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';

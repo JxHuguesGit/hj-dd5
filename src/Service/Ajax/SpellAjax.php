@@ -1,6 +1,7 @@
 <?php
 namespace src\Service\Ajax;
 
+use src\Constant\Constant;
 use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;
@@ -12,16 +13,16 @@ class SpellAjax
 {
     public static function loadMoreSpells(): array
     {
-        $spellService = new SpellService(new WpPostService());
+        $spellService        = new SpellService(new WpPostService());
         $spellListePresenter = new SpellListPresenter();
-        $spellTableBuilder = new SpellTableBuilder();
+        $spellTableBuilder   = new SpellTableBuilder();
 
         parse_str(html_entity_decode(Session::fromPost('spellFilter')), $fromPost);
 
         $criteria = SpellCriteria::fromRequest([
-            'page' => Session::fromPost('page', 1),
-            'type' => Session::fromPost('type'),
-            ...$fromPost
+            'page'             => Session::fromPost('page', 1),
+            Constant::CST_TYPE => Session::fromPost(Constant::CST_TYPE),
+            ...$fromPost,
         ]);
 
         $result   = $spellService->allSpells($criteria->toWpQueryArgs());
@@ -29,8 +30,8 @@ class SpellAjax
         $objTable = $spellTableBuilder->build($viewData);
 
         return [
-            'html' => $objTable->display(),
-            'hasMore' => $result->hasMore()
+            'html'    => $objTable->display(),
+            'hasMore' => $result->hasMore(),
         ];
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
+use src\Constant\Bootstrap;
 use src\Constant\Constant;
 use src\Utils\Html;
 
@@ -14,20 +15,21 @@ abstract class FormField
         protected array $params = [],
     ) {}
 
-    public function getId(): string { return 'id_'.$this->name; }
+    public function getId(): string
+    {return 'id_' . $this->name;}
 
     public function display(): string
     {
         $strBalise = $this->renderInput();
-        $strLabel = Html::getBalise(
-            'label',
+        $strLabel  = Html::getBalise(
+            Constant::CST_LABEL,
             htmlspecialchars($this->label),
             ['for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise.$strLabel, [Constant::CST_CLASS=>'form-floating']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CST_CLASS => 'form-floating']);
         return Html::getDiv(
             $innerDiv,
-            [Constant::CST_CLASS => $this->params['outerDivClass'] ?? 'col-12']
+            [Constant::CST_CLASS => $this->params[Constant::OUTERDIVCLASS] ?? Bootstrap::CSS_COL_12]
         );
     }
 }

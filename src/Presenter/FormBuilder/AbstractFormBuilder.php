@@ -27,16 +27,16 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
 
         $form->addCancel($params['cancelUrl']);
         // Boutons par défaut selon le type
-        switch ($params['type'] ?? 'new') {
-            case 'edit':
-                $form->addButton('Modifier', 'submit', ['class' => 'btn btn-sm btn-primary']);
+        switch ($params[Constant::CST_TYPE] ?? Constant::NEW ) {
+            case Constant::EDIT:
+                $form->addButton('Modifier', 'submit', [Constant::CST_CLASS => 'btn btn-sm btn-primary']);
                 break;
-            case 'delete':
-                $form->addButton('Supprimer', 'submit', ['class' => 'btn btn-sm btn-danger']);
+            case Constant::DELETE:
+                $form->addButton('Supprimer', 'submit', [Constant::CST_CLASS => 'btn btn-sm btn-danger']);
                 break;
-            case 'new':
+            case Constant::NEW :
             default:
-                $form->addButton('Créer', 'submit', ['class' => 'btn btn-sm btn-success']);
+                $form->addButton('Créer', 'submit', [Constant::CST_CLASS => 'btn btn-sm btn-success']);
                 break;
         }
 

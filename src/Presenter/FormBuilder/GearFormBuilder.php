@@ -31,7 +31,7 @@ class GearFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             [C::CST_VALUE => C::CST_WEAPON, C::CST_LABEL => 'Arme'],
             [C::CST_VALUE => C::CST_ARMOR, C::CST_LABEL => 'Armure'],
             [C::CST_VALUE => 'ammo', C::CST_LABEL => 'Munition'],
-            [C::CST_VALUE => C::CST_TOOL, C::CST_LABEL => 'Outil'],
+            [C::CST_VALUE => C::CST_TOOL, C::CST_LABEL => L::LG_TOOL],
             [C::CST_VALUE => 'other', C::CST_LABEL => 'Autre'],
         ];
 

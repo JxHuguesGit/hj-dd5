@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter;
 
+use src\Constant\Bootstrap;
 use src\Constant\Template;
 use src\Renderer\TemplateRenderer;
 
@@ -17,7 +18,7 @@ final class ToastBuilder
     {
         return $this->renderer->render(
             Template::MAIN_TOAST,
-            [$title, $message, ' show bg-'.$type]
+            [$title, $message, ' show bg-' . $type]
         );
     }
 
@@ -28,7 +29,7 @@ final class ToastBuilder
 
     public function error(string $message, string $title = 'Échec'): string
     {
-        return $this->build('danger', $title, $message);
+        return $this->build(Bootstrap::CSS_DANGER, $title, $message);
     }
 
     public function info(string $message, string $title = 'Information'): string

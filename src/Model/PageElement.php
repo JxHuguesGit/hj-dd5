@@ -1,6 +1,8 @@
 <?php
 namespace src\Model;
 
+use src\Constant\Constant;
+
 class PageElement
 {
     private string $slug;
@@ -11,14 +13,15 @@ class PageElement
     private int $order;
     private ?string $parentSlug = null;
 
-    public function __construct(array $data) {
-        $this->slug        = $data['slug']        ?? '';
-        $this->icon        = $data['icon']        ?? '';
-        $this->title       = $data['title']       ?? '';
-        $this->description = $data['description'] ?? '';
-        $this->url         = $data['url']         ?? '#';
-        $this->order       = $data['order']       ?? 100;
-        $this->parentSlug  = $data['parent']      ?? null;
+    public function __construct(array $data)
+    {
+        $this->slug        = $data[Constant::CST_SLUG] ?? '';
+        $this->icon        = $data['icon'] ?? '';
+        $this->title       = $data['title'] ?? '';
+        $this->description = $data[Constant::CST_DESCRIPTION] ?? '';
+        $this->url         = $data['url'] ?? '#';
+        $this->order       = $data['order'] ?? 100;
+        $this->parentSlug  = $data[Constant::CST_PARENT] ?? null;
     }
 
     public function getSlug(): string
@@ -50,7 +53,7 @@ class PageElement
     {
         return $this->order;
     }
-    
+
     public function getParentSlug(): ?string
     {
         return $this->parentSlug;

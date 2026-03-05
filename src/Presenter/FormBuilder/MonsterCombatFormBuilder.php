@@ -31,13 +31,13 @@ class MonsterCombatFormBuilder
                 [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_2 . ' ' . Bootstrap::CSS_MB3]
             ))
             ->addField(new NumberField(
-                Field::INITIATIVE, 'Initiative', $monster->initiative, false,
+                Field::INITIATIVE, Language::LG_INITIATIVE, $monster->initiative, false,
                 [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_2 . ' ' . Bootstrap::CSS_MB3]
             ))
         ;
         $checkBoxAttributes = [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3 . ' ' . Bootstrap::CSS_MB3];
         if ($monster->legendary) {
-            $checkBoxAttributes['checked'] = 'checked';
+            $checkBoxAttributes[Constant::CST_CHECKED] = Constant::CST_CHECKED;
         }
         $fieldset
             ->addField(new CheckboxField(Field::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
@@ -65,7 +65,7 @@ class MonsterCombatFormBuilder
 
         $checkBoxAttributes = [Constant::OUTERDIVCLASS => Bootstrap::CSS_COL_MD_3 . ' ' . Bootstrap::CSS_MB3];
         if ($monsterSpeed->id) {
-            $checkBoxAttributes['checked'] = 'checked';
+            $checkBoxAttributes[Constant::CST_CHECKED] = Constant::CST_CHECKED;
         }
 
         $fieldset

@@ -63,7 +63,7 @@ class ItemTableBuilder extends AbstractTableBuilder
                     Bootstrap::CSS_TEXT_DANGER . ' ' . Constant::CST_AJAXACTION,
                     [
                         Constant::CST_DATA => [
-                            Constant::CST_TRIGGER     => 'click',
+                            Constant::CST_TRIGGER     => Constant::CST_CLICK,
                             Constant::CST_ACTION      => 'openConfirm',
                             Constant::CST_TARGET      => 'confirmModal',
                             Constant::CST_TITLE       => 'Suppression de l\'objet ' . $item->name,

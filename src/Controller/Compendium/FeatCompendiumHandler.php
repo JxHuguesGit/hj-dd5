@@ -2,6 +2,7 @@
 namespace src\Controller\Compendium;
 
 use src\Constant\Field;
+use src\Constant\Language;
 use src\Domain\Criteria\AbilityCriteria;
 use src\Domain\Entity\Feat;
 use src\Domain\Entity\FeatAbility;
@@ -86,7 +87,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
 
         if (empty($changedFields) && ! $hasAbilityLinked) {
-            $this->toastContent = $this->toastBuilder->info("Aucune valeur n'a été modifiée pour être enregistrée.");
+            $this->toastContent = $this->toastBuilder->info(Language::LG_NO_MODIFICATION_ENTRY);
             return $this->renderEdit($slug);
         }
 

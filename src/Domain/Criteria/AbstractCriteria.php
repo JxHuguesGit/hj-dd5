@@ -21,7 +21,7 @@ abstract class AbstractCriteria implements CriteriaInterface
     ): void {
         if ($value !== null) {
             $queryBuilder->whereComplex([
-                ['field' => $field, 'operand' => '<', 'value' => $value],
+                ['field' => $field, 'operand' => '<', Constant::CST_VALUE => $value],
             ]);
         }
     }
@@ -33,7 +33,7 @@ abstract class AbstractCriteria implements CriteriaInterface
     ): void {
         if ($value !== null) {
             $queryBuilder->whereComplex([
-                ['field' => $field, 'operand' => '>', 'value' => $value],
+                ['field' => $field, 'operand' => '>', Constant::CST_VALUE => $value],
             ]);
         }
     }

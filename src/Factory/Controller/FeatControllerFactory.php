@@ -20,10 +20,10 @@ use src\Renderer\TemplateRenderer;
 final class FeatControllerFactory
 {
     private const CATEGORY_CONTROLLERS = [
-        'combat'  => PublicFeatCombat::class,
-        'epic'    => PublicFeatEpic::class,
-        'general' => PublicFeatGeneral::class,
-        'origin'  => PublicFeatOrigin::class,
+        Constant::COMBAT  => PublicFeatCombat::class,
+        Constant::EPIC    => PublicFeatEpic::class,
+        Constant::GENERAL => PublicFeatGeneral::class,
+        Constant::ORIGIN  => PublicFeatOrigin::class,
     ];
 
     public function __construct(
