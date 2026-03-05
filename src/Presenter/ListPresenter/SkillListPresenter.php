@@ -28,8 +28,8 @@ final class SkillListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new SkillGroup(
-                label: $types[$typeId][Constant::CST_LABEL] ?? '',
-                slug: $types[$typeId][Constant::CST_SLUG] ?? '',
+                label: $types[$typeId][Constant::LABEL] ?? '',
+                slug: $types[$typeId][Constant::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -60,12 +60,12 @@ final class SkillListPresenter
     private static function getSkillTypes(): array
     {
         return [
-            1 => [Constant::CST_SLUG => Constant::ABLSTR, Constant::CST_LABEL => L::FORCE],
-            2 => [Constant::CST_SLUG => Constant::ABLDEX, Constant::CST_LABEL => L::DEXTERITE],
-            3 => [Constant::CST_SLUG => Constant::ABLCON, Constant::CST_LABEL => L::CONSTITUTION],
-            4 => [Constant::CST_SLUG => Constant::ABLINT, Constant::CST_LABEL => L::INTELLIGENCE],
-            5 => [Constant::CST_SLUG => Constant::ABLWIS, Constant::CST_LABEL => L::SAGESSE],
-            6 => [Constant::CST_SLUG => Constant::ABLCHA, Constant::CST_LABEL => L::CHARISME],
+            1 => [Constant::SLUG => Constant::ABLSTR, Constant::LABEL => L::FORCE],
+            2 => [Constant::SLUG => Constant::ABLDEX, Constant::LABEL => L::DEXTERITE],
+            3 => [Constant::SLUG => Constant::ABLCON, Constant::LABEL => L::CONSTITUTION],
+            4 => [Constant::SLUG => Constant::ABLINT, Constant::LABEL => L::INTELLIGENCE],
+            5 => [Constant::SLUG => Constant::ABLWIS, Constant::LABEL => L::SAGESSE],
+            6 => [Constant::SLUG => Constant::ABLCHA, Constant::LABEL => L::CHARISME],
         ];
     }
 }

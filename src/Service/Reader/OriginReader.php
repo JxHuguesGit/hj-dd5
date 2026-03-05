@@ -62,7 +62,7 @@ final class OriginReader
     {
         if (!$criteria) {
             $criteria = new OriginCriteria();
-            $criteria->orderBy = [F::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME=>Constant::ASC];
         }
         return $this->originRepository->findAllWithCriteria($criteria);
     }

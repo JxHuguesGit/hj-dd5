@@ -28,9 +28,9 @@ final class SpeciesListPresenter
         return new SpeciesRow(
             name: $specie->name,
             url: UrlGenerator::specie($specie->getSlug()),
-            creatureType: (string)$this->wpPostService->getField(Constant::CST_CREATURE_TYPE),
-            sizeCategory: (string)$this->wpPostService->getField(Constant::CST_SIZE_CATEGORY),
-            speed: (string)$this->wpPostService->getField(Constant::CST_SPEED)
+            creatureType: (string)$this->wpPostService->getField(Constant::CREATURE_TYPE),
+            sizeCategory: (string)$this->wpPostService->getField(Constant::SIZE_CATEGORY),
+            speed: (string)$this->wpPostService->getField(Constant::SPEED)
         );
     }
 }

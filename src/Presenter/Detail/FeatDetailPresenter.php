@@ -21,22 +21,22 @@ class FeatDetailPresenter
         $wpPost = $this->wpPostService->getById($viewData->feat->postId);
 
         return [
-            Constant::CST_TITLE       => $viewData->feat->name,
-            Constant::CST_SLUG        => $viewData->feat->getSlug(),
+            Constant::TITLE       => $viewData->feat->name,
+            Constant::SLUG        => $viewData->feat->getSlug(),
 
-            Constant::CST_DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
-            Constant::CST_FEATTYPE    => $this->formatFeatType($viewData),
+            Constant::DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
+            Constant::FEATTYPE    => $this->formatFeatType($viewData),
 
             Constant::ORIGINES        => $this->formatOrigines($viewData),
 
-            Constant::CST_PREV        => $viewData->previous ? [
-                Constant::CST_SLUG => $viewData?->previous->getSlug(),
-                Constant::CST_NAME => $viewData?->previous->name,
+            Constant::PREV        => $viewData->previous ? [
+                Constant::SLUG => $viewData?->previous->getSlug(),
+                Constant::NAME => $viewData?->previous->name,
             ] : null,
 
-            Constant::CST_NEXT        => $viewData->next ? [
-                Constant::CST_SLUG => $viewData?->next->getSlug(),
-                Constant::CST_NAME => $viewData?->next->name,
+            Constant::NEXT        => $viewData->next ? [
+                Constant::SLUG => $viewData?->next->getSlug(),
+                Constant::NAME => $viewData?->next->name,
             ] : null,
         ];
 
@@ -55,7 +55,7 @@ class FeatDetailPresenter
                     UrlGenerator::origin($slug),
                     B::TEXT_WHITE
                 ),
-                [Constant::CST_CLASS => implode(' ', [B::BADGE, B::BG_DARK])]
+                [Constant::CLASS => implode(' ', [B::BADGE, B::BG_DARK])]
             ) . ' ';
         }
         return $html;
@@ -76,8 +76,8 @@ class FeatDetailPresenter
                     L::GENERAL_FEAT,
                     UrlGenerator::feats(Constant::GENERAL),
                     B::TEXT_DARK
-                ) . Constant::CST_PREREQUIS_NIV4;
-                $strPreRequis = $this->wpPostService->getField(Constant::CST_PREREQUIS);
+                ) . Constant::PREREQUIS_NIV4;
+                $strPreRequis = $this->wpPostService->getField(Constant::PREREQUIS);
                 if ($strPreRequis) {
                     $featType .= ', ' . $strPreRequis;
                 }
@@ -88,15 +88,15 @@ class FeatDetailPresenter
                     L::CBT_STYLE_FEAT,
                     UrlGenerator::feats(Constant::COMBAT),
                     B::TEXT_DARK
-                ) . Constant::CST_PREREQUIS_ASDC;
+                ) . Constant::PREREQUIS_ASDC;
                 break;
             case 4:
                 $featType  = Html::getLink(
                     L::CBT_STYLE_EPIC,
                     UrlGenerator::feats(Constant::EPIC),
                     B::TEXT_DARK
-                ) . Constant::CST_PREREQUIS_NIV19;
-                $strPreRequis  = $this->wpPostService->getField(Constant::CST_PREREQUIS);
+                ) . Constant::PREREQUIS_NIV19;
+                $strPreRequis  = $this->wpPostService->getField(Constant::PREREQUIS);
                 if ($strPreRequis) {
                     $featType .= ', ' . $strPreRequis;
                 }

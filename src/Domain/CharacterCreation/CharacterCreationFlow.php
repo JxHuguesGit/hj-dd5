@@ -21,7 +21,7 @@ class CharacterCreationFlow
     public function steps(): array
     {
         return [
-            Constant::CST_NAME => NameStep::class,
+            Constant::NAME => NameStep::class,
             Constant::ORIGIN   => OriginStep::class,
         ];
     }

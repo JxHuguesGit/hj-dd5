@@ -22,8 +22,8 @@ final class SpellService
                 'post_type'      => 'post',
                 'posts_per_page' => 10,
                 'category_name'  => 'sort',
-                'orderby'        => 'title',
-                'order'          => Constant::CST_ASC,
+                'orderby'        => Constant::TITLE,
+                'order'          => Constant::ASC,
             ],
             $criteria
         );
@@ -49,7 +49,7 @@ final class SpellService
 
     public function spellBySlug(string $slug): Spell
     {
-        $spellResult = $this->allSpells([Constant::CST_NAME => $slug]);
+        $spellResult = $this->allSpells([Constant::NAME => $slug]);
         return ($spellResult->collection)->first();
     }
 
@@ -63,6 +63,6 @@ final class SpellService
 
         $prev = $allSpells->collection->slice($idxPrev, 1)->first();
         $next = $allSpells->collection->slice($idxNext, 1)->first();
-        return [Constant::CST_PREV => $prev, Constant::CST_NEXT => $next];
+        return [Constant::PREV => $prev, Constant::NEXT => $next];
     }
 }

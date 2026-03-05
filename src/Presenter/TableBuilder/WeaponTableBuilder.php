@@ -32,17 +32,17 @@ class WeaponTableBuilder extends AbstractTableBuilder
                 /** @var WeaponRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink(
+                        Constant::CONTENT => Html::getLink(
                             $row->name,
                             $row->url,
                             B::TEXT_DARK
                         ),
                     ])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->damage])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->properties])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->masteryLink])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->weight])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->price]);
+                    ->addBodyCell([Constant::CONTENT => $row->damage])
+                    ->addBodyCell([Constant::CONTENT => $row->properties])
+                    ->addBodyCell([Constant::CONTENT => $row->masteryLink])
+                    ->addBodyCell([Constant::CONTENT => $row->weight])
+                    ->addBodyCell([Constant::CONTENT => $row->price]);
             }
         }
 

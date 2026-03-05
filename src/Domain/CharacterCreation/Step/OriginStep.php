@@ -48,23 +48,23 @@ class OriginStep extends AbstractBaseStep implements StepInterface
 
     public function getRadioForm(int $id, string $name, bool $checked = false): string
     {
-        $strLabel   = Html::getBalise('label', $name, [Constant::CST_CLASS => 'form-check-label', 'for' => 'origin' . $id]);
+        $strLabel   = Html::getBalise('label', $name, [Constant::CLASS => 'form-check-label', 'for' => 'origin' . $id]);
         $attributes = [
-            Constant::CST_CLASS => Constant::CST_AJAXACTION,
-            Constant::CST_TYPE  => 'radio',
-            Constant::CST_NAME  => 'characterOriginId',
-            Constant::CST_ID    => 'origin' . $id,
-            Constant::CST_VALUE => $id,
-            Constant::CST_DATA  => [
-                Constant::CST_TRIGGER => 'click',
-                Constant::CST_ACTION  => 'loadOrigin',
+            Constant::CLASS => Constant::AJAXACTION,
+            Constant::TYPE  => 'radio',
+            Constant::NAME  => 'characterOriginId',
+            Constant::ID    => 'origin' . $id,
+            Constant::VALUE => $id,
+            Constant::DATA  => [
+                Constant::TRIGGER => 'click',
+                Constant::ACTION  => 'loadOrigin',
             ],
         ];
         if ($checked) {
             $attributes['checked'] = 'checked';
         }
         $strInput = Html::getBalise('input', '', $attributes);
-        return Html::getDiv($strInput . $strLabel, [Constant::CST_CLASS => 'form-check']);
+        return Html::getDiv($strInput . $strLabel, [Constant::CLASS => 'form-check']);
     }
 
     public function validate(array $input): bool

@@ -18,24 +18,24 @@ class PublicItems extends PublicBase
     {
         // Récupérer le menu depuis le registry
         $registry = PageRegistry::getInstance();
-        $menuHtml = (new MenuPresenter($registry->all(), Constant::CST_ITEMS))->render();
+        $menuHtml = (new MenuPresenter($registry->all(), Constant::ITEMS))->render();
 
         $data = [];
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_ARMOR,
-            Constant::CST_TITLE => L::ARMORS_TITLE,
+            'url' => Routes::ITEMS_PREFIX.'-'.Constant::ARMOR,
+            Constant::TITLE => L::ARMORS_TITLE,
         ]);
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_WEAPON,
-            Constant::CST_TITLE => L::WEAPONS_TITLE,
+            'url' => Routes::ITEMS_PREFIX.'-'.Constant::WEAPON,
+            Constant::TITLE => L::WEAPONS_TITLE,
         ]);
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_TOOL,
-            Constant::CST_TITLE => L::TOOLS_TITLE,
+            'url' => Routes::ITEMS_PREFIX.'-'.Constant::TOOL,
+            Constant::TITLE => L::TOOLS_TITLE,
         ]);
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.Constant::CST_GEAR,
-            Constant::CST_TITLE => L::DIVERS,
+            'url' => Routes::ITEMS_PREFIX.'-'.Constant::GEAR,
+            Constant::TITLE => L::DIVERS,
         ]);
 
         $cardPresenter = new CardPresenter($data);

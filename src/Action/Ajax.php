@@ -15,7 +15,7 @@ class Ajax
 
     public static function dealWithAjax()
     {
-        $ajaxAction = Session::fromPost(Constant::CST_AJAXACTION);
+        $ajaxAction = Session::fromPost(Constant::AJAXACTION);
 
         $actions = [
             'downloadFile'    => fn()    => DownloadFile::start(),
@@ -39,7 +39,7 @@ class Ajax
                 $reader                = new ReaderFactory($repository);
                 $router                = new AjaxRouter($reader, new ServiceFactory($reader), new TemplateRenderer());
                 $response              = $router->dispatch($ajaxAction);
-                $response[$ajaxAction] = $response[Constant::CST_DATA];
+                $response[$ajaxAction] = $response[Constant::DATA];
             } elseif (isset($actions[$ajaxAction])) {
                 $returnedValue = $actions[$ajaxAction];
 
@@ -48,14 +48,14 @@ class Ajax
                     $ajaxAction          => $returnedValue,
                     // Fin suppression
                     'status'             => 'success',
-                    Constant::CST_ACTION => $ajaxAction,
-                    Constant::CST_DATA   => $returnedValue,
+                    Constant::ACTION => $ajaxAction,
+                    Constant::DATA   => $returnedValue,
                 ];
             } else {
                 $response = [
                     $ajaxAction          => 'default',
                     'status'             => 'error',
-                    Constant::CST_ACTION => $ajaxAction,
+                    Constant::ACTION => $ajaxAction,
                     'message'            => 'default',
                 ];
             }
@@ -65,7 +65,7 @@ class Ajax
                 $ajaxAction          => 'default',
                 // Fin suppression
                 'status'             => 'error',
-                Constant::CST_ACTION => $ajaxAction,
+                Constant::ACTION => $ajaxAction,
                 'message'            => $e->getMessage(),
             ];
         }

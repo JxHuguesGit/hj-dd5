@@ -13,22 +13,22 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
     {
         $withMarginTop   = $params[B::WITH_MRGNTOP] ?? true;
         $tableAttributes = [
-            Constant::CST_CLASS => implode(' ', [
+            Constant::CLASS => implode(' ', [
                 B::TABLE_SM,
                 B::TABLE_STRIPED,
                 $withMarginTop ? B::MT5 : '',
             ]),
         ];
-        if (isset($params[Constant::CST_ID])) {
-            $tableAttributes[Constant::CST_ID] = $params[Constant::CST_ID];
+        if (isset($params[Constant::ID])) {
+            $tableAttributes[Constant::ID] = $params[Constant::ID];
         }
-        if (isset($params[Constant::CST_TARGET])) {
-            $tableAttributes[Constant::CST_TARGET] = $params[Constant::CST_TARGET];
+        if (isset($params[Constant::TARGET])) {
+            $tableAttributes[Constant::TARGET] = $params[Constant::TARGET];
         }
         return (new Table())
             ->setTable($tableAttributes)
             ->addHeader([
-                Constant::CST_CLASS => implode(' ', [
+                Constant::CLASS => implode(' ', [
                     B::TABLE_DARK,
                     B::TEXT_CENTER,
                 ]),
@@ -38,12 +38,12 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
 
     protected function addGroupRow(Table $table, string $label, int $colspan): void
     {
-        $table->addBodyRow([Constant::CST_CLASS => B::ROW_DARK_STRIPED])
+        $table->addBodyRow([Constant::CLASS => B::ROW_DARK_STRIPED])
             ->addBodyCell([
-                Constant::CST_CONTENT    => $label,
-                Constant::CST_ATTRIBUTES => [
-                    Constant::CST_COLSPAN => $colspan,
-                    Constant::CST_CLASS   => B::FONT_ITALIC,
+                Constant::CONTENT    => $label,
+                Constant::ATTRIBUTES => [
+                    Constant::COLSPAN => $colspan,
+                    Constant::CLASS   => B::FONT_ITALIC,
                 ],
             ]);
     }
@@ -52,12 +52,12 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
     {
         foreach ($headers as $data) {
             if (! is_array($data)) {
-                $table->addHeaderCell([Constant::CST_CONTENT => $data]);
+                $table->addHeaderCell([Constant::CONTENT => $data]);
             } else {
                 if (isset($data['abbr'])) {
-                    $strContent = Html::getBalise('abbr', $data[Constant::CST_LABEL], [Constant::CST_TITLE => $data['abbr']]);
+                    $strContent = Html::getBalise('abbr', $data[Constant::LABEL], [Constant::TITLE => $data['abbr']]);
                 } else {
-                    $strContent = $data[Constant::CST_LABEL];
+                    $strContent = $data[Constant::LABEL];
                 }
 
                 if ($data['filter'] ?? false) {
@@ -66,18 +66,18 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                             I::FITLER,
                             I::SOLID,
                             [
-                                Constant::CST_CLASS => 'modal-tooltip ajaxAction',
-                                Constant::CST_DATA  => [
-                                    Constant::CST_TRIGGER => Constant::CST_CLICK,
-                                    Constant::CST_ACTION  => Constant::CST_OPENMODAL,
-                                    Constant::CST_TARGET  => $table->attributes[Constant::CST_TARGET],
+                                Constant::CLASS => 'modal-tooltip ajaxAction',
+                                Constant::DATA  => [
+                                    Constant::TRIGGER => Constant::CLICK,
+                                    Constant::ACTION  => Constant::OPENMODAL,
+                                    Constant::TARGET  => $table->attributes[Constant::TARGET],
                                 ],
                             ]
                         ),
-                        [Constant::CST_CLASS => B::TEXT_NOWRAP]
+                        [Constant::CLASS => B::TEXT_NOWRAP]
                     );
                 }
-                $table->addHeaderCell([Constant::CST_CONTENT => $strContent]);
+                $table->addHeaderCell([Constant::CONTENT => $strContent]);
 
             }
         }

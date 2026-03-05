@@ -12,7 +12,7 @@ final class MonsterAbilityCriteria extends BaseCriteria
     public ?int $powerId   = null;
 
     public array $orderBy = [
-        F::RANK => Constant::CST_ASC,
+        F::RANK => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

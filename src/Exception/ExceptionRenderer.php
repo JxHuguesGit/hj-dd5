@@ -16,7 +16,7 @@ class ExceptionRenderer
         $html = '<div class="card border-danger p-0" style="max-width:100%;margin-right:15px;">';
         $html .= '<div class="card-header bg-danger text-white"><strong>Exception levée</strong></div>';
         $html .= '<div class="card-body">';
-        
+
         $html .= self::renderExceptionChain($exception);
 
         $html .= '</div>';
@@ -51,7 +51,7 @@ class ExceptionRenderer
         foreach ($trace as $t) {
             $file = $t['file'] ?? '[internal function]';
             $line = $t['line'] ?? '';
-            $fn   = ($t[Constant::CST_CLASS] ?? '') . ($t[Constant::CST_TYPE] ?? '') . ($t['function'] ?? '');
+            $fn   = ($t[Constant::CLASS] ?? '') . ($t[Constant::TYPE] ?? '') . ($t['function'] ?? '');
             $args = self::formatArgs($t['args'] ?? []);
             $html .= '<li class="list-group-item">'.htmlspecialchars($file).' ('.$line.') : '.$fn.$args.'</li>';
         }

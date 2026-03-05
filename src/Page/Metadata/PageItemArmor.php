@@ -11,13 +11,13 @@ class PageItemArmor extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => Constant::CST_ITEMS . '-' . Constant::CST_ARMOR,
+            Constant::SLUG        => Constant::ITEMS . '-' . Constant::ARMOR,
             'icon'                    => I::SHIELD,
-            Constant::CST_TITLE       => L::ARMORS_TITLE,
-            Constant::CST_DESCRIPTION => 'Les armures disponibles pour les aventuriers.',
-            'url'                     => Routes::ITEMS_PREFIX . Constant::CST_ARMOR,
+            Constant::TITLE       => L::ARMORS_TITLE,
+            Constant::DESCRIPTION => 'Les armures disponibles pour les aventuriers.',
+            'url'                     => Routes::ITEMS_PREFIX . Constant::ARMOR,
             'order'                   => 5,
-            Constant::CST_PARENT      => Constant::CST_ITEMS,
+            Constant::PARENT      => Constant::ITEMS,
         ];
     }
 }

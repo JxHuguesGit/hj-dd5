@@ -19,63 +19,63 @@ class MonsterTableBuilder extends AbstractTableBuilder
             B::TEXT_WHITE
         );
         $headers = [
-            [Constant::CST_LABEL => L::MONSTER],
-            [Constant::CST_LABEL => L::FP, Constant::CST_CLASS => B::COL_1],
-            [Constant::CST_LABEL => L::CREATURE_TYPE, Constant::CST_CLASS => B::COL_2],
-            [Constant::CST_LABEL => L::CA, Constant::CST_CLASS => B::COL_1],
-            [Constant::CST_LABEL => L::PV, Constant::CST_CLASS => B::COL_1],
-            [Constant::CST_LABEL => L::REFERENCE, Constant::CST_CLASS => B::COL_2],
-            [Constant::CST_LABEL => $createLink, Constant::CST_CLASS => B::COL_1],
+            [Constant::LABEL => L::MONSTER],
+            [Constant::LABEL => L::FP, Constant::CLASS => B::COL_1],
+            [Constant::LABEL => L::CREATURE_TYPE, Constant::CLASS => B::COL_2],
+            [Constant::LABEL => L::CA, Constant::CLASS => B::COL_1],
+            [Constant::LABEL => L::PV, Constant::CLASS => B::COL_1],
+            [Constant::LABEL => L::REFERENCE, Constant::CLASS => B::COL_2],
+            [Constant::LABEL => $createLink, Constant::CLASS => B::COL_1],
         ];
 
-        $params[Constant::CST_ID] = 'monsterFilter';
+        $params[Constant::ID] = 'monsterFilter';
         $table                    = $this->createTable(count($headers), $params);
 
         foreach ($headers as $data) {
             $table->addHeaderCell([
-                Constant::CST_CONTENT    => $data[Constant::CST_LABEL],
-                Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => $data[Constant::CST_CLASS] ?? ''],
+                Constant::CONTENT    => $data[Constant::LABEL],
+                Constant::ATTRIBUTES => [Constant::CLASS => $data[Constant::CLASS] ?? ''],
             ]);
         }
 
         foreach ($monsters as $monster) {
             /** @var MonsterRow $row */
             $table->addBodyRow([])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->name])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->cr, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER]])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->type])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->ca, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER]])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->hp, Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_END]])
-                ->addBodyCell([Constant::CST_CONTENT => $monster->reference])
+                ->addBodyCell([Constant::CONTENT => $monster->name])
+                ->addBodyCell([Constant::CONTENT => $monster->cr, Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER]])
+                ->addBodyCell([Constant::CONTENT => $monster->type])
+                ->addBodyCell([Constant::CONTENT => $monster->ca, Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER]])
+                ->addBodyCell([Constant::CONTENT => $monster->hp, Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_END]])
+                ->addBodyCell([Constant::CONTENT => $monster->reference])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => Html::getLink(
+                    Constant::CONTENT    => Html::getLink(
                         Html::getIcon(I::EDIT),
                         UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, $monster->ukTag ?? '', Constant::EDIT),
                         B::TEXT_DARK
                     ),
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER . ' ' . B::COL_1],
+                    Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER . ' ' . B::COL_1],
                 ]);
         }
 
         $table->addFooter([
-            Constant::CST_CLASS => implode(' ', [
+            Constant::CLASS => implode(' ', [
                 B::TABLE_DARK,
                 B::TEXT_CENTER,
             ]),
         ])
             ->addFootRow()
             ->addFootCell([
-                Constant::CST_CONTENT    => Html::getDiv(
+                Constant::CONTENT    => Html::getDiv(
                     Html::getIcon(I::CIRCLEPLUS),
                     [
-                        Constant::CST_CLASS => Constant::CST_AJAXACTION . ' cursor-pointer',
-                        Constant::CST_DATA  => [
-                            Constant::CST_TRIGGER => Constant::CST_CLICK,
-                            Constant::CST_ACTION  => 'loadMoreMonsters',
+                        Constant::CLASS => Constant::AJAXACTION . ' cursor-pointer',
+                        Constant::DATA  => [
+                            Constant::TRIGGER => Constant::CLICK,
+                            Constant::ACTION  => 'loadMoreMonsters',
                         ],
                     ]
                 ),
-                Constant::CST_ATTRIBUTES => [Constant::CST_COLSPAN => count($headers)],
+                Constant::ATTRIBUTES => [Constant::COLSPAN => count($headers)],
             ]);
 
         return $table;

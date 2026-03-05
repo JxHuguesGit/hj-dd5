@@ -14,18 +14,18 @@ class SpellTableBuilder extends AbstractTableBuilder
     public function build(iterable $rows, array $params = []): Table
     {
         $headers = [
-            [Constant::CST_LABEL => L::NAMES],
-            [Constant::CST_LABEL => L::LEVEL, 'filter' => true],
-            [Constant::CST_LABEL => L::SCHOOL, 'filter' => true],
-            [Constant::CST_LABEL => L::CLASSES, 'filter' => true],
-            [Constant::CST_LABEL => 'TI', 'abbr' => L::INCTIME],
-            [Constant::CST_LABEL => L::RANGE],
-            [Constant::CST_LABEL => L::DURATION],
-            [Constant::CST_LABEL => 'V,S,M', 'abbr' => L::COMPONENTS],
+            [Constant::LABEL => L::NAMES],
+            [Constant::LABEL => L::LEVEL, 'filter' => true],
+            [Constant::LABEL => L::SCHOOL, 'filter' => true],
+            [Constant::LABEL => L::CLASSES, 'filter' => true],
+            [Constant::LABEL => 'TI', 'abbr' => L::INCTIME],
+            [Constant::LABEL => L::RANGE],
+            [Constant::LABEL => L::DURATION],
+            [Constant::LABEL => 'V,S,M', 'abbr' => L::COMPONENTS],
         ];
 
-        $params[Constant::CST_ID]     = 'spellTable';
-        $params[Constant::CST_TARGET] = 'spellFilter';
+        $params[Constant::ID]     = 'spellTable';
+        $params[Constant::TARGET] = 'spellFilter';
 
         $table = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);
@@ -33,30 +33,30 @@ class SpellTableBuilder extends AbstractTableBuilder
         foreach ($rows as $row) {
             /** @var SpellRow $row */
             $table->addBodyRow([])
-                ->addBodyCell([Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK)])
+                ->addBodyCell([Constant::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK)])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => $row->niveau,
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER],
+                    Constant::CONTENT    => $row->niveau,
+                    Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER],
                 ])
-                ->addBodyCell([Constant::CST_CONTENT => $row->ecole])
-                ->addBodyCell([Constant::CST_CONTENT => SpellFormatter::formatClasses($row->classes, false)])
-                ->addBodyCell([Constant::CST_CONTENT => SpellFormatter::formatIncantation($row->tpsInc, $row->rituel)])
-                ->addBodyCell([Constant::CST_CONTENT => SpellFormatter::formatPortee($row->portee)])
-                ->addBodyCell([Constant::CST_CONTENT => SpellFormatter::formatDuree($row->duree, $row->concentration)])
-                ->addBodyCell([Constant::CST_CONTENT => SpellFormatter::formatComposantes($row->composantes, $row->composanteMaterielle, false)])
+                ->addBodyCell([Constant::CONTENT => $row->ecole])
+                ->addBodyCell([Constant::CONTENT => SpellFormatter::formatClasses($row->classes, false)])
+                ->addBodyCell([Constant::CONTENT => SpellFormatter::formatIncantation($row->tpsInc, $row->rituel)])
+                ->addBodyCell([Constant::CONTENT => SpellFormatter::formatPortee($row->portee)])
+                ->addBodyCell([Constant::CONTENT => SpellFormatter::formatDuree($row->duree, $row->concentration)])
+                ->addBodyCell([Constant::CONTENT => SpellFormatter::formatComposantes($row->composantes, $row->composanteMaterielle, false)])
             ;
         }
 
         $table->addFooter([
-            Constant::CST_CLASS => implode(' ', [
+            Constant::CLASS => implode(' ', [
                 B::TABLE_DARK,
                 B::TEXT_CENTER,
             ]),
         ])
             ->addFootRow()
             ->addFootCell([
-                Constant::CST_CONTENT    => '<div class="ajaxAction" data-trigger="click" data-action="loadMoreSpells" style="cursor:pointer;"><i class="fa-solid fa-circle-plus"></i></div>',
-                Constant::CST_ATTRIBUTES => [Constant::CST_COLSPAN => 8],
+                Constant::CONTENT    => '<div class="ajaxAction" data-trigger="click" data-action="loadMoreSpells" style="cursor:pointer;"><i class="fa-solid fa-circle-plus"></i></div>',
+                Constant::ATTRIBUTES => [Constant::COLSPAN => 8],
             ]);
 
         return $table;

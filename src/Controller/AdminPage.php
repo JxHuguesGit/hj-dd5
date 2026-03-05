@@ -42,7 +42,7 @@ class AdminPage extends Utilities
     protected function getSidebar(): string
     {
         $currentTab = $this->getArrParams(Constant::ONGLET, Constant::HOME);
-        $currentId  = $this->getArrParams(Constant::CST_ID, '');
+        $currentId  = $this->getArrParams(Constant::ID, '');
 
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();

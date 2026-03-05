@@ -2,9 +2,10 @@
 namespace src\Presenter\MenuPresenter;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Icon as I;
-use src\Constant\Template;
+use src\Constant\Language as L;
+use src\Constant\Template as T;
 use src\Presenter\MenuPresenter\MenuItemPresenter;
 use src\Presenter\ViewModel\MenuItem;
 use src\Service\Reader\CharacterReader;
@@ -20,46 +21,46 @@ class CharacterMenuPresenter
 
     public function render(string $currentTab, string $currentId, callable $renderer): string
     {
-        $isActiveTab  = $currentTab === Constant::ONG_CHARACTER;
+        $isActiveTab  = $currentTab === C::ONG_CHARACTER;
         $childrenHtml = '';
 
         // URL de base pour les personnages
-        $url = UrlGenerator::admin(Constant::ONG_CHARACTER, '%d', '', '', ['step' => '%s']);
+        $url = UrlGenerator::admin(C::ONG_CHARACTER, '%d', '', '', [C::STEP => '%s']);
 
         // ----- 1) Item "Nouveau" -----
-        $newItem   = new MenuItem(0, 'Nouveau', I::PLUS);
+        $newItem   = new MenuItem(0, L::NOUVEAU, I::PLUS);
         $presenter = new MenuItemPresenter($newItem, $currentTab, $currentId);
 
-        $childrenHtml .= $renderer(Template::ADMINSIDEBARITEM, $presenter->toTemplateAttributesNewCharacter($url));
+        $childrenHtml .= $renderer(T::ADMINSIDEBARITEM, $presenter->toTemplateAttributesNewCharacter($url));
 
         // ----- 2) Items "héros" -----
         $heroes = $this->reader->characterByWpUser(Session::getWpUser()->data->ID);
 
         foreach ($heroes as $hero) {
-            $item      = new MenuItem($hero->id, $hero->name, 'user');
+            $item      = new MenuItem($hero->id, $hero->name, C::USER);
             $presenter = new MenuItemPresenter($item, $currentTab, $currentId);
 
             $childrenHtml .= $renderer(
-                Template::ADMINSIDEBARITEM,
+                T::ADMINSIDEBARITEM,
                 $presenter->toTemplateAttributesCharacter($url, $hero->createStep)
             );
         }
 
         // UL contenant les enfants
-        $ul = Html::getBalise('ul', $childrenHtml, [Constant::CST_CLASS => 'nav nav-treeview']);
+        $ul = Html::getUl($childrenHtml, [C::CST_CLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]);
 
         // ----- 3) Item parent -----
         $attributes = [
             $isActiveTab ? B::MENU_OPEN : '',
             '#',
-            $isActiveTab ? Constant::CST_ACTIVE : '',
-            'users',
-            'Personnages',
+            $isActiveTab ? C::CST_ACTIVE : '',
+            C::USERS,
+            L::CHARACTERS,
             '',
             $ul,
             '', '',
         ];
 
-        return $renderer(Template::ADMINSIDEBARITEM, $attributes);
+        return $renderer(T::ADMINSIDEBARITEM, $attributes);
     }
 }

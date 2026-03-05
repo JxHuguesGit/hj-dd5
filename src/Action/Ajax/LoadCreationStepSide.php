@@ -20,8 +20,8 @@ class LoadCreationStepSide implements AjaxActionInterface
     {
         $ajax = new CharacterCreationAjax($this->readerFactory, $this->serviceFactory, $this->renderer);
         return $ajax->loadCreationStepSide(
-            Session::fromPost(Constant::CST_TYPE),
-            Session::fromPost(Constant::CST_ID)
+            Session::fromPost(Constant::TYPE),
+            Session::fromPost(Constant::ID)
         );
     }
 }

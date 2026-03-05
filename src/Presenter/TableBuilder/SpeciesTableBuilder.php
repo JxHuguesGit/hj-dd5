@@ -20,13 +20,13 @@ class SpeciesTableBuilder extends AbstractTableBuilder
             /** @var SpeciesRow $row */
             $table->addBodyRow([])
                 ->addBodyCell([
-                    Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
+                    Constant::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                 ])
-                ->addBodyCell([Constant::CST_CONTENT => $row->creatureType])
-                ->addBodyCell([Constant::CST_CONTENT => $row->sizeCategory])
+                ->addBodyCell([Constant::CONTENT => $row->creatureType])
+                ->addBodyCell([Constant::CONTENT => $row->sizeCategory])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => $row->speed,
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::TEXT_CENTER],
+                    Constant::CONTENT    => $row->speed,
+                    Constant::ATTRIBUTES => [Constant::CLASS => B::TEXT_CENTER],
                 ]);
         }
 

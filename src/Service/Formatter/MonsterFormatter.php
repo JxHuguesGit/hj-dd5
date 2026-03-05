@@ -87,7 +87,7 @@ class MonsterFormatter
 
         // Type principal
         $type                                                   = $this->readerFactory->monsterType()->monsterTypeById($monster->monstreTypeId);
-        [Constant::CST_LABEL => $typeName, 'gender' => $gender] = $type?->getNameAndGender();
+        [Constant::LABEL => $typeName, 'gender' => $gender] = $type?->getNameAndGender();
 
         // Nuée
         if ($monster->swarmSize) {
@@ -166,7 +166,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', 'Immunités') . ' ' . $content,
-            [Constant::CST_CLASS => B::COL_12]
+            [Constant::CLASS => B::COL_12]
         );
     }
 
@@ -197,7 +197,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', $label) . ' ' . implode(', ', $resistances),
-            [Constant::CST_CLASS => B::COL_12]
+            [Constant::CLASS => B::COL_12]
         );
     }
 
@@ -220,7 +220,7 @@ class MonsterFormatter
         return Html::getDiv(
             Html::getBalise('strong', 'Sens') . ' ' . implode(', ', $senses) .
             ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
-            [Constant::CST_CLASS => B::COL_12]
+            [Constant::CLASS => B::COL_12]
         );
     }
 
@@ -236,7 +236,7 @@ class MonsterFormatter
         }
         return Html::getDiv(
             Html::getBalise('strong', 'Langues') . ' ' . (empty($languages) ? 'Aucune' : implode(', ', $languages)),
-            [Constant::CST_CLASS => B::COL_12]
+            [Constant::CLASS => B::COL_12]
         );
     }
 
@@ -252,7 +252,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', L::FP) . ' ' . $content,
-            [Constant::CST_CLASS => B::COL_12]
+            [Constant::CLASS => B::COL_12]
         );
     }
 

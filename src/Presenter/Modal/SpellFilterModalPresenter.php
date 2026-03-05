@@ -22,14 +22,14 @@ class SpellFilterModalPresenter implements ModalPresenter
         $selectedMin = 0;
         $selectedMax = 9;
         for ($i=0; $i<=9; $i++) {
-            $minOptions .= Html::getOption($i, [Constant::CST_VALUE=>$i], $selectedMin==$i);
-            $maxOptions .= Html::getOption($i, [Constant::CST_VALUE=>$i], $selectedMax==$i);
+            $minOptions .= Html::getOption($i, [Constant::VALUE=>$i], $selectedMin==$i);
+            $maxOptions .= Html::getOption($i, [Constant::VALUE=>$i], $selectedMax==$i);
         }
 
         // Liste des classes
         $classOptions = '';
         $nbClassOptions = 0;
-        $strAllClassSelected = ' '.Constant::CST_CHECKED;
+        $strAllClassSelected = ' '.Constant::CHECKED;
         $defaultClassSelection = array_map(fn($case) => $case->value, array_filter(ClassEnum::cases(), fn($case) => !in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])));
         $selectedClasses = $defaultClassSelection;
         foreach (ClassEnum::cases() as $case) {
@@ -39,35 +39,35 @@ class SpellFilterModalPresenter implements ModalPresenter
             $value = $case->value;
             if (in_array($value, $selectedClasses)) {
                 ++$nbClassOptions;
-                $classOptions .= Html::getOption(ucfirst($case->label()), [Constant::CST_VALUE=>$value], true);
+                $classOptions .= Html::getOption(ucfirst($case->label()), [Constant::VALUE=>$value], true);
             } else {
-                $classOptions .= Html::getOption(ucfirst($case->label()), [Constant::CST_VALUE=>$value]);
+                $classOptions .= Html::getOption(ucfirst($case->label()), [Constant::VALUE=>$value]);
             }
         }
 
         // Liste des écoles
         $schoolOptions = '';
         $nbSchoolOptions = 0;
-        $strAllSchoolSelected = ' '.Constant::CST_CHECKED;
+        $strAllSchoolSelected = ' '.Constant::CHECKED;
         $defaultSchoolSelection = array_map(fn($case) => $case->value, MagicSchoolEnum::cases());
         $selectedSchools = $defaultSchoolSelection;
         foreach (MagicSchoolEnum::cases() as $case) {
             $value = $case->value;
             if (in_array($value, $selectedSchools)) {
                 ++$nbSchoolOptions;
-                $schoolOptions .= Html::getOption(ucfirst($case->label()), [Constant::CST_VALUE=>$value], true);
+                $schoolOptions .= Html::getOption(ucfirst($case->label()), [Constant::VALUE=>$value], true);
             } else {
-                $schoolOptions .= Html::getOption(ucfirst($case->label()), [Constant::CST_VALUE=>$value]);
+                $schoolOptions .= Html::getOption(ucfirst($case->label()), [Constant::VALUE=>$value]);
             }
         }
 
         // Rituels
         $onlyRituels = false;
-        $strRituels = $onlyRituels ? ' '.Constant::CST_CHECKED : '';
+        $strRituels = $onlyRituels ? ' '.Constant::CHECKED : '';
 
         // Concentration
         $onlyConcentrate = false;
-        $strConcentration = $onlyConcentrate ? ' '.Constant::CST_CHECKED : '';
+        $strConcentration = $onlyConcentrate ? ' '.Constant::CHECKED : '';
 
         $attrContent = [
             // Niveau

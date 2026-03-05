@@ -10,7 +10,7 @@ final class WeaponPropertyValueCriteria extends BaseCriteria
     public ?int $weaponId = null;
 
     public array $orderBy = [
-        F::NAME => Constant::CST_ASC,
+        F::NAME => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

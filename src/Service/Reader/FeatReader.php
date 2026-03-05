@@ -40,7 +40,7 @@ final class FeatReader
     {
         $criteria = new FeatCriteria();
         $criteria->featTypeId = $featTypeId;
-        $criteria->orderBy    = [F::NAME=>Constant::CST_ASC];
+        $criteria->orderBy    = [F::NAME=>Constant::ASC];
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 
@@ -51,7 +51,7 @@ final class FeatReader
     {
         if (!$criteria) {
             $criteria = new FeatCriteria();
-            $criteria->orderBy = [F::FEATTYPEID=>Constant::CST_ASC, F::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::FEATTYPEID=>Constant::ASC, F::NAME=>Constant::ASC];
         }
         return $this->featRepository->findAllWithCriteria($criteria);
     }

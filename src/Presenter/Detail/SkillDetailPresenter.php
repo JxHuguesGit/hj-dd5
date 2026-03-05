@@ -13,21 +13,21 @@ class SkillDetailPresenter
         SkillPageView $viewData
     ): array {
         return [
-            Constant::CST_TITLE       => $viewData->skill->name,
+            Constant::TITLE       => $viewData->skill->name,
 
-            Constant::CST_ABILITIES   => $viewData->ability->name,
-            Constant::CST_DESCRIPTION => $viewData->skill->description,
-            Constant::CST_SUBSKILLS   => $this->formatSubSkills($viewData),
+            Constant::ABILITIES   => $viewData->ability->name,
+            Constant::DESCRIPTION => $viewData->skill->description,
+            Constant::SUBSKILLS   => $this->formatSubSkills($viewData),
             Constant::ORIGINES        => $this->formatOrigines($viewData),
 
-            Constant::CST_PREV        => $viewData->previous ? [
-                Constant::CST_NAME => $viewData?->previous->name,
-                Constant::CST_SLUG => $viewData?->previous->getSlug(),
+            Constant::PREV        => $viewData->previous ? [
+                Constant::NAME => $viewData?->previous->name,
+                Constant::SLUG => $viewData?->previous->getSlug(),
             ] : null,
 
-            Constant::CST_NEXT        => $viewData->next ? [
-                Constant::CST_NAME => $viewData?->next->name,
-                Constant::CST_SLUG => $viewData?->next->getSlug(),
+            Constant::NEXT        => $viewData->next ? [
+                Constant::NAME => $viewData?->next->name,
+                Constant::SLUG => $viewData?->next->getSlug(),
             ] : null,
         ];
     }
@@ -45,7 +45,7 @@ class SkillDetailPresenter
                     UrlGenerator::origin($origin->slug),
                     B::TEXT_WHITE
                 ),
-                [Constant::CST_CLASS => implode(' ', [B::BADGE, B::BG_DARK])]
+                [Constant::CLASS => implode(' ', [B::BADGE, B::BG_DARK])]
             ) . ' ';
         }
         return $html;
@@ -62,6 +62,6 @@ class SkillDetailPresenter
             $desc    = $subSkill->description ?? '';
             $parts[] = Html::getBalise('dt', $name) . Html::getBalise('dd', $desc);
         }
-        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CST_CLASS => 'my-0']) : '-';
+        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CLASS => 'my-0']) : '-';
     }
 }

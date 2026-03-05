@@ -29,7 +29,7 @@ final class SubSkillReader
     {
         if (! $criteria) {
             $criteria          = new SubSkillCriteria();
-            $criteria->orderBy = [F::NAME => Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME => Constant::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

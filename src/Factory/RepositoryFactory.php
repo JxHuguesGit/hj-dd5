@@ -41,12 +41,12 @@ class RepositoryFactory
 {
     private array $map = [
         'ability'              => AbilityRepository::class,
-        Constant::CST_ARMOR    => ArmorRepository::class,
+        Constant::ARMOR    => ArmorRepository::class,
         'condition'            => ConditionRepository::class,
         'damageType'           => DamageTypeRepository::class,
-        Constant::CST_FEAT     => FeatRepository::class,
+        Constant::FEAT     => FeatRepository::class,
         'featAbility'          => FeatAbilityRepository::class,
-        Constant::CST_FEATTYPE => FeatTypeRepository::class,
+        Constant::FEATTYPE => FeatTypeRepository::class,
         'item'                 => ItemRepository::class,
         'language'             => LanguageRepository::class,
         'monster'              => MonsterRepository::class,
@@ -68,9 +68,9 @@ class RepositoryFactory
         'speedType'            => SpeedTypeRepository::class,
         'spell'                => SpellRepository::class,
         'subSkill'             => SubSkillRepository::class,
-        Constant::CST_TOOL     => ToolRepository::class,
+        Constant::TOOL     => ToolRepository::class,
         'visionType'           => VisionTypeRepository::class,
-        Constant::CST_WEAPON   => WeaponRepository::class,
+        Constant::WEAPON   => WeaponRepository::class,
         'weaponPropertyValue'  => WeaponPropertyValueRepository::class,
     ];
 

@@ -28,10 +28,10 @@ class Form
         return $this->renderer->render(
             Template::FORM_CARD,
             [
-                $this->formAttributes[Constant::CST_TITLE],
+                $this->formAttributes[Constant::TITLE],
                 $formContent,
                 implode(' ', $this->formAttributes['buttons']),
-                $this->formAttributes[Constant::CST_ACTION],
+                $this->formAttributes[Constant::ACTION],
             ]
         );
     }

@@ -25,7 +25,7 @@ final class PublicItemArmor extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::CST_ITEMS);
+        $menu = $this->menuPresenter->render(Constant::ITEMS);
         $viewData = $this->presenter->present($this->armors);
         return $this->page->render($menu, $this->getTitle(), $viewData);
     }

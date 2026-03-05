@@ -14,7 +14,7 @@ class Form
     public function addRow(array $attributes = []): self
     {
         $this->nbRows++;
-        $this->formRows[$this->nbRows] = [Constant::CST_ATTRIBUTES => $attributes, Constant::CST_CONTENT => ''];
+        $this->formRows[$this->nbRows] = [Constant::ATTRIBUTES => $attributes, Constant::CONTENT => ''];
         return $this;
     }
 
@@ -22,21 +22,21 @@ class Form
     {
         $attributes = $this->initAttributes($id, $name, $label, $value);
 
-        if (isset($extraAttributes[Constant::CST_CLASS])) {
-            $attributes[Constant::CST_CLASS] .= ' ' . $extraAttributes[Constant::CST_CLASS];
+        if (isset($extraAttributes[Constant::CLASS])) {
+            $attributes[Constant::CLASS] .= ' ' . $extraAttributes[Constant::CLASS];
         }
-        $attributes[Constant::CST_TYPE] = $extraAttributes[Constant::CST_TYPE] ?? B::TEXT;
+        $attributes[Constant::TYPE] = $extraAttributes[Constant::TYPE] ?? B::TEXT;
 
         $spanAttributes = [];
-        if (isset($extraAttributes[Constant::CST_TYPE]) &&
-            $extraAttributes[Constant::CST_TYPE] == 'hidden') {
-            $spanAttributes[Constant::CST_CLASS] = B::DNONE;
+        if (isset($extraAttributes[Constant::TYPE]) &&
+            $extraAttributes[Constant::TYPE] == 'hidden') {
+            $spanAttributes[Constant::CLASS] = B::DNONE;
         }
 
         if ($label != '') {
-            $this->formRows[$this->nbRows][Constant::CST_CONTENT] .= $this->getSpan($id, $label, $spanAttributes);
+            $this->formRows[$this->nbRows][Constant::CONTENT] .= $this->getSpan($id, $label, $spanAttributes);
         }
-        $this->formRows[$this->nbRows][Constant::CST_CONTENT] .= Html::getBalise('input', '', $attributes);
+        $this->formRows[$this->nbRows][Constant::CONTENT] .= Html::getBalise('input', '', $attributes);
 
         return $this;
     }
@@ -46,12 +46,12 @@ class Form
         $strContent = '';
         while (! empty($this->formRows)) {
             $row = array_shift($this->formRows);
-            if (isset($row[Constant::CST_ATTRIBUTES][Constant::CST_CLASS])) {
-                $row[Constant::CST_ATTRIBUTES][Constant::CST_CLASS] .= ' input-group mb-3';
+            if (isset($row[Constant::ATTRIBUTES][Constant::CLASS])) {
+                $row[Constant::ATTRIBUTES][Constant::CLASS] .= ' input-group mb-3';
             } else {
-                $row[Constant::CST_ATTRIBUTES][Constant::CST_CLASS] = ' input-group mb-3';
+                $row[Constant::ATTRIBUTES][Constant::CLASS] = ' input-group mb-3';
             }
-            $strContent .= Html::getDiv($row[Constant::CST_CONTENT], $row[Constant::CST_ATTRIBUTES]);
+            $strContent .= Html::getDiv($row[Constant::CONTENT], $row[Constant::ATTRIBUTES]);
         }
 
         $formBalise  = Html::getBalise(
@@ -63,23 +63,23 @@ class Form
         return Html::getBalise(
             'section',
             $formBalise,
-            [Constant::CST_CLASS => 'wrapper pt-3 col-12']
+            [Constant::CLASS => 'wrapper pt-3 col-12']
         );
     }
 
     public function addFiller(array $extraAttributes = []): self
     {
         $attributes  = [
-            Constant::CST_CLASS => $extraAttributes[Constant::CST_CLASS] ?? 'col-8',
+            Constant::CLASS => $extraAttributes[Constant::CLASS] ?? 'col-8',
         ];
-        $this->formRows[$this->nbRows][Constant::CST_CONTENT] .= $this->getSpan('', '', $attributes);
+        $this->formRows[$this->nbRows][Constant::CONTENT] .= $this->getSpan('', '', $attributes);
         return $this;
     }
 
     private function getSpan(string $id, string $label, array $extraAttributes = []): string
     {
         $attributes = [
-            Constant::CST_CLASS => 'input-group-text ' . ($extraAttributes[Constant::CST_CLASS] ?? B::COL_2),
+            Constant::CLASS => 'input-group-text ' . ($extraAttributes[Constant::CLASS] ?? B::COL_2),
             'for'               => $id,
         ];
         return Html::getSpan($label, $attributes);
@@ -88,10 +88,10 @@ class Form
     private function initAttributes(string $id, string $name, string $label, $value): array
     {
         return [
-            Constant::CST_CLASS => 'form-control',
-            Constant::CST_NAME  => $name,
-            Constant::CST_ID    => $id,
-            Constant::CST_VALUE => $value,
+            Constant::CLASS => 'form-control',
+            Constant::NAME  => $name,
+            Constant::ID    => $id,
+            Constant::VALUE => $value,
             'aria'              => [
                 'label'       => $label,
                 'describedby' => $label,

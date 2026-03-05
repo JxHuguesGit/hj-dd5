@@ -20,7 +20,7 @@ class MonsterIdentityFormBuilder
         $references = $reader->allReferences();
         $options    = [];
         foreach ($references as $reference) {
-            $options[] = ['valeur' => $reference->id, Constant::CST_LABEL => $reference->name];
+            $options[] = ['valeur' => $reference->id, Constant::LABEL => $reference->name];
         }
         $fieldset
             ->addField(new NumberField(

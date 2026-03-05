@@ -11,13 +11,13 @@ class PageFeatsEpic extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => 'feats-epic',
+            Constant::SLUG        => 'feats-epic',
             'icon'                    => I::STAR,
-            Constant::CST_TITLE       => L::CBT_STYLE_EPICS,
-            Constant::CST_DESCRIPTION => 'Les dons de haut niveau, puissants et rares.',
+            Constant::TITLE       => L::CBT_STYLE_EPICS,
+            Constant::DESCRIPTION => 'Les dons de haut niveau, puissants et rares.',
             'url'                     => Routes::FEAT_PREFIX . '-' . Constant::EPIC,
             'order'                   => 44,
-            Constant::CST_PARENT      => Constant::FEATS,
+            Constant::PARENT      => Constant::FEATS,
         ];
     }
 }

@@ -10,7 +10,7 @@ final class MonsterSpeedTypeCriteria extends BaseCriteria
     public ?int $monsterId = null;
 
     public array $orderBy = [
-        F::TYPESPEEDID => Constant::CST_ASC
+        F::TYPESPEEDID => Constant::ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

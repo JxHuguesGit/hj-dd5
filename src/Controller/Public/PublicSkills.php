@@ -25,7 +25,7 @@ class PublicSkills extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::CST_SKILLS);
+        $menu = $this->menuPresenter->render(Constant::SKILLS);
         $viewData = $this->presenter->present($this->skills);
         return $this->page->render($menu, $this->title, $viewData);
     }

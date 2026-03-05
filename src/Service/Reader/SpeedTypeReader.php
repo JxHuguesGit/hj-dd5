@@ -29,7 +29,7 @@ final class SpeedTypeReader
     {
         if (!$criteria) {
             $criteria = new SpeedTypeCriteria();
-            $criteria->orderBy = [F::ID=>Constant::CST_ASC];
+            $criteria->orderBy = [F::ID=>Constant::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

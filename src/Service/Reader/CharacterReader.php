@@ -29,7 +29,7 @@ final class CharacterReader
     {
         $criteria           = new CharacterCriteria();
         $criteria->wpUserId = $wpUserId;
-        $criteria->orderBy  = [F::NAME => Constant::CST_ASC];
+        $criteria->orderBy  = [F::NAME => Constant::ASC];
         return $this->repo->findAllWithCriteria($criteria);
     }
 
@@ -40,7 +40,7 @@ final class CharacterReader
     {
         if (! $criteria) {
             $criteria          = new CharacterCriteria();
-            $criteria->orderBy = [F::NAME => Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME => Constant::ASC];
         }
         return $this->repo->findAllWithCriteria($criteria);
     }

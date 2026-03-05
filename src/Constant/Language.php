@@ -52,6 +52,7 @@ class Language
     public const CBT_STYLE_EPICS = 'Faveurs épiques';
     public const FORCE           = 'Force';
     public const FP              = 'FP';
+    public const UNKNOWN_GROUP   = 'Groupe inconnu : ';
     public const CHAR_HIST_TITLE = 'Historique du personnage';
     public const HISTORIQUES     = 'Historiques';
     public const UNLIMITED       = 'Illimitée';
@@ -68,12 +69,14 @@ class Language
     public const SPECIES_TITLE   = 'Les Espèces';
     public const SPELLS_TITLE    = 'Les Sorts';
     public const MONSTER         = 'Monstre';
+    public const LEVEL           = 'Niveau';
     public const CHAR_NAME_TITLE = 'Nom du personnage';
     public const NAMES           = 'Noms';
-    public const LEVEL           = 'Niveau';
+    public const NOUVEAU = 'Nouveau';
     public const ORIGIN          = 'Origine';
     public const ORIGINS         = 'Origines';
     public const TOOL            = 'Outil';
+    public const CHARACTERS = 'Personnages';
     public const PERSO           = 'Personnelle';
     public const WEIGHT          = 'Poids';
     public const RANGE           = 'Portée';

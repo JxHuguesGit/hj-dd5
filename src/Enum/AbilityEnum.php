@@ -1,28 +1,30 @@
 <?php
 namespace src\Enum;
 
+use src\Constant\Constant as C;
+use src\Constant\Language as L;
 use src\Helper\EnumHelper;
 
 enum AbilityEnum: string
 {
     use EnumHelper;
 
-    case Str = 'str';
-    case Dex = 'dex';
-    case Con = 'con';
-    case Int = 'int';
-    case Wis = 'wis';
-    case Cha = 'cha';
+    case Str = C::ABL_STR;
+    case Dex = C::ABL_DEX;
+    case Con = C::ABL_CON;
+    case Int = C::ABL_INT;
+    case Wis = C::ABL_WIS;
+    case Cha = C::ABL_CHA;
 
     public function label(): string
     {
         return match ($this) {
-            static::Str => 'Force',
-            static::Dex => 'Dextérité',
-            static::Con => 'Constitution',
-            static::Int => 'Intelligence',
-            static::Wis => 'Sagesse',
-            static::Cha => 'Charisme',
+            static::Str => L::FORCE,
+            static::Dex => L::DEXTERITE,
+            static::Con => L::CONSTITUTION,
+            static::Int => L::INTELLIGENCE,
+            static::Wis => L::SAGESSE,
+            static::Cha => L::CHARISME,
         };
     }
 
@@ -30,8 +32,8 @@ enum AbilityEnum: string
     public static function groups(): array
     {
         return [
-            'mental' => [self::Int, self::Wis, self::Cha],
-            'physical' => [self::Str, self::Dex, self::Con],
+            C::MENTAL   => [self::Int, self::Wis, self::Cha],
+            C::PHYSICAL => [self::Str, self::Dex, self::Con],
         ];
     }
 
@@ -39,8 +41,8 @@ enum AbilityEnum: string
     public static function group(string $name): array
     {
         $groups = self::groups();
-        if (!isset($groups[$name])) {
-            throw new \InvalidArgumentException("Groupe inconnu : $name");
+        if (! isset($groups[$name])) {
+            throw new \InvalidArgumentException(L::UNKNOWN_GROUP . $name);
         }
         return $groups[$name];
     }

@@ -23,7 +23,7 @@ class TimelineMenuPresenter
         $attributes = [
             '',
             UrlGenerator::admin(Constant::ONG_TIMELINE, ''),
-            $isActive ? Constant::CST_ACTIVE : '',
+            $isActive ? Constant::ACTIVE : '',
             $item->icon,
             $item->label,
             B::DNONE,

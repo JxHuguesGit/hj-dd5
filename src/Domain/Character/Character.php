@@ -39,7 +39,7 @@ final class Character extends Entity
             $this->name = $input['characterName'];
         }
         if ($this->createStep === null || $this->createStep === '') {
-            $this->createStep = Constant::CST_NAME;
+            $this->createStep = Constant::NAME;
         } elseif (isset($input['createStep'])) {
             $this->createStep = $input['createStep'];
         }
@@ -55,7 +55,7 @@ final class Character extends Entity
     }
     public function isComplete(): bool
     {
-        return $this->createStep === Constant::CST_DONE;
+        return $this->createStep === Constant::DONE;
     }
 
     public function getDataField(string $key, mixed $default = null): mixed

@@ -20,8 +20,8 @@ final class OriginPageService
 
         return new OriginPageView(
             $origin,
-            $nav[Constant::CST_PREV],
-            $nav[Constant::CST_NEXT],
+            $nav[Constant::PREV],
+            $nav[Constant::NEXT],
             $this->originService->getFeat($origin),
             $this->originService->getTool($origin),
             $this->originService->getAbilities($origin),

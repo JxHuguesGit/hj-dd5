@@ -40,15 +40,15 @@ class Paginate
         $this->objs = $arrData[Constant::PAGE_OBJS] ?? new Collection();
         $this->nbElements = $this->objs->count();
         $this->nbPages = ceil($this->nbElements/$this->nbPerPage);
-        $curPage = $arrData[Constant::CST_CURPAGE] ?? 1;
+        $curPage = $arrData[Constant::CURPAGE] ?? 1;
         $this->curPage = max(1, min($curPage, $this->nbPages));
         /////////////////////////////////////////////////
-        
+
         $this->extraParams = $params;
 
-        $this->url = remove_query_arg(Constant::CST_CURPAGE);
+        $this->url = remove_query_arg(Constant::CURPAGE);
         $this->dealWithFilterParams($this->url);
-        
+
     }
 
     public function getPaginationBlock(): string
@@ -57,7 +57,7 @@ class Paginate
         $firstElement = ($this->curPage-1)*$this->nbPerPage*1+1;
         $lastElement  = min($this->nbElements, $this->curPage*$this->nbPerPage);
         $divContent = "Entrées $firstElement à $lastElement sur ".$this->nbElements;
-        $navContent = Html::getSpan($divContent, [Constant::CST_CLASS => $strClass]);
+        $navContent = Html::getSpan($divContent, [Constant::CLASS => $strClass]);
 
         if ($this->nbPages<=1) {
             return $navContent;
@@ -138,8 +138,8 @@ class Paginate
         }
 
         $strClass = 'pagination pagination-sm justify-content-end mb-0 col-6';
-        $navContent .= Html::getBalise('ul', $ulContent, [Constant::CST_CLASS => $strClass]);
-        $navAttributes = [Constant::CST_CLASS => 'row mx-2', 'aria-label' => 'Pagination liste'];
+        $navContent .= Html::getBalise('ul', $ulContent, [Constant::CLASS => $strClass]);
+        $navAttributes = [Constant::CLASS => 'row mx-2', 'aria-label' => 'Pagination liste'];
         return Html::getBalise('nav', $navContent, $navAttributes);
     }
 
@@ -147,17 +147,17 @@ class Paginate
     {
         $addClass = '';
         if ($isDisabled) {
-            $addClass = ' '.Constant::CST_DISABLED;
+            $addClass = ' '.Constant::DISABLED;
             $strLink = Html::getLink($label, '#', $this->cssPageLink);
         } else {
             $href = remove_query_arg('refElementId', $this->url);
-            $href = add_query_arg(Constant::CST_CURPAGE, $curpage, $href);
+            $href = add_query_arg(Constant::CURPAGE, $curpage, $href);
             $strLink = Html::getLink($label, $href, $this->cssPageLink);
         }
 
-        return Html::getLi($strLink, [Constant::CST_CLASS=>'page-item'.$addClass]);
+        return Html::getLi($strLink, [Constant::CLASS=>'page-item'.$addClass]);
     }
-    
+
     private function dealWithFilterParams(string &$href): void
     {
         if (empty($this->extraParams)) {
@@ -182,12 +182,12 @@ class Paginate
             $href = add_query_arg($filterArgs, $href);
         }
     }
-    
+
     public function getStartSlice(): int
     {
         return ($this->curPage-1)*$this->nbPerPage;
     }
-    
+
     public function getNbPerPage(): int
     {
         return $this->nbPerPage;

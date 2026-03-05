@@ -8,8 +8,8 @@ abstract class AbstractCompendiumHandler
 {
     public function render(): string
     {
-        $action = Session::fromGet(Constant::CST_ACTION);
-        $slug   = Session::fromGet(Constant::CST_SLUG);
+        $action = Session::fromGet(Constant::ACTION);
+        $slug   = Session::fromGet(Constant::SLUG);
 
         if (Session::isPostSubmitted()) {
             return $this->handleSubmit($action, $slug);

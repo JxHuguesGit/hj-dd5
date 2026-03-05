@@ -26,8 +26,8 @@ final class WeaponListPresenter
         $grouped = [];
         foreach ($weapons as $weapon) {
             /** @var Weapon $weapon */
-            $key = ($weapon->isMartial() ? Constant::CST_MARTIAL : Constant::CST_SIMPLE) . '_'
-                 . ($weapon->isMelee() ? Constant::CST_MELEE : Constant::CST_RANGED);
+            $key = ($weapon->isMartial() ? Constant::MARTIAL : Constant::SIMPLE) . '_'
+                 . ($weapon->isMelee() ? Constant::MELEE : Constant::RANGED);
             $grouped[$key][] = $this->buildRow($weapon);
         }
 
@@ -35,8 +35,8 @@ final class WeaponListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new WeaponGroup(
-                label: $types[$typeId][Constant::CST_LABEL] ?? '',
-                slug: $types[$typeId][Constant::CST_SLUG] ?? '',
+                label: $types[$typeId][Constant::LABEL] ?? '',
+                slug: $types[$typeId][Constant::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -66,25 +66,25 @@ final class WeaponListPresenter
     public static function getWeaponTypes(): array
     {
         return [
-            Constant::CST_SIMPLE.'_'.Constant::CST_MELEE => [
-                Constant::CST_SLUG => Constant::CST_SIMPLE.'_'.Constant::CST_MELEE,
-                Constant::CST_LABEL => 'Armes simples de mêlée',
-                Constant::CST_LABEL_SING => 'Arme simple de mêlée',
+            Constant::SIMPLE.'_'.Constant::MELEE => [
+                Constant::SLUG => Constant::SIMPLE.'_'.Constant::MELEE,
+                Constant::LABEL => 'Armes simples de mêlée',
+                Constant::LABEL_SING => 'Arme simple de mêlée',
             ],
-            Constant::CST_SIMPLE.'_'.Constant::CST_RANGED => [
-                Constant::CST_SLUG => Constant::CST_SIMPLE.'_'.Constant::CST_RANGED,
-                Constant::CST_LABEL => 'Armes simples à distance',
-                Constant::CST_LABEL_SING => 'Arme simple à distance',
+            Constant::SIMPLE.'_'.Constant::RANGED => [
+                Constant::SLUG => Constant::SIMPLE.'_'.Constant::RANGED,
+                Constant::LABEL => 'Armes simples à distance',
+                Constant::LABEL_SING => 'Arme simple à distance',
             ],
-            Constant::CST_MARTIAL.'_'.Constant::CST_MELEE => [
-                Constant::CST_SLUG => Constant::CST_MARTIAL.'_'.Constant::CST_MELEE,
-                Constant::CST_LABEL => 'Armes martiales de mêlée',
-                Constant::CST_LABEL_SING => 'Arme martiale de mêlée',
+            Constant::MARTIAL.'_'.Constant::MELEE => [
+                Constant::SLUG => Constant::MARTIAL.'_'.Constant::MELEE,
+                Constant::LABEL => 'Armes martiales de mêlée',
+                Constant::LABEL_SING => 'Arme martiale de mêlée',
             ],
-            Constant::CST_MARTIAL.'_'.Constant::CST_RANGED => [
-                Constant::CST_SLUG => Constant::CST_MARTIAL.'_'.Constant::CST_RANGED,
-                Constant::CST_LABEL => 'Armes martiales à distance',
-                Constant::CST_LABEL_SING => 'Arme martiale à distance',
+            Constant::MARTIAL.'_'.Constant::RANGED => [
+                Constant::SLUG => Constant::MARTIAL.'_'.Constant::RANGED,
+                Constant::LABEL => 'Armes martiales à distance',
+                Constant::LABEL_SING => 'Arme martiale à distance',
             ],
         ];
     }

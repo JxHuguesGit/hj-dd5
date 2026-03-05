@@ -11,13 +11,13 @@ class PageFeatsGeneral extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => 'feats-general',
+            Constant::SLUG        => 'feats-general',
             'icon'                    => I::SCROLL,
-            Constant::CST_TITLE       => L::GENERAL_FEATS,
-            Constant::CST_DESCRIPTION => "Les dons accessibles au cours de la carrière d'un personnage.",
+            Constant::TITLE       => L::GENERAL_FEATS,
+            Constant::DESCRIPTION => "Les dons accessibles au cours de la carrière d'un personnage.",
             'url'                     => Routes::FEAT_PREFIX . '-' . Constant::GENERAL,
             'order'                   => 42,
-            Constant::CST_PARENT      => Constant::FEATS,
+            Constant::PARENT      => Constant::FEATS,
         ];
     }
 }

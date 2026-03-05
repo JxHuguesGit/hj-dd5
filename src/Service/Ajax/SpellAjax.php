@@ -21,7 +21,7 @@ class SpellAjax
 
         $criteria = SpellCriteria::fromRequest([
             'page'             => Session::fromPost('page', 1),
-            Constant::CST_TYPE => Session::fromPost(Constant::CST_TYPE),
+            Constant::TYPE => Session::fromPost(Constant::TYPE),
             ...$fromPost,
         ]);
 

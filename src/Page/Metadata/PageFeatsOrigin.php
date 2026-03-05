@@ -11,13 +11,13 @@ class PageFeatsOrigin extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => 'feats-origin',
+            Constant::SLUG        => 'feats-origin',
             'icon'                    => I::SCROLL,
-            Constant::CST_TITLE       => L::ORIGIN_FEATS,
-            Constant::CST_DESCRIPTION => "Les dons d'origine liés aux historiques de personnage.",
+            Constant::TITLE       => L::ORIGIN_FEATS,
+            Constant::DESCRIPTION => "Les dons d'origine liés aux historiques de personnage.",
             'url'                     => Routes::FEAT_PREFIX . '-' . Constant::ORIGIN,
             'order'                   => 41,
-            Constant::CST_PARENT      => Constant::FEATS,
+            Constant::PARENT      => Constant::FEATS,
         ];
     }
 }

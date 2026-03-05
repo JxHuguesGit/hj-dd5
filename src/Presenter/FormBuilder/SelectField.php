@@ -27,15 +27,15 @@ class SelectField extends FormField
         $strOptions = '';
         foreach ($this->options as $option) {
             $strOptions .= Html::getOption(
-                $option[Constant::CST_LABEL],
-                [Constant::CST_VALUE => $option[Constant::CST_VALUE]],
-                $this->value == $option[Constant::CST_VALUE]
+                $option[Constant::LABEL],
+                [Constant::VALUE => $option[Constant::VALUE]],
+                $this->value == $option[Constant::VALUE]
             );
         }
         $attrs = [
-            Constant::CST_ID    => $this->getId(),
-            Constant::CST_NAME  => $this->name,
-            Constant::CST_CLASS => 'form-select',
+            Constant::ID    => $this->getId(),
+            Constant::NAME  => $this->name,
+            Constant::CLASS => 'form-select',
         ];
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';

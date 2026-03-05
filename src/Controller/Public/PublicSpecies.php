@@ -3,7 +3,7 @@ namespace src\Controller\Public;
 
 use src\Collection\Collection;
 use src\Constant\Constant;
-use src\Constant\Field;
+use src\Constant\Field as F;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
 use src\Presenter\ListPresenter\SpeciesListPresenter;
@@ -19,7 +19,7 @@ class PublicSpecies extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->species = $this->speciesQueryService->speciesByParent(0, [Field::NAME=>Constant::CST_ASC]);
+        $this->species = $this->speciesQueryService->speciesByParent(0, [F::NAME=>Constant::ASC]);
         $this->title = 'Les Espèces';
     }
 

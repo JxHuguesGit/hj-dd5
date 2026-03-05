@@ -114,7 +114,7 @@ final class PublicControllerFactory
                 new SpellFilterModalPresenter($this->renderer)
             ),
 
-            Constant::CST_ITEMS => new PublicItems(),
+            Constant::ITEMS => new PublicItems(),
 
             default             => null,
         };

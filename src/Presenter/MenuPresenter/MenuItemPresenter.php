@@ -31,7 +31,7 @@ class MenuItemPresenter
         return [
             '',
             $url,
-            $isActive ? Constant::CST_ACTIVE : '',
+            $isActive ? Constant::ACTIVE : '',
             $icon,
             $label,
             $show,

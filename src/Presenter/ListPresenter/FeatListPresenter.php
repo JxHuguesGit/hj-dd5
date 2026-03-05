@@ -36,9 +36,9 @@ final class FeatListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new FeatGroup(
-                label: $types[$typeId][Constant::CST_LABEL] ?? '',
-                slug: $types[$typeId][Constant::CST_SLUG] ?? '',
-                extraPrerequis: $types[$typeId][Constant::CST_EXTRA_PREREQUIS] ?? '',
+                label: $types[$typeId][Constant::LABEL] ?? '',
+                slug: $types[$typeId][Constant::SLUG] ?? '',
+                extraPrerequis: $types[$typeId][Constant::EXTRA_PREREQUIS] ?? '',
                 rows: $rows
             ));
         }
@@ -79,12 +79,12 @@ final class FeatListPresenter
                 }
 
                 $this->wpPostService->getById($feat->postId);
-                $wpPreRequis = $this->wpPostService->getField(Constant::CST_PREREQUIS);
+                $wpPreRequis = $this->wpPostService->getField(Constant::PREREQUIS);
                 $returned    = [implode(', ', $parts), $wpPreRequis ? ucfirst($wpPreRequis) : '-'];
                 break;
             case Feat::TYPE_EPIC:
                 $this->wpPostService->getById($feat->postId);
-                $wpPreRequis = $this->wpPostService->getField(Constant::CST_PREREQUIS);
+                $wpPreRequis = $this->wpPostService->getField(Constant::PREREQUIS);
                 $returned    = ['-', $wpPreRequis ? ucfirst($wpPreRequis) : '-'];
                 break;
             default:
@@ -98,24 +98,24 @@ final class FeatListPresenter
     {
         return [
             Feat::TYPE_ORIGIN  => [
-                Constant::CST_SLUG            => '-' . Constant::ORIGIN,
-                Constant::CST_LABEL           => L::ORIGIN_FEATS,
-                Constant::CST_EXTRA_PREREQUIS => '',
+                Constant::SLUG            => '-' . Constant::ORIGIN,
+                Constant::LABEL           => L::ORIGIN_FEATS,
+                Constant::EXTRA_PREREQUIS => '',
             ],
             Feat::TYPE_GENERAL => [
-                Constant::CST_SLUG            => '-' . Constant::GENERAL,
-                Constant::CST_LABEL           => L::GENERAL_FEATS,
-                Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV4 . ')',
+                Constant::SLUG            => '-' . Constant::GENERAL,
+                Constant::LABEL           => L::GENERAL_FEATS,
+                Constant::EXTRA_PREREQUIS => Constant::PREREQUIS_NIV4 . ')',
             ],
             Feat::TYPE_COMBAT  => [
-                Constant::CST_SLUG            => '-' . Constant::COMBAT,
-                Constant::CST_LABEL           => L::CBT_STYLE_FEATS,
-                Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_ASDC . ')',
+                Constant::SLUG            => '-' . Constant::COMBAT,
+                Constant::LABEL           => L::CBT_STYLE_FEATS,
+                Constant::EXTRA_PREREQUIS => Constant::PREREQUIS_ASDC . ')',
             ],
             Feat::TYPE_EPIC    => [
-                Constant::CST_SLUG            => '-' . Constant::EPIC,
-                Constant::CST_LABEL           => L::CBT_STYLE_EPICS,
-                Constant::CST_EXTRA_PREREQUIS => Constant::CST_PREREQUIS_NIV19 . ')',
+                Constant::SLUG            => '-' . Constant::EPIC,
+                Constant::LABEL           => L::CBT_STYLE_EPICS,
+                Constant::EXTRA_PREREQUIS => Constant::PREREQUIS_NIV19 . ')',
             ],
         ];
     }

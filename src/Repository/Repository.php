@@ -64,7 +64,7 @@ class Repository
         );
     }
 
-    public function findAll(array $orderBy = [F::ID => Constant::CST_ASC]): Collection
+    public function findAll(array $orderBy = [F::ID => Constant::ASC]): Collection
     {
         return $this->findBy([], $orderBy, -1);
     }

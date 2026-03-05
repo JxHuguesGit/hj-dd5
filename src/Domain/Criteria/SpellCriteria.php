@@ -26,7 +26,7 @@ final class SpellCriteria
             'posts_per_page' => 10,
             'category_name'  => 'sort',
             'orderby'        => B::TITLE,
-            'order'          => Constant::CST_ASC,
+            'order'          => Constant::ASC,
             'paged'          => $this->page,
             'meta_query'     => ['relation' => 'AND'],
         ];
@@ -41,8 +41,8 @@ final class SpellCriteria
         if ($this->minLevel !== null && $this->maxLevel !== null) {
             $args['meta_query'][] = [
                 'key'               => F::NIVEAU,
-                Constant::CST_VALUE => [$this->minLevel, $this->maxLevel],
-                Constant::CST_TYPE  => 'NUMERIC',
+                Constant::VALUE => [$this->minLevel, $this->maxLevel],
+                Constant::TYPE  => 'NUMERIC',
                 'compare'           => 'BETWEEN',
             ];
         }
@@ -53,7 +53,7 @@ final class SpellCriteria
             foreach ($this->classes as $class) {
                 $classConditions[] = [
                     'key'               => F::CLASSES,
-                    Constant::CST_VALUE => '"' . $class . '"',
+                    Constant::VALUE => '"' . $class . '"',
                     'compare'           => 'LIKE',
                 ];
             }
@@ -67,7 +67,7 @@ final class SpellCriteria
         if (! empty($this->schools) && count($this->schools) < 8) {
             $args['meta_query'][] = [
                 'key'               => F::SCHOOL,
-                Constant::CST_VALUE => $this->schools,
+                Constant::VALUE => $this->schools,
                 'compare'           => 'IN',
             ];
         }
@@ -76,7 +76,7 @@ final class SpellCriteria
         if ($this->onlyRituel) {
             $args['meta_query'][] = [
                 'key'               => 'rituel',
-                Constant::CST_VALUE => '"r"',
+                Constant::VALUE => '"r"',
                 'compare'           => 'LIKE',
             ];
         }
@@ -85,7 +85,7 @@ final class SpellCriteria
         if ($this->onlyConcentration) {
             $args['meta_query'][] = [
                 'key'               => 'concentration',
-                Constant::CST_VALUE => '"c"',
+                Constant::VALUE => '"c"',
                 'compare'           => 'LIKE',
             ];
         }
@@ -100,7 +100,7 @@ final class SpellCriteria
     {
         $criteria                    = new self();
         $criteria->page              = (int) ($request['page'] ?? 1);
-        $criteria->type              = $request[Constant::CST_TYPE] ?? 'append';
+        $criteria->type              = $request[Constant::TYPE] ?? 'append';
         $criteria->minLevel          = isset($request['levelMinFilter']) ? (int) $request['levelMinFilter'] : null;
         $criteria->maxLevel          = isset($request['levelMaxFilter']) ? (int) $request['levelMaxFilter'] : null;
         $criteria->classes           = $request['classFilter'] ?? [];

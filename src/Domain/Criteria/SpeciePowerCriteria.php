@@ -11,7 +11,7 @@ final class SpeciePowerCriteria extends BaseCriteria
     public ?int $powerId   = null;
 
     public array $orderBy = [
-        F::ID => Constant::CST_ASC,
+        F::ID => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

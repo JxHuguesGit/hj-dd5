@@ -10,7 +10,7 @@ final class MonsterResistanceCriteria extends BaseCriteria
     public ?int $monsterId = null;
 
     public array $orderBy = [
-        F::ID => Constant::CST_ASC,
+        F::ID => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

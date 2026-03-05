@@ -11,13 +11,13 @@ class PageOrigines extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => Constant::ORIGINES,
+            Constant::SLUG        => Constant::ORIGINES,
             'icon'                    => I::USERS,
-            Constant::CST_TITLE       => L::HISTO_TITLE,
-            Constant::CST_DESCRIPTION => "L'historique de votre personnage est un ensemble d'éléments disparates qui symbolisent le lieu et l'occupation de votre héros en herbe avant qu'il embrasse la carrière d'aventurier.",
+            Constant::TITLE       => L::HISTO_TITLE,
+            Constant::DESCRIPTION => "L'historique de votre personnage est un ensemble d'éléments disparates qui symbolisent le lieu et l'occupation de votre héros en herbe avant qu'il embrasse la carrière d'aventurier.",
             'url'                     => Routes::ORIGINS_PREFIX,
             'order'                   => 40,
-            Constant::CST_PARENT      => Constant::HOME,
+            Constant::PARENT      => Constant::HOME,
         ];
     }
 }

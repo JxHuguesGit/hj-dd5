@@ -15,13 +15,13 @@ class PageElement
 
     public function __construct(array $data)
     {
-        $this->slug        = $data[Constant::CST_SLUG] ?? '';
+        $this->slug        = $data[Constant::SLUG] ?? '';
         $this->icon        = $data['icon'] ?? '';
         $this->title       = $data['title'] ?? '';
-        $this->description = $data[Constant::CST_DESCRIPTION] ?? '';
+        $this->description = $data[Constant::DESCRIPTION] ?? '';
         $this->url         = $data['url'] ?? '#';
         $this->order       = $data['order'] ?? 100;
-        $this->parentSlug  = $data[Constant::CST_PARENT] ?? null;
+        $this->parentSlug  = $data[Constant::PARENT] ?? null;
     }
 
     public function getSlug(): string

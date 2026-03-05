@@ -11,7 +11,7 @@ final class CharacterCriteria extends BaseCriteria
     public ?int $wpUserId = null;
 
     public array $orderBy = [
-        F::NAME => Constant::CST_ASC,
+        F::NAME => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

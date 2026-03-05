@@ -9,9 +9,9 @@ class TextareaField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            Constant::CST_ID    => $this->getId(),
-            Constant::CST_NAME  => $this->name,
-            Constant::CST_CLASS => 'form-control',
+            Constant::ID    => $this->getId(),
+            Constant::NAME  => $this->name,
+            Constant::CLASS => 'form-control',
             'style'             => $this->params['style'],
         ];
         if ($this->readonly) {

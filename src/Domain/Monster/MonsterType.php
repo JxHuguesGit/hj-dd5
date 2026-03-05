@@ -20,6 +20,6 @@ final class MonsterType
 
     public function getName(): string
     {
-        return ($this->getEntity()?->getNameAndGender())[Constant::CST_LABEL];
+        return ($this->getEntity()?->getNameAndGender())[Constant::LABEL];
     }
 }

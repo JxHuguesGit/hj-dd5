@@ -20,9 +20,9 @@ class PageFeat extends PageDetail
             Template::FEAT_DETAIL_CARD,
             [
                 '',
-                $data[Constant::CST_TITLE] ?? '',
-                $data[Constant::CST_DESCRIPTION] ?? '',
-                $data[Constant::CST_FEATTYPE] ?? '-',
+                $data[Constant::TITLE] ?? '',
+                $data[Constant::DESCRIPTION] ?? '',
+                $data[Constant::FEATTYPE] ?? '-',
                 $data[Constant::ORIGINES] ?? '',
             ]
         );

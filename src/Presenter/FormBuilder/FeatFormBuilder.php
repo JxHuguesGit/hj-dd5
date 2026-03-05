@@ -35,15 +35,15 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $featTypes      = $this->featTypeReader->allFeatTypes();
         $selectElements = array_map(
             fn($t) => [
-                Constant::CST_VALUE => $t->id,
-                Constant::CST_LABEL => $t->name,
+                Constant::VALUE => $t->id,
+                Constant::LABEL => $t->name,
             ],
             $featTypes->toArray()
         );
         $this->wpPostService->getById($entity->postId);
 
-        $params[Constant::CST_TITLE] = 'Don : ' . $entity->name;
-        $params[Constant::CST_TYPE]  = Constant::EDIT;
+        $params[Constant::TITLE] = 'Don : ' . $entity->name;
+        $params[Constant::TYPE]  = Constant::EDIT;
         $params['cancelUrl']         = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::FEATS);
         $form                        = $this->createForm($params);
 
@@ -66,7 +66,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
-                F::NAME, Constant::CST_NAME, $entity->name, true,
+                F::NAME, Constant::NAME, $entity->name, true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_5]
             ))
             ->addField(new FillerField(
@@ -78,7 +78,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
-                F::SLUG, Constant::CST_SLUG, $entity->slug, true,
+                F::SLUG, Constant::SLUG, $entity->slug, true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_8,
                 ]))
             ->addField(new TextareaField(
@@ -89,9 +89,9 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 ]
             ))
             ->addField(new TextField(
-                Constant::CST_PREREQUIS,
+                Constant::PREREQUIS,
                 L::PREQUISITE,
-                $this->wpPostService->getField(Constant::CST_PREREQUIS),
+                $this->wpPostService->getField(Constant::PREREQUIS),
                 true,
                 [Constant::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3]
             ))

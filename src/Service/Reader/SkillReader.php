@@ -40,7 +40,7 @@ final class SkillReader
     {
         if (!$criteria) {
             $criteria = new SkillCriteria();
-            $criteria->orderBy = [F::ABILITYID=>Constant::CST_ASC, F::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::ABILITYID=>Constant::ASC, F::NAME=>Constant::ASC];
         }
         return $this->skillRepository->findAllWithCriteria($criteria);
     }

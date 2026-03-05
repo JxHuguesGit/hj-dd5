@@ -30,7 +30,7 @@ class AjaxRouter
         if (! isset($this->actions[$ajaxAction])) {
             return [
                 'status'             => 'error',
-                Constant::CST_ACTION => $ajaxAction,
+                Constant::ACTION => $ajaxAction,
                 'message'            => 'Unknown action',
             ];
         }
@@ -40,8 +40,8 @@ class AjaxRouter
 
         return [
             'status'             => 'success',
-            Constant::CST_ACTION => $ajaxAction,
-            Constant::CST_DATA   => $action->execute(),
+            Constant::ACTION => $ajaxAction,
+            Constant::DATA   => $action->execute(),
         ];
     }
 }

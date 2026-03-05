@@ -16,7 +16,7 @@ final class MonsterCriteria extends BaseCriteria
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        'CONCAT('.F::FRNAME.', m.'.F::NAME.')' => Constant::CST_ASC
+        'CONCAT('.F::FRNAME.', m.'.F::NAME.')' => Constant::ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void
@@ -37,11 +37,11 @@ final class MonsterCriteria extends BaseCriteria
     {
         // Voir SpellCriteria pour informations complémentaires.
         $criteria = new self();
-        $criteria->orderBy = [F::NAME => Constant::CST_ASC];
+        $criteria->orderBy = [F::NAME => Constant::ASC];
         $criteria->page = (int)($request['page'] ?? 1);
         $criteria->limit = (int)($request['limit'] ?? 10);
         $criteria->offset = $criteria->page*$criteria->limit;
-        $criteria->type = $request[Constant::CST_TYPE] ?? 'append';
+        $criteria->type = $request[Constant::TYPE] ?? 'append';
         return $criteria;
     }
 

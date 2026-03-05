@@ -28,8 +28,8 @@ final class SkillPageService
             $subSkills,
             $ability,
             $origins,
-            $nav[Constant::CST_PREV],
-            $nav[Constant::CST_NEXT],
+            $nav[Constant::PREV],
+            $nav[Constant::NEXT],
         );
     }
 }

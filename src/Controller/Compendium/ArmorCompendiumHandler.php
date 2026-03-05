@@ -20,9 +20,9 @@ final class ArmorCompendiumHandler implements CompendiumHandlerInterface
     {
         $criteria = new ArmorCriteria();
         $criteria->orderBy = [
-            F::ARMORTYPID => Constant::CST_ASC,
-            F::ARMORCLASS => Constant::CST_ASC,
-            F::GOLDPRICE  => Constant::CST_ASC,
+            F::ARMORTYPID => Constant::ASC,
+            F::ARMORCLASS => Constant::ASC,
+            F::GOLDPRICE  => Constant::ASC,
         ];
         $armors = $this->reader->allArmors($criteria);
         $content   = $this->presenter->present($armors);

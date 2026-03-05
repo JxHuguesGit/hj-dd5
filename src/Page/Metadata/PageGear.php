@@ -11,13 +11,13 @@ class PageGear extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => Constant::GEAR,
+            Constant::SLUG        => Constant::GEAR,
             'icon'                    => I::BOXOPEN,
-            Constant::CST_TITLE       => L::EQUIPMENT,
-            Constant::CST_DESCRIPTION => 'Découvrez l\'équipement jouable.',
+            Constant::TITLE       => L::EQUIPMENT,
+            Constant::DESCRIPTION => 'Découvrez l\'équipement jouable.',
             'url'                     => Routes::ITEM_PREFIX,
             'order'                   => 50,
-            Constant::CST_PARENT      => Constant::CST_ITEMS,
+            Constant::PARENT      => Constant::ITEMS,
         ];
     }
 }

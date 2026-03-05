@@ -22,14 +22,14 @@ abstract class FormField
     {
         $strBalise = $this->renderInput();
         $strLabel  = Html::getBalise(
-            Constant::CST_LABEL,
+            Constant::LABEL,
             htmlspecialchars($this->label),
             ['for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CST_CLASS => 'form-floating']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CLASS => 'form-floating']);
         return Html::getDiv(
             $innerDiv,
-            [Constant::CST_CLASS => $this->params[Constant::OUTERDIVCLASS] ?? B::COL_12]
+            [Constant::CLASS => $this->params[Constant::OUTERDIVCLASS] ?? B::COL_12]
         );
     }
 }

@@ -19,12 +19,12 @@ class PageSpecie extends PageDetail
             $data,
             Template::SPECIE_DETAIL_CARD,
             [
-                $data[Constant::CST_TITLE] ?? '',
-                $data[Constant::CST_DESCRIPTION] ?? '',
-                $data[Constant::CST_CREATURE_TYPE] ?? '-',
-                $data[Constant::CST_SIZE_CATEGORY] ?? '-',
-                $data[Constant::CST_SPEED] ?? '-',
-                $data[Constant::CST_POWERS] ?? '-',
+                $data[Constant::TITLE] ?? '',
+                $data[Constant::DESCRIPTION] ?? '',
+                $data[Constant::CREATURE_TYPE] ?? '-',
+                $data[Constant::SIZE_CATEGORY] ?? '-',
+                $data[Constant::SPEED] ?? '-',
+                $data[Constant::POWERS] ?? '-',
             ]
         );
     }

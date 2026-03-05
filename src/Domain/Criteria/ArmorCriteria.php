@@ -8,7 +8,7 @@ use src\Query\QueryBuilder;
 final class ArmorCriteria extends BaseCriteria
 {
     public ?int $id = null;
-    public string $type = Constant::CST_ARMOR;
+    public string $type = Constant::ARMOR;
     public ?string $name = null;
     public ?string $slug = null;
     public ?int $armorTypeId = null;
@@ -17,9 +17,9 @@ final class ArmorCriteria extends BaseCriteria
     public ?string $nameGt  = null;
 
     public array $orderBy = [
-        F::ARMORTYPID => Constant::CST_ASC,
-        F::ARMORCLASS => Constant::CST_ASC,
-        F::NAME       => Constant::CST_ASC,
+        F::ARMORTYPID => Constant::ASC,
+        F::ARMORCLASS => Constant::ASC,
+        F::NAME       => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $qb): void

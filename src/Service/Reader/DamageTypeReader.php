@@ -29,7 +29,7 @@ final class DamageTypeReader
     {
         if (! $criteria) {
             $criteria          = new DamageTypeCriteria();
-            $criteria->orderBy = [F::NAME => Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME => Constant::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

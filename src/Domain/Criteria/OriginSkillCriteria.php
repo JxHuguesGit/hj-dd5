@@ -11,7 +11,7 @@ final class OriginSkillCriteria extends BaseCriteria
     public ?int $skillId  = null;
 
     public array $orderBy = [
-        F::ID => Constant::CST_ASC,
+        F::ID => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

@@ -20,8 +20,8 @@ final class SpellPageService
 
         return new SpellPageView(
             $this->presenter->present($spell),
-            $nav[Constant::CST_PREV] ? $this->presenter->present($nav[Constant::CST_PREV]) : null,
-            $nav[Constant::CST_NEXT] ? $this->presenter->present($nav[Constant::CST_NEXT]) : null
+            $nav[Constant::PREV] ? $this->presenter->present($nav[Constant::PREV]) : null,
+            $nav[Constant::NEXT] ? $this->presenter->present($nav[Constant::NEXT]) : null
         );
     }
 }

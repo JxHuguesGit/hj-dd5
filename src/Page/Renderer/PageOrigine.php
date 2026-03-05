@@ -23,13 +23,13 @@ class PageOrigine extends PageDetail
             Template::ORIGIN_DETAIL_CARD,
             [
                 '',
-                $data[Constant::CST_TITLE] ?? '',
-                $data[Constant::CST_DESCRIPTION] ?? '',
-                implode(', ', $data[Constant::CST_ABILITIES]),
-                $this->formatSkills($data[Constant::CST_SKILLS]),
-                $this->formatLink($data[Constant::CST_FEAT], fn($slug) => UrlGenerator::feat($slug)),
-                $this->formatLink($data[Constant::CST_TOOL], fn($slug) => UrlGenerator::item($slug)),
-                implode(', ', $data[Constant::CST_EQUIPMENT]),
+                $data[Constant::TITLE] ?? '',
+                $data[Constant::DESCRIPTION] ?? '',
+                implode(', ', $data[Constant::ABILITIES]),
+                $this->formatSkills($data[Constant::SKILLS]),
+                $this->formatLink($data[Constant::FEAT], fn($slug) => UrlGenerator::feat($slug)),
+                $this->formatLink($data[Constant::TOOL], fn($slug) => UrlGenerator::item($slug)),
+                implode(', ', $data[Constant::EQUIPMENT]),
                 'col-width' => 'col-sm-6',
             ]
         );
@@ -55,8 +55,8 @@ class PageOrigine extends PageDetail
         }
 
         return Html::getLink(
-            $entityData[Constant::CST_NAME],
-            $urlGenerator($entityData[Constant::CST_SLUG]),
+            $entityData[Constant::NAME],
+            $urlGenerator($entityData[Constant::SLUG]),
             B::TEXT_DARK
         );
     }

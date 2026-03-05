@@ -11,13 +11,13 @@ class PageSkills extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => Constant::SKILLS,
+            Constant::SLUG        => Constant::SKILLS,
             'icon'                    => I::STAR,
-            Constant::CST_TITLE       => L::SKILLS_TITLE,
-            Constant::CST_DESCRIPTION => "Les compétences sont des aptitudes liées aux caractéristiques qui permettent d'accomplir certaines actions spécifiques.",
+            Constant::TITLE       => L::SKILLS_TITLE,
+            Constant::DESCRIPTION => "Les compétences sont des aptitudes liées aux caractéristiques qui permettent d'accomplir certaines actions spécifiques.",
             'url'                     => Routes::SKILLS_PREFIX,
             'order'                   => 10,
-            Constant::CST_PARENT      => Constant::HOME,
+            Constant::PARENT      => Constant::HOME,
         ];
     }
 

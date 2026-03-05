@@ -30,7 +30,7 @@ class PublicSpecie extends PublicBase
         $menu = $this->menuPresenter->render(Constant::SPECIES);
         $pageView = $this->pageService->build($this->species);
         $viewData = $this->presenter->present($pageView);
-        $viewData[Constant::CST_TITLE] = $this->getTitle();
+        $viewData[Constant::TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }

@@ -31,8 +31,8 @@ final class ToolListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ToolGroup(
-                label: $types[$typeId][Constant::CST_LABEL] ?? '',
-                slug: $types[$typeId][Constant::CST_SLUG] ?? '',
+                label: $types[$typeId][Constant::LABEL] ?? '',
+                slug: $types[$typeId][Constant::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -71,20 +71,20 @@ final class ToolListPresenter
     {
         return [
             Tool::TYPE_DIVERS => [
-                Constant::CST_SLUG  => Constant::DIVERS,
-                Constant::CST_LABEL => L::TOOL_DIVERS,
+                Constant::SLUG  => Constant::DIVERS,
+                Constant::LABEL => L::TOOL_DIVERS,
             ],
             Tool::TYPE_GAMES  => [
-                Constant::CST_SLUG  => Constant::GAMES,
-                Constant::CST_LABEL => L::TOOL_GAMES,
+                Constant::SLUG  => Constant::GAMES,
+                Constant::LABEL => L::TOOL_GAMES,
             ],
             Tool::TYPE_MUSIC  => [
-                Constant::CST_SLUG  => Constant::MUSIC,
-                Constant::CST_LABEL => L::TOOL_MUSIC,
+                Constant::SLUG  => Constant::MUSIC,
+                Constant::LABEL => L::TOOL_MUSIC,
             ],
             Tool::TYPE_TOOL   => [
-                Constant::CST_SLUG  => Constant::TOOLS,
-                Constant::CST_LABEL => L::TOOL_TOOLS,
+                Constant::SLUG  => Constant::TOOLS,
+                Constant::LABEL => L::TOOL_TOOLS,
             ],
         ];
     }

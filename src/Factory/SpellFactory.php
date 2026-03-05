@@ -10,10 +10,10 @@ class SpellFactory
     public static function fromWpPost(\WP_Post $post): Spell
     {
         return new Spell([
-            Constant::CST_ID          => $post->ID,
-            Constant::CST_NAME        => $post->post_title,
-            Constant::CST_SLUG        => $post->post_name,
-            Constant::CST_CONTENT     => apply_filters('the_content', $post->post_content),
+            Constant::ID          => $post->ID,
+            Constant::NAME        => $post->post_title,
+            Constant::SLUG        => $post->post_name,
+            Constant::CONTENT     => apply_filters('the_content', $post->post_content),
             'tempsIncantation'        => get_field('temps_dincantation', $post->ID),
             'portee'                  => get_field('portee', $post->ID),
             'duree'                   => get_field('duree', $post->ID),

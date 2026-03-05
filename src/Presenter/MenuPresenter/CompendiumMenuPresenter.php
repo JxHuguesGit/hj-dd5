@@ -23,7 +23,7 @@ class CompendiumMenuPresenter
             ->add(new MenuItem(Constant::ARMORS, L::ARMORS_TITLE, I::SHIELD))
             ->add(new MenuItem(Constant::SKILLS, L::SKILLS_TITLE, I::BRAIN))
             ->add(new MenuItem(Constant::FEATS, L::FEATS_TITLE, I::MEDAL))
-            ->add(new MenuItem(Constant::CST_GEAR, L::GEAR_TITLE, I::BOX))
+            ->add(new MenuItem(Constant::GEAR, L::GEAR_TITLE, I::BOX))
             ->add(new MenuItem(Constant::MONSTERS, L::MONSTERS_TITLE, I::DRAGON))
             ->add(new MenuItem(Constant::ORIGINS, L::HISTO_TITLE, I::COMPASS))
             ->add(new MenuItem(Constant::TOOLS, L::TOOLS_TITLE, I::GAVEL))
@@ -43,14 +43,14 @@ class CompendiumMenuPresenter
 
         $ul = Html::getUl(
             $childrenHtml,
-            [Constant::CST_CLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]
+            [Constant::CLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]
         );
 
         // ---------- 3) Item parent ----------
         $parentAttributes = [
             $isActiveTab ? B::MENU_OPEN : '',
             '#',
-            $isActiveTab ? Constant::CST_ACTIVE : '',
+            $isActiveTab ? Constant::ACTIVE : '',
             I::BOOK,
             L::COMPENDIUM,
             '',

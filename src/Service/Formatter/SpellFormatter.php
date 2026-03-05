@@ -50,10 +50,10 @@ class SpellFormatter
     public static function formatPortee(string $value): string
     {
         return match ($value) {
-            Constant::CST_VUE, Constant::CST_CONTACT => ucwords($value),
-            Constant::CST_ILLIM     => L::UNLIMITED,
-            Constant::CST_PERSO     => L::PERSO,
-            Constant::CST_SPECIALES => L::SPECIALES,
+            Constant::VUE, Constant::CONTACT => ucwords($value),
+            Constant::ILLIM     => L::UNLIMITED,
+            Constant::PERSO     => L::PERSO,
+            Constant::SPECIALES => L::SPECIALES,
             default                 => self::formatDistance($value),
         };
     }
@@ -86,9 +86,9 @@ class SpellFormatter
             $returned = match ($value) {
                 'diss'                  => "Jusqu'à dissipation",
                 'inst'                  => 'Instantanée',
-                Constant::CST_SPECIALES => 'Spéciale',
+                Constant::SPECIALES => 'Spéciale',
                 'bonus'                 => 'Action Bonus',
-                Constant::CST_ACTION    => 'Action',
+                Constant::ACTION    => 'Action',
                 'reaction'              => 'Réaction',
                 default                 => $value,
             };

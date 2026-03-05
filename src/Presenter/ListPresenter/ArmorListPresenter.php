@@ -24,8 +24,8 @@ final class ArmorListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ArmorGroup(
-                label: $typesLabel[$typeId][Constant::CST_LABEL] ?? '',
-                slug: $typesLabel[$typeId][Constant::CST_SLUG] ?? '',
+                label: $typesLabel[$typeId][Constant::LABEL] ?? '',
+                slug: $typesLabel[$typeId][Constant::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -50,24 +50,24 @@ final class ArmorListPresenter
     {
         return [
             Armor::TYPE_LIGHT => [
-                Constant::CST_SLUG  => Constant::LIGHT,
-                Constant::CST_LABEL => L::ARM_LGT_DONDOFF,
-                Constant::CST_NAME  => L::ARM_LGT,
+                Constant::SLUG  => Constant::LIGHT,
+                Constant::LABEL => L::ARM_LGT_DONDOFF,
+                Constant::NAME  => L::ARM_LGT,
             ],
             Armor::TYPE_MEDIUM => [
-                Constant::CST_SLUG => Constant::MEDIUM,
-                Constant::CST_LABEL => L::ARM_MDM_DONDOFF,
-                Constant::CST_NAME  => L::ARM_MDM,
+                Constant::SLUG => Constant::MEDIUM,
+                Constant::LABEL => L::ARM_MDM_DONDOFF,
+                Constant::NAME  => L::ARM_MDM,
             ],
             Armor::TYPE_HEAVY => [
-                Constant::CST_SLUG => Constant::HEAVY,
-                Constant::CST_LABEL => L::ARM_HVY_DONDOFF,
-                Constant::CST_NAME  => L::ARM_HVY,
+                Constant::SLUG => Constant::HEAVY,
+                Constant::LABEL => L::ARM_HVY_DONDOFF,
+                Constant::NAME  => L::ARM_HVY,
             ],
             Armor::TYPE_SHIELD => [
-                Constant::CST_SLUG => Constant::SHIELD,
-                Constant::CST_LABEL => L::ARM_SHD_DONDOFF,
-                Constant::CST_NAME  => L::ARM_SHD,
+                Constant::SLUG => Constant::SHIELD,
+                Constant::LABEL => L::ARM_SHD_DONDOFF,
+                Constant::NAME  => L::ARM_SHD,
             ],
         ];
     }

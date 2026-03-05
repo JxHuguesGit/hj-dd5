@@ -12,7 +12,7 @@ final class AbilityCriteria extends BaseCriteria
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        F::ID => Constant::CST_ASC,
+        F::ID => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

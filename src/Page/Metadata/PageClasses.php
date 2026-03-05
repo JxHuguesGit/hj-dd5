@@ -11,10 +11,10 @@ class PageClasses extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => Constant::CLASSES,
+            Constant::SLUG        => Constant::CLASSES,
             'icon'                    => I::SHIELD,
-            Constant::CST_TITLE       => L::CLASSES,
-            Constant::CST_DESCRIPTION => 'Découvrez les classes jouables.',
+            Constant::TITLE       => L::CLASSES,
+            Constant::DESCRIPTION => 'Découvrez les classes jouables.',
             'url'                     => Routes::CLASSES_PREFIX,
             'order'                   => 30,
         ];

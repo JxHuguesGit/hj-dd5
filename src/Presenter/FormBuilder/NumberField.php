@@ -9,11 +9,11 @@ class NumberField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            Constant::CST_TYPE  => 'number',
-            Constant::CST_ID    => $this->getId(),
-            Constant::CST_NAME  => $this->name,
-            Constant::CST_VALUE => $this->value,
-            Constant::CST_CLASS => 'form-control',
+            Constant::TYPE  => 'number',
+            Constant::ID    => $this->getId(),
+            Constant::NAME  => $this->name,
+            Constant::VALUE => $this->value,
+            Constant::CLASS => 'form-control',
         ];
         if ($this->params['step']) {
             $attrs['step'] = $this->params['step'];

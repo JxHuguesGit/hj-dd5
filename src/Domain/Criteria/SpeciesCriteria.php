@@ -13,7 +13,7 @@ final class SpeciesCriteria extends BaseCriteria
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        F::NAME => Constant::CST_ASC
+        F::NAME => Constant::ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

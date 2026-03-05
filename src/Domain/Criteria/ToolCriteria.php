@@ -8,12 +8,12 @@ use src\Query\QueryBuilder;
 final class ToolCriteria extends BaseCriteria
 {
     public ?int $id = null;
-    public string $type = Constant::CST_TOOL;
+    public string $type = Constant::TOOL;
     public ?string $name = null;
 
     public array $orderBy = [
-        F::PARENTID => Constant::CST_ASC,
-        F::NAME     => Constant::CST_ASC,
+        F::PARENTID => Constant::ASC,
+        F::NAME     => Constant::ASC,
     ];
 
     public function apply(QueryBuilder $qb): void

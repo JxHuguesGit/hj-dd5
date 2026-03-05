@@ -122,7 +122,7 @@ class MonsterPresenter
         foreach ($objs as $obj) {
             $value .= ', ' . $obj->getController()->getFormatString();
         }
-        $extra = $this->monster->getExtra(Constant::CST_SPEED);
+        $extra = $this->monster->getExtra(Constant::SPEED);
         if ($extra) {
             $value .= $extra;
         }

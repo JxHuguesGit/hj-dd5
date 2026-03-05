@@ -37,7 +37,7 @@ class MonsterCombatFormBuilder
         ;
         $checkBoxAttributes = [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
         if ($monster->legendary) {
-            $checkBoxAttributes[Constant::CST_CHECKED] = Constant::CST_CHECKED;
+            $checkBoxAttributes[Constant::CHECKED] = Constant::CHECKED;
         }
         $fieldset
             ->addField(new CheckboxField(F::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
@@ -65,7 +65,7 @@ class MonsterCombatFormBuilder
 
         $checkBoxAttributes = [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
         if ($monsterSpeed->id) {
-            $checkBoxAttributes[Constant::CST_CHECKED] = Constant::CST_CHECKED;
+            $checkBoxAttributes[Constant::CHECKED] = Constant::CHECKED;
         }
 
         $fieldset

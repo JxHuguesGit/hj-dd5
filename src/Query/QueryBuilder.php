@@ -11,7 +11,7 @@ class QueryBuilder
     private string $strOrderBy = '';
     private string $strLimit = '';
     private array $params = [];
-    
+
     public function select(array $fields, string $table): self
     {
         $this->baseQuery = "SELECT $table.`".implode("`, $table.`", $fields)."` FROM $table";
@@ -20,15 +20,15 @@ class QueryBuilder
 
     public function getInsertQuery(array $fields, string $table): string
     {
-        $filteredFields = array_filter($fields, fn($f) => $f !== Constant::CST_ID);
+        $filteredFields = array_filter($fields, fn($f) => $f !== Constant::ID);
         if (empty($filteredFields)) {
             throw new \InvalidArgumentException("No valid fields to insert.");
         }
         $placeholders = array_fill(0, count($filteredFields), '%s');
-    
+
         $columns = implode('`, `', $filteredFields);
         $placeholdersStr = implode(', ', $placeholders);
-    
+
         return "INSERT INTO `{$table}` (`$columns`) VALUES ($placeholdersStr)";
     }
 
@@ -36,13 +36,13 @@ class QueryBuilder
     {
         $targetFields = $fieldsToUpdate ?? $fields;
 
-        $filteredFields = array_filter($targetFields, fn($f) => $f !== Constant::CST_ID);
+        $filteredFields = array_filter($targetFields, fn($f) => $f !== Constant::ID);
         if (empty($filteredFields)) {
             throw new \InvalidArgumentException("No valid fields to update.");
         }
-    
+
         $assignments = implode(', ', array_map(fn($f) => "`$f` = %s", $filteredFields));
-    
+
         return "UPDATE `{$table}` SET $assignments WHERE `id` = %s";
     }
 
@@ -91,11 +91,11 @@ class QueryBuilder
             } else {
                 $this->strWhere .= " AND `{$cond['field']}` {$cond['operand']} %s";
             }
-            $this->params[] = $cond[Constant::CST_VALUE];
+            $this->params[] = $cond[Constant::VALUE];
         }
         return $this;
     }
-    
+
     public function joinTable(string $strJoin): self
     {
         $this->strJoin = $strJoin;

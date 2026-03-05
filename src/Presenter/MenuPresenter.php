@@ -39,15 +39,15 @@ class MenuPresenter
             if ($el->getSlug() !== 'home' && $el->getParentSlug() !== 'home') {
                 continue;
             }
-            $activeClass  = ($el->getSlug() === $this->currentSlug) ? ' ' . Constant::CST_ACTIVE : '';
-            $strSpan      = Html::getSpan(htmlspecialchars($el->getTitle()), [Constant::CST_CLASS => B::NAV_LINK_TITLE]);
+            $activeClass  = ($el->getSlug() === $this->currentSlug) ? ' ' . Constant::ACTIVE : '';
+            $strSpan      = Html::getSpan(htmlspecialchars($el->getTitle()), [Constant::CLASS => B::NAV_LINK_TITLE]);
             $strLink      = Html::getLink($strSpan, trim($el->getUrl(), '-'), implode(' ', [B::NAV_LINK, B::TEXT_DARK]));
-            $html        .= Html::getLi($strLink, [Constant::CST_CLASS => B::NAV_ITEM . $activeClass]);
+            $html        .= Html::getLi($strLink, [Constant::CLASS => B::NAV_ITEM . $activeClass]);
         }
 
-        $strUl  = Html::getBalise('ul', $html, [Constant::CST_CLASS => 'navbar-nav']);
-        $strDiv = Html::getDiv($strUl, [Constant::CST_CLASS => 'container-xl']);
-        return Html::getBalise('nav', $strDiv, [Constant::CST_CLASS => 'navbar navbar-expand-md navbar-light pb-0']);
+        $strUl  = Html::getBalise('ul', $html, [Constant::CLASS => 'navbar-nav']);
+        $strDiv = Html::getDiv($strUl, [Constant::CLASS => 'container-xl']);
+        return Html::getBalise('nav', $strDiv, [Constant::CLASS => 'navbar navbar-expand-md navbar-light pb-0']);
     }
 
     /**

@@ -41,7 +41,7 @@ class AdminSidebar extends Utilities
 
         $attributes = [
             ! in_array($this->currentTab, $this->allowedTabs) || $this->currentTab == Constant::HOME
-                ? Constant::CST_ACTIVE
+                ? Constant::ACTIVE
                 : '',
             $menu,
         ];

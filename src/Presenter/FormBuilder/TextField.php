@@ -9,11 +9,11 @@ class TextField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            Constant::CST_TYPE  => 'text',
-            Constant::CST_ID    => $this->getId(),
-            Constant::CST_NAME  => $this->name,
-            Constant::CST_VALUE => $this->value,
-            Constant::CST_CLASS => 'form-control',
+            Constant::TYPE  => 'text',
+            Constant::ID    => $this->getId(),
+            Constant::NAME  => $this->name,
+            Constant::VALUE => $this->value,
+            Constant::CLASS => 'form-control',
         ];
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';

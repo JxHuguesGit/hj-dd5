@@ -36,7 +36,7 @@ final class SpecieReader
     /**
      * @return Collection<Specie>
      */
-    public function speciesByParent(int $parentId, array $order=[F::NAME=>Constant::CST_ASC]): Collection
+    public function speciesByParent(int $parentId, array $order=[F::NAME=>Constant::ASC]): Collection
     {
         $criteria = new SpeciesCriteria();
         $criteria->parentId = $parentId;
@@ -51,7 +51,7 @@ final class SpecieReader
     {
         if (!$criteria) {
             $criteria = new SpeciesCriteria();
-            $criteria->orderBy = [F::NAME=>Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME=>Constant::ASC];
         }
         return $this->speciesRepository->findAllWithCriteria($criteria);
     }

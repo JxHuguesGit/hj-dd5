@@ -11,13 +11,13 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
     protected function createForm(array $params = []): Form
     {
         $formAttributes = [
-            Constant::CST_CLASS  => implode(' ', [
+            Constant::CLASS  => implode(' ', [
                 B::MX_AUTO,
                 B::MY4,
-                $params[Constant::CST_CLASS] ?? '',
+                $params[Constant::CLASS] ?? '',
             ]),
-            Constant::CST_TITLE  => $params[Constant::CST_TITLE],
-            Constant::CST_ACTION => $params[Constant::CST_ACTION] ?? '',
+            Constant::TITLE  => $params[Constant::TITLE],
+            Constant::ACTION => $params[Constant::ACTION] ?? '',
         ];
 
         $form = (new Form(
@@ -27,16 +27,16 @@ abstract class AbstractFormBuilder implements FormBuilderInterface
 
         $form->addCancel($params['cancelUrl']);
         // Boutons par défaut selon le type
-        switch ($params[Constant::CST_TYPE] ?? Constant::NEW ) {
+        switch ($params[Constant::TYPE] ?? Constant::NEW ) {
             case Constant::EDIT:
-                $form->addButton('Modifier', 'submit', [Constant::CST_CLASS => 'btn btn-sm btn-primary']);
+                $form->addButton('Modifier', 'submit', [Constant::CLASS => 'btn btn-sm btn-primary']);
                 break;
             case Constant::DELETE:
-                $form->addButton('Supprimer', 'submit', [Constant::CST_CLASS => 'btn btn-sm btn-danger']);
+                $form->addButton('Supprimer', 'submit', [Constant::CLASS => 'btn btn-sm btn-danger']);
                 break;
             case Constant::NEW :
             default:
-                $form->addButton('Créer', 'submit', [Constant::CST_CLASS => 'btn btn-sm btn-success']);
+                $form->addButton('Créer', 'submit', [Constant::CLASS => 'btn btn-sm btn-success']);
                 break;
         }
 

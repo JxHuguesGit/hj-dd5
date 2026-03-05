@@ -25,7 +25,7 @@ final class PublicItemTool extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::CST_ITEMS);
+        $menu = $this->menuPresenter->render(Constant::ITEMS);
         $viewData = $this->presenter->present($this->tools);
         return $this->page->render($menu, $this->title, $viewData);
     }

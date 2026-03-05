@@ -25,10 +25,10 @@ class SkillTableBuilder extends AbstractTableBuilder
                 /** @var SkillRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CST_CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
+                        Constant::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->description])
-                    ->addBodyCell([Constant::CST_CONTENT => $row->subSkills]);
+                    ->addBodyCell([Constant::CONTENT => $row->description])
+                    ->addBodyCell([Constant::CONTENT => $row->subSkills]);
             }
         }
 

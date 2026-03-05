@@ -22,7 +22,7 @@ class ItemTableBuilder extends AbstractTableBuilder
         if ($this->isAdmin) {
             $createLink = Html::getLink(
                 Html::getIcon(I::PLUS),
-                UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, '', Constant::NEW ),
+                UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::GEAR, '', Constant::NEW ),
                 B::TEXT_WHITE
             );
             $headers[] = $createLink;
@@ -35,46 +35,46 @@ class ItemTableBuilder extends AbstractTableBuilder
             /** @var Item $item */
             $table->addBodyRow([])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => Html::getLink($item->name, $item->url, B::TEXT_DARK),
-                    Constant::CST_ATTRIBUTES => [Constant::CST_CLASS => B::COL_2],
+                    Constant::CONTENT    => Html::getLink($item->name, $item->url, B::TEXT_DARK),
+                    Constant::ATTRIBUTES => [Constant::CLASS => B::COL_2],
                 ])
-                ->addBodyCell([Constant::CST_CONTENT => $item->description])
+                ->addBodyCell([Constant::CONTENT => $item->description])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => $item->weight,
-                    Constant::CST_ATTRIBUTES => [
-                        Constant::CST_CLASS => B::TEXT_END . ' ' . B::COL_1,
+                    Constant::CONTENT    => $item->weight,
+                    Constant::ATTRIBUTES => [
+                        Constant::CLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ])
                 ->addBodyCell([
-                    Constant::CST_CONTENT    => $item->price,
-                    Constant::CST_ATTRIBUTES => [
-                        Constant::CST_CLASS => B::TEXT_END . ' ' . B::COL_1,
+                    Constant::CONTENT    => $item->price,
+                    Constant::ATTRIBUTES => [
+                        Constant::CLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ]);
             if ($this->isAdmin) {
                 $btnEdit = Html::getLink(
                     Html::getIcon(I::EDIT),
-                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::EDIT),
+                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::GEAR, $item->slug, Constant::EDIT),
                     B::TEXT_DARK
                 );
                 $btnDelete = Html::getLink(
                     Html::getIcon(I::TRASH),
-                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::DELETE),
-                    B::TEXT_DANGER . ' ' . Constant::CST_AJAXACTION,
+                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::GEAR, $item->slug, Constant::DELETE),
+                    B::TEXT_DANGER . ' ' . Constant::AJAXACTION,
                     [
-                        Constant::CST_DATA => [
-                            Constant::CST_TRIGGER     => Constant::CST_CLICK,
-                            Constant::CST_ACTION      => 'openConfirm',
-                            Constant::CST_TARGET      => 'confirmModal',
-                            Constant::CST_TITLE       => 'Suppression de l\'objet ' . $item->name,
-                            Constant::CST_DESCRIPTION => 'Confirmez-vous la suppression de l\'objet <strong>' . $item->name . '</strong> ?',
+                        Constant::DATA => [
+                            Constant::TRIGGER     => Constant::CLICK,
+                            Constant::ACTION      => 'openConfirm',
+                            Constant::TARGET      => 'confirmModal',
+                            Constant::TITLE       => 'Suppression de l\'objet ' . $item->name,
+                            Constant::DESCRIPTION => 'Confirmez-vous la suppression de l\'objet <strong>' . $item->name . '</strong> ?',
                         ],
                     ]
                 );
                 $table->addBodyCell([
-                    Constant::CST_CONTENT    => $btnEdit . ' ' . $btnDelete,
-                    Constant::CST_ATTRIBUTES => [
-                        Constant::CST_CLASS => B::TEXT_CENTER . ' ' . B::COL_1]
+                    Constant::CONTENT    => $btnEdit . ' ' . $btnDelete,
+                    Constant::ATTRIBUTES => [
+                        Constant::CLASS => B::TEXT_CENTER . ' ' . B::COL_1]
                     ,
                 ]);
             }

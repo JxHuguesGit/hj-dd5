@@ -18,30 +18,30 @@ class MonsterType extends Entity
 
     public function stringify(): string
     {
-        return ($this->getNameAndGender())[Constant::CST_LABEL];
+        return ($this->getNameAndGender())[Constant::LABEL];
     }
 
     public function getNameAndGender(): array
     {
         $mapping = [
-            'Elemental'      => [Constant::CST_LABEL => 'Elémentaire', 'gender' => 'm'],
-            'Humanoid'       => [Constant::CST_LABEL => 'Humanoïde', 'gender' => 'm'],
-            'Aberration'     => [Constant::CST_LABEL => 'Aberration', 'gender' => 'f'],
-            'Dragon'         => [Constant::CST_LABEL => 'Dragon', 'gender' => 'm'],
-            'Monstrosity'    => [Constant::CST_LABEL => 'Monstruosité', 'gender' => 'f'],
-            'Beast'          => [Constant::CST_LABEL => 'Bête', 'gender' => 'f'],
-            'Celestial'      => [Constant::CST_LABEL => 'Céleste', 'gender' => 'm'],
-            'Construct'      => [Constant::CST_LABEL => 'Construction', 'gender' => 'f'],
-            'Fiend'          => [Constant::CST_LABEL => 'Démon', 'gender' => 'm'],
-            'Fey'            => [Constant::CST_LABEL => 'Fée', 'gender' => 'f'],
-            'Plant'          => [Constant::CST_LABEL => 'Plante', 'gender' => 'f'],
-            'Undead'         => [Constant::CST_LABEL => 'Mort-vivant', 'gender' => 'm'],
-            'Ooze'           => [Constant::CST_LABEL => 'Vase', 'gender' => 'f'],
-            'Giant'          => [Constant::CST_LABEL => 'Géant', 'gender' => 'm'],
-            'CelFie'         => [Constant::CST_LABEL => 'Céleste ou Démon', 'gender' => 'm'],
-            'CelFeyFie'      => [Constant::CST_LABEL => 'Céleste, Fée ou Démon', 'gender' => 'm'],
+            'Elemental'      => [Constant::LABEL => 'Elémentaire', 'gender' => 'm'],
+            'Humanoid'       => [Constant::LABEL => 'Humanoïde', 'gender' => 'm'],
+            'Aberration'     => [Constant::LABEL => 'Aberration', 'gender' => 'f'],
+            'Dragon'         => [Constant::LABEL => 'Dragon', 'gender' => 'm'],
+            'Monstrosity'    => [Constant::LABEL => 'Monstruosité', 'gender' => 'f'],
+            'Beast'          => [Constant::LABEL => 'Bête', 'gender' => 'f'],
+            'Celestial'      => [Constant::LABEL => 'Céleste', 'gender' => 'm'],
+            'Construct'      => [Constant::LABEL => 'Construction', 'gender' => 'f'],
+            'Fiend'          => [Constant::LABEL => 'Démon', 'gender' => 'm'],
+            'Fey'            => [Constant::LABEL => 'Fée', 'gender' => 'f'],
+            'Plant'          => [Constant::LABEL => 'Plante', 'gender' => 'f'],
+            'Undead'         => [Constant::LABEL => 'Mort-vivant', 'gender' => 'm'],
+            'Ooze'           => [Constant::LABEL => 'Vase', 'gender' => 'f'],
+            'Giant'          => [Constant::LABEL => 'Géant', 'gender' => 'm'],
+            'CelFie'         => [Constant::LABEL => 'Céleste ou Démon', 'gender' => 'm'],
+            'CelFeyFie'      => [Constant::LABEL => 'Céleste, Fée ou Démon', 'gender' => 'm'],
         ];
 
-        return $mapping[$this->name] ?? [Constant::CST_LABEL => 'Type de monstre non identifié', 'gender' => 'm'];
+        return $mapping[$this->name] ?? [Constant::LABEL => 'Type de monstre non identifié', 'gender' => 'm'];
     }
 }

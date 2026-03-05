@@ -20,8 +20,8 @@ abstract class PageDetail
         array $detailFields
     ): string {
         // Navigation prev/next mutualisée
-        $prevHtml       = $this->renderNavLink($data[Constant::CST_PREV] ?? null, Constant::CST_PREV);
-        $nextHtml       = $this->renderNavLink($data[Constant::CST_NEXT] ?? null, Constant::CST_NEXT);
+        $prevHtml       = $this->renderNavLink($data[Constant::PREV] ?? null, Constant::PREV);
+        $nextHtml       = $this->renderNavLink($data[Constant::NEXT] ?? null, Constant::NEXT);
         $detailCard     = $this->renderer->render($detailTemplate, array_merge($detailFields, [$prevHtml, $nextHtml]));
         $contentSection = $this->renderer->render(Template::DETAIL_PAGE, ['', $detailCard]);
         return $this->renderer->render(Template::MAIN_PAGE, [$menuHtml, $contentSection, '']);
@@ -32,14 +32,14 @@ abstract class PageDetail
         string $direction
     ): string {
         if (! $navData) {
-            return Constant::CST_EMPTY_SPAN;
+            return Constant::EMPTY_SPAN;
         }
-        $label = $direction === Constant::CST_PREV
-            ? '&lt; ' . $navData[Constant::CST_NAME]
-            : $navData[Constant::CST_NAME] . ' &gt;';
+        $label = $direction === Constant::PREV
+            ? '&lt; ' . $navData[Constant::NAME]
+            : $navData[Constant::NAME] . ' &gt;';
         return Html::getLink(
             $label,
-            $this->getEntityUrl($navData[Constant::CST_SLUG]),
+            $this->getEntityUrl($navData[Constant::SLUG]),
             implode(' ', [B::BTN, B::BTN_SM, B::BTN_OUTLINE_DARK])
         );
     }

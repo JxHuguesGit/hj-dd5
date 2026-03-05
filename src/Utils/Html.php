@@ -46,8 +46,8 @@ class Html
     {
         // Les attributs par défaut d'un bouton.
         $defaultAttributes = [
-            Constant::CST_TYPE  => 'button',
-            Constant::CST_CLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
+            Constant::TYPE  => 'button',
+            Constant::CLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
         ];
         $attributes = array_merge($defaultAttributes, $extraAttributes);
         return static::getBalise('button', $label, $attributes);
@@ -66,7 +66,7 @@ class Html
     public static function getOption(string $label, array $attributes, bool $isSelected = false): string
     {
         if ($isSelected) {
-            $attributes[Constant::CST_SELECTED] = Constant::CST_SELECTED;
+            $attributes[Constant::SELECTED] = Constant::SELECTED;
         }
         return static::getBalise(Constant::PAGE_OPTION, $label, $attributes);
     }
@@ -79,7 +79,7 @@ class Html
     public static function getLink(string $label, string $href, string $classe = '', array $extraAttributes = []): string
     {
         $attributes = array_merge(
-            [Constant::CST_HREF => $href, Constant::CST_CLASS => $classe],
+            [Constant::HREF => $href, Constant::CLASS => $classe],
             $extraAttributes
         );
         return static::getBalise('a', $label, $attributes);
@@ -96,7 +96,7 @@ class Html
             $extraAttributes,
             'fa-' . $prefix . ' fa-' . $icon
         );
-        $attributes = array_merge([Constant::CST_CLASS => $strClass], $extraAttributes);
+        $attributes = array_merge([Constant::CLASS => $strClass], $extraAttributes);
         return static::getBalise('i', '', $attributes);
     }
 
@@ -115,9 +115,9 @@ class Html
 
     private static function mergeClasses(array &$attributes, string $defaultClass): string
     {
-        if (isset($attributes[Constant::CST_CLASS])) {
-            $defaultClass .= ' ' . $attributes[Constant::CST_CLASS];
-            unset($attributes[Constant::CST_CLASS]);
+        if (isset($attributes[Constant::CLASS])) {
+            $defaultClass .= ' ' . $attributes[Constant::CLASS];
+            unset($attributes[Constant::CLASS]);
         }
         if (isset($attributes['replaceclass'])) {
             $defaultClass = $attributes['replaceclass'];

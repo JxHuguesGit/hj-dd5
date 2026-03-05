@@ -24,9 +24,9 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
             throw new \InvalidArgumentException('Expected \Domain\Monster\Monster');
         }
 
-        $params[Constant::CST_TITLE] = 'Monstre : ' . $entity->name;
-        $params[Constant::CST_TYPE] = Constant::EDIT;
-        $params[Constant::CST_CLASS] = 'pt-3';
+        $params[Constant::TITLE] = 'Monstre : ' . $entity->name;
+        $params[Constant::TYPE] = Constant::EDIT;
+        $params[Constant::CLASS] = 'pt-3';
         $params['cancelUrl'] = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::MONSTERS);
         $form = $this->createForm($params);
 

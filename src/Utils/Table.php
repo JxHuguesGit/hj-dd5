@@ -22,7 +22,7 @@ class Table
     public function __construct()
     {
         $this->attributes = [
-            Constant::CST_CLASS => B::TABLE,
+            Constant::CLASS => B::TABLE,
             'aria-describedby'  => '',
         ];
 
@@ -30,9 +30,9 @@ class Table
 
     public function setTable(array $extraAttributes): self
     {
-        if (isset($extraAttributes[Constant::CST_CLASS])) {
-            $this->attributes[Constant::CST_CLASS] .= ' ' . $extraAttributes[Constant::CST_CLASS];
-            unset($extraAttributes[Constant::CST_CLASS]);
+        if (isset($extraAttributes[Constant::CLASS])) {
+            $this->attributes[Constant::CLASS] .= ' ' . $extraAttributes[Constant::CLASS];
+            unset($extraAttributes[Constant::CLASS]);
         }
         $this->attributes = array_merge($this->attributes, $extraAttributes);
         return $this;
@@ -42,8 +42,8 @@ class Table
     {
         $this->addHeaderRow()
             ->addHeaderCell([
-                Constant::CST_CONTENT    => $strContent,
-                Constant::CST_ATTRIBUTES => [Constant::CST_COLSPAN => $cols]]);
+                Constant::CONTENT    => $strContent,
+                Constant::ATTRIBUTES => [Constant::COLSPAN => $cols]]);
 
         return $this;
     }
@@ -55,7 +55,7 @@ class Table
             $arrNbPerPage = [10, 25, 50, 100];
         }
         // On modifie le margin-top pour pouvoir inclure cette ligne dans le header
-        $this->attributes[Constant::CST_CLASS] = str_replace(B::MT5, 'mt-2', $this->attributes[Constant::CST_CLASS]);
+        $this->attributes[Constant::CLASS] = str_replace(B::MT5, 'mt-2', $this->attributes[Constant::CLASS]);
 
         // On construit le contenu de la sélection
         $selectContent = '';
@@ -63,22 +63,22 @@ class Table
             $selectContent .= Html::getOption(
                 $nbPerPage,
                 array_merge(
-                    [Constant::CST_VALUE => $nbPerPage],
-                    $nbPerPage == $selNbPerPage ? [Constant::CST_SELECTED => Constant::CST_SELECTED] : []
+                    [Constant::VALUE => $nbPerPage],
+                    $nbPerPage == $selNbPerPage ? [Constant::SELECTED => Constant::SELECTED] : []
                 )
             );
         }
-        $strDivDivContent = Html::getBalise(Constant::CST_LABEL, 'Afficher', ['for' => Constant::PAGE_NBPERPAGE, Constant::CST_CLASS => 'col-1 me-2 mb-0 text-end"'])
-        . Html::getBalise('select', $selectContent, [Constant::CST_CLASS => 'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger' => 'change', 'data-action' => 'loadTablePage'])
-        . Html::getSpan('entrées', [Constant::CST_CLASS => 'ms-2 col-9 text-start'])
-        . Html::getBalise('input', '', [Constant::CST_TYPE => 'hidden', Constant::CST_VALUE => $refElementId, Constant::CST_ID => 'firstElementId', Constant::CST_NAME => 'firstElementId']);
+        $strDivDivContent = Html::getBalise(Constant::LABEL, 'Afficher', ['for' => Constant::PAGE_NBPERPAGE, Constant::CLASS => 'col-1 me-2 mb-0 text-end"'])
+        . Html::getBalise('select', $selectContent, [Constant::CLASS => 'form-select form-select-sm w-auto col-1 ajaxAction', 'data-trigger' => 'change', 'data-action' => 'loadTablePage'])
+        . Html::getSpan('entrées', [Constant::CLASS => 'ms-2 col-9 text-start'])
+        . Html::getBalise('input', '', [Constant::TYPE => 'hidden', Constant::VALUE => $refElementId, Constant::ID => 'firstElementId', Constant::NAME => 'firstElementId']);
 
         $strDivContent = '<!-- Choix du nombre d\'entrées -->'
-        . Html::getDiv($strDivDivContent, [Constant::CST_CLASS => 'row col align-items-center']);
+        . Html::getDiv($strDivDivContent, [Constant::CLASS => 'row col align-items-center']);
 
-        $strContent = Html::getDiv($strDivContent, [Constant::CST_CLASS => 'row mx-2 d-flex justify-content-between align-items-center']);
+        $strContent = Html::getDiv($strDivContent, [Constant::CLASS => 'row mx-2 d-flex justify-content-between align-items-center']);
         $this->addHeaderRow()
-            ->addHeaderCell([Constant::CST_CONTENT => $strContent, Constant::CST_ATTRIBUTES => [Constant::CST_COLSPAN => $cols]]);
+            ->addHeaderCell([Constant::CONTENT => $strContent, Constant::ATTRIBUTES => [Constant::COLSPAN => $cols]]);
         return $this;
     }
 
@@ -90,21 +90,21 @@ class Table
             foreach ($this->header['rows'] as $row) {
                 $rowContent = '';
                 foreach ($row['cells'] as $cell) {
-                    $cellType  = $cell[Constant::CST_TYPE];
+                    $cellType  = $cell[Constant::TYPE];
                     /*
                     // Tentative d'ajouter des div pour le tri. A traiter plus tard.
                     if ($cellType = 'th') {
-                        $cellContent = '<div class="dt-column-header"><span>'.$cell[Constant::CST_CONTENT].'</span><span class="dt-column-order"></span></div>';
+                        $cellContent = '<div class="dt-column-header"><span>'.$cell[Constant::CONTENT].'</span><span class="dt-column-order"></span></div>';
                     } else {
                         */
-                    $cellContent  = $cell[Constant::CST_CONTENT];
+                    $cellContent  = $cell[Constant::CONTENT];
                     /*
                     }
                         */
-                    $cellAttributes  = $cell[Constant::CST_ATTRIBUTES];
+                    $cellAttributes  = $cell[Constant::ATTRIBUTES];
                     $rowContent     .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $headContent .= Html::getBalise('tr', $rowContent, $row[Constant::CST_ATTRIBUTES]);
+                $headContent .= Html::getBalise('tr', $rowContent, $row[Constant::ATTRIBUTES]);
             }
         }
         return $headContent;
@@ -118,12 +118,12 @@ class Table
             foreach ($this->foot['rows'] as $row) {
                 $rowContent = '';
                 foreach ($row['cells'] as $cell) {
-                    $cellContent     = $cell[Constant::CST_CONTENT];
-                    $cellType        = $cell[Constant::CST_TYPE];
-                    $cellAttributes  = $cell[Constant::CST_ATTRIBUTES];
+                    $cellContent     = $cell[Constant::CONTENT];
+                    $cellType        = $cell[Constant::TYPE];
+                    $cellAttributes  = $cell[Constant::ATTRIBUTES];
                     $rowContent     .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $footContent .= Html::getBalise('tr', $rowContent, $row[Constant::CST_ATTRIBUTES]);
+                $footContent .= Html::getBalise('tr', $rowContent, $row[Constant::ATTRIBUTES]);
             }
         }
 
@@ -139,12 +139,12 @@ class Table
             foreach ($this->body['rows'] as $row) {
                 $rowContent = '';
                 foreach ($row['cells'] as $cell) {
-                    $cellContent     = $cell[Constant::CST_CONTENT] ?? '';
-                    $cellType        = $cell[Constant::CST_TYPE] ?? '';
-                    $cellAttributes  = $cell[Constant::CST_ATTRIBUTES];
+                    $cellContent     = $cell[Constant::CONTENT] ?? '';
+                    $cellType        = $cell[Constant::TYPE] ?? '';
+                    $cellAttributes  = $cell[Constant::ATTRIBUTES];
                     $rowContent     .= Html::getBalise($cellType, $cellContent, $cellAttributes);
                 }
-                $bodyContent .= Html::getBalise('tr', $rowContent, $row[Constant::CST_ATTRIBUTES]);
+                $bodyContent .= Html::getBalise('tr', $rowContent, $row[Constant::ATTRIBUTES]);
             }
         }
 
@@ -152,9 +152,9 @@ class Table
 
         return Html::getBalise(
             B::TABLE,
-            Html::getBalise('thead', $headContent, [Constant::CST_CLASS => $this->header[Constant::CST_CLASS]]) .
+            Html::getBalise('thead', $headContent, [Constant::CLASS => $this->header[Constant::CLASS]]) .
             Html::getBalise('tbody', $bodyContent) .
-            Html::getBalise('tfoot', $footContent, [Constant::CST_CLASS => $this->foot[Constant::CST_CLASS]]),
+            Html::getBalise('tfoot', $footContent, [Constant::CLASS => $this->foot[Constant::CLASS]]),
             $this->attributes
         );
     }
@@ -172,17 +172,17 @@ class Table
         } else {
             ++$this->nbHeaderRows;
         }
-        $this->header['rows'][$this->nbHeaderRows] = [Constant::CST_ATTRIBUTES => [], 'cells' => []];
+        $this->header['rows'][$this->nbHeaderRows] = [Constant::ATTRIBUTES => [], 'cells' => []];
         return $this;
     }
 
     public function addHeaderCell(array $cell): self
     {
-        if (! isset($cell[Constant::CST_ATTRIBUTES])) {
-            $cell[Constant::CST_ATTRIBUTES] = [];
+        if (! isset($cell[Constant::ATTRIBUTES])) {
+            $cell[Constant::ATTRIBUTES] = [];
         }
-        if (! isset($cell[Constant::CST_TYPE])) {
-            $cell[Constant::CST_TYPE] = 'th';
+        if (! isset($cell[Constant::TYPE])) {
+            $cell[Constant::TYPE] = 'th';
         }
         array_push($this->header['rows'][$this->nbHeaderRows]['cells'], $cell);
         return $this;
@@ -190,14 +190,14 @@ class Table
 
     public function addFilteredHeaderCell(array $cell): self
     {
-        if (! isset($cell[Constant::CST_ATTRIBUTES])) {
-            $cell[Constant::CST_ATTRIBUTES] = [];
+        if (! isset($cell[Constant::ATTRIBUTES])) {
+            $cell[Constant::ATTRIBUTES] = [];
         }
-        if (! isset($cell[Constant::CST_TYPE])) {
-            $cell[Constant::CST_TYPE] = 'th';
+        if (! isset($cell[Constant::TYPE])) {
+            $cell[Constant::TYPE] = 'th';
         }
 
-        $strTitle = $cell[Constant::CST_CONTENT];
+        $strTitle = $cell[Constant::CONTENT];
         $button   = Html::getButton($strTitle, ['replaceclass' => "btn btn-sm btn-secondary dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false"]);
         $dropdown = '  <ul class="dropdown-menu" style="">
     <li><a class="dropdown-item" href="#">Aberration</a></li>
@@ -205,9 +205,9 @@ class Table
     <li><a class="dropdown-item" href="#">Humanoïde</a></li>
   </ul>';
 
-        $filterTitle = Html::getDiv($button . $dropdown, [Constant::CST_CLASS => 'dropdown']);
+        $filterTitle = Html::getDiv($button . $dropdown, [Constant::CLASS => 'dropdown']);
 
-        $cell[Constant::CST_CONTENT] = $filterTitle;
+        $cell[Constant::CONTENT] = $filterTitle;
 
         array_push($this->header['rows'][$this->nbHeaderRows]['cells'], $cell);
         return $this;
@@ -216,13 +216,13 @@ class Table
     public function addBodyRows(mixed $objs, int $colspan = 1, array $arrParams = []): self
     {
         if ($this->blnFilter) {
-            $this->addFootRow([Constant::CST_CLASS => 'table-dark text-center']);
+            $this->addFootRow([Constant::CLASS => 'table-dark text-center']);
             for ($i = 1; $i <= $colspan; $i++) {
                 if (isset($this->filters[$i])) {
                     $filterBlock = $this->filters[$i]->getFilterBlock();
-                    $this->addFootCell([Constant::CST_CONTENT => $filterBlock]);
+                    $this->addFootCell([Constant::CONTENT => $filterBlock]);
                 } else {
-                    $this->addFootCell([Constant::CST_CONTENT => '&nbsp;']);
+                    $this->addFootCell([Constant::CONTENT => '&nbsp;']);
                 }
             }
         }
@@ -232,7 +232,7 @@ class Table
             if ($paginateBlock != '') {
                 $this->addFootRow()
                     ->addFootCell(
-                        [Constant::CST_ATTRIBUTES => [Constant::CST_COLSPAN => $colspan], Constant::CST_CONTENT => $paginateBlock]
+                        [Constant::ATTRIBUTES => [Constant::COLSPAN => $colspan], Constant::CONTENT => $paginateBlock]
                     );
             }
 
@@ -243,9 +243,9 @@ class Table
         $cpt   = 1;
         foreach ($objs as $obj) {
             if ($cpt % 2 == 0) {
-                $arrParams[Constant::CST_CLASS] = 'row-striped-even';
-            } elseif (isset($arrParams[Constant::CST_CLASS])) {
-                unset($arrParams[Constant::CST_CLASS]);
+                $arrParams[Constant::CLASS] = 'row-striped-even';
+            } elseif (isset($arrParams[Constant::CLASS])) {
+                unset($arrParams[Constant::CLASS]);
             } else {
                 //SONAR
             }
@@ -263,17 +263,17 @@ class Table
         } else {
             ++$this->nbBodyRows;
         }
-        $this->body['rows'][$this->nbBodyRows] = [Constant::CST_ATTRIBUTES => $attributes, 'cells' => []];
+        $this->body['rows'][$this->nbBodyRows] = [Constant::ATTRIBUTES => $attributes, 'cells' => []];
         return $this;
     }
 
     public function addBodyCell(array $cell): self
     {
-        if (! isset($cell[Constant::CST_ATTRIBUTES])) {
-            $cell[Constant::CST_ATTRIBUTES] = [];
+        if (! isset($cell[Constant::ATTRIBUTES])) {
+            $cell[Constant::ATTRIBUTES] = [];
         }
-        if (! isset($cell[Constant::CST_TYPE])) {
-            $cell[Constant::CST_TYPE] = 'td';
+        if (! isset($cell[Constant::TYPE])) {
+            $cell[Constant::TYPE] = 'td';
         }
         array_push($this->body['rows'][$this->nbBodyRows]['cells'], $cell);
         return $this;
@@ -292,17 +292,17 @@ class Table
         } else {
             ++$this->nbFootRows;
         }
-        $this->foot['rows'][$this->nbFootRows] = [Constant::CST_ATTRIBUTES => $attributes, 'cells' => []];
+        $this->foot['rows'][$this->nbFootRows] = [Constant::ATTRIBUTES => $attributes, 'cells' => []];
         return $this;
     }
 
     public function addFootCell(array $cell): self
     {
-        if (! isset($cell[Constant::CST_ATTRIBUTES])) {
-            $cell[Constant::CST_ATTRIBUTES] = [];
+        if (! isset($cell[Constant::ATTRIBUTES])) {
+            $cell[Constant::ATTRIBUTES] = [];
         }
-        if (! isset($cell[Constant::CST_TYPE])) {
-            $cell[Constant::CST_TYPE] = 'th';
+        if (! isset($cell[Constant::TYPE])) {
+            $cell[Constant::TYPE] = 'th';
         }
         array_push($this->foot['rows'][$this->nbFootRows]['cells'], $cell);
         return $this;

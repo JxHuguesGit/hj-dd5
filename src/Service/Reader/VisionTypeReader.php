@@ -29,7 +29,7 @@ final class VisionTypeReader
     {
         if (! $criteria) {
             $criteria          = new VisionTypeCriteria();
-            $criteria->orderBy = [F::ID => Constant::CST_ASC];
+            $criteria->orderBy = [F::ID => Constant::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

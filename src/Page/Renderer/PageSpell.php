@@ -73,7 +73,7 @@ class PageSpell extends PageDetail
         bool $isPrev
     ): string {
         if (! $navData) {
-            return Constant::CST_EMPTY_SPAN;
+            return Constant::EMPTY_SPAN;
         }
 
         $label = $isPrev

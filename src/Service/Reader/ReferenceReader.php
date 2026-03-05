@@ -29,7 +29,7 @@ final class ReferenceReader
     {
         if (!$criteria) {
             $criteria = new ReferenceCriteria();
-            $criteria->orderBy = [F::NAME => Constant::CST_ASC];
+            $criteria->orderBy = [F::NAME => Constant::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

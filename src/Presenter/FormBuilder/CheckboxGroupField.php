@@ -23,22 +23,22 @@ class CheckboxGroupField extends FormField
         $i      = 0;
         foreach ($this->choices as $choice) {
             if ($choice->checked) {
-                $params[Constant::CST_CHECKED] = Constant::CST_CHECKED;
+                $params[Constant::CHECKED] = Constant::CHECKED;
             } else {
-                unset($params[Constant::CST_CHECKED]);
+                unset($params[Constant::CHECKED]);
             }
             $checkboxField  = new CheckboxField($choice->slug->value, $choice->label, $choice->id, false, $params);
             $content       .= Html::getDiv(
                 $checkboxField->display(),
-                [Constant::CST_CLASS => 'col-4' . ($i >= 3 ? ' mt-2' : '')]
+                [Constant::CLASS => 'col-4' . ($i >= 3 ? ' mt-2' : '')]
             );
             $i++;
         }
 
         return Html::getBalise(
             'fieldset',
-            Html::getDiv($content, [Constant::CST_CLASS => 'row']),
-            [Constant::CST_CLASS => 'fieldset ' . $this->name . '-fieldset px-3 py-0 ' . ($this->params['extraClass'] ?? '')]
+            Html::getDiv($content, [Constant::CLASS => 'row']),
+            [Constant::CLASS => 'fieldset ' . $this->name . '-fieldset px-3 py-0 ' . ($this->params['extraClass'] ?? '')]
         );
     }
 }

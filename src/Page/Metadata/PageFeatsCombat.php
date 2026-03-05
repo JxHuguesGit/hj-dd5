@@ -11,13 +11,13 @@ class PageFeatsCombat extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => 'feats-combat',
+            Constant::SLUG        => 'feats-combat',
             'icon'                    => I::SHIELD,
-            Constant::CST_TITLE       => L::CBT_STYLE_FEATS,
-            Constant::CST_DESCRIPTION => 'Les dons spécifiques aux styles de combat des guerriers.',
+            Constant::TITLE       => L::CBT_STYLE_FEATS,
+            Constant::DESCRIPTION => 'Les dons spécifiques aux styles de combat des guerriers.',
             'url'                     => Routes::FEAT_PREFIX . '-' . Constant::COMBAT,
             'order'                   => 43,
-            Constant::CST_PARENT      => Constant::FEATS,
+            Constant::PARENT      => Constant::FEATS,
         ];
     }
 }

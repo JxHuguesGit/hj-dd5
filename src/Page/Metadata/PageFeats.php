@@ -11,13 +11,13 @@ class PageFeats extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::CST_SLUG        => Constant::FEATS,
+            Constant::SLUG        => Constant::FEATS,
             'icon'                    => I::SCROLL,
-            Constant::CST_TITLE       => L::FEATS_TITLE,
-            Constant::CST_DESCRIPTION => "Les dons sont des capacités spéciales que votre personnage peut acquérir, offrant des avantages uniques et personnalisant davantage son style de jeu.",
+            Constant::TITLE       => L::FEATS_TITLE,
+            Constant::DESCRIPTION => "Les dons sont des capacités spéciales que votre personnage peut acquérir, offrant des avantages uniques et personnalisant davantage son style de jeu.",
             'url'                     => Routes::FEATS_PREFIX,
             'order'                   => 20,
-            Constant::CST_PARENT      => Constant::HOME,
+            Constant::PARENT      => Constant::HOME,
         ];
     }
 }

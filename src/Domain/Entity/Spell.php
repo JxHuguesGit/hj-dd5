@@ -19,7 +19,7 @@ final class Spell extends Entity
         F::NIVEAU,
         F::SCHOOL,
         F::CLASSES,
-        Constant::CST_CONTENT,
+        Constant::CONTENT,
         'tempsIncantation',
         'portee',
         'duree',
@@ -37,7 +37,7 @@ final class Spell extends Entity
         F::SCHOOL             => FieldType::STRING,
         F::CLASSES            => FieldType::ARRAY,
 
-        Constant::CST_CONTENT     => FieldType::STRING,
+        Constant::CONTENT     => FieldType::STRING,
         'tempsIncantation'        => FieldType::STRING,
         'portee'                  => FieldType::STRING,
         'duree'                   => FieldType::STRING,

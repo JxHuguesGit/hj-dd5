@@ -12,7 +12,7 @@ final class NameStep extends AbstractBaseStep implements StepInterface
 {
     public function __construct()
     {
-        $this->id       = Constant::CST_NAME;
+        $this->id       = Constant::NAME;
         $this->title    = L::CHAR_NAME_TITLE;
         $this->template = Template::CREATE_NAME;
     }
