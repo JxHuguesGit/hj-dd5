@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Routes;
 
@@ -12,7 +12,7 @@ class PageSkills extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => Constant::SKILLS,
-            'icon'                    => Icon::ISTAR,
+            'icon'                    => I::STAR,
             Constant::CST_TITLE       => Language::LG_SKILLS_TITLE,
             Constant::CST_DESCRIPTION => "Les compétences sont des aptitudes liées aux caractéristiques qui permettent d'accomplir certaines actions spécifiques.",
             'url'                     => Routes::SKILLS_PREFIX,

@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Domain\Entity\Item;
 use src\Utils\Html;
@@ -21,7 +21,7 @@ class ItemTableBuilder extends AbstractTableBuilder
         $headers = [Language::LG_NAMES, Language::LG_DESCRIPTION, Language::LG_WEIGHT, Language::LG_PRICE];
         if ($this->isAdmin) {
             $createLink = Html::getLink(
-                Html::getIcon(Icon::IPLUS),
+                Html::getIcon(I::PLUS),
                 UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, '', Constant::NEW ),
                 B::TEXT_WHITE
             );
@@ -53,12 +53,12 @@ class ItemTableBuilder extends AbstractTableBuilder
                 ]);
             if ($this->isAdmin) {
                 $btnEdit = Html::getLink(
-                    Html::getIcon(Icon::IEDIT),
+                    Html::getIcon(I::EDIT),
                     UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::EDIT),
                     B::TEXT_DARK
                 );
                 $btnDelete = Html::getLink(
-                    Html::getIcon(Icon::ITRASH),
+                    Html::getIcon(I::TRASH),
                     UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::CST_GEAR, $item->slug, Constant::DELETE),
                     B::TEXT_DANGER . ' ' . Constant::CST_AJAXACTION,
                     [

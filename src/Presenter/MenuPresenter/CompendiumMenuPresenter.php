@@ -4,7 +4,7 @@ namespace src\Presenter\MenuPresenter;
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Template;
 use src\Presenter\ViewModel\MenuItem;
@@ -19,15 +19,15 @@ class CompendiumMenuPresenter
         // ---------- 1) Définition des items ----------
         $children = new Collection();
         $children
-            ->add(new MenuItem(Constant::WEAPONS, Language::LG_WEAPONS_TITLE, Icon::IGAVEL))
-            ->add(new MenuItem(Constant::ARMORS, Language::LG_ARMORS_TITLE, Icon::ISHIELD))
-            ->add(new MenuItem(Constant::SKILLS, Language::LG_SKILLS_TITLE, Icon::IBRAIN))
-            ->add(new MenuItem(Constant::FEATS, Language::LG_FEATS_TITLE, Icon::IMEDAL))
-            ->add(new MenuItem(Constant::CST_GEAR, Language::LG_GEAR_TITLE, Icon::IBOX))
-            ->add(new MenuItem(Constant::MONSTERS, Language::LG_MONSTERS_TITLE, Icon::IDRAGON))
-            ->add(new MenuItem(Constant::ORIGINS, Language::LG_HISTO_TITLE, Icon::ICOMPASS))
-            ->add(new MenuItem(Constant::TOOLS, Language::LG_TOOLS_TITLE, Icon::IGAVEL))
-            ->add(new MenuItem(Constant::SPELLS, Language::LG_SPELLS_TITLE, Icon::ISCROLL))
+            ->add(new MenuItem(Constant::WEAPONS, Language::LG_WEAPONS_TITLE, I::GAVEL))
+            ->add(new MenuItem(Constant::ARMORS, Language::LG_ARMORS_TITLE, I::SHIELD))
+            ->add(new MenuItem(Constant::SKILLS, Language::LG_SKILLS_TITLE, I::BRAIN))
+            ->add(new MenuItem(Constant::FEATS, Language::LG_FEATS_TITLE, I::MEDAL))
+            ->add(new MenuItem(Constant::CST_GEAR, Language::LG_GEAR_TITLE, I::BOX))
+            ->add(new MenuItem(Constant::MONSTERS, Language::LG_MONSTERS_TITLE, I::DRAGON))
+            ->add(new MenuItem(Constant::ORIGINS, Language::LG_HISTO_TITLE, I::COMPASS))
+            ->add(new MenuItem(Constant::TOOLS, Language::LG_TOOLS_TITLE, I::GAVEL))
+            ->add(new MenuItem(Constant::SPELLS, Language::LG_SPELLS_TITLE, I::SCROLL))
         ;
 
         // ---------- 2) Construction des enfants ----------
@@ -51,7 +51,7 @@ class CompendiumMenuPresenter
             $isActiveTab ? B::MENU_OPEN : '',
             '#',
             $isActiveTab ? Constant::CST_ACTIVE : '',
-            Icon::IBOOK,
+            I::BOOK,
             Language::LG_COMPENDIUM,
             '',
             $ul,

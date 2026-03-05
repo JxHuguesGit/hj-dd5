@@ -5,7 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
 use src\Constant\Field;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Domain\Monster\Monster;
 use src\Enum\AbilityEnum;
@@ -33,7 +33,7 @@ class MonsterFormatter
         string $frTag
     ): string {
         $html = '<span class="modal-tooltip" data-modal="monster" data-uktag="' . $ukTag . '">'
-        . $name . ' ' . Html::getIcon(Icon::ISEARCH) . '</span>';
+        . $name . ' ' . Html::getIcon(I::SEARCH) . '</span>';
 
         if (! $isComplete) {
             $html .= '<i class="float-end">🇬🇧</i>';

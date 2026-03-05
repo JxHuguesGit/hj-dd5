@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Routes;
 
@@ -12,7 +12,7 @@ class PageGear extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => Constant::GEAR,
-            'icon'                    => Icon::IBOXOPEN,
+            'icon'                    => I::BOXOPEN,
             Constant::CST_TITLE       => Language::LG_EQUIPMENT,
             Constant::CST_DESCRIPTION => 'Découvrez l\'équipement jouable.',
             'url'                     => Routes::ITEM_PREFIX,

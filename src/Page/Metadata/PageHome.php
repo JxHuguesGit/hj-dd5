@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 
 class PageHome extends PageMetadata
@@ -11,7 +11,7 @@ class PageHome extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => Constant::HOME,
-            'icon'                    => Icon::IHOUSE,
+            'icon'                    => I::HOUSE,
             Constant::CST_TITLE       => Language::LG_HOME,
             Constant::CST_DESCRIPTION => '',
             'url'                     => '/',

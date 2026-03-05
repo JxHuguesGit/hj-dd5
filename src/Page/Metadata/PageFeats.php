@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Routes;
 
@@ -12,7 +12,7 @@ class PageFeats extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => Constant::FEATS,
-            'icon'                    => Icon::ISCROLL,
+            'icon'                    => I::SCROLL,
             Constant::CST_TITLE       => Language::LG_FEATS_TITLE,
             Constant::CST_DESCRIPTION => "Les dons sont des capacités spéciales que votre personnage peut acquérir, offrant des avantages uniques et personnalisant davantage son style de jeu.",
             'url'                     => Routes::FEATS_PREFIX,

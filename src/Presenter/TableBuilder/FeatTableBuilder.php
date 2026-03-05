@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
@@ -66,7 +66,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                 if ($this->isAdmin) {
                     $table->addBodyCell([
                         Constant::CST_CONTENT => Html::getLink(
-                            Html::getIcon(Icon::IEDIT),
+                            Html::getIcon(I::EDIT),
                             UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::FEATS, $row->slug, Constant::EDIT),
                             B::TEXT_DARK
                         ),

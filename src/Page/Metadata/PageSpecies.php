@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Routes;
 
@@ -12,7 +12,7 @@ class PageSpecies extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => Constant::SPECIES,
-            'icon'                    => Icon::IPAW,
+            'icon'                    => I::PAW,
             Constant::CST_TITLE       => Language::LG_SPECIES_TITLE,
             Constant::CST_DESCRIPTION => "Les peuples du multivers de D&D proviennent de mondes très différents et comprennent maintes formes de vie intelligentes. L'espèce d'un personnage-joueur est l'ensemble des traits de jeu que l'aventurier reçoit en choisissant d'incarner l'une ou l'autre de ces formes de vie.",
             'url'                     => Routes::SPECIES_PREFIX,

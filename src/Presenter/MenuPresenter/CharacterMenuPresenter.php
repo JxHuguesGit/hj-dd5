@@ -3,7 +3,7 @@ namespace src\Presenter\MenuPresenter;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Template;
 use src\Presenter\MenuPresenter\MenuItemPresenter;
 use src\Presenter\ViewModel\MenuItem;
@@ -27,7 +27,7 @@ class CharacterMenuPresenter
         $url = UrlGenerator::admin(Constant::ONG_CHARACTER, '%d', '', '', ['step' => '%s']);
 
         // ----- 1) Item "Nouveau" -----
-        $newItem   = new MenuItem(0, 'Nouveau', Icon::IPLUS);
+        $newItem   = new MenuItem(0, 'Nouveau', I::PLUS);
         $presenter = new MenuItemPresenter($newItem, $currentTab, $currentId);
 
         $childrenHtml .= $renderer(Template::ADMINSIDEBARITEM, $presenter->toTemplateAttributesNewCharacter($url));

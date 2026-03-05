@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Routes;
 
@@ -12,10 +12,10 @@ class PageFeatsEpic extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => 'feats-epic',
-            'icon'                    => Icon::ISTAR,
+            'icon'                    => I::STAR,
             Constant::CST_TITLE       => Language::LG_CBT_STYLE_EPICS,
             Constant::CST_DESCRIPTION => 'Les dons de haut niveau, puissants et rares.',
-            'url'                     => Routes::FEAT_PREFIX.'-'.Constant::EPIC,
+            'url'                     => Routes::FEAT_PREFIX . '-' . Constant::EPIC,
             'order'                   => 44,
             Constant::CST_PARENT      => Constant::FEATS,
         ];

@@ -2,7 +2,7 @@
 namespace src\Page\Metadata;
 
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Constant\Routes;
 
@@ -12,7 +12,7 @@ class PageOrigines extends PageMetadata
     {
         return [
             Constant::CST_SLUG        => Constant::ORIGINES,
-            'icon'                    => Icon::IUSERS,
+            'icon'                    => I::USERS,
             Constant::CST_TITLE       => Language::LG_HISTO_TITLE,
             Constant::CST_DESCRIPTION => "L'historique de votre personnage est un ensemble d'éléments disparates qui symbolisent le lieu et l'occupation de votre héros en herbe avant qu'il embrasse la carrière d'aventurier.",
             'url'                     => Routes::ORIGINS_PREFIX,
@@ -21,4 +21,3 @@ class PageOrigines extends PageMetadata
         ];
     }
 }
-

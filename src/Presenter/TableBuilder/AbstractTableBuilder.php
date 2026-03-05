@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Utils\Html;
 use src\Utils\Table;
 
@@ -63,8 +63,8 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                 if ($data['filter'] ?? false) {
                     $strContent = Html::getDiv(
                         $strContent . ' ' . Html::getIcon(
-                            Icon::IFITLER,
-                            Icon::SOLID,
+                            I::FITLER,
+                            I::SOLID,
                             [
                                 Constant::CST_CLASS => 'modal-tooltip ajaxAction',
                                 Constant::CST_DATA  => [

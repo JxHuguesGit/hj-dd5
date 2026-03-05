@@ -3,7 +3,7 @@ namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant;
-use src\Constant\Icon;
+use src\Constant\Icon as I;
 use src\Constant\Language;
 use src\Utils\Html;
 use src\Utils\Table;
@@ -14,7 +14,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
     public function build(iterable $monsters, array $params = []): Table
     {
         $createLink = Html::getLink(
-            Html::getIcon(Icon::IPLUS),
+            Html::getIcon(I::PLUS),
             UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, '', Constant::NEW ),
             B::TEXT_WHITE
         );
@@ -49,7 +49,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
                 ->addBodyCell([Constant::CST_CONTENT => $monster->reference])
                 ->addBodyCell([
                     Constant::CST_CONTENT    => Html::getLink(
-                        Html::getIcon(Icon::IEDIT),
+                        Html::getIcon(I::EDIT),
                         UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, $monster->ukTag ?? '', Constant::EDIT),
                         B::TEXT_DARK
                     ),
@@ -66,7 +66,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
             ->addFootRow()
             ->addFootCell([
                 Constant::CST_CONTENT    => Html::getDiv(
-                    Html::getIcon(Icon::ICIRCLEPLUS),
+                    Html::getIcon(I::CIRCLEPLUS),
                     [
                         Constant::CST_CLASS => Constant::CST_AJAXACTION . ' cursor-pointer',
                         Constant::CST_DATA  => [
