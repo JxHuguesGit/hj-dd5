@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Page;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Origin;
 use src\Presenter\ViewModel\OriginPageView;
 use src\Service\Domain\OriginService;
@@ -20,8 +20,8 @@ final class OriginPageService
 
         return new OriginPageView(
             $origin,
-            $nav[Constant::PREV],
-            $nav[Constant::NEXT],
+            $nav[C::PREV],
+            $nav[C::NEXT],
             $this->originService->getFeat($origin),
             $this->originService->getTool($origin),
             $this->originService->getAbilities($origin),

@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Armor;
 use src\Presenter\ViewModel\ArmorGroup;
@@ -24,8 +24,8 @@ final class ArmorListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ArmorGroup(
-                label: $typesLabel[$typeId][Constant::LABEL] ?? '',
-                slug: $typesLabel[$typeId][Constant::SLUG] ?? '',
+                label: $typesLabel[$typeId][C::LABEL] ?? '',
+                slug: $typesLabel[$typeId][C::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -50,24 +50,24 @@ final class ArmorListPresenter
     {
         return [
             Armor::TYPE_LIGHT => [
-                Constant::SLUG  => Constant::LIGHT,
-                Constant::LABEL => L::ARM_LGT_DONDOFF,
-                Constant::NAME  => L::ARM_LGT,
+                C::SLUG  => C::LIGHT,
+                C::LABEL => L::ARM_LGT_DONDOFF,
+                C::NAME  => L::ARM_LGT,
             ],
             Armor::TYPE_MEDIUM => [
-                Constant::SLUG => Constant::MEDIUM,
-                Constant::LABEL => L::ARM_MDM_DONDOFF,
-                Constant::NAME  => L::ARM_MDM,
+                C::SLUG => C::MEDIUM,
+                C::LABEL => L::ARM_MDM_DONDOFF,
+                C::NAME  => L::ARM_MDM,
             ],
             Armor::TYPE_HEAVY => [
-                Constant::SLUG => Constant::HEAVY,
-                Constant::LABEL => L::ARM_HVY_DONDOFF,
-                Constant::NAME  => L::ARM_HVY,
+                C::SLUG => C::HEAVY,
+                C::LABEL => L::ARM_HVY_DONDOFF,
+                C::NAME  => L::ARM_HVY,
             ],
             Armor::TYPE_SHIELD => [
-                Constant::SLUG => Constant::SHIELD,
-                Constant::LABEL => L::ARM_SHD_DONDOFF,
-                Constant::NAME  => L::ARM_SHD,
+                C::SLUG => C::SHIELD,
+                C::LABEL => L::ARM_SHD_DONDOFF,
+                C::NAME  => L::ARM_SHD,
             ],
         ];
     }

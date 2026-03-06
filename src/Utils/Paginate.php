@@ -2,7 +2,7 @@
 namespace src\Utils;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 
 class Paginate
 {
@@ -24,11 +24,11 @@ class Paginate
         /////////////////////////////////////////////////
         // Paramètres optionnels
         // Si on veut personnaliser le nombre de lignes par page
-        $this->nbPerPage = $arrData[Constant::PAGE_NBPERPAGE] ?? Constant::PAGE_DEFAULT_NBPERPAGE;
+        $this->nbPerPage = $arrData[C::PAGE_NBPERPAGE] ?? C::PAGE_DEFAULT_NBPERPAGE;
         // Le visuel des boutons de pagination
-        $this->option = $arrData[Constant::PAGE_OPTION] ?? Constant::PAGE_OPT_FULL_NMB;
+        $this->option = $arrData[C::PAGE_OPTION] ?? C::PAGE_OPT_FULL_NMB;
         // Le nombre de pages autour de la page courante
-        $this->pageWidth = $arrData[Constant::PAGE_WIDTH] ?? self::PAGE_DEFAULT_WIDTH;
+        $this->pageWidth = $arrData[C::PAGE_WIDTH] ?? self::PAGE_DEFAULT_WIDTH;
         // Visuel du lien de pagination
         $this->cssPageLink = ' page-link '.($arrData['css-page-link'] ?? '');
         /////////////////////////////////////////////////
@@ -37,16 +37,16 @@ class Paginate
         // Paramètres obligatoires
         // On récupère la liste des objets de la pagination.
         // On défini le nombre d'éléments et le nombre de pages
-        $this->objs = $arrData[Constant::PAGE_OBJS] ?? new Collection();
+        $this->objs = $arrData[C::PAGE_OBJS] ?? new Collection();
         $this->nbElements = $this->objs->count();
         $this->nbPages = ceil($this->nbElements/$this->nbPerPage);
-        $curPage = $arrData[Constant::CURPAGE] ?? 1;
+        $curPage = $arrData[C::CURPAGE] ?? 1;
         $this->curPage = max(1, min($curPage, $this->nbPages));
         /////////////////////////////////////////////////
 
         $this->extraParams = $params;
 
-        $this->url = remove_query_arg(Constant::CURPAGE);
+        $this->url = remove_query_arg(C::CURPAGE);
         $this->dealWithFilterParams($this->url);
 
     }
@@ -57,7 +57,7 @@ class Paginate
         $firstElement = ($this->curPage-1)*$this->nbPerPage*1+1;
         $lastElement  = min($this->nbElements, $this->curPage*$this->nbPerPage);
         $divContent = "Entrées $firstElement à $lastElement sur ".$this->nbElements;
-        $navContent = Html::getSpan($divContent, [Constant::CSSCLASS => $strClass]);
+        $navContent = Html::getSpan($divContent, [C::CSSCLASS => $strClass]);
 
         if ($this->nbPages<=1) {
             return $navContent;
@@ -70,10 +70,10 @@ class Paginate
         // Met-on les numéros ?
         if (in_array(
             $this->option,
-            [Constant::PAGE_OPT_NUMBERS,
-            Constant::PAGE_OPT_SMP_NMB,
-            Constant::PAGE_OPT_FULL_NMB,
-            Constant::PAGE_OPT_FST_LAST_NMB]
+            [C::PAGE_OPT_NUMBERS,
+            C::PAGE_OPT_SMP_NMB,
+            C::PAGE_OPT_FULL_NMB,
+            C::PAGE_OPT_FST_LAST_NMB]
         )) {
             $ulContent .= $this->getPaginationLink($this->curPage==1, 1, 1);
             if ($this->curPage-$this->pageWidth>2) {
@@ -93,24 +93,24 @@ class Paginate
         // Met-on previous et next ?
         if (in_array(
             $this->option,
-            [Constant::PAGE_OPT_SIMPLE,
-            Constant::PAGE_OPT_SMP_NMB,
-            Constant::PAGE_OPT_FULL,
-            Constant::PAGE_OPT_FULL_NMB]
+            [C::PAGE_OPT_SIMPLE,
+            C::PAGE_OPT_SMP_NMB,
+            C::PAGE_OPT_FULL,
+            C::PAGE_OPT_FULL_NMB]
         )) {
             ////////////////////////////////////////////////////////////////////////////
             // Lien vers la page précédente. Seulement si on n'est pas sur la première.
             $strToPrevious = $this->getPaginationLink(
                 $this->curPage<2,
                 $this->curPage-1,
-                Constant::PAGE_PREVIOUS
+                C::PAGE_PREVIOUS
             );
             ////////////////////////////////////////////////////////////////////////////
             // Lien vers la page suivante. Seulement si on n'est pas sur la dernière.
             $strToNext = $this->getPaginationLink(
                 $this->curPage>=$this->nbPages,
                 $this->curPage+1,
-                Constant::PAGE_NEXT
+                C::PAGE_NEXT
             );
 
             $ulContent = $strToPrevious.$ulContent.$strToNext;
@@ -119,27 +119,27 @@ class Paginate
         // Met-on first et last ?
         if (in_array(
             $this->option,
-            [Constant::PAGE_OPT_FULL,
-            Constant::PAGE_OPT_FULL_NMB,
-            Constant::PAGE_OPT_FST_LAST_NMB]
+            [C::PAGE_OPT_FULL,
+            C::PAGE_OPT_FULL_NMB,
+            C::PAGE_OPT_FST_LAST_NMB]
         )) {
             ////////////////////////////////////////////////////////////////////////////
             // Lien vers la première page. Seulement si on n'est ni sur la première, ni sur la deuxième page.
-            $strToFirst = $this->getPaginationLink($this->curPage<3, 1, Constant::PAGE_FIRST);
+            $strToFirst = $this->getPaginationLink($this->curPage<3, 1, C::PAGE_FIRST);
             ////////////////////////////////////////////////////////////////////////////
             // Lien vers la dernière page. Seulement si on n'est pas sur la dernière, ni l'avant-dernière.
             $strToLast = $this->getPaginationLink(
                 $this->curPage>=$this->nbPages-1,
                 $this->nbPages,
-                Constant::PAGE_LAST
+                C::PAGE_LAST
             );
 
             $ulContent = $strToFirst.$ulContent.$strToLast;
         }
 
         $strClass = 'pagination pagination-sm justify-content-end mb-0 col-6';
-        $navContent .= Html::getBalise('ul', $ulContent, [Constant::CSSCLASS => $strClass]);
-        $navAttributes = [Constant::CSSCLASS => 'row mx-2', 'aria-label' => 'Pagination liste'];
+        $navContent .= Html::getBalise('ul', $ulContent, [C::CSSCLASS => $strClass]);
+        $navAttributes = [C::CSSCLASS => 'row mx-2', 'aria-label' => 'Pagination liste'];
         return Html::getBalise('nav', $navContent, $navAttributes);
     }
 
@@ -147,15 +147,15 @@ class Paginate
     {
         $addClass = '';
         if ($isDisabled) {
-            $addClass = ' '.Constant::DISABLED;
+            $addClass = ' '.C::DISABLED;
             $strLink = Html::getLink($label, '#', $this->cssPageLink);
         } else {
             $href = remove_query_arg('refElementId', $this->url);
-            $href = add_query_arg(Constant::CURPAGE, $curpage, $href);
+            $href = add_query_arg(C::CURPAGE, $curpage, $href);
             $strLink = Html::getLink($label, $href, $this->cssPageLink);
         }
 
-        return Html::getLi($strLink, [Constant::CSSCLASS=>'page-item'.$addClass]);
+        return Html::getLi($strLink, [C::CSSCLASS=>'page-item'.$addClass]);
     }
 
     private function dealWithFilterParams(string &$href): void

@@ -2,7 +2,7 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Monster\Monster;
@@ -20,7 +20,7 @@ class MonsterIdentityFormBuilder
         $references = $reader->allReferences();
         $options    = [];
         foreach ($references as $reference) {
-            $options[] = ['valeur' => $reference->id, Constant::LABEL => $reference->name];
+            $options[] = ['valeur' => $reference->id, C::LABEL => $reference->name];
         }
         $fieldset
             ->addField(new NumberField(
@@ -28,35 +28,35 @@ class MonsterIdentityFormBuilder
                 'ID',
                 $monster->id,
                 true,
-                [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
                 F::FRNAME,
                 'Nom français',
                 $monster->frName,
                 false,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4]
+                [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextField(
                 F::NAME,
                 'Nom anglais',
                 $monster->name,
                 true,
-                [Constant::OUTERDIVCLASS => B::COL_MD_3]
+                [C::OUTERDIVCLASS => B::COL_MD_3]
             ))
             ->addField(new TextField(
                 F::UKTAG,
                 'Slug',
                 $monster->ukTag,
                 true,
-                [Constant::OUTERDIVCLASS => B::COL_MD_3]
+                [C::OUTERDIVCLASS => B::COL_MD_3]
             ))
             ->addField(new SelectField(
                 F::REFID,
                 L::REFERENCE,
                 $monster->ukTag,
                 $options,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
         ;
     }

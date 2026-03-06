@@ -1,7 +1,7 @@
 <?php
 namespace src\Page\Metadata;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Constant\Routes;
@@ -11,13 +11,13 @@ class PageFeatsOrigin extends PageMetadata
     public function getConfig(): array
     {
         return [
-            Constant::SLUG        => 'feats-origin',
+            C::SLUG        => 'feats-origin',
             'icon'                    => I::SCROLL,
-            Constant::TITLE       => L::ORIGIN_FEATS,
-            Constant::DESCRIPTION => "Les dons d'origine liés aux historiques de personnage.",
-            'url'                     => Routes::FEAT_PREFIX . '-' . Constant::ORIGIN,
+            C::TITLE       => L::ORIGIN_FEATS,
+            C::DESCRIPTION => "Les dons d'origine liés aux historiques de personnage.",
+            'url'                     => Routes::FEAT_PREFIX . '-' . C::ORIGIN,
             'order'                   => 41,
-            Constant::PARENT      => Constant::FEATS,
+            C::PARENT      => C::FEATS,
         ];
     }
 }

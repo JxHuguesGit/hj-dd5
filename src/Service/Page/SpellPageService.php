@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Page;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Spell;
 use src\Presenter\Detail\SpellDetailPresenter;
 use src\Presenter\ViewModel\SpellPageView;
@@ -20,8 +20,8 @@ final class SpellPageService
 
         return new SpellPageView(
             $this->presenter->present($spell),
-            $nav[Constant::PREV] ? $this->presenter->present($nav[Constant::PREV]) : null,
-            $nav[Constant::NEXT] ? $this->presenter->present($nav[Constant::NEXT]) : null
+            $nav[C::PREV] ? $this->presenter->present($nav[C::PREV]) : null,
+            $nav[C::NEXT] ? $this->presenter->present($nav[C::NEXT]) : null
         );
     }
 }

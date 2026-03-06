@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Criteria\SubSkillCriteria;
 use src\Domain\Entity\SubSkill;
@@ -29,7 +29,7 @@ final class SubSkillReader
     {
         if (! $criteria) {
             $criteria          = new SubSkillCriteria();
-            $criteria->orderBy = [F::NAME => Constant::ASC];
+            $criteria->orderBy = [F::NAME => C::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

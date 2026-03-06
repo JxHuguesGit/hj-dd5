@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Entity\Spell;
 
@@ -10,10 +10,10 @@ class SpellFactory
     public static function fromWpPost(\WP_Post $post): Spell
     {
         return new Spell([
-            Constant::ID          => $post->ID,
-            Constant::NAME        => $post->post_title,
-            Constant::SLUG        => $post->post_name,
-            Constant::CONTENT     => apply_filters('the_content', $post->post_content),
+            C::ID          => $post->ID,
+            C::NAME        => $post->post_title,
+            C::SLUG        => $post->post_name,
+            C::CONTENT     => apply_filters('the_content', $post->post_content),
             'tempsIncantation'        => get_field('temps_dincantation', $post->ID),
             'portee'                  => get_field('portee', $post->ID),
             'duree'                   => get_field('duree', $post->ID),

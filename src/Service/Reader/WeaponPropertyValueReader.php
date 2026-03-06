@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Criteria\WeaponPropertyValueCriteria;
 use src\Domain\Entity\WeaponPropertyValue;
 use src\Repository\WeaponPropertyValueRepositoryInterface;
@@ -28,7 +28,7 @@ final class WeaponPropertyValueReader
     {
         $criteria = new WeaponPropertyValueCriteria();
         $criteria->weaponId = $weaponId;
-        $criteria->orderBy  = ['wp.name'=>Constant::ASC];
+        $criteria->orderBy  = ['wp.name'=>C::ASC];
         return $this->wpnPropValueRepository->findAllWithRelations($criteria);
     }
 }

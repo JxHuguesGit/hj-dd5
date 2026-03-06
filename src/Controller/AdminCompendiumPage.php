@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Factory\CompendiumFactory;
 
@@ -16,32 +16,32 @@ class AdminCompendiumPage extends AdminPage
 
     public function getAdminContentPage(string $content = ''): string
     {
-        switch ($this->getArrParams(Constant::ID)) {
-            case Constant::ARMORS:
+        switch ($this->getArrParams(C::ID)) {
+            case C::ARMORS:
                 $pageContent = $this->compendiumFactory->armor()->render();
                 break;
-            case Constant::WEAPONS:
+            case C::WEAPONS:
                 $pageContent = $this->compendiumFactory->weapon()->render();
                 break;
-            case Constant::SKILLS:
+            case C::SKILLS:
                 $pageContent = $this->compendiumFactory->skill()->render();
                 break;
-            case Constant::GEAR:
+            case C::GEAR:
                 $pageContent = $this->compendiumFactory->gear()->render();
                 break;
-            case Constant::MONSTERS:
+            case C::MONSTERS:
                 $pageContent = $this->compendiumFactory->monster()->render();
                 break;
-            case Constant::FEATS:
+            case C::FEATS:
                 $pageContent = $this->compendiumFactory->feat()->render();
                 break;
-            case Constant::ORIGINS:
+            case C::ORIGINS:
                 $pageContent = $this->compendiumFactory->origin()->render();
                 break;
-            case Constant::TOOLS:
+            case C::TOOLS:
                 $pageContent = $this->compendiumFactory->tool()->render();
                 break;
-            case Constant::SPELLS:
+            case C::SPELLS:
                 $pageContent = $this->compendiumFactory->spell()->render();
                 break;
             default:

@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 class NumberField extends FormField
@@ -9,11 +9,11 @@ class NumberField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            Constant::TYPE  => 'number',
-            Constant::ID    => $this->getId(),
-            Constant::NAME  => $this->name,
-            Constant::VALUE => $this->value,
-            Constant::CSSCLASS => 'form-control',
+            C::TYPE  => 'number',
+            C::ID    => $this->getId(),
+            C::NAME  => $this->name,
+            C::VALUE => $this->value,
+            C::CSSCLASS => 'form-control',
         ];
         if ($this->params['step']) {
             $attrs['step'] = $this->params['step'];

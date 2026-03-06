@@ -2,7 +2,7 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Spell;
 use src\Domain\Result\SpellResult;
 use src\Factory\SpellFactory;
@@ -22,8 +22,8 @@ final class SpellService
                 'post_type'      => 'post',
                 'posts_per_page' => 10,
                 'category_name'  => 'sort',
-                'orderby'        => Constant::TITLE,
-                'order'          => Constant::ASC,
+                'orderby'        => C::TITLE,
+                'order'          => C::ASC,
             ],
             $criteria
         );
@@ -49,7 +49,7 @@ final class SpellService
 
     public function spellBySlug(string $slug): Spell
     {
-        $spellResult = $this->allSpells([Constant::NAME => $slug]);
+        $spellResult = $this->allSpells([C::NAME => $slug]);
         return ($spellResult->collection)->first();
     }
 
@@ -63,6 +63,6 @@ final class SpellService
 
         $prev = $allSpells->collection->slice($idxPrev, 1)->first();
         $next = $allSpells->collection->slice($idxNext, 1)->first();
-        return [Constant::PREV => $prev, Constant::NEXT => $next];
+        return [C::PREV => $prev, C::NEXT => $next];
     }
 }

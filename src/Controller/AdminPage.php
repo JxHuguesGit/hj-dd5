@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Domain\Entity;
 use src\Factory\CharacterFactory;
@@ -20,10 +20,10 @@ use src\Service\Writer\CharacterWriter;
 class AdminPage extends Utilities
 {
     private array $allowedOnglets = [
-        Constant::HOME,
-        Constant::ONG_CHARACTER,
-        Constant::ONG_TIMELINE,
-        Constant::ONG_COMPENDIUM,
+        C::HOME,
+        C::ONG_CHARACTER,
+        C::ONG_TIMELINE,
+        C::ONG_COMPENDIUM,
     ];
 
     public function getAdminContentPage(string $content): string
@@ -41,8 +41,8 @@ class AdminPage extends Utilities
 
     protected function getSidebar(): string
     {
-        $currentTab = $this->getArrParams(Constant::ONGLET, Constant::HOME);
-        $currentId  = $this->getArrParams(Constant::ID, '');
+        $currentTab = $this->getArrParams(C::ONGLET, C::HOME);
+        $currentId  = $this->getArrParams(C::ID, '');
 
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
@@ -67,9 +67,9 @@ class AdminPage extends Utilities
         Entity::setSharedDependencies($qb, $qe);
 
         $controller = new AdminPage($arrUri);
-        $currentTab = $controller->getArrParams(Constant::ONGLET, Constant::HOME);
+        $currentTab = $controller->getArrParams(C::ONGLET, C::HOME);
         switch ($currentTab) {
-            case Constant::ONG_CHARACTER:
+            case C::ONG_CHARACTER:
                 $repo       = new CharacterRepository($qb, $qe);
                 $controller = new AdminCharacterPage(
                     $arrUri,
@@ -82,7 +82,7 @@ class AdminPage extends Utilities
                     )
                 );
                 break;
-            case Constant::ONG_COMPENDIUM:
+            case C::ONG_COMPENDIUM:
                 $controller = new AdminCompendiumPage(
                     $arrUri,
                     new CompendiumFactory(
@@ -92,7 +92,7 @@ class AdminPage extends Utilities
                     )
                 );
                 break;
-            case Constant::HOME:
+            case C::HOME:
             default:
                 $controller = new AdminHomePage($arrUri);
                 break;

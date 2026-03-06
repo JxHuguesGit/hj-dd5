@@ -84,8 +84,11 @@ class Field
     public const SSTYPMSTNAME  = 'subTypeMonsterName';
 
     /* Clefs étrangères */
+    // rpgFeatAbility, rpgOriginAbility, rpgSkill
     public const ABILITYID    = 'abilityId';
+    // rpgMonster
     public const ALGNID       = 'alignmentId';
+    // rpgArmor
     public const ARMORTYPID   = 'armorTypeId';
     public const CHARACTERID  = 'characterId';
     public const CLASSEID     = 'classeId';

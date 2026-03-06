@@ -3,7 +3,7 @@ namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Tool;
 use src\Presenter\ViewModel\ToolGroup;
@@ -31,8 +31,8 @@ final class ToolListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ToolGroup(
-                label: $types[$typeId][Constant::LABEL] ?? '',
-                slug: $types[$typeId][Constant::SLUG] ?? '',
+                label: $types[$typeId][C::LABEL] ?? '',
+                slug: $types[$typeId][C::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -71,20 +71,20 @@ final class ToolListPresenter
     {
         return [
             Tool::TYPE_DIVERS => [
-                Constant::SLUG  => Constant::DIVERS,
-                Constant::LABEL => L::TOOL_DIVERS,
+                C::SLUG  => C::DIVERS,
+                C::LABEL => L::TOOL_DIVERS,
             ],
             Tool::TYPE_GAMES  => [
-                Constant::SLUG  => Constant::GAMES,
-                Constant::LABEL => L::TOOL_GAMES,
+                C::SLUG  => C::GAMES,
+                C::LABEL => L::TOOL_GAMES,
             ],
             Tool::TYPE_MUSIC  => [
-                Constant::SLUG  => Constant::MUSIC,
-                Constant::LABEL => L::TOOL_MUSIC,
+                C::SLUG  => C::MUSIC,
+                C::LABEL => L::TOOL_MUSIC,
             ],
             Tool::TYPE_TOOL   => [
-                Constant::SLUG  => Constant::TOOLS,
-                Constant::LABEL => L::TOOL_TOOLS,
+                C::SLUG  => C::TOOLS,
+                C::LABEL => L::TOOL_TOOLS,
             ],
         ];
     }

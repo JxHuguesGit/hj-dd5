@@ -2,7 +2,7 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
@@ -29,28 +29,28 @@ class MonsterClassificationFormBuilder
                 'Type',
                 $monster->monstreTypeId,
                 $optionTypes,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
                 F::MSTSSTYPID,
                 'Sous Type',
                 $monster->monsterSubTypeId,
                 $optionSubTypes,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
                 F::ALGNID,
                 'Alignement',
                 $monster->alignmentId,
                 $optionAlignements,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
                 F::MSTSIZE,
                 'Taille',
                 $monster->monsterSize,
                 $optionSizes,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
         ;
     }

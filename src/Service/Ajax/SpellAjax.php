@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Ajax;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;
@@ -21,7 +21,7 @@ class SpellAjax
 
         $criteria = SpellCriteria::fromRequest([
             'page'             => Session::fromPost('page', 1),
-            Constant::TYPE => Session::fromPost(Constant::TYPE),
+            C::TYPE => Session::fromPost(C::TYPE),
             ...$fromPost,
         ]);
 

@@ -2,7 +2,7 @@
 namespace src\Service\Formatter;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\WeaponPropertyValue;
 use src\Service\Domain\WpPostService;
 use src\Utils\Html;
@@ -70,7 +70,7 @@ class WeaponPropertiesFormatter
     ): string {
         $wpPostService->getById($weaponPropertyValue->postId);
         $linkContent = $weaponPropertyValue->propertyName
-        . Html::getSpan($wpPostService->getPostContent() ?? '', [Constant::CSSCLASS => 'tooltip-text']);
+        . Html::getSpan($wpPostService->getPostContent() ?? '', [C::CSSCLASS => 'tooltip-text']);
         return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
     }
 

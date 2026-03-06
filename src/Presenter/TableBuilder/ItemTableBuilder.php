@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Domain\Entity\Item;
@@ -22,7 +22,7 @@ class ItemTableBuilder extends AbstractTableBuilder
         if ($this->isAdmin) {
             $createLink = Html::getLink(
                 Html::getIcon(I::PLUS),
-                UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::GEAR, '', Constant::NEW ),
+                UrlGenerator::admin(C::ONG_COMPENDIUM, C::GEAR, '', C::NEW ),
                 B::TEXT_WHITE
             );
             $headers[] = $createLink;
@@ -35,46 +35,46 @@ class ItemTableBuilder extends AbstractTableBuilder
             /** @var Item $item */
             $table->addBodyRow([])
                 ->addBodyCell([
-                    Constant::CONTENT    => Html::getLink($item->name, $item->url, B::TEXT_DARK),
-                    Constant::ATTRIBUTES => [Constant::CSSCLASS => B::COL_2],
+                    C::CONTENT    => Html::getLink($item->name, $item->url, B::TEXT_DARK),
+                    C::ATTRIBUTES => [C::CSSCLASS => B::COL_2],
                 ])
-                ->addBodyCell([Constant::CONTENT => $item->description])
+                ->addBodyCell([C::CONTENT => $item->description])
                 ->addBodyCell([
-                    Constant::CONTENT    => $item->weight,
-                    Constant::ATTRIBUTES => [
-                        Constant::CSSCLASS => B::TEXT_END . ' ' . B::COL_1,
+                    C::CONTENT    => $item->weight,
+                    C::ATTRIBUTES => [
+                        C::CSSCLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ])
                 ->addBodyCell([
-                    Constant::CONTENT    => $item->price,
-                    Constant::ATTRIBUTES => [
-                        Constant::CSSCLASS => B::TEXT_END . ' ' . B::COL_1,
+                    C::CONTENT    => $item->price,
+                    C::ATTRIBUTES => [
+                        C::CSSCLASS => B::TEXT_END . ' ' . B::COL_1,
                     ],
                 ]);
             if ($this->isAdmin) {
                 $btnEdit = Html::getLink(
                     Html::getIcon(I::EDIT),
-                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::GEAR, $item->slug, Constant::EDIT),
+                    UrlGenerator::admin(C::ONG_COMPENDIUM, C::GEAR, $item->slug, C::EDIT),
                     B::TEXT_DARK
                 );
                 $btnDelete = Html::getLink(
                     Html::getIcon(I::TRASH),
-                    UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::GEAR, $item->slug, Constant::DELETE),
-                    B::TEXT_DANGER . ' ' . Constant::AJAXACTION,
+                    UrlGenerator::admin(C::ONG_COMPENDIUM, C::GEAR, $item->slug, C::DELETE),
+                    B::TEXT_DANGER . ' ' . C::AJAXACTION,
                     [
-                        Constant::DATA => [
-                            Constant::TRIGGER     => Constant::CLICK,
-                            Constant::ACTION      => 'openConfirm',
-                            Constant::TARGET      => 'confirmModal',
-                            Constant::TITLE       => 'Suppression de l\'objet ' . $item->name,
-                            Constant::DESCRIPTION => 'Confirmez-vous la suppression de l\'objet <strong>' . $item->name . '</strong> ?',
+                        C::DATA => [
+                            C::TRIGGER     => C::CLICK,
+                            C::ACTION      => 'openConfirm',
+                            C::TARGET      => 'confirmModal',
+                            C::TITLE       => 'Suppression de l\'objet ' . $item->name,
+                            C::DESCRIPTION => 'Confirmez-vous la suppression de l\'objet <strong>' . $item->name . '</strong> ?',
                         ],
                     ]
                 );
                 $table->addBodyCell([
-                    Constant::CONTENT    => $btnEdit . ' ' . $btnDelete,
-                    Constant::ATTRIBUTES => [
-                        Constant::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1]
+                    C::CONTENT    => $btnEdit . ' ' . $btnDelete,
+                    C::ATTRIBUTES => [
+                        C::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1]
                     ,
                 ]);
             }

@@ -5,7 +5,7 @@ use src\Action\Ajax\LoadCreationStepSide;
 use src\Action\Ajax\LoadMoreMonstersAction;
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\ModalMonsterCard;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
@@ -30,7 +30,7 @@ class AjaxRouter
         if (! isset($this->actions[$ajaxAction])) {
             return [
                 'status'             => 'error',
-                Constant::ACTION => $ajaxAction,
+                C::ACTION => $ajaxAction,
                 'message'            => 'Unknown action',
             ];
         }
@@ -40,8 +40,8 @@ class AjaxRouter
 
         return [
             'status'             => 'success',
-            Constant::ACTION => $ajaxAction,
-            Constant::DATA   => $action->execute(),
+            C::ACTION => $ajaxAction,
+            C::DATA   => $action->execute(),
         ];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Page;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Service\Reader\FeatReader;
@@ -21,8 +21,8 @@ final class FeatPageService
         return new FeatPageView(
             $feat,
             $this->getOrigins($feat),
-            $nav[Constant::PREV],
-            $nav[Constant::NEXT],
+            $nav[C::PREV],
+            $nav[C::NEXT],
         );
     }
 

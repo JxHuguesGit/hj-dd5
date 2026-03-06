@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Spell;
 use src\Page\Renderer\PageSpell;
 use src\Presenter\MenuPresenter;
@@ -24,7 +24,7 @@ class PublicSpell extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::SPELLS);
+        $menu = $this->menuPresenter->render(C::SPELLS);
         $pageView = $this->pageService->build($this->spell);
         return $this->page->render($menu, $pageView);
     }

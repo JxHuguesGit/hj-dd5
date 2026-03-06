@@ -1,23 +1,23 @@
 <?php
 namespace src\Domain\Criteria;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class WeaponCriteria extends BaseCriteria
 {
     public ?int $id = null;
-    public string $type = Constant::WEAPON;
+    public string $type = C::WEAPON;
     public ?string $name = null;
     public ?string $slug = null;
     public ?string $nameLt  = null;
     public ?string $nameGt  = null;
 
     public array $orderBy = [
-        F::WPNCATID   => Constant::ASC,
-        F::WPNRANGEID => Constant::ASC,
-        'i.'.F::NAME       => Constant::ASC,
+        F::WPNCATID   => C::ASC,
+        F::WPNRANGEID => C::ASC,
+        'i.'.F::NAME       => C::ASC,
     ];
 
     public function apply(QueryBuilder $qb): void

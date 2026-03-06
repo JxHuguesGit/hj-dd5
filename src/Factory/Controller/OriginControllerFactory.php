@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\PublicOrigine;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
@@ -32,7 +32,7 @@ class OriginControllerFactory
                 $this->serviceFactory->wordPress()
             ),
             new PageOrigine($this->renderer),
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ORIGINES)
+            new MenuPresenter(PageRegistry::getInstance()->all(), C::ORIGINES)
         );
     }
 }

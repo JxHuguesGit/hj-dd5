@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Skill;
 use src\Page\Renderer\PageSkill;
 use src\Presenter\Detail\SkillDetailPresenter;
@@ -27,7 +27,7 @@ class PublicSkill extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::SKILLS);
+        $menu = $this->menuPresenter->render(C::SKILLS);
         $pageView = $this->pageService->build($this->skill);
         $viewData = $this->presenter->present($pageView);
         return $this->page->render($menu, $viewData);

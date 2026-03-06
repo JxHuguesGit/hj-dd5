@@ -56,7 +56,7 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
             self::INNERJOIN . Table::WPNCATEGORY . " c ON c.id = a.".F::WPNCATID." " .
             self::INNERJOIN . Table::MSTPROFCY . " p ON p.id = a.".F::MSTPROFID." " .
             self::INNERJOIN . Table::DMGDIE . " d ON d.id = a.".F::DMGDIEID." " .
-            self::INNERJOIN . Table::TYPEDAMAGE . " td ON td.id = a.".F::TYPEDMGID." " .
+            self::INNERJOIN . Table::DAMAGETYPE . " td ON td.id = a.".F::TYPEDMGID." " .
             self::INNERJOIN . Table::WPNRANGE . " r ON r.id = a.".F::WPNRANGEID."
         ";
 

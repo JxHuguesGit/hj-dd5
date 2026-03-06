@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Page\PageList;
 use src\Presenter\MenuPresenter;
@@ -19,7 +19,7 @@ class PublicSpecies extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->species = $this->speciesQueryService->speciesByParent(0, [F::NAME=>Constant::ASC]);
+        $this->species = $this->speciesQueryService->speciesByParent(0, [F::NAME=>C::ASC]);
         $this->title = 'Les Espèces';
     }
 
@@ -30,7 +30,7 @@ class PublicSpecies extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::SPECIES);
+        $menu = $this->menuPresenter->render(C::SPECIES);
         $viewData = $this->presenter->present($this->species);
         return $this->page->render($menu, $this->title, $viewData);
     }

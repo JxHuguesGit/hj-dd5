@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Entity;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
@@ -19,7 +19,7 @@ final class Spell extends Entity
         F::NIVEAU,
         F::SCHOOL,
         F::CLASSES,
-        Constant::CONTENT,
+        C::CONTENT,
         'tempsIncantation',
         'portee',
         'duree',
@@ -37,7 +37,7 @@ final class Spell extends Entity
         F::SCHOOL             => FieldType::STRING,
         F::CLASSES            => FieldType::ARRAY,
 
-        Constant::CONTENT     => FieldType::STRING,
+        C::CONTENT     => FieldType::STRING,
         'tempsIncantation'        => FieldType::STRING,
         'portee'                  => FieldType::STRING,
         'duree'                   => FieldType::STRING,

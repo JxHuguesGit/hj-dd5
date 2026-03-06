@@ -1,19 +1,19 @@
 <?php
 namespace src\Domain\Criteria;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class ToolCriteria extends BaseCriteria
 {
     public ?int $id = null;
-    public string $type = Constant::TOOL;
+    public string $type = C::TOOL;
     public ?string $name = null;
 
     public array $orderBy = [
-        F::PARENTID => Constant::ASC,
-        F::NAME     => Constant::ASC,
+        F::PARENTID => C::ASC,
+        F::NAME     => C::ASC,
     ];
 
     public function apply(QueryBuilder $qb): void

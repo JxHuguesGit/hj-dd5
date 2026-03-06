@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\AbilityRepository;
@@ -41,12 +41,12 @@ class RepositoryFactory
 {
     private array $map = [
         'ability'              => AbilityRepository::class,
-        Constant::ARMOR    => ArmorRepository::class,
+        C::ARMOR    => ArmorRepository::class,
         'condition'            => ConditionRepository::class,
         'damageType'           => DamageTypeRepository::class,
-        Constant::FEAT     => FeatRepository::class,
+        C::FEAT     => FeatRepository::class,
         'featAbility'          => FeatAbilityRepository::class,
-        Constant::FEATTYPE => FeatTypeRepository::class,
+        C::FEATTYPE => FeatTypeRepository::class,
         'item'                 => ItemRepository::class,
         'language'             => LanguageRepository::class,
         'monster'              => MonsterRepository::class,
@@ -56,7 +56,7 @@ class RepositoryFactory
         'monsterSubType'       => MonsterSubTypeRepository::class,
         'monsterType'          => MonsterTypeRepository::class,
         'monsterVisionType'    => MonsterVisionTypeRepository::class,
-        Constant::ORIGIN       => OriginRepository::class,
+        C::ORIGIN       => OriginRepository::class,
         'originAbility'        => OriginAbilityRepository::class,
         'originItem'           => OriginItemRepository::class,
         'originSkill'          => OriginSkillRepository::class,
@@ -64,13 +64,13 @@ class RepositoryFactory
         'reference'            => ReferenceRepository::class,
         'skill'                => SkillRepository::class,
         'speciePower'          => SpeciePowerRepository::class,
-        Constant::SPECIES      => SpeciesRepository::class,
+        C::SPECIES      => SpeciesRepository::class,
         'speedType'            => SpeedTypeRepository::class,
         'spell'                => SpellRepository::class,
         'subSkill'             => SubSkillRepository::class,
-        Constant::TOOL     => ToolRepository::class,
+        C::TOOL     => ToolRepository::class,
         'visionType'           => VisionTypeRepository::class,
-        Constant::WEAPON   => WeaponRepository::class,
+        C::WEAPON   => WeaponRepository::class,
         'weaponPropertyValue'  => WeaponPropertyValueRepository::class,
     ];
 

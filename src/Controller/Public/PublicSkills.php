@@ -2,7 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\SkillListPresenter;
@@ -25,7 +25,7 @@ class PublicSkills extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::SKILLS);
+        $menu = $this->menuPresenter->render(C::SKILLS);
         $viewData = $this->presenter->present($this->skills);
         return $this->page->render($menu, $this->title, $viewData);
     }

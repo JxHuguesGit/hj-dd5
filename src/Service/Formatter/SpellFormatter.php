@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Formatter;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Enum\ClassEnum;
 use src\Enum\MagicSchoolEnum;
@@ -50,10 +50,10 @@ class SpellFormatter
     public static function formatPortee(string $value): string
     {
         return match ($value) {
-            Constant::VUE, Constant::CONTACT => ucwords($value),
-            Constant::ILLIM     => L::UNLIMITED,
-            Constant::PERSO     => L::PERSO,
-            Constant::SPECIALES => L::SPECIALES,
+            C::VUE, C::CONTACT => ucwords($value),
+            C::ILLIM     => L::UNLIMITED,
+            C::PERSO     => L::PERSO,
+            C::SPECIALES => L::SPECIALES,
             default                 => self::formatDistance($value),
         };
     }
@@ -86,9 +86,9 @@ class SpellFormatter
             $returned = match ($value) {
                 'diss'                  => "Jusqu'à dissipation",
                 'inst'                  => 'Instantanée',
-                Constant::SPECIALES => 'Spéciale',
+                C::SPECIALES => 'Spéciale',
                 'bonus'                 => 'Action Bonus',
-                Constant::ACTION    => 'Action',
+                C::ACTION    => 'Action',
                 'reaction'              => 'Réaction',
                 default                 => $value,
             };

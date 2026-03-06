@@ -1,18 +1,18 @@
 <?php
 namespace src\Utils;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 
 final class Navigation
 {
     public static function getPrevNext(callable $queryBuilder): array
     {
-        $prev = $queryBuilder('&lt;', Constant::DESC)?->first();
-        $next = $queryBuilder('&gt;', Constant::ASC)?->first();
+        $prev = $queryBuilder('&lt;', C::DESC)?->first();
+        $next = $queryBuilder('&gt;', C::ASC)?->first();
 
         return [
-            Constant::PREV => $prev ?: null,
-            Constant::NEXT => $next ?: null,
+            C::PREV => $prev ?: null,
+            C::NEXT => $next ?: null,
         ];
     }
 }

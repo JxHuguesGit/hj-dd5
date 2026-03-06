@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicFeats;
 use src\Controller\Public\PublicItems;
@@ -40,7 +40,7 @@ final class PublicControllerFactory
     {
         return match ($slug) {
 
-            Constant::ORIGINES  => new PublicOrigines(
+            C::ORIGINES  => new PublicOrigines(
                 $this->readerFactory->origin(),
                 new OriginListPresenter(
                     $this->serviceFactory->origin()
@@ -52,10 +52,10 @@ final class PublicControllerFactory
                         $this->readerFactory->origin()
                     )
                 ),
-                new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ORIGINES)
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::ORIGINES)
             ),
 
-            Constant::SPECIES   => new PublicSpecies(
+            C::SPECIES   => new PublicSpecies(
                 $this->readerFactory->species(),
                 new SpeciesListPresenter(
                     $this->serviceFactory->wordPress()
@@ -64,10 +64,10 @@ final class PublicControllerFactory
                     $this->renderer,
                     new SpeciesTableBuilder()
                 ),
-                new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES)
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::SPECIES)
             ),
 
-            Constant::SKILLS    => new PublicSkills(
+            C::SKILLS    => new PublicSkills(
                 $this->readerFactory->skill(),
                 new SkillListPresenter(
                     $this->serviceFactory->skill()
@@ -78,10 +78,10 @@ final class PublicControllerFactory
                         $this->serviceFactory->skill()
                     )
                 ),
-                new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SKILLS)
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::SKILLS)
             ),
 
-            Constant::FEATS     => new PublicFeats(
+            C::FEATS     => new PublicFeats(
                 $this->readerFactory->feat(),
                 new FeatListPresenter(
                     $this->readerFactory->origin(),
@@ -93,10 +93,10 @@ final class PublicControllerFactory
                     $this->renderer,
                     new FeatTableBuilder()
                 ),
-                new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::FEATS)
             ),
 
-            Constant::SPELLS    => new PublicSpells(
+            C::SPELLS    => new PublicSpells(
                 new SpellService(
                     $this->serviceFactory->wordPress()
                 ),
@@ -110,11 +110,11 @@ final class PublicControllerFactory
                         $this->readerFactory->spell()
                     )
                 ),
-                new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS),
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
                 new SpellFilterModalPresenter($this->renderer)
             ),
 
-            Constant::ITEMS => new PublicItems(),
+            C::ITEMS => new PublicItems(),
 
             default             => null,
         };

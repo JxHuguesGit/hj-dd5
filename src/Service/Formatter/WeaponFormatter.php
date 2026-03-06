@@ -2,7 +2,7 @@
 namespace src\Service\Formatter;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Weapon;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\WeaponPropertyValueReader;
@@ -35,7 +35,7 @@ final class WeaponFormatter
         $this->wpPostService->getById($weapon->masteryPostId);
         $postContent = $this->wpPostService->getPostContent();
         $linkContent = $weapon->masteryName
-        . Html::getSpan($postContent ?? '', [Constant::CSSCLASS => 'tooltip-text']);
+        . Html::getSpan($postContent ?? '', [C::CSSCLASS => 'tooltip-text']);
         return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
     }
 }

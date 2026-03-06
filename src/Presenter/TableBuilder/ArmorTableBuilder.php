@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Armor;
 use src\Presenter\ViewModel\ArmorGroup;
@@ -34,21 +34,21 @@ class ArmorTableBuilder extends AbstractTableBuilder
                 /** @var Armor $armor */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CONTENT => Html::getLink($armor->name, $armor->url, B::TEXT_DARK),
+                        C::CONTENT => Html::getLink($armor->name, $armor->url, B::TEXT_DARK),
                     ])
-                    ->addBodyCell([Constant::CONTENT => $armor->armorClass])
+                    ->addBodyCell([C::CONTENT => $armor->armorClass])
                     ->addBodyCell([
-                        Constant::CONTENT    => $armor->strengthPenalty ?: '-',
-                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER],
+                        C::CONTENT    => $armor->strengthPenalty ?: '-',
+                        C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER],
                     ])
-                    ->addBodyCell([Constant::CONTENT => $armor->stealth])
+                    ->addBodyCell([C::CONTENT => $armor->stealth])
                     ->addBodyCell([
-                        Constant::CONTENT    => $armor->weight,
-                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END],
+                        C::CONTENT    => $armor->weight,
+                        C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_END],
                     ])
                     ->addBodyCell([
-                        Constant::CONTENT    => $armor->price,
-                        Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END],
+                        C::CONTENT    => $armor->price,
+                        C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_END],
                     ]);
             }
         }

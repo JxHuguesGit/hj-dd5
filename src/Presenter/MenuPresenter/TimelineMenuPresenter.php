@@ -2,7 +2,7 @@
 namespace src\Presenter\MenuPresenter;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Presenter\ViewModel\MenuItem;
@@ -13,17 +13,17 @@ class TimelineMenuPresenter
     public function render(string $currentTab, callable $renderer): string
     {
         $item = new MenuItem(
-            id: Constant::ONG_TIMELINE,
+            id: C::ONG_TIMELINE,
             label: L::INITIATIVE,
-            icon: Constant::ONG_TIMELINE
+            icon: C::ONG_TIMELINE
         );
 
-        $isActive = ($currentTab === Constant::ONG_TIMELINE);
+        $isActive = ($currentTab === C::ONG_TIMELINE);
 
         $attributes = [
             '',
-            UrlGenerator::admin(Constant::ONG_TIMELINE, ''),
-            $isActive ? Constant::ACTIVE : '',
+            UrlGenerator::admin(C::ONG_TIMELINE, ''),
+            $isActive ? C::ACTIVE : '',
             $item->icon,
             $item->label,
             B::DNONE,

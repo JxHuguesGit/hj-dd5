@@ -2,7 +2,7 @@
 namespace src\Presenter\Detail;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Presenter\ViewModel\SkillPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
@@ -13,21 +13,21 @@ class SkillDetailPresenter
         SkillPageView $viewData
     ): array {
         return [
-            Constant::TITLE       => $viewData->skill->name,
+            C::TITLE       => $viewData->skill->name,
 
-            Constant::ABILITIES   => $viewData->ability->name,
-            Constant::DESCRIPTION => $viewData->skill->description,
-            Constant::SUBSKILLS   => $this->formatSubSkills($viewData),
-            Constant::ORIGINES        => $this->formatOrigines($viewData),
+            C::ABILITIES   => $viewData->ability->name,
+            C::DESCRIPTION => $viewData->skill->description,
+            C::SUBSKILLS   => $this->formatSubSkills($viewData),
+            C::ORIGINES        => $this->formatOrigines($viewData),
 
-            Constant::PREV        => $viewData->previous ? [
-                Constant::NAME => $viewData?->previous->name,
-                Constant::SLUG => $viewData?->previous->getSlug(),
+            C::PREV        => $viewData->previous ? [
+                C::NAME => $viewData?->previous->name,
+                C::SLUG => $viewData?->previous->getSlug(),
             ] : null,
 
-            Constant::NEXT        => $viewData->next ? [
-                Constant::NAME => $viewData?->next->name,
-                Constant::SLUG => $viewData?->next->getSlug(),
+            C::NEXT        => $viewData->next ? [
+                C::NAME => $viewData?->next->name,
+                C::SLUG => $viewData?->next->getSlug(),
             ] : null,
         ];
     }
@@ -45,7 +45,7 @@ class SkillDetailPresenter
                     UrlGenerator::origin($origin->slug),
                     B::TEXT_WHITE
                 ),
-                [Constant::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
+                [C::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
             ) . ' ';
         }
         return $html;
@@ -62,6 +62,6 @@ class SkillDetailPresenter
             $desc    = $subSkill->description ?? '';
             $parts[] = Html::getBalise('dt', $name) . Html::getBalise('dd', $desc);
         }
-        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CSSCLASS => 'my-0']) : '-';
+        return $parts ? Html::getBalise('dl', implode('', $parts), [C::CSSCLASS => 'my-0']) : '-';
     }
 }

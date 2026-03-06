@@ -3,7 +3,7 @@ namespace src\Utils;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Presenter\FormBuilder\FormField;
 use src\Presenter\FormBuilder\HrField;
@@ -28,10 +28,10 @@ class Form
         return $this->renderer->render(
             Template::FORM_CARD,
             [
-                $this->formAttributes[Constant::TITLE],
+                $this->formAttributes[C::TITLE],
                 $formContent,
                 implode(' ', $this->formAttributes['buttons']),
-                $this->formAttributes[Constant::ACTION],
+                $this->formAttributes[C::ACTION],
             ]
         );
     }

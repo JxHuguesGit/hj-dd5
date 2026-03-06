@@ -2,7 +2,7 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Entity\SpeedType;
@@ -28,22 +28,22 @@ class MonsterCombatFormBuilder
             ))
             ->addField(new NumberField(
                 F::SCORECR, L::FP, $monster->cr, false,
-                [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new NumberField(
                 F::INITIATIVE, L::INITIATIVE, $monster->initiative, false,
-                [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
         ;
-        $checkBoxAttributes = [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
+        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
         if ($monster->legendary) {
-            $checkBoxAttributes[Constant::CHECKED] = Constant::CHECKED;
+            $checkBoxAttributes[C::CHECKED] = C::CHECKED;
         }
         $fieldset
             ->addField(new CheckboxField(F::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
             ->addField(new FillerField(
                 '', '', '', '',
-                [Constant::OUTERDIVCLASS => B::COL_MD_5 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_5 . ' ' . B::MB3]
             ))
         ;
 
@@ -63,9 +63,9 @@ class MonsterCombatFormBuilder
         $monsterSpeed = $monster->speed($speedType->id);
         $frTag        = $speedType->frTag;
 
-        $checkBoxAttributes = [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
+        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
         if ($monsterSpeed->id) {
-            $checkBoxAttributes[Constant::CHECKED] = Constant::CHECKED;
+            $checkBoxAttributes[C::CHECKED] = C::CHECKED;
         }
 
         $fieldset
@@ -74,15 +74,15 @@ class MonsterCombatFormBuilder
             ))
             ->addField(new TextField(
                 "value['$frTag']", 'Distance (m)', $monsterSpeed->value ?? '', false,
-                [Constant::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new TextField(
                 "extra['$frTag']", 'Complément', $monsterSpeed->extra ?? '', false,
-                [Constant::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new FillerField(
                 '', '', '', '',
-                [Constant::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
             ))
         ;
     }

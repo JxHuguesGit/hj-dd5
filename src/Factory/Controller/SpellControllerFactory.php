@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\PublicSpell;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
@@ -29,7 +29,7 @@ class SpellControllerFactory
         $spellDetailPresenter = new SpellDetailPresenter();
         return new PublicSpell(
             $slug,
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPELLS),
+            new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
             new PageSpell($this->renderer),
             $spellService,
             new SpellPageService($spellService, $spellDetailPresenter),

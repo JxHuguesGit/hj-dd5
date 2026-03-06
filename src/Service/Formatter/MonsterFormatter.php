@@ -3,7 +3,7 @@ namespace src\Service\Formatter;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Icon as I;
 use src\Constant\Language as L;
@@ -87,7 +87,7 @@ class MonsterFormatter
 
         // Type principal
         $type                                                   = $this->readerFactory->monsterType()->monsterTypeById($monster->monstreTypeId);
-        [Constant::LABEL => $typeName, 'gender' => $gender] = $type?->getNameAndGender();
+        [C::LABEL => $typeName, 'gender' => $gender] = $type?->getNameAndGender();
 
         // Nuée
         if ($monster->swarmSize) {
@@ -165,7 +165,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', 'Immunités') . ' ' . $content,
-            [Constant::CSSCLASS => B::COL_12]
+            [C::CSSCLASS => B::COL_12]
         );
     }
 
@@ -196,7 +196,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', $label) . ' ' . implode(', ', $resistances),
-            [Constant::CSSCLASS => B::COL_12]
+            [C::CSSCLASS => B::COL_12]
         );
     }
 
@@ -219,7 +219,7 @@ class MonsterFormatter
         return Html::getDiv(
             Html::getBalise('strong', 'Sens') . ' ' . implode(', ', $senses) .
             ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
-            [Constant::CSSCLASS => B::COL_12]
+            [C::CSSCLASS => B::COL_12]
         );
     }
 
@@ -235,7 +235,7 @@ class MonsterFormatter
         }
         return Html::getDiv(
             Html::getBalise('strong', 'Langues') . ' ' . (empty($languages) ? 'Aucune' : implode(', ', $languages)),
-            [Constant::CSSCLASS => B::COL_12]
+            [C::CSSCLASS => B::COL_12]
         );
     }
 
@@ -251,7 +251,7 @@ class MonsterFormatter
 
         return Html::getDiv(
             Html::getBalise('strong', L::FP) . ' ' . $content,
-            [Constant::CSSCLASS => B::COL_12]
+            [C::CSSCLASS => B::COL_12]
         );
     }
 

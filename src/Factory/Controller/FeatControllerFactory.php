@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicFeat;
 use src\Controller\Public\PublicFeatCombat;
@@ -20,10 +20,10 @@ use src\Renderer\TemplateRenderer;
 final class FeatControllerFactory
 {
     private const CATEGORY_CONTROLLERS = [
-        Constant::COMBAT  => PublicFeatCombat::class,
-        Constant::EPIC    => PublicFeatEpic::class,
-        Constant::GENERAL => PublicFeatGeneral::class,
-        Constant::ORIGIN  => PublicFeatOrigin::class,
+        C::COMBAT  => PublicFeatCombat::class,
+        C::EPIC    => PublicFeatEpic::class,
+        C::GENERAL => PublicFeatGeneral::class,
+        C::ORIGIN  => PublicFeatOrigin::class,
     ];
 
     public function __construct(
@@ -52,7 +52,7 @@ final class FeatControllerFactory
         );
         $menu = new MenuPresenter(
             PageRegistry::getInstance()->all(),
-            Constant::FEATS
+            C::FEATS
         );
         return new $controllerClass($featReader, $presenter, $page, $menu);
     }
@@ -70,7 +70,7 @@ final class FeatControllerFactory
                 $this->serviceFactory->wordPress()
             ),
             new \src\Page\Renderer\PageFeat($this->renderer),
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::FEATS)
+            new MenuPresenter(PageRegistry::getInstance()->all(), C::FEATS)
         );
     }
 }

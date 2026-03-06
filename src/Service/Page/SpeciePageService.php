@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Page;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Specie;
 use src\Presenter\ViewModel\SpeciePageView;
 use src\Service\Domain\SpecieService;
@@ -20,8 +20,8 @@ final class SpeciePageService
 
         return new SpeciePageView(
             $specie,
-            $nav[Constant::PREV],
-            $nav[Constant::NEXT],
+            $nav[C::PREV],
+            $nav[C::NEXT],
             $this->specieService->getAbilities($specie),
         );
     }

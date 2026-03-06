@@ -2,7 +2,7 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Criteria\CriteriaInterface;
 use src\Domain\Entity as DomainEntity;
@@ -64,7 +64,7 @@ class Repository
         );
     }
 
-    public function findAll(array $orderBy = [F::ID => Constant::ASC]): Collection
+    public function findAll(array $orderBy = [F::ID => C::ASC]): Collection
     {
         return $this->findBy([], $orderBy, -1);
     }

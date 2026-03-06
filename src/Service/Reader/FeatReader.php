@@ -2,7 +2,7 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Entity\Feat;
@@ -40,7 +40,7 @@ final class FeatReader
     {
         $criteria = new FeatCriteria();
         $criteria->featTypeId = $featTypeId;
-        $criteria->orderBy    = [F::NAME=>Constant::ASC];
+        $criteria->orderBy    = [F::NAME=>C::ASC];
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 
@@ -51,7 +51,7 @@ final class FeatReader
     {
         if (!$criteria) {
             $criteria = new FeatCriteria();
-            $criteria->orderBy = [F::FEATTYPEID=>Constant::ASC, F::NAME=>Constant::ASC];
+            $criteria->orderBy = [F::FEATTYPEID=>C::ASC, F::NAME=>C::ASC];
         }
         return $this->featRepository->findAllWithCriteria($criteria);
     }

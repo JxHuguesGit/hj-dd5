@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 class SelectField extends FormField
@@ -27,15 +27,15 @@ class SelectField extends FormField
         $strOptions = '';
         foreach ($this->options as $option) {
             $strOptions .= Html::getOption(
-                $option[Constant::LABEL],
-                [Constant::VALUE => $option[Constant::VALUE]],
-                $this->value == $option[Constant::VALUE]
+                $option[C::LABEL],
+                [C::VALUE => $option[C::VALUE]],
+                $this->value == $option[C::VALUE]
             );
         }
         $attrs = [
-            Constant::ID    => $this->getId(),
-            Constant::NAME  => $this->name,
-            Constant::CSSCLASS => 'form-select',
+            C::ID    => $this->getId(),
+            C::NAME  => $this->name,
+            C::CSSCLASS => 'form-select',
         ];
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';

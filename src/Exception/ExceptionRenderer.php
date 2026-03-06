@@ -1,7 +1,7 @@
 <?php
 namespace src\Exception;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use Throwable;
 
 class ExceptionRenderer
@@ -51,7 +51,7 @@ class ExceptionRenderer
         foreach ($trace as $t) {
             $file = $t['file'] ?? '[internal function]';
             $line = $t['line'] ?? '';
-            $fn   = ($t[Constant::CSSCLASS] ?? '') . ($t[Constant::TYPE] ?? '') . ($t['function'] ?? '');
+            $fn   = ($t[C::CSSCLASS] ?? '') . ($t[C::TYPE] ?? '') . ($t['function'] ?? '');
             $args = self::formatArgs($t['args'] ?? []);
             $html .= '<li class="list-group-item">'.htmlspecialchars($file).' ('.$line.') : '.$fn.$args.'</li>';
         }

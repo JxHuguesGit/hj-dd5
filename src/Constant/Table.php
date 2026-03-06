@@ -5,12 +5,13 @@ class Table
 {
     public const ABILITY        = 'rpgAbility';
     public const ALIGNMENT      = 'rpgAlignement';
+    public const AMMOTYPE       = 'rpgAmmunitionType';
     public const ARMOR          = 'rpgArmor';
     public const CHARACTER      = 'rpgCharacter';
     public const CHARACTERSKILL = 'rpgCharacterSkill';
     public const CONDITION      = 'rpgCondition';
     public const DMGDIE         = 'rpgDamageDie';
-    public const DAMAGETYPE     = 'rpgTypeDamage'; // A renommer en rpgDamageType
+    public const DAMAGETYPE     = 'rpgDamageType';
     public const FEAT           = 'rpgFeat';
     public const FEATABILITY    = 'rpgFeatAbility';
     public const FEATTYPE       = 'rpgFeatType';
@@ -34,15 +35,13 @@ class Table
     public const POWER          = 'rpgPower';
     public const REFERENCE      = 'rpgReference';
     public const SKILL          = 'rpgSkill';
-    public const SPECIEPOWER    = 'rpgSpeciesPower';
     public const SPECIES        = 'rpgSpecies';
+    public const SPECIEPOWER    = 'rpgSpeciesPower';
     public const SPEEDTYPE      = 'rpgSpeedType';
     public const SPELL          = 'rpgSpell';
     public const SUBSKILL       = 'rpgSubSkill';
     public const TOOL           = 'rpgTool';
-    public const TYPEAMMO       = 'rpgTypeAmmunition';
-    public const TYPEDAMAGE     = 'rpgTypeDamage';
-    public const VISIONTYPE     = 'rpgTypeVision'; // A renommer en rpgVisionType
+    public const VISIONTYPE     = 'rpgVisionType';
     public const WEAPON         = 'rpgWeapon';
     public const WPNCATEGORY    = 'rpgWeaponCategory';
     public const WPNPROPERTY    = 'rpgWeaponProperty';

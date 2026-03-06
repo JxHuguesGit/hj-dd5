@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Criteria;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
@@ -13,7 +13,7 @@ final class SkillCriteria extends BaseCriteria
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        F::NAME => Constant::ASC
+        F::NAME => C::ASC
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

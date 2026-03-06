@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Monster;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Entity\MonsterType as EntityMonsterType;
 
@@ -20,6 +20,6 @@ final class MonsterType
 
     public function getName(): string
     {
-        return ($this->getEntity()?->getNameAndGender())[Constant::LABEL];
+        return ($this->getEntity()?->getNameAndGender())[C::LABEL];
     }
 }

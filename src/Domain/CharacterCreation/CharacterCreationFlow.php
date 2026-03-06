@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\CharacterCreation;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Domain\CharacterCreation\Step\NameStep;
 use src\Domain\CharacterCreation\Step\OriginStep;
@@ -21,8 +21,8 @@ class CharacterCreationFlow
     public function steps(): array
     {
         return [
-            Constant::NAME => NameStep::class,
-            Constant::ORIGIN   => OriginStep::class,
+            C::NAME => NameStep::class,
+            C::ORIGIN   => OriginStep::class,
         ];
     }
 

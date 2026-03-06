@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 class FillerField extends FormField
@@ -16,7 +16,7 @@ class FillerField extends FormField
         $strBalise = $this->renderInput();
         return Html::getDiv(
             $strBalise,
-            [Constant::CSSCLASS => $this->params['outerDivClass'] ?? 'col-12']
+            [C::CSSCLASS => $this->params['outerDivClass'] ?? 'col-12']
         );
     }
 }

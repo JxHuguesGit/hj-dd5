@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 class FieldsetField extends FormField
@@ -32,16 +32,16 @@ class FieldsetField extends FormField
         }
 
         $legend = Html::getBalise('legend', htmlspecialchars($this->title), [
-            Constant::CSSCLASS => Constant::AJAXACTION,
-            Constant::DATA  => [
-                Constant::TRIGGER => Constant::CLICK,
-                Constant::ACTION  => 'collapse',
+            C::CSSCLASS => C::AJAXACTION,
+            C::DATA  => [
+                C::TRIGGER => C::CLICK,
+                C::ACTION  => 'collapse',
             ],
         ]);
 
-        $attrs = [Constant::CSSCLASS => 'monster-fieldset row mb-4'];
+        $attrs = [C::CSSCLASS => 'monster-fieldset row mb-4'];
         if ($this->collapsible) {
-            $attrs[Constant::CSSCLASS] .= ' collapsible';
+            $attrs[C::CSSCLASS] .= ' collapsible';
         }
 
         return Html::getBalise('fieldset', $legend . $content, $attrs);

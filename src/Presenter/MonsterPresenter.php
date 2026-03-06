@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Reference;
 use src\Domain\Monster\Monster;
 use src\Helper\SizeHelper;
@@ -122,7 +122,7 @@ class MonsterPresenter
         foreach ($objs as $obj) {
             $value .= ', ' . $obj->getController()->getFormatString();
         }
-        $extra = $this->monster->getExtra(Constant::SPEED);
+        $extra = $this->monster->getExtra(C::SPEED);
         if ($extra) {
             $value .= $extra;
         }

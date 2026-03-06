@@ -1,14 +1,14 @@
 <?php
 namespace src\Domain\Criteria;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
 final class ArmorCriteria extends BaseCriteria
 {
     public ?int $id = null;
-    public string $type = Constant::ARMOR;
+    public string $type = C::ARMOR;
     public ?string $name = null;
     public ?string $slug = null;
     public ?int $armorTypeId = null;
@@ -17,9 +17,9 @@ final class ArmorCriteria extends BaseCriteria
     public ?string $nameGt  = null;
 
     public array $orderBy = [
-        F::ARMORTYPID => Constant::ASC,
-        F::ARMORCLASS => Constant::ASC,
-        F::NAME       => Constant::ASC,
+        F::ARMORTYPID => C::ASC,
+        F::ARMORCLASS => C::ASC,
+        F::NAME       => C::ASC,
     ];
 
     public function apply(QueryBuilder $qb): void

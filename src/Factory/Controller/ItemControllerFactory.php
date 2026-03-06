@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\{
     PublicBase,
     PublicItemArmor,
@@ -38,22 +38,22 @@ final class ItemControllerFactory
 
     public function createCategoryController(string $slug): ?PublicBase
     {
-        $menu = new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ITEMS);
+        $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::ITEMS);
 
         return match($slug) {
-            Constant::ARMOR  => new PublicItemArmor(
+            C::ARMOR  => new PublicItemArmor(
                 $this->readerFactory->armor(),
                 new ArmorListPresenter(),
                 new PageList($this->renderer, new ArmorTableBuilder()),
                 $menu
             ),
-            Constant::TOOL   => new PublicItemTool(
+            C::TOOL   => new PublicItemTool(
                 $this->readerFactory->tool(),
                 new ToolListPresenter($this->readerFactory->origin()),
                 new PageList($this->renderer, new ToolTableBuilder()),
                 $menu
             ),
-            Constant::WEAPON => new PublicItemWeapon(
+            C::WEAPON => new PublicItemWeapon(
                 $this->readerFactory->weapon(),
                 new WeaponListPresenter(
                     $this->serviceFactory->wordPress(),
@@ -63,7 +63,7 @@ final class ItemControllerFactory
                 new PageList($this->renderer, new WeaponTableBuilder()),
                 $menu
             ),
-            Constant::GEAR   => new PublicItemGear(
+            C::GEAR   => new PublicItemGear(
                 $this->readerFactory->item(),
                 new GearListPresenter(),
                 new PageList($this->renderer, new ItemTableBuilder()),
@@ -75,15 +75,15 @@ final class ItemControllerFactory
 
     public function createDetailController(string $slug): ?PublicBase
     {
-        $menu = new MenuPresenter(PageRegistry::getInstance()->all(), Constant::ITEMS);
+        $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::ITEMS);
 
         $criteria = new ItemCriteria();
         $criteria->type = null;
         $item = $this->readerFactory->item()->itemBySlug($slug, $criteria);
 
         return match($item?->type) {
-            Constant::ARMOR  => $this->createArmorDetail($slug, $menu),
-            Constant::WEAPON => $this->createWeaponDetail($slug, $menu),
+            C::ARMOR  => $this->createArmorDetail($slug, $menu),
+            C::WEAPON => $this->createWeaponDetail($slug, $menu),
             default              => null
         };
     }
@@ -101,8 +101,8 @@ final class ItemControllerFactory
             $menu,
             new ArmorPageView(
                 $item,
-                $nav[Constant::PREV],
-                $nav[Constant::NEXT],
+                $nav[C::PREV],
+                $nav[C::NEXT],
             ),
             new PageItemArmor($this->renderer)
         );
@@ -133,8 +133,8 @@ final class ItemControllerFactory
             $menu,
             new WeaponPageView(
                 $item,
-                $nav[Constant::PREV],
-                $nav[Constant::NEXT],
+                $nav[C::PREV],
+                $nav[C::NEXT],
             ),
             new PageItemWeapon($this->renderer)
         );

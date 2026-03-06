@@ -3,7 +3,7 @@ namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillGroup;
@@ -28,8 +28,8 @@ final class SkillListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new SkillGroup(
-                label: $types[$typeId][Constant::LABEL] ?? '',
-                slug: $types[$typeId][Constant::SLUG] ?? '',
+                label: $types[$typeId][C::LABEL] ?? '',
+                slug: $types[$typeId][C::SLUG] ?? '',
                 rows: $rows
             ));
         }
@@ -60,12 +60,12 @@ final class SkillListPresenter
     private static function getSkillTypes(): array
     {
         return [
-            1 => [Constant::SLUG => Constant::ABLSTR, Constant::LABEL => L::FORCE],
-            2 => [Constant::SLUG => Constant::ABLDEX, Constant::LABEL => L::DEXTERITE],
-            3 => [Constant::SLUG => Constant::ABLCON, Constant::LABEL => L::CONSTITUTION],
-            4 => [Constant::SLUG => Constant::ABLINT, Constant::LABEL => L::INTELLIGENCE],
-            5 => [Constant::SLUG => Constant::ABLWIS, Constant::LABEL => L::SAGESSE],
-            6 => [Constant::SLUG => Constant::ABLCHA, Constant::LABEL => L::CHARISME],
+            1 => [C::SLUG => C::ABLSTR, C::LABEL => L::FORCE],
+            2 => [C::SLUG => C::ABLDEX, C::LABEL => L::DEXTERITE],
+            3 => [C::SLUG => C::ABLCON, C::LABEL => L::CONSTITUTION],
+            4 => [C::SLUG => C::ABLINT, C::LABEL => L::INTELLIGENCE],
+            5 => [C::SLUG => C::ABLWIS, C::LABEL => L::SAGESSE],
+            6 => [C::SLUG => C::ABLCHA, C::LABEL => L::CHARISME],
         ];
     }
 }

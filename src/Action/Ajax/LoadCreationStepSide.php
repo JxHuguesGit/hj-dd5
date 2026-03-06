@@ -1,7 +1,7 @@
 <?php
 namespace src\Action\Ajax;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
@@ -20,8 +20,8 @@ class LoadCreationStepSide implements AjaxActionInterface
     {
         $ajax = new CharacterCreationAjax($this->readerFactory, $this->serviceFactory, $this->renderer);
         return $ajax->loadCreationStepSide(
-            Session::fromPost(Constant::TYPE),
-            Session::fromPost(Constant::ID)
+            Session::fromPost(C::TYPE),
+            Session::fromPost(C::ID)
         );
     }
 }

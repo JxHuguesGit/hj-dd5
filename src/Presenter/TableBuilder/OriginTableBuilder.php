@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\OriginRow;
 use src\Utils\Html;
@@ -31,11 +31,11 @@ class OriginTableBuilder extends AbstractTableBuilder
                 );
                 /** @var OriginRow $row */
                 $table->addBodyRow([])
-                    ->addBodyCell([Constant::CONTENT => $url])
-                    ->addBodyCell([Constant::CONTENT => $row->abilities])
-                    ->addBodyCell([Constant::CONTENT => $row->originFeat])
-                    ->addBodyCell([Constant::CONTENT => $row->skills])
-                    ->addBodyCell([Constant::CONTENT => $row->tool]);
+                    ->addBodyCell([C::CONTENT => $url])
+                    ->addBodyCell([C::CONTENT => $row->abilities])
+                    ->addBodyCell([C::CONTENT => $row->originFeat])
+                    ->addBodyCell([C::CONTENT => $row->skills])
+                    ->addBodyCell([C::CONTENT => $row->tool]);
             }
         }
         return $table;

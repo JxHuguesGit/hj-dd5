@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Page\Renderer\PageDetail;
 use src\Presenter\Detail\WeaponDetailPresenter;
 use src\Presenter\MenuPresenter;
@@ -20,7 +20,7 @@ final class PublicItemWeaponDetail extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::ITEMS);
+        $menu = $this->menuPresenter->render(C::ITEMS);
         $viewData = $this->detailPresenter->present($this->pageView);
         return $this->page->render($menu, $this->getTitle(), $viewData);
     }

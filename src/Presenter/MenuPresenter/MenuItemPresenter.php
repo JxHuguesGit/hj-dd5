@@ -2,7 +2,7 @@
 namespace src\Presenter\MenuPresenter;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Presenter\ViewModel\MenuItem;
 use src\Utils\UrlGenerator;
 
@@ -17,7 +17,7 @@ class MenuItemPresenter
     private function isActive(): bool
     {
         return $this->currentId == $this->item->id
-        && $this->currentTab == Constant::ONG_COMPENDIUM;
+        && $this->currentTab == C::ONG_COMPENDIUM;
     }
 
     private function formatAttributes(
@@ -31,7 +31,7 @@ class MenuItemPresenter
         return [
             '',
             $url,
-            $isActive ? Constant::ACTIVE : '',
+            $isActive ? C::ACTIVE : '',
             $icon,
             $label,
             $show,
@@ -44,7 +44,7 @@ class MenuItemPresenter
     public function toTemplateAttributes(): array
     {
         return $this->formatAttributes(
-            UrlGenerator::admin(Constant::ONG_COMPENDIUM, $this->item->id),
+            UrlGenerator::admin(C::ONG_COMPENDIUM, $this->item->id),
             $this->isActive(),
             $this->item->icon,
             $this->item->label,
@@ -81,7 +81,7 @@ class MenuItemPresenter
     public function toTemplateAttributesCompendium(): array
     {
         return $this->formatAttributes(
-            UrlGenerator::admin(Constant::ONG_COMPENDIUM, $this->item->id),
+            UrlGenerator::admin(C::ONG_COMPENDIUM, $this->item->id),
             $this->isActive(),
             $this->item->icon,
             $this->item->label,

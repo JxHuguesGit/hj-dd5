@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\WeaponGroup;
 use src\Presenter\ViewModel\WeaponRow;
@@ -32,17 +32,17 @@ class WeaponTableBuilder extends AbstractTableBuilder
                 /** @var WeaponRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CONTENT => Html::getLink(
+                        C::CONTENT => Html::getLink(
                             $row->name,
                             $row->url,
                             B::TEXT_DARK
                         ),
                     ])
-                    ->addBodyCell([Constant::CONTENT => $row->damage])
-                    ->addBodyCell([Constant::CONTENT => $row->properties])
-                    ->addBodyCell([Constant::CONTENT => $row->masteryLink])
-                    ->addBodyCell([Constant::CONTENT => $row->weight])
-                    ->addBodyCell([Constant::CONTENT => $row->price]);
+                    ->addBodyCell([C::CONTENT => $row->damage])
+                    ->addBodyCell([C::CONTENT => $row->properties])
+                    ->addBodyCell([C::CONTENT => $row->masteryLink])
+                    ->addBodyCell([C::CONTENT => $row->weight])
+                    ->addBodyCell([C::CONTENT => $row->price]);
             }
         }
 

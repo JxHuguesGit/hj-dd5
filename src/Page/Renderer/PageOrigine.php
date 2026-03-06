@@ -3,7 +3,7 @@ namespace src\Page\Renderer;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
@@ -23,13 +23,13 @@ class PageOrigine extends PageDetail
             Template::ORIGIN_DETAIL_CARD,
             [
                 '',
-                $data[Constant::TITLE] ?? '',
-                $data[Constant::DESCRIPTION] ?? '',
-                implode(', ', $data[Constant::ABILITIES]),
-                $this->formatSkills($data[Constant::SKILLS]),
-                $this->formatLink($data[Constant::FEAT], fn($slug) => UrlGenerator::feat($slug)),
-                $this->formatLink($data[Constant::TOOL], fn($slug) => UrlGenerator::item($slug)),
-                implode(', ', $data[Constant::EQUIPMENT]),
+                $data[C::TITLE] ?? '',
+                $data[C::DESCRIPTION] ?? '',
+                implode(', ', $data[C::ABILITIES]),
+                $this->formatSkills($data[C::SKILLS]),
+                $this->formatLink($data[C::FEAT], fn($slug) => UrlGenerator::feat($slug)),
+                $this->formatLink($data[C::TOOL], fn($slug) => UrlGenerator::item($slug)),
+                implode(', ', $data[C::EQUIPMENT]),
                 'col-width' => 'col-sm-6',
             ]
         );
@@ -55,8 +55,8 @@ class PageOrigine extends PageDetail
         }
 
         return Html::getLink(
-            $entityData[Constant::NAME],
-            $urlGenerator($entityData[Constant::SLUG]),
+            $entityData[C::NAME],
+            $urlGenerator($entityData[C::SLUG]),
             B::TEXT_DARK
         );
     }

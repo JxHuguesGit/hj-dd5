@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Page;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillPageView;
 use src\Service\Domain\SkillService;
@@ -28,8 +28,8 @@ final class SkillPageService
             $subSkills,
             $ability,
             $origins,
-            $nav[Constant::PREV],
-            $nav[Constant::NEXT],
+            $nav[C::PREV],
+            $nav[C::NEXT],
         );
     }
 }

@@ -2,7 +2,7 @@
 namespace src\Presenter\Detail;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Service\Domain\WpPostService;
@@ -21,22 +21,22 @@ class FeatDetailPresenter
         $wpPost = $this->wpPostService->getById($viewData->feat->postId);
 
         return [
-            Constant::TITLE       => $viewData->feat->name,
-            Constant::SLUG        => $viewData->feat->getSlug(),
+            C::TITLE       => $viewData->feat->name,
+            C::SLUG        => $viewData->feat->getSlug(),
 
-            Constant::DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
-            Constant::FEATTYPE    => $this->formatFeatType($viewData),
+            C::DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
+            C::FEATTYPE    => $this->formatFeatType($viewData),
 
-            Constant::ORIGINES        => $this->formatOrigines($viewData),
+            C::ORIGINES        => $this->formatOrigines($viewData),
 
-            Constant::PREV        => $viewData->previous ? [
-                Constant::SLUG => $viewData?->previous->getSlug(),
-                Constant::NAME => $viewData?->previous->name,
+            C::PREV        => $viewData->previous ? [
+                C::SLUG => $viewData?->previous->getSlug(),
+                C::NAME => $viewData?->previous->name,
             ] : null,
 
-            Constant::NEXT        => $viewData->next ? [
-                Constant::SLUG => $viewData?->next->getSlug(),
-                Constant::NAME => $viewData?->next->name,
+            C::NEXT        => $viewData->next ? [
+                C::SLUG => $viewData?->next->getSlug(),
+                C::NAME => $viewData?->next->name,
             ] : null,
         ];
 
@@ -55,7 +55,7 @@ class FeatDetailPresenter
                     UrlGenerator::origin($slug),
                     B::TEXT_WHITE
                 ),
-                [Constant::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
+                [C::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
             ) . ' ';
         }
         return $html;
@@ -67,17 +67,17 @@ class FeatDetailPresenter
             case 1:
                 $featType = Html::getLink(
                     L::ORIGIN_FEAT,
-                    UrlGenerator::feats(Constant::ORIGIN),
+                    UrlGenerator::feats(C::ORIGIN),
                     B::TEXT_DARK
                 );
                 break;
             case 2:
                 $featType = Html::getLink(
                     L::GENERAL_FEAT,
-                    UrlGenerator::feats(Constant::GENERAL),
+                    UrlGenerator::feats(C::GENERAL),
                     B::TEXT_DARK
-                ) . Constant::PREREQUIS_NIV4;
-                $strPreRequis = $this->wpPostService->getField(Constant::PREREQUIS);
+                ) . C::PREREQUIS_NIV4;
+                $strPreRequis = $this->wpPostService->getField(C::PREREQUIS);
                 if ($strPreRequis) {
                     $featType .= ', ' . $strPreRequis;
                 }
@@ -86,17 +86,17 @@ class FeatDetailPresenter
             case 3:
                 $featType  = Html::getLink(
                     L::CBT_STYLE_FEAT,
-                    UrlGenerator::feats(Constant::COMBAT),
+                    UrlGenerator::feats(C::COMBAT),
                     B::TEXT_DARK
-                ) . Constant::PREREQUIS_ASDC;
+                ) . C::PREREQUIS_ASDC;
                 break;
             case 4:
                 $featType  = Html::getLink(
                     L::CBT_STYLE_EPIC,
-                    UrlGenerator::feats(Constant::EPIC),
+                    UrlGenerator::feats(C::EPIC),
                     B::TEXT_DARK
-                ) . Constant::PREREQUIS_NIV19;
-                $strPreRequis  = $this->wpPostService->getField(Constant::PREREQUIS);
+                ) . C::PREREQUIS_NIV19;
+                $strPreRequis  = $this->wpPostService->getField(C::PREREQUIS);
                 if ($strPreRequis) {
                     $featType .= ', ' . $strPreRequis;
                 }

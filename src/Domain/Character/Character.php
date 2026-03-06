@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Character;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\FieldType;
 use src\Domain\Entity;
@@ -39,7 +39,7 @@ final class Character extends Entity
             $this->name = $input['characterName'];
         }
         if ($this->createStep === null || $this->createStep === '') {
-            $this->createStep = Constant::NAME;
+            $this->createStep = C::NAME;
         } elseif (isset($input['createStep'])) {
             $this->createStep = $input['createStep'];
         }
@@ -55,7 +55,7 @@ final class Character extends Entity
     }
     public function isComplete(): bool
     {
-        return $this->createStep === Constant::DONE;
+        return $this->createStep === C::DONE;
     }
 
     public function getDataField(string $key, mixed $default = null): mixed

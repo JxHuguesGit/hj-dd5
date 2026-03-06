@@ -2,7 +2,7 @@
 namespace src\Presenter\Detail;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Presenter\ViewModel\OriginPageView;
 use src\Service\Domain\WpPostService;
 use src\Utils\Html;
@@ -20,30 +20,30 @@ class OriginDetailPresenter
         $wpPost = $this->wpPostService->getById($viewData->origin->postId ?? 0);
 
         return [
-            Constant::TITLE       => $viewData->origin->name,
-            Constant::SLUG        => $viewData->origin->getSlug(),
+            C::TITLE       => $viewData->origin->name,
+            C::SLUG        => $viewData->origin->getSlug(),
 
-            Constant::ABILITIES   => $this->formatAbilities($viewData->abilities),
-            Constant::SKILLS      => $viewData->skills,
+            C::ABILITIES   => $this->formatAbilities($viewData->abilities),
+            C::SKILLS      => $viewData->skills,
 
-            Constant::DESCRIPTION => $this->cleanContent($wpPost->post_content),
-            Constant::FEAT        => $viewData->feat ? [
-                Constant::NAME => $viewData->feat->name,
-                Constant::SLUG => $viewData->feat->getSlug(),
+            C::DESCRIPTION => $this->cleanContent($wpPost->post_content),
+            C::FEAT        => $viewData->feat ? [
+                C::NAME => $viewData->feat->name,
+                C::SLUG => $viewData->feat->getSlug(),
             ] : null,
-            Constant::TOOL        => $viewData->tool ? [
-                Constant::NAME => $viewData->tool->name,
-                Constant::SLUG => $viewData->tool->getSlug(),
+            C::TOOL        => $viewData->tool ? [
+                C::NAME => $viewData->tool->name,
+                C::SLUG => $viewData->tool->getSlug(),
             ] : null,
-            Constant::EQUIPMENT   => $this->formatItems($viewData->items),
+            C::EQUIPMENT   => $this->formatItems($viewData->items),
 
-            Constant::PREV        => $viewData->previous ? [
-                Constant::NAME => $viewData->previous->name,
-                Constant::SLUG => $viewData->previous->getSlug(),
+            C::PREV        => $viewData->previous ? [
+                C::NAME => $viewData->previous->name,
+                C::SLUG => $viewData->previous->getSlug(),
             ] : null,
-            Constant::NEXT        => $viewData->next ? [
-                Constant::NAME => $viewData->next->name,
-                Constant::SLUG => $viewData->next->getSlug(),
+            C::NEXT        => $viewData->next ? [
+                C::NAME => $viewData->next->name,
+                C::SLUG => $viewData->next->getSlug(),
             ] : null,
         ];
     }

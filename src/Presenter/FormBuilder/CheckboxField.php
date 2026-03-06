@@ -2,7 +2,7 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 class CheckboxField extends FormField
@@ -10,13 +10,13 @@ class CheckboxField extends FormField
     public function renderInput(): string
     {
         $attrs = [
-            Constant::TYPE  => 'checkbox',
-            Constant::ID    => $this->getId(),
-            Constant::NAME  => $this->name,
-            Constant::VALUE => $this->value,
+            C::TYPE  => 'checkbox',
+            C::ID    => $this->getId(),
+            C::NAME  => $this->name,
+            C::VALUE => $this->value,
         ];
-        if ($this->params[Constant::CHECKED]) {
-            $attrs[Constant::CHECKED] = Constant::CHECKED;
+        if ($this->params[C::CHECKED]) {
+            $attrs[C::CHECKED] = C::CHECKED;
         }
 
         return Html::getBalise('input', '', $attrs);
@@ -26,25 +26,25 @@ class CheckboxField extends FormField
     {
         $strBalise = $this->renderInput();
         $strLabel  = Html::getBalise(
-            Constant::LABEL,
+            C::LABEL,
             htmlspecialchars($this->label),
-            [Constant::CSSCLASS => 'w-100 py-0', 'for' => $this->getId()]
+            [C::CSSCLASS => 'w-100 py-0', 'for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CSSCLASS => 'form-floating h-100']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [C::CSSCLASS => 'form-floating h-100']);
         $innerDiv = Html::getDiv(
             $innerDiv,
             [
-                Constant::CSSCLASS => 'checkbox checkbox-sm ajaxAction w-100',
-                Constant::DATA  => [
-                    Constant::TRIGGER => Constant::CLICK,
-                    Constant::ACTION  => 'toggleCheckbox',
-                    Constant::TARGET  => $this->getId(),
+                C::CSSCLASS => 'checkbox checkbox-sm ajaxAction w-100',
+                C::DATA  => [
+                    C::TRIGGER => C::CLICK,
+                    C::ACTION  => 'toggleCheckbox',
+                    C::TARGET  => $this->getId(),
                 ],
             ]
         );
         return Html::getDiv(
             $innerDiv,
-            [Constant::CSSCLASS => ($this->params[Constant::OUTERDIVCLASS] ?? B::COL_12)]
+            [C::CSSCLASS => ($this->params[C::OUTERDIVCLASS] ?? B::COL_12)]
         );
     }
 }

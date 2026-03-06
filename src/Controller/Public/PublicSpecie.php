@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Specie;
 use src\Page\Renderer\PageSpecie;
 use src\Presenter\Detail\SpeciesDetailPresenter;
@@ -27,10 +27,10 @@ class PublicSpecie extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::SPECIES);
+        $menu = $this->menuPresenter->render(C::SPECIES);
         $pageView = $this->pageService->build($this->species);
         $viewData = $this->presenter->present($pageView);
-        $viewData[Constant::TITLE] = $this->getTitle();
+        $viewData[C::TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 }

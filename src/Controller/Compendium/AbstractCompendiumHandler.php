@@ -1,23 +1,23 @@
 <?php
 namespace src\Controller\Compendium;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Session;
 
 abstract class AbstractCompendiumHandler
 {
     public function render(): string
     {
-        $action = Session::fromGet(Constant::ACTION);
-        $slug   = Session::fromGet(Constant::SLUG);
+        $action = Session::fromGet(C::ACTION);
+        $slug   = Session::fromGet(C::SLUG);
 
         if (Session::isPostSubmitted()) {
             return $this->handleSubmit($action, $slug);
         }
 
         return match (true) {
-            $action === Constant::EDIT && $slug !== '' => $this->renderEdit($slug),
-        //TODO : $action === Constant::NEW => $this->renderCreate(new Item()),
+            $action === C::EDIT && $slug !== '' => $this->renderEdit($slug),
+        //TODO : $action === C::NEW => $this->renderCreate(new Item()),
             default                                    => $this->renderList(),
         };
     }
@@ -25,8 +25,8 @@ abstract class AbstractCompendiumHandler
     protected function handleSubmit(string $action, string $slug): string
     {
         return match ($action) {
-            Constant::EDIT => $this->handleEditSubmit($slug),
-        //TODO : Constant::NEW  => $this->handleNewSubmit(),
+            C::EDIT => $this->handleEditSubmit($slug),
+        //TODO : C::NEW  => $this->handleNewSubmit(),
             default        => $this->renderList(),
         };
     }

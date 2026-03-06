@@ -2,7 +2,7 @@
 namespace src\Form;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 class Form
@@ -14,7 +14,7 @@ class Form
     public function addRow(array $attributes = []): self
     {
         $this->nbRows++;
-        $this->formRows[$this->nbRows] = [Constant::ATTRIBUTES => $attributes, Constant::CONTENT => ''];
+        $this->formRows[$this->nbRows] = [C::ATTRIBUTES => $attributes, C::CONTENT => ''];
         return $this;
     }
 
@@ -22,21 +22,21 @@ class Form
     {
         $attributes = $this->initAttributes($id, $name, $label, $value);
 
-        if (isset($extraAttributes[Constant::CSSCLASS])) {
-            $attributes[Constant::CSSCLASS] .= ' ' . $extraAttributes[Constant::CSSCLASS];
+        if (isset($extraAttributes[C::CSSCLASS])) {
+            $attributes[C::CSSCLASS] .= ' ' . $extraAttributes[C::CSSCLASS];
         }
-        $attributes[Constant::TYPE] = $extraAttributes[Constant::TYPE] ?? B::TEXT;
+        $attributes[C::TYPE] = $extraAttributes[C::TYPE] ?? B::TEXT;
 
         $spanAttributes = [];
-        if (isset($extraAttributes[Constant::TYPE]) &&
-            $extraAttributes[Constant::TYPE] == 'hidden') {
-            $spanAttributes[Constant::CSSCLASS] = B::DNONE;
+        if (isset($extraAttributes[C::TYPE]) &&
+            $extraAttributes[C::TYPE] == 'hidden') {
+            $spanAttributes[C::CSSCLASS] = B::DNONE;
         }
 
         if ($label != '') {
-            $this->formRows[$this->nbRows][Constant::CONTENT] .= $this->getSpan($id, $label, $spanAttributes);
+            $this->formRows[$this->nbRows][C::CONTENT] .= $this->getSpan($id, $label, $spanAttributes);
         }
-        $this->formRows[$this->nbRows][Constant::CONTENT] .= Html::getBalise('input', '', $attributes);
+        $this->formRows[$this->nbRows][C::CONTENT] .= Html::getBalise('input', '', $attributes);
 
         return $this;
     }
@@ -46,12 +46,12 @@ class Form
         $strContent = '';
         while (! empty($this->formRows)) {
             $row = array_shift($this->formRows);
-            if (isset($row[Constant::ATTRIBUTES][Constant::CSSCLASS])) {
-                $row[Constant::ATTRIBUTES][Constant::CSSCLASS] .= ' input-group mb-3';
+            if (isset($row[C::ATTRIBUTES][C::CSSCLASS])) {
+                $row[C::ATTRIBUTES][C::CSSCLASS] .= ' input-group mb-3';
             } else {
-                $row[Constant::ATTRIBUTES][Constant::CSSCLASS] = ' input-group mb-3';
+                $row[C::ATTRIBUTES][C::CSSCLASS] = ' input-group mb-3';
             }
-            $strContent .= Html::getDiv($row[Constant::CONTENT], $row[Constant::ATTRIBUTES]);
+            $strContent .= Html::getDiv($row[C::CONTENT], $row[C::ATTRIBUTES]);
         }
 
         $formBalise  = Html::getBalise(
@@ -63,23 +63,23 @@ class Form
         return Html::getBalise(
             'section',
             $formBalise,
-            [Constant::CSSCLASS => 'wrapper pt-3 col-12']
+            [C::CSSCLASS => 'wrapper pt-3 col-12']
         );
     }
 
     public function addFiller(array $extraAttributes = []): self
     {
         $attributes  = [
-            Constant::CSSCLASS => $extraAttributes[Constant::CSSCLASS] ?? 'col-8',
+            C::CSSCLASS => $extraAttributes[C::CSSCLASS] ?? 'col-8',
         ];
-        $this->formRows[$this->nbRows][Constant::CONTENT] .= $this->getSpan('', '', $attributes);
+        $this->formRows[$this->nbRows][C::CONTENT] .= $this->getSpan('', '', $attributes);
         return $this;
     }
 
     private function getSpan(string $id, string $label, array $extraAttributes = []): string
     {
         $attributes = [
-            Constant::CSSCLASS => 'input-group-text ' . ($extraAttributes[Constant::CSSCLASS] ?? B::COL_2),
+            C::CSSCLASS => 'input-group-text ' . ($extraAttributes[C::CSSCLASS] ?? B::COL_2),
             'for'               => $id,
         ];
         return Html::getSpan($label, $attributes);
@@ -88,10 +88,10 @@ class Form
     private function initAttributes(string $id, string $name, string $label, $value): array
     {
         return [
-            Constant::CSSCLASS => 'form-control',
-            Constant::NAME  => $name,
-            Constant::ID    => $id,
-            Constant::VALUE => $value,
+            C::CSSCLASS => 'form-control',
+            C::NAME  => $name,
+            C::ID    => $id,
+            C::VALUE => $value,
             'aria'              => [
                 'label'       => $label,
                 'describedby' => $label,

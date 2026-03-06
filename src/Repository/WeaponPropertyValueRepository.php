@@ -39,7 +39,7 @@ class WeaponPropertyValueRepository extends Repository implements WeaponProperty
                 , " . F::DICECOUNT . ", " . F::DICEFACES . "
             FROM " . Table::WPNPROPVALUE . " wpv
             INNER JOIN " . Table::WPNPROPERTY . " wp ON wp.id = wpv." . F::WPNPROPID . "
-            LEFT JOIN " . Table::TYPEAMMO . " ta ON ta.id = wpv." . F::TYPEAMMID . "
+            LEFT JOIN " . Table::AMMOTYPE . " ta ON ta.id = wpv." . F::TYPEAMMID . "
             LEFT JOIN " . Table::DMGDIE . " dd ON dd.id = wpv." . F::DMGDIEID . "
         ";
 

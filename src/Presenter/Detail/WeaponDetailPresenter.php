@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Presenter\ListPresenter\WeaponListPresenter;
 use src\Presenter\ViewModel\PageViewInterface;
 use src\Service\Formatter\WeaponFormatter;
@@ -18,9 +18,9 @@ class WeaponDetailPresenter extends AbstractItemDetailPresenter
         /** @var PageViewInterface $viewData */
         $base = parent::present($viewData);
 
-        $key = ($viewData->weapon->isMartial() ? Constant::MARTIAL : Constant::SIMPLE) . '_'
-                . ($viewData->weapon->isMelee() ? Constant::MELEE : Constant::RANGED);
-        $base['category'] = (WeaponListPresenter::getWeaponTypes())[$key][Constant::LABEL_SING];
+        $key = ($viewData->weapon->isMartial() ? C::MARTIAL : C::SIMPLE) . '_'
+                . ($viewData->weapon->isMelee() ? C::MELEE : C::RANGED);
+        $base['category'] = (WeaponListPresenter::getWeaponTypes())[$key][C::LABEL_SING];
         $base['damage'] = Utils::getStrDamage($viewData->weapon);
         $base['properties'] = $this->formatter->properties($viewData->weapon);
         $base['masteryLink'] = $this->formatter->masteryLink($viewData->weapon);

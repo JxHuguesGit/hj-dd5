@@ -2,7 +2,7 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 
 class ExtraNumberField extends FormField
 {
@@ -30,14 +30,14 @@ class ExtraNumberField extends FormField
             $this->label,
             $this->value,
             $this->readonly,
-            [Constant::OUTERDIVCLASS => $this->params['valueWidth']]
+            [C::OUTERDIVCLASS => $this->params['valueWidth']]
         ))->display() .
         (new TextField(
             'extra[' . $this->name . ']',
             'Complément',
             $this->extraValue,
             $this->readonly,
-            [Constant::OUTERDIVCLASS => $this->params['extraWidth']]
+            [C::OUTERDIVCLASS => $this->params['extraWidth']]
         ))->display();
     }
 }

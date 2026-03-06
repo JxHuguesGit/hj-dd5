@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\PublicSkill;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
@@ -33,7 +33,7 @@ class SkillControllerFactory
             ),
             new SkillDetailPresenter(),
             new PageSkill($this->renderer),
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SKILLS)
+            new MenuPresenter(PageRegistry::getInstance()->all(), C::SKILLS)
         );
     }
 }

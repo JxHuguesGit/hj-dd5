@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Utils\Html;
@@ -15,67 +15,67 @@ class MonsterTableBuilder extends AbstractTableBuilder
     {
         $createLink = Html::getLink(
             Html::getIcon(I::PLUS),
-            UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, '', Constant::NEW ),
+            UrlGenerator::admin(C::ONG_COMPENDIUM, C::TAB_MONSTERS, '', C::NEW ),
             B::TEXT_WHITE
         );
         $headers = [
-            [Constant::LABEL => L::MONSTER],
-            [Constant::LABEL => L::FP, Constant::CSSCLASS => B::COL_1],
-            [Constant::LABEL => L::CREATURE_TYPE, Constant::CSSCLASS => B::COL_2],
-            [Constant::LABEL => L::CA, Constant::CSSCLASS => B::COL_1],
-            [Constant::LABEL => L::PV, Constant::CSSCLASS => B::COL_1],
-            [Constant::LABEL => L::REFERENCE, Constant::CSSCLASS => B::COL_2],
-            [Constant::LABEL => $createLink, Constant::CSSCLASS => B::COL_1],
+            [C::LABEL => L::MONSTER],
+            [C::LABEL => L::FP, C::CSSCLASS => B::COL_1],
+            [C::LABEL => L::CREATURE_TYPE, C::CSSCLASS => B::COL_2],
+            [C::LABEL => L::CA, C::CSSCLASS => B::COL_1],
+            [C::LABEL => L::PV, C::CSSCLASS => B::COL_1],
+            [C::LABEL => L::REFERENCE, C::CSSCLASS => B::COL_2],
+            [C::LABEL => $createLink, C::CSSCLASS => B::COL_1],
         ];
 
-        $params[Constant::ID] = 'monsterFilter';
+        $params[C::ID] = 'monsterFilter';
         $table                    = $this->createTable(count($headers), $params);
 
         foreach ($headers as $data) {
             $table->addHeaderCell([
-                Constant::CONTENT    => $data[Constant::LABEL],
-                Constant::ATTRIBUTES => [Constant::CSSCLASS => $data[Constant::CSSCLASS] ?? ''],
+                C::CONTENT    => $data[C::LABEL],
+                C::ATTRIBUTES => [C::CSSCLASS => $data[C::CSSCLASS] ?? ''],
             ]);
         }
 
         foreach ($monsters as $monster) {
             /** @var MonsterRow $row */
             $table->addBodyRow([])
-                ->addBodyCell([Constant::CONTENT => $monster->name])
-                ->addBodyCell([Constant::CONTENT => $monster->cr, Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER]])
-                ->addBodyCell([Constant::CONTENT => $monster->type])
-                ->addBodyCell([Constant::CONTENT => $monster->ca, Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER]])
-                ->addBodyCell([Constant::CONTENT => $monster->hp, Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_END]])
-                ->addBodyCell([Constant::CONTENT => $monster->reference])
+                ->addBodyCell([C::CONTENT => $monster->name])
+                ->addBodyCell([C::CONTENT => $monster->cr, C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER]])
+                ->addBodyCell([C::CONTENT => $monster->type])
+                ->addBodyCell([C::CONTENT => $monster->ca, C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER]])
+                ->addBodyCell([C::CONTENT => $monster->hp, C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_END]])
+                ->addBodyCell([C::CONTENT => $monster->reference])
                 ->addBodyCell([
-                    Constant::CONTENT    => Html::getLink(
+                    C::CONTENT    => Html::getLink(
                         Html::getIcon(I::EDIT),
-                        UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::TAB_MONSTERS, $monster->ukTag ?? '', Constant::EDIT),
+                        UrlGenerator::admin(C::ONG_COMPENDIUM, C::TAB_MONSTERS, $monster->ukTag ?? '', C::EDIT),
                         B::TEXT_DARK
                     ),
-                    Constant::ATTRIBUTES => [Constant::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1],
+                    C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1],
                 ]);
         }
 
         $table->addFooter([
-            Constant::CSSCLASS => implode(' ', [
+            C::CSSCLASS => implode(' ', [
                 B::TABLE_DARK,
                 B::TEXT_CENTER,
             ]),
         ])
             ->addFootRow()
             ->addFootCell([
-                Constant::CONTENT    => Html::getDiv(
+                C::CONTENT    => Html::getDiv(
                     Html::getIcon(I::CIRCLEPLUS),
                     [
-                        Constant::CSSCLASS => Constant::AJAXACTION . ' cursor-pointer',
-                        Constant::DATA  => [
-                            Constant::TRIGGER => Constant::CLICK,
-                            Constant::ACTION  => 'loadMoreMonsters',
+                        C::CSSCLASS => C::AJAXACTION . ' cursor-pointer',
+                        C::DATA  => [
+                            C::TRIGGER => C::CLICK,
+                            C::ACTION  => 'loadMoreMonsters',
                         ],
                     ]
                 ),
-                Constant::ATTRIBUTES => [Constant::COLSPAN => count($headers)],
+                C::ATTRIBUTES => [C::COLSPAN => count($headers)],
             ]);
 
         return $table;

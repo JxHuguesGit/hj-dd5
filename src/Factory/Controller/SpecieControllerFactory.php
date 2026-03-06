@@ -1,7 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Controller\Public\PublicSpecie;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
@@ -32,7 +32,7 @@ class SpecieControllerFactory
                 $this->serviceFactory->wordPress()
             ),
             new PageSpecie($this->renderer),
-            new MenuPresenter(PageRegistry::getInstance()->all(), Constant::SPECIES)
+            new MenuPresenter(PageRegistry::getInstance()->all(), C::SPECIES)
         );
     }
 }

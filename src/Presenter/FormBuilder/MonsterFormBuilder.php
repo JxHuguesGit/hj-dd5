@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\FormBuilder;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
@@ -24,10 +24,10 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
             throw new \InvalidArgumentException('Expected \Domain\Monster\Monster');
         }
 
-        $params[Constant::TITLE] = 'Monstre : ' . $entity->name;
-        $params[Constant::TYPE] = Constant::EDIT;
-        $params[Constant::CSSCLASS] = 'pt-3';
-        $params['cancelUrl'] = UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::MONSTERS);
+        $params[C::TITLE] = 'Monstre : ' . $entity->name;
+        $params[C::TYPE] = C::EDIT;
+        $params[C::CSSCLASS] = 'pt-3';
+        $params['cancelUrl'] = UrlGenerator::admin(C::ONG_COMPENDIUM, C::MONSTERS);
         $form = $this->createForm($params);
 
         foreach ($this->sections as $sectionClass => $title) {

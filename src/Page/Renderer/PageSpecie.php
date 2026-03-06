@@ -1,7 +1,7 @@
 <?php
 namespace src\Page\Renderer;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Utils\UrlGenerator;
 
@@ -19,12 +19,12 @@ class PageSpecie extends PageDetail
             $data,
             Template::SPECIE_DETAIL_CARD,
             [
-                $data[Constant::TITLE] ?? '',
-                $data[Constant::DESCRIPTION] ?? '',
-                $data[Constant::CREATURE_TYPE] ?? '-',
-                $data[Constant::SIZE_CATEGORY] ?? '-',
-                $data[Constant::SPEED] ?? '-',
-                $data[Constant::POWERS] ?? '-',
+                $data[C::TITLE] ?? '',
+                $data[C::DESCRIPTION] ?? '',
+                $data[C::CREATURE_TYPE] ?? '-',
+                $data[C::SIZE_CATEGORY] ?? '-',
+                $data[C::SPEED] ?? '-',
+                $data[C::POWERS] ?? '-',
             ]
         );
     }

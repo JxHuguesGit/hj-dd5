@@ -2,7 +2,7 @@
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Utils\Html;
 
 abstract class FormField
@@ -22,14 +22,14 @@ abstract class FormField
     {
         $strBalise = $this->renderInput();
         $strLabel  = Html::getBalise(
-            Constant::LABEL,
+            C::LABEL,
             htmlspecialchars($this->label),
             ['for' => $this->getId()]
         );
-        $innerDiv = Html::getDiv($strBalise . $strLabel, [Constant::CSSCLASS => 'form-floating']);
+        $innerDiv = Html::getDiv($strBalise . $strLabel, [C::CSSCLASS => 'form-floating']);
         return Html::getDiv(
             $innerDiv,
-            [Constant::CSSCLASS => $this->params[Constant::OUTERDIVCLASS] ?? B::COL_12]
+            [C::CSSCLASS => $this->params[C::OUTERDIVCLASS] ?? B::COL_12]
         );
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace src\Domain\Criteria;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Query\QueryBuilder;
 
@@ -12,7 +12,7 @@ final class MonsterAbilityCriteria extends BaseCriteria
     public ?int $powerId   = null;
 
     public array $orderBy = [
-        F::RANK => Constant::ASC,
+        F::RANK => C::ASC,
     ];
 
     public function apply(QueryBuilder $queryBuilder): void

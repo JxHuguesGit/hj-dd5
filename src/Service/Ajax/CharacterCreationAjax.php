@@ -1,7 +1,7 @@
 <?php
 namespace src\Service\Ajax;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Factory\Controller\OriginControllerFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
@@ -18,7 +18,7 @@ class CharacterCreationAjax
     public function loadCreationStepSide(string $type, int $id): array
     {
         switch ($type) {
-            case Constant::ORIGIN :
+            case C::ORIGIN :
                 $reader = $this->readerFactory->origin();
                 $origin = $reader->originById($id);
                 if (!$origin) {

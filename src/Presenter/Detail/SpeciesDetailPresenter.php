@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Presenter\ViewModel\SpeciePageView;
 use src\Service\Domain\WpPostService;
 use src\Utils\Html;
@@ -18,23 +18,23 @@ class SpeciesDetailPresenter
         $wpPost = $this->wpPostService->getById($viewData->specie->postId ?? 0);
 
         return [
-            Constant::TITLE => $viewData->specie->name,
-            Constant::SLUG  => $viewData->specie?->getSlug(),
+            C::TITLE => $viewData->specie->name,
+            C::SLUG  => $viewData->specie?->getSlug(),
 
-            Constant::DESCRIPTION   => $this->cleanContent($wpPost->post_content ?? ''),
-            Constant::CREATURE_TYPE => $this->wpPostService?->getField(Constant::CREATURE_TYPE),
-            Constant::SIZE_CATEGORY => $this->wpPostService?->getField(Constant::SIZE_CATEGORY),
-            Constant::SPEED         => $this->wpPostService?->getField(Constant::SPEED),
-            Constant::POWERS        => $this->formatAbilities($viewData->abilities),
+            C::DESCRIPTION   => $this->cleanContent($wpPost->post_content ?? ''),
+            C::CREATURE_TYPE => $this->wpPostService?->getField(C::CREATURE_TYPE),
+            C::SIZE_CATEGORY => $this->wpPostService?->getField(C::SIZE_CATEGORY),
+            C::SPEED         => $this->wpPostService?->getField(C::SPEED),
+            C::POWERS        => $this->formatAbilities($viewData->abilities),
 
-            Constant::PREV => $viewData->previous ? [
-                Constant::NAME => $viewData?->previous->name,
-                Constant::SLUG => $viewData?->previous->getSlug(),
+            C::PREV => $viewData->previous ? [
+                C::NAME => $viewData?->previous->name,
+                C::SLUG => $viewData?->previous->getSlug(),
             ] : null,
 
-            Constant::NEXT => $viewData->next ? [
-                Constant::NAME => $viewData?->next->name,
-                Constant::SLUG => $viewData?->next->getSlug(),
+            C::NEXT => $viewData->next ? [
+                C::NAME => $viewData?->next->name,
+                C::SLUG => $viewData?->next->getSlug(),
             ] : null,
         ];
     }
@@ -47,7 +47,7 @@ class SpeciesDetailPresenter
             $desc = $ability->description ?? '';
             $parts[] = Html::getBalise('dt', $name).Html::getBalise('dd', $desc);
         }
-        return $parts ? Html::getBalise('dl', implode('', $parts), [Constant::CSSCLASS=>'my-0']) : '-';
+        return $parts ? Html::getBalise('dl', implode('', $parts), [C::CSSCLASS=>'my-0']) : '-';
     }
 
     private function cleanContent(string $content): string

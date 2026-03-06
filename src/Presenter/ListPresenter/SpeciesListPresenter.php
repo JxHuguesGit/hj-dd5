@@ -2,7 +2,7 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Specie;
 use src\Presenter\ViewModel\SpeciesRow;
 use src\Service\Domain\WpPostService;
@@ -28,9 +28,9 @@ final class SpeciesListPresenter
         return new SpeciesRow(
             name: $specie->name,
             url: UrlGenerator::specie($specie->getSlug()),
-            creatureType: (string)$this->wpPostService->getField(Constant::CREATURE_TYPE),
-            sizeCategory: (string)$this->wpPostService->getField(Constant::SIZE_CATEGORY),
-            speed: (string)$this->wpPostService->getField(Constant::SPEED)
+            creatureType: (string)$this->wpPostService->getField(C::CREATURE_TYPE),
+            sizeCategory: (string)$this->wpPostService->getField(C::SIZE_CATEGORY),
+            speed: (string)$this->wpPostService->getField(C::SPEED)
         );
     }
 }

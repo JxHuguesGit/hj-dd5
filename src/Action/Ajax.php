@@ -1,7 +1,7 @@
 <?php
 namespace src\Action;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
@@ -15,7 +15,7 @@ class Ajax
 
     public static function dealWithAjax()
     {
-        $ajaxAction = Session::fromPost(Constant::AJAXACTION);
+        $ajaxAction = Session::fromPost(C::AJAXACTION);
 
         $actions = [
             'downloadFile'    => fn()    => DownloadFile::start(),
@@ -39,7 +39,7 @@ class Ajax
                 $reader                = new ReaderFactory($repository);
                 $router                = new AjaxRouter($reader, new ServiceFactory($reader), new TemplateRenderer());
                 $response              = $router->dispatch($ajaxAction);
-                $response[$ajaxAction] = $response[Constant::DATA];
+                $response[$ajaxAction] = $response[C::DATA];
             } elseif (isset($actions[$ajaxAction])) {
                 $returnedValue = $actions[$ajaxAction];
 
@@ -48,14 +48,14 @@ class Ajax
                     $ajaxAction          => $returnedValue,
                     // Fin suppression
                     'status'             => 'success',
-                    Constant::ACTION => $ajaxAction,
-                    Constant::DATA   => $returnedValue,
+                    C::ACTION => $ajaxAction,
+                    C::DATA   => $returnedValue,
                 ];
             } else {
                 $response = [
                     $ajaxAction          => 'default',
                     'status'             => 'error',
-                    Constant::ACTION => $ajaxAction,
+                    C::ACTION => $ajaxAction,
                     'message'            => 'default',
                 ];
             }
@@ -65,7 +65,7 @@ class Ajax
                 $ajaxAction          => 'default',
                 // Fin suppression
                 'status'             => 'error',
-                Constant::ACTION => $ajaxAction,
+                C::ACTION => $ajaxAction,
                 'message'            => $e->getMessage(),
             ];
         }

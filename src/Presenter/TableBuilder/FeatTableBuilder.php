@@ -2,7 +2,7 @@
 namespace src\Presenter\TableBuilder;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\FeatGroup;
@@ -22,15 +22,15 @@ class FeatTableBuilder extends AbstractTableBuilder
     public function build(iterable $groups, array $params = []): Table
     {
         $headers = [
-            [Constant::LABEL => L::NAMES],
-            [Constant::LABEL => Constant::VIDE],
-            [Constant::LABEL => L::PREQUISITE],
+            [C::LABEL => L::NAMES],
+            [C::LABEL => C::VIDE],
+            [C::LABEL => L::PREQUISITE],
         ];
         if ($this->isAdmin) {
-            $headers[] = [Constant::LABEL => Constant::VIDE];
+            $headers[] = [C::LABEL => C::VIDE];
         }
-        $params[Constant::ID]     = 'featTable';
-        $params[Constant::TARGET] = 'featFilter';
+        $params[C::ID]     = 'featTable';
+        $params[C::TARGET] = 'featFilter';
 
         $table = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);
@@ -49,7 +49,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                     $this->intermediateLabel = L::ABILITIES;
                     break;
                 default:
-                    $this->intermediateLabel = Constant::VIDE;
+                    $this->intermediateLabel = C::VIDE;
                     break;
             }
             /** @var FeatGroup $group */
@@ -59,15 +59,15 @@ class FeatTableBuilder extends AbstractTableBuilder
                 /** @var FeatRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
-                        Constant::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
+                        C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
-                    ->addBodyCell([Constant::CONTENT => $row->originLabel])
-                    ->addBodyCell([Constant::CONTENT => $row->prerequisite]);
+                    ->addBodyCell([C::CONTENT => $row->originLabel])
+                    ->addBodyCell([C::CONTENT => $row->prerequisite]);
                 if ($this->isAdmin) {
                     $table->addBodyCell([
-                        Constant::CONTENT => Html::getLink(
+                        C::CONTENT => Html::getLink(
                             Html::getIcon(I::EDIT),
-                            UrlGenerator::admin(Constant::ONG_COMPENDIUM, Constant::FEATS, $row->slug, Constant::EDIT),
+                            UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, $row->slug, C::EDIT),
                             B::TEXT_DARK
                         ),
                     ]);
@@ -80,20 +80,20 @@ class FeatTableBuilder extends AbstractTableBuilder
 
     protected function addGroupRow(Table $table, string $label, int $colspan): void
     {
-        $table->addBodyRow([Constant::CSSCLASS => B::ROW_DARK_STRIPED])
+        $table->addBodyRow([C::CSSCLASS => B::ROW_DARK_STRIPED])
             ->addBodyCell([
-                Constant::CONTENT    => $label,
-                Constant::ATTRIBUTES => [
-                    Constant::CSSCLASS => B::FONT_ITALIC,
+                C::CONTENT    => $label,
+                C::ATTRIBUTES => [
+                    C::CSSCLASS => B::FONT_ITALIC,
                 ],
             ])
             ->addBodyCell([
-                Constant::CONTENT => $this->intermediateLabel,
+                C::CONTENT => $this->intermediateLabel,
             ])
             ->addBodyCell([
-                Constant::CONTENT    => Constant::VIDE,
-                Constant::ATTRIBUTES => [
-                    Constant::COLSPAN => $colspan - 2,
+                C::CONTENT    => C::VIDE,
+                C::ATTRIBUTES => [
+                    C::COLSPAN => $colspan - 2,
                 ],
             ])
         ;

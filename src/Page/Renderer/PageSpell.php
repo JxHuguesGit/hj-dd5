@@ -2,7 +2,7 @@
 namespace src\Page\Renderer;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Presenter\ViewModel\SpellDetail;
 use src\Presenter\ViewModel\SpellPageView;
@@ -73,7 +73,7 @@ class PageSpell extends PageDetail
         bool $isPrev
     ): string {
         if (! $navData) {
-            return Constant::EMPTY_SPAN;
+            return C::EMPTY_SPAN;
         }
 
         $label = $isPrev

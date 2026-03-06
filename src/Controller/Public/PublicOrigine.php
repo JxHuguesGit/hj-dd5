@@ -1,7 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Domain\Entity\Origin;
 use src\Page\Renderer\PageOrigine;
 use src\Presenter\Detail\OriginDetailPresenter;
@@ -27,9 +27,9 @@ class PublicOrigine extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(Constant::ORIGINS);
+        $menu = $this->menuPresenter->render(C::ORIGINS);
         $viewData = $this->getViewData();
-        $viewData[Constant::TITLE] = $this->getTitle();
+        $viewData[C::TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
     }
 

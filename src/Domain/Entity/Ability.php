@@ -13,9 +13,11 @@ final class Ability extends Entity
     public const FIELDS = [
         F::ID,
         F::NAME,
+        F::SLUG,
     ];
     public const FIELD_TYPES = [
         F::NAME => FieldType::STRING,
+        F::SLUG  => FieldType::STRING,
     ];
 
     public function stringify(): string

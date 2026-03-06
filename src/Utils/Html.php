@@ -2,7 +2,7 @@
 namespace src\Utils;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Icon;
 
 class Html
@@ -46,8 +46,8 @@ class Html
     {
         // Les attributs par défaut d'un bouton.
         $defaultAttributes = [
-            Constant::TYPE  => 'button',
-            Constant::CSSCLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
+            C::TYPE  => 'button',
+            C::CSSCLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
         ];
         $attributes = array_merge($defaultAttributes, $extraAttributes);
         return static::getBalise('button', $label, $attributes);
@@ -66,9 +66,9 @@ class Html
     public static function getOption(string $label, array $attributes, bool $isSelected = false): string
     {
         if ($isSelected) {
-            $attributes[Constant::SELECTED] = Constant::SELECTED;
+            $attributes[C::SELECTED] = C::SELECTED;
         }
-        return static::getBalise(Constant::PAGE_OPTION, $label, $attributes);
+        return static::getBalise(C::PAGE_OPTION, $label, $attributes);
     }
 
     public static function getLi(string $content, array $extraAttributes = []): string
@@ -79,7 +79,7 @@ class Html
     public static function getLink(string $label, string $href, string $classe = '', array $extraAttributes = []): string
     {
         $attributes = array_merge(
-            [Constant::HREF => $href, Constant::CSSCLASS => $classe],
+            [C::HREF => $href, C::CSSCLASS => $classe],
             $extraAttributes
         );
         return static::getBalise('a', $label, $attributes);
@@ -96,7 +96,7 @@ class Html
             $extraAttributes,
             'fa-' . $prefix . ' fa-' . $icon
         );
-        $attributes = array_merge([Constant::CSSCLASS => $strClass], $extraAttributes);
+        $attributes = array_merge([C::CSSCLASS => $strClass], $extraAttributes);
         return static::getBalise('i', '', $attributes);
     }
 
@@ -115,9 +115,9 @@ class Html
 
     private static function mergeClasses(array &$attributes, string $defaultClass): string
     {
-        if (isset($attributes[Constant::CSSCLASS])) {
-            $defaultClass .= ' ' . $attributes[Constant::CSSCLASS];
-            unset($attributes[Constant::CSSCLASS]);
+        if (isset($attributes[C::CSSCLASS])) {
+            $defaultClass .= ' ' . $attributes[C::CSSCLASS];
+            unset($attributes[C::CSSCLASS]);
         }
         if (isset($attributes['replaceclass'])) {
             $defaultClass = $attributes['replaceclass'];

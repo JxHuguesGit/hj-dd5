@@ -2,7 +2,7 @@
 namespace src\Domain\CharacterCreation\Step;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant;
+use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Domain\CharacterCreation\StepInterface;
@@ -19,7 +19,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
 {
     public function __construct()
     {
-        $this->id       = Constant::ORIGIN;
+        $this->id       = C::ORIGIN;
         $this->title    = L::CHAR_HIST_TITLE;
         $this->template = Template::CREATE_ORIGIN;
     }
@@ -48,23 +48,23 @@ class OriginStep extends AbstractBaseStep implements StepInterface
 
     public function getRadioForm(int $id, string $name, bool $checked = false): string
     {
-        $strLabel   = Html::getBalise('label', $name, [Constant::CSSCLASS => 'form-check-label', 'for' => 'origin' . $id]);
+        $strLabel   = Html::getBalise('label', $name, [C::CSSCLASS => 'form-check-label', 'for' => 'origin' . $id]);
         $attributes = [
-            Constant::CSSCLASS => Constant::AJAXACTION,
-            Constant::TYPE  => 'radio',
-            Constant::NAME  => 'characterOriginId',
-            Constant::ID    => 'origin' . $id,
-            Constant::VALUE => $id,
-            Constant::DATA  => [
-                Constant::TRIGGER => 'click',
-                Constant::ACTION  => 'loadOrigin',
+            C::CSSCLASS => C::AJAXACTION,
+            C::TYPE  => 'radio',
+            C::NAME  => 'characterOriginId',
+            C::ID    => 'origin' . $id,
+            C::VALUE => $id,
+            C::DATA  => [
+                C::TRIGGER => 'click',
+                C::ACTION  => 'loadOrigin',
             ],
         ];
         if ($checked) {
             $attributes['checked'] = 'checked';
         }
         $strInput = Html::getBalise('input', '', $attributes);
-        return Html::getDiv($strInput . $strLabel, [Constant::CSSCLASS => 'form-check']);
+        return Html::getDiv($strInput . $strLabel, [C::CSSCLASS => 'form-check']);
     }
 
     public function validate(array $input): bool
@@ -99,7 +99,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
 
     public function sidebar(Character $character): array
     {
-        $url = UrlGenerator::admin(Constant::ONG_CHARACTER, $character->id, '', '', ['step' => '%s']);
+        $url = UrlGenerator::admin(C::ONG_CHARACTER, $character->id, '', '', ['step' => '%s']);
         return [
             $character->id,
             Html::getLink('Nom', sprintf($url, 'name'), B::TEXT_DARK) . ' : ' . $character->name,
