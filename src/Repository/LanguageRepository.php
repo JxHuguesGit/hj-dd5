@@ -3,8 +3,8 @@ namespace src\Repository;
 
 use src\Collection\Collection;
 use src\Constant\Table;
+use src\Domain\Entity\Language;
 use src\Domain\Criteria\LanguageCriteria;
-use src\Domain\Entity\Language as L;
 
 class LanguageRepository extends Repository implements LanguageRepositoryInterface
 {

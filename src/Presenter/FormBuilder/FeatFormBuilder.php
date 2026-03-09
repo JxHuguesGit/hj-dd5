@@ -6,6 +6,7 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
+use src\Domain\Criteria\AbilityCriteria;
 use src\Domain\Criteria\FeatAbilityCriteria;
 use src\Domain\Entity\Feat;
 use src\Enum\AbilityEnum;

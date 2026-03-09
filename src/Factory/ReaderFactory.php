@@ -78,7 +78,7 @@ final class ReaderFactory
             'subSkill'            => fn()            => new SubSkillReader($this->repositories->subSkill()),
 
             'speciePower'         => fn()         => new SpeciePowerReader($this->repositories->speciePower()),
-            C::SPECIES            => fn()            => new SpecieReader($this->repositories->specie()),
+            C::SPECIES            => fn()            => new SpecieReader($this->repositories->species()),
 
             C::ARMOR          => fn()          => new ArmorReader($this->repositories->armor()),
             'item'                => fn()                => new ItemReader($this->repositories->item()),

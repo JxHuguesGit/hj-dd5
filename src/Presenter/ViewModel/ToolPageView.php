@@ -1,14 +1,14 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-use src\Domain\Entity\Armor;
+use src\Domain\Entity\Tool;
 
-class ArmorPageView implements PageViewInterface
+class ToolPageView implements PageViewInterface
 {
     public function __construct(
-        public Armor $item,
-        public ?Armor $previous = null,
-        public ?Armor $next = null
+        public Tool $item,
+        public ?Tool $previous = null,
+        public ?Tool $next = null
     ) {}
 
     public function getSlug(): string

@@ -1,7 +1,10 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\{Constant, Language, Routes, Template};
+use src\Constant\Constant as C;
+use src\Constant\Language as L;
+use src\Constant\Routes as R;
+use src\Constant\Template as T;
 use src\Model\PageElement;
 use src\Model\PageRegistry;
 use src\Presenter\CardPresenter;
@@ -11,7 +14,7 @@ class PublicItems extends PublicBase
 {
     public function __construct()
     {
-        $this->title = 'Le Matériel';
+        $this->title = L::GEAR_TITLE;
     }
 
     public function getContentPage(): string
@@ -22,27 +25,27 @@ class PublicItems extends PublicBase
 
         $data = [];
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.C::ARMOR,
+            C::URL => R::ITEMS_PREFIX.'-'.C::ARMOR,
             C::TITLE => L::ARMORS_TITLE,
         ]);
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.C::WEAPON,
+            C::URL => R::ITEMS_PREFIX.'-'.C::WEAPON,
             C::TITLE => L::WEAPONS_TITLE,
         ]);
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.C::TOOL,
+            C::URL => R::ITEMS_PREFIX.'-'.C::TOOL,
             C::TITLE => L::TOOLS_TITLE,
         ]);
         $data[] = new PageElement([
-            'url' => Routes::ITEMS_PREFIX.'-'.C::GEAR,
+            C::URL => R::ITEMS_PREFIX.'-'.C::GEAR,
             C::TITLE => L::DIVERS,
         ]);
 
         $cardPresenter = new CardPresenter($data);
         $contentHtml = $cardPresenter->render();
 
-        $contentSection = $this->getRender(Template::CATEGORY_PAGE, [$this->getTitle(), $contentHtml]);
+        $contentSection = $this->getRender(T::CATEGORY_PAGE, [$this->getTitle(), $contentHtml, '', '']);
 
-        return $this->getRender(Template::MAIN_PAGE, [$menuHtml, $contentSection]);
+        return $this->getRender(T::MAIN_PAGE, [$menuHtml, $contentSection]);
     }
 }

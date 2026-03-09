@@ -10,11 +10,11 @@ abstract class AbstractItemDetailPresenter implements DetailPresenterInterface
     public function present(PageViewInterface $viewData): array
     {
         return [
-            'title'                   => $viewData->item->name,
+            C::TITLE                   => $viewData->item->name,
             C::SLUG        => $viewData->item->slug,
             C::DESCRIPTION => $viewData->item->description,
-            'weight'                  => Utils::getStrWeight($viewData->item->weight ?? 0),
-            'goldPrice'               => Utils::getStrPrice($viewData->item->goldPrice ?? 0),
+            C::WEIGHT                  => Utils::getStrWeight($viewData->item->weight ?? 0),
+            C::GOLDPRICE               => Utils::getStrPrice($viewData->item->goldPrice ?? 0),
 
             C::PREV        => $viewData->previous ? [
                 C::SLUG => $viewData?->previous->slug,

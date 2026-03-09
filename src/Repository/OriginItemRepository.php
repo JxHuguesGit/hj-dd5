@@ -1,7 +1,9 @@
 <?php
 namespace src\Repository;
 
+use src\Collection\Collection;
 use src\Constant\Table;
+use src\Domain\Criteria\OriginItemCriteria;
 use src\Domain\Entity\OriginItem;
 
 class OriginItemRepository extends Repository implements OriginItemRepositoryInterface
@@ -11,5 +13,13 @@ class OriginItemRepository extends Repository implements OriginItemRepositoryInt
     public function getEntityClass(): string
     {
         return OriginItem::class;
+    }
+
+    /**
+     * @return Collection<OriginItem>
+     */
+    public function findAllWithCriteria(OriginItemCriteria $criteria): Collection
+    {
+        return $this->findAllByCriteria($criteria);
     }
 }

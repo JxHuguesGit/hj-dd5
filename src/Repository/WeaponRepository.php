@@ -43,7 +43,7 @@ class WeaponRepository extends Repository implements WeaponRepositoryInterface
     public function findAllWithRelations(WeaponCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT a.id
+            SELECT a.".F::ID.", ".F::WPNCATID.", ".F::WPNRANGEID."
                 , i.".F::NAME." AS ".F::NAME.", i.".F::SLUG." AS ".F::SLUG."
                 , ".F::WEIGHT.", ".F::GOLDPRICE.", ".F::TYPE."
                 , c.".F::SLUG." AS ".F::CATEGORYSLUG.", c.".F::NAME." AS ".F::CATEGORYNAME."

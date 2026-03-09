@@ -7,21 +7,24 @@ use src\Controller\Public\{
     PublicItemArmor,
     PublicItemArmorDetail,
     PublicItemGear,
+    PublicItemGearDetail,
     PublicItemTool,
+    PublicItemToolDetail,
     PublicItemWeapon,
     PublicItemWeaponDetail,
 };
 use src\Domain\Criteria\ItemCriteria;
+use src\Domain\Entity\Item;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
-use src\Page\Renderer\{PageItemArmor, PageItemWeapon};
+use src\Page\Renderer\{PageItemArmor, PageItemGear, PageItemTool, PageItemWeapon};
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
-use src\Presenter\Detail\{ArmorDetailPresenter, WeaponDetailPresenter};
+use src\Presenter\Detail\{ArmorDetailPresenter, GearDetailPresenter, ToolDetailPresenter, WeaponDetailPresenter};
 use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolListPresenter, WeaponListPresenter};
 use src\Presenter\TableBuilder\{ArmorTableBuilder, ItemTableBuilder, ToolTableBuilder, WeaponTableBuilder};
-use src\Presenter\ViewModel\{ArmorPageView, WeaponPageView};
+use src\Presenter\ViewModel\{ArmorPageView, GearPageView, ToolPageView, WeaponPageView};
 use src\Query\{QueryBuilder, QueryExecutor};
 use src\Repository\WeaponPropertyValueRepository;
 use src\Service\Domain\WpPostService;
@@ -83,9 +86,48 @@ final class ItemControllerFactory
 
         return match($item?->type) {
             C::ARMOR  => $this->createArmorDetail($slug, $menu),
+            C::TOOL => $this->createToolDetail($slug, $menu),
             C::WEAPON => $this->createWeaponDetail($slug, $menu),
+            C::OTHER => $this->createOtherDetail($item, $menu),
             default              => null
         };
+    }
+
+    private function createOtherDetail(Item $item, MenuPresenter $menu): ?PublicBase
+    {
+        $nav = $this->readerFactory->item()->getPreviousAndNext($item);
+
+        return new PublicItemGearDetail(
+            new GearDetailPresenter(),
+            $menu,
+            new GearPageView(
+                $item,
+                $nav[C::PREV],
+                $nav[C::NEXT],
+            ),
+            new PageItemGear($this->renderer)
+        );
+    }
+
+    private function createToolDetail(string $slug, MenuPresenter $menu): ?PublicBase
+    {
+        $item = $this->readerFactory->tool()->itemBySlug($slug);
+        if (!$item) {
+            return null;
+        }
+
+        $nav = $this->readerFactory->tool()->getPreviousAndNext($item);
+
+        return new PublicItemToolDetail(
+            new ToolDetailPresenter(),
+            $menu,
+            new ToolPageView(
+                $item,
+                $nav[C::PREV],
+                $nav[C::NEXT],
+            ),
+            new PageItemTool($this->renderer)
+        );
     }
 
     private function createArmorDetail(string $slug, MenuPresenter $menu): ?PublicBase

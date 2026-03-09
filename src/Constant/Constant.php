@@ -26,7 +26,12 @@ class Constant
     public const PHYSICAL = 'physical';
     public const USER = 'user';
     public const STEP = 'step';
+    public const OTHER = 'other';
     public const USERS = 'users';
+    public const CATEGORY = 'category';
+    public const DAMAGE = 'damage';
+    public const PROPERTIES = 'properties';
+    public const MASTERYLINK = 'masteryLink';
     public const CLASSES        = 'classes';
     public const HOME           = 'home';
     public const ARMORS         = 'armors';
@@ -58,6 +63,9 @@ class Constant
 
     public const EXTRA           = '-extra';
     public const ASC             = 'ASC';
+    public const URL = 'url';
+    public const WEIGHT = 'weight';
+    public const GOLDPRICE = 'goldPrice';
     public const CSSCLASS           = 'class';
     public const ACTIVE          = 'active';
     public const CONTENT         = 'content';

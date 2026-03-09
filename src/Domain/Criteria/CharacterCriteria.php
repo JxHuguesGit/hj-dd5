@@ -3,26 +3,20 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Query\QueryBuilder;
+use src\Domain\Criteria\Attributes\Equals;
 
 final class CharacterCriteria extends BaseCriteria
 {
-    public ?string $name  = null;
+    #[Equals(F::ID)]
+    public ?int $id = null;
+
+    #[Equals(F::WPUSERID)]
     public ?int $wpUserId = null;
+
+    #[Equals(F::NAME)]
+    public ?string $name = null;
 
     public array $orderBy = [
         F::NAME => C::ASC,
     ];
-
-    public function apply(QueryBuilder $queryBuilder): void
-    {
-        $filters = [];
-        if ($this->wpUserId != null) {
-            $filters[F::WPUSERID] = $this->wpUserId;
-        }
-        if ($this->name != null) {
-            $filters[F::NAME] = $this->name;
-        }
-        $this->applyEquals($queryBuilder, $filters);
-    }
 }

@@ -3,26 +3,17 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Query\QueryBuilder;
+use src\Domain\Criteria\Attributes\Equals;
 
 final class OriginItemCriteria extends BaseCriteria
 {
+    #[Equals(F::ORIGINID)]
     public ?int $originId = null;
-    public ?int $itemId   = null;
+
+    #[Equals(F::ITEMID)]
+    public ?int $itemId = null;
 
     public array $orderBy = [
         F::ID => C::ASC,
     ];
-
-    public function apply(QueryBuilder $queryBuilder): void
-    {
-        $filters = [];
-        if ($this->originId != null) {
-            $filters[F::ORIGINID] = $this->originId;
-        }
-        if ($this->itemId != null) {
-            $filters[F::ITEMID] = $this->itemId;
-        }
-        $this->applyEquals($queryBuilder, $filters);
-    }
 }

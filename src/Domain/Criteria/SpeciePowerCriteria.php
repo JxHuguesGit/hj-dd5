@@ -3,26 +3,17 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Query\QueryBuilder;
+use src\Domain\Criteria\Attributes\Equals;
 
 final class SpeciePowerCriteria extends BaseCriteria
 {
+    #[Equals(F::SPECIESID)]
     public ?int $speciesId = null;
-    public ?int $powerId   = null;
+
+    #[Equals(F::POWERID)]
+    public ?int $powerId = null;
 
     public array $orderBy = [
         F::ID => C::ASC,
     ];
-
-    public function apply(QueryBuilder $queryBuilder): void
-    {
-        $filters = [];
-        if ($this->speciesId != null) {
-            $filters[F::SPECIESID] = $this->speciesId;
-        }
-        if ($this->powerId != null) {
-            $filters[F::POWERID] = $this->powerId;
-        }
-        $this->applyEquals($queryBuilder, $filters);
-    }
 }

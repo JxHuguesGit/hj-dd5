@@ -39,4 +39,12 @@ final class OriginSkillReader
         $criteria->originId = $originId;
         return $this->repository->findAllWithCriteria($criteria);
     }
+
+    /**
+     * @return Collection<OriginSkill>
+     */
+    public function allOriginSkills(OriginSkillCriteria $criteria): Collection
+    {
+        return $this->repository->findAllWithCriteria($criteria);
+    }
 }

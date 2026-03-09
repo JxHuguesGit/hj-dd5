@@ -3,13 +3,22 @@ namespace src\Presenter\ViewModel;
 
 use src\Domain\Entity\Weapon;
 
-class WeaponPageView extends ItemPageView
+class WeaponPageView implements PageViewInterface
 {
     public function __construct(
-        public Weapon $weapon,
-        ?Weapon $previous = null,
-        ?Weapon $next = null
+        public Weapon $item,
+        public ?Weapon $previous = null,
+        public ?Weapon $next = null
     ) {
-        parent::__construct($weapon, $previous, $next);
+    }
+
+    public function getSlug(): string
+    {
+        return $this->item->slug;
+    }
+
+    public function getName(): string
+    {
+        return $this->item->name;
     }
 }

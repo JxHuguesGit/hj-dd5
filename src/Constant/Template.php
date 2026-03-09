@@ -43,6 +43,8 @@ final class Template
 
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
     public const ARMOR_CARD          = self::CARD_PATH.'armorCard.tpl';
+    public const TOOL_CARD          = self::CARD_PATH.'toolCard.tpl';
+    public const GEAR_CARD = self::CARD_PATH.'gearCard.tpl';
     public const FEAT_CARD           = self::CARD_PATH.'featCard.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
     public const NOT_FOUND_CARD      = self::CARD_PATH.'notFoundCard.tpl';

@@ -45,7 +45,7 @@ class ArmorRepository extends Repository implements ArmorRepositoryInterface
             SELECT a.id, a.".F::ARMORTYPID.", a.".F::ARMORCLASS.",
                 a.".F::STRPENALTY.", a.".F::STHDISADV.",
                 i.".F::NAME.", i.".F::SLUG." AS ".F::SLUG.",
-                i.".F::WEIGHT.", i.".F::GOLDPRICE.", i.".F::TYPE."
+                ".F::WEIGHT.", ".F::GOLDPRICE.", i.".F::TYPE."
             FROM " . Table::ARMOR . " a
             INNER JOIN " . Table::ITEM . " i ON i.id = a.id
         ";

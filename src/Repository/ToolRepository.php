@@ -6,6 +6,7 @@ use src\Constant\Field as F;
 use src\Constant\Table;
 use src\Domain\Entity\Tool;
 use src\Domain\Criteria\ToolCriteria;
+use src\Query\QueryBuilder;
 
 class ToolRepository extends Repository implements ToolRepositoryInterface
 {
@@ -42,29 +43,25 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     {
         $baseQuery = "
             SELECT i.".F::ID." as ".F::ID.", ".F::PARENTID."
-                , ".F::NAME.", ".F::SLUG.", ".F::WEIGHT.", ".F::GOLDPRICE."
+                , i.".F::NAME.", i.".F::SLUG.", i.".F::WEIGHT.", i.".F::GOLDPRICE."
+                , i2.".F::NAME." as ".F::PARENTNAME."
             FROM " . Table::TOOL . " t
             INNER JOIN " . Table::ITEM . " i ON i.id = t.id
+            LEFT JOIN " . Table::ITEM . " i2 ON i2.id = parentId
         ";
 
-        $filters = [];
-        if ($criteria->id !== null) {
-            $filters['i.'.F::ID] = $criteria->id;
-        }
-        if ($criteria->type !== null) {
-            $filters[F::TYPE] = $criteria->type;
-        }
+        $queryBuilder = new QueryBuilder();
+        $queryBuilder->setBaseQuery($baseQuery);
+        $criteria->apply($queryBuilder);
 
-        $this->query = $this->queryBuilder->reset()
-            ->setBaseQuery($baseQuery)
-            ->where($filters)
+        $this->query = $queryBuilder
             ->orderBy($criteria->orderBy)
             ->getQuery();
 
         return $this->queryExecutor->fetchAll(
             $this->query,
             $this->resolveEntityClass(),
-            $this->queryBuilder->getParams()
+            $queryBuilder->getParams()
         );
     }
 

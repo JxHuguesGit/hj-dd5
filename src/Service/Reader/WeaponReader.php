@@ -37,6 +37,8 @@ final class WeaponReader
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($weapon) {
                 $criteria = new WeaponCriteria();
+                $criteria->weaponCategoryId = $weapon->weaponCategoryId;
+                $criteria->weaponRangeId = $weapon->weaponRangeId;
                 $operand === '&lt;'
                     ? $criteria->nameLt = $weapon->name
                     : $criteria->nameGt = $weapon->name

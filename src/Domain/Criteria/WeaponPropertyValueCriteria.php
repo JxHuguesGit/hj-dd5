@@ -3,23 +3,17 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Query\QueryBuilder;
+use src\Domain\Criteria\Attributes\Equals;
 
 final class WeaponPropertyValueCriteria extends BaseCriteria
 {
+    #[Equals(F::TYPEID)]
+    public ?int $typeId = null;
+
+    #[Equals(F::WEAPONID)]
     public ?int $weaponId = null;
 
     public array $orderBy = [
-        F::NAME => C::ASC,
+        F::RANK => C::ASC,
     ];
-
-    public function apply(QueryBuilder $queryBuilder): void
-    {
-        $filters = [];
-        if ($this->weaponId !== null) {
-            $filters[F::WEAPONID] = $this->weaponId;
-        }
-
-        $this->applyEquals($queryBuilder, $filters);
-    }
 }

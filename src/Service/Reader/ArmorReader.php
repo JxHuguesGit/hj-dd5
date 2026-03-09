@@ -40,6 +40,7 @@ final class ArmorReader
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($armor) {
                 $criteria = new ArmorCriteria();
+                $criteria->armorTypeId = $armor->armorTypeId;
                 $operand === '&lt;'
                     ? $criteria->nameLt = $armor->name
                     : $criteria->nameGt = $armor->name

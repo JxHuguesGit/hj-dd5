@@ -82,6 +82,7 @@ class Field
     public const TYPDMGNAME    = 'typeDamageName';
     public const TYPMSTNAME    = 'typeMonsterName';
     public const SSTYPMSTNAME  = 'subTypeMonsterName';
+    public const PARENTNAME    = 'parentName';
 
     /* Clefs étrangères */
     // rpgFeatAbility, rpgOriginAbility, rpgSkill

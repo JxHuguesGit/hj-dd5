@@ -3,34 +3,30 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Query\QueryBuilder;
+use src\Domain\Criteria\Attributes\Compare;
+use src\Domain\Criteria\Attributes\Equals;
 
 final class ItemCriteria extends BaseCriteria
 {
+    #[Equals(F::ID)]
     public ?int $id = null;
-    public ?string $type  = 'other';
-    public ?string $slug = null;
+
+    #[Equals(F::TYPE)]
+    public ?string $type = C::OTHER;
+
+    #[Equals(F::NAME)]
     public ?string $name = null;
+
+    #[Equals(F::SLUG)]
+    public ?string $slug = null;
+
+    #[Compare(field: F::NAME, operator: Compare::LT)]
+    public ?string $nameLt = null;
+
+    #[Compare(field: F::NAME, operator: Compare::GT)]
+    public ?string $nameGt = null;
 
     public array $orderBy = [
         F::NAME => C::ASC,
     ];
-
-    public function apply(QueryBuilder $qb): void
-    {
-        $filters = [];
-        if ($this->id !== null) {
-            $filters[F::ID] = $this->id;
-        }
-        if ($this->type !== null) {
-            $filters[F::TYPE] = $this->type;
-        }
-        if ($this->slug!=null) {
-            $filters[F::SLUG] = $this->slug;
-        }
-        if ($this->name !== null) {
-            $filters[F::NAME] = $this->name;
-        }
-        $this->applyEquals($qb, $filters);
-    }
 }

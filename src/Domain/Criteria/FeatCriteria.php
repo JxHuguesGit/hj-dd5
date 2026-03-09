@@ -3,34 +3,30 @@ namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Query\QueryBuilder;
+use src\Domain\Criteria\Attributes\Compare;
+use src\Domain\Criteria\Attributes\Equals;
 
 final class FeatCriteria extends BaseCriteria
 {
+    #[Equals(F::ID)]
+    public ?int $id = null;
+
+    #[Equals(F::NAME)]
+    public ?string $name = null;
+
+    #[Equals(F::SLUG)]
+    public ?string $slug = null;
+
+    #[Equals(F::FEATTYPEID)]
     public ?int $featTypeId = null;
-    public ?string $slug    = null;
-    public ?string $name    = null;
-    public ?string $nameLt  = null;
-    public ?string $nameGt  = null;
 
-    public array $orderBy   = [
-        F::NAME         => C::ASC,
+    #[Compare(field: F::NAME, operator: Compare::LT)]
+    public ?string $nameLt = null;
+
+    #[Compare(field: F::NAME, operator: Compare::GT)]
+    public ?string $nameGt = null;
+
+    public array $orderBy = [
+        F::NAME => C::ASC
     ];
-
-    public function apply(QueryBuilder $queryBuilder): void
-    {
-        $filters = [];
-        if ($this->featTypeId!=null) {
-            $filters[F::FEATTYPEID] = $this->featTypeId;
-        }
-        if ($this->slug!=null) {
-            $filters[F::SLUG] = $this->slug;
-        }
-        if ($this->name!=null) {
-            $filters[F::NAME] = $this->name;
-        }
-        $this->applyEquals($queryBuilder, $filters);
-        $this->applyLt($queryBuilder, F::NAME, $this->nameLt);
-        $this->applyGt($queryBuilder, F::NAME, $this->nameGt);
-    }
 }

@@ -11,17 +11,21 @@ use src\Utils\Utils;
  */
 final class Tool extends Item
 {
-    public const TYPE_DIVERS = 1;
-    public const TYPE_GAMES = 2;
-    public const TYPE_MUSIC = 3;
-    public const TYPE_TOOL = 4;
+    public const TYPE_DIVERS = 0;
+    public const TYPE_GAMES = 19;
+    public const TYPE_MUSIC = 20;
+    public const TYPE_TOOL = 158;
 
     public const SPECIFIC_FIELDS = [
         F::PARENTID,
+
+        F::PARENTNAME,
     ];
 
     public const SPECIFIC_FIELD_TYPES = [
         F::PARENTID => FieldType::INT,
+
+        F::PARENTNAME => FieldType::STRINGNULLABLE,
     ];
 
     public const FIELDS = [

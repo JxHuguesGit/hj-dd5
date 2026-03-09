@@ -65,7 +65,7 @@ final class OriginService
 
     public function getItems(Origin $origin): Collection
     {
-        $originItems = $this->readerFactory->originItem()->originItemByOrigin($origin->id);
+        $originItems = $this->readerFactory->originItem()->originItemsByOrigin($origin->id);
         $collection  = new Collection();
         foreach ($originItems as $originItem) {
             $itemId = $originItem->itemId;

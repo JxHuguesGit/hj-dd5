@@ -3,7 +3,7 @@ namespace src\Service\Reader;
 
 use src\Collection\Collection;
 use src\Domain\Criteria\LanguageCriteria;
-use src\Domain\Entity\Language as L;
+use src\Domain\Entity\Language;
 use src\Repository\LanguageRepositoryInterface;
 
 final class LanguageReader

@@ -18,12 +18,12 @@ class WeaponDetailPresenter extends AbstractItemDetailPresenter
         /** @var PageViewInterface $viewData */
         $base = parent::present($viewData);
 
-        $key = ($viewData->weapon->isMartial() ? C::MARTIAL : C::SIMPLE) . '_'
-                . ($viewData->weapon->isMelee() ? C::MELEE : C::RANGED);
-        $base['category'] = (WeaponListPresenter::getWeaponTypes())[$key][C::LABEL_SING];
-        $base['damage'] = Utils::getStrDamage($viewData->weapon);
-        $base['properties'] = $this->formatter->properties($viewData->weapon);
-        $base['masteryLink'] = $this->formatter->masteryLink($viewData->weapon);
+        $key = ($viewData->item->isMartial() ? C::MARTIAL : C::SIMPLE) . '_'
+                . ($viewData->item->isMelee() ? C::MELEE : C::RANGED);
+        $base[C::CATEGORY] = (WeaponListPresenter::getWeaponTypes())[$key][C::LABEL_SING];
+        $base[C::DAMAGE] = Utils::getStrDamage($viewData->item);
+        $base[C::PROPERTIES] = $this->formatter->properties($viewData->item);
+        $base[C::MASTERYLINK] = $this->formatter->masteryLink($viewData->item);
 
         return $base;
     }

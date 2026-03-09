@@ -5,10 +5,6 @@ use src\Query\QueryBuilder;
 
 abstract class BaseCriteria extends AbstractCriteria implements CriteriaInterface
 {
-    public ?int $limit    = -1;
-    public ?int $offset   = 0;
-    public array $orderBy = [];
-
     /**
      * Méthode utilitaire pour appliquer automatiquement
      * limit / offset / orderBy si le QueryBuilder le supporte.

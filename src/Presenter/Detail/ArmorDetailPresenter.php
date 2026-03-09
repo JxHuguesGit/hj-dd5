@@ -13,10 +13,10 @@ class ArmorDetailPresenter extends AbstractItemDetailPresenter
         /** @var PageViewInterface $viewData */
         $base = parent::present($viewData);
 
-        $base['armorTypeId']         = (ArmorListPresenter::getTypesLabel())[$viewData->armor->armorTypeId][C::NAME];
-        $base['armorClass']          = $viewData->armor->displayArmorClass();
-        $base['strengthPenalty']     = $viewData->armor->strengthPenalty != 0 ? $viewData->armor->strengthPenalty : '-';
-        $base['stealthDisadvantage'] = $viewData->armor->stealthDisadvantage ? L::DISADVANTAGE : '-';
+        $base['armorTypeId']         = (ArmorListPresenter::getTypesLabel())[$viewData->item->armorTypeId][C::NAME];
+        $base['armorClass']          = $viewData->item->displayArmorClass();
+        $base['strengthPenalty']     = $viewData->item->strengthPenalty != 0 ? $viewData->item->strengthPenalty : '-';
+        $base['stealthDisadvantage'] = $viewData->item->stealthDisadvantage ? L::DISADVANTAGE : '-';
 
         return $base;
     }
