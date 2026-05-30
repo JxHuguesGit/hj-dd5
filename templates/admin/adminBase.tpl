@@ -49,6 +49,32 @@
   </aside>
 
   <div class="content-wrapper">%3$s</div>
+
+    <!-- Modale -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- En-tête (facultatif) -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Titre de la modale</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+
+                <!-- Corps de la modale -->
+                <div id="confirmModalBody" class="modal-body p-5">
+                    Voici l'information que vous souhaitez afficher.
+                </div>
+
+                <!-- Pied de la modale -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="confirmModalButton">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop d-none"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
