@@ -50,9 +50,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
         $selectedAbilities = [];
         $currentAbilities = new Collection();
-        if (Session::fromPost(F::FEATTYPEID) == 2) {
-            $hasAbilityLinked = $this->handleFeatAbilities($selectedAbilities, $currentAbilities, $feat->id);
-        }
+        $hasAbilityLinked = Session::fromPost(F::FEATTYPEID) == 2 ? $this->handleFeatAbilities($selectedAbilities, $currentAbilities, $feat->id) : false;
 
         $changedFields = [];
         foreach (Feat::EDITABLE_FIELDS as $field) {
@@ -68,6 +66,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
             } elseif (empty($changedFields)) {
                 $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
+            } else {
+                $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
             }
             return $this->renderEdit($slug);
         }
