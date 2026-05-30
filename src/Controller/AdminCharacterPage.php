@@ -1,7 +1,10 @@
 <?php
 namespace src\Controller;
 
+use src\Constant\Language as L;
 use src\Factory\CharacterFactory;
+use src\Presenter\ToastBuilder;
+use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 class AdminCharacterPage extends AdminPage
@@ -21,6 +24,21 @@ class AdminCharacterPage extends AdminPage
         } else {
             $id         = Session::fromGet('characterId', $this->arrParams['id'] ?? 0);
             $nextStepId = Session::fromGet('step', '');
+            $action     = Session::fromGet('action', '');
+            if ($action === 'confirmDeletion' && $id != 0) {
+                $toastBuilder = new ToastBuilder(
+                    new TemplateRenderer(),
+                );
+                $character = $this->factory->services()->reader()->characterById($id);
+                $toastContent = $toastBuilder->success(sprintf(L::SUCCESS_DEL_ENTRY, $character->name));
+
+                $this->factory->delete($character);
+
+                $characterCreationFlow = $this->factory->init();
+                $nextStepId = $characterCreationFlow->handle([]);
+                $html = $characterCreationFlow->render($nextStepId, $toastContent);
+                return parent::getAdminContentPage($html);
+            }
         }
 
         if ($id != 0) {

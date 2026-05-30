@@ -35,4 +35,14 @@ final class CharacterFactory
         return $character;
     }
 
+    public function delete(Character $character): void
+    {
+        $this->services->writer()->delete($character);
+    }
+
+    public function services(): CharacterServices
+    {
+        return $this->services;
+    }
+
 }

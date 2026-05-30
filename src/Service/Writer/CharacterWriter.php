@@ -30,4 +30,9 @@ class CharacterWriter
             throw $e;
         }
     }
+
+    public function delete(Character $character): void
+    {
+        $this->repository->delete($character);
+    }
 }

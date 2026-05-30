@@ -17,12 +17,13 @@ final class NameStep extends AbstractBaseStep implements StepInterface
         $this->template = Template::CREATE_NAME;
     }
 
-    public function render(Character $character): array
+    public function render(Character $character, ?string $toastContent = null): array
     {
         return [
             $character->id ?? 0,
             htmlspecialchars($character->name ?? ''),
             '',
+            $toastContent,
         ];
     }
 

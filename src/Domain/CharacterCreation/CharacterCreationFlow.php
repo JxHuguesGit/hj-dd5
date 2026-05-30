@@ -21,8 +21,8 @@ class CharacterCreationFlow
     public function steps(): array
     {
         return [
-            C::NAME => NameStep::class,
-            C::ORIGIN   => OriginStep::class,
+            C::NAME   => NameStep::class,
+            C::ORIGIN => OriginStep::class,
         ];
     }
 
@@ -100,7 +100,7 @@ class CharacterCreationFlow
         return $current;
     }
 
-    public function render(?string $stepId = null): string
+    public function render(?string $stepId = null, ?string $toastContent = null): string
     {
         $stepId = $stepId ?? $this->getCurrentStepId();
         if ($stepId === 'done') {
@@ -111,7 +111,7 @@ class CharacterCreationFlow
             $step->template,
             array_merge(
                 [$this->renderer->render(Template::CREATE_SIDEBAR, $step->sidebar($this->character))],
-                $step->render($this->character)
+                $step->render($this->character, $toastContent)
             )
         );
     }

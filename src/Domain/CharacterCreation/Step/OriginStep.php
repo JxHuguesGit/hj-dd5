@@ -24,7 +24,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
         $this->template = Template::CREATE_ORIGIN;
     }
 
-    public function render(Character $character): array
+    public function render(Character $character, ?string $toastContent=''): array
     {
         $queryBuilder  = new QueryBuilder();
         $queryExecutor = new QueryExecutor();
@@ -43,6 +43,7 @@ class OriginStep extends AbstractBaseStep implements StepInterface
             $character->id,
             $strOptions,
             '',
+            $toastContent,
         ];
     }
 
@@ -99,9 +100,10 @@ class OriginStep extends AbstractBaseStep implements StepInterface
 
     public function sidebar(Character $character): array
     {
-        $url = UrlGenerator::admin(C::ONG_CHARACTER, $character->id, '', '', ['step' => '%s']);
+        $href = UrlGenerator::admin(C::ONG_CHARACTER, (string) $character->id, '', 'confirmDeletion');
+        $url = UrlGenerator::admin(C::ONG_CHARACTER, (string) $character->id, '', '', ['step' => '%s']);
         return [
-            $character->id,
+            $href,
             Html::getLink('Nom', sprintf($url, 'name'), B::TEXT_DARK) . ' : ' . $character->name,
         ];
     }
