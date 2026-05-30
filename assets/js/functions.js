@@ -47,6 +47,15 @@ function ajaxActionClick(obj, e) {
             });
         } else if (oneAction=='loadOrigin') {
             loadCreationStepSide('origin', obj.val())
+        } else if (oneAction=='confirmCharacterDeletion') {
+            e.preventDefault();
+            const target = 'confirmModal';
+            $('#' + target + ' h5').html('Confirmer la suppression');
+            $('#' + target + ' .modal-body').html('Êtes-vous sûr de vouloir supprimer ce personnage ? Cette action est irréversible.');
+            openModal(target);
+            $('#' + target + ' button.btn-primary').unbind().on('click', function() {
+                window.location.href = obj.attr('href');
+            });
         }
     }
     return false;
@@ -54,6 +63,10 @@ function ajaxActionClick(obj, e) {
 
 // Ouvre la modale dont on passe l'identifiant
 function openModal(id) {
+    if ($('#'+id).length==0) {
+        console.log('Error: no modal with id '+id);
+        return false;
+    }
     $('#'+id).addClass('show').css('display', 'block');
     $('#'+id+' + .modal-backdrop').addClass('show').removeClass('d-none');
     $('button[data-bs-dismiss="modal"]').on('click', function() {
