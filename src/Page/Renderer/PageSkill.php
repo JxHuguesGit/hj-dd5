@@ -23,7 +23,7 @@ class PageSkill extends PageDetail
                 $data[C::ABILITIES] ?? '',
                 $data[C::DESCRIPTION] ?? '',
                 $data[C::ORIGINES] ?? [],
-                $data[C::SUBSKILLS] ?? [],
+                $data[C::SUB_SKILLS] ?? [],
             ]
         );
     }

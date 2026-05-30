@@ -22,7 +22,7 @@ class PageFeat extends PageDetail
                 '',
                 $data[C::TITLE] ?? '',
                 $data[C::DESCRIPTION] ?? '',
-                $data[C::FEATTYPE] ?? '-',
+                $data[C::FEAT_TYPE] ?? '-',
                 $data[C::ORIGINES] ?? '',
             ]
         );

@@ -15,7 +15,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
     {
         $createLink = Html::getLink(
             Html::getIcon(I::PLUS),
-            UrlGenerator::admin(C::ONG_COMPENDIUM, C::TAB_MONSTERS, '', C::NEW ),
+            UrlGenerator::admin(C::ONG_COMPENDIUM, C::MONSTERS, '', C::NEW ),
             B::TEXT_WHITE
         );
         $headers = [
@@ -50,7 +50,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
                 ->addBodyCell([
                     C::CONTENT    => Html::getLink(
                         Html::getIcon(I::EDIT),
-                        UrlGenerator::admin(C::ONG_COMPENDIUM, C::TAB_MONSTERS, $monster->ukTag ?? '', C::EDIT),
+                        UrlGenerator::admin(C::ONG_COMPENDIUM, C::MONSTERS, $monster->ukTag ?? '', C::EDIT),
                         B::TEXT_DARK
                     ),
                     C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER . ' ' . B::COL_1],

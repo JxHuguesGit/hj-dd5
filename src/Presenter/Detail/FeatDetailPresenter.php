@@ -25,7 +25,7 @@ class FeatDetailPresenter
             C::SLUG        => $viewData->feat->getSlug(),
 
             C::DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
-            C::FEATTYPE    => $this->formatFeatType($viewData),
+            C::FEAT_TYPE    => $this->formatFeatType($viewData),
 
             C::ORIGINES        => $this->formatOrigines($viewData),
 

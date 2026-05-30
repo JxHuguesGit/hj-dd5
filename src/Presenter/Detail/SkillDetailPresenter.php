@@ -17,7 +17,7 @@ class SkillDetailPresenter
 
             C::ABILITIES   => $viewData->ability->name,
             C::DESCRIPTION => $viewData->skill->description,
-            C::SUBSKILLS   => $this->formatSubSkills($viewData),
+            C::SUB_SKILLS   => $this->formatSubSkills($viewData),
             C::ORIGINES        => $this->formatOrigines($viewData),
 
             C::PREV        => $viewData->previous ? [

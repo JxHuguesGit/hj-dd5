@@ -1,78 +1,12 @@
 <?php
 namespace src\Factory;
 
-use src\Constant\Constant as C;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
-use src\Repository\AbilityRepository;
-use src\Repository\ArmorRepository;
-use src\Repository\ConditionRepository;
-use src\Repository\DamageTypeRepository;
-use src\Repository\FeatAbilityRepository;
-use src\Repository\FeatRepository;
-use src\Repository\FeatTypeRepository;
-use src\Repository\ItemRepository;
-use src\Repository\LanguageRepository;
-use src\Repository\MonsterAbilityRepository;
-use src\Repository\MonsterConditionRepository;
-use src\Repository\MonsterLanguageRepository;
-use src\Repository\MonsterRepository;
-use src\Repository\MonsterSubTypeRepository;
-use src\Repository\MonsterTypeRepository;
-use src\Repository\MonsterVisionTypeRepository;
-use src\Repository\OriginAbilityRepository;
-use src\Repository\OriginItemRepository;
-use src\Repository\OriginRepository;
-use src\Repository\OriginSkillRepository;
-use src\Repository\PowerRepository;
-use src\Repository\ReferenceRepository;
-use src\Repository\SkillRepository;
-use src\Repository\SpeciePowerRepository;
-use src\Repository\SpeciesRepository;
-use src\Repository\SpeedTypeRepository;
-use src\Repository\SpellRepository;
-use src\Repository\SubSkillRepository;
-use src\Repository\ToolRepository;
-use src\Repository\VisionTypeRepository;
-use src\Repository\WeaponPropertyValueRepository;
-use src\Repository\WeaponRepository;
 
 class RepositoryFactory
 {
-    private array $map = [
-        'ability'              => AbilityRepository::class,
-        C::ARMOR    => ArmorRepository::class,
-        'condition'            => ConditionRepository::class,
-        'damageType'           => DamageTypeRepository::class,
-        C::FEAT     => FeatRepository::class,
-        'featAbility'          => FeatAbilityRepository::class,
-        C::FEATTYPE => FeatTypeRepository::class,
-        'item'                 => ItemRepository::class,
-        'language'             => LanguageRepository::class,
-        'monster'              => MonsterRepository::class,
-        'monsterAbility'       => MonsterAbilityRepository::class,
-        'monsterCondition'     => MonsterConditionRepository::class,
-        'monsterLanguage'      => MonsterLanguageRepository::class,
-        'monsterSubType'       => MonsterSubTypeRepository::class,
-        'monsterType'          => MonsterTypeRepository::class,
-        'monsterVisionType'    => MonsterVisionTypeRepository::class,
-        C::ORIGIN       => OriginRepository::class,
-        'originAbility'        => OriginAbilityRepository::class,
-        'originItem'           => OriginItemRepository::class,
-        'originSkill'          => OriginSkillRepository::class,
-        'power'                => PowerRepository::class,
-        'reference'            => ReferenceRepository::class,
-        'skill'                => SkillRepository::class,
-        'speciePower'          => SpeciePowerRepository::class,
-        C::SPECIES      => SpeciesRepository::class,
-        'speedType'            => SpeedTypeRepository::class,
-        'spell'                => SpellRepository::class,
-        'subSkill'             => SubSkillRepository::class,
-        C::TOOL     => ToolRepository::class,
-        'visionType'           => VisionTypeRepository::class,
-        C::WEAPON   => WeaponRepository::class,
-        'weaponPropertyValue'  => WeaponPropertyValueRepository::class,
-    ];
+    private array $cache = [];
 
     public function __construct(
         private QueryBuilder $builder,
@@ -81,11 +15,28 @@ class RepositoryFactory
 
     public function __call(string $name, array $args): object
     {
-        if (! isset($this->map[$name])) {
-            throw new \BadMethodCallException("Repository inconnu : '$name'");
+        if (! isset($this->cache[$name])) {
+            $this->cache[$name] = $this->make($name);
         }
 
-        $class = $this->map[$name];
-        return new $class($this->builder, $this->executor);
+        return $this->cache[$name];
+    }
+
+    private function make(string $name): object
+    {
+        $class = 'src\\Repository\\'
+            . ucfirst($name)
+            . 'Repository';
+
+        if (! class_exists($class)) {
+            throw new \BadMethodCallException(
+                "Repository inconnu : '$name'"
+            );
+        }
+
+        return new $class(
+            $this->builder,
+            $this->executor
+        );
     }
 }
