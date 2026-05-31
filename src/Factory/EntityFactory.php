@@ -6,7 +6,6 @@ use src\Domain\Entity;
 
 class EntityFactory
 {
-
     public static function createEmpty(string $entityClass): Entity
     {
         $defaults = [];

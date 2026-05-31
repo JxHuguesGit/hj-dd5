@@ -46,7 +46,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         $feat = $this->featReader->featBySlug($slug);
         if (! $feat) {
             $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
-            return $this->renderList($slug);
+            return $this->renderList();
         }
         $selectedAbilities = [];
         $currentAbilities = new Collection();
@@ -90,7 +90,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             $this->featWriter->updatePartial($feat, $changedFields);
         }
         $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
-        return $this->renderList($slug);
+        return $this->renderList();
     }
 
     private function handleFeatAbilities(

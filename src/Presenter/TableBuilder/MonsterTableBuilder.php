@@ -39,7 +39,7 @@ class MonsterTableBuilder extends AbstractTableBuilder
         }
 
         foreach ($monsters as $monster) {
-            /** @var MonsterRow $row */
+            /** @var \src\Presenter\ViewModel\MonsterRow $row */
             $table->addBodyRow([])
                 ->addBodyCell([C::CONTENT => $monster->name])
                 ->addBodyCell([C::CONTENT => $monster->cr, C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER]])
