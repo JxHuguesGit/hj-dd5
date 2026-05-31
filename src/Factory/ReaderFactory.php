@@ -8,45 +8,45 @@ final class ReaderFactory
     private array $cache = [];
 
     private const MAP = [
-        C::ABILITY               => ['reader' => 'AbilityReader',              'repo' => 'ability'],
-        C::ARMOR                 => ['reader' => 'ArmorReader',                'repo' => 'armor'],
-        C::CONDITION             => ['reader' => 'ConditionReader',            'repo' => 'condition'],
-        C::DAMAGE_TYPE           => ['reader' => 'DamageTypeReader',           'repo' => 'damageType'],
+        C::ABILITY               => [C::READER => 'AbilityReader',              C::REPO => C::ABILITY],
+        C::ARMOR                 => [C::READER => 'ArmorReader',                C::REPO => C::ARMOR],
+        C::CONDITION             => [C::READER => 'ConditionReader',            C::REPO => C::CONDITION],
+        C::DAMAGE_TYPE           => [C::READER => 'DamageTypeReader',           C::REPO => C::DAMAGE_TYPE],
 
-        C::FEAT                  => ['reader' => 'FeatReader',                 'repo' => 'feat'],
-        C::FEAT_ABILITY          => ['reader' => 'FeatAbilityReader',          'repo' => 'featAbility'],
-        C::FEAT_TYPE             => ['reader' => 'FeatTypeReader',             'repo' => 'featType'],
+        C::FEAT                  => [C::READER => 'FeatReader',                 C::REPO => C::FEAT],
+        C::FEAT_ABILITY          => [C::READER => 'FeatAbilityReader',          C::REPO => C::FEAT_ABILITY],
+        C::FEAT_TYPE             => [C::READER => 'FeatTypeReader',             C::REPO => C::FEAT_TYPE],
 
-        C::ITEM                  => ['reader' => 'ItemReader',                 'repo' => 'item'],
-        C::LANGUAGE              => ['reader' => 'LanguageReader',             'repo' => 'language'],
+        C::ITEM                  => [C::READER => 'ItemReader',                 C::REPO => C::ITEM],
+        C::LANGUAGE              => [C::READER => 'LanguageReader',             C::REPO => C::LANGUAGE],
 
-        C::MONSTER               => ['reader' => 'MonsterReader',              'repo' => 'monster'],
-        C::MONSTER_ABILITY       => ['reader' => 'MonsterAbilityReader',       'repo' => 'monsterAbility'],
-        C::MONSTER_CONDITION     => ['reader' => 'MonsterConditionReader',     'repo' => 'monsterCondition'],
-        C::MONSTER_LANGUAGE      => ['reader' => 'MonsterLanguageReader',      'repo' => 'monsterLanguage'],
-        C::MONSTER_SUB_TYPE      => ['reader' => 'MonsterSubTypeReader',       'repo' => 'monsterSubType'],
-        C::MONSTER_TYPE          => ['reader' => 'MonsterTypeReader',          'repo' => 'monsterType'],
-        C::MONSTER_VISION_TYPE   => ['reader' => 'MonsterVisionTypeReader',    'repo' => 'monsterVisionType'],
+        C::MONSTER               => [C::READER => 'MonsterReader',              C::REPO => C::MONSTER],
+        C::MONSTER_ABILITY       => [C::READER => 'MonsterAbilityReader',       C::REPO => C::MONSTER_ABILITY],
+        C::MONSTER_CONDITION     => [C::READER => 'MonsterConditionReader',     C::REPO => C::MONSTER_CONDITION],
+        C::MONSTER_LANGUAGE      => [C::READER => 'MonsterLanguageReader',      C::REPO => C::MONSTER_LANGUAGE],
+        C::MONSTER_SUB_TYPE      => [C::READER => 'MonsterSubTypeReader',       C::REPO => C::MONSTER_SUB_TYPE],
+        C::MONSTER_TYPE          => [C::READER => 'MonsterTypeReader',          C::REPO => C::MONSTER_TYPE],
+        C::MONSTER_VISION_TYPE   => [C::READER => 'MonsterVisionTypeReader',    C::REPO => C::MONSTER_VISION_TYPE],
 
-        C::ORIGIN                => ['reader' => 'OriginReader',               'repo' => 'origin'],
-        C::ORIGIN_ABILITY        => ['reader' => 'OriginAbilityReader',        'repo' => 'originAbility'],
-        C::ORIGIN_ITEM           => ['reader' => 'OriginItemReader',           'repo' => 'originItem'],
-        C::ORIGIN_SKILL          => ['reader' => 'OriginSkillReader',          'repo' => 'originSkill'],
+        C::ORIGIN                => [C::READER => 'OriginReader',               C::REPO => C::ORIGIN],
+        C::ORIGIN_ABILITY        => [C::READER => 'OriginAbilityReader',        C::REPO => C::ORIGIN_ABILITY],
+        C::ORIGIN_ITEM           => [C::READER => 'OriginItemReader',           C::REPO => C::ORIGIN_ITEM],
+        C::ORIGIN_SKILL          => [C::READER => 'OriginSkillReader',          C::REPO => C::ORIGIN_SKILL],
 
-        C::POWER                 => ['reader' => 'PowerReader',                'repo' => 'power'],
-        C::REFERENCE             => ['reader' => 'ReferenceReader',            'repo' => 'reference'],
+        C::POWER                 => [C::READER => 'PowerReader',                C::REPO => C::POWER],
+        C::REFERENCE             => [C::READER => 'ReferenceReader',            C::REPO => C::REFERENCE],
 
-        C::SKILL                 => ['reader' => 'SkillReader',                'repo' => 'skill'],
-        C::SPECIES               => ['reader' => 'SpecieReader',               'repo' => 'species'],
-        C::SPECIE_POWER          => ['reader' => 'SpeciePowerReader',          'repo' => 'speciePower'],
-        C::SPEED_TYPE            => ['reader' => 'SpeedTypeReader',            'repo' => 'speedType'],
-        C::SPELL                 => ['reader' => 'SpellReader',                'repo' => 'spell'],
-        C::SUB_SKILL             => ['reader' => 'SubSkillReader',             'repo' => 'subSkill'],
+        C::SKILL                 => [C::READER => 'SkillReader',                C::REPO => C::SKILL],
+        C::SPECIES               => [C::READER => 'SpecieReader',               C::REPO => C::SPECIES],
+        C::SPECIE_POWER          => [C::READER => 'SpeciePowerReader',          C::REPO => C::SPECIE_POWER],
+        C::SPEED_TYPE            => [C::READER => 'SpeedTypeReader',            C::REPO => C::SPEED_TYPE],
+        C::SPELL                 => [C::READER => 'SpellReader',                C::REPO => C::SPELL],
+        C::SUB_SKILL             => [C::READER => 'SubSkillReader',             C::REPO => C::SUB_SKILL],
 
-        C::TOOL                  => ['reader' => 'ToolReader',                 'repo' => 'tool'],
-        C::VISION_TYPE           => ['reader' => 'VisionTypeReader',           'repo' => 'visionType'],
-        C::WEAPON                => ['reader' => 'WeaponReader',               'repo' => 'weapon'],
-        C::WEAPON_PROPERTY_VALUE => ['reader' => 'WeaponPropertyValueReader',  'repo' => 'weaponPropertyValue'],
+        C::TOOL                  => [C::READER => 'ToolReader',                 C::REPO => C::TOOL],
+        C::VISION_TYPE           => [C::READER => 'VisionTypeReader',           C::REPO => C::VISION_TYPE],
+        C::WEAPON                => [C::READER => 'WeaponReader',               C::REPO => C::WEAPON],
+        C::WEAPON_PROPERTY_VALUE => [C::READER => 'WeaponPropertyValueReader',  C::REPO => C::WEAPON_PROPERTY_VALUE],
     ];
 
     public function __construct(
@@ -67,8 +67,8 @@ final class ReaderFactory
         $config = self::MAP[$name]
             ?? throw new \BadMethodCallException("Reader inconnu : '$name'.");
 
-        $readerClass = 'src\\Service\\Reader\\' . $config['reader'];
-        $repository  = $config['repo'];
+        $readerClass = 'src\\Service\\Reader\\' . $config[C::READER];
+        $repository  = $config[C::REPO];
 
         return new $readerClass(
             $this->repositories->$repository()

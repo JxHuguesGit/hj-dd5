@@ -109,4 +109,7 @@ class Language
     public const NO_MODIFICATION_ENTRY = "Aucune valeur n'a été modifiée pour être enregistrée.";
     public const FORM_ERROR            = "Le formulaire contient des erreurs : %s";
 
+    public const FORMAT_SCORE          = '<div class="col car%s">%d</div><div class="col car%s">%+d</div><div class="col car%s">%+d</div>';
+    public const FORMAT_SKILLS         = '<div class="col-12"><strong>Compétences</strong> %s</div>';
+
 }

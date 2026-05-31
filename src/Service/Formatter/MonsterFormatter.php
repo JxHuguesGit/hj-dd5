@@ -115,13 +115,8 @@ class MonsterFormatter
         $mod          = Utils::getModAbility($score);
         $bonus        = $monster->getExtra('js' . $carac->value) ?: 0;
         $modWithBonus = Utils::getModAbility($score, $bonus);
-        $mentalStats  = in_array($carac, AbilityEnum::group('mental'), true);
-        return sprintf(
-            '<div class="col %s">%d</div><div class="col %s">%+d</div><div class="col %s">%+d</div>',
-            'car' . (2 + 3 * $mentalStats), $score,
-            'car' . (3 + 3 * $mentalStats), $mod,
-            'car' . (3 + 3 * $mentalStats), $modWithBonus
-        );
+        $mentalStats  = in_array($carac, AbilityEnum::group(C::MENTAL), true);
+        return sprintf(L::FORMAT_SCORE, (2 + 3 * $mentalStats), $score, (3 + 3 * $mentalStats), $mod, (3 + 3 * $mentalStats), $modWithBonus);
     }
 
     public function formatSkills(Collection $monsterSkills): string
@@ -134,8 +129,7 @@ class MonsterFormatter
             $skill    = $this->readerFactory->skill()->skillById($monsterSkill->skillId);
             $skills[] = $skill->name . ' +' . $monsterSkill->value;
         }
-
-        return '<div class="col-12"><strong>Compétences</strong> ' . implode(', ', $skills) . '</div>';
+        return sprintf(L::FORMAT_SKILLS, implode(', ', $skills));
     }
 
     public function formatImmunites(Collection $monsterResistances, Collection $monsterConditions): string

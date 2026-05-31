@@ -109,7 +109,9 @@ class Constant
     public const PREREQUIS              = 'prerequis';
     public const PROPERTIES             = 'properties';
     public const RANGED                 = 'ranged';
+    public const READER                 = 'reader';
     public const REFERENCE              = 'reference';
+    public const REPO                   = 'repo';
     public const RULES                  = 'rules';
     public const SELECTED               = 'selected';
     public const SHIELD                 = 'shield';
