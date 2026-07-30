@@ -1,10 +1,12 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Template;
+use src\Constant\Constant as C;
+use src\Constant\Template as T;
 use src\Model\PageRegistry;
 use src\Presenter\CardPresenter;
 use src\Presenter\MenuPresenter;
+use src\Utils\Html;
 
 class PublicHome extends PublicBase
 {
@@ -30,12 +32,12 @@ class PublicHome extends PublicBase
         );
 
         $cardPresenter = new CardPresenter($pages);
-        $contentGrid = $cardPresenter->render();
+        $contentGrid = Html::getDiv($cardPresenter->render(), [C::CSSCLASS => 'card-grid']);
         
-        $sectionGrid = $this->getRender(Template::HOME_PAGE, [$contentGrid]);
+        $sectionGrid = $this->getRender(T::HOME_PAGE, [$contentGrid]);
         
         // Ici on renvoie le template de la home
-        return $this->getRender(Template::MAIN_PAGE, [$menuHtml, $sectionGrid]);
+        return $this->getRender(T::MAIN_PAGE, [$menuHtml, $sectionGrid]);
     }
 }
 

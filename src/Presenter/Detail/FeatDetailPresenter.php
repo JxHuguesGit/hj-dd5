@@ -1,13 +1,14 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
+use src\Domain\Entity\Feat;
+use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\FeatPageView;
+use src\Presenter\ViewModel\FeatTypeView;
+use src\Presenter\ViewModel\LinkView;
 use src\Service\Domain\WpPostService;
-use src\Utils\Html;
-use src\Utils\UrlGenerator;
 
 class FeatDetailPresenter
 {
@@ -17,96 +18,90 @@ class FeatDetailPresenter
 
     public function present(
         FeatPageView $viewData
-    ): array {
+    ): FeatDetailView {
         $wpPost = $this->wpPostService->getById($viewData->feat->postId);
 
-        return [
-            C::TITLE       => $viewData->feat->name,
-            C::SLUG        => $viewData->feat->getSlug(),
-
-            C::DESCRIPTION => $this->cleanContent($wpPost->post_content ?? ''),
-            C::FEAT_TYPE    => $this->formatFeatType($viewData),
-
-            C::ORIGINES        => $this->formatOrigines($viewData),
-
-            C::PREV        => $viewData->previous ? [
-                C::SLUG => $viewData?->previous->getSlug(),
-                C::NAME => $viewData?->previous->name,
-            ] : null,
-
-            C::NEXT        => $viewData->next ? [
-                C::SLUG => $viewData?->next->getSlug(),
-                C::NAME => $viewData?->next->name,
-            ] : null,
-        ];
-
+        return new FeatDetailView(
+            name: $viewData->feat->name,
+            slug: $viewData->feat->getSlug(),
+            description: $this->cleanContent($wpPost->post_content ?? ''),
+            type: $this->buildType($viewData),
+            origins: $this->buildOrigins($viewData),
+            previous: $this->buildLink($viewData->previous),
+            next: $this->buildLink($viewData->next)
+        );
     }
 
-    private function formatOrigines(FeatPageView $viewData): string
+    private function buildOrigins(FeatPageView $viewData): array
     {
-        if ($viewData->origins === null) {
-            return '';
-        }
-        $html = '';
-        foreach ($viewData->origins as $slug => $value) {
-            $html .= Html::getDiv(
-                Html::getLink(
-                    $value,
-                    UrlGenerator::origin($slug),
-                    B::TEXT_WHITE
-                ),
-                [C::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
-            ) . ' ';
-        }
-        return $html;
+        return $viewData->origins;
     }
 
-    private function formatFeatType(FeatPageView $viewData): string
+    private function buildLink(?Feat $feat): ?LinkView
     {
-        switch ($viewData->feat->featTypeId) {
-            case 1:
-                $featType = Html::getLink(
-                    L::ORIGIN_FEAT,
-                    UrlGenerator::feats(C::ORIGIN),
-                    B::TEXT_DARK
-                );
-                break;
-            case 2:
-                $featType = Html::getLink(
-                    L::GENERAL_FEAT,
-                    UrlGenerator::feats(C::GENERAL),
-                    B::TEXT_DARK
-                ) . C::PREREQUIS_NIV4;
-                $strPreRequis = $this->wpPostService->getField(C::PREREQUIS);
-                if ($strPreRequis) {
-                    $featType .= ', ' . $strPreRequis;
-                }
-                $featType .= ')';
-                break;
-            case 3:
-                $featType  = Html::getLink(
-                    L::CBT_STYLE_FEAT,
-                    UrlGenerator::feats(C::COMBAT),
-                    B::TEXT_DARK
-                ) . C::PREREQUIS_ASDC;
-                break;
-            case 4:
-                $featType  = Html::getLink(
-                    L::CBT_STYLE_EPIC,
-                    UrlGenerator::feats(C::EPIC),
-                    B::TEXT_DARK
-                ) . C::PREREQUIS_NIV19;
-                $strPreRequis  = $this->wpPostService->getField(C::PREREQUIS);
-                if ($strPreRequis) {
-                    $featType .= ', ' . $strPreRequis;
-                }
-                $featType .= ')';
-                break;
-            default:
-                $featType  = 'Don non identifié';
-                break;
+        if ($feat === null) {
+            return null;
         }
-        return $featType;
+
+        return new LinkView(
+            name: $feat->name,
+            slug: $feat->getSlug(),
+        );
+    }
+
+    private function buildType(FeatPageView $viewData): FeatTypeView
+    {
+        return match ($viewData->feat->featTypeId) {
+            Feat::TYPE_ORIGIN => new FeatTypeView(
+                label: L::ORIGIN_FEAT,
+                slug: C::ORIGIN,
+            ),
+
+            Feat::TYPE_GENERAL => new FeatTypeView(
+                label: L::GENERAL_FEAT,
+                slug: C::GENERAL,
+                prerequisite: $this->buildGeneralPrerequisite(),
+            ),
+
+            Feat::TYPE_COMBAT => new FeatTypeView(
+                label: L::CBT_STYLE_FEAT,
+                slug: C::COMBAT,
+                prerequisite: C::PREREQUIS_ASDC,
+            ),
+
+            Feat::TYPE_EPIC => new FeatTypeView(
+                label: L::CBT_STYLE_EPIC,
+                slug: C::EPIC,
+                prerequisite: $this->buildEpicPrerequisite(),
+            ),
+
+            default => new FeatTypeView(
+                label: 'Don non identifié',
+                slug: '',
+            ),
+        };
+    }
+
+    private function buildGeneralPrerequisite(): ?string
+    {
+        $prerequisite = $this->wpPostService->getField(C::PREREQUIS);
+
+        if (!$prerequisite) {
+            return C::PREREQUIS_NIV4;
+        }
+
+        return C::PREREQUIS_NIV4 . ', ' . ucfirst($prerequisite);
+    }
+
+    private function buildEpicPrerequisite(): ?string
+    {
+        $prerequisite = $this->wpPostService->getField(C::PREREQUIS);
+
+        if (!$prerequisite) {
+            return C::PREREQUIS_NIV19;
+        }
+
+        return C::PREREQUIS_NIV19 . ', ' . ucfirst($prerequisite);
     }
 
     private function cleanContent(string $content): string

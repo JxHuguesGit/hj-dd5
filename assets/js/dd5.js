@@ -14,6 +14,10 @@ $(document).ready(function() {
         }
     });
 
+    $('.burger').on('click', function() {
+        $('#mainMenu').toggleClass('show');
+        $(this).attr('aria-expanded', $('#mainMenu').hasClass('show'));
+    });
 
 });
 

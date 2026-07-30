@@ -12,9 +12,9 @@ use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageList;
+use src\Presenter\ContentBuilder\FeatCardContentBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\MenuPresenter;
-use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Renderer\TemplateRenderer;
 
 final class FeatControllerFactory
@@ -48,7 +48,7 @@ final class FeatControllerFactory
         );
         $page = new PageList(
             $this->renderer,
-            new FeatTableBuilder()
+            new FeatCardContentBuilder()
         );
         $menu = new MenuPresenter(
             PageRegistry::getInstance()->all(),
@@ -69,6 +69,7 @@ final class FeatControllerFactory
             new \src\Presenter\Detail\FeatDetailPresenter(
                 $this->serviceFactory->wordPress()
             ),
+            new \src\Presenter\ContentBuilder\FeatDetailContentBuilder(),
             new \src\Page\Renderer\PageFeat($this->renderer),
             new MenuPresenter(PageRegistry::getInstance()->all(), C::FEATS)
         );

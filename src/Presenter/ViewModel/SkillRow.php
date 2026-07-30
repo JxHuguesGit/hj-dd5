@@ -3,10 +3,13 @@ namespace src\Presenter\ViewModel;
 
 final class SkillRow
 {
+    /**
+     * @param SkillLink[] $subSkills
+     */
     public function __construct(
         public string $name,
         public string $url,
         public string $description,
-        public string $subSkills
+        public array $subSkills
     ) {}
 }

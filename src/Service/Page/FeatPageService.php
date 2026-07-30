@@ -4,6 +4,7 @@ namespace src\Service\Page;
 use src\Constant\Constant as C;
 use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatPageView;
+use src\Presenter\ViewModel\LinkView;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\OriginReader;
 
@@ -28,11 +29,13 @@ final class FeatPageService
 
     private function getOrigins(Feat $feat): array
     {
-        $data = [];
-        $origins = $this->originReader->originsByFeat($feat);
-        foreach ($origins as $origin) {
-            $data[$origin->slug] = $origin->name;
+        $result = [];
+        foreach ($this->originReader->originsByFeat($feat) as $origin) {
+            $result[] = new LinkView(
+                name: $origin->name,
+                slug: $origin->slug,
+            );
         }
-        return $data;
+        return $result;
     }
 }

@@ -6,7 +6,7 @@
         <title>%1$s | DD5</title>
         %2$s
         <!-- DD5 style -->
-        <link rel="stylesheet" media="all" href="%3$sassets/styles/dd5.css" />
+        <link rel="stylesheet" media="all" href="%3$sassets/styles/dd5-v0.1.css" />
         <link rel="icon" type="image/png" href="%3$sassets/images/favicon-32x32.ico">
     </head>
     <body>
@@ -15,12 +15,10 @@
             %4$s
             <!-- Finish Header -->
             <!-- Start Main -->
-            <div id="main">
-                %7$s
-                <!-- Start Content -->
-                %5$s
-                <!-- Finish Content -->
-            </div>
+            %7$s
+            <!-- Start Content -->
+            %5$s
+            <!-- Finish Content -->
             <!-- Finish Main -->
             <!-- Start Footer -->
             %6$s

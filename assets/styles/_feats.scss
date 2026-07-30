@@ -1,0 +1,290 @@
+@use "variables" as *;
+
+/* =============================
+   FEATS LIST
+   ============================= */
+
+.feat-groups {
+
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+
+.feat-group-title {
+
+    margin-bottom: 1.25rem;
+    padding-bottom: .5rem;
+
+    border-bottom: 2px solid $color-footer-text;
+
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+
+.feat-grid {
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: 1rem;
+}
+
+
+@media (min-width: $breakpoint-tablet) {
+
+    .feat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (min-width: $breakpoint-desktop) {
+
+    .feat-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+.feat-card {
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 1rem;
+
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+
+    background: #fff;
+
+    transition: .15s ease;
+
+
+    &:hover {
+
+        border-color: #bbb;
+        box-shadow: 0 .25rem .75rem rgba(0,0,0,.08);
+    }
+
+
+    h3 {
+
+        margin: 0 0 .75rem;
+
+        font-size: 1.15rem;
+        font-weight: 700;
+    }
+
+
+    h3 a {
+
+        color: inherit;
+
+        text-decoration: none;
+
+
+        &:hover {
+
+            color: $color-primary;
+        }
+    }
+}
+
+
+.feat-origins {
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: .5rem;
+}
+
+
+.feat-origin {
+
+    padding: .25rem .75rem;
+
+    border-radius: 1rem;
+
+    background: #232324;
+
+
+    a {
+
+        color: white;
+
+        text-decoration: none;
+
+        font-size: .9rem;
+    }
+}
+
+
+.feat-prerequisite {
+
+    margin-top: .75rem;
+    margin-bottom: 0;
+
+    font-size: .9rem;
+}
+
+
+/* =============================
+   FEAT DETAIL
+   ============================= */
+
+
+.feat-detail {
+
+    background: white;
+
+    border-radius: .5rem;
+
+    padding: 1.5rem;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+
+
+    .feat-detail-header {
+
+        margin-bottom: 1rem;
+
+
+        h1 {
+
+            margin: 0;
+
+            font-size: 2rem;
+
+            font-weight: 700;
+        }
+    }
+
+
+    .feat-description {
+
+        margin-bottom: 1rem;
+
+        line-height: 1.5;
+
+
+        strong {
+
+            font-weight: 700;
+        }
+    }
+
+
+    .feat-type {
+
+        margin-bottom: 1rem;
+
+        font-style: italic;
+
+        color: #666;
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+
+            &:hover {
+
+                color: $color-primary;
+            }
+        }
+    }
+
+
+    .feat-origins {
+
+        margin-bottom: 1.5rem;
+
+
+        .feat-origin {
+
+            background: #232324;
+
+
+            a {
+
+                color: white;
+
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+
+.feat-navigation {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-top: 2rem;
+
+    padding-top: 1rem;
+
+    border-top: 1px solid #ddd;
+
+
+    a {
+
+        text-decoration: none;
+    }
+
+
+    &.only-next {
+
+        justify-content: flex-end;
+    }
+
+
+    &.only-prev {
+
+        justify-content: flex-start;
+    }
+}
+
+
+@media (min-width: $breakpoint-desktop) {
+
+    .feat-detail {
+
+        padding: 2rem;
+    }
+}
+
+
+@media (max-width: 576px) {
+
+    .feat-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .feat-card {
+
+        padding: .75rem;
+    }
+
+
+    .feat-group-title {
+
+        font-size: 1.25rem;
+    }
+}

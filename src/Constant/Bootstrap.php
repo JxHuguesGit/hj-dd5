@@ -32,6 +32,24 @@ class Bootstrap
     public const TREEVIEW  = 'treeview';
     public const WHITE     = 'white';
 
+    public const FEAT         = 'feat';
+    public const SKILL        = 'skill';
+    public const GROUPS       = 'groups';
+    public const GRID         = 'grid';
+    public const GROUP        = 'group';
+    public const CARD         = 'card';
+
+    public const FEAT_GROUPS  = self::FEAT . '-' . self::GROUPS;
+    public const FEAT_GRID    = self::FEAT . '-' . self::GRID;
+    public const FEAT_GROUP   = self::FEAT . '-' . self::GROUP;
+    public const FEAT_CARD   = self::FEAT . '-' . self::CARD;
+    public const FEAT_GROUP_TITLE = self::FEAT . '-' . self::GROUP . '-' . self::TITLE;
+    public const SKILL_GROUPS = self::SKILL . '-' . self::GROUPS;
+    public const SKILL_GRID   = self::SKILL . '-' . self::GRID;
+    public const SKILL_GROUP  = self::SKILL . '-' . self::GROUP;
+    public const SKILL_CARD   = self::SKILL . '-' . self::CARD;
+    public const SKILL_GROUP_TITLE = self::SKILL . '-' . self::GROUP . '-' . self::TITLE;
+
     public const ROW_DARK_STRIPED = 'row-dark-striped';
 
     public const COL_1     = 'col-1';

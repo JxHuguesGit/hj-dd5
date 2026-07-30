@@ -32,7 +32,7 @@ class CardPresenter
         foreach ($this->elements as $el) {
             $html .= sprintf(
                 '<a href="%s" class="card">
-                    <h3>%s</h3>
+                    <h2>%s</h2>
                     <p>%s</p>
                 </a>',
                 $el->getUrl(),

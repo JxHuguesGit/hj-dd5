@@ -2,17 +2,16 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
+use src\Presenter\ViewModel\LinkView;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\OriginReader;
-use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
 final class FeatListPresenter
@@ -48,50 +47,44 @@ final class FeatListPresenter
 
     private function buildRow(Feat $feat): FeatRow
     {
-        [$originLabel, $prerequisite] = $this->resolveFeatDetails($feat);
-
         return new FeatRow(
             name: $feat->name,
             slug: $feat->slug,
             url: UrlGenerator::feat($feat->slug),
-            originLabel: $originLabel,
-            prerequisite: $prerequisite
+            origins: $this->buildOrigins($feat),
+            prerequisite: $this->resolveFeatPrerequisite($feat)
         );
     }
 
-    private function resolveFeatDetails(Feat $feat): array
+    private function buildOrigins(Feat $feat): array
+    {
+        if ($feat->featTypeId !== Feat::TYPE_ORIGIN) {
+            return [];
+        }
+        
+        $result = [];
+
+        foreach ($this->originReader->originsByFeat($feat) as $origin) {
+            $result[] = new LinkView(
+                name: $origin->name,
+                slug: $origin->slug
+            );
+        }
+
+        return $result;
+    }
+
+    private function resolveFeatPrerequisite(Feat $feat): string
     {
         switch ($feat->featTypeId) {
-            case Feat::TYPE_ORIGIN:
-                $origins = $this->originReader->originsByFeat($feat);
-                $parts   = [];
-                foreach ($origins as $origin) {
-                    $parts[] = Html::getLink($origin->name, UrlGenerator::origin($origin->slug), B::TEXT_DARK);
-                }
-                $returned = [implode(', ', $parts), '-'];
-                break;
             case Feat::TYPE_GENERAL:
-                $featAbilities = $this->featAbilityReader->featAbilitiesByFeatId($feat->id);
-                $parts         = [];
-                foreach ($featAbilities as $featAbility) {
-                    $ability = $this->abilityReader->abilityById($featAbility->abilityId);
-                    $parts[] = $ability->name;
-                }
-
-                $this->wpPostService->getById($feat->postId);
-                $wpPreRequis = $this->wpPostService->getField(C::PREREQUIS);
-                $returned    = [implode(', ', $parts), $wpPreRequis ? ucfirst($wpPreRequis) : '-'];
-                break;
             case Feat::TYPE_EPIC:
                 $this->wpPostService->getById($feat->postId);
                 $wpPreRequis = $this->wpPostService->getField(C::PREREQUIS);
-                $returned    = ['-', $wpPreRequis ? ucfirst($wpPreRequis) : '-'];
-                break;
+                return $wpPreRequis ? ucfirst($wpPreRequis) : '-';
             default:
-                $returned = ['-', '-'];
-                break;
+                return '-';
         }
-        return $returned;
     }
 
     private static function getFeatTypes(): array

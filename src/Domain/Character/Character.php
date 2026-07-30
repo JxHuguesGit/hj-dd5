@@ -42,6 +42,8 @@ final class Character extends Entity
             $this->createStep = C::NAME;
         } elseif (isset($input['createStep'])) {
             $this->createStep = $input['createStep'];
+        } else {
+            // Sonar
         }
         if (isset($input['characterOriginId']) && $input['characterOriginId'] != 0) {
             $this->originId = $input['characterOriginId'];

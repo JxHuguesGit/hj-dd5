@@ -1,8 +1,6 @@
 <?php
 namespace src\Page\Renderer;
 
-use src\Constant\Constant as C;
-use src\Constant\Template;
 use src\Utils\UrlGenerator;
 
 class PageFeat extends PageDetail
@@ -12,19 +10,13 @@ class PageFeat extends PageDetail
         return UrlGenerator::feat($slug);
     }
 
-    public function render(string $menuHtml, array $data): string
-    {
-        return $this->renderDetail(
+    public function render(
+        string $menuHtml,
+        string $contentHtml
+    ): string {
+        return $this->renderContentDetail(
             $menuHtml,
-            $data,
-            Template::FEAT_DETAIL_CARD,
-            [
-                '',
-                $data[C::TITLE] ?? '',
-                $data[C::DESCRIPTION] ?? '',
-                $data[C::FEAT_TYPE] ?? '-',
-                $data[C::ORIGINES] ?? '',
-            ]
+            $contentHtml
         );
     }
 }

@@ -36,6 +36,7 @@ class Constant
     public const SIZE_CATEGORY          = 'categorie_de_taille';
     public const CHECKED                = 'checked';
     public const CLICK                  = 'click';
+    public const CLASSE                 = 'classe';
     public const CLASSES                = 'classes';
     public const COLSPAN                = 'colspan';
     public const COMBAT                 = 'combat';
@@ -146,9 +147,12 @@ class Constant
     public const WEAPON_PROPERTY_VALUE  = 'weaponPropertyValue';
     public const WEIGHT                 = 'weight';
 
+    public const FEAT_ORIGIN            = self::FEAT . '-' . self::ORIGIN;
+    public const FEAT_ORIGINS           = self::FEAT . '-' . self::ORIGINS;
+
 
     public const PREREQUIS_NIV4  = ' (prérequis : niveau 4 ou supérieur';
-    public const PREREQUIS_ASDC  = ' (prérequis : aptitude Style de combat)';
+    public const PREREQUIS_ASDC  = ' (prérequis : aptitude Style de combat';
     public const PREREQUIS_NIV19 = ' (prérequis : niveau 19 ou supérieur';
 
     public const EMPTY_SPAN = '<span></span>';

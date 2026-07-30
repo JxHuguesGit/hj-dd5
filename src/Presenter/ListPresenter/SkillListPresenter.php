@@ -2,14 +2,13 @@
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillGroup;
+use src\Presenter\ViewModel\SkillLink;
 use src\Presenter\ViewModel\SkillRow;
 use src\Service\Domain\SkillService;
-use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
 final class SkillListPresenter
@@ -43,16 +42,12 @@ final class SkillListPresenter
             name: $skill->name,
             url: UrlGenerator::skill($skill->slug),
             description: $skill->description,
-            subSkills: implode(
-                '<br>',
-                array_map(
-                    fn($s) => Html::getLink(
-                        $s->name ?? '',
-                        $s->slug ? UrlGenerator::skill($s->slug) : '#',
-                        B::TEXT_DARK
-                    ),
-                    $this->skillService->subSkills($skill)->toArray()
-                )
+            subSkills: array_map(
+                fn($s) => new SkillLink(
+                    name: $s->name ?? '',
+                    url: $s->slug ? UrlGenerator::skill($s->slug) : '#',
+                ),
+                $this->skillService->subSkills($skill)->toArray()
             )
         );
     }

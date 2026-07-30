@@ -6,6 +6,7 @@ use src\Controller\Public\PublicSkill;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
 use src\Page\Renderer\PageSkill;
+use src\Presenter\ContentBuilder\SkillDetailContentBuilder;
 use src\Presenter\Detail\SkillDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
@@ -28,10 +29,10 @@ class SkillControllerFactory
             new SkillPageService(
                 $this->serviceFactory->skill(),
                 $skillReader,
-                $this->readerFactory->ability(),
-                $this->readerFactory->origin()
+                $this->readerFactory->ability()
             ),
             new SkillDetailPresenter(),
+            new SkillDetailContentBuilder(),
             new PageSkill($this->renderer),
             new MenuPresenter(PageRegistry::getInstance()->all(), C::SKILLS)
         );

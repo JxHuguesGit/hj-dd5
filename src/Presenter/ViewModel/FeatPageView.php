@@ -7,16 +7,9 @@ class FeatPageView
 {
     public function __construct(
         public Feat $feat,
-        public ?array $origins = null,
+        /** @var LinkView[] */
+        public array $origins,
         public ?Feat $previous = null,
         public ?Feat $next = null,
     ) {}
-
-    public function __get(string $name): mixed
-    {
-        if(property_exists($this, $name)) {
-            return $this->$name;
-        }
-        return null;
-    }
 }

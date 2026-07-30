@@ -4,6 +4,7 @@ namespace src\Controller\Public;
 use src\Constant\Constant as C;
 use src\Domain\Entity\Feat;
 use src\Page\Renderer\PageFeat;
+use src\Presenter\ContentBuilder\FeatDetailContentBuilder;
 use src\Presenter\Detail\FeatDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\FeatPageService;
@@ -18,6 +19,7 @@ class PublicFeat extends PublicBase
         private FeatReader $featReader,
         private FeatPageService $pageService,
         private FeatDetailPresenter $presenter,
+        private FeatDetailContentBuilder $contentBuilder,
         private PageFeat $page,
         private MenuPresenter $menuPresenter,
     ) {
@@ -32,9 +34,10 @@ class PublicFeat extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(C::FEATS);
+        $menu = $this->menuPresenter->render();
         $pageView = $this->pageService->build($this->feat);
         $viewData = $this->presenter->present($pageView);
-        return $this->page->render($menu, $viewData);
+        $content = $this->contentBuilder->build($viewData);
+        return $this->page->render($menu, $content);
     }
 }

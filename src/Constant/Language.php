@@ -53,6 +53,7 @@ class Language
     public const FORCE           = 'Force';
     public const FP              = 'FP';
     public const UNKNOWN_GROUP   = 'Groupe inconnu : ';
+    public const CHAR_CLASSE_TITLE = 'Classe du personnage';
     public const CHAR_HIST_TITLE = 'Historique du personnage';
     public const HISTORIQUES     = 'Historiques';
     public const UNLIMITED       = 'Illimitée';
@@ -111,5 +112,6 @@ class Language
 
     public const FORMAT_SCORE          = '<div class="col car%s">%d</div><div class="col car%s">%+d</div><div class="col car%s">%+d</div>';
     public const FORMAT_SKILLS         = '<div class="col-12"><strong>Compétences</strong> %s</div>';
-
+    public const BALISE_SMALL          = ' <small>%s</small>';
+    public const PREREQUIS_TEXT        = '<strong>Pré-requis :</strong> %s';
 }

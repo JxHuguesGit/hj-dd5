@@ -5,6 +5,7 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\SkillGroup;
+use src\Presenter\ViewModel\SkillLink;
 use src\Presenter\ViewModel\SkillRow;
 use src\Utils\Html;
 use src\Utils\Table;
@@ -28,10 +29,25 @@ class SkillTableBuilder extends AbstractTableBuilder
                         C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
                     ->addBodyCell([C::CONTENT => $row->description])
-                    ->addBodyCell([C::CONTENT => $row->subSkills]);
+                    ->addBodyCell([C::CONTENT => $this->renderLinks($row->subSkills)]);
             }
         }
 
         return $table;
+    }
+
+    private function renderLinks(array $links): string
+    {
+        return implode(
+            '<br>',
+            array_map(
+                fn(SkillLink $link) => Html::getLink(
+                    $link->name,
+                    $link->url,
+                    B::TEXT_DARK
+                ),
+                $links
+            )
+        );
     }
 }

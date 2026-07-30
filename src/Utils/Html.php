@@ -3,11 +3,19 @@ namespace src\Utils;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
+use src\Constant\Html as H;
 use src\Constant\Icon;
 
 class Html
 {
-    public const SELF_CLOSING_TAGS = ['img', 'input', 'br', 'hr', 'meta', B::LINK];
+    public const SELF_CLOSING_TAGS = [
+        H::BALISE_IMG,
+        H::BALISE_INPUT,
+        H::BALISE_BR,
+        H::BALISE_HR,
+        H::BALISE_META,
+        H::BALISE_LINK
+    ];
 
     public static function getBalise(string $balise, string $label = '', array $attributes = []): string
     {
@@ -46,21 +54,21 @@ class Html
     {
         // Les attributs par défaut d'un bouton.
         $defaultAttributes = [
-            C::TYPE  => 'button',
+            C::TYPE  => H::BALISE_BUTTON,
             C::CSSCLASS => self::mergeClasses($extraAttributes, 'btn btn-default btn-sm'),
         ];
         $attributes = array_merge($defaultAttributes, $extraAttributes);
-        return static::getBalise('button', $label, $attributes);
+        return static::getBalise(H::BALISE_BUTTON, $label, $attributes);
     }
 
     public static function getDiv(string $content, array $extraAttributes = []): string
     {
-        return static::getBalise('div', $content, $extraAttributes);
+        return static::getBalise(H::BALISE_DIV, $content, $extraAttributes);
     }
 
     public static function getUl(string $content, array $extraAttributes = []): string
     {
-        return static::getBalise('ul', $content, $extraAttributes);
+        return static::getBalise(H::BALISE_UL, $content, $extraAttributes);
     }
 
     public static function getOption(string $label, array $attributes, bool $isSelected = false): string
@@ -73,7 +81,7 @@ class Html
 
     public static function getLi(string $content, array $extraAttributes = []): string
     {
-        return static::getBalise('li', $content, $extraAttributes);
+        return static::getBalise(H::BALISE_LI, $content, $extraAttributes);
     }
 
     public static function getLink(string $label, string $href, string $classe = '', array $extraAttributes = []): string
@@ -82,12 +90,12 @@ class Html
             [C::HREF => $href, C::CSSCLASS => $classe],
             $extraAttributes
         );
-        return static::getBalise('a', $label, $attributes);
+        return static::getBalise(H::BALISE_A, $label, $attributes);
     }
 
     public static function getSpan(string $content, array $extraAttributes = []): string
     {
-        return static::getBalise('span', $content, $extraAttributes);
+        return static::getBalise(H::BALISE_SPAN, $content, $extraAttributes);
     }
 
     public static function getIcon(string $icon, string $prefix = Icon::SOLID, array $extraAttributes = []): string
@@ -97,7 +105,7 @@ class Html
             'fa-' . $prefix . ' fa-' . $icon
         );
         $attributes = array_merge([C::CSSCLASS => $strClass], $extraAttributes);
-        return static::getBalise('i', '', $attributes);
+        return static::getBalise(H::BALISE_I, '', $attributes);
     }
 
     public static function shortcodes(string $content = ''): string

@@ -30,9 +30,8 @@ class CharacterCreationAjax
                 } else {
                     $detail = new OriginControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer);
                     $publicBase = $detail->createDetailController($origin->slug);
-                    $viewData = $publicBase->getViewData();
                     $returned = [
-                        'html' => $viewData['description'],
+                        'html' => $publicBase->getStepSideContent(),
                     ];
                 }
             break;

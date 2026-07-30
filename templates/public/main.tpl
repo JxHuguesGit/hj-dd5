@@ -17,36 +17,29 @@
     <div class="container nav-inner">
 
         <!-- Burger icon for mobile -->
-        <div class="burger" onclick="toggleMenu()">
+        <button
+            class="burger"
+            type="button"
+            aria-label="Ouvrir le menu"
+            aria-controls="mainMenu"
+            aria-expanded="false">
             <i class="fa-solid fa-bars"></i>
-        </div>
+        </button>
 
-        <nav class="main-nav" id="mainMenu">
-            %1$s
-        </nav>
-<!--
-        <div class="nav-search">
-            <input type="text" placeholder="Rechercher…">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
--->
+        <!-- Main nav -->
+        %1$s
     </div>
 </header>
 
+<main>
 %2$s
-
 %3$s
+</main>
+
 <!-- FOOTER -->
-<footer>
+<footer class="site-footer">
     <div class="container footer-inner">
         <p>© 2026 – DD5 2024</p>
         <p><a href="#">Mentions légales</a> — <a href="#">Contact</a></p>
     </div>
 </footer>
-
-<!-- JS Burger -->
-<script>
-function toggleMenu() {
-    document.getElementById("mainMenu").classList.toggle("show");
-}
-</script>

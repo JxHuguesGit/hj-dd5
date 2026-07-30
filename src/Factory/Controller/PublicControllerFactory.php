@@ -13,6 +13,8 @@ use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageList;
+use src\Presenter\ContentBuilder\FeatCardContentBuilder;
+use src\Presenter\ContentBuilder\SkillCardContentBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\ListPresenter\OriginListPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
@@ -20,9 +22,7 @@ use src\Presenter\ListPresenter\SpeciesListPresenter;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\Modal\SpellFilterModalPresenter;
-use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\TableBuilder\OriginTableBuilder;
-use src\Presenter\TableBuilder\SkillTableBuilder;
 use src\Presenter\TableBuilder\SpeciesTableBuilder;
 use src\Presenter\TableBuilder\SpellTableBuilder;
 use src\Renderer\TemplateRenderer;
@@ -74,9 +74,7 @@ final class PublicControllerFactory
                 ),
                 new PageList(
                     $this->renderer,
-                    new SkillTableBuilder(
-                        $this->serviceFactory->skill()
-                    )
+                    new SkillCardContentBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::SKILLS)
             ),
@@ -91,7 +89,7 @@ final class PublicControllerFactory
                 ),
                 new PageList(
                     $this->renderer,
-                    new FeatTableBuilder()
+                    new FeatCardContentBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::FEATS)
             ),

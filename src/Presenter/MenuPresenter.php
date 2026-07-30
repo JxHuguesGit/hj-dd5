@@ -40,14 +40,16 @@ class MenuPresenter
                 continue;
             }
             $activeClass  = ($el->getSlug() === $this->currentSlug) ? ' ' . C::ACTIVE : '';
-            $strSpan      = Html::getSpan(htmlspecialchars($el->getTitle()), [C::CSSCLASS => B::NAV_LINK_TITLE]);
-            $strLink      = Html::getLink($strSpan, trim($el->getUrl(), '-'), implode(' ', [B::NAV_LINK, B::TEXT_DARK]));
+            $strLink      = Html::getLink(
+                htmlspecialchars($el->getTitle()),
+                trim($el->getUrl(), '-'),
+                implode(' ', [B::NAV_LINK, B::TEXT_DARK, B::NAV_LINK_TITLE])
+            );
             $html        .= Html::getLi($strLink, [C::CSSCLASS => B::NAV_ITEM . $activeClass]);
         }
 
-        $strUl  = Html::getBalise('ul', $html, [C::CSSCLASS => 'navbar-nav']);
-        $strDiv = Html::getDiv($strUl, [C::CSSCLASS => 'container-xl']);
-        return Html::getBalise('nav', $strDiv, [C::CSSCLASS => 'navbar navbar-expand-md navbar-light pb-0']);
+        $strUl  = Html::getBalise('ul', $html, [C::CSSCLASS => 'nav-list']);
+        return Html::getBalise('nav', $strUl, [C::CSSCLASS => 'main-nav', C::ID => 'mainMenu']);
     }
 
     /**

@@ -16,8 +16,8 @@ class MenuItemPresenter
 
     private function isActive(): bool
     {
-        return $this->currentId == $this->item->id
-        && $this->currentTab == C::ONG_COMPENDIUM;
+        return $this->currentId == $this->item->id;
+//        && $this->currentTab == C::ONG_COMPENDIUM;
     }
 
     private function formatAttributes(

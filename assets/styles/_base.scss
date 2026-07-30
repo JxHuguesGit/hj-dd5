@@ -1,0 +1,31 @@
+@use "variables" as *;
+
+body {
+    background: $color-background url(../images/background_texture.png) repeat;
+    color: $color-text;
+    font-family: $font-body;
+    margin: 0;
+    min-height: 100vh;
+}
+
+#page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.container {
+    width: min($container-width, 90%);
+    margin-inline: auto;
+}
+
+@font-face {
+    font-family: "Righteous";
+    font-style: normal;
+    font-weight: 400;
+    src: url("https://fonts.gstatic.com/s/righteous/v9/1cXxaUPXBpj2rGoU7C9WiHGF.woff2") format("woff2");
+}

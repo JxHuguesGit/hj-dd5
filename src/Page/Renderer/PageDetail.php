@@ -27,6 +27,21 @@ abstract class PageDetail
         return $this->renderer->render(Template::MAIN_PAGE, [$menuHtml, $contentSection, '']);
     }
 
+    protected function renderContentDetail(
+        string $menuHtml,
+        string $contentHtml
+    ): string {
+        $contentSection = $this->renderer->render(
+            Template::DETAIL_PAGE,
+            ['', $contentHtml]
+        );
+
+        return $this->renderer->render(
+            Template::MAIN_PAGE,
+            [$menuHtml, $contentSection, '']
+        );
+    }
+    
     private function renderNavLink(
         ?array $navData,
         string $direction

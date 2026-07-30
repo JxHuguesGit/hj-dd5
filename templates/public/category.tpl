@@ -1,13 +1,13 @@
-<!-- HERO -->
-<section class="hero">
-    <div class="container hero-inner">
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <div class="container page-header-inner">
         <h1>%1$s</h1>
     </div>
 </section>
 
 <!-- GRID -->
-<section class="sections">
-    <div class="container section-grid">
+<section class="page-content">
+    <div class="container page-content-inner">
         %2$s
     </div>
 </section>

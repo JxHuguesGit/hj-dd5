@@ -56,12 +56,22 @@ class FeatTableBuilder extends AbstractTableBuilder
             $this->addGroupRow($table, $url, count($headers));
 
             foreach ($group->rows as $row) {
+                $origins = [];
+
+                foreach ($row->origins as $origin) {
+                    $origins[] = Html::getLink(
+                        $origin->name,
+                        UrlGenerator::origin($origin->slug),
+                        B::TEXT_DARK
+                    );
+                }
+
                 /** @var FeatRow $row */
                 $table->addBodyRow([])
                     ->addBodyCell([
                         C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                     ])
-                    ->addBodyCell([C::CONTENT => $row->originLabel])
+                    ->addBodyCell([C::CONTENT => implode(', ', $origins)])
                     ->addBodyCell([C::CONTENT => $row->prerequisite]);
                 if ($this->isAdmin) {
                     $table->addBodyCell([

@@ -1,0 +1,78 @@
+@use "variables" as *;
+
+/* =============================
+   TOPBAR
+   ============================= */
+
+header.topbar {
+
+    backdrop-filter: blur(4px);
+    background: $color-topbar;
+    background-size: contain;
+    border-bottom: 1px solid #e2e8f0;
+
+    &::before {
+        animation: slide 1.4s forwards ease-out;
+        background: url(../images/DDSplat.png) no-repeat left center;
+        background-size: auto 100%;
+        content: "";
+        inset: 0;
+        position: absolute;
+        transform: translateX(-100%);
+    }
+
+    .topbar-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .5rem 0;
+    }
+}
+
+@keyframes slide {
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* =============================
+   PAGE HEADER
+   ============================= */
+
+.page-header {
+
+    padding: 1.5rem 0;
+
+    .page-header-inner {
+        text-align: center;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+
+    p {
+        margin-top: .75rem;
+        color: #666;
+    }
+}
+
+@media (min-width: $breakpoint-desktop) {
+
+    .page-header {
+
+        padding: 3rem 0 2rem;
+
+        .page-header-inner {
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+        }
+    }
+
+}

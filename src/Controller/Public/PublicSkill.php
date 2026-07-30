@@ -4,6 +4,7 @@ namespace src\Controller\Public;
 use src\Constant\Constant as C;
 use src\Domain\Entity\Skill;
 use src\Page\Renderer\PageSkill;
+use src\Presenter\ContentBuilder\SkillDetailContentBuilder;
 use src\Presenter\Detail\SkillDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SkillPageService;
@@ -18,6 +19,7 @@ class PublicSkill extends PublicBase
         private SkillReader $skillReader,
         private SkillPageService $pageService,
         private SkillDetailPresenter $presenter,
+        private SkillDetailContentBuilder $contentBuilder,
         private PageSkill $page,
         private MenuPresenter $menuPresenter,
     ) {
@@ -27,9 +29,10 @@ class PublicSkill extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(C::SKILLS);
+        $menu = $this->menuPresenter->render();
         $pageView = $this->pageService->build($this->skill);
         $viewData = $this->presenter->present($pageView);
-        return $this->page->render($menu, $viewData);
+        $contentHtml = $this->contentBuilder->build($viewData);
+        return $this->page->render($menu, $contentHtml);
     }
 }

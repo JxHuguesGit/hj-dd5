@@ -27,7 +27,7 @@ class PublicOrigine extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(C::ORIGINS);
+        $menu = $this->menuPresenter->render();
         $viewData = $this->getViewData();
         $viewData[C::TITLE] = $this->getTitle();
         return $this->page->render($menu, $viewData);
@@ -37,5 +37,10 @@ class PublicOrigine extends PublicBase
     {
         $pageView = $this->pageService->build($this->origin);
         return $this->presenter->present($pageView);
+    }
+
+    public function getStepSideContent(): string
+    {
+        return $this->page->renderContent($this->getViewData());
     }
 }

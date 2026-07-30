@@ -5,14 +5,22 @@ use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Template;
 use src\Presenter\TableBuilder\TableBuilderInterface;
+use src\Presenter\ContentBuilder\ContentBuilderInterface;
+use src\Presenter\ContentBuilder\TableContentBuilder;
 use src\Renderer\TemplateRenderer;
 
 class PageList
 {
+    private ContentBuilderInterface $contentBuilder;
+
     public function __construct(
         private TemplateRenderer $renderer,
-        private TableBuilderInterface $tableBuilder
-    ) {}
+        TableBuilderInterface|ContentBuilderInterface $builder
+    ) {
+        $this->contentBuilder = $builder instanceof TableBuilderInterface
+            ? new TableContentBuilder($builder)
+            : $builder;
+    }
 
     public function render(string $menuHtml, string $title, Collection $viewData): string
     {
@@ -26,7 +34,7 @@ class PageList
     public function renderAdmin(string $title, Collection $viewData, ?string $toastContent = null): string
     {
         // Construire le tableau
-        $tableHtml = $this->tableBuilder->build(
+        $contentHtml = $this->contentBuilder->build(
             $viewData,
             [B::WITH_MRGNTOP => false]
         );
@@ -34,7 +42,7 @@ class PageList
         // Section centrale (titre + tableau)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $tableHtml->display(), $toastContent, '']
+            [$title, $contentHtml, $toastContent, '']
         );
     }
 }

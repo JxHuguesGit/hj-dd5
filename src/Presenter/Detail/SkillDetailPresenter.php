@@ -1,67 +1,62 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
+use src\Domain\Entity\Skill;
+use src\Presenter\ViewModel\LinkView;
+use src\Presenter\ViewModel\SkillDetailView;
 use src\Presenter\ViewModel\SkillPageView;
-use src\Utils\Html;
-use src\Utils\UrlGenerator;
+use src\Presenter\ViewModel\SubSkillView;
 
 class SkillDetailPresenter
 {
     public function present(
         SkillPageView $viewData
-    ): array {
-        return [
-            C::TITLE       => $viewData->skill->name,
-
-            C::ABILITIES   => $viewData->ability->name,
-            C::DESCRIPTION => $viewData->skill->description,
-            C::SUB_SKILLS   => $this->formatSubSkills($viewData),
-            C::ORIGINES        => $this->formatOrigines($viewData),
-
-            C::PREV        => $viewData->previous ? [
-                C::NAME => $viewData?->previous->name,
-                C::SLUG => $viewData?->previous->getSlug(),
-            ] : null,
-
-            C::NEXT        => $viewData->next ? [
-                C::NAME => $viewData?->next->name,
-                C::SLUG => $viewData?->next->getSlug(),
-            ] : null,
-        ];
+    ): SkillDetailView {
+        return new SkillDetailView(
+            name: $viewData->skill->name,
+            ability: $viewData->ability->name,
+            description: $viewData->skill->description,
+            origins: $this->buildOrigins($viewData),
+            subSkills: $this->buildSubSkills($viewData),
+            previous: $this->buildLink($viewData?->previous),
+            next: $this->buildLink($viewData?->next)
+        );
     }
 
-    private function formatOrigines(SkillPageView $viewData): string
+    private function buildOrigins(SkillPageView $viewData): array
     {
-        if ($viewData->origins === null) {
-            return '';
-        }
-        $html = '';
+        $parts = [];
         foreach ($viewData->origins as $origin) {
-            $html .= Html::getDiv(
-                Html::getLink(
-                    $origin->name,
-                    UrlGenerator::origin($origin->slug),
-                    B::TEXT_WHITE
-                ),
-                [C::CSSCLASS => implode(' ', [B::BADGE, B::BG_DARK])]
-            ) . ' ';
+            $parts[] = new LinkView(
+                name: $origin->name,
+                slug: $origin->slug
+            );
         }
-        return $html;
+        return $parts;
     }
 
-    private function formatSubSkills(SkillPageView $viewData): string
+    private function buildSubSkills(SkillPageView $viewData): array
     {
-        if ($viewData->subSkills === null) {
-            return '';
-        }
         $parts = [];
         foreach ($viewData->subSkills as $subSkill) {
-            $name    = $subSkill->name ?? '';
-            $desc    = $subSkill->description ?? '';
-            $parts[] = Html::getBalise('dt', $name) . Html::getBalise('dd', $desc);
+            $parts[] = new SubSkillView(
+                name: $subSkill->name ?? '',
+                slug: $subSkill->slug ?? '',
+                description: $subSkill->description ?? '',
+            );
         }
-        return $parts ? Html::getBalise('dl', implode('', $parts), [C::CSSCLASS => 'my-0']) : '-';
+        return $parts;
+    }
+
+    private function buildLink(?Skill $skill): ?LinkView
+    {
+        if ($skill === null) {
+            return null;
+        }
+        return new LinkView(
+            name: $skill->name,
+            slug: $skill->getSlug()
+        );
     }
 }

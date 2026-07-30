@@ -21,7 +21,24 @@ class PageOrigine extends PageDetail
             $menuHtml,
             $data,
             Template::ORIGIN_DETAIL_CARD,
-            [
+            $this->formatData($data, 'col-sm-6'),
+        );
+    }
+
+    public function renderContent(array $data): string
+    {
+        return $this->renderer->render(
+            Template::ORIGIN_DETAIL_CARD,
+            array_merge(
+                $this->formatData($data, ''),
+                ['', '']
+            )
+        );
+    }
+
+    private function formatData(array $data, string $colWidth=''): array
+    {
+        return [
                 '',
                 $data[C::TITLE] ?? '',
                 $data[C::DESCRIPTION] ?? '',
@@ -30,9 +47,8 @@ class PageOrigine extends PageDetail
                 $this->formatLink($data[C::FEAT], fn($slug) => UrlGenerator::feat($slug)),
                 $this->formatLink($data[C::TOOL], fn($slug) => UrlGenerator::item($slug)),
                 implode(', ', $data[C::EQUIPMENT]),
-                'col-width' => 'col-sm-6',
-            ]
-        );
+                'col-width' => $colWidth,
+            ];
     }
 
     private function formatSkills(Collection $skills): string
