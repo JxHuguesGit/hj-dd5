@@ -33,11 +33,6 @@
         transform .15s ease,
         box-shadow .15s ease,
         border-color .15s ease;
-
-    &:hover {
-        border-color: $color-card-border-hover;
-        box-shadow: $shadow-card;
-    }
 }
 
 @mixin detail-panel {
@@ -68,6 +63,69 @@
     padding-top: 1rem;
 
     border-top: 1px solid $color-card-border;
+}
+
+
+/* =============================
+   GENERIC CARD GRID
+   ============================= */
+
+.card-grid {
+    @include card-grid(4);
+
+    max-width: $card-grid-width;
+    margin-inline: auto;
+
+    gap: 1.5rem;
+}
+
+
+/* =============================
+   GENERIC CARD
+   ============================= */
+
+.card {
+    @include card;
+
+    padding: 1rem 1.25rem;
+
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+        border-color: $color-card-border-hover;
+        box-shadow: $shadow-card;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+
+    h2 {
+        margin: 0 0 .5rem;
+        font-size: 1.2rem;
+    }
+
+    p {
+        margin: 0;
+
+        color: $color-text-muted;
+        line-height: 1.5;
+    }
+
+    * {
+        text-decoration: none;
+    }
+}
+
+
+/* =============================
+   NAVIGATION
+   ============================= */
+
+.armor-detail-navigation {
+    @include navigation;
 
     a {
         width: 100%;
@@ -98,54 +156,5 @@
         &.only-prev {
             justify-content: flex-start;
         }
-    }
-}
-
-
-/* =============================
-   GENERIC CARD GRID
-   ============================= */
-
-.card-grid {
-    @include card-grid(4);
-
-    max-width: $card-grid-width;
-    margin-inline: auto;
-
-    gap: 1.5rem;
-}
-
-
-/* =============================
-   GENERIC CARD
-   ============================= */
-
-.card {
-    @include card;
-
-    padding: 1rem 1.25rem;
-
-    color: inherit;
-    text-decoration: none;
-
-    &:focus-visible {
-        outline: 2px solid $color-primary;
-        outline-offset: 2px;
-    }
-
-    h2 {
-        margin: 0 0 .5rem;
-        font-size: 1.2rem;
-    }
-
-    p {
-        margin: 0;
-
-        color: $color-text-muted;
-        line-height: 1.5;
-    }
-
-    * {
-        text-decoration: none;
     }
 }
