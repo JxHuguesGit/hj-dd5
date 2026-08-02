@@ -67,6 +67,7 @@ function openModal(id) {
         console.log('Error: no modal with id '+id);
         return false;
     }
+    $('.modal').show();
     $('#'+id).addClass('show').css('display', 'block');
     $('#'+id+' + .modal-backdrop').addClass('show').removeClass('d-none');
     $('button[data-bs-dismiss="modal"]').on('click', function() {
@@ -76,6 +77,7 @@ function openModal(id) {
 
 // Ferme la modale dont on passe l'identifiant
 function closeModal(id) {
+    $('.modal').hide();
     $('#'+id).removeClass('show').css('display', 'none');
     $('#'+id+' + .modal-backdrop').removeClass('show').addClass('d-none');
 }
@@ -96,7 +98,7 @@ function collapse(obj) {
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des sorts.
 // Présent côté admin et public.
 function loadMoreSpells(type) {
-    const page = $('#spellTable tbody tr').length/10 + (type=='append' ? 1 : 0);
+    const page = $('.spell-grid .spell-card').length / 12 + (type == 'append' ? 1 : 0);
     const data = {
         'action': 'dealWithAjax',
         'ajaxAction': 'loadMoreSpells',
@@ -115,18 +117,19 @@ function loadMoreSpells(type) {
                 let obj = JSON.parse(response.data);
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(obj.data.html, "text/html");
-                const tbodyContent = doc.querySelector("tbody").innerHTML;
+                const gridContent = doc.querySelector(".spell-grid").innerHTML;
+
                 if (type=='append') {
-                    $('#spellTable tbody').append(tbodyContent);
+                    $('.spell-grid').append(gridContent);
                 } else {
-                    $('#spellTable tbody').html(tbodyContent);
+                    $('.spell-grid').html(gridContent);
                 }
 
                 const hasMore = obj.data.hasMore;
                 if (hasMore) {
-                    $('div[data-action="loadMoreSpells"] i').show();
+                    $('.spell-load-more').show();
                 } else {
-                    $('div[data-action="loadMoreSpells"] i').hide();
+                    $('.spell-load-more').hide();
                 }
 
             } catch (e) {

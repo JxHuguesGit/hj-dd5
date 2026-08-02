@@ -10,7 +10,7 @@ use src\Utils\Table;
 
 class OriginTableBuilder extends AbstractTableBuilder
 {
-    public function build(iterable $groups, array $params = []): Table
+    public function build(mixed $groups, array $params = []): Table
     {
         $headers = [
             L::NAMES,

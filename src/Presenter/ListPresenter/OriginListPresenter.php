@@ -23,7 +23,7 @@ final class OriginListPresenter
         }
 
         $collection = new Collection();
-        $collection->add(new OriginGroup(label: 'Origines', slug: 'origins', rows: $rows));
+        $collection->add(new OriginGroup(label: '', slug: 'origins', rows: $rows));
         return $collection;
     }
 

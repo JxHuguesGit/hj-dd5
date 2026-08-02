@@ -15,13 +15,11 @@ class PageOrigine extends PageDetail
         return UrlGenerator::origin($slug);
     }
 
-    public function render(string $menuHtml, array $data): string
+    public function render(string $menuHtml, string $contentHtml): string
     {
-        return $this->renderDetail(
+        return $this->renderContentDetail(
             $menuHtml,
-            $data,
-            Template::ORIGIN_DETAIL_CARD,
-            $this->formatData($data, 'col-sm-6'),
+            $contentHtml,
         );
     }
 

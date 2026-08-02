@@ -4,7 +4,8 @@ namespace src\Controller\Public;
 use src\Constant\Constant as C;
 use src\Domain\Entity\Specie;
 use src\Page\Renderer\PageSpecie;
-use src\Presenter\Detail\SpeciesDetailPresenter;
+use src\Presenter\ContentBuilder\SpecieDetailContentBuilder;
+use src\Presenter\Detail\SpecieDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SpeciePageService;
 use src\Service\Reader\SpecieReader;
@@ -17,7 +18,8 @@ class PublicSpecie extends PublicBase
         private string $slug,
         private SpecieReader $specieReader,
         private SpeciePageService $pageService,
-        private SpeciesDetailPresenter $presenter,
+        private SpecieDetailPresenter $presenter,
+        private SpecieDetailContentBuilder $contentBuilder,
         private PageSpecie $page,
         private MenuPresenter $menuPresenter,
     ) {
@@ -27,10 +29,10 @@ class PublicSpecie extends PublicBase
 
     public function getContentPage(): string
     {
-        $menu = $this->menuPresenter->render(C::SPECIES);
+        $menu = $this->menuPresenter->render();
         $pageView = $this->pageService->build($this->species);
         $viewData = $this->presenter->present($pageView);
-        $viewData[C::TITLE] = $this->getTitle();
-        return $this->page->render($menu, $viewData);
+        $contentHtml = $this->contentBuilder->build($viewData);
+        return $this->page->render($menu, $contentHtml);
     }
 }

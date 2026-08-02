@@ -14,7 +14,11 @@ use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageList;
 use src\Presenter\ContentBuilder\FeatCardContentBuilder;
+use src\Presenter\ContentBuilder\ItemCategoryContentBuilder;
+use src\Presenter\ContentBuilder\OriginCardContentBuilder;
 use src\Presenter\ContentBuilder\SkillCardContentBuilder;
+use src\Presenter\ContentBuilder\SpecieCardContentBuilder;
+use src\Presenter\ContentBuilder\SpellCardContentBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\ListPresenter\OriginListPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
@@ -22,9 +26,6 @@ use src\Presenter\ListPresenter\SpeciesListPresenter;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\Modal\SpellFilterModalPresenter;
-use src\Presenter\TableBuilder\OriginTableBuilder;
-use src\Presenter\TableBuilder\SpeciesTableBuilder;
-use src\Presenter\TableBuilder\SpellTableBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Domain\SpellService;
 
@@ -47,10 +48,13 @@ final class PublicControllerFactory
                 ),
                 new PageList(
                     $this->renderer,
+                    new OriginCardContentBuilder()
+                    /*
                     new OriginTableBuilder(
                         $this->serviceFactory->origin(),
                         $this->readerFactory->origin()
                     )
+                    */
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::ORIGINES)
             ),
@@ -62,7 +66,7 @@ final class PublicControllerFactory
                 ),
                 new PageList(
                     $this->renderer,
-                    new SpeciesTableBuilder()
+                    new SpecieCardContentBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::SPECIES)
             ),
@@ -104,15 +108,19 @@ final class PublicControllerFactory
                 ),
                 new PageList(
                     $this->renderer,
-                    new SpellTableBuilder(
-                        $this->readerFactory->spell()
-                    )
+                    new SpellCardContentBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
                 new SpellFilterModalPresenter($this->renderer)
             ),
 
-            C::ITEMS => new PublicItems(),
+            C::ITEMS => new PublicItems(
+                new PageList(
+                    $this->renderer,
+                    new ItemCategoryContentBuilder()
+                ),
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::ITEMS),
+            ),
 
             default             => null,
         };

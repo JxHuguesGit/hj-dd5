@@ -7,7 +7,6 @@
 .site-footer {
     margin-top: 3rem;
     padding: 2rem 0;
-
     background: $color-footer;
     color: $color-footer-text;
 
@@ -30,25 +29,16 @@
     flex-direction: column;
     align-items: center;
     gap: .5rem;
-
     text-align: center;
     font-size: .9rem;
 }
 
-
-
 @media (min-width: $breakpoint-desktop) {
 
-    .site-footer {
-
-        .footer-inner {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            text-align: left;
-        }
-
+    .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
     }
-
 }

@@ -63,7 +63,7 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                 if ($data['filter'] ?? false) {
                     $strContent = Html::getDiv(
                         $strContent . ' ' . Html::getIcon(
-                            I::FITLER,
+                            I::FILTER,
                             I::SOLID,
                             [
                                 C::CSSCLASS => 'modal-tooltip ajaxAction',

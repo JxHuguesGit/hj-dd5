@@ -38,4 +38,24 @@ final class WpPostService
     {
         wp_reset_postdata();
     }
+
+    public function getByTitle(
+        string $title,
+        ?string $category = null
+    ): ?WP_Post {
+        $args = [
+            'post_type'      => 'post',
+            'post_status'    => 'publish',
+            'posts_per_page' => 1,
+            'title'          => $title,
+        ];
+
+        if ($category !== null) {
+            $args['category_name'] = $category;
+        }
+
+        $query = $this->query($args);
+
+        return $query->posts[0] ?? null;
+    }
 }

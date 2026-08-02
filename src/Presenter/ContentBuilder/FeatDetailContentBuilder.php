@@ -96,43 +96,43 @@ final class FeatDetailContentBuilder implements ContentBuilderInterface
         );
     }
 
-private function renderNavigation(FeatDetailView $view): string
-{
-    $content = '';
+    private function renderNavigation(FeatDetailView $view): string
+    {
+        $content = '';
 
-    if ($view->previous) {
-        $content .= Html::getLink(
-            '&lt; ' . htmlspecialchars($view->previous->name),
-            UrlGenerator::feat($view->previous->slug),
-            'btn btn-sm btn-outline-dark'
+        if ($view->previous) {
+            $content .= Html::getLink(
+                '&lt; ' . htmlspecialchars($view->previous->name),
+                UrlGenerator::feat($view->previous->slug),
+                'btn btn-sm btn-outline-dark'
+            );
+        }
+
+        if ($view->next) {
+            $content .= Html::getLink(
+                htmlspecialchars($view->next->name) . ' &gt;',
+                UrlGenerator::feat($view->next->slug),
+                'btn btn-sm btn-outline-dark'
+            );
+        }
+
+        if ($content === '') {
+            return '';
+        }
+
+        $class = 'feat-navigation';
+
+        if (!$view->previous) {
+            $class .= ' only-next';
+        }
+
+        if (!$view->next) {
+            $class .= ' only-prev';
+        }
+
+        return Html::getDiv(
+            $content,
+            ['class' => $class]
         );
     }
-
-    if ($view->next) {
-        $content .= Html::getLink(
-            htmlspecialchars($view->next->name) . ' &gt;',
-            UrlGenerator::feat($view->next->slug),
-            'btn btn-sm btn-outline-dark'
-        );
-    }
-
-    if ($content === '') {
-        return '';
-    }
-
-    $class = 'feat-navigation';
-
-    if (!$view->previous) {
-        $class .= ' only-next';
-    }
-
-    if (!$view->next) {
-        $class .= ' only-prev';
-    }
-
-    return Html::getDiv(
-        $content,
-        ['class' => $class]
-    );
-}
 }

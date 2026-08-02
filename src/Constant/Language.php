@@ -90,7 +90,9 @@ class Language
     public const SPECIALES       = 'Spéciales';
     public const SAGESSE         = 'Sagesse';
     public const CBT_STYLE_FEATS = 'Styles de combat';
+    public const HEIGHT          = 'Taille';
     public const INCTIME         = 'Temps d\'incantation';
+    public const TYPE            = 'Type';
     public const CREATURE_TYPE   = 'Type de créature';
     public const FEAT_TYPE       = 'Type de don';
     public const SPEED           = 'Vitesse';
@@ -113,5 +115,6 @@ class Language
     public const FORMAT_SCORE          = '<div class="col car%s">%d</div><div class="col car%s">%+d</div><div class="col car%s">%+d</div>';
     public const FORMAT_SKILLS         = '<div class="col-12"><strong>Compétences</strong> %s</div>';
     public const BALISE_SMALL          = ' <small>%s</small>';
+    public const STRONG_INFO           = '<strong>%s</strong> %s';
     public const PREREQUIS_TEXT        = '<strong>Pré-requis :</strong> %s';
 }

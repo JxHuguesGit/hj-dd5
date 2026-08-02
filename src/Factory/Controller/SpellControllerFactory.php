@@ -6,6 +6,7 @@ use src\Controller\Public\PublicSpell;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
 use src\Page\Renderer\PageSpell;
+use src\Presenter\ContentBuilder\SpellDetailContentBuilder;
 use src\Presenter\Detail\SpellDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
@@ -30,10 +31,12 @@ class SpellControllerFactory
         return new PublicSpell(
             $slug,
             new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
-            new PageSpell($this->renderer),
+            new PageSpell(
+                $this->renderer,
+                new SpellDetailContentBuilder()
+            ),
             $spellService,
-            new SpellPageService($spellService, $spellDetailPresenter),
-            $spellDetailPresenter
+            new SpellPageService($spellService, $spellDetailPresenter)
         );
     }
 }

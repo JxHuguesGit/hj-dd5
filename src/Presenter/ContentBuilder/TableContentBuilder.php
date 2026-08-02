@@ -10,7 +10,7 @@ final class TableContentBuilder implements ContentBuilderInterface
         private TableBuilderInterface $tableBuilder
     ) {}
 
-    public function build(iterable $data, array $params = []): string
+    public function build(object $data, array $params = []): string
     {
         return $this->tableBuilder
             ->build($data, $params)

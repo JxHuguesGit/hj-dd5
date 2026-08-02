@@ -5,5 +5,5 @@ use src\Utils\Table;
 
 interface TableBuilderInterface
 {
-    public function build(iterable $groups, array $params = []): Table;
+    public function build(object $groups, array $params = []): Table;
 }

@@ -23,10 +23,20 @@ final class SpeciePowerReader
     /**
      * @return Collection<SpeciePower>
      */
-    public function specialPowerBySpecie(int $speciesId): Collection
+    public function speciePowerBySpecie(int $speciesId): Collection
     {
         $criteria            = new SpeciePowerCriteria();
         $criteria->speciesId = $speciesId;
+        return $this->repository->findAllWithCriteria($criteria);
+    }
+
+    /**
+     * @return Collection<SpeciePower>
+     */
+    public function speciePowerByPower(int $powerId): Collection
+    {
+        $criteria            = new SpeciePowerCriteria();
+        $criteria->powerId = $powerId;
         return $this->repository->findAllWithCriteria($criteria);
     }
 }

@@ -11,10 +11,11 @@ class SpellFormatter
     public static function formatEcole(string $schoolSlug, int $level): string
     {
         return MagicSchoolEnum::from($schoolSlug)->label() .
-        $level == 0
-            ? L::SORT_MINEUR
-            : sprintf(L::SORT_NIVEAU_X, $level)
-        ;
+        (
+            $level == 0
+                ? L::SORT_MINEUR
+                : sprintf(L::SORT_NIVEAU_X, $level)
+        );
     }
 
     public static function formatComposantes(array $composantes, string $composanteMaterielle = '', bool $detail = true): string

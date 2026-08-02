@@ -22,16 +22,36 @@ class PageList
             : $builder;
     }
 
-    public function render(string $menuHtml, string $title, Collection $viewData): string
+    public function render(
+        string $menuHtml,
+        string $title,
+        Collection $viewData,
+        ?string $modalContent = null,
+        ?string $toastContent = null,
+    ): string
     {
         // Page complète avec menu
         return $this->renderer->render(
             Template::MAIN_PAGE,
-            [$menuHtml, $this->renderAdmin($title, $viewData), '']
+            [
+                $menuHtml,
+                $this->renderAdmin(
+                    $title,
+                    $viewData,
+                    $modalContent ?? '',
+                    $toastContent ?? ''
+                ),
+                ''
+            ]
         );
     }
 
-    public function renderAdmin(string $title, Collection $viewData, ?string $toastContent = null): string
+    public function renderAdmin(
+        string $title,
+        Collection $viewData,
+        ?string $modalContent = null,
+        ?string $toastContent = null
+    ): string
     {
         // Construire le tableau
         $contentHtml = $this->contentBuilder->build(
@@ -42,7 +62,7 @@ class PageList
         // Section centrale (titre + tableau)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $contentHtml, $toastContent, '']
+            [$title, $contentHtml, $toastContent, $modalContent]
         );
     }
 }

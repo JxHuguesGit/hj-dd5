@@ -3,6 +3,7 @@ namespace src\Service\Domain;
 
 use src\Collection\Collection;
 use src\Constant\Constant as C;
+use src\Domain\Criteria\SpellCriteria;
 use src\Domain\Entity\Spell;
 use src\Domain\Result\SpellResult;
 use src\Factory\SpellFactory;
@@ -20,7 +21,7 @@ final class SpellService
         $args = array_merge(
             [
                 'post_type'      => 'post',
-                'posts_per_page' => 10,
+                'posts_per_page' => SpellCriteria::DEFAULT_PAGE_SIZE,
                 'category_name'  => 'sort',
                 'orderby'        => C::TITLE,
                 'order'          => C::ASC,

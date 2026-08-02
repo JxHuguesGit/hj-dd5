@@ -1,18 +1,18 @@
 @use "variables" as *;
+@use "cards" as *;
 
 /* =============================
-   SKILLS
+   SKILLS LIST
    ============================= */
 
 .skill-groups {
-
     display: flex;
     flex-direction: column;
+
     gap: 3rem;
 }
 
 .skill-group-title {
-
     margin-bottom: 1.25rem;
     padding-bottom: .5rem;
 
@@ -23,172 +23,128 @@
 }
 
 .skill-grid {
-
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-}
-
-@media (min-width: $breakpoint-tablet) {
-
-    .skill-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-}
-
-@media (min-width: $breakpoint-desktop) {
-
-    .skill-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
+    @include card-grid(3);
 }
 
 .skill-card {
+    @include card;
 
-    display: flex;
-    flex-direction: column;
     gap: .75rem;
 
-    padding: 1rem;
+    h3 {
+        margin: 0;
 
-    border: 1px solid #ddd;
-    border-radius: .5rem;
-
-    background: #fff;
-
-    transition: .15s ease;
-
-    &:hover {
-        border-color: #bbb;
-        box-shadow: 0 .25rem .75rem rgba(0,0,0,.08);
+        font-size: 1.15rem;
     }
 
-}
+    h3 a {
+        color: inherit;
+        text-decoration: none;
 
-.skill-card h3 {
-
-    margin: 0;
-
-    font-size: 1.15rem;
-}
-
-.skill-card h3 a {
-
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-        color: $color-primary;
+        &:hover {
+            color: $color-primary;
+        }
     }
 
+    p {
+        margin: 0;
+
+        color: $color-text-muted;
+
+        line-height: 1.45;
+        font-size: .95rem;
+    }
 }
 
-.skill-card p {
 
-    margin: 0;
-
-    color: #666;
-
-    line-height: 1.45;
-    font-size: .95rem;
-}
+/* =============================
+   SUBSKILLS
+   ============================= */
 
 .subskills {
-
     display: flex;
     flex-wrap: wrap;
+
     gap: .4rem;
 
     margin: 0;
     padding: 0;
 
     list-style: none;
-}
 
-.subskills li {
-
-    margin: 0;
-}
-
-.subskills a {
-
-    display: block;
-
-    padding: .2rem .55rem;
-
-    border-radius: 999px;
-
-    background: #f3f3f3;
-
-    color: #555;
-    text-decoration: none;
-    font-size: .82rem;
-
-    transition: .15s ease;
-
-    &:hover {
-
-        background: #e6e6e6;
+    li {
+        margin: 0;
     }
 
+    a {
+        display: block;
+
+        padding: .2rem .55rem;
+
+        border-radius: $radius-pill;
+
+        background: #f3f3f3;
+
+        color: #555;
+
+        text-decoration: none;
+
+        font-size: .82rem;
+
+        transition: background .15s ease;
+
+        &:hover {
+            background: #e6e6e6;
+        }
+    }
 }
+
 
 /* =============================
    SKILL DETAIL
    ============================= */
 
 .skill-detail {
-
-    background: white;
-    border-radius: .5rem;
-    padding: 1.5rem;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-
+    @include detail-panel;
 
     .skill-detail-header {
-
         margin-bottom: 1rem;
 
         h1 {
             margin: 0;
-            font-size: 2rem;
+
+            font-size: 1.5rem;
         }
 
         .skill-ability {
             display: inline-block;
+
             margin-top: .25rem;
 
+            color: $color-text-muted;
+
             font-style: italic;
-            color: #666;
         }
     }
 
-
     .skill-description {
-
         margin-bottom: 1rem;
 
         line-height: 1.5;
     }
 
-
     .skill-origins {
-
         display: flex;
         flex-wrap: wrap;
+
         gap: .5rem;
 
         margin-bottom: 1.5rem;
 
-
         .skill-origin {
-
             padding: .25rem .75rem;
 
-            border-radius: 1rem;
+            border-radius: $radius-pill;
 
             background: #232324;
 
@@ -199,57 +155,53 @@
         }
     }
 
-
     .skill-subskills {
-
         display: grid;
         grid-template-columns: 1fr;
+
         gap: 1rem;
 
-
         .subskill {
-
             padding: 1rem;
 
             border-left: 3px solid #232324;
 
-            background: #f8f8f8;
-
+            background: $color-surface-alt;
 
             h2 {
-
                 margin-top: 0;
 
                 font-size: 1.2rem;
             }
 
-
             p {
-
                 margin-bottom: 0;
             }
         }
     }
 }
 
+
+/* =============================
+   NAVIGATION
+   ============================= */
+
 .skill-navigation {
-
-    display: flex;
-    justify-content: space-between;
-
-    margin-top: 2rem;
-    padding-top: 1rem;
-
-    border-top: 1px solid #ddd;
+    @include navigation;
+}
 
 
-    &.only-next {
-        justify-content: flex-end;
-    }
+/* =============================
+   DESKTOP
+   ============================= */
 
+@media (min-width: $breakpoint-tablet) {
 
-    &.only-prev {
-        justify-content: flex-start;
+    .skill-detail {
+
+        .skill-detail-header h1 {
+            font-size: 2rem;
+        }
     }
 }
 
@@ -257,13 +209,8 @@
 
     .skill-detail {
 
-        padding: 2rem;
-
-
         .skill-subskills {
-
             grid-template-columns: repeat(2, 1fr);
-
         }
     }
 }

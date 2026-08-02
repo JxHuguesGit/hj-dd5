@@ -74,16 +74,16 @@ final class FeatListPresenter
         return $result;
     }
 
-    private function resolveFeatPrerequisite(Feat $feat): string
+    private function resolveFeatPrerequisite(Feat $feat): ?string
     {
         switch ($feat->featTypeId) {
             case Feat::TYPE_GENERAL:
             case Feat::TYPE_EPIC:
                 $this->wpPostService->getById($feat->postId);
                 $wpPreRequis = $this->wpPostService->getField(C::PREREQUIS);
-                return $wpPreRequis ? ucfirst($wpPreRequis) : '-';
+                return $wpPreRequis ? ucfirst($wpPreRequis) : null;
             default:
-                return '-';
+                return null;
         }
     }
 

@@ -8,7 +8,7 @@ use src\Domain\Criteria\Attributes\Equals;
 
 final class ToolCriteria extends BaseCriteria
 {
-    #[Equals(F::ID)]
+    #[Equals(F::ID, alias: 'i')]
     public ?int $id = null;
 
     #[Equals(F::TYPE, alias: 'i')]

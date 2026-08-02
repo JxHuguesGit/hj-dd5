@@ -1,0 +1,181 @@
+@use "variables" as *;
+@use "cards" as *;
+
+/* =============================
+   ARMOR LIST
+   ============================= */
+
+.armor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+/* =============================
+   ARMOR GROUP
+   ============================= */
+
+.armor-group {
+
+    h2 {
+        margin: 0 0 1rem;
+
+        font-size: 1.25rem;
+        line-height: 1.3;
+        font-weight: 700;
+    }
+}
+
+
+/* =============================
+   ARMOR GRID
+   ============================= */
+
+.armor-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+
+/* =============================
+   ARMOR CARD
+   ============================= */
+
+.armor-card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 1rem;
+
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+
+    background: #fff;
+
+    transition: .15s ease;
+
+    h3 {
+        margin: 0 0 .75rem;
+
+        font-size: 1.05rem;
+        line-height: 1.3;
+    }
+
+    h3 a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+    p {
+        margin: 0;
+
+        font-size: .9rem;
+        line-height: 1.45;
+    }
+
+    &:hover {
+        border-color: #bbb;
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .08);
+    }
+}
+
+
+/* =============================
+   RESPONSIVE
+   ============================= */
+
+@media (min-width: $breakpoint-tablet) {
+
+    .armor-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (min-width: $breakpoint-desktop) {
+
+    .armor-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+}
+
+.armor-detail {
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+
+    h1 {
+        margin: 0 0 1.25rem;
+        font-size: 1.4rem;
+    }
+
+    .armor-detail-infos {
+        display: flex;
+        flex-direction: column;
+        gap: .35rem;
+
+        .armor-detail-info-column {
+            display: contents;
+        }
+
+        p {
+            display: grid;
+            grid-template-columns: 7rem 1fr;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+    }
+
+    .armor-detail-navigation {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #dee2e6;
+
+        a {
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: $breakpoint-tablet) {
+    .armor-detail {
+        .armor-detail-infos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            grid-auto-flow: column;
+            column-gap: 2rem;
+            row-gap: .35rem;
+
+            .armor-detail-info {
+                margin: 0;
+            }
+        }
+
+        .armor-detail-navigation {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            a {
+                width: auto;
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@ class Icon
     public const SHIELD   = 'shield-halved';
     public const GAVEL    = 'gavel';
     public const BRAIN    = 'brain';
-    public const FITLER   = 'filter';
+    public const FILTER   = 'filter';
     public const MEDAL    = 'medal';
     public const DRAGON   = 'dragon';
     public const COMPASS  = 'compass';

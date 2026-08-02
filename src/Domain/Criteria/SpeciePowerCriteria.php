@@ -14,6 +14,6 @@ final class SpeciePowerCriteria extends BaseCriteria
     public ?int $powerId = null;
 
     public array $orderBy = [
-        F::ID => C::ASC,
+        F::RANK => C::ASC,
     ];
 }

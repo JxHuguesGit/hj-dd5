@@ -1,51 +1,56 @@
 <?php
+
 namespace src\Controller\Public;
 
+use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Constant\Routes as R;
-use src\Constant\Template as T;
-use src\Model\PageElement;
 use src\Model\PageRegistry;
-use src\Presenter\CardPresenter;
+use src\Page\PageList;
+use src\Presenter\ContentBuilder\ItemCategoryContentBuilder;
 use src\Presenter\MenuPresenter;
+use src\Presenter\ViewModel\ItemCategory;
+use src\Renderer\TemplateRenderer;
 
 class PublicItems extends PublicBase
 {
-    public function __construct()
-    {
+    private Collection $categories;
+
+    public function __construct(
+        private PageList $page,
+        private MenuPresenter $menuPresenter,
+    ) {
+        $this->categories = new Collection([
+            new ItemCategory(
+                title: L::ARMORS_TITLE,
+                url: R::ITEMS_PREFIX . '-' . C::ARMOR,
+            ),
+            new ItemCategory(
+                title: L::WEAPONS_TITLE,
+                url: R::ITEMS_PREFIX . '-' . C::WEAPON,
+            ),
+            new ItemCategory(
+                title: L::TOOLS_TITLE,
+                url: R::ITEMS_PREFIX . '-' . C::TOOL,
+            ),
+            new ItemCategory(
+                title: L::DIVERS,
+                url: R::ITEMS_PREFIX . '-' . C::GEAR,
+            ),
+        ]);
+
         $this->title = L::GEAR_TITLE;
     }
 
     public function getContentPage(): string
     {
-        // Récupérer le menu depuis le registry
-        $registry = PageRegistry::getInstance();
-        $menuHtml = (new MenuPresenter($registry->all(), C::ITEMS))->render();
+        $menu = $this->menuPresenter->render();
 
-        $data = [];
-        $data[] = new PageElement([
-            C::URL => R::ITEMS_PREFIX.'-'.C::ARMOR,
-            C::TITLE => L::ARMORS_TITLE,
-        ]);
-        $data[] = new PageElement([
-            C::URL => R::ITEMS_PREFIX.'-'.C::WEAPON,
-            C::TITLE => L::WEAPONS_TITLE,
-        ]);
-        $data[] = new PageElement([
-            C::URL => R::ITEMS_PREFIX.'-'.C::TOOL,
-            C::TITLE => L::TOOLS_TITLE,
-        ]);
-        $data[] = new PageElement([
-            C::URL => R::ITEMS_PREFIX.'-'.C::GEAR,
-            C::TITLE => L::DIVERS,
-        ]);
-
-        $cardPresenter = new CardPresenter($data);
-        $contentHtml = $cardPresenter->render();
-
-        $contentSection = $this->getRender(T::CATEGORY_PAGE, [$this->getTitle(), $contentHtml, '', '']);
-
-        return $this->getRender(T::MAIN_PAGE, [$menuHtml, $contentSection]);
+        return $this->page->render(
+            $menu,
+            $this->getTitle(),
+            $this->categories
+        );
     }
 }

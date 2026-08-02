@@ -2,12 +2,17 @@ $breakpoint-tablet: 640px;
 $breakpoint-desktop: 960px;
 
 $container-width: 1200px;
+$card-grid-width: 1100px;
 
 $font-body: "Inter", sans-serif;
 $font-nav: "Righteous", "Inter", sans-serif;
 
 $color-background: #f9f9f9;
+$color-surface: #fff;
+$color-surface-alt: #f8f8f8;
+
 $color-text: #212529;
+$color-text-muted: #666;
 
 $color-topbar: #000000d9;
 $color-navbar: #ffffffcc;
@@ -19,3 +24,9 @@ $color-footer: #111;
 $color-footer-text: #ddd;
 
 $color-primary: #495057;
+
+$shadow-card: 0 .25rem .75rem rgba(0, 0, 0, .08);
+$shadow-detail: 0 2px 8px rgba(0, 0, 0, .08);
+
+$radius-card: .5rem;
+$radius-pill: 999px;

@@ -43,7 +43,8 @@ final class ServiceFactory
     {
         return new SpecieService(
             $this->readerFactory->speciePower(),
-            $this->readerFactory->power()
+            $this->readerFactory->power(),
+            $this->readerFactory->species()
         );
     }
 }

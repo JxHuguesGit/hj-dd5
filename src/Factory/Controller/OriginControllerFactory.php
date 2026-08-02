@@ -6,6 +6,7 @@ use src\Controller\Public\PublicOrigine;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
 use src\Page\Renderer\PageOrigine;
+use src\Presenter\ContentBuilder\OriginDetailContentBuilder;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
@@ -31,6 +32,7 @@ class OriginControllerFactory
             new OriginDetailPresenter(
                 $this->serviceFactory->wordPress()
             ),
+            new OriginDetailContentBuilder(),
             new PageOrigine($this->renderer),
             new MenuPresenter(PageRegistry::getInstance()->all(), C::ORIGINES)
         );

@@ -34,10 +34,16 @@ class Bootstrap
 
     public const FEAT         = 'feat';
     public const SKILL        = 'skill';
+    public const SPECIE       = 'specie';
     public const GROUPS       = 'groups';
     public const GRID         = 'grid';
+    public const LIST         = 'list';
     public const GROUP        = 'group';
     public const CARD         = 'card';
+    public const ORIGIN       = 'origin';
+    public const SPELL        = 'spell';
+
+    public const FLOAT_START = 'float-start';
 
     public const FEAT_GROUPS  = self::FEAT . '-' . self::GROUPS;
     public const FEAT_GRID    = self::FEAT . '-' . self::GRID;
@@ -49,6 +55,36 @@ class Bootstrap
     public const SKILL_GROUP  = self::SKILL . '-' . self::GROUP;
     public const SKILL_CARD   = self::SKILL . '-' . self::CARD;
     public const SKILL_GROUP_TITLE = self::SKILL . '-' . self::GROUP . '-' . self::TITLE;
+    public const SPECIE_GROUPS  = self::SPECIE . '-' . self::GROUPS;
+    public const SPECIE_GRID    = self::SPECIE . '-' . self::GRID;
+    public const SPECIE_GROUP   = self::SPECIE . '-' . self::GROUP;
+    public const SPECIE_CARD   = self::SPECIE . '-' . self::CARD;
+    public const SPECIE_GROUP_TITLE = self::SPECIE . '-' . self::GROUP . '-' . self::TITLE;
+    public const ORIGIN_GROUPS  = self::ORIGIN . '-' . self::GROUPS;
+    public const ORIGIN_GRID    = self::ORIGIN . '-' . self::GRID;
+    public const ORIGIN_GROUP   = self::ORIGIN . '-' . self::GROUP;
+    public const ORIGIN_CARD   = self::ORIGIN . '-' . self::CARD;
+    public const ORIGIN_GROUP_TITLE = self::ORIGIN . '-' . self::GROUP . '-' . self::TITLE;
+    public const SPELL_GROUPS  = self::SPELL . '-' . self::GROUPS;
+    public const SPELL_GRID    = self::SPELL . '-' . self::GRID;
+    public const SPELL_LIST    = self::SPELL . '-' . self::LIST;
+    public const SPELL_GROUP   = self::SPELL . '-' . self::GROUP;
+    public const SPELL_CARD   = self::SPELL . '-' . self::CARD;
+    public const SPELL_GROUP_TITLE = self::SPELL . '-' . self::GROUP . '-' . self::TITLE;
+    public const SPELL_DETAIL_DESCRIPTION   = self::SPELL . '-detail-description';
+    public const SPELL_DETAIL   = self::SPELL . '-detail';
+    public const SPELL_DETAIL_INFO   = self::SPELL . '-detail-info';
+    public const SPELL_DETAIL_NAVIGATION   = self::SPELL . '-detail-navigation';
+
+    public const ARMOR = 'armor';
+    public const ARMOR_GRID = self::ARMOR . '-' . self::GRID;
+    public const ARMOR_GROUP = self::ARMOR . '-' . self::GROUP;
+    public const ARMOR_CARD = self::ARMOR . '-' . self::CARD;
+    public const ARMOR_LIST    = self::ARMOR . '-' . self::LIST;
+    public const ARMOR_DETAIL   = self::ARMOR . '-detail';
+    public const ARMOR_DETAIL_INFO   = self::ARMOR . '-detail-info';
+    public const ARMOR_DETAIL_INFOS  = self::ARMOR . '-detail-infos';
+    public const ARMOR_DETAIL_NAVIGATION   = self::ARMOR . '-detail-navigation';
 
     public const ROW_DARK_STRIPED = 'row-dark-striped';
 

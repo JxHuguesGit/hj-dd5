@@ -4,6 +4,7 @@ namespace src\Controller\Public;
 use src\Constant\Constant as C;
 use src\Domain\Entity\Origin;
 use src\Page\Renderer\PageOrigine;
+use src\Presenter\ContentBuilder\OriginDetailContentBuilder;
 use src\Presenter\Detail\OriginDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\OriginPageService;
@@ -18,6 +19,7 @@ class PublicOrigine extends PublicBase
         private OriginReader $originReader,
         private OriginPageService $pageService,
         private OriginDetailPresenter $presenter,
+        private OriginDetailContentBuilder $contentBuilder,
         private PageOrigine $page,
         private MenuPresenter $menuPresenter,
     ) {
@@ -28,15 +30,10 @@ class PublicOrigine extends PublicBase
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render();
-        $viewData = $this->getViewData();
-        $viewData[C::TITLE] = $this->getTitle();
-        return $this->page->render($menu, $viewData);
-    }
-
-    public function getViewData()
-    {
         $pageView = $this->pageService->build($this->origin);
-        return $this->presenter->present($pageView);
+        $viewData = $this->presenter->present($pageView);
+        $contentHtml = $this->contentBuilder->build($viewData);
+        return $this->page->render($menu, $contentHtml);
     }
 
     public function getStepSideContent(): string

@@ -21,9 +21,11 @@ use src\Page\Renderer\{PageItemArmor, PageItemGear, PageItemTool, PageItemWeapon
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
-use src\Presenter\Detail\{ArmorDetailPresenter, GearDetailPresenter, ToolDetailPresenter, WeaponDetailPresenter};
+use src\Presenter\ContentBuilder\ArmorCardContentBuilder;
+use src\Presenter\ContentBuilder\ArmorDetailContentBuilder;
+use src\Presenter\Detail\{GearDetailPresenter, ToolDetailPresenter, WeaponDetailPresenter};
 use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolListPresenter, WeaponListPresenter};
-use src\Presenter\TableBuilder\{ArmorTableBuilder, ItemTableBuilder, ToolTableBuilder, WeaponTableBuilder};
+use src\Presenter\TableBuilder\{ItemTableBuilder, ToolTableBuilder, WeaponTableBuilder};
 use src\Presenter\ViewModel\{ArmorPageView, GearPageView, ToolPageView, WeaponPageView};
 use src\Query\{QueryBuilder, QueryExecutor};
 use src\Repository\WeaponPropertyValueRepository;
@@ -47,7 +49,10 @@ final class ItemControllerFactory
             C::ARMOR  => new PublicItemArmor(
                 $this->readerFactory->armor(),
                 new ArmorListPresenter(),
-                new PageList($this->renderer, new ArmorTableBuilder()),
+                new PageList(
+                    $this->renderer,
+                    new ArmorCardContentBuilder()
+                ),
                 $menu
             ),
             C::TOOL   => new PublicItemTool(
@@ -139,14 +144,16 @@ final class ItemControllerFactory
 
         $nav = $this->readerFactory->armor()->getPreviousAndNext($item);
         return new PublicItemArmorDetail(
-            new ArmorDetailPresenter(),
             $menu,
             new ArmorPageView(
                 $item,
                 $nav[C::PREV],
                 $nav[C::NEXT],
             ),
-            new PageItemArmor($this->renderer)
+            new PageItemArmor(
+                $this->renderer,
+                new ArmorDetailContentBuilder()
+            )
         );
     }
 

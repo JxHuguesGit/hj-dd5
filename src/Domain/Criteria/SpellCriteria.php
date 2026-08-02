@@ -7,6 +7,8 @@ use src\Constant\Field as F;
 
 final class SpellCriteria
 {
+    const DEFAULT_PAGE_SIZE = 12;
+
     public int $page               = 1;
     public string $type            = 'append';
     public ?int $minLevel          = null;
@@ -23,7 +25,7 @@ final class SpellCriteria
     {
         $args = [
             'post_type'      => 'post',
-            'posts_per_page' => 10,
+            'posts_per_page' => self::DEFAULT_PAGE_SIZE,
             'category_name'  => 'sort',
             'orderby'        => B::TITLE,
             'order'          => C::ASC,
@@ -33,7 +35,7 @@ final class SpellCriteria
 
         // Gestion du type "replace"
         if ($this->type === 'replace') {
-            $args['posts_per_page'] = 10 * $this->page;
+            $args['posts_per_page'] = self::DEFAULT_PAGE_SIZE * $this->page;
             $args['paged']          = 1;
         }
 

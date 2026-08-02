@@ -4,6 +4,7 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Domain\Entity\Specie;
+use src\Presenter\ViewModel\SpeciesGroup;
 use src\Presenter\ViewModel\SpeciesRow;
 use src\Service\Domain\WpPostService;
 use src\Utils\UrlGenerator;
@@ -14,10 +15,20 @@ final class SpeciesListPresenter
 
     public function present(iterable $species): Collection
     {
-        $collection = new Collection();
+        $rows = [];
+
         foreach ($species as $specie) {
-            $collection->add($this->buildRow($specie));
+            $rows[] = $this->buildRow($specie);
         }
+
+        $collection = new Collection();
+
+        $collection->add(new SpeciesGroup(
+            label: '',
+            slug: 'species',
+            rows: $rows
+        ));
+
         return $collection;
     }
 

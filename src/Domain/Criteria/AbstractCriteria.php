@@ -36,6 +36,30 @@ abstract class AbstractCriteria implements CriteriaInterface
         }
     }
 
+    private function applyAttribute(QueryBuilder $qb, mixed $attr, mixed $value): void
+    {
+        $instance = $attr->newInstance();
+
+        $field = $instance->alias
+            ? $instance->alias . '.' . $instance->field
+            : $instance->field;
+
+        // Equals
+        if ($instance instanceof Equals) {
+            $qb->where([$field => $value]);
+            return;
+        }
+
+        // Compare
+        if ($instance instanceof Compare) {
+            $qb->whereComplex([[
+                'field'   => $field,
+                'operand' => $instance->operator,
+                'value'   => $value,
+            ]]);
+        }
+    }
+
     private function applyAttributes(QueryBuilder $qb): void
     {
         $ref = new \ReflectionObject($this);
@@ -51,27 +75,7 @@ abstract class AbstractCriteria implements CriteriaInterface
             }
 
             foreach ($prop->getAttributes() as $attr) {
-                $instance = $attr->newInstance();
-
-                $field = $instance->alias
-                    ? $instance->alias . '.' . $instance->field
-                    : $instance->field;
-
-                // Equals
-                if ($instance instanceof Equals) {
-                    $qb->where([$field => $value]);
-                    continue;
-                }
-
-                // Compare
-                if ($instance instanceof Compare) {
-                    $qb->whereComplex([[
-                        'field'   => $field,
-                        'operand' => $instance->operator,
-                        'value'   => $value,
-                    ]]);
-                    continue;
-                }
+                $this->applyAttribute($qb, $attr, $value);
             }
         }
     }

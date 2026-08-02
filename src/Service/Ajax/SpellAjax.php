@@ -3,8 +3,8 @@ namespace src\Service\Ajax;
 
 use src\Constant\Constant as C;
 use src\Domain\Criteria\SpellCriteria;
+use src\Presenter\ContentBuilder\SpellCardContentBuilder;
 use src\Presenter\ListPresenter\SpellListPresenter;
-use src\Presenter\TableBuilder\SpellTableBuilder;
 use src\Service\Domain\SpellService;
 use src\Service\Domain\WpPostService;
 use src\Utils\Session;
@@ -15,7 +15,7 @@ class SpellAjax
     {
         $spellService        = new SpellService(new WpPostService());
         $spellListePresenter = new SpellListPresenter();
-        $spellTableBuilder   = new SpellTableBuilder();
+        $spellContentBuilder = new SpellCardContentBuilder();
 
         parse_str(html_entity_decode(Session::fromPost('spellFilter')), $fromPost);
 
@@ -25,12 +25,12 @@ class SpellAjax
             ...$fromPost,
         ]);
 
-        $result   = $spellService->allSpells($criteria->toWpQueryArgs());
-        $viewData = $spellListePresenter->present($result->collection);
-        $objTable = $spellTableBuilder->build($viewData);
+        $result      = $spellService->allSpells($criteria->toWpQueryArgs());
+        $viewData    = $spellListePresenter->present($result->collection);
+        $contentHtml = $spellContentBuilder->build($viewData);
 
         return [
-            'html'    => $objTable->display(),
+            'html'    => $contentHtml,
             'hasMore' => $result->hasMore(),
         ];
     }

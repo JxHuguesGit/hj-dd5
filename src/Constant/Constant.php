@@ -73,6 +73,7 @@ class Constant
     public const LABEL                  = 'label';
     public const LABEL_SING             = 'labelSingulier';
     public const LANGUAGE               = 'language';
+    public const LOADMORESPELLS         = 'loadMoreSpells';
     public const LIGHT                  = 'light';
     public const MARTIAL                = 'martial';
     public const MASTERYLINK            = 'masteryLink';
@@ -128,6 +129,7 @@ class Constant
     public const SPEED                  = 'vitesse';
     public const SPEED_TYPE             = 'speedType';
     public const STEP                   = 'step';
+    public const STYLE                  = 'style';
     public const SUB_SKILL              = 'subSkill';
     public const SUB_SKILLS             = 'subSkills';
     public const TARGET                 = 'target';

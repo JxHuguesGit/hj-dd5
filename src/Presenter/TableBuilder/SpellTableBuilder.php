@@ -11,7 +11,7 @@ use src\Utils\Table;
 
 class SpellTableBuilder extends AbstractTableBuilder
 {
-    public function build(iterable $rows, array $params = []): Table
+    public function build(mixed $rows, array $params = []): Table
     {
         $headers = [
             [C::LABEL => L::NAMES],

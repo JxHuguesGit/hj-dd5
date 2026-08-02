@@ -16,7 +16,7 @@ class ItemTableBuilder extends AbstractTableBuilder
         private bool $isAdmin = false
     ) {}
 
-    public function build(iterable $rows, array $params = []): Table
+    public function build(mixed $rows, array $params = []): Table
     {
         $headers = [L::NAMES, L::DESCRIPTION, L::WEIGHT, L::PRICE];
         if ($this->isAdmin) {
