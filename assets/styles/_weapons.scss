@@ -2,32 +2,29 @@
 @use "cards" as *;
 
 /* =============================
-   ARMOR LIST
+   WEAPON LIST
    ============================= */
-.armor-list {
+
+.weapon-list {
     @include data-group;
 }
 
-/* =============================
-   ARMOR GROUP
-   ============================= */
-.armor-group {
+.weapon-group {
     h2 {
         @include group-title;
     }
 }
 
-/* =============================
-   ARMOR GRID
-   ============================= */
-.armor-grid {
-    @include card-grid(4);
+.weapon-grid {
+    @include card-grid(3);
 }
 
+
 /* =============================
-   ARMOR CARD
+   WEAPON CARD
    ============================= */
-.armor-card {
+
+.weapon-card {
     @include card;
 
     h3 {
@@ -36,22 +33,46 @@
         a {
             color: inherit;
             text-decoration: none;
-
-            &:hover {
-                color: $color-primary;
-            }
         }
     }
 
-    p {
+    .weapon-card-info {
         @include card-info;
+
+        strong {
+            grid-column: 1;
+        }
+
+        > :not(strong) {
+            grid-column: 2;
+        }
+    }
+
+    .weapon-properties {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .weapon-property {
+            display: block;
+
+            &:not(:last-child)::after {
+                content: ",";
+            }
+        }
     }
 }
 
-.armor-detail {
+
+
+/* =============================
+   WEAPON NAVIGATION
+   ============================= */
+
+.weapon-detail {
     @include detail-panel;
 
-    .armor-detail-header {
+    .weapon-detail-header {
         margin-bottom: 1rem;
 
         h1 {
@@ -59,34 +80,38 @@
         }
     }
 
-    .armor-detail-infos {
+    .weapon-detail-infos {
         @include detail-info;
-
 
         display: flex;
         flex-direction: column;
         gap: .35rem;
 
-        .armor-detail-info-column {
-            display: contents;
-        }
-
-        p {
+        .weapon-detail-info {
             @include detail-info-row;
 
             display: grid;
             grid-template-columns: 7rem 1fr;
+
+            .weapon-property {
+                display: block;
+            }
         }
     }
 }
 
-.armor-detail-navigation {
+.weapon-navigation {
+    @include navigation;
+}
+
+.weapon-detail-navigation {
     @include navigation;
 }
 
 @media (min-width: $breakpoint-tablet) {
-    .armor-detail {
-        .armor-detail-infos {
+    .weapon-detail {
+
+        .weapon-detail-infos {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, auto);

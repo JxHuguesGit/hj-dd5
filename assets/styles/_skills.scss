@@ -6,20 +6,11 @@
    ============================= */
 
 .skill-groups {
-    display: flex;
-    flex-direction: column;
-
-    gap: 3rem;
+    @include data-group;
 }
 
 .skill-group-title {
-    margin-bottom: 1.25rem;
-    padding-bottom: .5rem;
-
-    border-bottom: 2px solid $color-footer-text;
-
-    font-size: 1.6rem;
-    font-weight: 700;
+    @include group-title;
 }
 
 .skill-grid {
@@ -29,30 +20,21 @@
 .skill-card {
     @include card;
 
-    gap: .75rem;
-
     h3 {
-        margin: 0;
+        @include card-title;
+    
+        a {
+            color: inherit;
+            text-decoration: none;
 
-        font-size: 1.15rem;
-    }
-
-    h3 a {
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-            color: $color-primary;
+            &:hover {
+                color: $color-primary;
+            }
         }
     }
 
     p {
-        margin: 0;
-
-        color: $color-text-muted;
-
-        line-height: 1.45;
-        font-size: .95rem;
+        @include card-text;
     }
 }
 
@@ -62,40 +44,14 @@
    ============================= */
 
 .subskills {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: .4rem;
+    @include badge-list;
 
     margin: 0;
     padding: 0;
-
     list-style: none;
 
-    li {
-        margin: 0;
-    }
-
     a {
-        display: block;
-
-        padding: .2rem .55rem;
-
-        border-radius: $radius-pill;
-
-        background: #f3f3f3;
-
-        color: #555;
-
-        text-decoration: none;
-
-        font-size: .82rem;
-
-        transition: background .15s ease;
-
-        &:hover {
-            background: #e6e6e6;
-        }
+        @include badge;
     }
 }
 
@@ -111,67 +67,40 @@
         margin-bottom: 1rem;
 
         h1 {
-            margin: 0;
-
-            font-size: 1.5rem;
+            @include detail-title(true);
         }
 
         .skill-ability {
             display: inline-block;
-
-            margin-top: .25rem;
-
             color: $color-text-muted;
-
             font-style: italic;
         }
     }
 
     .skill-description {
         margin-bottom: 1rem;
-
-        line-height: 1.5;
+        line-height: 1.6;
     }
 
     .skill-origins {
-        display: flex;
-        flex-wrap: wrap;
-
-        gap: .5rem;
-
-        margin-bottom: 1.5rem;
+        @include badge-list;
 
         .skill-origin {
-            padding: .25rem .75rem;
-
-            border-radius: $radius-pill;
-
-            background: #232324;
-
             a {
-                color: white;
-                text-decoration: none;
+                @include badge;
             }
         }
     }
 
     .skill-subskills {
-        display: grid;
-        grid-template-columns: 1fr;
-
-        gap: 1rem;
 
         .subskill {
-            padding: 1rem;
-
-            border-left: 3px solid #232324;
-
-            background: $color-surface-alt;
+            @include ability;
 
             h2 {
-                margin-top: 0;
-
-                font-size: 1.2rem;
+                margin: 0 0 .75rem;
+                font-size: 1.15rem;
+                font-weight: 700;
             }
 
             p {
@@ -191,26 +120,3 @@
 }
 
 
-/* =============================
-   DESKTOP
-   ============================= */
-
-@media (min-width: $breakpoint-tablet) {
-
-    .skill-detail {
-
-        .skill-detail-header h1 {
-            font-size: 2rem;
-        }
-    }
-}
-
-@media (min-width: $breakpoint-desktop) {
-
-    .skill-detail {
-
-        .skill-subskills {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-}

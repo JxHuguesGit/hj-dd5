@@ -22,8 +22,8 @@ final class OriginDetailContentBuilder implements ContentBuilderInterface
     {
         return
             $this->renderHeader($data)
-            . $this->renderDescription($data)
             . $this->renderProperties($data)
+            . $this->renderDescription($data)
             //. $this->renderAbilities($data)
             . $this->renderEquipment($data)
             . $this->renderNavigation($data);

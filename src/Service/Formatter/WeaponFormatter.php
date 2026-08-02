@@ -27,15 +27,15 @@ final class WeaponFormatter
         foreach ($weaponPropertyValues as $weaponPropertyValue) {
             $parts[] = $this->formatter->format($weaponPropertyValue, $this->wpPostService);
         }
-        return implode(', ', $parts);
+        return implode(' ', $parts);
     }
 
     public function masteryLink(Weapon $weapon): string
     {
         $this->wpPostService->getById($weapon->masteryPostId);
-        $postContent = $this->wpPostService->getPostContent();
-        $linkContent = $weapon->masteryName
-        . Html::getSpan($postContent ?? '', [C::CSSCLASS => 'tooltip-text']);
-        return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
+        $linkTag = Html::getLink($weapon->masteryName, '#', B::TEXT_DARK);
+        $tooltipContent = Html::getSpan($this->wpPostService->getPostContent() ?? '', [C::CSSCLASS => 'tooltip-text']);
+
+        return Html::getSpan($linkTag . $tooltipContent, [C::CSSCLASS => 'tooltip-trigger']);
     }
 }

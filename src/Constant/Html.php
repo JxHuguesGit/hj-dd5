@@ -13,6 +13,7 @@ class Html
     public const BALISE_SMALL  = 'small';
     public const BALISE_SPAN   = 'span';
     public const BALISE_SECTION= 'section';
+    public const BALISE_STRONG= 'strong';
     public const BALISE_UL     = 'ul';
     public const BALISE_DL     = 'dl';
     public const BALISE_DT     = 'dt';

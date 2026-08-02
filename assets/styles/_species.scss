@@ -6,20 +6,11 @@
    ============================= */
 
 .specie-groups {
-    display: flex;
-    flex-direction: column;
-
-    gap: 3rem;
+    @include data-group;
 }
 
 .specie-group-title {
-    margin-bottom: 1.25rem;
-    padding-bottom: .5rem;
-
-    border-bottom: 2px solid $color-footer-text;
-
-    font-size: 1.6rem;
-    font-weight: 700;
+    @include group-title;
 }
 
 .specie-grid {
@@ -30,29 +21,20 @@
     @include card;
 
     h3 {
-        margin: 0 0 .75rem;
+        @include card-title;
 
-        font-size: 1.15rem;
-        font-weight: 700;
-    }
+        a {
+            color: inherit;
+            text-decoration: none;
 
-    h3 a {
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-            color: $color-primary;
+            &:hover {
+                color: $color-primary;
+            }
         }
     }
 
     p {
-        margin: .25rem 0;
-
-        font-size: .9rem;
-    }
-
-    strong {
-        font-weight: 700;
+        @include card-text;
     }
 }
 
@@ -65,24 +47,16 @@
     @include detail-panel;
 
     h1 {
-        margin: 0 0 1rem;
-
-        font-size: 1.5rem;
-        font-weight: 700;
+        @include detail-title;
     }
 
     .specie-properties {
+        @include detail-info;
+
         display: flex;
         flex-direction: column;
-
         gap: .5rem;
-
         margin-bottom: 1.5rem;
-        padding: 1rem;
-
-        border-radius: $radius-card;
-
-        background: $color-surface-alt;
 
         p {
             margin: 0;
@@ -91,17 +65,8 @@
         }
     }
 
-    .specie-description {
-        margin-bottom: 2rem;
-
-        line-height: 1.6;
-    }
-
-    .specie-abilities {
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-
-        border-top: 2px solid $color-footer-text;
+    .specie-property {
+        @include detail-info-row;
     }
 }
 
@@ -135,27 +100,21 @@
 .specie-abilities {
 
     .ability {
-        margin-bottom: 1rem;
-        padding: 1rem;
+        @include ability;
 
-        border: 1px solid #e6e6e6;
-        border-radius: $radius-card;
+        .ability-title {
+            margin: 0 0 .75rem;
 
-        background: #fcfcfc;
-    }
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
 
-    .ability-title {
-        margin: 0 0 .75rem;
+        .ability-description {
+            line-height: 1.6;
 
-        font-size: 1.15rem;
-        font-weight: 700;
-    }
-
-    .ability-description {
-        line-height: 1.6;
-
-        p:last-child {
-            margin-bottom: 0;
+            p:last-child {
+                margin-bottom: 0;
+            }
         }
     }
 
@@ -171,9 +130,9 @@
     .ability-children > .ability {
         margin-bottom: .75rem;
 
-        border-color: #ddd;
+        border-color: $color-text-on-dark;
 
-        background: #f5f5f5;
+        background: $color-surface-subtle;
     }
 
     .ability-children .ability-title {
@@ -239,7 +198,6 @@
     @include navigation;
 }
 
-
 /* =============================
    DESKTOP
    ============================= */
@@ -248,14 +206,9 @@
 
     .specie-detail {
 
-        h1 {
-            font-size: 2rem;
-        }
-
         .specie-properties {
             flex-direction: row;
             flex-wrap: wrap;
-
             gap: .5rem 1.5rem;
         }
     }

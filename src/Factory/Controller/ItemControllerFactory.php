@@ -23,9 +23,11 @@ use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
 use src\Presenter\ContentBuilder\ArmorCardContentBuilder;
 use src\Presenter\ContentBuilder\ArmorDetailContentBuilder;
-use src\Presenter\Detail\{GearDetailPresenter, ToolDetailPresenter, WeaponDetailPresenter};
+use src\Presenter\ContentBuilder\WeaponCardContentBuilder;
+use src\Presenter\ContentBuilder\WeaponDetailContentBuilder;
+use src\Presenter\Detail\{GearDetailPresenter, ToolDetailPresenter};
 use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolListPresenter, WeaponListPresenter};
-use src\Presenter\TableBuilder\{ItemTableBuilder, ToolTableBuilder, WeaponTableBuilder};
+use src\Presenter\TableBuilder\{ItemTableBuilder, ToolTableBuilder};
 use src\Presenter\ViewModel\{ArmorPageView, GearPageView, ToolPageView, WeaponPageView};
 use src\Query\{QueryBuilder, QueryExecutor};
 use src\Repository\WeaponPropertyValueRepository;
@@ -68,7 +70,10 @@ final class ItemControllerFactory
                     $this->serviceFactory->weaponProperties(),
                     $this->readerFactory->weaponPropertyValue()
                 ),
-                new PageList($this->renderer, new WeaponTableBuilder()),
+                new PageList(
+                    $this->renderer,
+                    new WeaponCardContentBuilder()
+                ),
                 $menu
             ),
             C::GEAR   => new PublicItemGear(
@@ -165,27 +170,28 @@ final class ItemControllerFactory
         }
 
         $nav = $this->readerFactory->weapon()->getPreviousAndNext($item);
-        $presenter = new WeaponDetailPresenter(
-            new WeaponFormatter(
-                new WpPostService(),
-                new WeaponPropertiesFormatter(),
-                new WeaponPropertyValueReader(
-                    new WeaponPropertyValueRepository(
-                        new QueryBuilder(),
-                        new QueryExecutor()
-                    ),
-                )
-            )
-        );
         return new PublicItemWeaponDetail(
-            $presenter,
             $menu,
             new WeaponPageView(
                 $item,
                 $nav[C::PREV],
                 $nav[C::NEXT],
             ),
-            new PageItemWeapon($this->renderer)
+            new PageItemWeapon(
+                $this->renderer,
+                new WeaponDetailContentBuilder(
+                    new WeaponFormatter(
+                        new WpPostService(),
+                        new WeaponPropertiesFormatter(),
+                        new WeaponPropertyValueReader(
+                            new WeaponPropertyValueRepository(
+                                new QueryBuilder(),
+                                new QueryExecutor()
+                            ),
+                        )
+                    )
+                )
+            )
         );
     }
 }

@@ -24,20 +24,133 @@
 
     padding: 1rem;
 
-    border: 1px solid $color-card-border;
+    border: 1px solid $color-border;
     border-radius: $radius-card;
 
     background: $color-surface;
 
     transition:
-        transform .15s ease,
         box-shadow .15s ease,
         border-color .15s ease;
 }
 
+@mixin navigation {
+    display: flex;
+    flex-direction: column;
+
+    gap: .5rem;
+
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+
+    border-top: 1px solid $color-border;
+
+    a {
+        width: 100%;
+    }
+
+    @media (min-width: $breakpoint-tablet) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        a {
+            width: auto;
+        }
+
+        &.only-next {
+            justify-content: flex-end;
+        }
+
+        &.only-prev {
+            justify-content: flex-start;
+        }
+    }
+}
+
+@mixin data-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+@mixin group-title {
+    margin-bottom: 1.25rem;
+    padding-bottom: .5rem;
+
+    border-bottom: 2px solid $color-text-on-dark;
+
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+@mixin card-title {
+    margin: 0 0 1rem;
+    padding-bottom: .6rem;
+
+    border-bottom: 1px solid $color-border;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+@mixin badge {
+    display: inline-block;
+    padding: .2rem .55rem;
+    border-radius: $radius-pill;
+    background: $color-accent-dark;
+    color: $color-surface;
+    text-decoration: none;
+    font-size: .82rem;
+    transition: background .15s ease;
+
+    &:hover {
+        background: $color-primary;
+    }
+}
+
+@mixin badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+@mixin card-text {
+    margin: 0;
+    color: $color-text-muted;
+    font-size: .9rem;
+    line-height: 1.45;
+
+    strong {
+        color: $color-text;
+        font-weight: 700;
+    }
+}
+
+@mixin card-info {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    align-items: baseline;
+
+    margin: 0;
+    color: $color-text-muted;
+    font-size: .9rem;
+    line-height: 1.45;
+
+    strong {
+        color: $color-text;
+        font-weight: 700;
+    }
+}
+
 @mixin detail-panel {
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
     padding: 1rem;
 
+    border: 1px solid $color-border;
     border-radius: $radius-card;
 
     background: $color-surface;
@@ -53,17 +166,60 @@
     }
 }
 
-@mixin navigation {
-    display: flex;
-    flex-direction: column;
+@mixin detail-title($has-subtitle: false) {
+    margin: 0;
 
-    gap: 1rem;
+    @if $has-subtitle {
+        margin-bottom: .25rem;
+    } @else {
+        margin-bottom: 1rem;
+    }
 
-    margin-top: 2rem;
-    padding-top: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 700;
 
-    border-top: 1px solid $color-card-border;
+    @media (min-width: $breakpoint-tablet) {
+        font-size: 2rem;
+    }
 }
+
+@mixin detail-info {
+    padding: 1rem;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-card;
+
+    background: $color-surface-alt;
+}
+
+@mixin detail-info-row {
+    margin: 0;
+
+    color: $color-text-muted;
+    line-height: 1.5;
+
+    strong {
+        color: $color-text;
+        font-weight: 700;
+    }
+
+    a {
+        color: inherit;
+    }
+}
+
+@mixin ability {
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-card;
+
+    background: $color-surface-alt;
+}
+
+
 
 
 /* =============================
@@ -93,7 +249,7 @@
     text-decoration: none;
 
     &:hover {
-        border-color: $color-card-border-hover;
+        border-color: $color-border-hover;
         box-shadow: $shadow-card;
     }
 
@@ -116,45 +272,5 @@
 
     * {
         text-decoration: none;
-    }
-}
-
-
-/* =============================
-   NAVIGATION
-   ============================= */
-
-.armor-detail-navigation {
-    @include navigation;
-
-    a {
-        width: 100%;
-        text-align: center;
-    }
-
-    &.only-next {
-        align-items: stretch;
-    }
-
-    &.only-prev {
-        align-items: stretch;
-    }
-
-    @media (min-width: $breakpoint-tablet) {
-        flex-direction: row;
-        justify-content: space-between;
-
-        a {
-            width: auto;
-            text-align: initial;
-        }
-
-        &.only-next {
-            justify-content: flex-end;
-        }
-
-        &.only-prev {
-            justify-content: flex-start;
-        }
     }
 }

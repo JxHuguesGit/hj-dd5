@@ -82,9 +82,7 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
                     UrlGenerator::origin($origin->slug),
                     B::TEXT_WHITE
                 ),
-                [
-                    C::CSSCLASS => implode(' ', [C::FEAT_ORIGIN, B::BADGE, B::BG_DARK])
-                ]
+                [C::CSSCLASS => C::FEAT_ORIGIN]
             );
         }
 

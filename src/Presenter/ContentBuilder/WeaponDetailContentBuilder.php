@@ -1,65 +1,71 @@
 <?php
-
 namespace src\Presenter\ContentBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
-use src\Domain\Entity\Armor;
-use src\Presenter\ListPresenter\ArmorListPresenter;
-use src\Presenter\ViewModel\ArmorPageView;
+use src\Domain\Entity\Weapon;
+use src\Presenter\ListPresenter\WeaponListPresenter;
+use src\Presenter\ViewModel\WeaponPageView;
+use src\Service\Formatter\WeaponFormatter;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 
-final class ArmorDetailContentBuilder implements ContentBuilderInterface
+final class WeaponDetailContentBuilder implements ContentBuilderInterface
 {
+    public function __construct(
+        private WeaponFormatter $formatter
+    ) {}
+
     public function build(object $view, array $params = []): string
     {
-        /** @var ArmorPageView $view */
+        /** @var WeaponPageView $view */
 
-        $armor = $view->item;
+        $weapon = $view->item;
 
         $content = Html::getBalise(
             'header',
             Html::getBalise(
                 H::BALISE_H1,
-                $armor->name
+                $weapon->name
             ),
-            [C::CSSCLASS => 'armor-detail-header']
+            [C::CSSCLASS => 'weapon-detail-header']
         );
+
+        $key = ($weapon->isMartial() ? C::MARTIAL : C::SIMPLE) . '_'
+            . ($weapon->isMelee() ? C::MELEE : C::RANGED);
 
         $contentInfo =
             $this->renderInfo(
                 L::TYPE,
-                ArmorListPresenter::getTypesLabel()[$armor->armorTypeId][C::NAME]
+                WeaponListPresenter::getWeaponTypes()[$key][C::LABEL_SING]
             )
             . $this->renderInfo(
-                L::CA,
-                $armor->displayArmorClass()
+                L::DAMAGES,
+                Utils::getStrDamage($weapon)
             )
             . $this->renderInfo(
-                L::FORCE,
-                $armor->strengthPenalty ?: '-'
+                L::PROPERTIES,
+                $this->formatter->properties($weapon)
             )
             . $this->renderInfo(
-                L::STEALTH,
-                $armor->stealthDisadvantage
-                    ? L::DISADVANTAGE
-                    : '-'
+                L::WEAPON_PROP,
+                $this->formatter->masteryLink($weapon)
             )
             . $this->renderInfo(
                 L::WEIGHT,
-                Utils::getStrWeight($armor->weight)
+                Utils::getStrWeight($weapon->weight)
             )
             . $this->renderInfo(
                 L::PRICE,
-                Utils::getStrPrice($armor->goldPrice)
+                Utils::getStrPrice($weapon->goldPrice)
             );
+
         $content .= Html::getDiv(
             $contentInfo,
-            [C::CSSCLASS => B::ARMOR_DETAIL_INFOS]
+            [C::CSSCLASS => B::WEAPON_DETAIL_INFOS]
         );
 
         $content .= $this->renderNavigation(
@@ -70,22 +76,32 @@ final class ArmorDetailContentBuilder implements ContentBuilderInterface
         return Html::getBalise(
             H::BALISE_ARTICLE,
             $content,
-            [C::CSSCLASS => B::ARMOR_DETAIL]
+            [C::CSSCLASS => B::WEAPON_DETAIL]
         );
     }
 
     private function renderInfo(string $label, string $value): string
     {
+        $content = Html::getBalise(
+            H::BALISE_STRONG,
+            $label
+        );
+
+        $content .= Html::getDiv(
+            $value,
+            [C::CSSCLASS => B::WEAPON_DETAIL_INFO_VALUE]
+        );
+
         return Html::getBalise(
-            H::BALISE_P,
-            sprintf(L::STRONG_INFO, $label, $value),
-            [C::CSSCLASS => B::ARMOR_DETAIL_INFO]
+            H::BALISE_DIV,
+            $content,
+            [C::CSSCLASS => B::WEAPON_DETAIL_INFO]
         );
     }
 
     private function renderNavigation(
-        ?Armor $previous,
-        ?Armor $next
+        ?Weapon $previous,
+        ?Weapon $next
     ): string {
         $previousHtml = $previous
             ? Html::getLink(
@@ -113,7 +129,7 @@ final class ArmorDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $previousHtml . $nextHtml,
-            [C::CSSCLASS => B::ARMOR_DETAIL_NAVIGATION]
+            [C::CSSCLASS => B::WEAPON_DETAIL_NAVIGATION]
         );
     }
 }

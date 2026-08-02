@@ -16,13 +16,13 @@ class WeaponPropertiesFormatter
         $property = $this->getLink($weaponPropertyValue, $wpPostService);
         switch ($weaponPropertyValue->propertySlug) {
             case 'polyvalente':
-                $property .= $this->formatPolyvalente($weaponPropertyValue);
+                $property .= Html::getSpan($this->formatPolyvalente($weaponPropertyValue));
                 break;
             case 'lancer':
-                $property .= $this->formatLancer($weaponPropertyValue);
+                $property .= Html::getSpan($this->formatLancer($weaponPropertyValue));
                 break;
             case 'munitions':
-                $property .= $this->formatMunitions($weaponPropertyValue);
+                $property .= Html::getSpan($this->formatMunitions($weaponPropertyValue));
                 break;
             case 'finesse':
             case 'legere':
@@ -39,7 +39,7 @@ class WeaponPropertiesFormatter
                 echo '<br>';
                 break;
         }
-        return $property;
+        return Html::getSpan($property, [C::CSSCLASS => 'weapon-property']);
     }
 
     private function formatPolyvalente(WeaponPropertyValue $weaponPropertyValue): string
@@ -69,9 +69,10 @@ class WeaponPropertiesFormatter
         WpPostService $wpPostService
     ): string {
         $wpPostService->getById($weaponPropertyValue->postId);
-        $linkContent = $weaponPropertyValue->propertyName
-        . Html::getSpan($wpPostService->getPostContent() ?? '', [C::CSSCLASS => 'tooltip-text']);
-        return Html::getLink($linkContent, '#', B::TEXT_DARK . ' tooltip-trigger');
+        $linkTag = Html::getLink($weaponPropertyValue->propertyName, '#', B::TEXT_DARK);
+        $tooltipContent = Html::getSpan($wpPostService->getPostContent() ?? '', [C::CSSCLASS => 'tooltip-text']);
+
+        return Html::getSpan($linkTag . $tooltipContent, [C::CSSCLASS => 'tooltip-trigger']);
     }
 
 }

@@ -1,38 +1,27 @@
 @use "variables" as *;
+@use "cards" as *;
 
 /* =============================
    SPELL LIST
    ============================= */
 
 .spell-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    @include card-grid(4);
 }
-
 
 /* =============================
    SPELL CARD
    ============================= */
 
 .spell-card {
-    display: flex;
-    flex-direction: column;
+    @include card;
+
     gap: .5rem;
-
-    padding: 1rem;
-
-    border: 1px solid #ddd;
-    border-radius: .5rem;
-
-    background: #fff;
-
-    transition: .15s ease;
 
     .spell-level {
         font-size: .9rem;
         font-style: italic;
-        color: #666;
+        color: $color-text-muted;
     }
 
     .spell-info {
@@ -41,64 +30,22 @@
         gap: .25rem;
     }
 
-    &:hover {
-        border-color: #bbb;
-        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .08);
-    }
-
     h3 {
-        margin: 0 0 .25rem;
+        @include card-title;
 
-        font-size: 1.15rem;
-        font-weight: 700;
-    }
+        a {
+            color: inherit;
+            text-decoration: none;
 
-    h3 a {
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-            color: $color-primary;
+            &:hover {
+                color: $color-primary;
+            }
         }
     }
 
     p {
-        margin: 0;
-
-        font-size: .9rem;
-        line-height: 1.45;
+        @include card-text;
     }
-}
-
-
-/* =============================
-   RESPONSIVE
-   ============================= */
-
-@media (min-width: $breakpoint-tablet) {
-
-    .spell-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-}
-
-
-@media (min-width: $breakpoint-desktop) {
-
-    .spell-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-}
-
-
-@media (max-width: 576px) {
-
-    .spell-card {
-        padding: .75rem;
-    }
-
 }
 
 /* =============================
@@ -106,44 +53,29 @@
    ============================= */
 
 .spell-load-more {
-
     display: flex;
     justify-content: center;
-
     margin-top: 1.5rem;
-
 
     i {
 
         display: flex;
         align-items: center;
         justify-content: center;
-
         width: 2.5rem;
         height: 2.5rem;
-
-        border: 1px solid #ddd;
+        border: 1px solid $color-text-on-dark;
         border-radius: 50%;
-
-        background: #fff;
-
-        color: #555;
-
+        background: $color-surface;
+        color: $color-text-muted;
         font-size: 1.1rem;
-
         cursor: pointer;
-
         transition: .15s ease;
 
-
         &:hover {
-
-            border-color: #bbb;
-
-            background: #f5f5f5;
-
+            border-color: $color-border-hover;
+            background: $color-surface-subtle;
             color: $color-primary;
-
             box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .08);
         }
     }
@@ -154,68 +86,41 @@
     ============================= */
 
 .spell-filter {
-
     display: flex;
     justify-content: flex-end;
-
     margin-bottom: 1.25rem;
 
-
     .ajaxAction {
-
         display: inline-flex;
         align-items: center;
         gap: .5rem;
-
         padding: .45rem .85rem;
-
-        border: 1px solid #ddd;
+        border: 1px solid $color-text-on-dark;
         border-radius: .5rem;
-
-        background: #fff;
-
-        color: #555;
-
+        background: $color-surface;
+        color: $color-text-muted;
         font-size: .9rem;
-
         cursor: pointer;
-
         transition: .15s ease;
 
-
         i {
-
             font-size: .85rem;
         }
 
-
         &:hover {
-
-            border-color: #bbb;
-
-            background: #f5f5f5;
-
+            border-color: $color-border-hover;
+            background: $color-surface-subtle;
             color: $color-primary;
-
             box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .06);
         }
     }
 }
 
 .spell-detail {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1.5rem;
-
-    border: 1px solid #ddd;
-    border-radius: .5rem;
-
-    background: #fff;
-
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    @include detail-panel;
 
     h1 {
-        margin: 0 0 .25rem;
+       @include detail-title(true);
     }
 
     > p {
@@ -223,9 +128,8 @@
     }
 
     .spell-detail-info {
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
-        padding: 1rem 0;
+        @include detail-info;
+
         margin-bottom: 1.5rem;
 
         dl {
@@ -252,31 +156,8 @@
             margin-bottom: 0;
         }
     }
-
-    .spell-detail-navigation {
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-
-        margin-top: 2rem;
-        padding-top: 1rem;
-        border-top: 1px solid #ddd;
-
-        > * {
-            width: 100%;
-        }
-    }
 }
 
-@media (min-width: $breakpoint-tablet) {
-    .spell-detail {
-        .spell-detail-navigation {
-            flex-direction: row;
-            justify-content: space-between;
-
-            > * {
-                max-width: 48%;
-            }
-        }
-    }
+.spell-detail-navigation {
+    @include navigation;
 }

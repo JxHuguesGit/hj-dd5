@@ -6,20 +6,11 @@
    ============================= */
 
 .origin-groups {
-    display: flex;
-    flex-direction: column;
-
-    gap: 3rem;
+    @include data-group;
 }
 
 .origin-group-title {
-    margin-bottom: 1.25rem;
-    padding-bottom: .5rem;
-
-    border-bottom: 2px solid $color-footer-text;
-
-    font-size: 1.6rem;
-    font-weight: 700;
+    @include group-title;
 }
 
 .origin-grid {
@@ -30,33 +21,20 @@
     @include card;
 
     h3 {
-        margin: 0 0 1rem;
-        padding-bottom: .6rem;
+        @include card-title;
 
-        border-bottom: 1px solid #eee;
+        a {
+            color: inherit;
+            text-decoration: none;
 
-        font-size: 1.2rem;
-        font-weight: 700;
-    }
-
-    h3 a {
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-            color: $color-primary;
+            &:hover {
+                color: $color-primary;
+            }
         }
     }
 
     p {
-        margin: .4rem 0;
-
-        font-size: .9rem;
-        line-height: 1.45;
-    }
-
-    strong {
-        font-weight: 700;
+        @include card-text;
     }
 }
 
@@ -69,15 +47,11 @@
     @include detail-panel;
 
     h1 {
-        margin: 0 0 1.5rem;
-
-        font-size: 1.5rem;
-        font-weight: 700;
+        @include detail-title;
     }
 
     .origin-description {
         margin-bottom: 2rem;
-
         line-height: 1.6;
 
         p:last-child {
@@ -86,32 +60,23 @@
     }
 
     .origin-properties {
+        @include detail-info;
+
         display: flex;
         flex-direction: column;
-
         gap: .5rem;
-
         margin-bottom: 2rem;
-        padding: 1rem;
-
-        border-radius: $radius-card;
-
-        background: $color-surface-alt;
     }
 
     .origin-property {
-        line-height: 1.5;
-
-        strong {
-            font-weight: 700;
-        }
+        @include detail-info-row;
     }
 
     .origin-equipment {
         margin-bottom: 2rem;
         padding-top: 1.5rem;
 
-        border-top: 1px solid $color-card-border;
+        border-top: 1px solid $color-border;
 
         line-height: 1.6;
 
@@ -126,12 +91,11 @@
             font-weight: 700;
         }
     }
-
-    .origin-navigation {
-        @include navigation;
-    }
 }
 
+.origin-navigation {
+    @include navigation;
+}
 
 /* =============================
    TABLET
@@ -141,15 +105,9 @@
 
     .origin-detail {
 
-        h1 {
-            font-size: 2rem;
-        }
-
         .origin-properties {
             display: grid;
-
             grid-template-columns: repeat(2, minmax(0, 1fr));
-
             gap: .75rem 1.5rem;
         }
     }

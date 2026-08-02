@@ -30,3 +30,36 @@ main {
     src: url("https://fonts.gstatic.com/s/righteous/v9/1cXxaUPXBpj2rGoU7C9WiHGF.woff2")
         format("woff2");
 }
+
+.tooltip-trigger {
+    position: relative;
+
+    .tooltip-text {
+        display: none;
+        position: absolute;
+        z-index: 10;
+
+        width: max-content;
+        max-width: 320px;
+
+        padding: .75rem;
+
+        border: 1px solid $color-border;
+        border-radius: $radius-card;
+
+        background: $color-surface;
+        box-shadow: $shadow-detail;
+
+        text-align: left;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &:hover {
+        .tooltip-text {
+            display: block;
+        }
+    }
+}

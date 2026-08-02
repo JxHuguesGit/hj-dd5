@@ -25,7 +25,6 @@ final class FeatDetailContentBuilder implements ContentBuilderInterface
     {
         return
             $this->renderHeader($view)
-            . $this->renderType($view)
             . $this->renderDescription($view)
             . $this->renderOrigins($view)
             . $this->renderNavigation($view);
@@ -35,9 +34,10 @@ final class FeatDetailContentBuilder implements ContentBuilderInterface
     {
         return sprintf(
             '<header class="feat-detail-header">
-                <h1>%s</h1>
+                <h1>%s</h1>%s
             </header>',
-            htmlspecialchars($view->name)
+            htmlspecialchars($view->name),
+            $this->renderType($view)
         );
     }
 
@@ -64,7 +64,7 @@ final class FeatDetailContentBuilder implements ContentBuilderInterface
             $type .= htmlspecialchars($view->type->prerequisite) . ')';
         }
 
-        return Html::getDiv(
+        return Html::getSpan(
             $type,
             ['class' => 'feat-type']
         );

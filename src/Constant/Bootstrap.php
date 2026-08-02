@@ -86,6 +86,14 @@ class Bootstrap
     public const ARMOR_DETAIL_INFOS  = self::ARMOR . '-detail-infos';
     public const ARMOR_DETAIL_NAVIGATION   = self::ARMOR . '-detail-navigation';
 
+    public const WEAPON = 'weapon';
+    public const WEAPON_DETAIL   = self::WEAPON . '-detail';
+    public const WEAPON_DETAIL_INFO   = self::WEAPON . '-detail-info';
+    public const WEAPON_DETAIL_INFO_VALUE = self::WEAPON . '-detail-info-value';
+    public const WEAPON_DETAIL_INFOS  = self::WEAPON . '-detail-infos';
+    public const WEAPON_DETAIL_NAVIGATION   = self::WEAPON   . '-detail-navigation';
+
+
     public const ROW_DARK_STRIPED = 'row-dark-striped';
 
     public const COL_1     = 'col-1';

@@ -5,43 +5,27 @@
    ============================= */
 
 header.topbar {
-
     backdrop-filter: blur(4px);
-
     background: $color-topbar;
-    background-size: contain;
-
-    border-bottom: 1px solid #e2e8f0;
-
+    border-bottom: 1px solid $color-border-subtle;
 
     &::before {
-
         animation: slide 1.4s forwards ease-out;
-
         background: url(../images/DDSplat.png) no-repeat left center;
         background-size: auto 100%;
-
         content: "";
-
         inset: 0;
-
         position: absolute;
-
         transform: translateX(-100%);
     }
 
-
     .topbar-inner {
-
         display: flex;
-
         justify-content: space-between;
         align-items: center;
-
         padding: .5rem 0;
     }
 }
-
 
 @keyframes slide {
 
@@ -80,7 +64,7 @@ header.topbar {
 
         margin-top: .75rem;
 
-        color: #666;
+        color: $color-text-muted;
     }
 }
 
@@ -95,7 +79,7 @@ header.nav-header {
 
     background: $color-navbar;
 
-    border-bottom: 2px solid #232324;
+    border-bottom: 2px solid $color-accent-dark;
 
     font-family: $font-nav;
 
