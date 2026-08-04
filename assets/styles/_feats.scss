@@ -20,6 +20,10 @@
 .feat-origin {
     a {
         @include badge;
+        
+        &:hover {
+            background: $color-primary;
+        }
     }
 }
 

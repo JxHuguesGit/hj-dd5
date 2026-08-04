@@ -46,8 +46,11 @@ class Bootstrap
     public const SUBSKILL     = 'subskill';
     public const SUBSKILLS    = 'subskills';
     public const DATA         = 'data';
+    public const INFO         = 'info';
+    public const INFOS        = 'infos';
     public const DETAIL       = 'detail';
     public const ABILITY      = 'ability';
+    public const NAVIGATION   = 'navigation';
 
     public const FLOAT_START = 'float-start';
 
@@ -112,9 +115,9 @@ class Bootstrap
     public const SPELL_CARD   = self::SPELL . '-' . self::CARD;
     public const SPELL_GROUP_TITLE = self::SPELL . '-' . self::GROUP . '-' . self::TITLE;
     public const SPELL_DETAIL_DESCRIPTION   = self::SPELL . '-detail-description';
-    public const SPELL_DETAIL   = self::SPELL . '-detail';
-    public const SPELL_DETAIL_INFO   = self::SPELL . '-detail-info';
-    public const SPELL_DETAIL_NAVIGATION   = self::SPELL . '-detail-navigation';
+    public const SPELL_DETAIL   = self::SPELL . '-' . self::DETAIL;
+    public const SPELL_DETAIL_INFO   = self::SPELL . '-' . self::DETAIL . '-' . self::INFO;
+    public const SPELL_DETAIL_NAVIGATION   = self::SPELL . '-' . self::DETAIL . '-' . self::NAVIGATION;
     public const TOOL_TYPE = 'tool-type';
     public const TOOL_DETAIL_DESCRIPTION = 'tool-detail-description';
     public const TOOL_DETAIL_CRAFT_ITEM_VALUE = 'tool-detail-craftable-items-value';
@@ -132,10 +135,10 @@ class Bootstrap
     public const ARMOR_GROUP = self::ARMOR . '-' . self::GROUP;
     public const ARMOR_CARD = self::ARMOR . '-' . self::CARD;
     public const ARMOR_LIST    = self::ARMOR . '-' . self::LIST;
-    public const ARMOR_DETAIL   = self::ARMOR . '-detail';
-    public const ARMOR_DETAIL_INFO   = self::ARMOR . '-detail-info';
-    public const ARMOR_DETAIL_INFOS  = self::ARMOR . '-detail-infos';
-    public const ARMOR_DETAIL_NAVIGATION   = self::ARMOR . '-detail-navigation';
+    public const ARMOR_DETAIL   = self::ARMOR . '-' . self::DETAIL;
+    public const ARMOR_DETAIL_INFO   = self::ARMOR . '-' . self::DETAIL . '-' . self::INFO;
+    public const ARMOR_DETAIL_INFOS  = self::ARMOR . '-' . self::DETAIL . '-' . self::INFOS;
+    public const ARMOR_DETAIL_NAVIGATION   = self::ARMOR . '-' . self::DETAIL . '-' . self::NAVIGATION;
 
     public const WEAPON = 'weapon';
     public const WEAPON_GRID = self::WEAPON . '-' . self::GRID;
@@ -143,11 +146,11 @@ class Bootstrap
     public const WEAPON_CARD = self::WEAPON . '-' . self::CARD;
     public const WEAPON_CARD_INFO   = self::WEAPON . '-card-info';
     public const WEAPON_LIST    = self::WEAPON . '-' . self::LIST;
-    public const WEAPON_DETAIL   = self::WEAPON . '-detail';
-    public const WEAPON_DETAIL_INFO   = self::WEAPON . '-detail-info';
+    public const WEAPON_DETAIL   = self::WEAPON . '-' . self::DETAIL;
+    public const WEAPON_DETAIL_INFO   = self::WEAPON . '-' . self::DETAIL . '-' . self::INFO;
     public const WEAPON_DETAIL_INFO_VALUE = self::WEAPON . '-detail-info-value';
-    public const WEAPON_DETAIL_INFOS  = self::WEAPON . '-detail-infos';
-    public const WEAPON_DETAIL_NAVIGATION   = self::WEAPON   . '-detail-navigation';
+    public const WEAPON_DETAIL_INFOS  = self::WEAPON . '-' . self::DETAIL . '-' . self::INFOS;
+    public const WEAPON_DETAIL_NAVIGATION   = self::WEAPON . '-' . self::DETAIL . '-' . self::NAVIGATION;
 
     public const TOOL = 'tool';
     public const TOOL_GRID = self::TOOL . '-' . self::GRID;
@@ -155,11 +158,11 @@ class Bootstrap
     public const TOOL_CARD = self::TOOL . '-' . self::CARD;
     public const TOOL_CARD_INFOS = self::TOOL . '-' . self::CARD . '-infos';
     public const TOOL_LIST    = self::TOOL . '-' . self::LIST;
-    public const TOOL_DETAIL   = self::TOOL . '-detail';
-    public const TOOL_DETAIL_INFO   = self::TOOL . '-detail-info';
+    public const TOOL_DETAIL   = self::TOOL . '-' . self::DETAIL;
+    public const TOOL_DETAIL_INFO   = self::TOOL . '-' . self::DETAIL . '-' . self::INFO;
     public const TOOL_DETAIL_INFO_VALUE = self::TOOL . '-detail-info-value';
-    public const TOOL_DETAIL_INFOS  = self::TOOL . '-detail-infos';
-    public const TOOL_DETAIL_NAVIGATION   = self::TOOL   . '-detail-navigation';
+    public const TOOL_DETAIL_INFOS  = self::TOOL . '-' . self::DETAIL . '-' . self::INFOS;
+    public const TOOL_DETAIL_NAVIGATION   = self::TOOL . '-' . self::DETAIL . '-' . self::NAVIGATION;
 
     public const GEAR = 'gear';
     public const GEAR_GRID = self::GEAR . '-' . self::GRID;

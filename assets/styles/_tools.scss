@@ -54,6 +54,10 @@
 
     .badge {
         @include badge;
+        
+        &:hover {
+            background: $color-primary;
+        }
     }
 }    
 
@@ -97,6 +101,10 @@
 
     a {
         @include badge;
+        
+        &:hover {
+            background: $color-primary;
+        }
     }
 }
 
