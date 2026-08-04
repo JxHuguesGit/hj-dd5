@@ -27,11 +27,11 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
             $htmlContent .= Html::getBalise(
                 H::BALISE_P,
                 sprintf(L::PREREQUIS_TEXT, htmlspecialchars($row->prerequisite)),
-                [C::CSSCLASS => 'feat-prerequisite']
+                [C::CSSCLASS => B::FEAT_PREREQUIS]
             );
         }
 
-        return Html::getBalise(H::BALISE_ARTICLE, $htmlContent, [C::CSSCLASS => B::FEAT_CARD]);
+        return Html::getBalise(H::BALISE_ARTICLE, $htmlContent, [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::FEAT_CARD]);
     }
 
     /** @param FeatGroup $group */
@@ -49,23 +49,8 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
         return Html::getBalise(
             H::BALISE_H2,
             $title,
-            [C::CSSCLASS => B::FEAT_GROUP_TITLE]
+            [C::CSSCLASS => B::DATA_GROUP_TITLE]
         );
-    }
-    
-    protected function getGroupsClass(): string
-    {
-        return B::FEAT_GROUPS;
-    }
-
-    protected function getGroupClass(): string
-    {
-        return B::FEAT_GROUP;
-    }
-
-    protected function getGridClass(): string
-    {
-        return B::FEAT_GRID;
     }
 
     /**

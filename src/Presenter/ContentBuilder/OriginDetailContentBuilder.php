@@ -4,81 +4,67 @@ namespace src\Presenter\ContentBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
+use src\Constant\Language as L;
+use src\Presenter\ViewModel\LinkView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
-final class OriginDetailContentBuilder implements ContentBuilderInterface
+final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
 {
-    public function build(mixed $data, array $params = []): string
+
+    protected function getDetailUrl(string $slug): string
     {
-        return Html::getBalise(
-            'section',
-            $this->renderContent($data),
-            [C::CSSCLASS => 'origin-detail']
-        );
+        return UrlGenerator::origin($slug);
     }
 
-    private function renderContent(array $data): string
+    protected function renderDetailBody(object $view, array $params = []) : string
     {
         return
-            $this->renderHeader($data)
-            . $this->renderProperties($data)
-            . $this->renderDescription($data)
-            //. $this->renderAbilities($data)
-            . $this->renderEquipment($data)
-            . $this->renderNavigation($data);
+            $this->renderProperties($view)
+            . $this->renderDescription($view)
+            // . $this->renderAbilities($view)
+            . $this->renderEquipment($view)
+        ;
     }
 
-    private function renderHeader(array $view): string
+    private function renderDescription(object $view): string
     {
-        return Html::getBalise(
-            'header',
-            Html::getBalise(
-                'h1',
-                htmlspecialchars($view[C::TITLE] ?? '')
-            ),
-            ['class' => 'origin-detail-header']
-        );
-    }
-
-    private function renderDescription(array $view): string
-    {
-        if (($view[C::DESCRIPTION] ?? '') === '') {
+        if (($view->description ?? '') === '') {
             return '';
         }
 
         return Html::getDiv(
-            $view[C::DESCRIPTION],
-            ['class' => 'origin-description']
+            $view->description,
+            [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION . L::SPACE . B::ORIGIN_DESCRIPTION]
         );
     }
 
-    private function renderProperties(array $view): string
+    private function renderProperties(object $view): string
     {
         $content = '';
 
         $content .= $this->renderProperty(
-            'Capacités',
-            implode(', ', $view[C::ABILITIES] ?? [])
+            L::CAPACITES,
+            implode(', ', $view->abilities ?? [])
         );
 
         $content .= $this->renderProperty(
-            'Compétences',
-            $this->formatSkills($view[C::SKILLS] ?? [])
+            L::SKILLS,
+            $this->formatSkills($view->skills ?? [])
         );
 
         $content .= $this->renderProperty(
-            'Don d\'origine',
+            L::ORIGIN_FEAT,
             $this->formatLink(
-                $view[C::FEAT] ?? null,
+                $view->feat ?? null,
                 fn(string $slug) => UrlGenerator::feat($slug)
             )
         );
 
         $content .= $this->renderProperty(
-            'Outil',
+            L::TOOL,
             $this->formatLink(
-                $view[C::TOOL] ?? null,
+                $view->tool ?? null,
                 fn(string $slug) => UrlGenerator::item($slug)
             )
         );
@@ -89,7 +75,7 @@ final class OriginDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            ['class' => 'origin-properties']
+            [C::CSSCLASS => B::ORIGIN_PROPERTIES]
         );
     }
 
@@ -100,8 +86,8 @@ final class OriginDetailContentBuilder implements ContentBuilderInterface
         }
 
         return Html::getDiv(
-            '<strong>' . htmlspecialchars($label) . ' :</strong> ' . $value,
-            ['class' => 'origin-property']
+            sprintf(L::STRONG_INFO, htmlspecialchars($label) . L::COLON, $value),
+            [C::CSSCLASS => B::ORIGIN_PROPERTY]
         );
     }
 
@@ -121,23 +107,23 @@ final class OriginDetailContentBuilder implements ContentBuilderInterface
     }
 
     private function formatLink(
-        ?array $entityData,
+        ?LinkView $entityData,
         callable $urlGenerator
     ): string {
         if (!$entityData) {
-            return '-';
+            return L::DASH;
         }
 
         return Html::getLink(
-            htmlspecialchars($entityData[C::NAME]),
-            $urlGenerator($entityData[C::SLUG]),
+            htmlspecialchars($entityData->name),
+            $urlGenerator($entityData->slug),
             B::TEXT_DARK
         );
     }
 
-    private function renderEquipment(array $view): string
+    private function renderEquipment(object $view): string
     {
-        $equipment = $view[C::EQUIPMENT] ?? [];
+        $equipment = $view->equipment ?? [];
 
         if (!$equipment) {
             return '';
@@ -145,47 +131,7 @@ final class OriginDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             implode(', ', $equipment),
-            ['class' => 'origin-equipment']
-        );
-    }
-
-    private function renderNavigation(array $view): string
-    {
-        $content = '';
-
-        if (!empty($view[C::PREV])) {
-            $content .= Html::getLink(
-                '&lt; ' . htmlspecialchars($view[C::PREV][C::NAME]),
-                UrlGenerator::origin($view[C::PREV][C::SLUG]),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if (!empty($view[C::NEXT])) {
-            $content .= Html::getLink(
-                htmlspecialchars($view[C::NEXT][C::NAME]) . ' &gt;',
-                UrlGenerator::origin($view[C::NEXT][C::SLUG]),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if ($content === '') {
-            return '';
-        }
-
-        $class = 'origin-navigation';
-
-        if (empty($view[C::PREV])) {
-            $class .= ' only-next';
-        }
-
-        if (empty($view[C::NEXT])) {
-            $class .= ' only-prev';
-        }
-
-        return Html::getDiv(
-            $content,
-            ['class' => $class]
+            [C::CSSCLASS => B::ORIGIN_EQUIPMENT]
         );
     }
 }

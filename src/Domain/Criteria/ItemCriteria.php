@@ -11,19 +11,22 @@ final class ItemCriteria extends BaseCriteria
     #[Equals(F::ID)]
     public ?int $id = null;
 
-    #[Equals(F::TYPE)]
+    #[Equals(F::TYPE, alias: 'i')]
     public ?string $type = C::OTHER;
 
-    #[Equals(F::NAME)]
+    #[Equals(F::NAME, alias: 'i')]
     public ?string $name = null;
 
-    #[Equals(F::SLUG)]
+    #[Equals(F::SLUG, alias: 'i')]
     public ?string $slug = null;
 
-    #[Compare(field: F::NAME, operator: Compare::LT)]
+    #[Equals(F::TOOLID, alias: 'i')]
+    public ?int $toolId = null;
+
+    #[Compare(field: F::NAME, alias: 'i', operator: Compare::LT)]
     public ?string $nameLt = null;
 
-    #[Compare(field: F::NAME, operator: Compare::GT)]
+    #[Compare(field: F::NAME, alias: 'i', operator: Compare::GT)]
     public ?string $nameGt = null;
 
     public array $orderBy = [

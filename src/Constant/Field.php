@@ -70,6 +70,8 @@ class Field
 
     /* Alias dans le code php */
     public const AMMONAME      = 'ammunitionName';
+    public const BUILDNAME     = 'buildName';
+    public const BUILDSLUG     = 'buildSlug';
     public const CATEGORYSLUG  = 'categorySlug';
     public const CATEGORYNAME  = 'categoryName';
     public const MASTERYNAME   = 'masteryName';
@@ -83,6 +85,7 @@ class Field
     public const TYPMSTNAME    = 'typeMonsterName';
     public const SSTYPMSTNAME  = 'subTypeMonsterName';
     public const PARENTNAME    = 'parentName';
+    public const ABILITYNAME   = 'abilityName';
 
     /* Clefs étrangères */
     // rpgFeatAbility, rpgOriginAbility, rpgSkill

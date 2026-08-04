@@ -125,6 +125,9 @@ class Constant
     public const SPECIES                = 'species';
     public const SPECIE_POWER           = 'speciePower';
     public const SPELL                  = 'spell';
+    public const SPELLLOADMORE          = 'spell-load-more';
+    public const SPELL_FILTER           = 'spellFilter';
+    public const SPELLFILTER            = 'spell-filter';
     public const SPELLS                 = 'spells';
     public const SPEED                  = 'vitesse';
     public const SPEED_TYPE             = 'speedType';
@@ -146,6 +149,7 @@ class Constant
     public const VUE                    = 'vue';
     public const WEAPON                 = 'weapon';
     public const WEAPONS                = 'weapons';
+    public const WEAPON_PROPERTIES      = 'weaponProperties';
     public const WEAPON_PROPERTY_VALUE  = 'weaponPropertyValue';
     public const WEIGHT                 = 'weight';
 

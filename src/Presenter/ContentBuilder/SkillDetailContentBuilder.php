@@ -2,52 +2,45 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Constant\Bootstrap as B;
+use src\Constant\Constant as C;
+use src\Constant\Html as H;
 use src\Presenter\ViewModel\LinkView;
 use src\Presenter\ViewModel\SkillDetailView;
 use src\Presenter\ViewModel\SubSkillView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
-final class SkillDetailContentBuilder implements ContentBuilderInterface
+final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
 {
-    public function build(mixed $data, array $params = []): string
-    {
-        /** @var SkillDetailView $view */
-        $view = $data;
 
-        return Html::getDiv(
-            $this->renderContent($view),
-            ['class' => 'skill-detail']
-        );
-    }
-
-    private function renderContent(SkillDetailView $view): string
+    protected function renderDetailHeader(object $view) : string
     {
-        return
-            $this->renderHeader($view)
-            . $this->renderDescription($view)
-            . $this->renderOrigins($view)
-            . $this->renderSubSkills($view)
-            . $this->renderNavigation($view);
-    }
-
-    private function renderHeader(SkillDetailView $view): string
-    {
-        return sprintf(
-            '<header class="skill-detail-header">
-                <h1>%s</h1>
-                <span class="skill-ability">%s</span>
-            </header>',
-            htmlspecialchars($view->name),
+        return $this->renderHeader(
+            $view->name,
             htmlspecialchars($view->ability)
         );
+    }
+
+    protected function getDetailUrl(string $slug): string
+    {
+        return UrlGenerator::skill($slug);
+    }
+
+    protected function renderDetailBody(object $view, array $params = []) : string
+    {
+        return
+            $this->renderDescription($view)
+            . $this->renderOrigins($view)
+            . $this->renderSubSkills($view)
+        ;
     }
 
     private function renderDescription(SkillDetailView $view): string
     {
         return Html::getDiv(
             htmlspecialchars($view->description),
-            ['class' => 'skill-description']
+            [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION]
         );
     }
 
@@ -60,21 +53,18 @@ final class SkillDetailContentBuilder implements ContentBuilderInterface
         $content = '';
 
         foreach ($view->origins as $origin) {
-
             /** @var LinkView $origin */
-
             $content .= Html::getSpan(
                 Html::getLink(
                     htmlspecialchars($origin->name),
                     UrlGenerator::origin($origin->slug)
-                ),
-                ['class' => 'skill-origin']
+                )
             );
         }
 
         return Html::getDiv(
             $content,
-            ['class' => 'skill-origins']
+            [C::CSSCLASS => B::SKILL_ORIGINS]
         );
     }
 
@@ -87,61 +77,24 @@ final class SkillDetailContentBuilder implements ContentBuilderInterface
         $content = '';
 
         foreach ($view->subSkills as $subSkill) {
-
             /** @var SubSkillView $subSkill */
-
-            $content .= sprintf(
-                '<article class="subskill">
-                    <h2>%s</h2>
-                    <p>%s</p>
-                </article>',
-                htmlspecialchars($subSkill->name),
-                htmlspecialchars($subSkill->description)
+            $content .= Html::getBalise(
+                H::BALISE_ARTICLE,
+                Html::getBalise(
+                    H::BALISE_H2,
+                    htmlspecialchars($subSkill->name)
+                )
+                . Html::getBalise(
+                    H::BALISE_P,
+                    htmlspecialchars($subSkill->description)
+                ),
+                [C::CSSCLASS => B::SUBSKILL]
             );
         }
 
         return Html::getDiv(
             $content,
-            ['class' => 'skill-subskills']
-        );
-    }
-
-    private function renderNavigation(SkillDetailView $view): string
-    {
-        $content = '';
-        $class = 'skill-navigation';
-
-        if ($view->previous) {
-            $content .= Html::getLink(
-                '&lt; ' . htmlspecialchars($view->previous->name),
-                UrlGenerator::skill($view->previous->slug),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if ($view->next) {
-            $content .= Html::getLink(
-                htmlspecialchars($view->next->name) . ' &gt;',
-                UrlGenerator::skill($view->next->slug),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if (!$content) {
-            return '';
-        }
-
-        if (!$view->previous) {
-            $class .= ' only-next';
-        }
-
-        if (!$view->next) {
-            $class .= ' only-prev';
-        }
-
-        return Html::getDiv(
-            $content,
-            ['class' => $class]
+            [C::CSSCLASS => B::SKILL_SUBSKILLS]
         );
     }
 }

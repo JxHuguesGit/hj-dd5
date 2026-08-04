@@ -1,0 +1,111 @@
+@use "variables" as *;
+@use "cards" as *;
+
+/* =============================
+   LISTING
+   ============================= */
+
+.tool-card {
+
+    .tool-card-infos {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: .35rem 1.5rem;
+
+        p {
+            margin: 0;
+            color: $color-text-muted;
+            font-size: .9rem;
+            line-height: 1.45;
+        }
+
+        strong {
+            color: $color-text;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+    }    
+}
+
+/* =============================
+   DETAIL
+   ============================= */
+
+.tool-detail-description {
+    margin: 0 0 1.5rem;
+
+    color: $color-text-muted;
+    line-height: 1.5;
+}
+
+.tool-detail-origins {
+    margin-bottom: 1.5rem;
+
+    strong {
+        display: block;
+        margin-bottom: .5rem;
+    }
+}
+
+.tool-detail-origins-value {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+
+    .badge {
+        @include badge;
+    }
+}    
+
+.tool-detail-infos {
+    @include detail-info;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.tool-detail-info {
+    @include detail-info-row;
+
+    display: flex;
+    align-items: baseline;
+    gap: .35rem;
+
+    strong {
+        flex-shrink: 0;
+    }
+}
+
+.tool-detail-info-value {
+    color: $color-text;
+}
+
+.tool-detail-craftable-items {
+    @include detail-info;
+
+    margin-bottom: 1.5rem;
+}
+
+.tool-detail-craftable-items-value {
+    @include badge-list;
+
+    margin-top: .5rem;
+    margin-bottom: 0;
+
+    a {
+        @include badge;
+    }
+}
+
+/* =============================
+   TABLET
+   ============================= */
+
+@media (min-width: $breakpoint-tablet) {
+    .tool-detail-infos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

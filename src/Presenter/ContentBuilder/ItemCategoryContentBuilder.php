@@ -2,6 +2,7 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Presenter\ViewModel\ItemCategory;
@@ -22,13 +23,13 @@ final class ItemCategoryContentBuilder implements ContentBuilderInterface
                     $category->title
                 ),
                 $category->url,
-                'card'
+                B::CARD
             );
         }
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'item-category-grid']
+            [C::CSSCLASS => B::ITEM_CATEGORY_GRID]
         );
     }
 }

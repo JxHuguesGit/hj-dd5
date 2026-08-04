@@ -5,7 +5,7 @@ namespace src\Presenter\ContentBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
-use src\Presenter\ViewModel\SkillGroup;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\SkillRow;
 use src\Utils\Html;
 
@@ -28,31 +28,6 @@ final class SkillCardContentBuilder extends AbstractCardContentBuilder
             $htmlContent .= Html::getUl($ulContent, [C::CSSCLASS => strtolower(C::SUB_SKILLS)]);
         }
 
-        return Html::getBalise(H::BALISE_ARTICLE, $htmlContent, [C::CSSCLASS => B::SKILL_CARD]);
-    }
-
-    /** @param SkillGroup $group */
-    protected function renderGroupTitle(object $group): string
-    {
-        return Html::getBalise(
-            H::BALISE_H2,
-            htmlspecialchars($group->label),
-            [C::CSSCLASS => B::SKILL_GROUP_TITLE]
-        );
-    }
-
-    protected function getGroupsClass(): string
-    {
-        return B::SKILL_GROUPS;
-    }
-
-    protected function getGroupClass(): string
-    {
-        return B::SKILL_GROUP;
-    }
-
-    protected function getGridClass(): string
-    {
-        return B::SKILL_GRID;
+        return Html::getBalise(H::BALISE_ARTICLE, $htmlContent, [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::SKILL_CARD]);
     }
 }

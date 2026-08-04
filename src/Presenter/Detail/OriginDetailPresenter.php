@@ -1,8 +1,10 @@
 <?php
+
 namespace src\Presenter\Detail;
 
 use src\Constant\Bootstrap as B;
-use src\Constant\Constant as C;
+use src\Presenter\ViewModel\LinkView;
+use src\Presenter\ViewModel\OriginDetailView;
 use src\Presenter\ViewModel\OriginPageView;
 use src\Service\Domain\WpPostService;
 use src\Utils\Html;
@@ -16,51 +18,73 @@ class OriginDetailPresenter
 
     public function present(
         OriginPageView $viewData
-    ): array {
-        $wpPost = $this->wpPostService->getById($viewData->origin->postId ?? 0);
+    ): OriginDetailView {
+        $wpPost = $this->wpPostService->getById(
+            $viewData->origin->postId ?? 0
+        );
 
-        return [
-            C::TITLE       => $viewData->origin->name,
-            C::SLUG        => $viewData->origin->getSlug(),
-
-            C::ABILITIES   => $this->formatAbilities($viewData->abilities),
-            C::SKILLS      => $viewData->skills,
-
-            C::DESCRIPTION => $this->cleanContent($wpPost->post_content),
-            C::FEAT        => $viewData->feat ? [
-                C::NAME => $viewData->feat->name,
-                C::SLUG => $viewData->feat->getSlug(),
-            ] : null,
-            C::TOOL        => $viewData->tool ? [
-                C::NAME => $viewData->tool->name,
-                C::SLUG => $viewData->tool->getSlug(),
-            ] : null,
-            C::EQUIPMENT   => $this->formatItems($viewData->items),
-
-            C::PREV        => $viewData->previous ? [
-                C::NAME => $viewData->previous->name,
-                C::SLUG => $viewData->previous->getSlug(),
-            ] : null,
-            C::NEXT        => $viewData->next ? [
-                C::NAME => $viewData->next->name,
-                C::SLUG => $viewData->next->getSlug(),
-            ] : null,
-        ];
+        return new OriginDetailView(
+            name: $viewData->origin->name,
+            abilities: $this->formatAbilities($viewData->abilities),
+            skills: $viewData->skills,
+            description: $this->cleanContent($wpPost->post_content),
+            feat: $viewData->feat
+                ? new LinkView(
+                    name: $viewData->feat->name,
+                    slug: $viewData->feat->getSlug()
+                )
+                : null,
+            tool: $viewData->tool
+                ? new LinkView(
+                    name: $viewData->tool->name,
+                    slug: $viewData->tool->getSlug()
+                )
+                : null,
+            equipment: $this->formatItems($viewData->items),
+            previous: $viewData->previous
+                ? new LinkView(
+                    name: $viewData->previous->name,
+                    slug: $viewData->previous->getSlug()
+                )
+                : null,
+            next: $viewData->next
+                ? new LinkView(
+                    name: $viewData->next->name,
+                    slug: $viewData->next->getSlug()
+                )
+                : null,
+        );
     }
 
     private function formatItems(iterable $items): array
     {
         $cache = [];
+
         foreach ($items as $item) {
-            $cache[$item->slug]['quantity'] = ($cache[$item->slug]['quantity'] ?? 0) + 1;
-            $cache[$item->slug]['item']     = $item;
+            $cache[$item->slug]['quantity'] =
+                ($cache[$item->slug]['quantity'] ?? 0) + 1;
+
+            $cache[$item->slug]['item'] = $item;
         }
-        return array_map(fn($data) => $data['quantity'] . ' ' . Html::getLink($data['item']->name, UrlGenerator::item($data['item']->slug), B::TEXT_DARK), $cache);
+
+        return array_map(
+            fn($data) =>
+                $data['quantity'] . ' ' .
+                Html::getLink(
+                    $data['item']->name,
+                    UrlGenerator::item($data['item']->slug),
+                    B::TEXT_DARK
+                ),
+            $cache
+        );
     }
 
     private function formatAbilities(iterable $abilities): array
     {
-        return array_map(fn($a) => $a->name, $abilities->toArray());
+        return array_map(
+            fn($a) => $a->name,
+            $abilities->toArray()
+        );
     }
 
     private function cleanContent(string $content): string

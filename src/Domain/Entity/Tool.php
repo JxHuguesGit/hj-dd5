@@ -18,14 +18,18 @@ final class Tool extends Item
 
     public const SPECIFIC_FIELDS = [
         F::PARENTID,
+        F::ABILITYID,
 
         F::PARENTNAME,
+        F::ABILITYNAME,
     ];
 
     public const SPECIFIC_FIELD_TYPES = [
         F::PARENTID => FieldType::INT,
+        F::ABILITYID => FieldType::INTNULLABLE,
 
         F::PARENTNAME => FieldType::STRINGNULLABLE,
+        F::ABILITYNAME => FieldType::STRINGNULLABLE,
     ];
 
     public const FIELDS = [

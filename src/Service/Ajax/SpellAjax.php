@@ -17,7 +17,7 @@ class SpellAjax
         $spellListePresenter = new SpellListPresenter();
         $spellContentBuilder = new SpellCardContentBuilder();
 
-        parse_str(html_entity_decode(Session::fromPost('spellFilter')), $fromPost);
+        parse_str(html_entity_decode(Session::fromPost(C::SPELL_FILTER)), $fromPost);
 
         $criteria = SpellCriteria::fromRequest([
             'page'             => Session::fromPost('page', 1),

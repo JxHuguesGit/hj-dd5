@@ -23,6 +23,10 @@ class Item extends Entity
         F::WEIGHT,
         F::GOLDPRICE,
         F::TYPE,
+        F::TOOLID,
+
+        F::BUILDNAME,
+        F::BUILDSLUG,
     ];
 
     public const COMMON_FIELDS = [
@@ -32,6 +36,10 @@ class Item extends Entity
         F::WEIGHT,
         F::GOLDPRICE,
         F::TYPE,
+        F::TOOLID,
+        
+        F::BUILDNAME,
+        F::BUILDSLUG,
     ];
 
     public const FIELD_TYPES = [
@@ -41,6 +49,9 @@ class Item extends Entity
         F::WEIGHT =>      FieldType::FLOAT,
         F::GOLDPRICE =>   FieldType::FLOAT,
         F::TYPE =>        FieldType::STRING,
+        F::TOOLID =>      FieldType::INTNULLABLE,
+        F::BUILDNAME =>   FieldType::STRINGNULLABLE,
+        F::BUILDSLUG =>   FieldType::STRINGNULLABLE,
     ];
 
     public const COMMON_FIELD_TYPES = [
@@ -50,6 +61,9 @@ class Item extends Entity
         F::WEIGHT =>      FieldType::FLOAT,
         F::GOLDPRICE =>   FieldType::FLOAT,
         F::TYPE =>        FieldType::STRING,
+        F::TOOLID =>      FieldType::INTNULLABLE,
+        F::BUILDNAME =>   FieldType::STRINGNULLABLE,
+        F::BUILDSLUG =>   FieldType::STRINGNULLABLE,
     ];
 
     public const EDITABLE_FIELDS = [
@@ -57,6 +71,7 @@ class Item extends Entity
         F::WEIGHT,
         F::GOLDPRICE,
         F::TYPE,
+        F::TOOLID,
     ];
 
     public function stringify(): string

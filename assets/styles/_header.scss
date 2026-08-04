@@ -11,7 +11,7 @@ header.topbar {
 
     &::before {
         animation: slide 1.4s forwards ease-out;
-        background: url(../images/DDSplat.png) no-repeat left center;
+        background: url("../images/DDSplat.png") no-repeat left center;
         background-size: auto 100%;
         content: "";
         inset: 0;

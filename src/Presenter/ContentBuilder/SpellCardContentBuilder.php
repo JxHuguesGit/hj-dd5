@@ -17,17 +17,17 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
     {
         $contentFilter = Html::getDiv(
             Html::getDiv(
-                Html::getIcon(Icon::FILTER) . ' Filtrer les sorts',
+                Html::getIcon(Icon::FILTER) . L::SPACE . L::FILTRE_SPELLS,
                 [
-                    C::CSSCLASS => 'ajaxAction',
+                    C::CSSCLASS => C::AJAXACTION,
                     C::DATA     => [
                         C::TRIGGER => C::CLICK,
                         C::ACTION  => C::OPENMODAL,
-                        C::TARGET  => 'spellFilter',
+                        C::TARGET  => C::SPELL_FILTER,
                     ],
                 ]
             ),
-            [C::CSSCLASS => 'spell-filter']
+            [C::CSSCLASS => C::SPELLFILTER]
         );
 
         $contentSpellGrid = '';
@@ -38,14 +38,15 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
 
         $contentSpellList = Html::getDiv(
             $contentSpellGrid,
-            [C::CSSCLASS => B::SPELL_GRID]
+            [C::CSSCLASS => B::DATA_GRID . L::SPACE . B::SPELL_GRID]
         );
 
         $strIcon = Html::getIcon(Icon::CIRCLEPLUS);
+
         $contentSpellList .= Html::getDiv(
             $strIcon,
             [
-                C::CSSCLASS => 'ajaxAction spell-load-more',
+                C::CSSCLASS => C::AJAXACTION . L::SPACE . C::SPELLLOADMORE,
                 C::DATA     => [
                     C::TRIGGER => C::CLICK,
                     C::ACTION  => C::LOADMORESPELLS,
@@ -55,7 +56,7 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $contentFilter . $contentSpellList,
-            [C::CSSCLASS => B::SPELL_LIST]
+            [C::CSSCLASS => B::DATA_LIST . L::SPACE . B::SPELL_LIST]
         );
     }
 
@@ -106,7 +107,7 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
         return Html::getBalise(
             H::BALISE_ARTICLE,
             $content,
-            [C::CSSCLASS => B::SPELL_CARD]
+            [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::SPELL_CARD]
         );
     }
 

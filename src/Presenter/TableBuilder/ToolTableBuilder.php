@@ -11,7 +11,7 @@ use src\Utils\Table;
 
 class ToolTableBuilder extends AbstractTableBuilder
 {
-    public function build(iterable $groups, array $params = []): Table
+    public function build(mixed $groups, array $params = []): Table
     {
         $headers = [L::NAMES, L::HISTORIQUES, L::WEIGHT, L::PRICE];
         $table   = $this->createTable(count($headers), $params);

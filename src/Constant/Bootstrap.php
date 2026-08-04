@@ -41,16 +41,49 @@ class Bootstrap
     public const GROUP        = 'group';
     public const CARD         = 'card';
     public const ORIGIN       = 'origin';
+    public const ORIGINS      = 'origins';
     public const SPELL        = 'spell';
+    public const SUBSKILL     = 'subskill';
+    public const SUBSKILLS    = 'subskills';
+    public const DATA         = 'data';
+    public const DETAIL       = 'detail';
+    public const ABILITY      = 'ability';
 
     public const FLOAT_START = 'float-start';
 
+    public const DATA_CARD        = self::DATA . '-' . self::CARD;
+    public const DATA_GRID        = self::DATA . '-' . self::GRID;
+    public const DATA_GROUP       = self::DATA . '-' . self::GROUP;
+    public const DATA_LIST        = self::DATA . '-' . self::LIST;
+    public const DATA_GROUP_TITLE = self::DATA_GROUP . '-' . self::TITLE;
+
+    public const DATA_DETAIL      = self::DATA . '-' . self::DETAIL;
+    public const DATA_DETAIL_HEADER = self::DATA . '-' . self::DETAIL . '-header';
+    public const DATA_DETAIL_NAVIGATION = self::DATA . '-' . self::DETAIL . '-navigation';
+    public const DATA_DETAIL_DESCRIPTION = self::DATA . '-' . self::DETAIL . '-description';
+    public const DATA_DETAIL_INFO = 'data-detail-info';
+    public const DATA_DETAIL_INFOS = 'data-detail-infos';
+    public const GEAR_DETAIL_INFOS = 'gear-detail-infos';
+    public const GEAR_DETAIL_DESCRIPTION = 'gear-detail-description';
+    public const GEAR_DETAIL_INFO = 'gear-detail-info';
+    
+    public const ABILITY_DESCRIPTION = 'ability-description';
+    public const ABILITY_TITLE = 'ability-title';
+    public const ABILITY_CHILDREN = 'ability-children';
+    public const ABILITY_OPTIONS = 'ability-options';
     public const FEAT_GROUPS  = self::FEAT . '-' . self::GROUPS;
     public const FEAT_GRID    = self::FEAT . '-' . self::GRID;
+    public const FEAT_ORIGIN  = self::FEAT . '-' . self::ORIGIN;
+    public const FEAT_ORIGINS = self::FEAT . '-' . self::ORIGINS;
     public const FEAT_GROUP   = self::FEAT . '-' . self::GROUP;
     public const FEAT_CARD   = self::FEAT . '-' . self::CARD;
     public const FEAT_GROUP_TITLE = self::FEAT . '-' . self::GROUP . '-' . self::TITLE;
+    public const FEAT_PREREQUIS = 'feat-prerequisite';
+    public const SKILL_DETAIL   = self::SKILL . '-' . self::DETAIL;
+    public const SKILL_ABILITY = self::SKILL . '-ability';
+    public const SKILL_SUBSKILLS = self::SKILL . '-' . self::SUBSKILLS;
     public const SKILL_GROUPS = self::SKILL . '-' . self::GROUPS;
+    public const SKILL_ORIGINS = self::SKILL . '-' . self::ORIGINS;
     public const SKILL_GRID   = self::SKILL . '-' . self::GRID;
     public const SKILL_GROUP  = self::SKILL . '-' . self::GROUP;
     public const SKILL_CARD   = self::SKILL . '-' . self::CARD;
@@ -58,12 +91,19 @@ class Bootstrap
     public const SPECIE_GROUPS  = self::SPECIE . '-' . self::GROUPS;
     public const SPECIE_GRID    = self::SPECIE . '-' . self::GRID;
     public const SPECIE_GROUP   = self::SPECIE . '-' . self::GROUP;
+    public const SPECIE_PROPERTIES  = self::SPECIE . '-properties';
+    public const SPECIE_DESCRIPTION = self::SPECIE . '-description';
+    public const SPECIE_ABILITIES  = self::SPECIE . '-abilities';
     public const SPECIE_CARD   = self::SPECIE . '-' . self::CARD;
     public const SPECIE_GROUP_TITLE = self::SPECIE . '-' . self::GROUP . '-' . self::TITLE;
     public const ORIGIN_GROUPS  = self::ORIGIN . '-' . self::GROUPS;
     public const ORIGIN_GRID    = self::ORIGIN . '-' . self::GRID;
     public const ORIGIN_GROUP   = self::ORIGIN . '-' . self::GROUP;
     public const ORIGIN_CARD   = self::ORIGIN . '-' . self::CARD;
+    public const ORIGIN_DESCRIPTION = 'origin-description';
+    public const ORIGIN_PROPERTY = 'origin-property';
+    public const ORIGIN_EQUIPMENT = 'origin-equipment';
+    public const ORIGIN_PROPERTIES = 'origin-properties';
     public const ORIGIN_GROUP_TITLE = self::ORIGIN . '-' . self::GROUP . '-' . self::TITLE;
     public const SPELL_GROUPS  = self::SPELL . '-' . self::GROUPS;
     public const SPELL_GRID    = self::SPELL . '-' . self::GRID;
@@ -75,6 +115,17 @@ class Bootstrap
     public const SPELL_DETAIL   = self::SPELL . '-detail';
     public const SPELL_DETAIL_INFO   = self::SPELL . '-detail-info';
     public const SPELL_DETAIL_NAVIGATION   = self::SPELL . '-detail-navigation';
+    public const TOOL_TYPE = 'tool-type';
+    public const TOOL_DETAIL_DESCRIPTION = 'tool-detail-description';
+    public const TOOL_DETAIL_CRAFT_ITEM_VALUE = 'tool-detail-craftable-items-value';
+    public const TOOL_DETAIL_CRAFT_ITEMS = 'tool-detail-craftable-items';
+    public const TOOL_DETAIL_ORIGINS_VALUE = 'tool-detail-origins-value';
+    public const TOOL_DETAIL_ORIGINS = 'tool-detail-origins';
+    public const TOOL_CARD_ORIGINS_LABEL = 'tool-card-origins-label';
+    public const TOOL_CARD_WEIGHT = 'tool-card-weight';
+    public const TOOL_CARD_ORIGINS = 'tool-card-origins';
+    public const TOOL_CARD_PRICE = 'tool-card-price';
+    public const ITEM_CATEGORY_GRID = 'item-category-grid';
 
     public const ARMOR = 'armor';
     public const ARMOR_GRID = self::ARMOR . '-' . self::GRID;
@@ -87,11 +138,32 @@ class Bootstrap
     public const ARMOR_DETAIL_NAVIGATION   = self::ARMOR . '-detail-navigation';
 
     public const WEAPON = 'weapon';
+    public const WEAPON_GRID = self::WEAPON . '-' . self::GRID;
+    public const WEAPON_GROUP = self::WEAPON . '-' . self::GROUP;
+    public const WEAPON_CARD = self::WEAPON . '-' . self::CARD;
+    public const WEAPON_CARD_INFO   = self::WEAPON . '-card-info';
+    public const WEAPON_LIST    = self::WEAPON . '-' . self::LIST;
     public const WEAPON_DETAIL   = self::WEAPON . '-detail';
     public const WEAPON_DETAIL_INFO   = self::WEAPON . '-detail-info';
     public const WEAPON_DETAIL_INFO_VALUE = self::WEAPON . '-detail-info-value';
     public const WEAPON_DETAIL_INFOS  = self::WEAPON . '-detail-infos';
     public const WEAPON_DETAIL_NAVIGATION   = self::WEAPON   . '-detail-navigation';
+
+    public const TOOL = 'tool';
+    public const TOOL_GRID = self::TOOL . '-' . self::GRID;
+    public const TOOL_GROUP = self::TOOL . '-' . self::GROUP;
+    public const TOOL_CARD = self::TOOL . '-' . self::CARD;
+    public const TOOL_CARD_INFOS = self::TOOL . '-' . self::CARD . '-infos';
+    public const TOOL_LIST    = self::TOOL . '-' . self::LIST;
+    public const TOOL_DETAIL   = self::TOOL . '-detail';
+    public const TOOL_DETAIL_INFO   = self::TOOL . '-detail-info';
+    public const TOOL_DETAIL_INFO_VALUE = self::TOOL . '-detail-info-value';
+    public const TOOL_DETAIL_INFOS  = self::TOOL . '-detail-infos';
+    public const TOOL_DETAIL_NAVIGATION   = self::TOOL   . '-detail-navigation';
+
+    public const GEAR = 'gear';
+    public const GEAR_GRID = self::GEAR . '-' . self::GRID;
+    public const GEAR_CARD = self::GEAR . '-' . self::CARD;
 
 
     public const ROW_DARK_STRIPED = 'row-dark-striped';

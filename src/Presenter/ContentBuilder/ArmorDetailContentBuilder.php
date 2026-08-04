@@ -6,29 +6,27 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
-use src\Domain\Entity\Armor;
 use src\Presenter\ListPresenter\ArmorListPresenter;
-use src\Presenter\ViewModel\ArmorPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
 
-final class ArmorDetailContentBuilder implements ContentBuilderInterface
+final class ArmorDetailContentBuilder extends AbstractDetailContentBuilder
 {
-    public function build(object $view, array $params = []): string
+
+    protected function renderDetailHeader(object $view) : string
     {
-        /** @var ArmorPageView $view */
+        return $this->renderHeader($view->item->name);
+    }
 
+    protected function getDetailUrl(string $slug): string
+    {
+        return UrlGenerator::item($slug);
+    }
+
+    protected function renderDetailBody(object $view, array $params = []) : string
+    {
         $armor = $view->item;
-
-        $content = Html::getBalise(
-            'header',
-            Html::getBalise(
-                H::BALISE_H1,
-                $armor->name
-            ),
-            [C::CSSCLASS => 'armor-detail-header']
-        );
 
         $contentInfo =
             $this->renderInfo(
@@ -41,13 +39,13 @@ final class ArmorDetailContentBuilder implements ContentBuilderInterface
             )
             . $this->renderInfo(
                 L::FORCE,
-                $armor->strengthPenalty ?: '-'
+                $armor->strengthPenalty ?: L::DASH
             )
             . $this->renderInfo(
                 L::STEALTH,
                 $armor->stealthDisadvantage
                     ? L::DISADVANTAGE
-                    : '-'
+                    : L::DASH
             )
             . $this->renderInfo(
                 L::WEIGHT,
@@ -57,63 +55,19 @@ final class ArmorDetailContentBuilder implements ContentBuilderInterface
                 L::PRICE,
                 Utils::getStrPrice($armor->goldPrice)
             );
-        $content .= Html::getDiv(
+
+        return Html::getDiv(
             $contentInfo,
             [C::CSSCLASS => B::ARMOR_DETAIL_INFOS]
         );
-
-        $content .= $this->renderNavigation(
-            $view->previous,
-            $view->next
-        );
-
-        return Html::getBalise(
-            H::BALISE_ARTICLE,
-            $content,
-            [C::CSSCLASS => B::ARMOR_DETAIL]
-        );
     }
-
+    
     private function renderInfo(string $label, string $value): string
     {
         return Html::getBalise(
             H::BALISE_P,
             sprintf(L::STRONG_INFO, $label, $value),
             [C::CSSCLASS => B::ARMOR_DETAIL_INFO]
-        );
-    }
-
-    private function renderNavigation(
-        ?Armor $previous,
-        ?Armor $next
-    ): string {
-        $previousHtml = $previous
-            ? Html::getLink(
-                '&lt; ' . $previous->name,
-                UrlGenerator::item($previous->slug),
-                implode(' ', [
-                    B::BTN,
-                    B::BTN_SM,
-                    B::BTN_OUTLINE_DARK,
-                ])
-            )
-            : C::EMPTY_SPAN;
-
-        $nextHtml = $next
-            ? Html::getLink(
-                $next->name . ' &gt;',
-                UrlGenerator::item($next->slug),
-                implode(' ', [
-                    B::BTN,
-                    B::BTN_SM,
-                    B::BTN_OUTLINE_DARK,
-                ])
-            )
-            : C::EMPTY_SPAN;
-
-        return Html::getDiv(
-            $previousHtml . $nextHtml,
-            [C::CSSCLASS => B::ARMOR_DETAIL_NAVIGATION]
         );
     }
 }

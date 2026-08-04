@@ -42,12 +42,14 @@ class ToolRepository extends Repository implements ToolRepositoryInterface
     public function findAllWithRelations(ToolCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT i.".F::ID." as ".F::ID.", ".F::PARENTID."
+            SELECT i.".F::ID." as ".F::ID.", ".F::PARENTID.", i.".F::DESCRIPTION."
                 , i.".F::NAME.", i.".F::SLUG.", i.".F::WEIGHT.", i.".F::GOLDPRICE."
                 , i2.".F::NAME." as ".F::PARENTNAME."
+                , a.".F::NAME." as ".F::ABILITYNAME."
             FROM " . Table::TOOL . " t
             INNER JOIN " . Table::ITEM . " i ON i.id = t.id
-            LEFT JOIN " . Table::ITEM . " i2 ON i2.id = parentId
+            LEFT JOIN " . Table::ITEM . " i2 ON i2.id = t.parentId
+            LEFT JOIN " . Table::ABILITY . " a ON a.id = t.abilityId
         ";
 
         $queryBuilder = new QueryBuilder();

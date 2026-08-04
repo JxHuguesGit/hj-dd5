@@ -2,43 +2,48 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Constant\Bootstrap as B;
+use src\Constant\Constant as C;
 use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\LinkView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
-final class FeatDetailContentBuilder implements ContentBuilderInterface
+final class FeatDetailContentBuilder extends AbstractDetailContentBuilder
 {
-    public function build(mixed $data, array $params = []): string
-    {
-        /** @var FeatDetailView $view */
-        $view = $data;
 
-        return Html::getBalise(
-            'section',
-            $this->renderContent($view),
-            ['class' => 'feat-detail']
-        );
-    }
-
-    private function renderContent(FeatDetailView $view): string
+    protected function renderDetailHeader(object $view) : string
     {
-        return
-            $this->renderHeader($view)
-            . $this->renderDescription($view)
-            . $this->renderOrigins($view)
-            . $this->renderNavigation($view);
-    }
-
-    private function renderHeader(FeatDetailView $view): string
-    {
-        return sprintf(
-            '<header class="feat-detail-header">
-                <h1>%s</h1>%s
-            </header>',
-            htmlspecialchars($view->name),
+        return $this->renderHeader(
+            $view->name,
             $this->renderType($view)
         );
+    }
+
+    protected function getDetailUrl(string $slug): string
+    {
+        return UrlGenerator::feat($slug);
+    }
+
+    protected function renderDetailBody(object $view, array $params = []) : string
+    {
+        return
+            $this->renderDescription($view)
+            . $this->renderOrigins($view);
+    }
+
+    private function renderType(FeatDetailView $view): string
+    {
+        $type = Html::getLink(
+            htmlspecialchars($view->type->label),
+            UrlGenerator::feats(L::DASH . $view->type->slug)
+        );
+
+        if ($view->type->prerequisite) {
+            $type .= htmlspecialchars($view->type->prerequisite) . ')';
+        }
+
+        return $type;
     }
 
     private function renderDescription(FeatDetailView $view): string
@@ -49,24 +54,7 @@ final class FeatDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $view->description,
-            ['class' => 'feat-description']
-        );
-    }
-
-    private function renderType(FeatDetailView $view): string
-    {
-        $type = Html::getLink(
-            htmlspecialchars($view->type->label),
-            UrlGenerator::feats('-'.$view->type->slug)
-        );
-
-        if ($view->type->prerequisite) {
-            $type .= htmlspecialchars($view->type->prerequisite) . ')';
-        }
-
-        return Html::getSpan(
-            $type,
-            ['class' => 'feat-type']
+            [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION]
         );
     }
 
@@ -86,53 +74,13 @@ final class FeatDetailContentBuilder implements ContentBuilderInterface
                     htmlspecialchars($origin->name),
                     UrlGenerator::origin($origin->slug)
                 ),
-                ['class' => 'feat-origin']
+                [C::CSSCLASS => B::FEAT_ORIGIN]
             );
         }
 
         return Html::getDiv(
             $content,
-            ['class' => 'feat-origins']
-        );
-    }
-
-    private function renderNavigation(FeatDetailView $view): string
-    {
-        $content = '';
-
-        if ($view->previous) {
-            $content .= Html::getLink(
-                '&lt; ' . htmlspecialchars($view->previous->name),
-                UrlGenerator::feat($view->previous->slug),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if ($view->next) {
-            $content .= Html::getLink(
-                htmlspecialchars($view->next->name) . ' &gt;',
-                UrlGenerator::feat($view->next->slug),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if ($content === '') {
-            return '';
-        }
-
-        $class = 'feat-navigation';
-
-        if (!$view->previous) {
-            $class .= ' only-next';
-        }
-
-        if (!$view->next) {
-            $class .= ' only-prev';
-        }
-
-        return Html::getDiv(
-            $content,
-            ['class' => $class]
+            [C::CSSCLASS => B::FEAT_ORIGINS]
         );
     }
 }

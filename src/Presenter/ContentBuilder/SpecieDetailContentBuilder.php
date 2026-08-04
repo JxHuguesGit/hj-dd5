@@ -2,8 +2,10 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\AbilityOptionView;
 use src\Presenter\ViewModel\AbilityView;
 use src\Presenter\ViewModel\SpecieDetailView;
@@ -11,38 +13,24 @@ use src\Service\Formatter\ShortcodeFormatter;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
-final class SpecieDetailContentBuilder implements ContentBuilderInterface
+final class SpecieDetailContentBuilder extends AbstractDetailContentBuilder
 {
     public function __construct(
         private ShortcodeFormatter $shortcodeFormatter
     ) {}
 
-    public function build(mixed $data, array $params = []): string
+    protected function getDetailUrl(string $slug): string
     {
-        /** @var SpecieDetailView $data */
+        return UrlGenerator::specie($slug);
+    }
 
-        $content = '';
-
-        $content .= Html::getBalise(
-            H::BALISE_H1,
-            htmlspecialchars($data->name)
-        );
-
-        $content .= $this->renderProperties($data);
-
-        $content .= Html::getDiv(
-            $data->description,
-            [C::CSSCLASS => 'specie-description']
-        );
-
-        $content .= $this->renderAbilities($data->abilities);
-
-        $content .= $this->renderNavigation($data);
-
-        return Html::getDiv(
-            $content,
-            [C::CSSCLASS => 'specie-detail']
-        );
+    protected function renderDetailBody(object $view, array $params = []) : string
+    {
+        return
+            $this->renderProperties($view)
+            . $this->renderDescription($view)
+            . $this->renderAbilities($view->abilities)
+        ;
     }
 
     private function renderProperties(SpecieDetailView $view): string
@@ -52,30 +40,21 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
         if ($view->creatureType !== '') {
             $content .= Html::getBalise(
                 H::BALISE_P,
-                sprintf(
-                    '<strong>Type :</strong> %s',
-                    htmlspecialchars($view->creatureType)
-                )
+                sprintf(L::STRONG_INFO, L::TYPE . L::COLON, htmlspecialchars($view->creatureType))
             );
         }
 
         if ($view->sizeCategory !== '') {
             $content .= Html::getBalise(
                 H::BALISE_P,
-                sprintf(
-                    '<strong>Taille :</strong> %s',
-                    htmlspecialchars($view->sizeCategory)
-                )
+                sprintf(L::STRONG_INFO, L::HEIGHT . L::COLON, htmlspecialchars($view->sizeCategory))
             );
         }
 
         if ($view->speed !== '') {
             $content .= Html::getBalise(
                 H::BALISE_P,
-                sprintf(
-                    '<strong>Vitesse :</strong> %s',
-                    htmlspecialchars($view->speed)
-                )
+                sprintf(L::STRONG_INFO, L::SPEED . L::COLON, htmlspecialchars($view->speed))
             );
         }
 
@@ -85,7 +64,15 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'specie-properties']
+            [C::CSSCLASS => B::SPECIE_PROPERTIES]
+        );
+    }
+
+    private function renderDescription(SpecieDetailView $view): string
+    {
+        return Html::getDiv(
+            $view->description,
+            [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION . L::SPACE . B::SPECIE_DESCRIPTION]
         );
     }
 
@@ -103,24 +90,22 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'specie-abilities']
+            [C::CSSCLASS => B::SPECIE_ABILITIES]
         );
     }
 
     private function renderAbility(AbilityView $ability): string
     {
-        $content = '';
-
-        $content .= Html::getBalise(
+        $content = Html::getBalise(
             H::BALISE_H3,
             htmlspecialchars($ability->name),
-            [C::CSSCLASS => 'ability-title']
+            [C::CSSCLASS => B::ABILITY_TITLE]
         );
 
         if ($ability->description !== '') {
             $content .= Html::getDiv(
                 $this->shortcodeFormatter->parse($ability->description),
-                [C::CSSCLASS => 'ability-description']
+                [C::CSSCLASS => B::ABILITY_DESCRIPTION]
             );
         }
 
@@ -134,24 +119,22 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'ability']
+            [C::CSSCLASS => B::ABILITY]
         );
     }
 
     private function renderOption(AbilityOptionView $option): string
     {
-        $content = '';
-
-        $content .= Html::getBalise(
+        $content = Html::getBalise(
             H::BALISE_H3,
             htmlspecialchars($option->name),
-            [C::CSSCLASS => 'ability-title']
+            [C::CSSCLASS => B::ABILITY_TITLE]
         );
 
         if ($option->description !== '') {
             $content .= Html::getDiv(
                 $this->shortcodeFormatter->parse($option->description),
-                [C::CSSCLASS => 'ability-description']
+                [C::CSSCLASS => B::ABILITY_DESCRIPTION]
             );
         }
 
@@ -159,10 +142,10 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'ability']
+            [C::CSSCLASS => B::ABILITY]
         );
     }
-    
+
     private function renderChildren(iterable $children): string
     {
         $content = '';
@@ -173,7 +156,7 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'ability-children']
+            [C::CSSCLASS => B::ABILITY_CHILDREN]
         );
     }
 
@@ -187,48 +170,7 @@ final class SpecieDetailContentBuilder implements ContentBuilderInterface
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => 'ability-options']
-        );
-    }
-
-
-    private function renderNavigation(SpecieDetailView $view): string
-    {
-        $content = '';
-
-        if ($view->previous) {
-            $content .= Html::getLink(
-                '&lt; ' . htmlspecialchars($view->previous->name),
-                UrlGenerator::specie($view->previous->slug),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if ($view->next) {
-            $content .= Html::getLink(
-                htmlspecialchars($view->next->name) . ' &gt;',
-                UrlGenerator::specie($view->next->slug),
-                'btn btn-sm btn-outline-dark'
-            );
-        }
-
-        if ($content === '') {
-            return '';
-        }
-
-        $class = 'specie-navigation';
-
-        if (!$view->previous) {
-            $class .= ' only-next';
-        }
-
-        if (!$view->next) {
-            $class .= ' only-prev';
-        }
-
-        return Html::getDiv(
-            $content,
-            ['class' => $class]
+            [C::CSSCLASS => B::ABILITY_OPTIONS]
         );
     }
 }

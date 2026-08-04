@@ -2,52 +2,76 @@
 
 namespace src\Presenter\ContentBuilder;
 
-use src\Collection\Collection;
+use src\Constant\Bootstrap as B;
+use src\Constant\Constant as C;
+use src\Constant\Html as H;
 use src\Constant\Language as L;
-use src\Presenter\ViewModel\WeaponGroup;
 use src\Presenter\ViewModel\WeaponRow;
 use src\Utils\Html;
 
-final class WeaponCardContentBuilder implements ContentBuilderInterface
+final class WeaponCardContentBuilder extends AbstractCardContentBuilder
 {
-    public function build(object $groups, array $params = []): string
+    /** @param WeaponRow $row */
+    protected function renderItem(object $row): string
     {
-        $content = '<div class="weapon-list">';
+        /** @var WeaponRow $weapon */
+        $weapon = $row;
 
-        foreach ($groups as $group) {
-            /** @var WeaponGroup $group */
-            $content .= '<div class="weapon-group">';
-            $content .= '<h2>' . $group->label . '</h2>';
-            $content .= '<div class="weapon-grid">';
+        $content = Html::getBalise(
+            H::BALISE_H3,
+            Html::getLink($weapon->name, $weapon->url)
+        );
 
-            foreach ($group->rows as $row) {
-                /** @var WeaponRow $row */
-                $content .= '<article class="weapon-card">';
-                $content .= '<h3>'
-                    . Html::getLink($row->name, $row->url)
-                    . '</h3>';
+        $content .= $this->renderInfo(
+            L::DAMAGES,
+            $weapon->damage,
+            [C::CSSCLASS => B::WEAPON_CARD_INFO]
+        );
 
-                $content .= '<div class="weapon-card-info"><strong>' . L::DAMAGES . '</strong> '
-                    . $row->damage . '</div>';
+        $content .= $this->renderInfo(
+            L::PROPERTIES,
+            Html::getSpan(
+                $weapon->properties,
+                [C::CSSCLASS => C::WEAPON_PROPERTIES]
+            ),
+            [C::CSSCLASS => B::WEAPON_CARD_INFO]
+        );
 
-                $content .= '<div class="weapon-card-info"><strong>' . L::PROPERTIES . '</strong> <span class="weapon-properties">'
-                    . $row->properties . '</span></div>';
+        $content .= $this->renderInfo(
+            L::WEAPON_PROP,
+            $weapon->masteryLink,
+            [C::CSSCLASS => B::WEAPON_CARD_INFO]
+        );
 
-                $content .= '<div class="weapon-card-info"><strong>' . L::WEAPON_PROP . '</strong> '
-                    . $row->masteryLink . '</div>';
+        $content .= $this->renderInfo(
+            L::WEIGHT,
+            $weapon->weight,
+            [C::CSSCLASS => B::WEAPON_CARD_INFO]
+        );
 
-                $content .= '<div class="weapon-card-info"><strong>' . L::WEIGHT . '</strong> '
-                    . $row->weight . '</div>';
+        $content .= $this->renderInfo(
+            L::PRICE,
+            $weapon->price,
+            [C::CSSCLASS => B::WEAPON_CARD_INFO]
+        );
 
-                $content .= '<div class="weapon-card-info"><strong>' . L::PRICE . '</strong> '
-                    . $row->price . '</div>';
+        return Html::getBalise(
+            H::BALISE_ARTICLE,
+            $content,
+            [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::WEAPON_CARD]
+        );
+    }
 
-                $content .= '</article>';
-            }
-
-            $content .= '</div></div>';
-        }
-
-        return $content . '</div>';
+    protected function renderInfo(string $label, string $value, array $attributes = []): string
+    {
+        return Html::getBalise(
+            H::BALISE_DIV,
+            sprintf(
+                L::STRONG_INFO,
+                $label,
+                $value
+            ),
+            $attributes
+        );
     }
 }

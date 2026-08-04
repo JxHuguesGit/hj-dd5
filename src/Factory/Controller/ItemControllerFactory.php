@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory\Controller;
 
+use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Controller\Public\{
     PublicBase,
@@ -23,11 +24,13 @@ use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
 use src\Presenter\ContentBuilder\ArmorCardContentBuilder;
 use src\Presenter\ContentBuilder\ArmorDetailContentBuilder;
+use src\Presenter\ContentBuilder\GearCardContentBuilder;
+use src\Presenter\ContentBuilder\GearDetailContentBuilder;
+use src\Presenter\ContentBuilder\ToolCardContentBuilder;
+use src\Presenter\ContentBuilder\ToolDetailContentBuilder;
 use src\Presenter\ContentBuilder\WeaponCardContentBuilder;
 use src\Presenter\ContentBuilder\WeaponDetailContentBuilder;
-use src\Presenter\Detail\{GearDetailPresenter, ToolDetailPresenter};
 use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolListPresenter, WeaponListPresenter};
-use src\Presenter\TableBuilder\{ItemTableBuilder, ToolTableBuilder};
 use src\Presenter\ViewModel\{ArmorPageView, GearPageView, ToolPageView, WeaponPageView};
 use src\Query\{QueryBuilder, QueryExecutor};
 use src\Repository\WeaponPropertyValueRepository;
@@ -60,7 +63,10 @@ final class ItemControllerFactory
             C::TOOL   => new PublicItemTool(
                 $this->readerFactory->tool(),
                 new ToolListPresenter($this->readerFactory->origin()),
-                new PageList($this->renderer, new ToolTableBuilder()),
+                new PageList(
+                    $this->renderer,
+                    new ToolCardContentBuilder()
+                ),
                 $menu
             ),
             C::WEAPON => new PublicItemWeapon(
@@ -79,7 +85,10 @@ final class ItemControllerFactory
             C::GEAR   => new PublicItemGear(
                 $this->readerFactory->item(),
                 new GearListPresenter(),
-                new PageList($this->renderer, new ItemTableBuilder()),
+                new PageList(
+                    $this->renderer,
+                    new GearCardContentBuilder()
+                ),
                 $menu
             ),
             default              => null,
@@ -108,14 +117,16 @@ final class ItemControllerFactory
         $nav = $this->readerFactory->item()->getPreviousAndNext($item);
 
         return new PublicItemGearDetail(
-            new GearDetailPresenter(),
             $menu,
             new GearPageView(
                 $item,
                 $nav[C::PREV],
                 $nav[C::NEXT],
             ),
-            new PageItemGear($this->renderer)
+            new PageItemGear(
+                $this->renderer,
+                new GearDetailContentBuilder()
+            )
         );
     }
 
@@ -126,17 +137,23 @@ final class ItemControllerFactory
             return null;
         }
 
+        $origins = $this->readerFactory->origin()->originsByTool($item);
+        $craftableItems = $this->readerFactory->item()->craftableItemsByTool($item);
         $nav = $this->readerFactory->tool()->getPreviousAndNext($item);
 
         return new PublicItemToolDetail(
-            new ToolDetailPresenter(),
             $menu,
             new ToolPageView(
                 $item,
+                $origins,
+                $craftableItems,
                 $nav[C::PREV],
                 $nav[C::NEXT],
             ),
-            new PageItemTool($this->renderer)
+            new PageItemTool(
+                $this->renderer,
+                new ToolDetailContentBuilder()
+            )
         );
     }
 

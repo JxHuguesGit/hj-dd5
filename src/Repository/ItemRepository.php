@@ -42,9 +42,13 @@ class ItemRepository extends Repository implements ItemRepositoryInterface
     public function findAllWithRelations(ItemCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT id, ".F::NAME.", ".F::SLUG.", ".F::DESCRIPTION.",
-                ".F::WEIGHT.", ".F::GOLDPRICE.", ".F::TYPE."
-            FROM " . Table::ITEM . " ";
+            SELECT i.".F::ID." as ".F::ID.", i.".F::NAME." AS ".F::NAME.", i.".F::SLUG." as ".F::SLUG."
+                , i.".F::DESCRIPTION." as ".F::DESCRIPTION.", i.".F::WEIGHT." as ".F::WEIGHT."
+                , i.".F::GOLDPRICE." as ".F::GOLDPRICE.", i.".F::TYPE." as ".F::TYPE."
+                , i2.".F::NAME." as ".F::BUILDNAME." , i2.".F::SLUG." as ".F::BUILDSLUG."
+            FROM " . Table::ITEM . " i
+            LEFT JOIN " . Table::ITEM . " i2 ON i.toolId = i2.id
+        ";
 
         $queryBuilder = new QueryBuilder();
         $queryBuilder->setBaseQuery($baseQuery);

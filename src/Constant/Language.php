@@ -3,6 +3,10 @@ namespace src\Constant;
 
 class Language
 {
+    public const DASH            = '-';
+    public const SPACE           = ' ';
+    public const COLON           = ' :';
+
     public const GP              = ' po';
     public const KG              = ' kg';
     public const MOD_DEX_MAX2    = ' + Dex (max 2)';
@@ -22,8 +26,11 @@ class Language
     public const WEAPON_RANGED  = ' à distance';
 
     public const HOME            = 'Accueil';
+    public const CRAFTSHIP       = 'Artisanat';
     public const WEAPON_PROP     = 'Botte d\'arme';
     public const CA              = 'CA';
+    public const CAPACITES       = 'Capacités';
+    public const ABILITY         = 'Caractéristique';
     public const ABILITIES       = 'Caractéristiques';
     public const CATEGORY        = 'Catégorie';
     public const SIZE_CATEGORY   = 'Catégorie de taille';
@@ -50,6 +57,7 @@ class Language
     public const SCHOOL          = 'Ecole';
     public const EQUIPMENT       = 'Équipement';
     public const CBT_STYLE_EPICS = 'Faveurs épiques';
+    public const FILTRE_SPELLS   = 'Filtrer les sorts';
     public const FORCE           = 'Force';
     public const FP              = 'FP';
     public const UNKNOWN_GROUP   = 'Groupe inconnu : ';
@@ -83,6 +91,7 @@ class Language
     public const RANGE           = 'Portée';
     public const PREQUISITE      = 'Pré-requis';
     public const PRICE           = 'Prix';
+    public const PRODUCEDBY      = 'Produit par';
     public const PROPERTIES      = 'Propriétés';
     public const PV              = 'PV';
     public const REFERENCE       = 'Référence';

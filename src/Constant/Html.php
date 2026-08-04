@@ -10,10 +10,12 @@ class Html
     public const BALISE_H3     = 'h3';
     public const BALISE_LI     = 'li';
     public const BALISE_P      = 'p';
+    public const BALISE_HEADER  = 'header';
     public const BALISE_SMALL  = 'small';
     public const BALISE_SPAN   = 'span';
     public const BALISE_SECTION= 'section';
     public const BALISE_STRONG= 'strong';
+    public const BALISE_NAV     = 'nav';
     public const BALISE_UL     = 'ul';
     public const BALISE_DL     = 'dl';
     public const BALISE_DT     = 'dt';

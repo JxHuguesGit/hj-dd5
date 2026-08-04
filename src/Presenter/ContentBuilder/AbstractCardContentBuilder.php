@@ -2,7 +2,10 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
+use src\Constant\Html as H;
+use src\Constant\Language as L;
 use src\Utils\Html;
 
 abstract class AbstractCardContentBuilder implements ContentBuilderInterface
@@ -35,7 +38,7 @@ abstract class AbstractCardContentBuilder implements ContentBuilderInterface
         );
 
         return Html::getBalise(
-            'section',
+            H::BALISE_SECTION,
             $this->renderGroupTitle($group) . $grid,
             [
                 C::CSSCLASS => $this->getGroupClass(),
@@ -44,13 +47,56 @@ abstract class AbstractCardContentBuilder implements ContentBuilderInterface
         );
     }
 
+    protected function renderGroupTitle(object $group): string
+    {
+        if ($group->label === '') {
+            return '';
+        }
+
+        return Html::getBalise(
+            H::BALISE_H2,
+            htmlspecialchars($group->label),
+            [C::CSSCLASS => B::DATA_GROUP_TITLE]
+        );
+    }
+
+    protected function renderCard(string $content, string $specificClass): string
+    {
+        return Html::getBalise(
+            H::BALISE_ARTICLE,
+            $content,
+            [C::CSSCLASS => B::DATA_CARD . L::SPACE . $specificClass]
+        );
+    }
+
+    protected function renderInfo(string $label, string $value, array $attributes = []): string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        return Html::getBalise(
+            H::BALISE_P,
+            sprintf(L::STRONG_INFO, $label, htmlspecialchars($value)),
+            $attributes
+        );
+    }
+
     abstract protected function renderItem(object $row): string;
 
-    abstract protected function renderGroupTitle(object $group): string;
+    protected function getGroupsClass(): string
+    {
+        return B::DATA_LIST;
+    }
 
-    abstract protected function getGroupsClass(): string;
+    protected function getGroupClass(): string
+    {
+        return B::DATA_GROUP;
+    }
 
-    abstract protected function getGroupClass(): string;
+    protected function getGridClass(): string
+    {
+        return B::DATA_GRID;
+    }
 
-    abstract protected function getGridClass(): string;
 }

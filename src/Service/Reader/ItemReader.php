@@ -42,6 +42,17 @@ final class ItemReader
         return $this->itemRepository->findAllWithRelations(new ItemCriteria());
     }
 
+    /**
+     * @return Collection<Item>
+     */
+    public function craftableItemsByTool(Item $item): Collection
+    {
+        $criteria = new ItemCriteria();
+        $criteria->type = null;
+        $criteria->toolId = $item->id;
+        return $this->itemRepository->findAllWithRelations($criteria);
+    }
+
     public function getPreviousAndNext(Item $item): array
     {
         return Navigation::getPrevNext(

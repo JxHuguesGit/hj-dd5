@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\ContentBuilder;
 
 use src\Constant\Bootstrap as B;
@@ -6,50 +7,55 @@ use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\SpellDetail;
-use src\Presenter\ViewModel\SpellPageView;
 use src\Service\Formatter\SpellFormatter;
 use src\Utils\Html;
 
-final class SpellDetailContentBuilder implements ContentBuilderInterface
+final class SpellDetailContentBuilder extends AbstractDetailContentBuilder
 {
-    public function build(object $view, array $params = []): string
+    
+    protected function renderDetailHeader(object $view) : string
     {
-        /** @var SpellPageView $view */
+        return $this->renderHeader(
+            $view->spell->name,
+            Html::getBalise(
+                H::BALISE_EM,
+                SpellFormatter::formatEcole($view->spell->ecole, $view->spell->niveau) .
+                '<br>' .
+                SpellFormatter::formatClasses($view->spell->classes)
+            )
+        );
+    }
 
+    protected function getDetailUrl(string $slug): string
+    {
+        return '';
+    }
+
+    protected function renderDetailNavigation(object $view): string
+    {
+        return $this->renderNavigation(
+            $view->previous
+                ? $view->previous->url
+                : null,
+            $view->previous?->name,
+            $view->next
+                ? $view->next->url
+                : null,
+            $view->next?->name
+        );
+    }
+
+    protected function renderDetailBody(object $view, array $params = []) : string
+    {
         $spell = $view->spell;
 
-        $content = Html::getBalise(
-            H::BALISE_H1,
-            $spell->name
-        );
+        $content = $this->renderInfoList($spell);
 
-        $content .= Html::getBalise(
-            H::BALISE_P,
-            '<em>' .
-            SpellFormatter::formatEcole($spell->ecole, $spell->niveau) .
-            '<br>' .
-            SpellFormatter::formatClasses($spell->classes) .
-            '</em>'
-        );
-
-        $content .= $this->renderInfoList($spell);
-
-        $content .= Html::getBalise(
-            H::BALISE_DIV,
+        $content .= Html::getDiv(
             $spell->description,
-            [C::CSSCLASS => B::SPELL_DETAIL_DESCRIPTION]
+            [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION . L::SPACE . B::SPELL_DETAIL_DESCRIPTION]
         );
-
-        $content .= $this->renderNavigation(
-            $view->previous,
-            $view->next
-        );
-
-        return Html::getBalise(
-            H::BALISE_ARTICLE,
-            $content,
-            [C::CSSCLASS => B::SPELL_DETAIL]
-        );
+        return $content;
     }
 
     private function renderInfoList(SpellDetail $spell): string
@@ -86,8 +92,7 @@ final class SpellDetailContentBuilder implements ContentBuilderInterface
             )
         );
 
-        return Html::getBalise(
-            H::BALISE_DIV,
+        return Html::getDiv(
             Html::getBalise(H::BALISE_DL, $content),
             [C::CSSCLASS => B::SPELL_DETAIL_INFO]
         );
@@ -102,40 +107,6 @@ final class SpellDetailContentBuilder implements ContentBuilderInterface
         Html::getBalise(
             H::BALISE_DD,
             $value
-        );
-    }
-
-    private function renderNavigation(
-        ?SpellDetail $previous,
-        ?SpellDetail $next
-    ): string {
-        $previousHtml = $previous
-            ? Html::getLink(
-                '&lt; ' . $previous->name,
-                $previous->url,
-                implode(' ', [
-                    B::BTN,
-                    B::BTN_SM,
-                    B::BTN_OUTLINE_DARK,
-                ])
-            )
-            : C::EMPTY_SPAN;
-
-        $nextHtml = $next
-            ? Html::getLink(
-                $next->name . ' &gt;',
-                $next->url,
-                implode(' ', [
-                    B::BTN,
-                    B::BTN_SM,
-                    B::BTN_OUTLINE_DARK,
-                ])
-            )
-            : C::EMPTY_SPAN;
-
-        return Html::getDiv(
-            $previousHtml . $nextHtml,
-            [C::CSSCLASS => B::SPELL_DETAIL_NAVIGATION]
         );
     }
 }

@@ -2,39 +2,10 @@
 @use "cards" as *;
 
 /* =============================
-   WEAPON LIST
-   ============================= */
-
-.weapon-list {
-    @include data-group;
-}
-
-.weapon-group {
-    h2 {
-        @include group-title;
-    }
-}
-
-.weapon-grid {
-    @include card-grid(3);
-}
-
-
-/* =============================
-   WEAPON CARD
+   LISTING
    ============================= */
 
 .weapon-card {
-    @include card;
-
-    h3 {
-        @include card-title;
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-    }
 
     .weapon-card-info {
         @include card-info;
@@ -63,61 +34,35 @@
     }
 }
 
-
-
 /* =============================
    WEAPON NAVIGATION
    ============================= */
 
-.weapon-detail {
-    @include detail-panel;
+.weapon-detail-infos {
+    @include detail-info;
 
-    .weapon-detail-header {
-        margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
 
-        h1 {
-            @include detail-title;
+    .weapon-detail-info {
+        @include detail-info-row;
+
+        display: grid;
+        grid-template-columns: 7rem 1fr;
+
+        .weapon-property {
+            display: block;
         }
     }
-
-    .weapon-detail-infos {
-        @include detail-info;
-
-        display: flex;
-        flex-direction: column;
-        gap: .35rem;
-
-        .weapon-detail-info {
-            @include detail-info-row;
-
-            display: grid;
-            grid-template-columns: 7rem 1fr;
-
-            .weapon-property {
-                display: block;
-            }
-        }
-    }
-}
-
-.weapon-navigation {
-    @include navigation;
-}
-
-.weapon-detail-navigation {
-    @include navigation;
 }
 
 @media (min-width: $breakpoint-tablet) {
-    .weapon-detail {
-
-        .weapon-detail-infos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, auto);
-            grid-auto-flow: column;
-            column-gap: 2rem;
-            row-gap: .35rem;
-        }
+    .weapon-detail-infos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        gap: .35rem 2rem;
     }
 }

@@ -93,7 +93,7 @@ class SpellFilterModalPresenter implements ModalPresenter
         );
 
         $attributes = [
-            'spellFilter',
+            C::SPELL_FILTER,
             'Sorts - Filtres',
             $modalContent,
             'Filtrer'

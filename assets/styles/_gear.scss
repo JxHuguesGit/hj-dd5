@@ -1,0 +1,69 @@
+@use "variables" as *;
+@use "cards" as *;
+
+/* =============================
+   LISTING
+   ============================= */
+
+.gear-grid {
+    @include card-grid(4);
+}
+
+.gear-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+
+    h3 {
+        grid-column: 1 / -1;
+    }
+
+    > p {
+        @include card-info;
+
+        display: flex;
+        align-items: baseline;
+        gap: .35rem;
+
+        strong {
+            flex-shrink: 0;
+        }
+    }
+}
+
+/* =============================
+   GEAR DETAIL
+   ============================= */
+
+/* =============================
+   DESCRIPTION
+   ============================= */
+
+.gear-detail-description {
+    margin: 0 0 1.5rem;
+
+    color: $color-text;
+    line-height: 1.6;
+}
+
+.gear-detail-infos {
+    @include detail-info;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.gear-detail-info {
+    @include detail-info-row;
+
+    display: flex;
+    align-items: baseline;
+    gap: .35rem;
+
+    strong {
+        flex-shrink: 0;
+    }
+}

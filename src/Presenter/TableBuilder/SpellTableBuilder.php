@@ -25,7 +25,7 @@ class SpellTableBuilder extends AbstractTableBuilder
         ];
 
         $params[C::ID]     = 'spellTable';
-        $params[C::TARGET] = 'spellFilter';
+        $params[C::TARGET] = C::SPELL_FILTER;
 
         $table = $this->createTable(count($headers), $params);
         $this->addHeader($table, $headers);

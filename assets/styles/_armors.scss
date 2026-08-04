@@ -2,97 +2,39 @@
 @use "cards" as *;
 
 /* =============================
-   ARMOR LIST
-   ============================= */
-.armor-list {
-    @include data-group;
-}
-
-/* =============================
-   ARMOR GROUP
-   ============================= */
-.armor-group {
-    h2 {
-        @include group-title;
-    }
-}
-
-/* =============================
-   ARMOR GRID
-   ============================= */
-.armor-grid {
-    @include card-grid(4);
-}
-
-/* =============================
-   ARMOR CARD
+   LISTING
    ============================= */
 .armor-card {
-    @include card;
-
-    h3 {
-        @include card-title;
-
-        a {
-            color: inherit;
-            text-decoration: none;
-
-            &:hover {
-                color: $color-primary;
-            }
-        }
-    }
-
     p {
         @include card-info;
     }
 }
 
-.armor-detail {
-    @include detail-panel;
+/* =============================
+   DETAIL
+   ============================= */
 
-    .armor-detail-header {
-        margin-bottom: 1rem;
+.armor-detail-infos {
+    @include detail-info;
 
-        h1 {
-            @include detail-title;
-        }
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+
+    p {
+        @include detail-info-row;
+
+        display: grid;
+        grid-template-columns: 7rem 1fr;
     }
-
-    .armor-detail-infos {
-        @include detail-info;
-
-
-        display: flex;
-        flex-direction: column;
-        gap: .35rem;
-
-        .armor-detail-info-column {
-            display: contents;
-        }
-
-        p {
-            @include detail-info-row;
-
-            display: grid;
-            grid-template-columns: 7rem 1fr;
-        }
-    }
-}
-
-.armor-detail-navigation {
-    @include navigation;
 }
 
 @media (min-width: $breakpoint-tablet) {
-    .armor-detail {
-        .armor-detail-infos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, auto);
-            grid-auto-flow: column;
-            column-gap: 2rem;
-            row-gap: .35rem;
-        }
+    .armor-detail-infos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        gap: .35rem 2rem;
     }
 }
