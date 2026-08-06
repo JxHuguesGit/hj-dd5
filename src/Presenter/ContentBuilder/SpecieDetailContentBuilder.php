@@ -2,6 +2,7 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
@@ -24,7 +25,8 @@ final class SpecieDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::specie($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param SpecieDetailView $view */
+    protected function renderDetailBody(object $view) : string
     {
         return
             $this->renderProperties($view)
@@ -76,6 +78,7 @@ final class SpecieDetailContentBuilder extends AbstractDetailContentBuilder
         );
     }
 
+    /** @param Collection<AbilityView> $abilities */
     private function renderAbilities(iterable $abilities): string
     {
         if (!$abilities) {
@@ -146,6 +149,7 @@ final class SpecieDetailContentBuilder extends AbstractDetailContentBuilder
         );
     }
 
+    /** @param Collection<AbilityView> $children */
     private function renderChildren(iterable $children): string
     {
         $content = '';
@@ -160,6 +164,7 @@ final class SpecieDetailContentBuilder extends AbstractDetailContentBuilder
         );
     }
 
+    /** @param Collection<AbilityOptionView> $options */
     private function renderOptions(iterable $options): string
     {
         $content = '';

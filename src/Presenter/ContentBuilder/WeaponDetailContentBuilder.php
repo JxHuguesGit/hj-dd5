@@ -7,6 +7,7 @@ use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
 use src\Presenter\ListPresenter\WeaponListPresenter;
+use src\Presenter\ViewModel\WeaponPageView;
 use src\Service\Formatter\WeaponFormatter;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
@@ -18,6 +19,7 @@ final class WeaponDetailContentBuilder extends AbstractDetailContentBuilder
         private WeaponFormatter $formatter
     ) {}
 
+    /** @param WeaponPageView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader($view->item->name);
@@ -28,7 +30,8 @@ final class WeaponDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::item($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param WeaponPageView $view */
+    protected function renderDetailBody(object $view) : string
     {
         $weapon = $view->item;
 

@@ -31,7 +31,7 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
             );
         }
 
-        return Html::getBalise(H::BALISE_ARTICLE, $htmlContent, [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::FEAT_CARD]);
+        return $this->renderCard($htmlContent, B::FEAT_CARD);
     }
 
     /** @param FeatGroup $group */

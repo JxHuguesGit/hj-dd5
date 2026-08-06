@@ -7,12 +7,13 @@ use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
 use src\Presenter\ViewModel\SpellDetail;
+use src\Presenter\ViewModel\SpellPageView;
 use src\Service\Formatter\SpellFormatter;
 use src\Utils\Html;
 
 final class SpellDetailContentBuilder extends AbstractDetailContentBuilder
 {
-    
+    /** @param SpellPageView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader(
@@ -31,21 +32,19 @@ final class SpellDetailContentBuilder extends AbstractDetailContentBuilder
         return '';
     }
 
+    /** @param SpellPageView $view */
     protected function renderDetailNavigation(object $view): string
     {
         return $this->renderNavigation(
-            $view->previous
-                ? $view->previous->url
-                : null,
+            $view->previous?->url,
             $view->previous?->name,
-            $view->next
-                ? $view->next->url
-                : null,
+            $view->next?->url,
             $view->next?->name
         );
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param SpellPageView $view */
+    protected function renderDetailBody(object $view) : string
     {
         $spell = $view->spell;
 

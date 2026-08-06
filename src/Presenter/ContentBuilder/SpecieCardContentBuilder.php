@@ -5,12 +5,12 @@ namespace src\Presenter\ContentBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
-use src\Presenter\ViewModel\SpeciesRow;
+use src\Presenter\ViewModel\SpecieRow;
 use src\Utils\Html;
 
 final class SpecieCardContentBuilder extends AbstractCardContentBuilder
 {
-    /** @param SpeciesRow $row */
+    /** @param SpecieRow $row */
     protected function renderItem(object $row): string
     {
         $content = Html::getBalise(

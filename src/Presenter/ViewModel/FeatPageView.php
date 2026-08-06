@@ -5,9 +5,9 @@ use src\Domain\Entity\Feat;
 
 class FeatPageView
 {
+    /** @param LinkView[] $origins */
     public function __construct(
         public Feat $feat,
-        /** @var LinkView[] */
         public array $origins,
         public ?Feat $previous = null,
         public ?Feat $next = null,

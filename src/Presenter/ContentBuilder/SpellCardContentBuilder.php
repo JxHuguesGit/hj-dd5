@@ -13,7 +13,7 @@ use src\Utils\Html;
 
 final class SpellCardContentBuilder implements ContentBuilderInterface
 {
-    public function build(object $rows, array $params = []): string
+    public function build(object $rows): string
     {
         $contentFilter = Html::getDiv(
             Html::getDiv(

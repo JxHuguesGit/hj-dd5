@@ -147,8 +147,6 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         $feats     = $this->featReader->allFeats();
         $presenter = new FeatListPresenter(
             $this->originReader,
-            $this->featAbilityReader,
-            $this->abilityReader,
             new WpPostService()
         );
         $presentContent = $presenter->present($feats);

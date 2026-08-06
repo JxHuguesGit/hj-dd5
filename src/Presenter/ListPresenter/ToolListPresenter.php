@@ -19,11 +19,11 @@ final class ToolListPresenter
         private OriginReader $originReader
     ) {}
 
+    /** @param Collection<Tool> $tools */
     public function present(iterable $tools): Collection
     {
         $grouped = [];
         foreach ($tools as $tool) {
-            /** @var Tool $tool */
             $grouped[$tool->parentId][] = $this->buildRow($tool);
         }
 
@@ -31,8 +31,8 @@ final class ToolListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ToolGroup(
-                label: $types[$typeId][C::LABEL] ?? '',
-                slug: $types[$typeId][C::SLUG] ?? '',
+                label: $types[$typeId][C::LABEL],
+                slug: $types[$typeId][C::SLUG],
                 rows: $rows
             ));
         }

@@ -69,6 +69,7 @@ class Bootstrap
     public const GEAR_DETAIL_INFOS = 'gear-detail-infos';
     public const GEAR_DETAIL_DESCRIPTION = 'gear-detail-description';
     public const GEAR_DETAIL_INFO = 'gear-detail-info';
+    public const GEAR_DETAIL_INFO_VALUE = 'gear-detail-info-value';
     
     public const ABILITY_DESCRIPTION = 'ability-description';
     public const ABILITY_TITLE = 'ability-title';

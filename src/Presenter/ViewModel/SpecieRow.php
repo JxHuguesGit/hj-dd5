@@ -1,7 +1,7 @@
 <?php
 namespace src\Presenter\ViewModel;
 
-final class SpeciesRow
+final class SpecieRow
 {
     public function __construct(
         public string $name,

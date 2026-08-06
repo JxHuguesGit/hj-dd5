@@ -11,7 +11,7 @@ use src\Utils\Html;
 
 final class GearCardContentBuilder implements ContentBuilderInterface
 {
-    public function build(object $view, array $params = []): string
+    public function build(object $view): string
     {
         $cards = '';
 

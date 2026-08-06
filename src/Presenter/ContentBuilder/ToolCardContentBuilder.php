@@ -11,11 +11,9 @@ use src\Utils\Html;
 
 final class ToolCardContentBuilder extends AbstractCardContentBuilder
 {
-    /** @param ToolRow $row */
-    protected function renderItem(object $row): string
+    /** @param ToolRow $tool */
+    protected function renderItem(object $tool): string
     {
-        $tool = $row;
-
         $content = Html::getBalise(
             H::BALISE_H3,
             Html::getLink(

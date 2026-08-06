@@ -2,10 +2,14 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
+use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\LinkView;
+use src\Presenter\ViewModel\OriginDetailView;
+use src\Presenter\ViewModel\SkillPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
@@ -17,7 +21,8 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::origin($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param OriginDetailView $view */
+    protected function renderDetailBody(object $view) : string
     {
         return
             $this->renderProperties($view)
@@ -27,7 +32,7 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
         ;
     }
 
-    private function renderDescription(object $view): string
+    private function renderDescription(OriginDetailView $view): string
     {
         if (($view->description ?? '') === '') {
             return '';
@@ -39,7 +44,7 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
         );
     }
 
-    private function renderProperties(object $view): string
+    private function renderProperties(OriginDetailView $view): string
     {
         $content = '';
 
@@ -91,6 +96,7 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
         );
     }
 
+    /** @param Collection<Skill> $skills */
     private function formatSkills(iterable $skills): string
     {
         $parts = [];
@@ -121,6 +127,7 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
         );
     }
 
+    /** @param OriginDetailView $view */
     private function renderEquipment(object $view): string
     {
         $equipment = $view->equipment ?? [];

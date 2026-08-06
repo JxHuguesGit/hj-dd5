@@ -42,8 +42,6 @@ final class FeatControllerFactory
         $featReader = $this->readerFactory->feat();
         $presenter  = new FeatListPresenter(
             $this->readerFactory->origin(),
-            $this->readerFactory->featAbility(),
-            $this->readerFactory->ability(),
             $this->serviceFactory->wordPress()
         );
         $page = new PageList(

@@ -4,6 +4,7 @@ namespace src\Presenter\ContentBuilder;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
+use src\Constant\Language as L;
 use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\LinkView;
 use src\Utils\Html;
@@ -12,6 +13,7 @@ use src\Utils\UrlGenerator;
 final class FeatDetailContentBuilder extends AbstractDetailContentBuilder
 {
 
+    /** @param FeatDetailView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader(
@@ -25,7 +27,8 @@ final class FeatDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::feat($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param FeatDetailView $view */
+    protected function renderDetailBody(object $view) : string
     {
         return
             $this->renderDescription($view)

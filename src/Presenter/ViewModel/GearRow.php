@@ -5,7 +5,9 @@ final class GearRow
 {
     public function __construct(
         public string $name,
+        // TODO : vérifier utilisation, pour suppression éventuelle
         public string $slug,
+        // TODO : vérifier utilisation, pour suppression éventuelle
         public string $description,
         public string $url,
         public string $weight,

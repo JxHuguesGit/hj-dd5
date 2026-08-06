@@ -9,7 +9,8 @@ use src\Utils\Utils;
 
 final class GearListPresenter
 {
-    public function present(iterable $gears): Collection
+    /** @param Collection<Item> $gears */
+    public function present(Collection $gears): Collection
     {
         $collection = new Collection();
         foreach ($gears as $gear) {

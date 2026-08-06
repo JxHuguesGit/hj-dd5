@@ -6,18 +6,14 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
-use src\Presenter\ViewModel\ArmorGroup;
 use src\Presenter\ViewModel\ArmorRow;
 use src\Utils\Html;
 
 final class ArmorCardContentBuilder extends AbstractCardContentBuilder
 {
-    /** @param ArmorRow $row */
-    protected function renderItem(object $row): string
+    /** @param ArmorRow $armor */
+    protected function renderItem(object $armor): string
     {
-        /** @var ArmorRow $armor */
-        $armor = $row;
-
         $content = Html::getBalise(
             H::BALISE_H3,
             Html::getLink($armor->name, $armor->url)
@@ -45,10 +41,6 @@ final class ArmorCardContentBuilder extends AbstractCardContentBuilder
             $armor->price
         );
 
-        return Html::getBalise(
-            H::BALISE_ARTICLE,
-            $content,
-            [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::ARMOR_CARD]
-        );
+        return $this->renderCard($content, B::ARMOR_CARD);
     }
 }

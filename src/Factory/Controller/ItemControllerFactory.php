@@ -1,7 +1,6 @@
 <?php
 namespace src\Factory\Controller;
 
-use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Controller\Public\{
     PublicBase,
@@ -32,11 +31,6 @@ use src\Presenter\ContentBuilder\WeaponCardContentBuilder;
 use src\Presenter\ContentBuilder\WeaponDetailContentBuilder;
 use src\Presenter\ListPresenter\{ArmorListPresenter, GearListPresenter, ToolListPresenter, WeaponListPresenter};
 use src\Presenter\ViewModel\{ArmorPageView, GearPageView, ToolPageView, WeaponPageView};
-use src\Query\{QueryBuilder, QueryExecutor};
-use src\Repository\WeaponPropertyValueRepository;
-use src\Service\Domain\WpPostService;
-use src\Service\Formatter\{WeaponFormatter, WeaponPropertiesFormatter};
-use src\Service\Reader\WeaponPropertyValueReader;
 
 final class ItemControllerFactory
 {
@@ -72,9 +66,7 @@ final class ItemControllerFactory
             C::WEAPON => new PublicItemWeapon(
                 $this->readerFactory->weapon(),
                 new WeaponListPresenter(
-                    $this->serviceFactory->wordPress(),
-                    $this->serviceFactory->weaponProperties(),
-                    $this->readerFactory->weaponPropertyValue()
+                    $this->serviceFactory->weaponFormatter()
                 ),
                 new PageList(
                     $this->renderer,
@@ -197,16 +189,7 @@ final class ItemControllerFactory
             new PageItemWeapon(
                 $this->renderer,
                 new WeaponDetailContentBuilder(
-                    new WeaponFormatter(
-                        new WpPostService(),
-                        new WeaponPropertiesFormatter(),
-                        new WeaponPropertyValueReader(
-                            new WeaponPropertyValueRepository(
-                                new QueryBuilder(),
-                                new QueryExecutor()
-                            ),
-                        )
-                    )
+                    $this->serviceFactory->weaponFormatter()
                 )
             )
         );

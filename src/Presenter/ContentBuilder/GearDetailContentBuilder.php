@@ -6,6 +6,7 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
+use src\Presenter\ViewModel\GearPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
@@ -13,6 +14,7 @@ use src\Utils\Utils;
 final class GearDetailContentBuilder extends AbstractDetailContentBuilder
 {
 
+    /** @param GearPageView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader($view->item->name);
@@ -23,7 +25,8 @@ final class GearDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::item($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param GearPageView $view */
+    protected function renderDetailBody(object $view) : string
     {
         $gear = $view->item;
 
@@ -67,7 +70,8 @@ final class GearDetailContentBuilder extends AbstractDetailContentBuilder
         );
 
         $content .= Html::getDiv(
-            $value
+            $value,
+            [C::CSSCLASS => B::GEAR_DETAIL_INFO_VALUE]
         );
 
         return Html::getDiv(

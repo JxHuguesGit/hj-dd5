@@ -10,7 +10,7 @@ use src\Utils\Html;
 
 abstract class AbstractCardContentBuilder implements ContentBuilderInterface
 {
-    public function build(object $groups, array $params = []): string
+    public function build(object $groups): string
     {
         $contentHtml = '';
 

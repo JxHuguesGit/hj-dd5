@@ -14,6 +14,7 @@ use src\Utils\UrlGenerator;
 final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
 {
 
+    /** @param SkillDetailView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader(
@@ -27,7 +28,8 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::skill($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param SkillDetailView $view */
+    protected function renderDetailBody(object $view) : string
     {
         return
             $this->renderDescription($view)

@@ -12,11 +12,11 @@ use src\Utils\Utils;
 
 final class ArmorListPresenter
 {
-    public function present(iterable $armors): Collection
+    /** @param Collection<Armor> $armors */
+    public function present(Collection $armors): Collection
     {
         $grouped = [];
         foreach ($armors as $armor) {
-            /** @var Armor $armor */
             $grouped[$armor->armorTypeId][] = $this->buildRow($armor);
         }
 
@@ -24,8 +24,8 @@ final class ArmorListPresenter
         $collection = new Collection();
         foreach ($grouped as $typeId => $rows) {
             $collection->add(new ArmorGroup(
-                label: $typesLabel[$typeId][C::LABEL] ?? '',
-                slug: $typesLabel[$typeId][C::SLUG] ?? '',
+                label: $typesLabel[$typeId][C::LABEL],
+                slug: $typesLabel[$typeId][C::SLUG],
                 rows: $rows
             ));
         }

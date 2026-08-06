@@ -2,10 +2,12 @@
 
 namespace src\Presenter\ContentBuilder;
 
+use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
+use src\Presenter\ViewModel\LinkView;
 use src\Presenter\ViewModel\ToolPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
@@ -14,6 +16,7 @@ use src\Utils\Utils;
 final class ToolDetailContentBuilder extends AbstractDetailContentBuilder
 {
 
+    /** @param ToolPageView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader(
@@ -28,7 +31,8 @@ final class ToolDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::item($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param ToolPageView $view */
+    protected function renderDetailBody(object $view) : string
     {
         $tool = $view->item;
 
@@ -131,7 +135,7 @@ final class ToolDetailContentBuilder extends AbstractDetailContentBuilder
 
         return Html::getDiv(
             $content,
-            [C::CSSCLASS => B::DATA_DETAIL_INFO . B::TOOL_DETAIL_INFO]
+            [C::CSSCLASS => B::DATA_DETAIL_INFO . L::SPACE . B::TOOL_DETAIL_INFO]
         );
     }
 }

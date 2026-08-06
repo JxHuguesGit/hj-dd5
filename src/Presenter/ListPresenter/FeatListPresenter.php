@@ -9,8 +9,6 @@ use src\Presenter\ViewModel\FeatGroup;
 use src\Presenter\ViewModel\FeatRow;
 use src\Presenter\ViewModel\LinkView;
 use src\Service\Domain\WpPostService;
-use src\Service\Reader\AbilityReader;
-use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\OriginReader;
 use src\Utils\UrlGenerator;
 
@@ -18,8 +16,6 @@ final class FeatListPresenter
 {
     public function __construct(
         private OriginReader $originReader,
-        private FeatAbilityReader $featAbilityReader,
-        private AbilityReader $abilityReader,
         private WpPostService $wpPostService
     ) {}
 
@@ -80,7 +76,7 @@ final class FeatListPresenter
             case Feat::TYPE_GENERAL:
             case Feat::TYPE_EPIC:
                 $this->wpPostService->getById($feat->postId);
-                $wpPreRequis = $this->wpPostService->getField(C::PREREQUIS);
+                $wpPreRequis = (string)$this->wpPostService->getField(C::PREREQUIS);
                 return $wpPreRequis ? ucfirst($wpPreRequis) : null;
             default:
                 return null;

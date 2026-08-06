@@ -5,7 +5,6 @@ namespace src\Presenter\ContentBuilder;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
-use src\Constant\Language as L;
 use src\Presenter\ViewModel\SkillRow;
 use src\Utils\Html;
 
@@ -28,6 +27,6 @@ final class SkillCardContentBuilder extends AbstractCardContentBuilder
             $htmlContent .= Html::getUl($ulContent, [C::CSSCLASS => strtolower(C::SUB_SKILLS)]);
         }
 
-        return Html::getBalise(H::BALISE_ARTICLE, $htmlContent, [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::SKILL_CARD]);
+        return $this->renderCard($htmlContent, B::SKILL_CARD);
     }
 }

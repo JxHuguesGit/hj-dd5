@@ -8,6 +8,7 @@ use src\Utils\UrlGenerator;
 
 final class SpellListPresenter
 {
+    /** @param Collection<Spell> $spells */
     public function present(iterable $spells): Collection
     {
         $collection = new Collection();

@@ -5,6 +5,7 @@ use src\Service\Domain\OriginService;
 use src\Service\Domain\SkillService;
 use src\Service\Domain\SpecieService;
 use src\Service\Domain\WpPostService;
+use src\Service\Formatter\WeaponFormatter;
 use src\Service\Formatter\WeaponPropertiesFormatter;
 
 final class ServiceFactory
@@ -45,6 +46,15 @@ final class ServiceFactory
             $this->readerFactory->speciePower(),
             $this->readerFactory->power(),
             $this->readerFactory->species()
+        );
+    }
+
+    public function weaponFormatter(): WeaponFormatter
+    {
+        return new WeaponFormatter(
+            $this->wordPress(),
+            $this->weaponProperties(),
+            $this->readerFactory->weaponPropertyValue()
         );
     }
 }

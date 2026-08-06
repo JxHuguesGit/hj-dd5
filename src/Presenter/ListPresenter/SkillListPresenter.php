@@ -5,6 +5,7 @@ use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
 use src\Domain\Entity\Skill;
+use src\Domain\Entity\SubSkill;
 use src\Presenter\ViewModel\SkillGroup;
 use src\Presenter\ViewModel\SkillLink;
 use src\Presenter\ViewModel\SkillRow;
@@ -43,7 +44,7 @@ final class SkillListPresenter
             url: UrlGenerator::skill($skill->slug),
             description: $skill->description,
             subSkills: array_map(
-                fn($s) => new SkillLink(
+                fn(SubSkill $s) => new SkillLink(
                     name: $s->name ?? '',
                     url: $s->slug ? UrlGenerator::skill($s->slug) : '#',
                 ),

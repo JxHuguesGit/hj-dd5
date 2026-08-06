@@ -7,6 +7,7 @@ use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Language as L;
 use src\Presenter\ListPresenter\ArmorListPresenter;
+use src\Presenter\ViewModel\ArmorPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 use src\Utils\Utils;
@@ -14,6 +15,7 @@ use src\Utils\Utils;
 final class ArmorDetailContentBuilder extends AbstractDetailContentBuilder
 {
 
+    /** @param ArmorPageView $view */
     protected function renderDetailHeader(object $view) : string
     {
         return $this->renderHeader($view->item->name);
@@ -24,7 +26,8 @@ final class ArmorDetailContentBuilder extends AbstractDetailContentBuilder
         return UrlGenerator::item($slug);
     }
 
-    protected function renderDetailBody(object $view, array $params = []) : string
+    /** @param ArmorPageView $view */
+    protected function renderDetailBody(object $view) : string
     {
         $armor = $view->item;
 

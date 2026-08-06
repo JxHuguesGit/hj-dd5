@@ -8,11 +8,11 @@ use src\Utils\Html;
 
 abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
 {
-    public function build(object $data, array $params = []): string
+    public function build(object $data): string
     {
         $content =
             $this->renderDetailHeader($data)
-            . $this->renderDetailBody($data, $params)
+            . $this->renderDetailBody($data)
             . $this->renderDetailNavigation($data)
         ;
 
@@ -28,7 +28,7 @@ abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
         return $this->renderHeader($view->name);
     }
 
-    abstract protected function renderDetailBody(object $view, array $params) : string;
+    abstract protected function renderDetailBody(object $view) : string;
 
     protected function renderDetailNavigation(object $view): string
     {
@@ -69,9 +69,7 @@ abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
             $content .= Html::getBalise(
                 H::BALISE_SPAN,
                 $subtitle,
-                [
-                    C::CSSCLASS => $subtitleClass,
-                ]
+                [C::CSSCLASS => $subtitleClass]
             );
         }
 
@@ -122,9 +120,7 @@ abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
         return Html::getBalise(
             H::BALISE_NAV,
             $content,
-            [
-                C::CSSCLASS => $navigationClass,
-            ]
+            [C::CSSCLASS => $navigationClass]
         );
     }
 }

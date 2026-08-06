@@ -11,12 +11,9 @@ use src\Utils\Html;
 
 final class WeaponCardContentBuilder extends AbstractCardContentBuilder
 {
-    /** @param WeaponRow $row */
-    protected function renderItem(object $row): string
+    /** @param WeaponRow $weapon */
+    protected function renderItem(object $weapon): string
     {
-        /** @var WeaponRow $weapon */
-        $weapon = $row;
-
         $content = Html::getBalise(
             H::BALISE_H3,
             Html::getLink($weapon->name, $weapon->url)
