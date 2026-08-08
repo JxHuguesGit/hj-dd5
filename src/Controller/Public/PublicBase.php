@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller\Public;
 
+use src\Constant\Template;
 use src\Exception\TemplateInvalid;
 use src\Model\PageElement;
 
@@ -37,6 +38,11 @@ class PublicBase
 
     public function getPageElement(): PageElement
     { return $this->pageElement; }
+
+    public function getBaseTemplate(): string
+    {
+        return Template::BASE;
+    }
 
 }
 

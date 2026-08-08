@@ -42,17 +42,30 @@ class DD5Base
             $srcJsFilesTpl  = $controller->getRender(Template::WWW_JS);
         }
 
-        $attributes = [
-            $controller->getTitle(),
-            $srcCssFilesTpl,
-            PLUGINS_DD5,
-            $controller->getContentHeader(),
-            $controller->getContentPage($msgProcessError),
-            $controller->getContentFooter(),
-            $errorPanel,
-            $srcJsFilesTpl,
-        ];
-        echo $controller->getRender(Template::BASE, $attributes);
+        $baseTemplate = $controller->getBaseTemplate();
+
+        if ($baseTemplate === Template::BASE_MAP) {
+            $attributes = [
+                $controller->getTitle(),
+                $srcCssFilesTpl,
+                PLUGINS_DD5,
+                $controller->getContentPage($msgProcessError),
+                $srcJsFilesTpl,
+            ];
+        } else {
+            $attributes = [
+                $controller->getTitle(),
+                $srcCssFilesTpl,
+                PLUGINS_DD5,
+                $controller->getContentHeader(),
+                $controller->getContentPage($msgProcessError),
+                $controller->getContentFooter(),
+                $errorPanel,
+                $srcJsFilesTpl,
+            ];
+        }
+
+        echo $controller->getRender($baseTemplate, $attributes);
     }
 
 }

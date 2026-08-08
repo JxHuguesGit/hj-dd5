@@ -7,6 +7,7 @@ use src\Controller\Public\PublicHome;
 use src\Controller\Public\PublicNotFound;
 use src\Factory\Controller\FeatControllerFactory;
 use src\Factory\Controller\ItemControllerFactory;
+use src\Factory\Controller\MapControllerFactory;
 use src\Factory\Controller\OriginControllerFactory;
 use src\Factory\Controller\PublicControllerFactory;
 use src\Factory\Controller\SkillControllerFactory;
@@ -36,6 +37,7 @@ class Router
             new SkillRouter(new SkillControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new FeatRouter(new FeatControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new ItemRouter(new ItemControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new MapRouter(new MapControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
         ]);
     }

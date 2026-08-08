@@ -5,10 +5,19 @@ use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
+use src\Factory\WriterFactory as WF;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
+
+if (strpos(PLUGIN_PATH, 'wamp64') !== false) {
+    define('DD5_URL', 'http://localhost/');
+} else {
+    define('DD5_URL', 'https://dd5.jhugues.fr/');
+}
+define('PLUGIN_URL', 'wp-content/plugins/hj-dd5/');
+define('PLUGINS_DD5', DD5_URL . PLUGIN_URL);
 
 class Ajax
 {
@@ -31,13 +40,16 @@ class Ajax
                     'loadMoreMonsters',
                     'modalMonsterCard',
                     'loadCreationStepSide',
+                    'loadMapTokens',
+                    'updateMapTokens',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();
                 $queryExecutor         = new QueryExecutor();
                 $repository            = new RepositoryFactory($queryBuilder, $queryExecutor);
                 $reader                = new ReaderFactory($repository);
-                $router                = new AjaxRouter($reader, new ServiceFactory($reader), new TemplateRenderer());
+                $writer                = new WF($repository);
+                $router                = new AjaxRouter($reader, new ServiceFactory($reader), $writer, new TemplateRenderer());
                 $response              = $router->dispatch($ajaxAction);
                 $response[$ajaxAction] = $response[C::DATA];
             } elseif (isset($actions[$ajaxAction])) {

@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory;
 
+use src\Service\Domain\MapTokenService;
 use src\Service\Domain\OriginService;
 use src\Service\Domain\SkillService;
 use src\Service\Domain\SpecieService;
@@ -55,6 +56,13 @@ final class ServiceFactory
             $this->wordPress(),
             $this->weaponProperties(),
             $this->readerFactory->weaponPropertyValue()
+        );
+    }
+
+    public function mapToken(): MapTokenService
+    {
+        return new MapTokenService(
+            $this->readerFactory->mapToken()
         );
     }
 }

@@ -12,6 +12,7 @@ final class Template
     public const TEMPLATE_PATH       = 'templates/';
 
     public const BASE                = self::TEMPLATE_PATH.'base.tpl';
+    public const BASE_MAP            = self::TEMPLATE_PATH.'baseMap.tpl';
     public const FOOTER              = self::TEMPLATE_PATH.'footer.tpl';
     public const HEADER              = self::TEMPLATE_PATH.'header.tpl';
     public const LOCAL_CSS           = self::TEMPLATE_PATH.'localCss.tpl';
@@ -104,4 +105,6 @@ final class Template
     public const SPELL_FILTER_MODAL  = self::MODAL_PATH.'spellFilter.tpl';
     public const MONSTER_FILTER_MODAL = self::MODAL_PATH.'monsterFilter.tpl';
 
+    public const MAP_PAGE_PJ          = self::PUBLIC_PATH.'map-pj.tpl';
+    public const MAP_PAGE_MJ          = self::PUBLIC_PATH.'map-mj.tpl';
 }

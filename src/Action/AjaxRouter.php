@@ -2,12 +2,15 @@
 namespace src\Action;
 
 use src\Action\Ajax\LoadCreationStepSide;
+use src\Action\Ajax\LoadMapTokensAction;
 use src\Action\Ajax\LoadMoreMonstersAction;
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\ModalMonsterCard;
+use src\Action\Ajax\UpdateMapTokensAction;
 use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
+use src\Factory\WriterFactory as WF;
 use src\Renderer\TemplateRenderer;
 
 class AjaxRouter
@@ -17,11 +20,14 @@ class AjaxRouter
         'loadMoreMonsters'     => LoadMoreMonstersAction::class,
         'modalMonsterCard'     => ModalMonsterCard::class,
         'loadCreationStepSide' => LoadCreationStepSide::class,
+        'loadMapTokens'        => LoadMapTokensAction::class,
+        'updateMapTokens'      => UpdateMapTokensAction::class,
     ];
 
     public function __construct(
         private ReaderFactory $readerFactory,
         private ServiceFactory $serviceFactory,
+        private WF $writerFactory,
         private TemplateRenderer $renderer
     ) {}
 
@@ -36,7 +42,17 @@ class AjaxRouter
         }
 
         $className = $this->actions[$ajaxAction];
-        $action    = new $className($this->readerFactory, $this->serviceFactory, $this->renderer);
+        $action = match ($ajaxAction) {
+            'updateMapTokens' => new $className(
+                $this->writerFactory,
+            ),
+
+            default => new $className(
+                $this->readerFactory,
+                $this->serviceFactory,
+                $this->renderer
+            ),
+        };
 
         return [
             'status'             => 'success',

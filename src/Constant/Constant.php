@@ -75,6 +75,7 @@ class Constant
     public const LANGUAGE               = 'language';
     public const LOADMORESPELLS         = 'loadMoreSpells';
     public const LIGHT                  = 'light';
+    public const MAPTOKEN               = 'mapToken';
     public const MARTIAL                = 'martial';
     public const MASTERYLINK            = 'masteryLink';
     public const MEDIUM                 = 'medium';
@@ -93,6 +94,7 @@ class Constant
     public const NEXT                   = 'next';
     public const OPENMODAL              = 'openModal';
     public const ONG_CHARACTER          = 'character';
+    public const ONG_MAP                = 'map';
     public const ONG_TIMELINE           = 'timeline';
     public const ORIGIN                 = 'origin';
     public const ORIGINES               = 'origines';

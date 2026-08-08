@@ -1,7 +1,6 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant as C;
 use src\Domain\Entity\Origin;
 use src\Page\Renderer\PageOrigine;
 use src\Presenter\ContentBuilder\OriginDetailContentBuilder;

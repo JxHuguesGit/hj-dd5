@@ -6,6 +6,11 @@ use WP_User;
 
 class Session
 {
+    public static function isWpUserLogged(): bool
+    {
+        return is_user_logged_in();
+    }
+
     public static function isPostSubmitted(): bool
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';

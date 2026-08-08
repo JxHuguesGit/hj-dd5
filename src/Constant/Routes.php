@@ -22,6 +22,7 @@ final class Routes
     public const FEATS_PATTERN  = '#^feats-(.+)$#';
     public const ITEM_PATTERN   = '#^item-(.+)$#';
     public const ITEMS_PATTERN  = '#^items-(.+)$#';
+    public const MAP_PATTERN    = '#^map(?:/([^/]+))?$#';
     public const ORIGIN_PATTERN = '#^origine-(.+)$#';
     public const SKILL_PATTERN  = '#^skill-(.+)$#';
     public const SPECIE_PATTERN = '#^specie-(.+)$#';
