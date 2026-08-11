@@ -19,8 +19,11 @@ class MapControllerFactory
 
     public function createController(): PublicMap
     {
+        $map = $this->readerFactory->map()->getActiveMap();
+
         return new PublicMap(
             new PageMap(
+                $map,
                 $this->renderer,
                 $this->serviceFactory->mapToken()
             )

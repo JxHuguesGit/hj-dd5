@@ -1,6 +1,8 @@
 <?php
 namespace src\Service\Reader;
 
+use src\Constant\Constant as C;
+use src\Constant\Field as F;
 use src\Collection\Collection;
 use src\Domain\Criteria\MapTokenCriteria;
 use src\Domain\Entity\MapToken;
@@ -27,7 +29,7 @@ final class MapTokenReader
     {
         $criteria = new MapTokenCriteria();
         $criteria->mapId = $mapId;
-        return $this->mapTokenRepository->findAllWithCriteria($criteria);
+        return $this->mapTokenRepository->findAllWithRelations($criteria);
     }
 
     /**
@@ -38,6 +40,20 @@ final class MapTokenReader
         if (!$criteria) {
             $criteria = new MapTokenCriteria();
         }
-        return $this->mapTokenRepository->findAllWithCriteria($criteria);
+        return $this->mapTokenRepository->findAllWithRelations($criteria);
+    }
+
+    /**
+     * @return int
+     */
+    public function nextNumber(int $mapId, int $tokenId): int
+    {
+        $criteria = new MapTokenCriteria();
+        $criteria->mapId = $mapId;
+        $criteria->tokenId = $tokenId;
+        $criteria->orderBy = [F::NUMBER => C::DESC];
+
+        $mapTokens = $this->allMapTokens($criteria);
+        return $mapTokens->isEmpty() ? 1 : $mapTokens->first()->number + 1;
     }
 }

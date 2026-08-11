@@ -10,6 +10,8 @@ class Icon
     public const MEDAL    = 'medal';
     public const DRAGON   = 'dragon';
     public const COMPASS  = 'compass';
+    public const LOCK     = 'lock';
+    public const UNLOCK   = 'unlock';
     public const SCROLL   = 'scroll';
     public const EDIT     = 'pen-to-square';
     public const BOX      = 'box';
@@ -21,6 +23,7 @@ class Icon
     public const USERS    = 'users';
     public const SEARCH   = 'search';
     public const TRASH    = 'trash';
+    public const TRASHALT = 'trash-alt';
     public const HOUSE    = 'house';
     public const SPARKLES = 'spell-sparkles';
 

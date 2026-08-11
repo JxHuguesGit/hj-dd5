@@ -7,13 +7,19 @@ use src\Domain\Criteria\Attributes\Equals;
 
 final class MapTokenCriteria extends BaseCriteria
 {
-    #[Equals(F::ID)]
+    #[Equals(F::ID, alias: 'mp')]
     public ?int $id = null;
 
     #[Equals(F::MAPID)]
     public ?int $mapId = null;
 
+    #[Equals(F::TOKENID)]
+    public ?int $tokenId = null;
+
+    #[Equals(F::SIZE, alias: 'mp')]
+    public ?int $size = null;
+
     public array $orderBy = [
-        F::ID => C::ASC
+        F::NAME => C::ASC
     ];
 }

@@ -68,8 +68,8 @@ class Utilities
         }
     }
 
-    public function getArrParams(string $key): mixed
+    public function getArrParams(string $key, string $default = ''): mixed
     {
-        return $this->arrParams[$key] ?? '';
+        return $this->arrParams[$key] ?? $default;
     }
 }

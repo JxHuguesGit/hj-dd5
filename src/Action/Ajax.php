@@ -2,6 +2,7 @@
 namespace src\Action;
 
 use src\Constant\Constant as C;
+use src\Factory\PresenterFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
@@ -25,6 +26,7 @@ class Ajax
     public static function dealWithAjax()
     {
         $ajaxAction = Session::fromPost(C::AJAXACTION);
+        $mapId = (int)Session::fromPost(C::MAPID);
 
         $actions = [
             'downloadFile'    => fn()    => DownloadFile::start(),
@@ -42,6 +44,12 @@ class Ajax
                     'loadCreationStepSide',
                     'loadMapTokens',
                     'updateMapTokens',
+                    'getAddMapTokenModal',
+                    'addMapToken',
+                    'deleteMapToken',
+                    'activateMap',
+                    'lockMap',
+                    'unlockMap',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();
@@ -49,8 +57,17 @@ class Ajax
                 $repository            = new RepositoryFactory($queryBuilder, $queryExecutor);
                 $reader                = new ReaderFactory($repository);
                 $writer                = new WF($repository);
-                $router                = new AjaxRouter($reader, new ServiceFactory($reader), $writer, new TemplateRenderer());
-                $response              = $router->dispatch($ajaxAction);
+                $router                = new AjaxRouter(
+                    $reader,
+                    new ServiceFactory($reader, $repository),
+                    $writer,
+                    new TemplateRenderer(),
+                    new PresenterFactory()
+                );
+                $response              = $router->dispatch(
+                    $ajaxAction,
+                    [C::MAPID => $mapId]
+                );
                 $response[$ajaxAction] = $response[C::DATA];
             } elseif (isset($actions[$ajaxAction])) {
                 $returnedValue = $actions[$ajaxAction];

@@ -6,8 +6,10 @@ class Field
     public const ID = 'id';
 
     public const ABBR        = 'abbr';
+    public const ACTIVE      = 'active';
     public const ARMORCLASS  = 'armorClass';
     public const SCORECA     = 'ca';
+    public const CELLSIZE    = 'cellSize';
     public const CHASCORE    = 'chaScore';
     public const COLUMN      = 'column';
     public const CONSCORE    = 'conScore';
@@ -32,7 +34,9 @@ class Field
     public const INTSCORE    = 'intScore';
     public const LASTUPDATE  = 'lastUpdate';
     public const LEGENDARY   = 'legendary';
-    public const MAPID       = 'mapId';
+    public const LOCKED      = 'locked';
+    public const MAPCOLUMNS  = 'mapColumns';
+    public const MAPROWS     = 'mapRows';
     public const MAXRANGE    = 'maxRange';
     public const MINRANGE    = 'minRange';
     public const MSTSIZE     = 'monsterSize';
@@ -110,6 +114,7 @@ class Field
     public const HEROSID      = 'herosId';
     public const ITEMID       = 'itemId';
     public const LANGUAGEID   = 'languageId';
+    public const MAPID        = 'mapId';
     public const MSTPROFID    = 'masteryProficiencyId';
     public const MONSTERID    = 'monsterId';
     public const MSTSSTYPID   = 'monsterSubTypeId';
@@ -122,6 +127,7 @@ class Field
     public const REFID        = 'referenceId';
     public const SKILLID      = 'skillId';
     public const SPECIESID    = 'speciesId';
+    public const TOKENID      = 'tokenId';
     public const TOOLID       = 'toolId';
     public const TYPEAMMID    = 'typeAmmunitionId';
     public const TYPEDMGID    = 'typeDamageId';

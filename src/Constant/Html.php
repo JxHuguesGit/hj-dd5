@@ -30,4 +30,6 @@ class Html
     public const BALISE_META   = 'meta';
     public const BALISE_LINK   = 'link';
     public const BALISE_ARTICLE= 'article';
+    public const BALISE_TD      = 'td';
+    public const BALISE_TR      = 'tr';
 }

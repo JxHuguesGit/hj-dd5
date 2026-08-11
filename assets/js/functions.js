@@ -56,6 +56,129 @@ function ajaxActionClick(obj, e) {
             $('#' + target + ' button.btn-primary').unbind().on('click', function() {
                 window.location.href = obj.attr('href');
             });
+        } else if (oneAction == 'activateMap') {
+            e.preventDefault();
+
+            const mapId = obj.data('map-id');
+
+            $.post(
+                globalThis.location.origin + '/wp-admin/admin-ajax.php',
+                {
+                    action: 'dealWithAjax',
+                    ajaxAction: 'activateMap',
+                    mapId: mapId
+                },
+                function (response) {
+                    try {
+                        const result = JSON.parse(response.data);
+
+                        if (result.status !== 'success') {
+                            console.error('Erreur activation map:', result);
+                            return;
+                        }
+
+                        window.location.reload();
+
+                    } catch (error) {
+                        console.error('Erreur activateMap:', error);
+                        console.error(response);
+                    }
+                }
+            );
+        } else if (oneAction == 'lockMap' || oneAction == 'unlockMap') {
+            e.preventDefault();
+
+            const mapId = obj.data('map-id');
+
+            $.post(
+                globalThis.location.origin + '/wp-admin/admin-ajax.php',
+                {
+                    action: 'dealWithAjax',
+                    ajaxAction: oneAction,
+                    mapId: mapId
+                },
+                function (response) {
+                    try {
+                        const result = JSON.parse(response.data);
+
+                        if (result.status !== 'success') {
+                            console.error(
+                                'Erreur ' + oneAction + ':',
+                                result
+                            );
+                            return;
+                        }
+
+                        window.location.reload();
+
+                    } catch (error) {
+                        console.error(
+                            'Erreur ' + oneAction + ':',
+                            error
+                        );
+                        console.error(response);
+                    }
+                }
+            );
+        } else if (oneAction=='deleteMapToken') {
+            e.preventDefault();
+            const data = {
+                action: 'dealWithAjax',
+                ajaxAction: 'deleteMapToken',
+                tokenId: obj.data('map-token-id')
+            };
+            $.post(
+                globalThis.location.origin + '/wp-admin/admin-ajax.php',
+                data,
+                function(response) {
+                    try {
+                        const obj = JSON.parse(response.data);
+                        if (obj.status !== 'success') {
+                            console.error('Erreur addMapToken:', obj);
+                            return;
+                        }
+                        refreshMapTokens();
+                    } catch (e) {
+                        console.error('Erreur addMapToken:', e);
+                        console.error(response);
+                    }
+                }
+            );            
+        } else if (oneAction=='addMapToken') {
+            e.preventDefault();
+
+            const data = {
+                action: 'dealWithAjax',
+                ajaxAction: 'addMapToken',
+                mapId: MAP_CONFIG.mapId,
+                tokenId: $('#confirmModal [name="tokenId"]').val(),
+                column: $('#confirmModal [name="column"]').val(),
+                row: $('#confirmModal [name="row"]').val()
+            };
+
+            $.post(
+                globalThis.location.origin + '/wp-admin/admin-ajax.php',
+                data,
+                function(response) {
+                    try {
+                        const obj = JSON.parse(response.data);
+
+                        if (obj.status !== 'success') {
+                            console.error('Erreur addMapToken:', obj);
+                            return;
+                        }
+
+                        closeModal('confirmModal');
+                        refreshMapTokens();
+
+                    } catch (e) {
+                        console.error('Erreur addMapToken:', e);
+                        console.error(response);
+                    }
+                }
+            );
+        } else {
+            console.log(oneAction + ' not implemented');
         }
     }
     return false;

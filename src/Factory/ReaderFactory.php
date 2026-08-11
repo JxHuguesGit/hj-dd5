@@ -20,7 +20,10 @@ final class ReaderFactory
         C::ITEM                  => [C::READER => 'ItemReader',                 C::REPO => C::ITEM],
         C::LANGUAGE              => [C::READER => 'LanguageReader',             C::REPO => C::LANGUAGE],
 
+        C::CHARACTER             => [C::READER => 'CharacterReader',            C::REPO => C::CHARACTER],
+        C::MAP                   => [C::READER => 'MapReader',                  C::REPO => C::MAP],
         C::MAPTOKEN              => [C::READER => 'MapTokenReader',             C::REPO => C::MAPTOKEN],
+        C::TOKEN                 => [C::READER => 'TokenReader',                C::REPO => C::TOKEN],
 
         C::MONSTER               => [C::READER => 'MonsterReader',              C::REPO => C::MONSTER],
         C::MONSTER_ABILITY       => [C::READER => 'MonsterAbilityReader',       C::REPO => C::MONSTER_ABILITY],

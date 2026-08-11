@@ -1,11 +1,17 @@
 <?php
 namespace src\Factory;
 
+use src\Constant\Constant as C;
 use src\Factory\RepositoryFactory;
 
 final class WriterFactory
 {
     private array $cache = [];
+
+    private const MAP = [
+        C::MAP                    => [C::WRITER => 'MapWriter',                   C::REPO => C::MAP],
+        C::MAPTOKEN               => [C::WRITER => 'MapTokenWriter',              C::REPO => C::MAPTOKEN],
+    ];
 
     public function __construct(
         private RepositoryFactory $repositories
@@ -22,18 +28,14 @@ final class WriterFactory
 
     private function make(string $name): object
     {
-        $class = 'src\\Service\\Writer\\'
-            . ucfirst($name)
-            . 'Writer';
+        $config = self::MAP[$name]
+            ?? throw new \BadMethodCallException("Writer inconnu : '$name'.");
 
-        if (!class_exists($class)) {
-            throw new \BadMethodCallException(
-                "Writer inconnu : '$name'"
-            );
-        }
+        $writerClass = 'src\\Service\\Writer\\' . $config[C::WRITER];
+        $repository  = $config[C::REPO];
 
-        return new $class(
-            $this->repositories->$name()
+        return new $writerClass(
+            $this->repositories->$repository()
         );
     }
 }

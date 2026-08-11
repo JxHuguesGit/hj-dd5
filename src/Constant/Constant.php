@@ -34,6 +34,7 @@ class Constant
     public const ABILITIES              = 'abilities';
     public const CATEGORY               = 'category';
     public const SIZE_CATEGORY          = 'categorie_de_taille';
+    public const CHARACTER              = 'character';
     public const CHECKED                = 'checked';
     public const CLICK                  = 'click';
     public const CLASSE                 = 'classe';
@@ -75,6 +76,8 @@ class Constant
     public const LANGUAGE               = 'language';
     public const LOADMORESPELLS         = 'loadMoreSpells';
     public const LIGHT                  = 'light';
+    public const MAP                    = 'map';
+    public const MAPID                  = 'mapId';
     public const MAPTOKEN               = 'mapToken';
     public const MARTIAL                = 'martial';
     public const MASTERYLINK            = 'masteryLink';
@@ -141,6 +144,7 @@ class Constant
     public const TITLE                  = 'title';
     public const TOOL                   = 'tool';
     public const TOOLS                  = 'outils';
+    public const TOKEN                  = 'token';
     public const TRIGGER                = 'trigger';
     public const TYPE                   = 'type';
     public const URL                    = 'url';
@@ -154,6 +158,7 @@ class Constant
     public const WEAPON_PROPERTIES      = 'weaponProperties';
     public const WEAPON_PROPERTY_VALUE  = 'weaponPropertyValue';
     public const WEIGHT                 = 'weight';
+    public const WRITER                 = 'writer';
 
     public const FEAT_ORIGIN            = self::FEAT . '-' . self::ORIGIN;
     public const FEAT_ORIGINS           = self::FEAT . '-' . self::ORIGINS;

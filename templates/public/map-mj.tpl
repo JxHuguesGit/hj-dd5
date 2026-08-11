@@ -4,15 +4,17 @@
 
 <script>
     window.MAP_CONFIG = {
+        mapId: %1$d,
         isMj: true,
-        image: '%1s',
+        image: '%2$s',
 
         grid: {
-            columns: 17,
-            rows: 22,
-            cellSize: 200
+            columns: %3$d,
+            rows: %4$d,
+            cellSize: %5$d,
+            tokenScale: 0.95
         },
 
-        tokens: %2$s,
+        tokens: %6$s,
     };
 </script>

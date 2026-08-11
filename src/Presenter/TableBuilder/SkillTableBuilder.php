@@ -12,7 +12,7 @@ use src\Utils\Table;
 
 class SkillTableBuilder extends AbstractTableBuilder
 {
-    public function build(iterable $groups, array $params = []): Table
+    public function build(mixed $groups, array $params = []): Table
     {
         $headers = [L::NAMES, L::DESCRIPTION, 'Sous-compétences'];
         $table   = $this->createTable(count($headers), $params);

@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory;
 
+use src\Service\Domain\MapService;
 use src\Service\Domain\MapTokenService;
 use src\Service\Domain\OriginService;
 use src\Service\Domain\SkillService;
@@ -12,7 +13,8 @@ use src\Service\Formatter\WeaponPropertiesFormatter;
 final class ServiceFactory
 {
     public function __construct(
-        private ReaderFactory $readerFactory
+        private ReaderFactory $readerFactory,
+        private RepositoryFactory $repositoryFactory
     ) {}
 
     public function wordPress(): WpPostService
@@ -63,6 +65,14 @@ final class ServiceFactory
     {
         return new MapTokenService(
             $this->readerFactory->mapToken()
+        );
+    }
+
+    public function map(): MapService
+    {
+        return new MapService(
+            $this->readerFactory->map(),
+            new WriterFactory($this->repositoryFactory)
         );
     }
 }

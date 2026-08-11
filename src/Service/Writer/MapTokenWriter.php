@@ -21,4 +21,28 @@ final class MapTokenWriter
             throw $e;
         }
     }
+
+    public function insert(MapToken $mapToken): void
+    {
+        $this->repository->beginTransaction();
+        try {
+            $this->repository->insert($mapToken);
+            $this->repository->commit();
+        } catch (\Throwable $e) {
+            $this->repository->rollBack();
+            throw $e;
+        }
+    }
+
+    public function delete(MapToken $mapToken): void
+    {
+        $this->repository->beginTransaction();
+        try {
+            $this->repository->delete($mapToken);
+            $this->repository->commit();
+        } catch (\Throwable $e) {
+            $this->repository->rollBack();
+            throw $e;
+        }
+    }
 }

@@ -31,7 +31,7 @@ class DD5Base
         $queryExecutor   = new QueryExecutor();
         $repository      = new RepositoryFactory($queryBuilder, $queryExecutor);
         $reader          = new ReaderFactory($repository);
-        $router          = new Router($reader, new ServiceFactory($reader), new TemplateRenderer());
+        $router          = new Router($reader, new ServiceFactory($reader, $repository), new TemplateRenderer());
         $controller      = $router->getController();
 
         if (DD5_URL == 'http://localhost/') {

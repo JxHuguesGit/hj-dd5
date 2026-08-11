@@ -12,6 +12,8 @@ interface MapTokenRepositoryInterface
     public function rollBack(): void;
 
     public function updatePartial(MapToken $mapToken, array $changedFields): void;
+    public function insert(MapToken $mapToken): void;
+    public function delete(MapToken $mapToken): void;
 
     /**
      * @return ?MapToken
@@ -22,4 +24,9 @@ interface MapTokenRepositoryInterface
      * @return Collection<MapToken>
      */
     public function findAllWithCriteria(MapTokenCriteria $criteria): Collection;
+
+    /**
+     * @return Collection<MapToken>
+     */
+    public function findAllWithRelations(MapTokenCriteria $criteria): Collection;
 }

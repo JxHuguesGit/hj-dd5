@@ -24,6 +24,7 @@ final class Template
     public const ADMINBASE           = self::ADMIN_PATH.'adminBase.tpl';
     public const ADMINSIDEBAR        = self::ADMIN_PATH.'adminSidebar.tpl';
     public const ADMINSIDEBARITEM    = self::ADMIN_PATH.'adminSidebarItem.tpl';
+    public const ADMINNAV            = self::ADMIN_PATH.'adminNav.tpl';
 
     public const ADMINCHARACTER      = self::ADMIN_PATH.'adminCharacter.tpl';
     public const ADMINQUICKINFO      = self::ADMIN_PATH.'adminCharacterQuickInfo.tpl';
@@ -42,11 +43,16 @@ final class Template
 
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
+    public const ADMINMAPTOKTABLE    = self::ADMIN_PATH.'adminMapTokenTable.tpl';
+
+    public const ADDMAPTOKMODAL      = self::TEMPLATE_PATH.'modal/addMapToken.tpl';
+
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
     public const ARMOR_CARD          = self::CARD_PATH.'armorCard.tpl';
-    public const TOOL_CARD          = self::CARD_PATH.'toolCard.tpl';
-    public const GEAR_CARD = self::CARD_PATH.'gearCard.tpl';
+    public const TOOL_CARD           = self::CARD_PATH.'toolCard.tpl';
+    public const GEAR_CARD           = self::CARD_PATH.'gearCard.tpl';
     public const FEAT_CARD           = self::CARD_PATH.'featCard.tpl';
+    public const MAP_CARD            = self::CARD_PATH.'mapCard.tpl';
     public const MONSTER_CARD        = self::CARD_PATH.'monsterCard.tpl';
     public const NOT_FOUND_CARD      = self::CARD_PATH.'notFoundCard.tpl';
     public const SPELL_CARD          = self::CARD_PATH.'spellCard.tpl';

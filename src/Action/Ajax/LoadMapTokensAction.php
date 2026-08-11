@@ -1,6 +1,7 @@
 <?php
 namespace src\Action\Ajax;
 
+use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
@@ -13,13 +14,12 @@ final class LoadMapTokensAction
         private TemplateRenderer $renderer
     ) {}
 
-    public function execute(): array
+    public function execute(array $params): array
     {
         return [
-            // TODO $mapId
             'tokens' => $this->serviceFactory
                 ->mapToken()
-                ->buildTokens(1),
+                ->buildTokens($params[C::MAPID]),
         ];
     }
 }

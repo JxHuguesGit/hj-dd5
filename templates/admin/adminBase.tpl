@@ -6,18 +6,11 @@
   -->
   <link rel='stylesheet' href='%4$sassets/styles/adminDashboard.css' type="text/css" media='all' />
   <link rel='stylesheet' id='monster-card-css' href='%4$sassets/styles/monsterCard.css' media='all' />
+  <link rel='stylesheet' id='map-css' href='%4$sassets/styles/map.css' media='all' />
 
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/wp-admin/admin.php?page=hj-dd5/admin_manage.php" class="nav-link">Home</a>
-      </li>
-    </ul>
-  </nav>
+    <!-- Top NavBar -->
+%5$s
+    <!--/ Top NavBar -->
 
   <aside style="" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -87,3 +80,4 @@
 
   <script src="%4$sassets/js/admin.js"></script>
   <script src="%4$sassets/js/functions.js"></script>
+  <script src="%4$sassets/js/map.js"></script>

@@ -21,6 +21,8 @@ abstract class Entity
     protected array $data = [];
     /** Champs de l’entité */
     public const FIELDS = [];
+    /** Champs de relation */
+    public const RELATION_FIELDS = [];
     /** Types des champs, associés aux constantes FieldType */
     public const FIELD_TYPES = [];
     /** Cache pour la validation des schémas */
@@ -75,7 +77,8 @@ abstract class Entity
      */
     public function __set(string $name, mixed $value): void
     {
-        if (! in_array($name, static::FIELDS, true)) {
+        if (!in_array($name, static::FIELDS, true)
+            && !in_array($name, static::RELATION_FIELDS, true)) {
             throw new \InvalidArgumentException("Propriété '$name' inconnue dans " . static::class);
         }
 
@@ -126,6 +129,22 @@ abstract class Entity
             }
             if (! array_key_exists($field, static::FIELD_TYPES)) {
                 throw new \LogicException("Le champ '$field' doit avoir un type défini dans FIELD_TYPES pour $class");
+            }
+        }
+
+        foreach (static::RELATION_FIELDS as $field) {
+            if (in_array($field, static::FIELDS, true)) {
+                throw new \LogicException(
+                    "Le champ '$field' ne peut pas être à la fois dans FIELDS "
+                    . "et RELATION_FIELDS pour $class"
+                );
+            }
+
+            if (!array_key_exists($field, static::FIELD_TYPES)) {
+                throw new \LogicException(
+                    "Le champ relation '$field' doit avoir un type défini "
+                    . "dans FIELD_TYPES pour $class"
+                );
             }
         }
 
