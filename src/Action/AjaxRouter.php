@@ -14,11 +14,7 @@ use src\Action\Ajax\ModalMonsterCard;
 use src\Action\Ajax\UnlockMapAction;
 use src\Action\Ajax\UpdateMapTokensAction;
 use src\Constant\Constant as C;
-use src\Factory\PresenterFactory;
-use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
-use src\Factory\WriterFactory as WF;
-use src\Renderer\TemplateRenderer;
+use src\Factory\AjaxActionFactory;
 
 class AjaxRouter
 {
@@ -38,11 +34,7 @@ class AjaxRouter
     ];
 
     public function __construct(
-        private ReaderFactory $readerFactory,
-        private ServiceFactory $serviceFactory,
-        private WF $writerFactory,
-        private TemplateRenderer $renderer,
-        private PresenterFactory $presenterFactory,
+        private AjaxActionFactory $actionFactory,
     ) {}
 
     public function dispatch(string $ajaxAction, ?array $params): array
@@ -55,40 +47,10 @@ class AjaxRouter
             ];
         }
 
-        $className = $this->actions[$ajaxAction];
-        $action = match ($ajaxAction) {
-            'addMapToken' => new $className(
-                $this->writerFactory,
-                $this->readerFactory,
-                $this->serviceFactory,
-            ),
-            'deleteMapToken' => new $className(
-                $this->writerFactory,
-                $this->readerFactory,
-                $this->serviceFactory,
-            ),
-            'updateMapTokens' => new $className(
-                $this->writerFactory,
-                $this->readerFactory,
-                $this->serviceFactory,
-            ),
-            'activateMap' => new $className(
-                $this->serviceFactory->map(),
-            ),
-            'getAddMapTokenModal' => new $className(
-                $this->readerFactory,
-                $this->presenterFactory,
-            ),
-
-            default => new $className(
-                $this->readerFactory,
-                $this->serviceFactory,
-                $this->renderer
-            ),
-        };
+        $action = $this->actionFactory->make($this->actions[$ajaxAction]);
 
         return [
-            'status'             => 'success',
+            'status'  => 'success',
             C::ACTION => $ajaxAction,
             C::DATA   => $action->execute($params),
         ];

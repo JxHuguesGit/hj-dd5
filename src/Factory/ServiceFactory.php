@@ -75,4 +75,21 @@ final class ServiceFactory
             new WriterFactory($this->repositoryFactory)
         );
     }
+    
+    public function get(string $className): object
+    {
+        return match ($className) {
+            MapService::class => $this->map(),
+            MapTokenService::class => $this->mapToken(),
+            OriginService::class => $this->origin(),
+            SkillService::class => $this->skill(),
+            SpecieService::class => $this->specie(),
+            WpPostService::class => $this->wordPress(),
+
+            default => throw new \LogicException(
+                "Service inconnu : '$className'."
+            ),
+        };
+    }
+    
 }

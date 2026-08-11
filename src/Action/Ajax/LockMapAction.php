@@ -1,6 +1,7 @@
 <?php
 namespace src\Action\Ajax;
 
+use src\Exception\MapNotFoundException;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 
@@ -18,7 +19,7 @@ final class LockMapAction
         $map = $this->readerFactory->map()->mapById($mapId);
 
         if ($map === null) {
-            throw new \RuntimeException('Map introuvable.');
+            throw new MapNotFoundException($mapId);
         }
 
         $this->serviceFactory->map()->lock($map);

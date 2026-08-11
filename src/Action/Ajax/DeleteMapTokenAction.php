@@ -3,6 +3,7 @@ namespace src\Action\Ajax;
 
 use src\Constant\Field as F;
 use src\Domain\Entity\MapToken;
+use src\Exception\MapNotFoundException;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory as WF;
@@ -23,9 +24,9 @@ final class DeleteMapTokenAction
             F::ID      => $tokenId,
         ]);
 
-        $map = $this->readerFactory->map()->mapById($mapToken->id);
+        $map = $this->readerFactory->map()->mapById($mapToken->mapId);
         if ($map === null) {
-            throw new \RuntimeException('Map introuvable.');
+            throw new MapNotFoundException($mapToken->mapId);
         }
         $this->serviceFactory->map()->assertUnlocked($map);
 

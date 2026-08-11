@@ -2,6 +2,7 @@
 namespace src\Action;
 
 use src\Constant\Constant as C;
+use src\Factory\AjaxActionFactory;
 use src\Factory\PresenterFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
@@ -58,11 +59,13 @@ class Ajax
                 $reader                = new ReaderFactory($repository);
                 $writer                = new WF($repository);
                 $router                = new AjaxRouter(
-                    $reader,
-                    new ServiceFactory($reader, $repository),
-                    $writer,
-                    new TemplateRenderer(),
-                    new PresenterFactory()
+                    new AjaxActionFactory(
+                        $reader,
+                        new ServiceFactory($reader, $repository),
+                        $writer,
+                        new TemplateRenderer(),
+                        new PresenterFactory()
+                    )
                 );
                 $response              = $router->dispatch(
                     $ajaxAction,
