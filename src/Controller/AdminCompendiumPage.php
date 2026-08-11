@@ -4,14 +4,25 @@ namespace src\Controller;
 use src\Constant\Constant as C;
 use src\Constant\Template;
 use src\Factory\CompendiumFactory;
+use src\Factory\ReaderFactory;
+use src\Factory\ServiceFactory;
+use src\Factory\WriterFactory;
 
 class AdminCompendiumPage extends AdminPage
 {
     public function __construct(
         private array $uri,
-        private CompendiumFactory $compendiumFactory
+        private CompendiumFactory $compendiumFactory,
+        private ReaderFactory $readerFactory,
+        private ServiceFactory $serviceFactory,
+        private WriterFactory $writerFactory,
     ) {
-        parent::__construct($this->uri);
+        parent::__construct(
+            $this->uri,
+            $readerFactory,
+            $serviceFactory,
+            $writerFactory
+        );
     }
 
     public function getAdminContentPage(string $content = ''): string

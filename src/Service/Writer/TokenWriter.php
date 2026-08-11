@@ -1,16 +1,16 @@
 <?php
 namespace src\Service\Writer;
 
-use src\Domain\Entity\MapToken;
-use src\Repository\MapTokenRepositoryInterface;
+use src\Domain\Entity\Token;
+use src\Repository\TokenRepositoryInterface;
 
-final class MapTokenWriter
+final class TokenWriter
 {
     public function __construct(
-        private MapTokenRepositoryInterface $repository
+        private TokenRepositoryInterface $repository
     ) {}
 
-    public function updatePartial(MapToken $token, array $changedFields): void
+    public function updatePartial(Token $token, array $changedFields): void
     {
         $this->repository->beginTransaction();
         try {
@@ -22,7 +22,7 @@ final class MapTokenWriter
         }
     }
 
-    public function insert(MapToken $mapToken): void
+    public function insert(Token $mapToken): void
     {
         $this->repository->beginTransaction();
         try {
@@ -34,12 +34,7 @@ final class MapTokenWriter
         }
     }
 
-    public function insertWithoutTransaction(MapToken $mapToken): void
-    {
-        $this->repository->insert($mapToken);
-    }
-
-    public function delete(MapToken $mapToken): void
+    public function delete(Token $mapToken): void
     {
         $this->repository->beginTransaction();
         try {
@@ -49,10 +44,5 @@ final class MapTokenWriter
             $this->repository->rollBack();
             throw $e;
         }
-    }
-
-    public function deleteWithoutTransaction(MapToken $mapToken): void
-    {
-        $this->repository->delete($mapToken);
     }
 }

@@ -44,8 +44,9 @@ final class Template
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
     public const ADMINMAPTOKTABLE    = self::ADMIN_PATH.'adminMapTokenTable.tpl';
-
+    public const ADMINTOKENTABLE     = self::ADMIN_PATH.'adminTokenTable.tpl';
     public const ADDMAPTOKMODAL      = self::TEMPLATE_PATH.'modal/addMapToken.tpl';
+    public const ADDTOKENMODAL       = self::TEMPLATE_PATH.'modal/addToken.tpl';
 
     public const CARD_PATH           = self::TEMPLATE_PATH.'card/';
     public const ARMOR_CARD          = self::CARD_PATH.'armorCard.tpl';

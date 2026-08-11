@@ -72,7 +72,8 @@ final class ServiceFactory
     {
         return new MapService(
             $this->readerFactory->map(),
-            new WriterFactory($this->repositoryFactory)
+            new WriterFactory($this->repositoryFactory),
+            $this->readerFactory->mapToken(),
         );
     }
     

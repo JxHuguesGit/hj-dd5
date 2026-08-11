@@ -23,6 +23,16 @@ final class MapWriter
         }
     }
 
+    public function insertWithoutTransaction(Map $map): void
+    {
+        $this->repository->insert($map);
+    }
+
+    public function deleteWithoutTransaction(Map $map): void
+    {
+        $this->repository->delete($map);
+    }
+
     public function activate(Map $map, ?Map $activeMap): void
     {
         $this->repository->beginTransaction();
@@ -49,5 +59,20 @@ final class MapWriter
             $this->repository->rollBack();
             throw $e;
         }
+    }
+
+    public function beginTransaction(): void
+    {
+        $this->repository->beginTransaction();
+    }
+
+    public function commit(): void
+    {
+        $this->repository->commit();
+    }
+
+    public function rollBack(): void
+    {
+        $this->repository->rollBack();
     }
 }

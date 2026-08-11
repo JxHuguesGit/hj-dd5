@@ -16,6 +16,7 @@ final class MapTokenService
 
         /** @var MapToken $token */
         foreach ($this->mapTokenReader->mapTokensByMap($mapId) as $token) {
+
             $tokens[] = [
                 'id' => $token->id,
                 'column' => $token->column,
@@ -23,6 +24,7 @@ final class MapTokenService
                 'size' => $token->size,
                 'image' => PLUGINS_DD5 . '/assets/map/tokens/' . $token->image,
                 'number' => $token->number,
+                'enablePjMove' => $token->enablePjMove,
             ];
         }
 

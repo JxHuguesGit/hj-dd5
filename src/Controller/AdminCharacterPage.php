@@ -3,6 +3,9 @@ namespace src\Controller;
 
 use src\Constant\Language as L;
 use src\Factory\CharacterFactory;
+use src\Factory\ReaderFactory;
+use src\Factory\ServiceFactory;
+use src\Factory\WriterFactory;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
@@ -11,9 +14,17 @@ class AdminCharacterPage extends AdminPage
 {
     public function __construct(
         private array $uri,
-        private CharacterFactory $factory
+        private CharacterFactory $factory,
+        private ReaderFactory $readerFactory,
+        private ServiceFactory $serviceFactory,
+        private WriterFactory $writerFactory,
     ) {
-        parent::__construct($this->uri);
+        parent::__construct(
+            $this->uri,
+            $readerFactory,
+            $serviceFactory,
+            $writerFactory
+        );
     }
 
     public function getAdminContentPage(string $content = ''): string

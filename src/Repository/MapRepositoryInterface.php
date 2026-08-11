@@ -12,6 +12,8 @@ interface MapRepositoryInterface
     public function rollBack(): void;
 
     public function updatePartial(Map $map, array $changedFields): void;
+    public function insert(Map $map): void;
+    public function delete(Map $map): void;
 
     /**
      * @return ?Map

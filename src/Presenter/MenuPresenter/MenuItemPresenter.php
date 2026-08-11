@@ -88,4 +88,15 @@ class MenuItemPresenter
             B::DNONE,
         );
     }
+
+    public function toTemplateAttributesMap(): array
+    {
+        return $this->formatAttributes(
+            UrlGenerator::admin(C::ONG_MAP, $this->item->id),
+            $this->isActive(),
+            $this->item->icon,
+            $this->item->label,
+            B::DNONE,
+        );
+    }
 }

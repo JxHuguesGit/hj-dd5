@@ -3,6 +3,8 @@ namespace src\Action\Ajax;
 
 use src\Constant\Field as F;
 use src\Domain\Entity\MapToken;
+use src\Exception\ForbiddenActionException;
+use src\Exception\MapNotFoundException;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory as WF;
@@ -19,6 +21,7 @@ final class UpdateMapTokensAction
     public function execute(): array
     {
         $tokensJson = filter_input(INPUT_POST, 'tokens');
+        $isMj = Session::getWpUser()->data->ID !== '0';
 
         $tokens = json_decode(
             $tokensJson,
@@ -33,11 +36,15 @@ final class UpdateMapTokensAction
             $mapToken = $this->readerFactory
                 ->mapToken()
                 ->mapTokenById($tokenId);
+            if (!$isMj && !$mapToken->enablePjMove) {
+                throw new ForbiddenActionException("L'utilisateur n'a pas le droit de déplacer ce token.");
+            }
+
             $map = $this->readerFactory
                 ->map()
                 ->mapById($mapToken->mapId);
             if ($map === null) {
-                throw new \RuntimeException('Map introuvable.');
+                throw new MapNotFoundException($mapToken->mapId);
             }
             $this->serviceFactory->map()->assertUnlocked($map);
 

@@ -1,36 +1,56 @@
 <?php
 namespace src\Presenter\MenuPresenter;
 
+use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
-use src\Constant\Language as L;
+use src\Constant\Icon as I;
 use src\Constant\Template;
 use src\Presenter\ViewModel\MenuItem;
-use src\Utils\UrlGenerator;
+use src\Utils\Html;
 
 class MapMenuPresenter
 {
-    public function render(string $currentTab, callable $renderer): string
+    public function render(string $currentTab, string $currentId, callable $renderer): string
     {
-        $item = new MenuItem(
-            id: C::ONG_MAP,
-            label: 'Map',//L::INITIATIVE,
-            icon: C::ONG_MAP
+        $isActiveTab = ($currentTab === C::ONG_MAP);
+
+        // ---------- 1) Définition des items ----------
+        $children = new Collection();
+        $children
+            ->add(new MenuItem(C::MAPS, 'Maps', I::MAP))
+            ->add(new MenuItem(C::TOKENS, 'Tokens', I::CIRCLEDOT))
+        ;
+
+        // ---------- 2) Construction des enfants ----------
+        $childrenHtml = '';
+        foreach ($children as $child) {
+            $presenter = new MenuItemPresenter($child, $currentTab, $currentId);
+
+            $childrenHtml .= $renderer(
+                Template::ADMINSIDEBARITEM,
+                $presenter->toTemplateAttributesMap()
+            );
+        }
+
+        $ul = Html::getUl(
+            $childrenHtml,
+            [C::CSSCLASS => implode(' ', [B::NAV, B::NAV_TREEVIEW])]
         );
 
-        $isActive = ($currentTab === C::ONG_MAP);
-
-        $attributes = [
+        // ---------- 3) Item parent ----------
+        $parentAttributes = [
+            $isActiveTab ? B::MENU_OPEN : '',
+            '#',
+            $isActiveTab ? C::ACTIVE : '',
+            I::MAP,
+            'Map',
             '',
-            UrlGenerator::admin(C::ONG_MAP, ''),
-            $isActive ? C::ACTIVE : '',
-            $item->icon,
-            $item->label,
-            B::DNONE,
+            $ul,
             '',
-            '', '',
+            '',
         ];
 
-        return $renderer(Template::ADMINSIDEBARITEM, $attributes);
+        return $renderer(Template::ADMINSIDEBARITEM, $parentAttributes);
     }
 }

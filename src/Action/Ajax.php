@@ -51,6 +51,10 @@ class Ajax
                     'activateMap',
                     'lockMap',
                     'unlockMap',
+                    'duplicateMap',
+                    'deleteMap',
+                    'getAddTokenModal',
+                    'addToken',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();

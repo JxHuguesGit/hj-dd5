@@ -47,6 +47,7 @@ class AdminSidebar extends Utilities
         // On ajoute le menu "map";
         $menu .= $this->mapMenuPresenter->render(
             $currentTab,
+            $currentId,
             $this->renderer
         );
         // On ajoute le menu "Compendium";

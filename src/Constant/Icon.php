@@ -9,12 +9,14 @@ class Icon
     public const FILTER   = 'filter';
     public const MEDAL    = 'medal';
     public const DRAGON   = 'dragon';
+    public const COPY     = 'copy';
     public const COMPASS  = 'compass';
     public const LOCK     = 'lock';
     public const UNLOCK   = 'unlock';
     public const SCROLL   = 'scroll';
     public const EDIT     = 'pen-to-square';
     public const BOX      = 'box';
+    public const MAP      = 'map';
     public const BOXOPEN  = 'box-open';
     public const PAW      = 'paw';
     public const STAR     = 'star';
@@ -28,6 +30,7 @@ class Icon
     public const SPARKLES = 'spell-sparkles';
 
     public const CIRCLEPLUS = 'circle-' . self::PLUS;
+    public const CIRCLEDOT  = 'circle-dot';
     public const SQUAREPLUS = 'square-' . self::PLUS;
 
     public const REGULAR = 'regular';

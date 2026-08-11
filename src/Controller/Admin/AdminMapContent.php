@@ -2,24 +2,33 @@
 namespace src\Controller\Admin;
 
 use src\Presenter\Admin\MapAdminPresenter;
+use src\Presenter\Admin\TokenAdminPresenter;
 use src\Service\Reader\MapReader;
+use src\Service\Reader\TokenReader;
 
 final class AdminMapContent implements AdminContentInterface
 {
     public function __construct(
+        private int|string $id,
         private ?int $mapId,
         private MapReader $mapReader,
         private MapAdminPresenter $mapAdminPresenter,
         private AdminMapAdministration $administration,
         private AdminMapView $mapView,
+        private TokenReader $tokenReader,
+        private TokenAdminPresenter $tokenAdminPresenter,
     ) {}
 
     public function getContent(): string
     {
-        if ($this->mapId === null) {
-            return $this->getMapHomeContent();
-        } else {
+        if ($this->mapId !== null) {
             return $this->getMapContent();
+        } else {
+            return match ($this->id) {
+                'maps' => $this->getMapHomeContent(),
+                'tokens' => $this->getTokenHomeContent(),
+                default => $this->getMapHomeContent(),
+            };
         }
     }
 
@@ -27,6 +36,13 @@ final class AdminMapContent implements AdminContentInterface
     {
         return $this->mapAdminPresenter->presentHome(
             $this->mapReader->allMaps()
+        );
+    }
+
+    private function getTokenHomeContent(): string
+    {
+        return $this->tokenAdminPresenter->present(
+            $this->tokenReader->allTokens()
         );
     }
 

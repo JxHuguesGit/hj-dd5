@@ -20,6 +20,7 @@ class Field
     public const DICECOUNT   = 'diceCount';
     public const DICEFACES   = 'diceFaces';
     public const DONNEES     = 'donnees';
+    public const ENABLEPJMOVE = 'enablePjMove';
     public const ENTITYTYPE  = 'entityType';
     public const EXPERTISE   = 'expertise';
     public const EXTRA       = 'extra';

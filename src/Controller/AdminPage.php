@@ -1,102 +1,50 @@
 <?php
 namespace src\Controller;
 
-use src\Constant\Constant as C;
-use src\Constant\Template;
-use src\Domain\Entity;
-use src\Factory\CharacterFactory;
-use src\Factory\CompendiumFactory;
-use src\Presenter\MenuPresenter\CharacterMenuPresenter;
-use src\Presenter\MenuPresenter\CompendiumMenuPresenter;
-use src\Presenter\MenuPresenter\TimelineMenuPresenter;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
+
+use src\Constant\Template as T;
+use src\Controller\Admin\AdminNav;
+use src\Factory\Admin\AdminContentFactory;
+use src\Factory\Admin\AdminSidebarFactory;
 use src\Renderer\TemplateRenderer;
-use src\Repository\CharacterRepository;
-use src\Service\Domain\CharacterServices;
-use src\Service\Reader\CharacterReader;
-use src\Service\Writer\CharacterWriter;
 
-class AdminPage extends Utilities
+
+final class AdminPage extends Utilities
 {
-    private array $allowedOnglets = [
-        C::HOME,
-        C::ONG_CHARACTER,
-        C::ONG_TIMELINE,
-        C::ONG_COMPENDIUM,
-    ];
+    public function __construct(
+        private array $arrUri,
+        private AdminSidebarFactory $sidebarFactory,
+        private AdminContentFactory $contentFactory,
+    ) {
+        parent::__construct($this->arrUri);
+    }
 
-    public function getAdminContentPage(string $content): string
+    public function getAdminContentPage(): string
     {
-        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
+        $renderer = new TemplateRenderer();
+        $nav = new AdminNav();
+
+        $content = $this->contentFactory
+            ->create($this->arrParams)
+            ->getContent();
+
+        $sidebar = $this->sidebarFactory->create(
+            $this->arrParams,
+            fn(string $template, array $attributes): string =>
+                $renderer->render($template, $attributes)
+        );
 
         $attributes = [
             'Hugues Joneaux',
-            $this->getSidebar(),
+            $sidebar->getContent(),
             $content,
             PLUGINS_DD5,
+            $nav->getContent()
         ];
-        return $this->getRender(Template::ADMINBASE, $attributes);
-    }
 
-    protected function getSidebar(): string
-    {
-        $currentTab = $this->getArrParams(C::ONGLET, C::HOME);
-        $currentId  = $this->getArrParams(C::ID, '');
-
-        $queryBuilder  = new QueryBuilder();
-        $queryExecutor = new QueryExecutor();
-        $reader        = new CharacterReader(new CharacterRepository($queryBuilder, $queryExecutor));
-        $sidebar       = new AdminSidebar(
-            new CharacterMenuPresenter($reader),
-            new TimelineMenuPresenter(),
-            new CompendiumMenuPresenter(),
-            fn($tpl, $attr) => $this->getRender($tpl, $attr),
-            $this->allowedOnglets,
-            $currentTab,
-            $currentId
+        return $renderer->render(
+            T::ADMINBASE,
+            $attributes
         );
-        return $sidebar->getContent();
-    }
-
-    public static function getAdminController(array $arrUri): mixed
-    {
-        $qb       = new QueryBuilder();
-        $qe       = new QueryExecutor();
-        $renderer = new TemplateRenderer();
-        Entity::setSharedDependencies($qb, $qe);
-
-        $controller = new AdminPage($arrUri);
-        $currentTab = $controller->getArrParams(C::ONGLET, C::HOME);
-        switch ($currentTab) {
-            case C::ONG_CHARACTER:
-                $repo       = new CharacterRepository($qb, $qe);
-                $controller = new AdminCharacterPage(
-                    $arrUri,
-                    new CharacterFactory(
-                        new CharacterServices(
-                            new CharacterReader($repo),
-                            new CharacterWriter($repo),
-                        ),
-                        $renderer
-                    )
-                );
-                break;
-            case C::ONG_COMPENDIUM:
-                $controller = new AdminCompendiumPage(
-                    $arrUri,
-                    new CompendiumFactory(
-                        $qb,
-                        $qe,
-                        $renderer
-                    )
-                );
-                break;
-            case C::HOME:
-            default:
-                $controller = new AdminHomePage($arrUri);
-                break;
-        }
-        return $controller;
     }
 }

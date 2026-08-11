@@ -77,6 +77,7 @@ class Constant
     public const LOADMORESPELLS         = 'loadMoreSpells';
     public const LIGHT                  = 'light';
     public const MAP                    = 'map';
+    public const MAPS                   = 'maps';
     public const MAPID                  = 'mapId';
     public const MAPTOKEN               = 'mapToken';
     public const MARTIAL                = 'martial';
@@ -145,6 +146,7 @@ class Constant
     public const TOOL                   = 'tool';
     public const TOOLS                  = 'outils';
     public const TOKEN                  = 'token';
+    public const TOKENS                 = 'tokens';
     public const TRIGGER                = 'trigger';
     public const TYPE                   = 'type';
     public const URL                    = 'url';

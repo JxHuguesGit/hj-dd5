@@ -15,6 +15,7 @@ final class MapToken extends Entity
         F::ROW,
         F::SIZE,
         F::NUMBER,
+        F::ENABLEPJMOVE,
     ];
 
     public const RELATION_FIELDS = [
@@ -29,6 +30,7 @@ final class MapToken extends Entity
         F::ROW         => FieldType::INTPOSITIVE,
         F::SIZE        => FieldType::INTPOSITIVE,
         F::NUMBER      => FieldType::INTNULLABLE,
+        F::ENABLEPJMOVE => FieldType::INTPOSITIVE,
 
         F::NAME        => FieldType::STRING,
         F::IMAGE       => FieldType::STRING,
@@ -37,5 +39,6 @@ final class MapToken extends Entity
     public const EDITABLE_FIELDS = [
         F::COLUMN,
         F::ROW,
+        F::ENABLEPJMOVE,
     ];
 }
