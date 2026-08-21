@@ -2,6 +2,7 @@
 namespace src\Presenter\Admin;
 
 use src\Constant\Constant as C;
+use src\Constant\Field as F;
 use src\Constant\Html as H;
 use src\Constant\Icon as I;
 use src\Constant\Template as T;
@@ -38,10 +39,25 @@ final class MapTokenAdminPresenter
                     'map-token-id' => $token['id']
                 ]
             ];
+            $active = ($token[F::ACTIVE]==1);
+            $btnToggleAttributes = [
+                C::CSSCLASS => $active ? 'btn-success ajaxAction' : 'btn-danger ajaxAction',
+                C::TITLE    => $active ? 'Masquer le token pour les PJ' : 'Afficher le token pour les PJ',
+                C::DATA     => [
+                    C::TRIGGER => C::CLICK,
+                    C::ACTION  => 'toggleMapToken',
+                    'map-token-id' => $token['id']
+                ]
+            ];
             if ($map->locked) {
                 $btnAttributes[C::DISABLED] = C::DISABLED;
+                $btnToggleAttributes[C::DISABLED] = C::DISABLED;
             }
             $strButton = Html::getButton(
+                Html::getIcon($active ? I::EYE : I::EYESLASH),
+                $btnToggleAttributes
+            );
+            $strButton .= ' ' . Html::getButton(
                 Html::getIcon(I::TRASHALT),
                 $btnAttributes
             );
@@ -54,7 +70,12 @@ final class MapTokenAdminPresenter
                 Html::getBalise(H::BALISE_TD, $token['number'] ?? '') .
                 Html::getBalise(H::BALISE_TD, $strButton, [C::CSSCLASS => 'map-token-actions']);
 
-            $rows .= Html::getBalise(H::BALISE_TR, $row, [C::CSSCLASS => 'map-token', C::DATA => ['token-id' => $token['id']]]);
+            $classes = 'map-token';
+            if (!$active) {
+                $classes .= ' inactive';
+            }
+
+            $rows .= Html::getBalise(H::BALISE_TR, $row, [C::CSSCLASS => $classes, C::DATA => ['token-id' => $token['id']]]);
         }
 
         return $this->renderer->render(

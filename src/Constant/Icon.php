@@ -10,6 +10,10 @@ class Icon
     public const MEDAL    = 'medal';
     public const DRAGON   = 'dragon';
     public const COPY     = 'copy';
+    public const CHECK    = 'check';
+    public const EYE      = 'eye';
+    public const EYESLASH = 'eye-slash';
+    public const TIMES    = 'times';
     public const COMPASS  = 'compass';
     public const LOCK     = 'lock';
     public const UNLOCK   = 'unlock';

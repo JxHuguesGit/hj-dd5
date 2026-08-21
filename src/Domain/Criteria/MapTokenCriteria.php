@@ -16,6 +16,9 @@ final class MapTokenCriteria extends BaseCriteria
     #[Equals(F::TOKENID)]
     public ?int $tokenId = null;
 
+    #[Equals(F::ACTIVE, alias: 'mp')]
+    public ?int $active = null;
+
     #[Equals(F::SIZE, alias: 'mp')]
     public ?int $size = null;
 

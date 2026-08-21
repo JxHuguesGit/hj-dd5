@@ -15,6 +15,7 @@ final class MapToken extends Entity
         F::ROW,
         F::SIZE,
         F::NUMBER,
+        F::ACTIVE,
         F::ENABLEPJMOVE,
     ];
 
@@ -30,6 +31,7 @@ final class MapToken extends Entity
         F::ROW         => FieldType::INTPOSITIVE,
         F::SIZE        => FieldType::INTPOSITIVE,
         F::NUMBER      => FieldType::INTNULLABLE,
+        F::ACTIVE      => FieldType::INTPOSITIVE,
         F::ENABLEPJMOVE => FieldType::INTPOSITIVE,
 
         F::NAME        => FieldType::STRING,

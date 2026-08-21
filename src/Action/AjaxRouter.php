@@ -15,6 +15,7 @@ use src\Action\Ajax\LoadMoreMonstersAction;
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\LockMapAction;
 use src\Action\Ajax\ModalMonsterCard;
+use src\Action\Ajax\ToggleMapTokenAction;
 use src\Action\Ajax\UnlockMapAction;
 use src\Action\Ajax\UpdateMapTokensAction;
 use src\Constant\Constant as C;
@@ -32,6 +33,7 @@ class AjaxRouter
         'getAddMapTokenModal'  => LoadMapTokenModal::class,
         'getAddTokenModal'     => LoadTokenModal::class,
         'addMapToken'          => AddMapTokenAction::class,
+        'toggleMapToken'       => ToggleMapTokenAction::class,
         'addToken'             => AddTokenAction::class,
         'deleteMapToken'       => DeleteMapTokenAction::class,
         'activateMap'          => ActivateMapAction::class,

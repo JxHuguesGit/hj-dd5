@@ -8,9 +8,16 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 <?php
 use src\Controller\AdminPage;
-use src\Domain\Entity;
+use src\Factory\Admin\AdminSidebarFactory;
+use src\Factory\Admin\AdminContentFactory;
+use src\Factory\CompendiumFactory;
+use src\Factory\PresenterFactory;
+use src\Factory\ReaderFactory;
+use src\Factory\RepositoryFactory;
+use src\Factory\ServiceFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
+use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
@@ -25,16 +32,31 @@ class DD5Admin
 {
     public static function display(): void
     {
-        Entity::setSharedDependencies(new QueryBuilder(), new QueryExecutor());
-
         /////////////////////////////////////////
         // Analyse de l'url
         $uri = Session::fromServer('REQUEST_URI');
         $arrUri = explode('/', $uri);
 
-        $controller = AdminPage::getAdminController($arrUri);
+        $qb       = new QueryBuilder();
+        $qe       = new QueryExecutor();
+        $repositoryFactory = new RepositoryFactory($qb, $qe);
+        $readerFactory = new ReaderFactory($repositoryFactory);
 
-        echo $controller->getAdminContentPage();
+        $adminPage = new AdminPage(
+            $arrUri,
+            new AdminSidebarFactory($readerFactory),
+            new AdminContentFactory(
+                new CompendiumFactory(
+                    $qb,
+                    $qe,
+                    new TemplateRenderer()
+                ),
+                new ServiceFactory($readerFactory, $repositoryFactory),
+                $readerFactory,
+                new PresenterFactory()
+            ),
+        );
+        echo $adminPage->getAdminContentPage();
     }
 }
 DD5Admin::display();

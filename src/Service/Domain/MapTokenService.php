@@ -25,6 +25,7 @@ final class MapTokenService
                 'image' => PLUGINS_DD5 . '/assets/map/tokens/' . $token->image,
                 'number' => $token->number,
                 'enablePjMove' => $token->enablePjMove,
+                'active' => $token->active,
             ];
         }
 

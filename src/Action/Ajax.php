@@ -55,6 +55,7 @@ class Ajax
                     'deleteMap',
                     'getAddTokenModal',
                     'addToken',
+                    'toggleMapToken',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();

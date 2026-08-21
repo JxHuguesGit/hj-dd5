@@ -56,125 +56,118 @@ function ajaxActionClick(obj, e) {
             $('#' + target + ' button.btn-primary').unbind().on('click', function() {
                 window.location.href = obj.attr('href');
             });
-        } else if (oneAction == 'activateMap') {
+        } else if (oneAction=='getAddTokenModal') {
             e.preventDefault();
-
-            const mapId = obj.data('map-id');
 
             $.post(
                 globalThis.location.origin + '/wp-admin/admin-ajax.php',
                 {
                     action: 'dealWithAjax',
-                    ajaxAction: 'activateMap',
-                    mapId: mapId
+                    ajaxAction: 'getAddTokenModal'
                 },
                 function (response) {
                     try {
-                        const result = JSON.parse(response.data);
+                        const obj = JSON.parse(response.data);
 
-                        if (result.status !== 'success') {
-                            console.error('Erreur activation map:', result);
+                        if (obj.status !== 'success') {
+                            console.error('Erreur getAddTokenModal:', obj);
                             return;
                         }
 
-                        window.location.reload();
+                        const modal = obj.data.data;
 
-                    } catch (error) {
-                        console.error('Erreur activateMap:', error);
+                        $('#confirmModalLabel').text(modal.title);
+                        $('#confirmModalBody').html(modal.content);
+                        $('#confirmModalButton').text(modal.action.label);
+
+                        $('#confirmModalButton').off('click')
+                        .data(
+                            'action',
+                            modal.action.ajaxAction
+                        ).addClass(
+                            'ajaxAction'
+                        ).on(
+                            'click',
+                            function(e) {
+                                ajaxActionClick($(this), e);
+                            }
+                        );
+
+                        openModal('confirmModal');
+
+                    } catch (e) {
+                        console.error('Erreur getAddTokenModal:', e);
                         console.error(response);
                     }
                 }
             );
-        } else if (oneAction == 'lockMap' || oneAction == 'unlockMap') {
+        } else if (
+            oneAction == 'activateMap' ||
+            oneAction == 'duplicateMap' ||
+            oneAction == 'deleteMap' ||
+            oneAction == 'lockMap' ||
+            oneAction == 'unlockMap'
+        ) {
             e.preventDefault();
-
-            const mapId = obj.data('map-id');
-
-            $.post(
-                globalThis.location.origin + '/wp-admin/admin-ajax.php',
+            sendAjaxAction(
+                oneAction,
                 {
-                    action: 'dealWithAjax',
-                    ajaxAction: oneAction,
-                    mapId: mapId
+                    mapId: obj.data('map-id')
                 },
-                function (response) {
-                    try {
-                        const result = JSON.parse(response.data);
-
-                        if (result.status !== 'success') {
-                            console.error(
-                                'Erreur ' + oneAction + ':',
-                                result
-                            );
-                            return;
-                        }
-
-                        window.location.reload();
-
-                    } catch (error) {
-                        console.error(
-                            'Erreur ' + oneAction + ':',
-                            error
-                        );
-                        console.error(response);
-                    }
+                function() {
+                    window.location.reload();
                 }
             );
         } else if (oneAction=='deleteMapToken') {
             e.preventDefault();
-            const data = {
-                action: 'dealWithAjax',
-                ajaxAction: 'deleteMapToken',
-                tokenId: obj.data('map-token-id')
-            };
-            $.post(
-                globalThis.location.origin + '/wp-admin/admin-ajax.php',
-                data,
-                function(response) {
-                    try {
-                        const obj = JSON.parse(response.data);
-                        if (obj.status !== 'success') {
-                            console.error('Erreur addMapToken:', obj);
-                            return;
-                        }
-                        refreshMapTokens();
-                    } catch (e) {
-                        console.error('Erreur addMapToken:', e);
-                        console.error(response);
-                    }
+            sendAjaxAction(
+                oneAction,
+                {
+                    tokenId: obj.data('map-token-id')
+                },
+                function() {
+                    refreshMapTokens();
                 }
-            );            
+            );     
         } else if (oneAction=='addMapToken') {
             e.preventDefault();
-
-            const data = {
-                action: 'dealWithAjax',
-                ajaxAction: 'addMapToken',
-                mapId: MAP_CONFIG.mapId,
-                tokenId: $('#confirmModal [name="tokenId"]').val(),
-                column: $('#confirmModal [name="column"]').val(),
-                row: $('#confirmModal [name="row"]').val()
-            };
-
-            $.post(
-                globalThis.location.origin + '/wp-admin/admin-ajax.php',
-                data,
-                function(response) {
-                    try {
-                        const obj = JSON.parse(response.data);
-
-                        if (obj.status !== 'success') {
-                            console.error('Erreur addMapToken:', obj);
-                            return;
-                        }
-
-                        closeModal('confirmModal');
-                        refreshMapTokens();
-
-                    } catch (e) {
-                        console.error('Erreur addMapToken:', e);
-                        console.error(response);
-                    }
+            sendAjaxAction(
+                oneAction,
+                {
+                    mapId: MAP_CONFIG.mapId,
+                    tokenId: $('#confirmModal [name="tokenId"]').val(),
+                    column: $('#confirmModal [name="column"]').val(),
+                    row: $('#confirmModal [name="row"]').val()
+                },
+                function() {
+                    closeModal('confirmModal');
+                    refreshMapTokens();
+                }
+            );
+        } else if (oneAction=='toggleMapToken') {
+            e.preventDefault();
+            sendAjaxAction(
+                oneAction,
+                {
+                    tokenId: obj.data('map-token-id'),
+                },
+                function() {
+                    refreshMapTokens();
+                }
+            );
+        } else if (oneAction=='addToken') {
+            e.preventDefault();
+            sendAjaxAction(
+                oneAction,
+                {
+                    tokenName: $('#confirmModal [name="name"]').val(),
+                    tokenImage: $('#confirmModal [name="image"]').val(),
+                    tokenType: $('#confirmModal [name="type"]').val(),
+                    tokenMonsterId: $('#confirmModal [name="monsterId"]').val(),
+                    tokenSize: $('#confirmModal [name="size"]').val(),
+                },
+                function() {
+                    window.location.reload();
                 }
             );
         } else {
@@ -182,6 +175,38 @@ function ajaxActionClick(obj, e) {
         }
     }
     return false;
+}
+
+function sendAjaxAction(ajaxAction, data, onSuccess) {
+    $.post(
+        globalThis.location.origin + '/wp-admin/admin-ajax.php',
+        {
+            action: 'dealWithAjax',
+            ajaxAction: ajaxAction,
+            ...data
+        },
+        function(response) {
+            try {
+                const result = JSON.parse(response.data);
+
+                if (result.status !== 'success') {
+                    console.error(
+                        'Erreur ' + ajaxAction + ':',
+                        result
+                    );
+                    return;
+                }
+
+                onSuccess(result.data);
+            } catch (error) {
+                console.error(
+                    'Erreur ' + ajaxAction + ':',
+                    error
+                );
+                console.error(response);
+            }
+        }
+    );
 }
 
 // Ouvre la modale dont on passe l'identifiant

@@ -19,11 +19,7 @@ final class DeleteMapTokenAction
     public function execute(): array
     {
         $tokenId = filter_input(INPUT_POST, 'tokenId');
-
-        $mapToken = new MapToken([
-            F::ID      => $tokenId,
-        ]);
-
+        $mapToken = $this->readerFactory->mapToken()->mapTokenById($tokenId);
         $map = $this->readerFactory->map()->mapById($mapToken->mapId);
         if ($map === null) {
             throw new MapNotFoundException($mapToken->mapId);
