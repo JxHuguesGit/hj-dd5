@@ -62,14 +62,16 @@ abstract class AbstractCriteria implements CriteriaInterface
 
     private function applyAttributes(QueryBuilder $qb): void
     {
+        $values = get_object_vars($this);
         $ref = new \ReflectionObject($this);
 
-        foreach ($ref->getProperties() as $prop) {
-            if (method_exists($prop, 'isInitialized') && !$prop->isInitialized($this)) {
+        foreach ($ref->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
+            $name = $prop->getName();
+            if (!array_key_exists($name, $values)) {
                 continue;
             }
 
-            $value = $prop->getValue($this);
+            $value = $values[$name];
             if ($value === null) {
                 continue;
             }

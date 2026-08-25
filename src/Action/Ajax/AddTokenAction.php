@@ -2,19 +2,13 @@
 namespace src\Action\Ajax;
 
 use src\Constant\Field as F;
-use src\Domain\Entity\MapToken;
 use src\Domain\Entity\Token;
-use src\Exception\MapNotFoundException;
-use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory as WF;
 
 final class AddTokenAction
 {
     public function __construct(
         private WF $writerFactory,
-        private ReaderFactory $readerFactory,
-        private ServiceFactory $serviceFactory
     ) {}
 
     public function execute(): array

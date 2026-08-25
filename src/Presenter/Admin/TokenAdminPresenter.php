@@ -35,14 +35,6 @@ final class TokenAdminPresenter
             );
 
             $association = $token->entityId;
-            /*
-            match ($token->type) {
-                'monster' => $token->monsterId ?? '—',
-                'character' => $token->characterId ?? '—',
-                default => '—',
-            };
-            */
-
             $strEditButton = Html::getButton(
                 Html::getIcon(I::EDIT),
                 [

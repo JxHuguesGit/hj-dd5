@@ -8,174 +8,194 @@ $(document).ready(function(e) {
 });
 
 // Gère les data-action des .ajaxAction[data-trigger="click"]
-// Pour l'heure, ça inclut :
-// loadMoreSpells, openModal
 function ajaxActionClick(obj, e) {
-    let actions = obj.data('action').split(',');
-    for (let oneAction of actions) {
-        if (oneAction=='loadMoreSpells') {
-            e.preventDefault();
-            loadMoreSpells('append');
-        } else if (oneAction=='loadMoreMonsters') {
-            e.preventDefault();
-            loadMoreMonsters('append');
-        } else if (oneAction=='toggleCheckbox') {
-            e.preventDefault();
-            const target = obj.data('target');
-            toggleCheckbox(target);
-        } else if (oneAction=='collapse') {
-            e.preventDefault();
-            collapse(obj);
-        } else if (oneAction=='openModal') {
-            e.preventDefault();
-            const target = obj.data('target');
-            openModal(target);
-            $('#'+target+' button.btn-primary').unbind().on('click', function() {
-                if (target=='spellFilter') {
-                    loadMoreSpells('replace');
-                }
-                closeModal(target);
-            });
-        } else if (oneAction=='openConfirm') {
-            e.preventDefault();
-            const target = 'confirmModal';
-            $('#' + target + ' h5').html(obj.data('title'));
-            $('#' + target + ' .modal-body').html(obj.data('description'));
-            openModal(target);
-            $('#' + target + ' button.btn-primary').unbind().on('click', function() {
-                window.location.href = obj.attr('href');
-            });
-        } else if (oneAction=='loadOrigin') {
-            loadCreationStepSide('origin', obj.val())
-        } else if (oneAction=='confirmCharacterDeletion') {
-            e.preventDefault();
-            const target = 'confirmModal';
-            $('#' + target + ' h5').html('Confirmer la suppression');
-            $('#' + target + ' .modal-body').html('Êtes-vous sûr de vouloir supprimer ce personnage ? Cette action est irréversible.');
-            openModal(target);
-            $('#' + target + ' button.btn-primary').unbind().on('click', function() {
-                window.location.href = obj.attr('href');
-            });
-        } else if (oneAction=='getAddTokenModal') {
-            e.preventDefault();
+    const actions = obj.data('action').split(',');
 
-            $.post(
-                globalThis.location.origin + '/wp-admin/admin-ajax.php',
-                {
-                    action: 'dealWithAjax',
-                    ajaxAction: 'getAddTokenModal'
-                },
-                function (response) {
-                    try {
-                        const obj = JSON.parse(response.data);
-
-                        if (obj.status !== 'success') {
-                            console.error('Erreur getAddTokenModal:', obj);
-                            return;
-                        }
-
-                        const modal = obj.data.data;
-
-                        $('#confirmModalLabel').text(modal.title);
-                        $('#confirmModalBody').html(modal.content);
-                        $('#confirmModalButton').text(modal.action.label);
-
-                        $('#confirmModalButton').off('click')
-                        .data(
-                            'action',
-                            modal.action.ajaxAction
-                        ).addClass(
-                            'ajaxAction'
-                        ).on(
-                            'click',
-                            function(e) {
-                                ajaxActionClick($(this), e);
-                            }
-                        );
-
-                        openModal('confirmModal');
-
-                    } catch (e) {
-                        console.error('Erreur getAddTokenModal:', e);
-                        console.error(response);
-                    }
-                }
-            );
-        } else if (
-            oneAction == 'activateMap' ||
-            oneAction == 'duplicateMap' ||
-            oneAction == 'deleteMap' ||
-            oneAction == 'lockMap' ||
-            oneAction == 'unlockMap' ||
-            oneAction == 'resetMapFog'
-        ) {
-            e.preventDefault();
-            sendAjaxAction(
-                oneAction,
-                {
-                    mapId: obj.data('map-id')
-                },
-                function() {
-                    window.location.reload();
-                }
-            );
-        } else if (oneAction=='deleteMapToken') {
-            e.preventDefault();
-            sendAjaxAction(
-                oneAction,
-                {
-                    tokenId: obj.data('map-token-id')
-                },
-                function() {
-                    refreshMapTokens();
-                }
-            );     
-        } else if (oneAction=='addMapToken') {
-            e.preventDefault();
-            sendAjaxAction(
-                oneAction,
-                {
-                    mapId: MAP_CONFIG.mapId,
-                    tokenId: $('#confirmModal [name="tokenId"]').val(),
-                    column: $('#confirmModal [name="column"]').val(),
-                    row: $('#confirmModal [name="row"]').val()
-                },
-                function() {
-                    closeModal('confirmModal');
-                    refreshMapTokens();
-                }
-            );
-        } else if (oneAction=='toggleMapToken') {
-            e.preventDefault();
-            sendAjaxAction(
-                oneAction,
-                {
-                    tokenId: obj.data('map-token-id'),
-                },
-                function() {
-                    refreshMapTokens();
-                }
-            );
-        } else if (oneAction=='addToken') {
-            e.preventDefault();
-            sendAjaxAction(
-                oneAction,
-                {
-                    tokenName: $('#confirmModal [name="name"]').val(),
-                    tokenImage: $('#confirmModal [name="image"]').val(),
-                    tokenType: $('#confirmModal [name="type"]').val(),
-                    tokenEntityId: $('#confirmModal [name="monsterId"]').val(),
-                    tokenSize: $('#confirmModal [name="size"]').val(),
-                },
-                function() {
-                    window.location.reload();
-                }
-            );
-        } else {
-            console.log(oneAction + ' not implemented');
-        }
+    for (const action of actions) {
+        dispatchAjaxAction(action, obj, e);
     }
+
     return false;
+}
+
+function dispatchAjaxAction(action, obj, e) {
+    const handlers = {
+        loadMoreSpells: () => handleLoadMoreSpells('append', e),
+        loadMoreMonsters: () => handleLoadMoreMonsters('append', e),
+        toggleCheckbox: () => handleToggleCheckbox(obj, e),
+        collapse: () => handleCollapse(obj, e),
+        openModal: () => handleOpenModal(obj, e),
+        openConfirm: () => handleOpenConfirm(obj, e),
+        loadOrigin: () => handleLoadOrigin(obj),
+        confirmCharacterDeletion: () => handleCharacterDeletion(obj, e),
+        getAddTokenModal: () => handleGetAddTokenModal(e),
+
+        activateMap: () => handleMapAction('activateMap', obj, e),
+        duplicateMap: () => handleMapAction('duplicateMap', obj, e),
+        deleteMap: () => handleMapAction('deleteMap', obj, e),
+        lockMap: () => handleMapAction('lockMap', obj, e),
+        unlockMap: () => handleMapAction('unlockMap', obj, e),
+        resetMapFog: () => handleMapAction('resetMapFog', obj, e),
+
+        deleteMapToken: () => handleMapTokenAction('deleteMapToken', obj, e),
+        addMapToken: () => handleAddMapToken(e),
+        toggleMapToken: () => handleMapTokenAction('toggleMapToken', obj, e),
+        addToken: () => handleAddToken(e),
+    };
+
+    const handler = handlers[action];
+
+    if (handler) {
+        handler();
+    } else {
+        console.log(action + ' not implemented');
+    }
+}
+
+function handleMapAction(action, obj, e) {
+    e.preventDefault();
+
+    sendAjaxAction(
+        action,
+        {
+            mapId: obj.data('map-id')
+        },
+        function() {
+            window.location.reload();
+        }
+    );
+}
+function handleMapTokenAction(action, obj, e) {
+    e.preventDefault();
+
+    sendAjaxAction(
+        action,
+        {
+            tokenId: obj.data('map-token-id')
+        },
+        function() {
+            refreshMapTokens();
+        }
+    );
+}
+function handleAddMapToken(e) {
+    e.preventDefault();
+
+    sendAjaxAction(
+        'addMapToken',
+        {
+            mapId: MAP_CONFIG.mapId,
+            tokenId: $('#confirmModal [name="tokenId"]').val(),
+            column: $('#confirmModal [name="column"]').val(),
+            row: $('#confirmModal [name="row"]').val()
+        },
+        function() {
+            closeModal('confirmModal');
+            refreshMapTokens();
+        }
+    );
+}
+function handleAddToken(e) {
+    e.preventDefault();
+
+    sendAjaxAction(
+        'addToken',
+        {
+            tokenName: $('#confirmModal [name="name"]').val(),
+            tokenImage: $('#confirmModal [name="image"]').val(),
+            tokenType: $('#confirmModal [name="type"]').val(),
+            tokenEntityId: $('#confirmModal [name="monsterId"]').val(),
+            tokenSize: $('#confirmModal [name="size"]').val(),
+        },
+        function() {
+            window.location.reload();
+        }
+    );
+}
+
+function handleOpenModal(obj, e) {
+    e.preventDefault();
+    const target = obj.data('target');
+    openModal(target);
+    $('#'+target+' button.btn-primary').unbind().on('click', function() {
+        if (target=='spellFilter') {
+            loadMoreSpells('replace');
+        }
+        closeModal(target);
+    });
+}
+
+function handleOpenConfirm(obj, e) {
+    e.preventDefault();
+    const target = 'confirmModal';
+    $('#' + target + ' h5').html(obj.data('title'));
+    $('#' + target + ' .modal-body').html(obj.data('description'));
+    openModal(target);
+    $('#' + target + ' button.btn-primary').unbind().on('click', function() {
+        window.location.href = obj.attr('href');
+    });
+}
+
+function handleLoadOrigin(obj, e) {
+    loadCreationStepSide('origin', obj.val());
+}
+
+function handleCharacterDeletion(obj, e) {
+    e.preventDefault();
+    const target = 'confirmModal';
+    $('#' + target + ' h5').html('Confirmer la suppression');
+    $('#' + target + ' .modal-body').html('Êtes-vous sûr de vouloir supprimer ce personnage ? Cette action est irréversible.');
+    openModal(target);
+    $('#' + target + ' button.btn-primary').unbind().on('click', function() {
+        window.location.href = obj.attr('href');
+    });
+}
+
+function handleGetAddTokenModal(e) {
+    e.preventDefault();
+
+    $.post(
+        globalThis.location.origin + '/wp-admin/admin-ajax.php',
+        {
+            action: 'dealWithAjax',
+            ajaxAction: 'getAddTokenModal'
+        },
+        function (response) {
+            try {
+                const obj = JSON.parse(response.data);
+
+                if (obj.status !== 'success') {
+                    console.error('Erreur getAddTokenModal:', obj);
+                    return;
+                }
+
+                const modal = obj.data.data;
+
+                $('#confirmModalLabel').text(modal.title);
+                $('#confirmModalBody').html(modal.content);
+                $('#confirmModalButton').text(modal.action.label);
+
+                $('#confirmModalButton').off('click')
+                .data(
+                    'action',
+                    modal.action.ajaxAction
+                ).addClass(
+                    'ajaxAction'
+                ).on(
+                    'click',
+                    function(e) {
+                        ajaxActionClick($(this), e);
+                    }
+                );
+
+                openModal('confirmModal');
+
+            } catch (e) {
+                console.error('Erreur getAddTokenModal:', e);
+                console.error(response);
+            }
+        }
+    );    
 }
 
 function sendAjaxAction(ajaxAction, data, onSuccess) {
@@ -232,12 +252,13 @@ function closeModal(id) {
 }
 
 // Coche et décoche une case à cocher
-function toggleCheckbox(id) {
+function handleToggleCheckbox(obj) {
+    const id = obj.data('target');
     $('#'+id).prop('checked', !$('#'+id).prop('checked'));
 }
 
 // Plie et déplie un fieldset
-function collapse(obj) {
+function handleCollapse(obj) {
     if (obj[0].localName!='legend' || !obj.parent().hasClass('collapsible')) {
         return false;
     }
@@ -246,7 +267,7 @@ function collapse(obj) {
 
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des sorts.
 // Présent côté admin et public.
-function loadMoreSpells(type) {
+function handleLoadMoreSpells(type, e) {
     const page = $('.spell-grid .spell-card').length / 12 + (type == 'append' ? 1 : 0);
     const data = {
         'action': 'dealWithAjax',
@@ -291,7 +312,7 @@ function loadMoreSpells(type) {
 }
 
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des monstres
-function loadMoreMonsters(type) {
+function handleLoadMoreMonsters(type, e) {
     const page = $('#spellMonster tbody tr').length/10 + 1;
     const data = {
         'action': 'dealWithAjax',
