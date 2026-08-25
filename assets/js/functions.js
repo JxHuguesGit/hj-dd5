@@ -22,8 +22,8 @@ function dispatchAjaxAction(action, obj, e) {
     const handlers = {
         loadMoreSpells: () => handleLoadMoreSpells('append', e),
         loadMoreMonsters: () => handleLoadMoreMonsters('append', e),
-        toggleCheckbox: () => handleToggleCheckbox(obj, e),
-        collapse: () => handleCollapse(obj, e),
+        toggleCheckbox: () => handleToggleCheckbox(obj),
+        collapse: () => handleCollapse(obj),
         openModal: () => handleOpenModal(obj, e),
         openConfirm: () => handleOpenConfirm(obj, e),
         loadOrigin: () => handleLoadOrigin(obj),
