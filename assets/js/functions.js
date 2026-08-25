@@ -106,7 +106,8 @@ function ajaxActionClick(obj, e) {
             oneAction == 'duplicateMap' ||
             oneAction == 'deleteMap' ||
             oneAction == 'lockMap' ||
-            oneAction == 'unlockMap'
+            oneAction == 'unlockMap' ||
+            oneAction == 'resetMapFog'
         ) {
             e.preventDefault();
             sendAjaxAction(
@@ -163,7 +164,7 @@ function ajaxActionClick(obj, e) {
                     tokenName: $('#confirmModal [name="name"]').val(),
                     tokenImage: $('#confirmModal [name="image"]').val(),
                     tokenType: $('#confirmModal [name="type"]').val(),
-                    tokenMonsterId: $('#confirmModal [name="monsterId"]').val(),
+                    tokenEntityId: $('#confirmModal [name="monsterId"]').val(),
                     tokenSize: $('#confirmModal [name="size"]').val(),
                 },
                 function() {

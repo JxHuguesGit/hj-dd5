@@ -44,6 +44,18 @@ final class MapTokenReader
     }
 
     /**
+     * @return Collection<MapToken>
+     */
+    public function pjTokensByMap(int $mapId): Collection
+    {
+        $criteria = new MapTokenCriteria();
+        $criteria->mapId = $mapId;
+        $criteria->type = 'character';
+
+        return $this->mapTokenRepository->findAllWithRelations($criteria);
+    }
+
+    /**
      * @return int
      */
     public function nextNumber(int $mapId, int $tokenId): int

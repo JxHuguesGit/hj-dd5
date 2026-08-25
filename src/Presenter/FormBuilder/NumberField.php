@@ -14,10 +14,8 @@ class NumberField extends FormField
             C::NAME  => $this->name,
             C::VALUE => $this->value,
             C::CSSCLASS => 'form-control',
+            'step' => $this->params['step'] ?? 1,
         ];
-        if ($this->params['step']) {
-            $attrs['step'] = $this->params['step'];
-        }
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';
         }

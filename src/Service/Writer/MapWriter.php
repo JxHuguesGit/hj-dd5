@@ -23,6 +23,18 @@ final class MapWriter
         }
     }
 
+    public function insert(Map $map): void
+    {
+        $this->repository->beginTransaction();
+        try {
+            $this->repository->insert($map);
+            $this->repository->commit();
+        } catch (\Throwable $e) {
+            $this->repository->rollBack();
+            throw $e;
+        }
+    }
+
     public function insertWithoutTransaction(Map $map): void
     {
         $this->repository->insert($map);

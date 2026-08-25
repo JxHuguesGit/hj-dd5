@@ -56,6 +56,7 @@ class Ajax
                     'getAddTokenModal',
                     'addToken',
                     'toggleMapToken',
+                    'resetMapFog',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();
@@ -66,7 +67,7 @@ class Ajax
                 $router                = new AjaxRouter(
                     new AjaxActionFactory(
                         $reader,
-                        new ServiceFactory($reader, $repository),
+                        new ServiceFactory($reader, $writer, $repository),
                         $writer,
                         new TemplateRenderer(),
                         new PresenterFactory()

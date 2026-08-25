@@ -4,6 +4,7 @@ use src\Constant\Template;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
+use src\Factory\WriterFactory;
 use src\Model\PageRegistry;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
@@ -31,7 +32,8 @@ class DD5Base
         $queryExecutor   = new QueryExecutor();
         $repository      = new RepositoryFactory($queryBuilder, $queryExecutor);
         $reader          = new ReaderFactory($repository);
-        $router          = new Router($reader, new ServiceFactory($reader, $repository), new TemplateRenderer());
+        $writer          = new WriterFactory($repository);
+        $router          = new Router($reader, new ServiceFactory($reader, $writer, $repository), new TemplateRenderer());
         $controller      = $router->getController();
 
         if (DD5_URL == 'http://localhost/') {
@@ -51,6 +53,7 @@ class DD5Base
                 PLUGINS_DD5,
                 $controller->getContentPage($msgProcessError),
                 $srcJsFilesTpl,
+                date('YmdHis'),
             ];
         } else {
             $attributes = [
@@ -62,6 +65,7 @@ class DD5Base
                 $controller->getContentFooter(),
                 $errorPanel,
                 $srcJsFilesTpl,
+                date('YmdHis'),
             ];
         }
 

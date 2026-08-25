@@ -174,6 +174,7 @@ class Bootstrap
 
     public const COL_1     = 'col-1';
     public const COL_2     = 'col-2';
+    public const COL_6     = 'col-6';
     public const COL_12    = 'col-12';
     public const COL_MD_2  = 'col-md-2';
     public const COL_MD_3  = 'col-md-3';

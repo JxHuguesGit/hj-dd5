@@ -15,6 +15,7 @@ use src\Factory\PresenterFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\RepositoryFactory;
 use src\Factory\ServiceFactory;
+use src\Factory\WriterFactory;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
@@ -41,6 +42,7 @@ class DD5Admin
         $qe       = new QueryExecutor();
         $repositoryFactory = new RepositoryFactory($qb, $qe);
         $readerFactory = new ReaderFactory($repositoryFactory);
+        $writerFactory = new WriterFactory($repositoryFactory);
 
         $adminPage = new AdminPage(
             $arrUri,
@@ -51,8 +53,9 @@ class DD5Admin
                     $qe,
                     new TemplateRenderer()
                 ),
-                new ServiceFactory($readerFactory, $repositoryFactory),
+                new ServiceFactory($readerFactory, $writerFactory, $repositoryFactory),
                 $readerFactory,
+                $writerFactory,
                 new PresenterFactory()
             ),
         );

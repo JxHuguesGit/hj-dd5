@@ -20,14 +20,14 @@ final class AddTokenAction
     public function execute(): array
     {
         $type = filter_input(INPUT_POST, 'tokenType');
+        $entityId = filter_input(INPUT_POST, 'tokenEntityId'); // tokenMonsterId
 
         $token = new Token([
             F::NAME        => filter_input(INPUT_POST, 'tokenName'),
             F::IMAGE       => filter_input(INPUT_POST, 'tokenImage'),
             F::SIZE        => filter_input(INPUT_POST, 'tokenSize'),
             F::TYPE        => $type,
-            F::CHARACTERID => null, // TODO à traiter
-            F::MONSTERID   => $type == 'monster' ? filter_input(INPUT_POST, 'tokenMonsterId') : null,
+            F::ENTITYID    => $entityId,
             F::ACTIVE      => filter_input(INPUT_POST, 'active') ?? 0
         ]);
 

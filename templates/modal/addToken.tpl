@@ -17,8 +17,8 @@
 </div>
 
 <div class="mb-3" id="tokenMonsterContainer">
-    <label for="tokenMonsterId" class="form-label">Monstre associé</label>
-    <select id="tokenMonsterId" name="monsterId" class="form-select">
+    <label for="tokenEntityId" class="form-label">Monstre associé</label>
+    <select id="tokenEntityId" name="monsterId" class="form-select">
         %1$s
     </select>
 </div>

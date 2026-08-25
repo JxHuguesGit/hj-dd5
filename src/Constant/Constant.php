@@ -69,6 +69,7 @@ class Constant
     public const HOME                   = 'home';
     public const ID                     = 'id';
     public const ILLIM                  = 'illim';
+    public const INITIATIVE             = 'initiative';
     public const ITEM                   = 'item';
     public const ITEMS                  = 'items';
     public const LABEL                  = 'label';
@@ -79,6 +80,7 @@ class Constant
     public const MAP                    = 'map';
     public const MAPS                   = 'maps';
     public const MAPID                  = 'mapId';
+    public const MAPFOG                 = 'mapFog';
     public const MAPTOKEN               = 'mapToken';
     public const MARTIAL                = 'martial';
     public const MASTERYLINK            = 'masteryLink';

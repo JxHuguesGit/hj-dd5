@@ -16,6 +16,7 @@ final class Map extends Entity
         F::CELLSIZE,
         F::ACTIVE,
         F::LOCKED,
+        F::VISIONRANGE,
     ];
 
     public const FIELD_TYPES = [
@@ -26,10 +27,17 @@ final class Map extends Entity
         F::CELLSIZE    => FieldType::INTPOSITIVE,
         F::ACTIVE      => FieldType::INTPOSITIVE,
         F::LOCKED      => FieldType::INTPOSITIVE,
+        F::VISIONRANGE => FieldType::INTPOSITIVE,
     ];
 
     public const EDITABLE_FIELDS = [
+        F::NAME,
+        F::IMAGE,
+        F::MAPCOLUMNS,
+        F::MAPROWS,
+        F::CELLSIZE,
         F::ACTIVE,
         F::LOCKED,
+        F::VISIONRANGE,
     ];
 }

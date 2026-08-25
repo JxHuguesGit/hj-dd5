@@ -4,7 +4,7 @@
     </div>
 
     <form method="POST" action="%4$s">
-        <div class="card-body g-4">%2$s</div>
+        <div class="card-body"><div class="row g-4">%2$s</div></div>
         <div class="card-footer d-flex justify-content-end gap-2">%3$s</div>
     </form>
 </div>

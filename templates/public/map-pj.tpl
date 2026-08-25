@@ -16,5 +16,7 @@
         },
 
         tokens: %6$s,
+        visibleCells: %7$s,
+        discoveredCells: %8$s,
     };
 </script>

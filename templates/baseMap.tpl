@@ -5,12 +5,12 @@
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>%1$s</title>
         %2$s
-        <link rel="stylesheet" media="all" href="%3$sassets/styles/map.css" />
+        <link rel="stylesheet" media="all" href="%3$sassets/styles/map.css?v=%6$s" />
     </head>
 
     <body>
         %4$s
         %5$s
-        <script src="%3$sassets/js/map.js"></script>
+        <script src="%3$sassets/js/map.js?v=%6$s"></script>
     </body>
 </html>

@@ -32,6 +32,14 @@ class QueryBuilder
         return "INSERT INTO `{$table}` (`$columns`) VALUES ($placeholdersStr)";
     }
 
+    public function getInsertOrIgnoreQuery(
+    array $fields,
+    string $table
+    ): string {
+        return $this->getInsertQuery($fields, $table)
+            . ' ON DUPLICATE KEY UPDATE `id` = `id`';
+    }
+
     public function getUpdateQuery(array $fields, string $table, ?array $fieldsToUpdate = null): string
     {
         $targetFields = $fieldsToUpdate ?? $fields;
@@ -49,6 +57,12 @@ class QueryBuilder
     public function getDeleteQuery(string $table): string
     {
         return "DELETE FROM `{$table}` WHERE `id` = %s";
+    }
+
+    public function getCriteriaDeleteQuery(string $table): self
+    {
+        $this->baseQuery = "DELETE FROM `{$table}`";
+        return $this;
     }
 
     public function setBaseQuery(string $sql): self

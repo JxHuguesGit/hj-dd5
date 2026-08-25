@@ -15,9 +15,11 @@ class Table
     public const FEAT           = 'rpgFeat';
     public const FEATABILITY    = 'rpgFeatAbility';
     public const FEATTYPE       = 'rpgFeatType';
+    public const INITIATIVE     = 'rpgInitiative';
     public const ITEM           = 'rpgItem';
     public const LANGUAGE       = 'rpgLanguage';
     public const MAP            = 'rpgMap';
+    public const MAPFOG         = 'rpgMapFog';
     public const MAPTOKEN       = 'rpgMapToken';
     public const MSTPROFCY      = 'rpgMasteryProficiency';
     public const MONSTER        = 'rpgMonster';

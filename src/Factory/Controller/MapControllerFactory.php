@@ -25,7 +25,8 @@ class MapControllerFactory
             new PageMap(
                 $map,
                 $this->renderer,
-                $this->serviceFactory->mapToken()
+                $this->serviceFactory->mapToken(),
+                $this->serviceFactory->mapFog()
             )
         );
     }

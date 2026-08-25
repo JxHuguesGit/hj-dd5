@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory;
 
+use src\Presenter\Admin\InitiativeAdminPresenter;
 use src\Presenter\Admin\MapAdminPresenter;
 use src\Presenter\Admin\MapTokenAdminPresenter;
 use src\Presenter\Admin\TokenAdminPresenter;
@@ -25,6 +26,13 @@ final class PresenterFactory
     public function mapToken(): MapTokenAdminPresenter
     {
         return new MapTokenAdminPresenter(
+            new TemplateRenderer()
+        );
+    }
+
+    public function initiative(): InitiativeAdminPresenter
+    {
+        return new InitiativeAdminPresenter(
             new TemplateRenderer()
         );
     }

@@ -48,6 +48,13 @@ class QueryExecutor
         return (int) $wpdb->rows_affected;
     }
 
+    public function delete(string $sql, array $params = []): void
+    {
+        global $wpdb;
+        $prepared = $wpdb->prepare($sql, $params);
+        $wpdb->query($prepared);
+    }
+
     public function beginTransaction(): void
     {
         global $wpdb;

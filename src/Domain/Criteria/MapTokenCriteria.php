@@ -13,6 +13,9 @@ final class MapTokenCriteria extends BaseCriteria
     #[Equals(F::MAPID)]
     public ?int $mapId = null;
 
+    #[Equals(F::TYPE)]
+    public ?string $type = null;
+
     #[Equals(F::TOKENID)]
     public ?int $tokenId = null;
 

@@ -43,6 +43,8 @@ final class Template
 
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
+    public const ADMINTIMELINE       = self::ADMIN_PATH.'adminTimeline.tpl';
+
     public const ADMINMAPTOKTABLE    = self::ADMIN_PATH.'adminMapTokenTable.tpl';
     public const ADMINTOKENTABLE     = self::ADMIN_PATH.'adminTokenTable.tpl';
     public const ADDMAPTOKMODAL      = self::TEMPLATE_PATH.'modal/addMapToken.tpl';
@@ -79,6 +81,7 @@ final class Template
     public const FILTER_SPELL        = self::FORM_PATH.'spellFilter.tpl';
     public const FORM_FEAT           = self::FORM_PATH.'RpgFeat.tpl';
     public const FORM_MONSTERABILITY = self::FORM_PATH.'RpgMonster.tpl';
+    public const FORM_MAP_EDIT       = self::FORM_PATH.'formMap.tpl';
 
     public const HERO_PATH           = self::TEMPLATE_PATH.'hero/';
     public const HERO_CREATE_HEADER  = self::HERO_PATH.'createHeader.tpl';

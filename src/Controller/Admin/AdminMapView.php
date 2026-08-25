@@ -16,6 +16,8 @@ final class AdminMapView
     public function getContent(
         Map $map,
         array $tokens,
+        array $visibleCells,
+        array $discoveredCells,
     ): string {
         return $this->renderer->render(
             Template::MAP_PAGE_MJ,
@@ -26,6 +28,8 @@ final class AdminMapView
                 $map->mapRows,
                 $map->cellSize,
                 json_encode($tokens, JSON_THROW_ON_ERROR),
+                json_encode($visibleCells, JSON_THROW_ON_ERROR),
+                json_encode($discoveredCells, JSON_THROW_ON_ERROR),
             ]
         );
     }

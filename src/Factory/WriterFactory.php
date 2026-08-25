@@ -10,6 +10,7 @@ final class WriterFactory
 
     private const MAP = [
         C::MAP                    => [C::WRITER => 'MapWriter',                   C::REPO => C::MAP],
+        C::MAPFOG                 => [C::WRITER => 'MapFogWriter',                C::REPO => C::MAPFOG],
         C::MAPTOKEN               => [C::WRITER => 'MapTokenWriter',              C::REPO => C::MAPTOKEN],
         C::TOKEN                  => [C::WRITER => 'TokenWriter',                 C::REPO => C::TOKEN],
     ];

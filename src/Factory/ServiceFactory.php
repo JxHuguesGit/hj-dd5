@@ -2,6 +2,7 @@
 namespace src\Factory;
 
 use src\Service\Domain\MapService;
+use src\Service\Domain\MapFogService;
 use src\Service\Domain\MapTokenService;
 use src\Service\Domain\OriginService;
 use src\Service\Domain\SkillService;
@@ -14,6 +15,7 @@ final class ServiceFactory
 {
     public function __construct(
         private ReaderFactory $readerFactory,
+        private WriterFactory $writerFactory,
         private RepositoryFactory $repositoryFactory
     ) {}
 
@@ -64,6 +66,15 @@ final class ServiceFactory
     public function mapToken(): MapTokenService
     {
         return new MapTokenService(
+            $this->readerFactory->mapToken()
+        );
+    }
+
+    public function mapFog(): MapFogService
+    {
+        return new MapFogService(
+            $this->readerFactory->mapFog(),
+            $this->writerFactory->mapFog(),
             $this->readerFactory->mapToken()
         );
     }

@@ -14,8 +14,7 @@ final class Token extends Entity
         F::IMAGE,
         F::SIZE,
         F::TYPE,
-        F::CHARACTERID,
-        F::MONSTERID,
+        F::ENTITYID,
         F::ACTIVE,
     ];
 
@@ -24,8 +23,7 @@ final class Token extends Entity
         F::IMAGE       => FieldType::STRING,
         F::SIZE        => FieldType::INTPOSITIVE,
         F::TYPE        => FieldType::STRING,
-        F::CHARACTERID => FieldType::INTNULLABLE,
-        F::MONSTERID   => FieldType::INTNULLABLE,
+        F::ENTITYID    => FieldType::INTPOSITIVE,
         F::ACTIVE      => FieldType::INTPOSITIVE,
     ];
 
@@ -34,8 +32,7 @@ final class Token extends Entity
         F::IMAGE,
         F::SIZE,
         F::TYPE,
-        F::CHARACTERID,
-        F::MONSTERID,
+        F::ENTITYID,
         F::ACTIVE,
     ];
 }

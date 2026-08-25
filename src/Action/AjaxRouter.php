@@ -15,6 +15,7 @@ use src\Action\Ajax\LoadMoreMonstersAction;
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\LockMapAction;
 use src\Action\Ajax\ModalMonsterCard;
+use src\Action\Ajax\ResetMapFogAction;
 use src\Action\Ajax\ToggleMapTokenAction;
 use src\Action\Ajax\UnlockMapAction;
 use src\Action\Ajax\UpdateMapTokensAction;
@@ -41,6 +42,7 @@ class AjaxRouter
         'unlockMap'            => UnlockMapAction::class,
         'duplicateMap'         => DuplicateMapAction::class,
         'deleteMap'            => DeleteMapAction::class,
+        'resetMapFog'          => ResetMapFogAction::class,
     ];
 
     public function __construct(

@@ -18,7 +18,7 @@ class Form
         return $this;
     }
 
-    public function addInput(string $id, string $name, string $label, $value, array $extraAttributes = []): self
+    public function addInput(string $id, string $name, string $label, mixed $value, array $extraAttributes = []): self
     {
         $attributes = $this->initAttributes($id, $name, $label, $value);
 
@@ -85,7 +85,7 @@ class Form
         return Html::getSpan($label, $attributes);
     }
 
-    private function initAttributes(string $id, string $name, string $label, $value): array
+    private function initAttributes(string $id, string $name, string $label, mixed $value): array
     {
         return [
             C::CSSCLASS => 'form-control',

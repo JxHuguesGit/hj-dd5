@@ -4,6 +4,7 @@ namespace src\Repository;
 use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
+use src\Domain\Criteria\BaseCriteria;
 use src\Domain\Criteria\CriteriaInterface;
 use src\Domain\Entity as DomainEntity;
 use src\Query\QueryBuilder;
@@ -164,6 +165,24 @@ class Repository
             ->getDeleteQuery($this->table);
 
         $this->queryExecutor->update($this->query, [$this->getEntityId($entity)]);
+    }
+
+    public function deleteByCriteria(BaseCriteria $criteria): void
+    {
+        $criteria->orderBy = [];
+
+        $queryBuilder = $this->queryBuilder->reset()
+            ->getCriteriaDeleteQuery($this->table);
+
+        $criteria->apply($queryBuilder);
+
+        $this->query = $queryBuilder
+            ->getQuery();
+
+        $this->queryExecutor->delete(
+            $this->query,
+            $queryBuilder->getParams()
+        );
     }
 
     protected function findAllByCriteria(

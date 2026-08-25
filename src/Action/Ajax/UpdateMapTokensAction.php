@@ -22,6 +22,7 @@ final class UpdateMapTokensAction
     {
         $tokensJson = filter_input(INPUT_POST, 'tokens');
         $isMj = Session::getWpUser()->data->ID !== '0';
+        $updateVisibility = false;
 
         $tokens = json_decode(
             $tokensJson,
@@ -39,6 +40,9 @@ final class UpdateMapTokensAction
             if (!$isMj && !$mapToken->enablePjMove) {
                 throw new ForbiddenActionException("L'utilisateur n'a pas le droit de déplacer ce token.");
             }
+            $token = $this->readerFactory
+                ->token()
+                ->tokenById($mapToken->tokenId);
 
             $map = $this->readerFactory
                 ->map()
@@ -48,25 +52,40 @@ final class UpdateMapTokensAction
             }
             $this->serviceFactory->map()->assertUnlocked($map);
 
-            $token = new MapToken();
-            $token->assignId($data[F::ID]);
-            $token->column = (int) $data[F::COLUMN];
-            $token->row = (int) $data[F::ROW];
-
+            $mapToken = new MapToken();
+            $mapToken->assignId($data[F::ID]);
+            $mapToken->column = (int) $data[F::COLUMN];
+            $mapToken->row = (int) $data[F::ROW];
 
             $this->writerFactory
                 ->mapToken()
                 ->updatePartial(
-                    $token,
+                    $mapToken,
                     [
                         F::COLUMN,
                         F::ROW,
                     ]
                 );
+
+            if ($token->type === 'character') {
+                $updateVisibility = true;
+            }
+        }
+
+        if ($updateVisibility) {
+            $this->serviceFactory
+                ->mapFog()
+                ->updateVisibility($map);
         }
 
         return [
             'tokens' => $tokens,
+            'visibleCells' => $this->serviceFactory
+                ->mapFog()
+                ->getVisibleCells($map),
+            'discoveredCells' => $this->serviceFactory
+                ->mapFog()
+                ->getDiscoveredCells($map),
         ];
     }
 }

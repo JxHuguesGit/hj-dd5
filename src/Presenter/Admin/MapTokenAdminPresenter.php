@@ -54,10 +54,9 @@ final class MapTokenAdminPresenter
                 $btnToggleAttributes[C::DISABLED] = C::DISABLED;
             }
             $strButton = Html::getButton(
-                Html::getIcon($active ? I::EYE : I::EYESLASH),
+                Html::getIcon(I::EYE) . ' ' . Html::getIcon(I::EYESLASH),
                 $btnToggleAttributes
-            );
-            $strButton .= ' ' . Html::getButton(
+            ) . ' ' . Html::getButton(
                 Html::getIcon(I::TRASHALT),
                 $btnAttributes
             );
@@ -75,7 +74,14 @@ final class MapTokenAdminPresenter
                 $classes .= ' inactive';
             }
 
-            $rows .= Html::getBalise(H::BALISE_TR, $row, [C::CSSCLASS => $classes, C::DATA => ['token-id' => $token['id']]]);
+            $rows .= Html::getBalise(
+                H::BALISE_TR,
+                $row,
+                [
+                    C::CSSCLASS => $classes,
+                    C::DATA => ['token-id' => $token['id']]
+                ]
+            );
         }
 
         return $this->renderer->render(

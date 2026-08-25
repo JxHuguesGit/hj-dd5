@@ -60,6 +60,7 @@ class Field
     public const UKTAG       = 'ukTag';
     public const VALUE       = 'value';
     public const VITESSE     = 'vitesse';
+    public const VISIONRANGE = 'visionRange';
     public const WEIGHT      = 'weight';
     public const WISSCORE    = 'wisScore';
 
@@ -116,6 +117,9 @@ class Field
     public const ITEMID       = 'itemId';
     public const LANGUAGEID   = 'languageId';
     public const MAPID        = 'mapId';
+    public const MAPCOLUMN    = 'mapColumn';
+    public const MAPROW       = 'mapRow';
+    public const MAPTOKENID   = 'mapTokenId';
     public const MSTPROFID    = 'masteryProficiencyId';
     public const MONSTERID    = 'monsterId';
     public const MSTSSTYPID   = 'monsterSubTypeId';
