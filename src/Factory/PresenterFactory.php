@@ -44,6 +44,12 @@ final class PresenterFactory
     public function combat(): CombatPresenter
     {
         return new CombatPresenter(
+            new ReaderFactory(
+                new RepositoryFactory(
+                    new QueryBuilder(),
+                    new QueryExecutor()
+                )
+            ),
             new TemplateRenderer()
         );
     }

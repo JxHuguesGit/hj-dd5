@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
@@ -9,6 +10,12 @@ final class TokenCriteria extends BaseCriteria
 {
     #[Equals(F::ID)]
     public ?int $id = null;
+
+    #[Equals(F::TYPE)]
+    public ?string $type = null;
+
+    #[Equals(F::ENTITYID)]
+    public ?int $entityId = null;
 
     #[Equals(F::ACTIVE)]
     public ?int $active = null;

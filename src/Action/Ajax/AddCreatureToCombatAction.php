@@ -1,13 +1,13 @@
 <?php
+
 namespace src\Action\Ajax;
 
 use src\Constant\Field as F;
+use src\Domain\Criteria\TokenCriteria;
 use src\Domain\Entity\Combat;
 use src\Domain\Entity\CombatParticipant;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
-use src\Factory\WriterFactory;
-use src\Service\CombatService;
 
 final class AddCreatureToCombatAction
 {
@@ -32,7 +32,22 @@ final class AddCreatureToCombatAction
                 'message' => 'Monstre inconnu.',
             ];
         }
-        
+        // Ici, on va récupérer dans token un type='monster' et entityId='monsterId'
+        // On peut
+        $criteria = new TokenCriteria();
+        $criteria->type = "monster";
+        $criteria->entityId = $monsterId;
+        $tokens = $this->readerFactory
+            ->token()
+            ->allTokens($criteria);
+        if ($tokens->isEmpty()) {
+            return [
+                'status' => 'error',
+                'message' => 'Token non défini pour ce monstre.',
+            ];
+        }
+        $token = $tokens->first();
+
         $combatService = $this->serviceFactory->combat();
         $combatId = (int) filter_input(
             INPUT_POST,
@@ -58,7 +73,7 @@ final class AddCreatureToCombatAction
 
         $participant = new CombatParticipant([
             F::COMBATID => $combatId,
-            F::TOKENID => null,
+            F::TOKENID => $token->id,
             F::MAPTOKENID => null,
             F::NAME => $monster->name,
             F::SCOREHP => $monster->hp,

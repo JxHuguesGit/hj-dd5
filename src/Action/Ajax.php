@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Action;
 
 use src\Constant\Constant as C;
@@ -61,6 +62,7 @@ class Ajax
                     'loadCombatMonsters',
                     'addCreatureToCombat',
                     'removeCreatureFromCombat',
+                    'rerollCombatParticipantInitiative',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();
@@ -114,5 +116,4 @@ class Ajax
 
         return json_encode($response);
     }
-
 }

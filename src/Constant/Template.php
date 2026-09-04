@@ -27,6 +27,7 @@ final class Template
     public const ADMINNAV            = self::ADMIN_PATH.'adminNav.tpl';
     public const ADMININITIATIVEPANEL = self::ADMIN_PATH.'adminInitiativePanel.tpl';
     public const ADMINCOMBATPARTICIPANT = self::ADMIN_PATH.'adminCombatParticipant.tpl';
+    public const ADMININITCBTBUTTON = 'adminInitiativeCombatButton.tpl';
 
     public const ADMINCHARACTER      = self::ADMIN_PATH.'adminCharacter.tpl';
     public const ADMINQUICKINFO      = self::ADMIN_PATH.'adminCharacterQuickInfo.tpl';

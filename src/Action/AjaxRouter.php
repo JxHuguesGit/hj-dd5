@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Action;
 
 use src\Action\Ajax\ActivateMapAction;
@@ -51,6 +52,7 @@ class AjaxRouter
         'loadCombat'           => LoadCombatAction::class,
         'addCreatureToCombat'  => AddCreatureToCombatAction::class,
         'removeCreatureFromCombat' => RemoveCreatureFromCombatAction::class,
+        'rerollCombatParticipantInitiative' => UpdateCombatParticipantAction::class,
     ];
 
     public function __construct(
