@@ -387,16 +387,6 @@ h1, h2, h3, h4 {
   width: 100%;
 }
 
-.combatant-card {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition), box-shadow var(--transition);
-  cursor: default;
-  margin-bottom: 4px;
-  padding: 8px 10px;
-}
-
 .combat-search__results {
     display: flex;
     flex: 1;
@@ -508,9 +498,10 @@ button:focus-visible {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
 
-    transition:
-        background var(--transition-fast),
-        border-color var(--transition-fast);
+    transition: background-color var(--transition), box-shadow var(--transition);
+    cursor: default;
+    margin-bottom: 4px;
+    padding: 8px 10px;
 
     &:hover {
         background: var(--color-bg-card-hover);

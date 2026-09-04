@@ -20,7 +20,7 @@ final class AdminTimelineContent implements AdminContentInterface
     public function getContent(): string
     {
         if ($this->mapId === null) {
-        	return $this->initiativeAdminPresenter->presentInitiativePanel();
+            return $this->initiativeAdminPresenter->presentInitiativePanel();
         }
 
         return $this->getTimelineContent();

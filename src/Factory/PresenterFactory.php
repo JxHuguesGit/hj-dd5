@@ -37,12 +37,6 @@ final class PresenterFactory
     public function initiative(): InitiativeAdminPresenter
     {
         return new InitiativeAdminPresenter(
-            new ReaderFactory(
-                new RepositoryFactory(
-                    new QueryBuilder(),
-                    new QueryExecutor()
-                )
-            ),
             new TemplateRenderer()
         );
     }

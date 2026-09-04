@@ -43,8 +43,7 @@ class MapTokenRepository extends Repository implements MapTokenRepositoryInterfa
         $baseQuery = "
             SELECT mp.".F::ID." as ".F::ID.", ".F::MAPID.", ".F::TOKENID."
                 , mp.".F::COLUMN.", ".F::ROW.", mp.".F::SIZE." as ".F::SIZE."
-                , ".F::ENABLEPJMOVE.", mp.".F::ACTIVE." as ".F::ACTIVE."
-                , ".F::SPEED."
+                , ".F::ENABLEPJMOVE.", mp.".F::ACTIVE." as ".F::ACTIVE.", ".F::SPEED."
                 , ".F::NUMBER.", ".F::NAME.", ".F::IMAGE."
             FROM " . Table::MAPTOKEN . " mp
             INNER JOIN " . Table::TOKEN . " t ON mp.".F::TOKENID." = t.".F::ID."
