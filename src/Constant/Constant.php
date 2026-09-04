@@ -41,6 +41,7 @@ class Constant
     public const CLASSES                = 'classes';
     public const COLSPAN                = 'colspan';
     public const COMBAT                 = 'combat';
+    public const COMBAT_PARTICIPANT     = 'combatParticipant';
     public const ONG_COMPENDIUM         = 'compendium';
     public const CONDITION              = 'condition';
     public const CONTACT                = 'contact';

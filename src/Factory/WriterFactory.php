@@ -13,6 +13,8 @@ final class WriterFactory
         C::MAPFOG                 => [C::WRITER => 'MapFogWriter',                C::REPO => C::MAPFOG],
         C::MAPTOKEN               => [C::WRITER => 'MapTokenWriter',              C::REPO => C::MAPTOKEN],
         C::TOKEN                  => [C::WRITER => 'TokenWriter',                 C::REPO => C::TOKEN],
+        C::COMBAT                 => [C::WRITER => 'CombatWriter',                C::REPO => C::COMBAT],
+        C::COMBAT_PARTICIPANT      => [C::WRITER => 'CombatParticipantWriter',     C::REPO => C::COMBAT_PARTICIPANT],
     ];
 
     public function __construct(

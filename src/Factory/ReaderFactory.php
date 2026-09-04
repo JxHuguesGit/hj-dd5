@@ -26,6 +26,8 @@ final class ReaderFactory
         C::MAPTOKEN              => [C::READER => 'MapTokenReader',             C::REPO => C::MAPTOKEN],
         C::MAPFOG                => [C::READER => 'MapFogReader',               C::REPO => C::MAPFOG],
         C::TOKEN                 => [C::READER => 'TokenReader',                C::REPO => C::TOKEN],
+        C::COMBAT                => [C::READER => 'CombatReader',               C::REPO => C::COMBAT],
+        C::COMBAT_PARTICIPANT    => [C::READER => 'CombatParticipantReader',    C::REPO => C::COMBAT_PARTICIPANT],
 
         C::MONSTER               => [C::READER => 'MonsterReader',              C::REPO => C::MONSTER],
         C::MONSTER_ABILITY       => [C::READER => 'MonsterAbilityReader',       C::REPO => C::MONSTER_ABILITY],

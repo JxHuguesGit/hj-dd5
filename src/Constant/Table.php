@@ -9,6 +9,8 @@ class Table
     public const ARMOR          = 'rpgArmor';
     public const CHARACTER      = 'rpgCharacter';
     public const CHARACTERSKILL = 'rpgCharacterSkill';
+    public const COMBAT         = 'rpgCombat';
+    public const COMBAT_PARTICIPANT = 'rpgCombatParticipant';
     public const CONDITION      = 'rpgCondition';
     public const DMGDIE         = 'rpgDamageDie';
     public const DAMAGETYPE     = 'rpgDamageType';

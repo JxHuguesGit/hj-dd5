@@ -66,6 +66,7 @@ final class MapTokenAdminPresenter
                 Html::getBalise(H::BALISE_TD, $token['column'], [C::CSSCLASS => 'map-token-column']) .
                 Html::getBalise(H::BALISE_TD, $token['row'], [C::CSSCLASS => 'map-token-row']) .
                 Html::getBalise(H::BALISE_TD, $token['size']) .
+                Html::getBalise(H::BALISE_TD, $token['speed']) .
                 Html::getBalise(H::BALISE_TD, $token['number'] ?? '') .
                 Html::getBalise(H::BALISE_TD, $strButton, [C::CSSCLASS => 'map-token-actions']);
 

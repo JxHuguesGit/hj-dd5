@@ -42,7 +42,7 @@ class MonsterRepository extends Repository implements MonsterRepositoryInterface
     public function findAllWithRelations(MonsterCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT m.id, m." . F::NAME . ", " . F::FRNAME . ", " . F::FRTAG . ", " . F::UKTAG . ", "
+            SELECT m.id, m." . F::NAME . " as " . F::NAME . ", " . F::FRNAME . ", " . F::FRTAG . ", " . F::UKTAG . ", "
         . F::INCOMPLET . ", " . F::SCORECR . ", " . F::SWARMSIZE . ", " . F::MSTSIZE . ", "
         . F::SCORECA . ", " . F::SCOREHP . ", " . F::INITIATIVE . ", " . F::LEGENDARY . ", "
         . F::HABITAT . ", " . F::STRSCORE . ", " . F::DEXSCORE . ", " . F::CONSCORE . ", "

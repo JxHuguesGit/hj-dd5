@@ -6,7 +6,9 @@ use src\Constant\Html as H;
 use src\Constant\Icon as I;
 use src\Constant\Template as T;
 use src\Collection\Collection;
+use src\Domain\Entity\Combat;
 use src\Domain\Entity\Map;
+use src\Factory\ReaderFactory;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
@@ -14,9 +16,30 @@ use src\Utils\UrlGenerator;
 final class InitiativeAdminPresenter
 {
     public function __construct(
+        private ReaderFactory $readerFactory,
         private TemplateRenderer $renderer
     ) {}
 
+    public function presentInitiativePanel(): string
+    {
+        $combatId = filter_input(
+            INPUT_GET,
+            'combatId',
+            FILTER_VALIDATE_INT
+        );
+
+        return $this->renderer->render(
+            T::ADMININITIATIVEPANEL,
+            [
+                PLUGINS_DD5,
+                date('YmdHis'),
+                $combatId,
+                '',
+                '',
+            ]
+        );
+    }
+       
     public function present(Map $map, Collection $mapTokens, Collection $initiatives): string
     {
         $mapTokensFormatted = $this->presentMapTokens($mapTokens, $initiatives);

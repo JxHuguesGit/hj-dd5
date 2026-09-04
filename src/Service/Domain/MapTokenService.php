@@ -23,6 +23,7 @@ final class MapTokenService
                 'row' => $token->row,
                 'size' => $token->size,
                 'image' => PLUGINS_DD5 . '/assets/map/tokens/' . $token->image,
+                'speed' => $token->speed,
                 'number' => $token->number,
                 'enablePjMove' => $token->enablePjMove,
                 'active' => $token->active,

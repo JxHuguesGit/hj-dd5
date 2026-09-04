@@ -25,6 +25,8 @@ final class Template
     public const ADMINSIDEBAR        = self::ADMIN_PATH.'adminSidebar.tpl';
     public const ADMINSIDEBARITEM    = self::ADMIN_PATH.'adminSidebarItem.tpl';
     public const ADMINNAV            = self::ADMIN_PATH.'adminNav.tpl';
+    public const ADMININITIATIVEPANEL = self::ADMIN_PATH.'adminInitiativePanel.tpl';
+    public const ADMINCOMBATPARTICIPANT = self::ADMIN_PATH.'adminCombatParticipant.tpl';
 
     public const ADMINCHARACTER      = self::ADMIN_PATH.'adminCharacter.tpl';
     public const ADMINQUICKINFO      = self::ADMIN_PATH.'adminCharacterQuickInfo.tpl';
@@ -44,6 +46,7 @@ final class Template
     public const ADMINCOMPENDIUM     = self::ADMIN_PATH.'adminCompendium.tpl';
 
     public const ADMINTIMELINE       = self::ADMIN_PATH.'adminTimeline.tpl';
+    public const ADMINWIP            = self::ADMIN_PATH.'adminWip.tpl';
 
     public const ADMINMAPTOKTABLE    = self::ADMIN_PATH.'adminMapTokenTable.tpl';
     public const ADMINTOKENTABLE     = self::ADMIN_PATH.'adminTokenTable.tpl';

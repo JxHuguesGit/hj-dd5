@@ -12,6 +12,7 @@ interface InitiativeRepositoryInterface
     public function rollBack(): void;
 
     public function insert(Initiative $initiative): void;
+    public function updatePartial(Initiative $initiative, array $changedFields): void;
     public function delete(Initiative $initiative): void;
 
     /**

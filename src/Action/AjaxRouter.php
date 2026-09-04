@@ -2,11 +2,14 @@
 namespace src\Action;
 
 use src\Action\Ajax\ActivateMapAction;
+use src\Action\Ajax\AddCreatureToCombatAction;
 use src\Action\Ajax\AddMapTokenAction;
 use src\Action\Ajax\AddTokenAction;
 use src\Action\Ajax\DeleteMapAction;
 use src\Action\Ajax\DeleteMapTokenAction;
 use src\Action\Ajax\DuplicateMapAction;
+use src\Action\Ajax\LoadCombatAction;
+use src\Action\Ajax\LoadCombatMonstersAction;
 use src\Action\Ajax\LoadCreationStepSide;
 use src\Action\Ajax\LoadMapTokensAction;
 use src\Action\Ajax\LoadMapTokenModal;
@@ -15,6 +18,7 @@ use src\Action\Ajax\LoadMoreMonstersAction;
 use src\Action\Ajax\LoadMoreSpellsAction;
 use src\Action\Ajax\LockMapAction;
 use src\Action\Ajax\ModalMonsterCard;
+use src\Action\Ajax\RemoveCreatureFromCombatAction;
 use src\Action\Ajax\ResetMapFogAction;
 use src\Action\Ajax\ToggleMapTokenAction;
 use src\Action\Ajax\UnlockMapAction;
@@ -43,6 +47,10 @@ class AjaxRouter
         'duplicateMap'         => DuplicateMapAction::class,
         'deleteMap'            => DeleteMapAction::class,
         'resetMapFog'          => ResetMapFogAction::class,
+        'loadCombatMonsters'   => LoadCombatMonstersAction::class,
+        'loadCombat'           => LoadCombatAction::class,
+        'addCreatureToCombat'  => AddCreatureToCombatAction::class,
+        'removeCreatureFromCombat' => RemoveCreatureFromCombatAction::class,
     ];
 
     public function __construct(

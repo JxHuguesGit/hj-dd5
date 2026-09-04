@@ -31,6 +31,7 @@ class Icon
     public const PLUS     = 'plus';
     public const USERS    = 'users';
     public const SEARCH   = 'search';
+    public const SWORDS   = 'swords';
     public const TOGGLEON = 'toggle-on';
     public const TOGGLEOFF = 'toggle-off';
     public const TRASH    = 'trash';

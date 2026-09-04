@@ -1,6 +1,7 @@
 <?php
 namespace src\Factory;
 
+use src\Service\Domain\CombatService;
 use src\Service\Domain\MapService;
 use src\Service\Domain\MapFogService;
 use src\Service\Domain\MapTokenService;
@@ -85,6 +86,14 @@ final class ServiceFactory
             $this->readerFactory->map(),
             new WriterFactory($this->repositoryFactory),
             $this->readerFactory->mapToken(),
+        );
+    }
+
+    public function combat(): CombatService
+    {
+        return new CombatService(
+            $this->writerFactory->combat(),
+            $this->writerFactory->combatParticipant()
         );
     }
     

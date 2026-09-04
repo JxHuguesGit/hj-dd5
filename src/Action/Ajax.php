@@ -57,6 +57,10 @@ class Ajax
                     'addToken',
                     'toggleMapToken',
                     'resetMapFog',
+                    'loadCombat',
+                    'loadCombatMonsters',
+                    'addCreatureToCombat',
+                    'removeCreatureFromCombat',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();

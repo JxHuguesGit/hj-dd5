@@ -17,6 +17,7 @@ final class MapToken extends Entity
         F::NUMBER,
         F::ACTIVE,
         F::ENABLEPJMOVE,
+        F::SPEED,
     ];
 
     public const RELATION_FIELDS = [
@@ -33,6 +34,7 @@ final class MapToken extends Entity
         F::NUMBER      => FieldType::INTNULLABLE,
         F::ACTIVE      => FieldType::INTPOSITIVE,
         F::ENABLEPJMOVE => FieldType::INTPOSITIVE,
+        F::SPEED        => FieldType::INTPOSITIVE,
 
         F::NAME        => FieldType::STRING,
         F::IMAGE       => FieldType::STRING,

@@ -1,0 +1,7 @@
+// Pour analyser les scss : npx stylelint "assets/styles/**/*.scss"
+// Pour compiler les scss :
+// ouvrir un powershell
+// cd .\assets\styles\ 
+// sass --watch .\initiative.scss .\initiative.css
+@use "combat";
+

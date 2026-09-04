@@ -6,6 +6,7 @@ class Field
     public const ID = 'id';
 
     public const ABBR        = 'abbr';
+    public const SCOREAC     = 'ac';
     public const ACTIVE      = 'active';
     public const ARMORCLASS  = 'armorClass';
     public const SCORECA     = 'ca';
@@ -15,6 +16,7 @@ class Field
     public const CONSCORE    = 'conScore';
     public const SCORECR     = 'cr';
     public const CREATESTEP  = 'createStep';
+    public const CURRENTPARTICIPANTID = 'currentParticipantId';
     public const DESCRIPTION = 'description';
     public const DEXSCORE    = 'dexScore';
     public const DICECOUNT   = 'diceCount';
@@ -38,6 +40,7 @@ class Field
     public const LOCKED      = 'locked';
     public const MAPCOLUMNS  = 'mapColumns';
     public const MAPROWS     = 'mapRows';
+    public const MAXHP       = 'maxHp';
     public const MAXRANGE    = 'maxRange';
     public const MINRANGE    = 'minRange';
     public const MSTSIZE     = 'monsterSize';
@@ -48,10 +51,12 @@ class Field
     public const PROFBONUS   = 'profBonus';
     public const QUANTITY    = 'quantity';
     public const RANK        = 'rank';
+    public const ROUND       = 'round';
     public const ROW         = 'row';
     public const SIZE        = 'size';
     public const SKILLS      = 'skills';
     public const SLUG        = 'slug';
+    public const SPEED       = 'speed';
     public const STHDISADV   = 'stealthDisadvantage';
     public const STRPENALTY  = 'strengthPenalty';
     public const STRSCORE    = 'strScore';
@@ -108,6 +113,7 @@ class Field
     public const ARMORTYPID   = 'armorTypeId';
     public const CHARACTERID  = 'characterId';
     public const CLASSEID     = 'classeId';
+    public const COMBATID     = 'combatId';
     public const CONDITIONID  = 'conditionId';
     public const DMGDIEID     = 'damageDieId';
     public const ENTITYID     = 'entityId';

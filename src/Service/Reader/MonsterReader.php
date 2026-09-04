@@ -15,6 +15,16 @@ final class MonsterReader
     /**
      * @return ?Monster
      */
+    public function monsterById(int $id): ?Monster
+    {
+        $criteria = new MonsterCriteria();
+        $criteria->id = $id;
+        return $this->monsterRepository->findAllWithRelations($criteria)?->first() ?? null;
+    }
+
+    /**
+     * @return ?Monster
+     */
     public function monsterByUkTag(string $ukTag): ?Monster
     {
         $criteria = new MonsterCriteria();
@@ -31,6 +41,7 @@ final class MonsterReader
             $criteria = new MonsterCriteria();
             $criteria->limit = 10;
         }
+
         return $this->monsterRepository->findAllWithRelations($criteria);
     }
 

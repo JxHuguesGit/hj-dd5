@@ -5,6 +5,7 @@
             <th>Colonne</th>
             <th>Ligne</th>
             <th>Taille</th>
+            <th>Vitesse</th>
             <th>N°</th>
             <th>
                 <button
