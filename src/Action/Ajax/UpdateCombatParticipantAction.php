@@ -2,12 +2,17 @@
 
 namespace src\Action\Ajax;
 
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
+use src\Domain\Entity\CombatParticipant;
 use src\Factory\ReaderFactory;
 use src\Factory\WriterFactory;
+use src\Utils\Session;
 
 final class UpdateCombatParticipantAction
 {
+    public const UNKNOWN_USER = 'Participant inconnu.';
+
     public function __construct(
         private ReaderFactory $readerFactory,
         private WriterFactory $writerFactory,
@@ -15,16 +20,28 @@ final class UpdateCombatParticipantAction
 
     public function execute(): array
     {
-        $tmp = [];
+        $ajaxAction = Session::fromPost(C::AJAXACTION);
+
+        $return = [];
         // Potentiellement, on a plusieurs branches qui arrivent ici.
-        // Retirage de l'initiative
-        $tmp = $this->rollInitiative();
-        // Ajout de points de vie
-        //$tmp = $this->addHitPoint();
-        // Retrait de points de vie (potentiellement mutualisé avec le précédent)
-        //$tmp = $this->removeHitPoint();
-        // Ajout / Retrait d'états (ou autre puisque ce sera la table jointe qui sera impactée)
-        return $tmp;
+        switch ($ajaxAction) {
+            // Retirage de l'initiative
+            case 'rerollCombatParticipantInitiative' :
+                $return = $this->rollInitiative();
+            break;
+            case 'addHitPoint' :
+                // Ajout de points de vie
+                $return = $this->addHitPoint();
+            break;
+            case 'removeHitPoint' :
+                // Retrait de points de vie (potentiellement mutualisé avec le précédent)
+                $return = $this->removeHitPoint();
+            break;
+            default :
+                // Ajout / Retrait d'états (ou autre puisque ce sera la table jointe qui sera impactée)
+            break;
+        }
+        return $return;
     }
 
     private function addHitPoint(): array
@@ -43,7 +60,7 @@ final class UpdateCombatParticipantAction
         if ($combatParticipant === null) {
             return [
                 'status' => 'error',
-                'message' => 'Participant inconnu.',
+                'message' => self::UNKNOWN_USER,
             ];
         }
 
@@ -80,7 +97,7 @@ final class UpdateCombatParticipantAction
         if ($combatParticipant === null) {
             return [
                 'status' => 'error',
-                'message' => 'Participant inconnu.',
+                'message' => self::UNKNOWN_USER,
             ];
         }
 
@@ -91,8 +108,6 @@ final class UpdateCombatParticipantAction
             FILTER_VALIDATE_INT
         );
 
-        // TODO : faudrait gérer le cas à 0 points de vie.
-        // Si c'est un PJ, il ne meurt pas. Si c'est un monstre, il meurt.
         $combatParticipant->hp = max(0, $combatParticipant->hp - $modHp);
         $changedFields = [F::SCOREHP];
         $this->writerFactory->updatePartial(
@@ -103,71 +118,89 @@ final class UpdateCombatParticipantAction
         return [];
     }
 
-    private function rollInitiative(): array
+    private function controleInitiative(
+        ?CombatParticipant &$combatParticipant,
+        string &$type,
+        int &$entityId
+    ): array
     {
+        $returnedArray = [];
+
         // On a le participantId
         $participantId = (int) filter_input(
             INPUT_POST,
             'participantId',
             FILTER_VALIDATE_INT
         );
-
         // On récupère l'objet CombatParticipant associé
         $combatParticipant = $this->readerFactory
             ->combatParticipant()
             ->participantById($participantId);
         if ($combatParticipant === null) {
-            return [
+            $returnedArray = [
                 'status' => 'error',
-                'message' => 'Participant inconnu.',
+                'message' => self::UNKNOWN_USER,
             ];
-        }
-        // On a donc le tokenId
-        $tokenId = $combatParticipant->tokenId;
-        // On récupère l'objet Token associé
-        $token = $this->readerFactory
-            ->token()
-            ->tokenById($tokenId);
-        if ($token === null) {
-            return [
-                'status' => 'error',
-                'message' => 'Token pour le participant &lt;'.$combatParticipant->name.'&gt; non défini.',
-            ];
-        }
-        // On a donc le entityId et le type
-        $type = $token->type;
-        $entityId = $token->entityId;
-
-        // Si type vaut 'monster'
-        if ($type=='monster') {
-        //    alors on récupère l'objet Monster associé à entityId
-            $monster = $this->readerFactory
-                ->monster()
-                ->monsterById($entityId);
-            if ($monster === null) {
-                return [
+        } else {
+            // On a donc le tokenId
+            $tokenId = $combatParticipant->tokenId;
+            // On récupère l'objet Token associé
+            $token = $this->readerFactory
+                ->token()
+                ->tokenById($tokenId);
+            if ($token === null) {
+                $returnedArray = [
                     'status' => 'error',
-                    'message' => 'Monstre inconnu.',
+                    'message' => 'Token pour le participant &lt;'.$combatParticipant->name.'&gt; non défini.',
                 ];
+            } else {
+                // On a donc le entityId et le type
+                $type = $token->type;
+                $entityId = $token->entityId;
             }
-        //          on récupère initiative
-            $modInitiative = $monster->initiative;
-        //          on roll 1d20 + initiative
-            $initiative = random_int(1, 20) + $modInitiative;
-        //          on met à jour CompatParticipant->initiative
-            $combatParticipant->initiative = $initiative;
-            $changedFields = [F::INITIATIVE];
-            $this->writerFactory
-                ->combatParticipant()
-                ->updatePartial(
-                    $combatParticipant,
-                    $changedFields
-                );
         }
-        // Si type vaut 'character'
-        //    alors on récupère l'objet Character associé à entityId
+        return $returnedArray;
+    }
 
+    private function rollInitiative(): array
+    {
+        $combatParticipant = new CombatParticipant();
+        $type = '';
+        $entityId = 0;
+        $returnedArray = $this->controleInitiative($combatParticipant, $type, $entityId);
 
-        return [];
+        if (empty($returnedArray)) {
+            // Si type vaut 'monster'
+            if ($type=='monster') {
+            //    alors on récupère l'objet Monster associé à entityId
+                $monster = $this->readerFactory
+                    ->monster()
+                    ->monsterById($entityId);
+                if ($monster === null) {
+                    return [
+                        'status' => 'error',
+                        'message' => 'Monstre inconnu.',
+                    ];
+                }
+            //          on récupère initiative
+                $modInitiative = $monster->initiative;
+            //          on roll 1d20 + initiative
+                $initiative = random_int(1, 20) + $modInitiative;
+            //          on met à jour CompatParticipant->initiative
+                $combatParticipant->initiative = $initiative;
+                $changedFields = [F::INITIATIVE];
+                $this->writerFactory
+                    ->combatParticipant()
+                    ->updatePartial(
+                        $combatParticipant,
+                        $changedFields
+                    );
+            }
+            // Si type vaut 'character'
+            //    alors on récupère l'objet Character associé à entityId
+            return [];
+        }
+
+        return $returnedArray;
     }
 }
