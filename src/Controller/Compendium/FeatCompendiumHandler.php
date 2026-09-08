@@ -62,17 +62,9 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
 
         if (! $hasAbilityLinked) {
-            if (Session::fromPost(F::FEATTYPEID) == 2 && $currentAbilities->isEmpty()) {
-                $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
-            } elseif (empty($changedFields)) {
-                $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
-            } else {
-                $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
-            }
+            $this->controlNoAbilityLinked($currentAbilities, $changedFields, $feat);
             return $this->renderEdit($slug);
-        }
-
-        if ($hasAbilityLinked) {
+        } else {
             // On sauvegarde les liens
             $this->featAbilityWriter->deleteFeatAbilities($currentAbilities);
             // On créé les nouveaux liens
@@ -91,6 +83,21 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
         $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
         return $this->renderList();
+    }
+
+    private function controlNoAbilityLinked(
+        Collection $currentAbilities,
+        array $changedFields,
+        Feat $feat
+    ): void
+    {
+        if (Session::fromPost(F::FEATTYPEID) == 2 && $currentAbilities->isEmpty()) {
+            $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
+        } elseif (empty($changedFields)) {
+            $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
+        } else {
+            $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
+        }
     }
 
     private function handleFeatAbilities(
