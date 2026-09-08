@@ -17,6 +17,8 @@ final class CombatParticipant extends Entity
         F::MAXHP,
         F::SCOREAC,
         F::INITIATIVE,
+
+        //F::TYPE,
     ];
 
     public const FIELD_TYPES = [
@@ -28,6 +30,8 @@ final class CombatParticipant extends Entity
         F::MAXHP       => FieldType::INTPOSITIVE,
         F::SCOREAC     => FieldType::INTPOSITIVE,
         F::INITIATIVE  => FieldType::FLOAT,
+
+        //F::TYPE        => FieldType::STRINGNULLABLE,
     ];
 
     public const EDITABLE_FIELDS = [

@@ -52,7 +52,7 @@ final class CombatPresenter
             ];
 
             return $this->renderer->render(
-                T::ADMININITCBTBUTTON,
+                T::TURNCONTROLS,
                 $attributes
             );
         }

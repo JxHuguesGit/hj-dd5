@@ -20,9 +20,9 @@ final class UpdateCombatParticipantAction
         // Retirage de l'initiative
         $tmp = $this->rollInitiative();
         // Ajout de points de vie
-        $tmp = $this->addHitPoint();
+        //$tmp = $this->addHitPoint();
         // Retrait de points de vie (potentiellement mutualisé avec le précédent)
-        $tmp = $this->removeHitPoint();
+        //$tmp = $this->removeHitPoint();
         // Ajout / Retrait d'états (ou autre puisque ce sera la table jointe qui sera impactée)
         return $tmp;
     }
@@ -39,7 +39,7 @@ final class UpdateCombatParticipantAction
         // On récupère l'objet CombatParticipant associé
         $combatParticipant = $this->readerFactory
             ->combatParticipant()
-            ->findById($participantId);
+            ->participantById($participantId);
         if ($combatParticipant === null) {
             return [
                 'status' => 'error',
@@ -76,7 +76,7 @@ final class UpdateCombatParticipantAction
         // On récupère l'objet CombatParticipant associé
         $combatParticipant = $this->readerFactory
             ->combatParticipant()
-            ->findById($participantId);
+            ->participantById($participantId);
         if ($combatParticipant === null) {
             return [
                 'status' => 'error',
@@ -115,7 +115,7 @@ final class UpdateCombatParticipantAction
         // On récupère l'objet CombatParticipant associé
         $combatParticipant = $this->readerFactory
             ->combatParticipant()
-            ->findById($participantId);
+            ->participantById($participantId);
         if ($combatParticipant === null) {
             return [
                 'status' => 'error',
@@ -127,7 +127,7 @@ final class UpdateCombatParticipantAction
         // On récupère l'objet Token associé
         $token = $this->readerFactory
             ->token()
-            ->findById($tokenId);
+            ->tokenById($tokenId);
         if ($token === null) {
             return [
                 'status' => 'error',
@@ -143,7 +143,7 @@ final class UpdateCombatParticipantAction
         //    alors on récupère l'objet Monster associé à entityId
             $monster = $this->readerFactory
                 ->monster()
-                ->findById($entityId);
+                ->monsterById($entityId);
             if ($monster === null) {
                 return [
                     'status' => 'error',
@@ -157,10 +157,12 @@ final class UpdateCombatParticipantAction
         //          on met à jour CompatParticipant->initiative
             $combatParticipant->initiative = $initiative;
             $changedFields = [F::INITIATIVE];
-            $this->writerFactory->updatePartial(
-                $combatParticipant,
-                $changedFields
-            );
+            $this->writerFactory
+                ->combatParticipant()
+                ->updatePartial(
+                    $combatParticipant,
+                    $changedFields
+                );
         }
         // Si type vaut 'character'
         //    alors on récupère l'objet Character associé à entityId

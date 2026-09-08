@@ -39,7 +39,8 @@ final class AdminPage extends Utilities
             $sidebar->getContent(),
             $content,
             PLUGINS_DD5,
-            $nav->getContent()
+            $nav->getContent(),
+            date('YmdHis'),
         ];
 
         return $renderer->render(

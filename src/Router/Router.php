@@ -6,6 +6,7 @@ use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicHome;
 use src\Controller\Public\PublicNotFound;
 use src\Factory\Controller\FeatControllerFactory;
+use src\Factory\Controller\InitiativeControllerFactory;
 use src\Factory\Controller\ItemControllerFactory;
 use src\Factory\Controller\MapControllerFactory;
 use src\Factory\Controller\OriginControllerFactory;
@@ -39,6 +40,7 @@ class Router
             new ItemRouter(new ItemControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new MapRouter(new MapControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new InitiativeRouter(new InitiativeControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
         ]);
     }
 

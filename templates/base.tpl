@@ -7,7 +7,6 @@
         %2$s
         <!-- DD5 style -->
         <link rel="stylesheet" media="all" href="%3$sassets/styles/dd5-v0.1.css?v=%9$s" />
-        <link rel="stylesheet" media="all" href="%3$sassets/styles/map.css?v=%9$s" />
         <link rel="icon" type="image/png" href="%3$sassets/images/favicon-32x32.ico">
     </head>
     <body>

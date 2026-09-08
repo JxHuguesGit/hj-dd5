@@ -646,6 +646,27 @@ input.hp-input {
     }
 }
 
+.btn--reroll {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+    padding: 0;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    &:hover {
+        color: var(--color-accent-red);
+        background: #e5484d1a;
+    }
+}
+
 .btn--dmg {
   background: var(--color-accent-red);
   color: var(--color-text-primary);

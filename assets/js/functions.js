@@ -119,7 +119,7 @@ function handleOpenModal(obj, e) {
     openModal(target);
     $('#'+target+' button.btn-primary').unbind().on('click', function() {
         if (target=='spellFilter') {
-            loadMoreSpells('replace');
+            handleLoadMoreSpells('replace');
         }
         closeModal(target);
     });

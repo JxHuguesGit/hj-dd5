@@ -46,7 +46,7 @@ class DD5Base
 
         $baseTemplate = $controller->getBaseTemplate();
 
-        if ($baseTemplate === Template::BASE_MAP) {
+        if ($baseTemplate === Template::BASE_MAP || $baseTemplate === Template::BASE_INITIATIVE) {
             $attributes = [
                 $controller->getTitle(),
                 $srcCssFilesTpl,

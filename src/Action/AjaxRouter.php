@@ -23,6 +23,7 @@ use src\Action\Ajax\RemoveCreatureFromCombatAction;
 use src\Action\Ajax\ResetMapFogAction;
 use src\Action\Ajax\ToggleMapTokenAction;
 use src\Action\Ajax\UnlockMapAction;
+use src\Action\Ajax\UpdateCombatParticipantAction;
 use src\Action\Ajax\UpdateMapTokensAction;
 use src\Constant\Constant as C;
 use src\Factory\AjaxActionFactory;
