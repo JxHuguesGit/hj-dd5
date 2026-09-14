@@ -19,12 +19,13 @@ class FeatTableBuilder extends AbstractTableBuilder
         private bool $isAdmin = false
     ) {}
 
-    public function build(iterable $groups, array $params = []): Table
+    public function build(object $groups, array $params = []): Table
     {
         $headers = [
             [C::LABEL => L::NAMES],
             [C::LABEL => C::VIDE],
             [C::LABEL => L::PREQUISITE],
+            [C::LABEL => L::SOURCE],
         ];
         if ($this->isAdmin) {
             $headers[] = [C::LABEL => C::VIDE];
@@ -70,9 +71,20 @@ class FeatTableBuilder extends AbstractTableBuilder
                 $table->addBodyRow([])
                     ->addBodyCell([
                         C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
+                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
                     ])
-                    ->addBodyCell([C::CONTENT => implode(', ', $origins)])
-                    ->addBodyCell([C::CONTENT => $row->prerequisite]);
+                    ->addBodyCell([
+                        C::CONTENT => implode(', ', $origins),
+                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+                    ])
+                    ->addBodyCell([
+                        C::CONTENT => $row->prerequisite,
+                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+                    ])
+                    ->addBodyCell([
+                        C::CONTENT => $row->sourceName,
+                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+                    ]);
                 if ($this->isAdmin) {
                     $table->addBodyCell([
                         C::CONTENT => Html::getLink(

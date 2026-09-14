@@ -137,6 +137,7 @@ class Field
     public const POWERID      = 'powerId';
     public const REFID        = 'referenceId';
     public const SKILLID      = 'skillId';
+    public const SOURCEID     = 'sourceId';
     public const SPECIESID    = 'speciesId';
     public const TOKENID      = 'tokenId';
     public const TOOLID       = 'toolId';
@@ -150,6 +151,7 @@ class Field
     public const WEAPONID     = 'weaponId';
     public const WPNPROPID    = 'weaponPropertyId';
     public const WPNRANGEID   = 'weaponRangeId';
+    public const WPPOSTID     = 'wpPostId';
     public const WPUSERID     = 'wpUserId';
 
     // Existantes, non déclarées

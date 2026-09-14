@@ -15,6 +15,7 @@ use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatTypeReader;
+use src\Service\Reader\ReferenceReader;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;
 
@@ -25,6 +26,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         private FeatTypeReader $featTypeReader,
         private AbilityReader $abilityReader,
         private FeatAbilityReader $featAbilityReader,
+        private ReferenceReader $referenceReader,
     ) {}
 
     public function build(object $entity, array $params = []): Form
@@ -42,6 +44,15 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             $featTypes->toArray()
         );
         $this->wpPostService->getById($entity->postId);
+
+        $sources       = $this->referenceReader->allReferences();
+        $selectSources = array_map(
+            fn($t) => [
+                C::VALUE => $t->id,
+                C::LABEL => $t->name,
+            ],
+            $sources->toArray()
+        );
 
         $params[C::TITLE] = 'Don : ' . $entity->name;
         $params[C::TYPE]  = C::EDIT;
@@ -64,24 +75,26 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $fieldset
             ->addField(new NumberField(
                 F::ID, 'ID', $entity->id, true,
-                [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
             ->addField(new TextField(
                 F::NAME, C::NAME, $entity->name, true,
-                [C::OUTERDIVCLASS => B::COL_MD_5]
-            ))
-            ->addField(new FillerField(
-                '', '', '', '',
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
+            ->addField(new SelectField(
+                F::SOURCEID, L::SOURCE, $entity->sourceId, $selectSources,
+                [C::OUTERDIVCLASS => B::COL_MD_4]
+            ))
+            ->addField(new FillerField())
             ->addField(new NumberField(
                 F::POSTID, 'Post ID', $entity->postId, false,
-                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
             ->addField(new TextField(
                 F::SLUG, C::SLUG, $entity->slug, true,
-                [C::OUTERDIVCLASS => B::COL_MD_8,
+                [C::OUTERDIVCLASS => B::COL_MD_4,
                 ]))
+            ->addField(new FillerField())
             ->addField(new TextareaField(
                 F::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
                 [

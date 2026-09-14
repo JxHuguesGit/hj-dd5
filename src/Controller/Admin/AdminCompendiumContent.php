@@ -13,9 +13,9 @@ final class AdminCompendiumContent implements AdminContentInterface
 
     public function getContent(): string
     {
-        echo "[[".$this->currentId."]]";
         return match ($this->currentId) {
             C::SKILLS => $this->compendiumFactory->skill()->render(),
+            C::FEATS => $this->compendiumFactory->feat()->render(),
             default => 'Hello Compendium !',
         };
     }

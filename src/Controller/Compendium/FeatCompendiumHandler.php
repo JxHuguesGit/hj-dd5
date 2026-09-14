@@ -21,6 +21,7 @@ use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\ReferenceReader;
 use src\Service\Writer\FeatAbilityWriter;
 use src\Service\Writer\FeatWriter;
 use src\Utils\Session;
@@ -37,6 +38,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         private OriginReader $originReader,
         private FeatAbilityReader $featAbilityReader,
         private AbilityReader $abilityReader,
+        private ReferenceReader $referenceReader,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
     ) {}
@@ -141,7 +143,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 new WpPostService(),
                 $this->featTypeReader,
                 $this->abilityReader,
-                $this->featAbilityReader
+                $this->featAbilityReader,
+                $this->referenceReader
             ),
             $this->toastContent
         );

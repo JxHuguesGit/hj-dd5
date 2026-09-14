@@ -47,6 +47,7 @@ final class FeatListPresenter
             name: $feat->name,
             slug: $feat->slug,
             url: UrlGenerator::feat($feat->slug),
+            sourceName: 'Manuel des Joueurs 2024',
             origins: $this->buildOrigins($feat),
             prerequisite: $this->resolveFeatPrerequisite($feat)
         );
@@ -57,7 +58,7 @@ final class FeatListPresenter
         if ($feat->featTypeId !== Feat::TYPE_ORIGIN) {
             return [];
         }
-        
+
         $result = [];
 
         foreach ($this->originReader->originsByFeat($feat) as $origin) {

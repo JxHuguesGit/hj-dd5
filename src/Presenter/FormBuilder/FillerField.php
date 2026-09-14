@@ -6,17 +6,18 @@ use src\Utils\Html;
 
 class FillerField extends FormField
 {
+    public function __construct()
+    {
+        parent::__construct('', '');
+    }
+
     public function renderInput(): string
     {
-        return Html::getBalise('span', '&nbsp;');
+        return Html::getBalise('div', '', [C::CSSCLASS => 'w-100 mb-3']);
     }
 
     public function display(): string
     {
-        $strBalise = $this->renderInput();
-        return Html::getDiv(
-            $strBalise,
-            [C::CSSCLASS => $this->params['outerDivClass'] ?? 'col-12']
-        );
+        return $this->renderInput();
     }
 }

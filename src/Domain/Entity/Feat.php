@@ -25,6 +25,8 @@ final class Feat extends Entity
         F::FEATTYPEID,
         F::POSTID,
         F::SLUG,
+        F::WPPOSTID,
+        F::SOURCEID,
     ];
 
     public const FIELD_TYPES = [
@@ -32,6 +34,8 @@ final class Feat extends Entity
         F::FEATTYPEID => FieldType::INTPOSITIVE,
         F::POSTID =>     FieldType::INTPOSITIVE,
         F::SLUG =>       FieldType::STRING,
+        F::WPPOSTID =>   FieldType::INTNULLABLE,
+        F::SOURCEID =>   FieldType::INTPOSITIVE,
     ];
 
     public const EDITABLE_FIELDS = [

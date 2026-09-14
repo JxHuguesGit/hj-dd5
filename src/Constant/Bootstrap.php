@@ -6,6 +6,7 @@ class Bootstrap
     public const AUTO      = 'auto';
     public const BADGE     = 'badge';
     public const BG        = 'bg';
+    public const BORDER    = 'border';
     public const BTN       = 'btn';
     public const CENTER    = 'center';
     public const DARK      = 'dark';
@@ -70,7 +71,7 @@ class Bootstrap
     public const GEAR_DETAIL_DESCRIPTION = 'gear-detail-description';
     public const GEAR_DETAIL_INFO = 'gear-detail-info';
     public const GEAR_DETAIL_INFO_VALUE = 'gear-detail-info-value';
-    
+
     public const ABILITY_DESCRIPTION = 'ability-description';
     public const ABILITY_TITLE = 'ability-title';
     public const ABILITY_CHILDREN = 'ability-children';
@@ -176,6 +177,7 @@ class Bootstrap
     public const COL_2     = 'col-2';
     public const COL_6     = 'col-6';
     public const COL_12    = 'col-12';
+    public const COL_MD_1  = 'col-md-1';
     public const COL_MD_2  = 'col-md-2';
     public const COL_MD_3  = 'col-md-3';
     public const COL_MD_4  = 'col-md-4';
@@ -203,6 +205,8 @@ class Bootstrap
     public const TEXT_END    = self::TEXT . '-' . self::END;
     public const TEXT_NOWRAP = self::TEXT . '-' . self::NOWRAP;
     public const TEXT_WHITE  = self::TEXT . '-' . self::WHITE;
+
+    public const BORDER_END  = self::BORDER . '-' . self::END;
 
     public const BG_DARK = self::TEXT . '-' . self::BG . '-' . self::DARK;
 

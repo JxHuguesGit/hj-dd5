@@ -10,7 +10,8 @@ final class FeatRow
         public string $name,
         public string $slug,
         public string $url,
+        public string $sourceName,
         public array $origins = [],
-        public ?string $prerequisite = null
+        public ?string $prerequisite = null,
     ) {}
 }

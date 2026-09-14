@@ -96,6 +96,7 @@ class Language
     public const PV              = 'PV';
     public const REFERENCE       = 'Référence';
     public const RULES           = 'Règles';
+    public const SOURCE          = 'Source';
     public const SPECIALES       = 'Spéciales';
     public const SAGESSE         = 'Sagesse';
     public const CBT_STYLE_FEATS = 'Styles de combat';
