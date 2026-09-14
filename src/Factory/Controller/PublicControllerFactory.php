@@ -87,7 +87,11 @@ final class PublicControllerFactory
                 $this->readerFactory->feat(),
                 new FeatListPresenter(
                     $this->readerFactory->origin(),
-                    $this->serviceFactory->wordPress()
+                    $this->serviceFactory->featPreRequis(),
+                    $this->readerFactory->featType(),
+                    $this->readerFactory->reference(),
+                    $this->readerFactory->featAbility(),
+                    $this->readerFactory->ability()
                 ),
                 new PageList(
                     $this->renderer,

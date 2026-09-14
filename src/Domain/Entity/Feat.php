@@ -7,10 +7,12 @@ use src\Domain\Entity;
 use src\Utils\Utils;
 
 /**
- * @property string $name
+ * @property ?string $name
  * @property int $featTypeId
- * @property int $postId
- * @property string $slug
+ * @property int $wpPostId
+ * @property ?string $slug
+ * @property int $sourceId
+ * @property ?int $preRequisId
  */
 final class Feat extends Entity
 {
@@ -21,26 +23,32 @@ final class Feat extends Entity
 
     public const FIELDS = [
         F::ID,
-        F::NAME,
         F::FEATTYPEID,
-        F::POSTID,
-        F::SLUG,
         F::WPPOSTID,
         F::SOURCEID,
+        F::PREREQUISID,
+    ];
+
+    public const RELATION_FIELDS = [
+        F::NAME,
+        F::SLUG,
     ];
 
     public const FIELD_TYPES = [
-        F::NAME =>       FieldType::STRING,
         F::FEATTYPEID => FieldType::INTPOSITIVE,
-        F::POSTID =>     FieldType::INTPOSITIVE,
-        F::SLUG =>       FieldType::STRING,
-        F::WPPOSTID =>   FieldType::INTNULLABLE,
-        F::SOURCEID =>   FieldType::INTPOSITIVE,
+        F::WPPOSTID   => FieldType::INTNULLABLE,
+        F::SOURCEID   => FieldType::INTPOSITIVE,
+        F::PREREQUISID => FieldType::INTNULLABLE,
+
+        F::NAME       => FieldType::STRINGNULLABLE,
+        F::SLUG       => FieldType::STRINGNULLABLE,
     ];
 
     public const EDITABLE_FIELDS = [
         F::FEATTYPEID,
-        F::POSTID,
+        F::WPPOSTID,
+        F::SOURCEID,
+        F::PREREQUISID,
     ];
 
     /**
@@ -53,7 +61,7 @@ final class Feat extends Entity
             $this->name,
             $this->getSlug(),
             $this->featTypeId,
-            $this->postId,
+            $this->wpPostId,
         );
     }
 

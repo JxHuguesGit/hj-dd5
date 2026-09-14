@@ -16,7 +16,7 @@ abstract class AbstractCompendiumHandler
         }
 
         return match (true) {
-            $action === C::EDIT && $slug !== '' => $this->renderEdit($slug),
+            $action === C::EDIT && $slug !== '' => $this->renderEdit((int)$slug),
         //TODO : $action === C::NEW => $this->renderCreate(new Item()),
             default                                    => $this->renderList(),
         };
@@ -25,7 +25,7 @@ abstract class AbstractCompendiumHandler
     protected function handleSubmit(string $action, string $slug): string
     {
         return match ($action) {
-            C::EDIT => $this->handleEditSubmit($slug),
+            C::EDIT => $this->handleEditSubmit((int)$slug),
         //TODO : C::NEW  => $this->handleNewSubmit(),
             default        => $this->renderList(),
         };

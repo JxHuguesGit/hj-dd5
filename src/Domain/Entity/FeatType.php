@@ -9,6 +9,7 @@ use src\Utils\Utils;
 /**
  * @property string $name
  * @property string $slug
+ * @property ?int $preRequisId
  */
 final class FeatType extends Entity
 {
@@ -16,10 +17,12 @@ final class FeatType extends Entity
         F::ID,
         F::NAME,
         F::SLUG,
+        F::PREREQUISID,
     ];
     public const FIELD_TYPES = [
-        F::NAME => FieldType::STRING,
-        F::SLUG => FieldType::STRING,
+        F::NAME        => FieldType::STRING,
+        F::SLUG        => FieldType::STRING,
+        F::PREREQUISID => FieldType::INTNULLABLE,
     ];
 
     public function stringify(): string

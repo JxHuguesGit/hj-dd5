@@ -2,8 +2,6 @@
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
-use src\Constant\Constant as C;
-use src\Constant\Field as F;
 use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Entity\Feat;
 use src\Repository\FeatRepositoryInterface;
@@ -20,7 +18,11 @@ final class FeatReader
      */
     public function featById(int $id): ?Feat
     {
-        return $this->featRepository->find($id);
+        $criteria = new FeatCriteria();
+        $criteria->id = $id;
+        return $this->featRepository
+            ->findAllWithRelations($criteria)
+            ?->first() ?? null;
     }
 
     /**
@@ -30,7 +32,12 @@ final class FeatReader
     {
         $criteria = new FeatCriteria();
         $criteria->slug = $slug;
-        return $this->featRepository->findAllWithCriteria($criteria)?->first() ?? null;
+
+        $result = $this->featRepository
+            ->findAllWithRelations($criteria)
+            ?->first() ?? null;
+
+        return $result;
     }
 
     /**
@@ -40,7 +47,6 @@ final class FeatReader
     {
         $criteria = new FeatCriteria();
         $criteria->featTypeId = $featTypeId;
-        $criteria->orderBy    = [F::NAME=>C::ASC];
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 
@@ -51,24 +57,52 @@ final class FeatReader
     {
         if (!$criteria) {
             $criteria = new FeatCriteria();
-            $criteria->orderBy = [F::FEATTYPEID=>C::ASC, F::NAME=>C::ASC];
         }
         return $this->featRepository->findAllWithCriteria($criteria);
     }
 
+    /**
+     * @return Collection<Feat>
+     */
+    public function allFeatsWithRelations(?FeatCriteria $criteria=null): Collection
+    {
+        if (!$criteria) {
+            $criteria = new FeatCriteria();
+        }
+        return $this->featRepository->findAllWithRelations($criteria);
+    }
+
+    /**
+     * @return array{prev: ?Feat, next: ?Feat}
+     */
     public function getPreviousAndNext(Feat $feat): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($feat) {
                 $criteria = new FeatCriteria();
                 $criteria->featTypeId = $feat->featTypeId;
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $feat->name
-                    : $criteria->nameGt = $feat->name
-                ;
-                $criteria->orderBy = [F::NAME => $order];
-                return $this->featRepository->findAllWithCriteria($criteria);
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $feat->name;
+                } else {
+                    $criteria->nameGt = $feat->name;
+                }
+                $criteria->orderBy = [FeatCriteria::WPPOST_ALIAS . '.post_title' => $order];
+                return $this->featRepository->findAllWithRelations($criteria);
             }
         );
+    }
+
+    /**
+     * @return Collection<Feat>
+     */
+    public function allPublishedFeatsWithRelations(?FeatCriteria $criteria=null): Collection
+    {
+        if (!$criteria) {
+            $criteria = new FeatCriteria();
+        }
+        return $this->featRepository->findAllWithRelations($criteria)
+            ->filter(
+                static fn (Feat $feat): bool => $feat->name !== ''
+            );
     }
 }

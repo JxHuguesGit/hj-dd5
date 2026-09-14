@@ -19,7 +19,7 @@ class FeatDetailPresenter
     public function present(
         FeatPageView $viewData
     ): FeatDetailView {
-        $wpPost = $this->wpPostService->getById($viewData->feat->postId);
+        $wpPost = $this->wpPostService->getById($viewData->feat->wpPostId);
 
         return new FeatDetailView(
             name: $viewData->feat->name,

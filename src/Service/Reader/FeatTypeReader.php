@@ -13,6 +13,24 @@ final class FeatTypeReader
     ) {}
      
     /**
+     * @return ?FeatType
+     */
+    public function featTypeById(int $id): ?FeatType
+    {
+        return $this->featTypeRepository->find($id);
+    }
+     
+    public function featTypeBySlug(string $slug): ?FeatType
+    {
+        $criteria = new FeatTypeCriteria();
+        $criteria->slug = $slug;
+
+        return $this->featTypeRepository
+            ->findAllWithCriteria($criteria)
+            ?->first() ?? null;
+    }
+
+    /**
      * @return Collection<FeatType>
      */
     public function allFeatTypes(): Collection

@@ -8,6 +8,7 @@ use src\Controller\Public\PublicFeatCombat;
 use src\Controller\Public\PublicFeatEpic;
 use src\Controller\Public\PublicFeatGeneral;
 use src\Controller\Public\PublicFeatOrigin;
+use src\Domain\Criteria\FeatCriteria;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
@@ -16,6 +17,7 @@ use src\Presenter\ContentBuilder\FeatCardContentBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
+use src\Service\Domain\FeatPreRequisService;
 
 final class FeatControllerFactory
 {
@@ -42,7 +44,11 @@ final class FeatControllerFactory
         $featReader = $this->readerFactory->feat();
         $presenter  = new FeatListPresenter(
             $this->readerFactory->origin(),
-            $this->serviceFactory->wordPress()
+            $this->serviceFactory->featPreRequis(),
+            $this->readerFactory->featType(),
+            $this->readerFactory->reference(),
+            $this->readerFactory->featAbility(),
+            $this->readerFactory->ability()
         );
         $page = new PageList(
             $this->renderer,
@@ -52,7 +58,20 @@ final class FeatControllerFactory
             PageRegistry::getInstance()->all(),
             C::FEATS
         );
-        return new $controllerClass($featReader, $presenter, $page, $menu);
+        $featType = $this->readerFactory
+            ->featType()
+            ->featTypeBySlug($slug);
+
+        $criteria = new FeatCriteria();
+        $criteria->featTypeId = $featType->id;
+
+        return new $controllerClass(
+            $featReader,
+            $presenter,
+            $page,
+            $menu,
+            $criteria
+        );
     }
 
     public function createDetailController(string $slug): PublicFeat

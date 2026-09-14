@@ -7,13 +7,24 @@ use src\Domain\Criteria\FeatCriteria;
 
 interface FeatRepositoryInterface
 {
+    public function beginTransaction(): void;
+    public function commit(): void;
+    public function rollBack(): void;
+
+    public function updatePartial(Feat $feat, array $changedFields): void;
+
     /**
      * @return ?Feat
      */
     public function find(int $id): ?Feat;
 
     /**
-     * @return Collection<DomainFeat>
+     * @return Collection<Feat>
      */
     public function findAllWithCriteria(FeatCriteria $criteria): Collection;
+
+    /**
+     * @return Collection<Feat>
+     */
+    public function findAllWithRelations(FeatCriteria $criteria): Collection;
 }

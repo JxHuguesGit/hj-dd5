@@ -117,6 +117,7 @@ class Constant
     public const POWER                  = 'power';
     public const POWERS                 = 'powers';
     public const PREV                   = 'prev';
+    public const PRE_REQUIS             = 'preRequis';
     public const PREREQUIS              = 'prerequis';
     public const PROPERTIES             = 'properties';
     public const RANGED                 = 'ranged';

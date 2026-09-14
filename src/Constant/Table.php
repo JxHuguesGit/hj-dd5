@@ -39,6 +39,7 @@ class Table
     public const ORIGINITEM     = 'rpgOriginItem';
     public const ORIGINSKILL    = 'rpgOriginSkill';
     public const POWER          = 'rpgPower';
+    public const PREREQUIS      = 'rpgPreRequis';
     public const REFERENCE      = 'rpgReference';
     public const SKILL          = 'rpgSkill';
     public const SPECIES        = 'rpgSpecies';
@@ -54,4 +55,6 @@ class Table
     public const WPNPROPERTY    = 'rpgWeaponProperty';
     public const WPNPROPVALUE   = 'rpgWeaponPropertyValue';
     public const WPNRANGE       = 'rpgWeaponRange';
+
+    public const WPPOST         = 'wp_26_posts';
 }

@@ -15,6 +15,7 @@ use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatTypeReader;
+use src\Service\Reader\PreRequisReader;
 use src\Service\Reader\ReferenceReader;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;
@@ -27,6 +28,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         private AbilityReader $abilityReader,
         private FeatAbilityReader $featAbilityReader,
         private ReferenceReader $referenceReader,
+        private PreRequisReader $preRequisReader
     ) {}
 
     public function build(object $entity, array $params = []): Form
@@ -43,7 +45,17 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ],
             $featTypes->toArray()
         );
-        $this->wpPostService->getById($entity->postId);
+        $this->wpPostService->getById($entity->wpPostId);
+
+        $preRequis       = $this->preRequisReader->allPreRequis();
+        $selectPreRequis = array_map(
+            fn($t) => [
+                C::VALUE => $t->id,
+                C::LABEL => $t->name,
+            ],
+            $preRequis->toArray()
+        );
+        array_unshift($selectPreRequis, [C::VALUE => 0, C::LABEL => 'Aucun']);
 
         $sources       = $this->referenceReader->allReferences();
         $selectSources = array_map(
@@ -77,8 +89,8 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 F::ID, 'ID', $entity->id, true,
                 [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
-            ->addField(new TextField(
-                F::NAME, C::NAME, $entity->name, true,
+            ->addField(new SelectField(
+                F::FEATTYPEID, L::FEAT_TYPE, $entity->featTypeId, $selectElements,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
@@ -86,9 +98,25 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new FillerField())
+            ->addField(new SelectField(
+                F::PREREQUISID, L::PREQUISITE, $entity->preRequisId, $selectPreRequis,
+                [C::OUTERDIVCLASS => B::COL_MD_4]
+            ))
+            ->addField(new CheckboxGroupField(
+                'ability',
+                $featAbilitiesSel,
+                [
+                    C::OUTERDIVCLASS => B::COL_MD_8,
+                ]
+            ))
+            ->addField(new FillerField())
             ->addField(new NumberField(
-                F::POSTID, 'Post ID', $entity->postId, false,
+                F::WPPOSTID, 'Post ID', $entity->wpPostId, false,
                 [C::OUTERDIVCLASS => B::COL_MD_2]
+            ))
+            ->addField(new TextField(
+                F::NAME, C::NAME, $entity->name, true,
+                [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextField(
                 F::SLUG, C::SLUG, $entity->slug, true,
@@ -100,25 +128,6 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [
                     C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3,
                     'style'                 => 'height: 200px',
-                ]
-            ))
-            ->addField(new TextField(
-                C::PREREQUIS,
-                L::PREQUISITE,
-                $this->wpPostService->getField(C::PREREQUIS),
-                true,
-                [C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3]
-            ))
-            ->addField(new SelectField(
-                F::FEATTYPEID, L::FEAT_TYPE, $entity->featTypeId, $selectElements,
-                [C::OUTERDIVCLASS => B::COL_MD_4]
-            ))
-            ->addField(new CheckboxGroupField(
-                'ability',
-                $featAbilitiesSel,
-                [
-                    C::OUTERDIVCLASS => B::COL_MD_8,
-                    'extraClass'            => $entity->featTypeId != 2 ? B::DNONE : '',
                 ]
             ))
         ;

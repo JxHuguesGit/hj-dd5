@@ -135,6 +135,7 @@ class Field
     public const PARENTID     = 'parentId';
     public const POSTID       = 'postId';
     public const POWERID      = 'powerId';
+    public const PREREQUISID  = 'preRequisId';
     public const REFID        = 'referenceId';
     public const SKILLID      = 'skillId';
     public const SOURCEID     = 'sourceId';

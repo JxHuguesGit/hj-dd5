@@ -19,13 +19,13 @@ class PublicFeats extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feats = $this->featReader->allFeats();
+        $this->feats = $this->featReader->allPublishedFeatsWithRelations();
         $this->title = L::FEATS_TITLE;
     }
 
     public function getContentPage(): string
     {
-        $menu     = $this->menuPresenter->render(C::FEATS);
+        $menu     = $this->menuPresenter->render();
         $viewData = $this->presenter->present($this->feats);
         return $this->page->render($menu, $this->title, $viewData);
     }

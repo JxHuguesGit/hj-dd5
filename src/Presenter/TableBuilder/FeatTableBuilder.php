@@ -22,13 +22,13 @@ class FeatTableBuilder extends AbstractTableBuilder
     public function build(object $groups, array $params = []): Table
     {
         $headers = [
-            [C::LABEL => L::NAMES],
+            [C::LABEL => L::NAMES, C::CSSCLASS => B::COL_3],
             [C::LABEL => C::VIDE],
-            [C::LABEL => L::PREQUISITE],
-            [C::LABEL => L::SOURCE],
+            [C::LABEL => L::PREQUISITE, C::CSSCLASS => B::COL_3],
+            [C::LABEL => L::SOURCE, C::CSSCLASS => B::COL_2],
         ];
         if ($this->isAdmin) {
-            $headers[] = [C::LABEL => C::VIDE];
+            $headers[] = [C::LABEL => C::VIDE, C::CSSCLASS => B::COL_1];
         }
         $params[C::ID]     = 'featTable';
         $params[C::TARGET] = 'featFilter';
@@ -41,7 +41,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                 $group->label,
                 UrlGenerator::feats($group->slug),
                 B::TEXT_WHITE
-            ) . $group->extraPrerequis;
+            );
             switch ($group->slug) {
                 case '-origin':
                     $this->intermediateLabel = L::ORIGINS;
@@ -54,17 +54,20 @@ class FeatTableBuilder extends AbstractTableBuilder
                     break;
             }
             /** @var FeatGroup $group */
-            $this->addGroupRow($table, $url, count($headers));
+            $this->addGroupRowLocal($table, $url, $group->extraPrerequis, count($headers));
 
             foreach ($group->rows as $row) {
                 $origins = [];
-
                 foreach ($row->origins as $origin) {
                     $origins[] = Html::getLink(
                         $origin->name,
                         UrlGenerator::origin($origin->slug),
                         B::TEXT_DARK
                     );
+                }
+                $abilities = [];
+                foreach ($row->abilities as $ability) {
+                    $abilities[] = $ability->name;
                 }
 
                 /** @var FeatRow $row */
@@ -74,7 +77,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                         C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
                     ])
                     ->addBodyCell([
-                        C::CONTENT => implode(', ', $origins),
+                        C::CONTENT => implode(', ', ($origins == [] ? $abilities : $origins)),
                         C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
                     ])
                     ->addBodyCell([
@@ -89,7 +92,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                     $table->addBodyCell([
                         C::CONTENT => Html::getLink(
                             Html::getIcon(I::EDIT),
-                            UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, $row->slug, C::EDIT),
+                            UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, $row->id, C::EDIT),
                             B::TEXT_DARK
                         ),
                     ]);
@@ -100,7 +103,12 @@ class FeatTableBuilder extends AbstractTableBuilder
         return $table;
     }
 
-    protected function addGroupRow(Table $table, string $label, int $colspan): void
+    protected function addGroupRowLocal(
+        Table $table,
+        string $label,
+        string $preRequis,
+        int $colspan
+    ): void
     {
         $table->addBodyRow([C::CSSCLASS => B::ROW_DARK_STRIPED])
             ->addBodyCell([
@@ -113,9 +121,12 @@ class FeatTableBuilder extends AbstractTableBuilder
                 C::CONTENT => $this->intermediateLabel,
             ])
             ->addBodyCell([
+                C::CONTENT => $preRequis,
+            ])
+            ->addBodyCell([
                 C::CONTENT    => C::VIDE,
                 C::ATTRIBUTES => [
-                    C::COLSPAN => $colspan - 2,
+                    C::COLSPAN => $colspan - 3,
                 ],
             ])
         ;

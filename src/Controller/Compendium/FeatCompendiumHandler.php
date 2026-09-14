@@ -15,12 +15,15 @@ use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
+use src\Service\Domain\FeatPrerequisiteService;
+use src\Service\Domain\FeatPrerequisService;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\PreRequisReader;
 use src\Service\Reader\ReferenceReader;
 use src\Service\Writer\FeatAbilityWriter;
 use src\Service\Writer\FeatWriter;
@@ -39,20 +42,19 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         private FeatAbilityReader $featAbilityReader,
         private AbilityReader $abilityReader,
         private ReferenceReader $referenceReader,
+        private FeatPrerequisService $featPrerequisiteService,
+        private PreRequisReader $preRequisReader,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer
     ) {}
 
-    protected function handleEditSubmit(string $slug): string
+    protected function handleEditSubmit(int $slug): string
     {
-        $feat = $this->featReader->featBySlug($slug);
+        $feat = $this->featReader->featById($slug);
         if (! $feat) {
             $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
             return $this->renderList();
         }
-        $selectedAbilities = [];
-        $currentAbilities = new Collection();
-        $hasAbilityLinked = Session::fromPost(F::FEATTYPEID) == 2 ? $this->handleFeatAbilities($selectedAbilities, $currentAbilities, $feat->id) : false;
 
         $changedFields = [];
         foreach (Feat::EDITABLE_FIELDS as $field) {
@@ -62,6 +64,13 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 $changedFields[] = $field;
             }
         }
+
+        /*
+        On doit vérifier si on a au moins une caractéristique cochée.
+        Si on est général ou Faveur épique, au moins une doit être cochée.
+        
+replaceFeatAbilities
+
 
         if (! $hasAbilityLinked) {
             $this->controlNoAbilityLinked($currentAbilities, $changedFields, $feat);
@@ -79,11 +88,13 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 $this->featAbilityWriter->insert($featAbility);
             }
         }
+        */
+
         if (! empty($changedFields)) {
             // On sauvegarde le changement
             $this->featWriter->updatePartial($feat, $changedFields);
         }
-        $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
+        $this->toastContent .= $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
         return $this->renderList();
     }
 
@@ -133,9 +144,9 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         return $currentValues !== $newValues;
     }
 
-    protected function renderEdit(string $slug): string
+    protected function renderEdit(int $slug): string
     {
-        $feat = $this->featReader->featBySlug($slug);
+        $feat = $this->featReader->featById($slug);
 
         $page = new PageForm(
             $this->templateRenderer,
@@ -144,7 +155,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 $this->featTypeReader,
                 $this->abilityReader,
                 $this->featAbilityReader,
-                $this->referenceReader
+                $this->referenceReader,
+                $this->preRequisReader
             ),
             $this->toastContent
         );
@@ -154,10 +166,14 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
 
     protected function renderList(): string
     {
-        $feats     = $this->featReader->allFeats();
+        $feats     = $this->featReader->allFeatsWithRelations();
         $presenter = new FeatListPresenter(
             $this->originReader,
-            new WpPostService()
+            $this->featPrerequisiteService,
+            $this->featTypeReader,
+            $this->referenceReader,
+            $this->featAbilityReader,
+            $this->abilityReader
         );
         $presentContent = $presenter->present($feats);
         $page           = new PageList(

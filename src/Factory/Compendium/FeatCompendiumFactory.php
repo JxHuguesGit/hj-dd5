@@ -8,12 +8,15 @@ use src\Repository\FeatAbilityRepository;
 use src\Repository\FeatRepository;
 use src\Repository\FeatTypeRepository;
 use src\Repository\OriginRepository;
+use src\Repository\PreRequisRepository;
 use src\Repository\ReferenceRepository;
+use src\Service\Domain\FeatPreRequisService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\OriginReader;
+use src\Service\Reader\PreRequisReader;
 use src\Service\Reader\ReferenceReader;
 use src\Service\Writer\FeatAbilityWriter;
 use src\Service\Writer\FeatWriter;
@@ -31,6 +34,11 @@ class FeatCompendiumFactory extends AbstractCompendiumFactory
             $this->reader(FeatAbilityReader::class, FeatAbilityRepository::class),
             $this->reader(AbilityReader::class, AbilityRepository::class),
             $this->reader(ReferenceReader::class, ReferenceRepository::class),
+            new FeatPreRequisService(
+                $this->reader(FeatTypeReader::class, FeatTypeRepository::class),
+                $this->reader(PreRequisReader::class, PreRequisRepository::class)
+            ),
+            $this->reader(PreRequisReader::class, PreRequisRepository::class),
             new ToastBuilder($this->renderer),
             $this->renderer
         );

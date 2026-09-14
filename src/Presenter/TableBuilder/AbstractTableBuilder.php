@@ -77,7 +77,12 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                         [C::CSSCLASS => B::TEXT_NOWRAP]
                     );
                 }
-                $table->addHeaderCell([C::CONTENT => $strContent]);
+                $table->addHeaderCell([
+                    C::CONTENT => $strContent,
+                    C::ATTRIBUTES => [
+                        C::CSSCLASS => $data[C::CSSCLASS] ?? '',
+                    ],
+                ]);
 
             }
         }

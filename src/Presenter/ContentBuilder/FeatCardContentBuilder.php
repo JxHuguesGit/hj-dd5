@@ -40,10 +40,10 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
         $title = htmlspecialchars($group->label);
 
         if ($group->extraPrerequis !== '') {
-            $title .= Html::getBalise(
+            $title .= ' (' . Html::getBalise(
                 H::BALISE_SMALL,
                 htmlspecialchars($group->extraPrerequis),
-            );
+            ) . ')';
         }
 
         return Html::getBalise(

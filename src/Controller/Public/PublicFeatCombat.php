@@ -4,6 +4,7 @@ namespace src\Controller\Public;
 use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
+use src\Domain\Criteria\FeatCriteria;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\MenuPresenter;
@@ -18,14 +19,15 @@ class PublicFeatCombat extends PublicBase
         private FeatListPresenter $presenter,
         private PageList $page,
         private MenuPresenter $menuPresenter,
+        private FeatCriteria $criteria
     ) {
-        $this->feats = $this->featReader->featsByCategory(3);
+        $this->feats = $this->featReader->allPublishedFeatsWithRelations($this->criteria);
         $this->title = L::CBT_STYLE_FEATS;
     }
 
     public function getContentPage(): string
     {
-        $menu     = $this->menuPresenter->render(C::FEATS);
+        $menu     = $this->menuPresenter->render();
         $viewData = $this->presenter->present($this->feats);
         return $this->page->render($menu, $this->title, $viewData);
     }
