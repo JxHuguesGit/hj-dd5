@@ -37,70 +37,80 @@ class FeatTableBuilder extends AbstractTableBuilder
         $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
-            $url = Html::getLink(
-                $group->label,
-                UrlGenerator::feats($group->slug),
-                B::TEXT_WHITE
-            );
-            switch ($group->slug) {
-                case '-origin':
-                    $this->intermediateLabel = L::ORIGINS;
-                    break;
-                case '-general':
-                    $this->intermediateLabel = L::ABILITIES;
-                    break;
-                default:
-                    $this->intermediateLabel = C::VIDE;
-                    break;
-            }
-            /** @var FeatGroup $group */
-            $this->addGroupRowLocal($table, $url, $group->extraPrerequis, count($headers));
-
-            foreach ($group->rows as $row) {
-                $origins = [];
-                foreach ($row->origins as $origin) {
-                    $origins[] = Html::getLink(
-                        $origin->name,
-                        UrlGenerator::origin($origin->slug),
-                        B::TEXT_DARK
-                    );
-                }
-                $abilities = [];
-                foreach ($row->abilities as $ability) {
-                    $abilities[] = $ability->name;
-                }
-
-                /** @var FeatRow $row */
-                $table->addBodyRow([])
-                    ->addBodyCell([
-                        C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
-                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
-                    ])
-                    ->addBodyCell([
-                        C::CONTENT => implode(', ', ($origins == [] ? $abilities : $origins)),
-                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
-                    ])
-                    ->addBodyCell([
-                        C::CONTENT => $row->prerequisite,
-                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
-                    ])
-                    ->addBodyCell([
-                        C::CONTENT => $row->sourceName,
-                        C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
-                    ]);
-                if ($this->isAdmin) {
-                    $table->addBodyCell([
-                        C::CONTENT => Html::getLink(
-                            Html::getIcon(I::EDIT),
-                            UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, $row->id, C::EDIT),
-                            B::TEXT_DARK
-                        ),
-                    ]);
-                }
-            }
+            $this->buildGroup($table, $headers, $group);
         }
 
         return $table;
+    }
+
+    private function buildGroup(Table $table, array $headers, FeatGroup $group): void
+    {
+        $url = Html::getLink(
+            $group->label,
+            UrlGenerator::feats($group->slug),
+            B::TEXT_WHITE
+        );
+        switch ($group->slug) {
+            case '-origin':
+                $this->intermediateLabel = L::ORIGINS;
+                break;
+            case '-general':
+                $this->intermediateLabel = L::ABILITIES;
+                break;
+            default:
+                $this->intermediateLabel = C::VIDE;
+                break;
+        }
+        /** @var FeatGroup $group */
+        $this->addGroupRowLocal($table, $url, $group->extraPrerequis, count($headers));
+
+        foreach ($group->rows as $row) {
+            $this->buildRow($table, $row);
+        }
+    }
+
+    private function buildRow(Table $table, FeatRow $row): void
+    {
+        $origins = [];
+        foreach ($row->origins as $origin) {
+            $origins[] = Html::getLink(
+                $origin->name,
+                UrlGenerator::origin($origin->slug),
+                B::TEXT_DARK
+            );
+        }
+        $abilities = [];
+        foreach ($row->abilities as $ability) {
+            $abilities[] = $ability->name;
+        }
+
+        /** @var FeatRow $row */
+        $table->addBodyRow([])
+            ->addBodyCell([
+                C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
+                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+            ])
+            ->addBodyCell([
+                C::CONTENT => implode(', ', ($origins == [] ? $abilities : $origins)),
+                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+            ])
+            ->addBodyCell([
+                C::CONTENT => $row->prerequisite,
+                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+            ])
+            ->addBodyCell([
+                C::CONTENT => $row->sourceName,
+                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
+            ]);
+        if ($this->isAdmin) {
+            $table->addBodyCell([
+                C::CONTENT => Html::getLink(
+                    Html::getIcon(I::EDIT),
+                    UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, $row->id, C::EDIT),
+                    B::TEXT_DARK
+                ),
+            ]);
+        }
     }
 
     protected function addGroupRowLocal(
