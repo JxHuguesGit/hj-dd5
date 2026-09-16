@@ -30,8 +30,8 @@ class SkillCompendiumHandler extends AbstractCompendiumHandler implements Compen
 
     }
 
-    protected function renderEdit(int $id): string { return ''; }
+    protected function renderEdit(int $id): string { return (string)$id; }
     protected function renderCreate(): string { return ''; }
-    protected function handleEditSubmit(int $id): string { return ''; }
+    protected function handleEditSubmit(int $id): string { return (string)$id; }
     protected function handleNewSubmit(): string { return ''; }
 }

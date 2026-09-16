@@ -19,7 +19,7 @@ class FeatFilterFormBuilder extends AbstractFormBuilder implements FormBuilderIn
 
         $form->addField($fieldset);
         return $form;
-
+/*
     $prerequisites = $this->preRequisReader->allPreRequis();
         $sources       = $this->originReader->allOrigins();
 
@@ -55,5 +55,6 @@ class FeatFilterFormBuilder extends AbstractFormBuilder implements FormBuilderIn
         <?php
 
         return ob_get_clean();
+        */
     }
 }
