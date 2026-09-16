@@ -4,6 +4,7 @@ namespace src\Factory\Compendium;
 use src\Controller\Compendium\SkillCompendiumHandler;
 use src\Presenter\ListPresenter\SkillListPresenter;
 use src\Presenter\TableBuilder\SkillTableBuilder;
+use src\Renderer\TemplateRenderer;
 use src\Repository\OriginRepository;
 use src\Repository\OriginSkillRepository;
 use src\Repository\SkillRepository;
@@ -27,6 +28,7 @@ class SkillCompendiumFactory extends AbstractCompendiumFactory
                     $this->reader(OriginReader::class, OriginRepository::class),
                 )
             ),
+            new TemplateRenderer(),
             $this->page(new SkillTableBuilder())
         );
     }

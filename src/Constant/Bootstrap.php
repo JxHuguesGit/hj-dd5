@@ -26,6 +26,7 @@ class Bootstrap
     public const NOWRAP    = 'nowrap';
     public const OUTLINE   = 'outline';
     public const SM        = 'sm';
+    public const START     = 'start';
     public const STRIPED   = 'striped';
     public const TABLE     = 'table';
     public const TEXT      = 'text';
@@ -53,7 +54,7 @@ class Bootstrap
     public const ABILITY      = 'ability';
     public const NAVIGATION   = 'navigation';
 
-    public const FLOAT_START = 'float-start';
+    public const FLOAT_START = 'float-' . self::START;
 
     public const DATA_CARD        = self::DATA . '-' . self::CARD;
     public const DATA_GRID        = self::DATA . '-' . self::GRID;
@@ -177,6 +178,7 @@ class Bootstrap
     public const COL_2     = 'col-2';
     public const COL_3     = 'col-3';
     public const COL_6     = 'col-6';
+    public const COL_7     = 'col-7';
     public const COL_12    = 'col-12';
     public const COL_MD_1  = 'col-md-1';
     public const COL_MD_2  = 'col-md-2';
@@ -207,7 +209,8 @@ class Bootstrap
     public const TEXT_NOWRAP = self::TEXT . '-' . self::NOWRAP;
     public const TEXT_WHITE  = self::TEXT . '-' . self::WHITE;
 
-    public const BORDER_END  = self::BORDER . '-' . self::END;
+    public const BORDER_END   = self::BORDER . '-' . self::END;
+    public const BORDER_START = self::BORDER . '-' . self::START;
 
     public const BG_DARK = self::TEXT . '-' . self::BG . '-' . self::DARK;
 

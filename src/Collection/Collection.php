@@ -43,7 +43,7 @@ class Collection implements \IteratorAggregate, \Countable
     {
         return count($this->items);
     }
-    
+
     public function isEmpty(): bool
     {
         return $this->count()==0;
@@ -53,7 +53,7 @@ class Collection implements \IteratorAggregate, \Countable
     {
         return array_keys($this->items);
     }
-    
+
     public function clear(): void
     {
         $this->items = [];
@@ -126,6 +126,11 @@ class Collection implements \IteratorAggregate, \Countable
             }
         }
         return null;
+    }
+
+    public function equals(Collection $collection): bool
+    {
+        return $this->items == $collection->items;
     }
 
 }

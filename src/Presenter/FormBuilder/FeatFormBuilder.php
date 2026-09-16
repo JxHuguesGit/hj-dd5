@@ -45,7 +45,8 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ],
             $featTypes->toArray()
         );
-        $this->wpPostService->getById($entity->wpPostId);
+        $entityWpPostId = $entity->wpPostId ?? -1;
+        $this->wpPostService->getById($entityWpPostId);
 
         $preRequis       = $this->preRequisReader->allPreRequis();
         $selectPreRequis = array_map(
@@ -66,8 +67,8 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             $sources->toArray()
         );
 
-        $params[C::TITLE] = 'Don : ' . $entity->name;
-        $params[C::TYPE]  = C::EDIT;
+        $params[C::TITLE] = $entityWpPostId == -1 ? 'Nouveau Don' : 'Don : ' . $entity->name;
+        $params[C::TYPE]  = $entityWpPostId == -1 ? C::NEW : C::EDIT;
         $params['cancelUrl']         = UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS);
         $form                        = $this->createForm($params);
 
@@ -115,11 +116,11 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
             ->addField(new TextField(
-                F::NAME, C::NAME, $entity->name, true,
+                F::NAME, C::NAME, $entityWpPostId == -1 ? '' : $entity->name, true,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextField(
-                F::SLUG, C::SLUG, $entity->slug, true,
+                F::SLUG, C::SLUG, $entityWpPostId == -1 ? '' : $entity->slug, true,
                 [C::OUTERDIVCLASS => B::COL_MD_4,
                 ]))
             ->addField(new FillerField())
@@ -127,7 +128,7 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
                 F::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
                 [
                     C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3,
-                    'style'                 => 'height: 200px',
+                    'style'                 => 'height: 100px',
                 ]
             ))
         ;

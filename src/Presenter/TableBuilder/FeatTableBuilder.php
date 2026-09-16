@@ -23,12 +23,18 @@ class FeatTableBuilder extends AbstractTableBuilder
     {
         $headers = [
             [C::LABEL => L::NAMES, C::CSSCLASS => B::COL_3],
-            [C::LABEL => C::VIDE],
+            [C::LABEL => C::VIDE, C::CSSCLASS => B::COL_3],
             [C::LABEL => L::PREQUISITE, C::CSSCLASS => B::COL_3],
-            [C::LABEL => L::SOURCE, C::CSSCLASS => B::COL_2],
+            [C::LABEL => L::SOURCE, C::CSSCLASS => B::COL_3],
         ];
         if ($this->isAdmin) {
-            $headers[] = [C::LABEL => C::VIDE, C::CSSCLASS => B::COL_1];
+            $headers[] = [
+                C::LABEL => Html::getLink(
+                    Html::getIcon(I::PLUS),
+                    UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, '', C::NEW),
+                    B::TEXT_WHITE
+                )
+            ];
         }
         $params[C::ID]     = 'featTable';
         $params[C::TARGET] = 'featFilter';
@@ -37,6 +43,7 @@ class FeatTableBuilder extends AbstractTableBuilder
         $this->addHeader($table, $headers);
 
         foreach ($groups as $group) {
+            /** @var FeatGroup $group */
             $this->buildGroup($table, $headers, $group);
         }
 
@@ -61,10 +68,10 @@ class FeatTableBuilder extends AbstractTableBuilder
                 $this->intermediateLabel = C::VIDE;
                 break;
         }
-        /** @var FeatGroup $group */
         $this->addGroupRowLocal($table, $url, $group->extraPrerequis, count($headers));
 
         foreach ($group->rows as $row) {
+            /** @var FeatRow $row */
             $this->buildRow($table, $row);
         }
     }
@@ -84,8 +91,14 @@ class FeatTableBuilder extends AbstractTableBuilder
             $abilities[] = $ability->name;
         }
 
-        /** @var FeatRow $row */
-        $table->addBodyRow([])
+        $rowAttributes = [
+            C::DATA => [
+                'nom' => strtolower($row->name),
+                'prerequis' => $row->preRequisId,
+                'source' => $row->sourceId
+            ]
+        ];
+        $table->addBodyRow($rowAttributes)
             ->addBodyCell([
                 C::CONTENT => Html::getLink($row->name, $row->url, B::TEXT_DARK),
                 C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
@@ -100,7 +113,6 @@ class FeatTableBuilder extends AbstractTableBuilder
             ])
             ->addBodyCell([
                 C::CONTENT => $row->sourceName,
-                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_END]
             ]);
         if ($this->isAdmin) {
             $table->addBodyCell([
@@ -109,6 +121,7 @@ class FeatTableBuilder extends AbstractTableBuilder
                     UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, $row->id, C::EDIT),
                     B::TEXT_DARK
                 ),
+                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_START]
             ]);
         }
     }

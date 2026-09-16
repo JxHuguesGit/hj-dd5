@@ -40,6 +40,7 @@ final class SkillListPresenter
     private function buildRow(Skill $skill): SkillRow
     {
         return new SkillRow(
+            id: $skill->id,
             name: $skill->name,
             url: UrlGenerator::skill($skill->slug),
             description: $skill->description,

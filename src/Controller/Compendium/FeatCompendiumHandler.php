@@ -2,12 +2,8 @@
 namespace src\Controller\Compendium;
 
 use src\Collection\Collection;
-use src\Constant\Field as F;
 use src\Constant\Language as L;
-use src\Domain\Criteria\AbilityCriteria;
 use src\Domain\Entity\Feat;
-use src\Domain\Entity\FeatAbility;
-use src\Enum\AbilityEnum;
 use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\FeatFormBuilder;
@@ -15,7 +11,6 @@ use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
-use src\Service\Domain\FeatPrerequisiteService;
 use src\Service\Domain\FeatPrerequisService;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
@@ -48,15 +43,75 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         private TemplateRenderer $templateRenderer
     ) {}
 
-    protected function handleEditSubmit(int $slug): string
+    protected function handleEditSubmit(int $id): string
     {
-        $feat = $this->featReader->featById($slug);
-        if (! $feat) {
+        $feat = $this->featReader->featById($id);
+        if (!$feat) {
             $this->toastContent = $this->toastBuilder->error("Le don modifié n'existe pas.");
             return $this->renderList();
         }
 
+        $hasChanged = false;
+        $hasErrors = false;
+
         $changedFields = [];
+        foreach (Feat::EDITABLE_FIELDS as $field) {
+            $value = Session::fromPost($field, 'err');
+            if ($value != 'err' && $feat->$field != $value) {
+                $feat->$field    = $value;
+                $changedFields[] = $field;
+                $hasChanged      = true;
+            }
+        }
+
+        $selectedAbilities = new Collection();
+        $abilitiesId = $this->getSelectedAbilities($selectedAbilities);
+
+        $currentFeatAbilities = $this->featAbilityReader->featAbilitiesByFeatId($id);
+        $currentAbilities = new Collection();
+        foreach ($currentFeatAbilities as $featAbility) {
+            $currentAbilities->add($this->abilityReader->abilityById($featAbility->abilityId));
+        }
+        if (!$currentAbilities->equals($selectedAbilities)) {
+            $hasChanged = true;
+        }
+
+        if (!$hasChanged) {
+            $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
+            $hasErrors = true;
+        } elseif ($selectedAbilities->isEmpty()
+            && ($feat->featTypeId==2 || $feat->featTypeId==4)) {
+            $this->toastContent = $this->toastBuilder->info("Au moins une caractéristique doit être sélectionnée pour ce type de don.");
+            $hasErrors = true;
+        }
+
+        if ($hasErrors) {
+            return $this->renderEdit($id);
+        }
+
+        $this->featAbilityWriter->replaceFeatAbilities($id, $abilitiesId);
+        $this->featWriter->updatePartial($feat, $changedFields);
+        $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
+        return $this->renderList();
+    }
+
+    private function getSelectedAbilities(Collection $selectedAbilities): array
+    {
+        $abilities = $this->abilityReader->allAbilities();
+        $abilitiesId = [];
+        foreach ($abilities as $ability) {
+            $val = Session::fromPost($ability->slug);
+            if ($val) {
+                $selectedAbilities->add($ability);
+                $abilitiesId[]       = $ability->id;
+            }
+        }
+        return $abilitiesId;
+    }
+
+    protected function handleNewSubmit(): string
+    {
+        $feat = new Feat();
         foreach (Feat::EDITABLE_FIELDS as $field) {
             $value = Session::fromPost($field, 'err');
             if ($value != 'err' && $feat->$field != $value) {
@@ -65,83 +120,36 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             }
         }
 
-        /*
-        On doit vérifier si on a au moins une caractéristique cochée.
-        Si on est général ou Faveur épique, au moins une doit être cochée.
-        
-replaceFeatAbilities
-
-
-        if (! $hasAbilityLinked) {
-            $this->controlNoAbilityLinked($currentAbilities, $changedFields, $feat);
-            return $this->renderEdit($slug);
-        } else {
-            // On sauvegarde les liens
-            $this->featAbilityWriter->deleteFeatAbilities($currentAbilities);
-            // On créé les nouveaux liens
-            $featAbility = new FeatAbility([F::FEATID => $feat->id]);
-            $criteria    = new AbilityCriteria();
-            foreach ($selectedAbilities as $abilityEnum) {
-                $criteria->name         = $abilityEnum->label();
-                $ability                = $this->abilityReader->allAbilities($criteria)?->first();
-                $featAbility->abilityId = $ability->id;
-                $this->featAbilityWriter->insert($featAbility);
-            }
+        $selectedAbilities = new Collection();
+        $abilitiesId = $this->getSelectedAbilities($selectedAbilities);
+        if ($selectedAbilities->isEmpty()
+            && ($feat->featTypeId==2 || $feat->featTypeId==4)) {
+            $this->toastContent = $this->toastBuilder->info("Au moins une caractéristique doit être sélectionnée pour ce type de don.");
+            return $this->renderCreate();
         }
-        */
 
-        if (! empty($changedFields)) {
-            // On sauvegarde le changement
-            $this->featWriter->updatePartial($feat, $changedFields);
-        }
-        $this->toastContent .= $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
+        $this->featWriter->insert($feat);
+        $this->featAbilityWriter->replaceFeatAbilities($feat->id, $abilitiesId);
+        $this->toastContent = $this->toastBuilder->success("Le nouveau don a été correctement créé.");
         return $this->renderList();
     }
 
-    private function controlNoAbilityLinked(
-        Collection $currentAbilities,
-        array $changedFields,
-        Feat $feat
-    ): void
+    protected function renderCreate(): string
     {
-        if (Session::fromPost(F::FEATTYPEID) == 2 && $currentAbilities->isEmpty()) {
-            $this->toastContent = $this->toastBuilder->info("Pour les dons généraux, au moins une caractéristique doit être sélectionnée.");
-        } elseif (empty($changedFields)) {
-            $this->toastContent = $this->toastBuilder->info(L::NO_MODIFICATION_ENTRY);
-        } else {
-            $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
-        }
-    }
+        $page = new PageForm(
+            $this->templateRenderer,
+            new FeatFormBuilder(
+                new WpPostService(),
+                $this->featTypeReader,
+                $this->abilityReader,
+                $this->featAbilityReader,
+                $this->referenceReader,
+                $this->preRequisReader
+            ),
+            $this->toastContent
+        );
 
-    private function handleFeatAbilities(
-        array &$selectedAbilities,
-        Collection &$currentAbilities,
-        int $featId
-    )
-    {
-        foreach (AbilityEnum::cases() as $ability) {
-            $val = Session::fromPost($ability->value);
-            if ($val) {
-                $case                = AbilityEnum::tryFrom($ability->value);
-                $selectedAbilities[] = $case;
-            }
-
-        }
-        if (empty($selectedAbilities)) {
-            return false;
-        }
-
-        $currentAbilities = $this->featAbilityReader->featAbilitiesByFeatId($featId);
-        $currentValues    = [];
-        foreach ($currentAbilities as $fa) {
-            $ability = $this->abilityReader->abilityById($fa->abilityId);
-            $enum    = AbilityEnum::fromLabel($ability->name);
-            if ($enum) {
-                $currentValues[] = $enum->value;
-            }
-        }
-        $newValues        = array_map(fn($a) => $a->value, $selectedAbilities);
-        return $currentValues !== $newValues;
+        return $page->renderAdmin('', new Feat());
     }
 
     protected function renderEdit(int $slug): string

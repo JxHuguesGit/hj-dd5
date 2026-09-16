@@ -13,8 +13,10 @@ final class FeatRow
         public string $slug,
         public string $url,
         public string $sourceName,
+        public int $sourceId,
         public array $origins = [],
         public array $abilities = [],
         public ?string $prerequisite = null,
+        public int $preRequisId = 0,
     ) {}
 }

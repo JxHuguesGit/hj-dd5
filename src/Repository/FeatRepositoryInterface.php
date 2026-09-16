@@ -11,6 +11,7 @@ interface FeatRepositoryInterface
     public function commit(): void;
     public function rollBack(): void;
 
+    public function insert(Feat $feat): void;
     public function updatePartial(Feat $feat, array $changedFields): void;
 
     /**
