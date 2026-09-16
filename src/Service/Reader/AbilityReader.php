@@ -15,7 +15,7 @@ final class AbilityReader
     /**
      * @return ?Ability
      */
-    public function abilityById(int $id): ?Ability
+    public function abilityById(?int $id): ?Ability
     {
         return $this->repository->find($id);
     }

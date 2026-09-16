@@ -43,7 +43,7 @@ final class FeatDetailContentBuilder extends AbstractDetailContentBuilder
         );
 
         if ($view->type->prerequisite) {
-            $type .= htmlspecialchars($view->type->prerequisite) . ')';
+            $type .= htmlspecialchars($view->type->prerequisite);
         }
 
         return $type;

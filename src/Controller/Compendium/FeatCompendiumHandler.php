@@ -83,6 +83,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             && ($feat->featTypeId==2 || $feat->featTypeId==4)) {
             $this->toastContent = $this->toastBuilder->info("Au moins une caractéristique doit être sélectionnée pour ce type de don.");
             $hasErrors = true;
+        } else {
+            //Sonar
         }
 
         if ($hasErrors) {

@@ -32,7 +32,6 @@ final class FeatReader
     {
         $criteria = new FeatCriteria();
         $criteria->slug = $slug;
-
         return $this->featRepository
             ->findAllWithRelations($criteria)
             ?->first() ?? null;

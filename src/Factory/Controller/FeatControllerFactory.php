@@ -84,7 +84,7 @@ final class FeatControllerFactory
                 $this->readerFactory->origin()
             ),
             new \src\Presenter\Detail\FeatDetailPresenter(
-                $this->serviceFactory->wordPress()
+                $this->serviceFactory->featPreRequis()
             ),
             new \src\Presenter\ContentBuilder\FeatDetailContentBuilder(),
             new \src\Page\Renderer\PageFeat($this->renderer),

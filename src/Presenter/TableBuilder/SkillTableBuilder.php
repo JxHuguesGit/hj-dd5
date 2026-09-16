@@ -30,7 +30,7 @@ class SkillTableBuilder extends AbstractTableBuilder
             $headers[] = [
                 C::LABEL => Html::getLink(
                     Html::getIcon(I::PLUS),
-                    UrlGenerator::admin(C::ONG_COMPENDIUM, C::FEATS, '', C::NEW),
+                    UrlGenerator::admin(C::ONG_COMPENDIUM, C::SKILLS, '', C::NEW),
                     B::TEXT_WHITE
                 )
             ];
@@ -43,13 +43,13 @@ class SkillTableBuilder extends AbstractTableBuilder
 
         foreach ($groups as $group) {
             /** @var SkillGroup $group */
-            $this->buildGroups($table, $headers, $group);
+            $this->buildGroup($table, $headers, $group);
         }
 
         return $table;
     }
 
-    private function buildGroups(Table $table, array $headers, SkillGroup $group): void
+    private function buildGroup(Table $table, array $headers, SkillGroup $group): void
     {
         $this->addGroupRow($table, $group->label, count($headers));
 

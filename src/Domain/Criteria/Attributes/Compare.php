@@ -11,6 +11,8 @@ class Compare
     public const GT   = '>';
     public const GTE  = '>=';
     public const LIKE = 'LIKE';
+    public const IS_NULL     = 'IS NULL';
+    public const IS_NOT_NULL = 'IS NOT NULL';
 
     public function __construct(
         public string $field,
@@ -19,7 +21,8 @@ class Compare
     ) {
         $allowed = [
             self::EQ, self::NEQ, self::LT, self::LTE,
-            self::GT, self::GTE, self::LIKE,
+            self::GT, self::GTE, self::LIKE, self::IS_NULL,
+            self::IS_NOT_NULL
         ];
 
         if (!in_array($this->operator, $allowed, true)) {

@@ -42,7 +42,7 @@ class FeatRepository extends Repository implements FeatRepositoryInterface
         $baseQuery = "
             SELECT f." . F::ID . ", f." . F::FEATTYPEID . ", f." . F::WPPOSTID . ",
                 f." . F::SOURCEID . ", f." . F::PREREQUISID . ",
-                wp.post_title AS " . F::NAME . ", wp.post_name AS " . F::SLUG . "
+                wp.post_title AS " . F::NAME . ", wp.post_name AS " . F::SLUG . ", wp.post_content AS " . F::DESCRIPTION . "
             FROM " . Table::FEAT . " f
             LEFT JOIN " . Table::WPPOST . " wp
                 ON f." . F::WPPOSTID . " = wp.ID

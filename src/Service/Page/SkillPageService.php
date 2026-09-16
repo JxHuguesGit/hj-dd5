@@ -2,6 +2,7 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant as C;
+use src\Domain\Criteria\SkillCriteria;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillPageView;
 use src\Service\Domain\SkillService;
@@ -16,10 +17,12 @@ final class SkillPageService
         private AbilityReader $abilityReader,
     ) {}
 
-    public function build(Skill $skill): SkillPageView
+    public function build(?Skill $skill): SkillPageView
     {
         $nav = $this->skillReader->getPreviousAndNext($skill);
-        $subSkills = $this->skillService->subSkills($skill);
+        $criteria = new SkillCriteria();
+        $criteria->parentId = $skill->id;
+        $subSkills = $this->skillReader->allSkills($criteria);
         $ability = $this->abilityReader->abilityById($skill->abilityId);
         $origins = $this->skillService->getOrigines($skill);
 

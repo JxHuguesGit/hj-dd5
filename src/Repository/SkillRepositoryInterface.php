@@ -16,4 +16,9 @@ interface SkillRepositoryInterface
      * @return Collection<Skill>
      */
     public function findAllWithCriteria(SkillCriteria $criteria): Collection;
+
+    /**
+     * @return Collection<Skill>
+     */
+    public function findAllWithRelations(SkillCriteria $criteria): Collection;
 }

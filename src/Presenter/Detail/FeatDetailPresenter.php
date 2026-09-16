@@ -8,23 +8,21 @@ use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Presenter\ViewModel\FeatTypeView;
 use src\Presenter\ViewModel\LinkView;
-use src\Service\Domain\WpPostService;
+use src\Service\Domain\FeatPreRequisService;
 
 class FeatDetailPresenter
 {
     public function __construct(
-        private WpPostService $wpPostService
+        private FeatPreRequisService $featPreRequisService
     ) {}
 
     public function present(
         FeatPageView $viewData
     ): FeatDetailView {
-        $wpPost = $this->wpPostService->getById($viewData->feat->wpPostId);
-
         return new FeatDetailView(
             name: $viewData->feat->name,
-            slug: $viewData->feat->getSlug(),
-            description: $this->cleanContent($wpPost->post_content ?? ''),
+            slug: $viewData->feat->slug,
+            description: $this->cleanContent($viewData->feat->description ?? ''),
             type: $this->buildType($viewData),
             origins: $this->buildOrigins($viewData),
             previous: $this->buildLink($viewData->previous),
@@ -51,57 +49,56 @@ class FeatDetailPresenter
 
     private function buildType(FeatPageView $viewData): FeatTypeView
     {
+        $prerequisite = $this->buildPrerequisite($viewData->feat);
+
         return match ($viewData->feat->featTypeId) {
             Feat::TYPE_ORIGIN => new FeatTypeView(
                 label: L::ORIGIN_FEAT,
                 slug: C::ORIGIN,
+                prerequisite: $prerequisite,
             ),
 
             Feat::TYPE_GENERAL => new FeatTypeView(
                 label: L::GENERAL_FEAT,
                 slug: C::GENERAL,
-                prerequisite: $this->buildGeneralPrerequisite(),
+                prerequisite: ' (' . $prerequisite . ')',
             ),
 
             Feat::TYPE_COMBAT => new FeatTypeView(
                 label: L::CBT_STYLE_FEAT,
                 slug: C::COMBAT,
-                prerequisite: C::PREREQUIS_ASDC,
+                prerequisite: ' (' . $prerequisite . ')',
             ),
 
             Feat::TYPE_EPIC => new FeatTypeView(
                 label: L::CBT_STYLE_EPIC,
                 slug: C::EPIC,
-                prerequisite: $this->buildEpicPrerequisite(),
+                prerequisite: ' (' . $prerequisite . ')',
             ),
 
             default => new FeatTypeView(
                 label: 'Don non identifié',
                 slug: '',
+                prerequisite: '',
             ),
         };
     }
 
-    private function buildGeneralPrerequisite(): ?string
+    private function buildPrerequisite(Feat $feat): ?string
     {
-        $prerequisite = $this->wpPostService->getField(C::PREREQUIS);
+        $preRequis = $this->featPreRequisService->preRequisForFeatWithType($feat);
 
-        if (!$prerequisite) {
-            return C::PREREQUIS_NIV4;
+        if ($preRequis->isEmpty()) {
+            return null;
         }
 
-        return C::PREREQUIS_NIV4 . ', ' . ucfirst($prerequisite);
-    }
+        $names = [];
 
-    private function buildEpicPrerequisite(): ?string
-    {
-        $prerequisite = $this->wpPostService->getField(C::PREREQUIS);
-
-        if (!$prerequisite) {
-            return C::PREREQUIS_NIV19;
+        foreach ($preRequis as $preRequisItem) {
+            $names[] = $preRequisItem->name;
         }
 
-        return C::PREREQUIS_NIV19 . ', ' . ucfirst($prerequisite);
+        return implode(', ', $names);
     }
 
     private function cleanContent(string $content): string

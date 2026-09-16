@@ -1,12 +1,10 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Constant as C;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\LinkView;
 use src\Presenter\ViewModel\SkillDetailView;
 use src\Presenter\ViewModel\SkillPageView;
-use src\Presenter\ViewModel\SubSkillView;
 
 class SkillDetailPresenter
 {
@@ -16,7 +14,7 @@ class SkillDetailPresenter
         return new SkillDetailView(
             name: $viewData->skill->name,
             ability: $viewData->ability->name,
-            description: $viewData->skill->description,
+            description: $this->cleanDescription($viewData->skill->description),
             origins: $this->buildOrigins($viewData),
             subSkills: $this->buildSubSkills($viewData),
             previous: $this->buildLink($viewData?->previous),
@@ -40,10 +38,14 @@ class SkillDetailPresenter
     {
         $parts = [];
         foreach ($viewData->subSkills as $subSkill) {
-            $parts[] = new SubSkillView(
+            $parts[] = new SkillDetailView(
                 name: $subSkill->name ?? '',
-                slug: $subSkill->slug ?? '',
-                description: $subSkill->description ?? '',
+                ability: '',
+                description: $this->cleanDescription($subSkill->description ?? ''),
+                origins: [],
+                subSkills: [],
+                previous: null,
+                next: null
             );
         }
         return $parts;
@@ -56,7 +58,13 @@ class SkillDetailPresenter
         }
         return new LinkView(
             name: $skill->name,
-            slug: $skill->getSlug()
+            slug: $skill->slug
         );
+    }
+
+    private function cleanDescription(?string $description): string
+    {
+        $description = preg_replace('/<!--.*?-->/s', '', $description);
+        return trim(strip_tags($description));
     }
 }

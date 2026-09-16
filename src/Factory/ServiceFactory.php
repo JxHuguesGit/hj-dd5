@@ -42,7 +42,6 @@ final class ServiceFactory
     {
         return new SkillService(
             $this->readerFactory->originSkill(),
-            $this->readerFactory->subSkill(),
             $this->readerFactory->origin()
         );
     }

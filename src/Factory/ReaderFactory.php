@@ -51,7 +51,6 @@ final class ReaderFactory
         C::SPECIE_POWER          => [C::READER => 'SpeciePowerReader',          C::REPO => C::SPECIE_POWER],
         C::SPEED_TYPE            => [C::READER => 'SpeedTypeReader',            C::REPO => C::SPEED_TYPE],
         C::SPELL                 => [C::READER => 'SpellReader',                C::REPO => C::SPELL],
-        C::SUB_SKILL             => [C::READER => 'SubSkillReader',             C::REPO => C::SUB_SKILL],
 
         C::TOOL                  => [C::READER => 'ToolReader',                 C::REPO => C::TOOL],
         C::VISION_TYPE           => [C::READER => 'VisionTypeReader',           C::REPO => C::VISION_TYPE],

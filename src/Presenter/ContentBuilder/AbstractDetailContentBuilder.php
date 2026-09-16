@@ -51,7 +51,7 @@ abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
     abstract protected function getDetailUrl(string $slug): string;
 
     protected function renderHeader(
-        string $title,
+        ?string $title,
         string $subtitle = '',
         string $subtitleClass = ''
     ): string

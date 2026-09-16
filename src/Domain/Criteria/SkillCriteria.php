@@ -8,25 +8,34 @@ use src\Domain\Criteria\Attributes\Equals;
 
 final class SkillCriteria extends BaseCriteria
 {
-    #[Equals(F::ID)]
+    public const WPPOST_ALIAS = 'wp';
+
+    #[Equals(field: F::ID, alias : 's')]
     public ?int $id = null;
 
-    #[Equals(F::NAME)]
+    #[Equals(field: 'post_title', alias: self::WPPOST_ALIAS)]
     public ?string $name = null;
 
-    #[Equals(F::SLUG)]
+    #[Equals(field: 'post_name', alias: self::WPPOST_ALIAS)]
     public ?string $slug = null;
 
-    #[Equals(F::ABILITYID)]
+    #[Equals(field: F::ABILITYID)]
     public ?int $abilityId = null;
 
-    #[Compare(field: F::NAME, operator: Compare::LT)]
+    #[Equals(field: F::PARENTID)]
+    public ?string $parentId = null;
+
+    #[Compare(field: F::PARENTID, operator: Compare::IS_NULL)]
+    public ?bool $parentIdIsNull = null;
+
+    #[Compare(field: 'post_title', operator: Compare::LT, alias: self::WPPOST_ALIAS)]
     public ?string $nameLt = null;
 
-    #[Compare(field: F::NAME, operator: Compare::GT)]
+    #[Compare(field: 'post_title', operator: Compare::GT, alias: self::WPPOST_ALIAS)]
     public ?string $nameGt = null;
 
     public array $orderBy = [
-        F::NAME => C::ASC
+        F::ABILITYID => C::ASC,
+        self::WPPOST_ALIAS . '.post_title' => C::ASC
     ];
 }

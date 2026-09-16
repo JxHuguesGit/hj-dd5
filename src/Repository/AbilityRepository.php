@@ -18,9 +18,9 @@ class AbilityRepository extends Repository implements AbilityRepositoryInterface
     /**
      * @return ?Ability
      */
-    public function find(int $id): ?Ability
+    public function find(?int $id): ?Ability
     {
-        return parent::find($id) ?? null;
+        return parent::find($id ?? 0) ?? null;
     }
 
     /**

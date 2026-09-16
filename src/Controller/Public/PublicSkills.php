@@ -18,7 +18,7 @@ class PublicSkills extends PublicBase
         private PageList $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->skills = $this->skillReader->allSkills();
+        $this->skills = $this->skillReader->allParentSkills();
         $this->title = L::SKILLS_TITLE;
     }
 

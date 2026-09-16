@@ -46,7 +46,6 @@ class Table
     public const SPECIEPOWER    = 'rpgSpeciesPower';
     public const SPEEDTYPE      = 'rpgSpeedType';
     public const SPELL          = 'rpgSpell';
-    public const SUBSKILL       = 'rpgSubSkill';
     public const TOKEN          = 'rpgToken';
     public const TOOL           = 'rpgTool';
     public const VISIONTYPE     = 'rpgVisionType';

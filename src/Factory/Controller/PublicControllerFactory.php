@@ -74,7 +74,7 @@ final class PublicControllerFactory
             C::SKILLS    => new PublicSkills(
                 $this->readerFactory->skill(),
                 new SkillListPresenter(
-                    $this->serviceFactory->skill()
+                    $this->readerFactory->skill()
                 ),
                 new PageList(
                     $this->renderer,

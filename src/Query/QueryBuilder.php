@@ -101,11 +101,17 @@ class QueryBuilder
         }
         foreach ($conditions as $cond) {
             if (strpos($cond['field'], '.')!==false) {
-                $this->strWhere .= " AND {$cond['field']} {$cond['operand']} %s";
+                $field = $cond['field'];
             } else {
-                $this->strWhere .= " AND `{$cond['field']}` {$cond['operand']} %s";
+                $field = "`{$cond['field']}`";
             }
-            $this->params[] = $cond[C::VALUE];
+
+            if (in_array($cond['operand'], ['IS NULL', 'IS NOT NULL'], true)) {
+                $this->strWhere .= " AND $field {$cond['operand']}";
+            } else {
+                $this->strWhere .= " AND $field {$cond['operand']} %s";
+                $this->params[] = $cond[C::VALUE];
+            }
         }
         return $this;
     }

@@ -4,18 +4,19 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
+use src\Domain\Criteria\SkillCriteria;
 use src\Domain\Entity\Skill;
-use src\Domain\Entity\SubSkill;
 use src\Presenter\ViewModel\SkillGroup;
 use src\Presenter\ViewModel\SkillLink;
 use src\Presenter\ViewModel\SkillRow;
-use src\Service\Domain\SkillService;
+use src\Service\Reader\SkillReader;
 use src\Utils\UrlGenerator;
 
 final class SkillListPresenter
 {
-    public function __construct(private SkillService $skillService)
-    {}
+    public function __construct(
+        private SkillReader $skillReader
+    ) {}
 
     public function present(iterable $skills): Collection
     {
@@ -39,17 +40,19 @@ final class SkillListPresenter
 
     private function buildRow(Skill $skill): SkillRow
     {
+        $criteria = new SkillCriteria();
+        $criteria->parentId = $skill->id;
         return new SkillRow(
             id: $skill->id,
             name: $skill->name,
             url: UrlGenerator::skill($skill->slug),
-            description: $skill->description,
+            description: $this->cleanDescription($skill->description ?? ''),
             subSkills: array_map(
-                fn(SubSkill $s) => new SkillLink(
+                fn(Skill $s) => new SkillLink(
                     name: $s->name ?? '',
                     url: $s->slug ? UrlGenerator::skill($s->slug) : '#',
                 ),
-                $this->skillService->subSkills($skill)->toArray()
+                $this->skillReader->allSkills($criteria)->toArray()
             )
         );
     }
@@ -64,5 +67,11 @@ final class SkillListPresenter
             5 => [C::SLUG => C::ABLWIS, C::LABEL => L::SAGESSE],
             6 => [C::SLUG => C::ABLCHA, C::LABEL => L::CHARISME],
         ];
+    }
+
+    private function cleanDescription(string $description): string
+    {
+        $description = preg_replace('/<!--.*?-->/s', '', $description);
+        return trim(strip_tags($description));
     }
 }

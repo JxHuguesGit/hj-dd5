@@ -7,25 +7,36 @@ use src\Domain\Entity;
 use src\Utils\Utils;
 
 /**
- * @property string $name
- * @property string $slug
  * @property int $abilityid
- * @property string $description
+ * @property int $wpPostId
+ * @property ?int $parentId
+ * @property ?string $name
+ * @property ?string $slug
+ * @property ?string $description
  */
 final class Skill extends Entity
 {
     public const FIELDS = [
         F::ID,
+        F::ABILITYID,
+        F::WPPOSTID,
+        F::PARENTID,
+    ];
+
+    public const RELATION_FIELDS = [
         F::NAME,
         F::SLUG,
-        F::ABILITYID,
         F::DESCRIPTION,
     ];
+
     public const FIELD_TYPES = [
-        F::NAME => FieldType::STRING,
-        F::SLUG => FieldType::STRING,
-        F::ABILITYID => FieldType::INTPOSITIVE,
-        F::DESCRIPTION => FieldType::STRING,
+        F::ABILITYID   => FieldType::INTPOSITIVE,
+        F::WPPOSTID    => FieldType::INTNULLABLE,
+        F::PARENTID    => FieldType::INTNULLABLE,
+
+        F::NAME        => FieldType::STRINGNULLABLE,
+        F::SLUG        => FieldType::STRINGNULLABLE,
+        F::DESCRIPTION => FieldType::STRINGNULLABLE,
     ];
 
     public function stringify(): string

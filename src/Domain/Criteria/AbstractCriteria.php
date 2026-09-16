@@ -19,18 +19,16 @@ abstract class AbstractCriteria implements CriteriaInterface
 
     public function apply(QueryBuilder $qb): void
     {
-        // 1) Nouveau système : appliquer les attributs si présents
         $this->applyAttributes($qb);
 
-        // 2) Ancien système : laisser les Criteria existants continuer à utiliser leur apply()
         if (method_exists($this, 'applyLegacy')) {
             $this->applyLegacy($qb);
         }
 
-        // 3) APPLY COMMON (orderBy / limit / offset)
         if ($this->orderBy) {
             $qb->orderBy($this->orderBy);
         }
+
         if ($this->limit !== -1) {
             $qb->limit($this->limit, $this->offset ?? 0);
         }

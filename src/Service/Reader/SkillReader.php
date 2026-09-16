@@ -20,7 +20,11 @@ final class SkillReader
      */
     public function skillById(int $id): ?Skill
     {
-        return $this->skillRepository->find($id);
+        $criteria = new SkillCriteria();
+        $criteria->id = $id;
+        return $this->skillRepository
+            ->findAllWithRelations($criteria)
+            ?->first() ?? null;
     }
 
     /**
@@ -30,7 +34,9 @@ final class SkillReader
     {
         $criteria = new SkillCriteria();
         $criteria->slug = $slug;
-        return $this->skillRepository->findAllWithCriteria($criteria)?->first() ?? null;
+        return $this->skillRepository
+            ->findAllWithRelations($criteria)
+            ?->first() ?? null;
     }
 
     /**
@@ -40,23 +46,37 @@ final class SkillReader
     {
         if (!$criteria) {
             $criteria = new SkillCriteria();
-            $criteria->orderBy = [F::ABILITYID=>C::ASC, F::NAME=>C::ASC];
         }
-        return $this->skillRepository->findAllWithCriteria($criteria);
+        return $this->skillRepository->findAllWithRelations($criteria);
     }
 
-    public function getPreviousAndNext(Skill $skill): array
+    /**
+     * @return Collection<Skill>
+     */
+    public function allParentSkills(?SkillCriteria $criteria=null): Collection
+    {
+        if (!$criteria) {
+            $criteria = new SkillCriteria();
+            $criteria->parentIdIsNull = true;
+            $criteria->orderBy = [F::ABILITYID=>C::ASC, F::NAME=>C::ASC];
+        }
+        return $this->skillRepository->findAllWithRelations($criteria);
+    }
+
+    public function getPreviousAndNext(?Skill $skill): array
     {
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($skill) {
                 $criteria = new SkillCriteria();
                 $criteria->abilityId = $skill->abilityId;
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $skill->name
-                    : $criteria->nameGt = $skill->name
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $skill->name;
+                } else {
+                    $criteria->nameGt = $skill->name;
+                }
                 ;
                 $criteria->orderBy = [F::NAME => $order];
-                return $this->skillRepository->findAllWithCriteria($criteria);
+                return $this->skillRepository->findAllWithRelations($criteria);
             }
         );
     }

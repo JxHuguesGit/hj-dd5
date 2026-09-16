@@ -15,12 +15,11 @@ class SkillCompendiumHandler extends AbstractCompendiumHandler implements Compen
         private SkillReader $reader,
         private SkillListPresenter $presenter,
         private TemplateRenderer $templateRenderer,
-        private PageList $page
     ) {}
 
     public function renderList(): string
     {
-        $skills         = $this->reader->allSkills();
+        $skills         = $this->reader->allParentSkills();
         $presentContent = $this->presenter->present($skills);
         $page           = new PageList(
             $this->templateRenderer,

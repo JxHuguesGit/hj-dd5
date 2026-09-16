@@ -13,6 +13,7 @@ use src\Utils\Utils;
  * @property ?string $slug
  * @property int $sourceId
  * @property ?int $preRequisId
+ * @property ?string $description
  */
 final class Feat extends Entity
 {
@@ -32,16 +33,18 @@ final class Feat extends Entity
     public const RELATION_FIELDS = [
         F::NAME,
         F::SLUG,
+        F::DESCRIPTION,
     ];
 
     public const FIELD_TYPES = [
-        F::FEATTYPEID => FieldType::INTPOSITIVE,
-        F::WPPOSTID   => FieldType::INTNULLABLE,
-        F::SOURCEID   => FieldType::INTPOSITIVE,
+        F::FEATTYPEID  => FieldType::INTPOSITIVE,
+        F::WPPOSTID    => FieldType::INTNULLABLE,
+        F::SOURCEID    => FieldType::INTPOSITIVE,
         F::PREREQUISID => FieldType::INTNULLABLE,
 
-        F::NAME       => FieldType::STRINGNULLABLE,
-        F::SLUG       => FieldType::STRINGNULLABLE,
+        F::NAME        => FieldType::STRINGNULLABLE,
+        F::SLUG        => FieldType::STRINGNULLABLE,
+        F::DESCRIPTION => FieldType::STRINGNULLABLE,
     ];
 
     public const EDITABLE_FIELDS = [

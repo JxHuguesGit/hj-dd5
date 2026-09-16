@@ -7,7 +7,6 @@ use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Presenter\ViewModel\LinkView;
 use src\Presenter\ViewModel\SkillDetailView;
-use src\Presenter\ViewModel\SubSkillView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
@@ -79,7 +78,7 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
         $content = '';
 
         foreach ($view->subSkills as $subSkill) {
-            /** @var SubSkillView $subSkill */
+            /** @var SkillDetailView $subSkill */
             $content .= Html::getBalise(
                 H::BALISE_ARTICLE,
                 Html::getBalise(

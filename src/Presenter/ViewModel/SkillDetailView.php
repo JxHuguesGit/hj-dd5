@@ -6,11 +6,11 @@ final class SkillDetailView
 {
     /**
      * @param SkillLink[] $origins
-     * @param SubSkillView[] $subSkills
+     * @param SkillDetailView[] $subSkills
      */
     public function __construct(
-        public string $name,
-        public string $ability,
+        public ?string $name,
+        public ?string $ability,
         public string $description,
         public array $origins,
         public array $subSkills,
