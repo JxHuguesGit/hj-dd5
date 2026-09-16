@@ -17,6 +17,9 @@ class FeatFilterFormBuilder extends AbstractFormBuilder implements FormBuilderIn
         $form = $this->createForm($params);
         $fieldset = new FieldsetField('');
 
+        var_dump($this->preRequisReader);
+        var_dump($this->originReader);
+
         $form->addField($fieldset);
         return $form;
 /*
@@ -26,12 +29,14 @@ class FeatFilterFormBuilder extends AbstractFormBuilder implements FormBuilderIn
         ob_start();
         ?>
         <div class="feat-filters">
+            <label for="filter-feat-name">Nom</label>
             <input
                 type="text"
                 id="filter-feat-name"
                 placeholder="Rechercher un don"
             >
 
+            <label for="filter-prerequisite">Prérequis</label>
             <select id="filter-prerequisite">
                 <option value="">Tous les prérequis</option>
 
@@ -42,6 +47,7 @@ class FeatFilterFormBuilder extends AbstractFormBuilder implements FormBuilderIn
                 <?php endforeach; ?>
             </select>
 
+            <label for="filter-source">Source</label>
             <select id="filter-source">
                 <option value="">Toutes les sources</option>
 
