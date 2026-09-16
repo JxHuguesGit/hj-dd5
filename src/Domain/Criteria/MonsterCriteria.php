@@ -9,6 +9,9 @@ use src\Domain\Criteria\Attributes\Equals;
 
 final class MonsterCriteria extends BaseCriteria
 {
+    public int $page               = 1;
+    public string $type            = 'append';
+
     #[Equals(F::ID, alias: 'm')]
     public ?int $id = null;
 
@@ -27,4 +30,21 @@ final class MonsterCriteria extends BaseCriteria
     public array $orderBy = [
         F::NAME => C::ASC,
     ];
+
+    /**
+     * Instancie MonsterCriteria depuis $_POST ou un tableau
+     */
+    public static function fromRequest(array $request): self
+    {
+        $criteria              = new self();
+        $criteria->page        = (int) ($request['page'] ?? 1);
+        $criteria->type        = $request[C::TYPE] ?? 'append';
+        $criteria->id          = (int) ($request['id'] ?? 1);
+        $criteria->ukTag       = $request['ukTag'] ?? '';
+        $criteria->name        = $request['name'] ?? '';
+        $criteria->referenceId = (int) ($request['referenceId'] ?? 0);
+        $criteria->cr          = $request['cr'] ?? '';
+
+        return $criteria;
+    }
 }

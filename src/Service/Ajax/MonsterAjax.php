@@ -5,7 +5,6 @@ use src\Constant\Field as F;
 use src\Constant\Template;
 use src\Domain\Criteria\MonsterCriteria;
 use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
 use src\Presenter\Detail\MonsterDetailPresenter;
 use src\Presenter\ListPresenter\MonsterListPresenter;
 use src\Presenter\TableBuilder\MonsterTableBuilder;
@@ -17,15 +16,13 @@ class MonsterAjax
 {
     public function __construct(
         private ReaderFactory $reader,
-        private ServiceFactory $service,
         private TemplateRenderer $renderer
     ) {}
 
     public function loadMoreMonsters(): array
     {
         $presenter = new MonsterListPresenter(
-            new MonsterFormatter($this->reader),
-            $this->reader->reference()
+            new MonsterFormatter($this->reader)
         );
         $builder = new MonsterTableBuilder();
 

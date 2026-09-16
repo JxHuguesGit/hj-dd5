@@ -10,13 +10,12 @@ class ModalMonsterCard
 {
     public function __construct(
         private ReaderFactory $reader,
-        private ServiceFactory $service,
         private TemplateRenderer $renderer
     ) {}
 
     public function execute(): mixed
     {
-        $ajax = new MonsterAjax($this->reader, $this->service, $this->renderer);
+        $ajax = new MonsterAjax($this->reader, $this->renderer);
         return $ajax->loadModal();
     }
 }
