@@ -3,6 +3,7 @@ namespace src\Service\Page;
 
 use src\Constant\Constant as C;
 use src\Domain\Criteria\SkillCriteria;
+use src\Domain\Entity\Ability;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\SkillPageView;
 use src\Service\Domain\SkillService;
@@ -23,7 +24,11 @@ final class SkillPageService
         $criteria = new SkillCriteria();
         $criteria->parentId = $skill->id;
         $subSkills = $this->skillReader->allSkills($criteria);
-        $ability = $this->abilityReader->abilityById($skill->abilityId);
+        if ($skill->abilityId!=0) {
+            $ability = $this->abilityReader->abilityById($skill->abilityId);
+        } else {
+            $ability = $this->skillReader->skillById($skill->parentId);
+        }
         $origins = $this->skillService->getOrigines($skill);
 
         return new SkillPageView(

@@ -114,8 +114,17 @@ class Utils
         $pattern = '/\[monster\](.*?)\[\/monster\]/i';
         $str = preg_replace($pattern, '<span class="modal-tooltip" data-modal="monster" data-postid="">$1 <span class="fa fa-search"></span></span>', $str);
 
+        $pattern = '/\[skill=([a-z0-9-]+)\](.*?)\[\/skill\]/i';
+        $str = preg_replace($pattern, '<a href="/skill-$1" class="text-dark text-decoration-none">$2</a>', $str);
+
+        $pattern = '/\[spell=([a-z0-9-]+)\](.*?)\[\/spell\]/i';
+        $str = preg_replace($pattern, '<a href="/spell-$1" class="text-dark text-decoration-none fst-italic">$2</a>', $str);
+
+        $str = preg_replace('/<!--.*?-->/s', '', $str);
+
         $search = ['[b]', '[/b]', '[i]', '[/i]', '[u]', '[/u]', '[br]', "\n"];
         $replace = ['<strong>', '</strong>', '<em>', '</em>', '<u>', '</u>', '<br/>', '<br/>'];
+        
         return str_ireplace($search, $replace, $str);
     }
 

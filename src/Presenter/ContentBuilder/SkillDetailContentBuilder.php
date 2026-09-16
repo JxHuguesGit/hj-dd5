@@ -40,7 +40,7 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
     private function renderDescription(SkillDetailView $view): string
     {
         return Html::getDiv(
-            htmlspecialchars($view->description),
+            $view->description,
             [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION]
         );
     }
@@ -83,11 +83,15 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
                 H::BALISE_ARTICLE,
                 Html::getBalise(
                     H::BALISE_H2,
-                    htmlspecialchars($subSkill->name)
+                    Html::getLink(
+                        htmlspecialchars($subSkill->name),
+                        UrlGenerator::skill($subSkill->slug),
+                        B::TEXT_DARK
+                    )
                 )
                 . Html::getBalise(
                     H::BALISE_P,
-                    htmlspecialchars($subSkill->description)
+                    $subSkill->description
                 ),
                 [C::CSSCLASS => B::SUBSKILL]
             );

@@ -79,6 +79,7 @@ final class FeatListPresenter
             url: UrlGenerator::feat($feat->slug),
             sourceName: $source->name ?? $feat->sourceId,
             sourceId: $source->id ?? $feat->sourceId,
+            sourceCode: strtolower($source->code ?? ''),
             origins: $this->buildOrigins($feat, $featType),
             abilities: $this->buildAbilities($feat),
             prerequisite: $this->formatPrerequisites($preRequis),

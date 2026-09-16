@@ -5,6 +5,7 @@ use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\LinkView;
 use src\Presenter\ViewModel\SkillDetailView;
 use src\Presenter\ViewModel\SkillPageView;
+use src\Utils\Utils;
 
 class SkillDetailPresenter
 {
@@ -13,8 +14,9 @@ class SkillDetailPresenter
     ): SkillDetailView {
         return new SkillDetailView(
             name: $viewData->skill->name,
+            slug: $viewData->skill->slug,
             ability: $viewData->ability->name,
-            description: $this->cleanDescription($viewData->skill->description),
+            description: Utils::formatBBCode($viewData->skill->description),
             origins: $this->buildOrigins($viewData),
             subSkills: $this->buildSubSkills($viewData),
             previous: $this->buildLink($viewData?->previous),
@@ -40,8 +42,9 @@ class SkillDetailPresenter
         foreach ($viewData->subSkills as $subSkill) {
             $parts[] = new SkillDetailView(
                 name: $subSkill->name ?? '',
+                slug: $subSkill->slug,
                 ability: '',
-                description: $this->cleanDescription($subSkill->description ?? ''),
+                description: Utils::formatBBCode($subSkill->description ?? ''),
                 origins: [],
                 subSkills: [],
                 previous: null,
@@ -60,11 +63,5 @@ class SkillDetailPresenter
             name: $skill->name,
             slug: $skill->slug
         );
-    }
-
-    private function cleanDescription(?string $description): string
-    {
-        $description = preg_replace('/<!--.*?-->/s', '', $description);
-        return trim(strip_tags($description));
     }
 }

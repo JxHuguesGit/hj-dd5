@@ -10,6 +10,7 @@ final class SkillDetailView
      */
     public function __construct(
         public ?string $name,
+        public ?string $slug,
         public ?string $ability,
         public string $description,
         public array $origins,

@@ -9,6 +9,7 @@ use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\LinkView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
+use src\Utils\Utils;
 
 final class FeatDetailContentBuilder extends AbstractDetailContentBuilder
 {
@@ -56,7 +57,7 @@ final class FeatDetailContentBuilder extends AbstractDetailContentBuilder
         }
 
         return Html::getDiv(
-            $view->description,
+            Utils::formatBBCode($view->description),
             [C::CSSCLASS => B::DATA_DETAIL_DESCRIPTION]
         );
     }

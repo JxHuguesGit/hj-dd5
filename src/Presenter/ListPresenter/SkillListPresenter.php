@@ -11,6 +11,7 @@ use src\Presenter\ViewModel\SkillLink;
 use src\Presenter\ViewModel\SkillRow;
 use src\Service\Reader\SkillReader;
 use src\Utils\UrlGenerator;
+use src\Utils\Utils;
 
 final class SkillListPresenter
 {
@@ -46,7 +47,7 @@ final class SkillListPresenter
             id: $skill->id,
             name: $skill->name,
             url: UrlGenerator::skill($skill->slug),
-            description: $this->cleanDescription($skill->description ?? ''),
+            description: Utils::formatBBCode(trim(strip_tags($skill->description ?? ''))),
             subSkills: array_map(
                 fn(Skill $s) => new SkillLink(
                     name: $s->name ?? '',
@@ -67,11 +68,5 @@ final class SkillListPresenter
             5 => [C::SLUG => C::ABLWIS, C::LABEL => L::SAGESSE],
             6 => [C::SLUG => C::ABLCHA, C::LABEL => L::CHARISME],
         ];
-    }
-
-    private function cleanDescription(string $description): string
-    {
-        $description = preg_replace('/<!--.*?-->/s', '', $description);
-        return trim(strip_tags($description));
     }
 }

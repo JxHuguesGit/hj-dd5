@@ -42,9 +42,14 @@ abstract class AbstractCardContentBuilder implements ContentBuilderInterface
             $this->renderGroupTitle($group) . $grid,
             [
                 C::CSSCLASS => $this->getGroupClass(),
-                C::ID => htmlspecialchars($group->slug),
+                C::ID => $this->getGroupId($group),
             ]
         );
+    }
+
+    protected function getGroupId (object $group): string
+    {
+        return $group->slug;
     }
 
     protected function renderGroupTitle(object $group): string

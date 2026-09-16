@@ -12,6 +12,7 @@ class Field
     public const SCORECA     = 'ca';
     public const CELLSIZE    = 'cellSize';
     public const CHASCORE    = 'chaScore';
+    public const CODE        = 'code';
     public const COLUMN      = 'column';
     public const CONSCORE    = 'conScore';
     public const SCORECR     = 'cr';

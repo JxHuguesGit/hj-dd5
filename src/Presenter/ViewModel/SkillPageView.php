@@ -2,6 +2,7 @@
 namespace src\Presenter\ViewModel;
 
 use src\Collection\Collection;
+use src\Domain\Entity;
 use src\Domain\Entity\Ability;
 use src\Domain\Entity\Skill;
 
@@ -10,7 +11,7 @@ class SkillPageView
     public function __construct(
         public ?Skill $skill,
         public Collection $subSkills,
-        public ?Ability $ability,
+        public ?Entity $ability,
         public Collection $origins,
         public ?Skill $previous = null,
         public ?Skill $next = null,

@@ -14,6 +14,79 @@ use src\Utils\UrlGenerator;
 
 final class FeatCardContentBuilder extends AbstractCardContentBuilder
 {
+    public function build(object $groups): string
+    {
+        $content = $this->getCategoryFilters($groups)
+            . $this->getSourceFilters($groups);
+
+        return $content . parent::build($groups);
+    }
+
+    private function getCategoryFilters(object $groups): string
+    {
+        $categories = [];
+        foreach ($groups as $group) {
+            $categories['feat' . $group->slug] = $group->label;
+        }
+        if ($categories===[]) {
+            return '';
+        }
+
+        $content = '';
+        foreach ($categories as $code => $name) {
+            $content .= Html::getBalise(
+                H::BALISE_BUTTON,
+                htmlspecialchars($name),
+                [
+                    C::CSSCLASS => 'badge bg-dark type-filter active',
+                    'type' => 'button',
+                    'data-type' => $code,
+                ]
+            ) . ' ';
+        }
+
+        return Html::getDiv(
+            $content,
+            [C::CSSCLASS => 'type-filters mb-2']
+        );
+    }
+
+    private function getSourceFilters(object $groups): string
+    {
+        $sources = [];
+        foreach ($groups as $group) {
+            foreach ($group->rows as $row) {
+                $sources[$row->sourceCode] = $row->sourceName;
+            }
+        }
+        if ($sources===[]) {
+            return '';
+        }
+
+        $content = '';
+        foreach ($sources as $code => $name) {
+            $content .= Html::getBalise(
+                H::BALISE_BUTTON,
+                htmlspecialchars($name),
+                [
+                    C::CSSCLASS => 'badge source-filter active',
+                    'type' => 'button',
+                    'data-source' => $code,
+                ]
+            ) . ' ';
+        }
+
+        return Html::getDiv(
+            $content,
+            [C::CSSCLASS => 'source-filters mb-2']
+        );
+    }
+
+    protected function getGroupId (object $group): string
+    {
+        return 'feat' . parent::getGroupId($group);
+    }
+
     /** @param FeatRow $row */
     protected function renderItem(object $row): string
     {
@@ -31,7 +104,7 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
             );
         }
 
-        return $this->renderCard($htmlContent, B::FEAT_CARD);
+        return $this->renderCard($htmlContent, B::FEAT_CARD . ' source source-' . $row->sourceCode);
     }
 
     /** @param FeatGroup $group */

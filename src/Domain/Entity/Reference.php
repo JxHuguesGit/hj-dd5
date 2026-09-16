@@ -10,9 +10,11 @@ class Reference extends Entity
     public const FIELDS = [
         F::ID,
         F::NAME,
+        F::CODE,
     ];
     public const FIELD_TYPES = [
         F::NAME => FieldType::STRING,
+        F::CODE => FieldType::STRING,
     ];
 
     public function stringify(): string

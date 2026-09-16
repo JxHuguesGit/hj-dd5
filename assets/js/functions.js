@@ -403,3 +403,21 @@ function addOpenMonsterModal() {
         return false;
     });
 }
+
+$('.source-filter').on('click', function () {
+    const $filter = $(this);
+    const source = $filter.data('source');
+    const disabled = $filter.hasClass('disabled');
+
+    $filter.toggleClass('disabled', !disabled);
+
+    $('.source-' + source).toggleClass('d-none', !disabled);
+});
+$('.type-filter').on('click', function () {
+    const $filter = $(this);
+    const type = $filter.data('type');
+    const disabled = $filter.hasClass('disabled');
+
+    $filter.toggleClass('disabled', !disabled);
+    $('#' + type).toggleClass('d-none', !disabled);
+});
