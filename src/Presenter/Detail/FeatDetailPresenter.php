@@ -1,19 +1,19 @@
 <?php
 namespace src\Presenter\Detail;
 
-use src\Constant\Constant as C;
-use src\Constant\Language as L;
 use src\Domain\Entity\Feat;
 use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Presenter\ViewModel\FeatTypeView;
 use src\Presenter\ViewModel\LinkView;
 use src\Service\Domain\FeatPreRequisService;
+use src\Service\Reader\FeatTypeReader;
 use src\Utils\Utils;
 
 class FeatDetailPresenter
 {
     public function __construct(
+        private FeatTypeReader $featTypeReader,
         private FeatPreRequisService $featPreRequisService
     ) {}
 
@@ -60,39 +60,17 @@ class FeatDetailPresenter
 
     private function buildType(FeatPageView $viewData): FeatTypeView
     {
+        $featType = $this->featTypeReader->featTypeById($viewData->feat->featTypeId);
         $prerequisite = $this->buildPrerequisite($viewData->feat);
+        if ($prerequisite!='') {
+            $prerequisite = ' (' . $prerequisite . ')';
+        }
 
-        return match ($viewData->feat->featTypeId) {
-            Feat::TYPE_ORIGIN => new FeatTypeView(
-                label: L::ORIGIN_FEAT,
-                slug: C::ORIGIN,
-                prerequisite: $prerequisite,
-            ),
-
-            Feat::TYPE_GENERAL => new FeatTypeView(
-                label: L::GENERAL_FEAT,
-                slug: C::GENERAL,
-                prerequisite: ' (' . $prerequisite . ')',
-            ),
-
-            Feat::TYPE_COMBAT => new FeatTypeView(
-                label: L::CBT_STYLE_FEAT,
-                slug: C::COMBAT,
-                prerequisite: ' (' . $prerequisite . ')',
-            ),
-
-            Feat::TYPE_EPIC => new FeatTypeView(
-                label: L::CBT_STYLE_EPIC,
-                slug: C::EPIC,
-                prerequisite: ' (' . $prerequisite . ')',
-            ),
-
-            default => new FeatTypeView(
-                label: 'Don non identifié',
-                slug: '',
-                prerequisite: '',
-            ),
-        };
+        return new FeatTypeView(
+            label: $featType->name,
+            slug: $featType->slug,
+            prerequisite: $prerequisite,
+        );
     }
 
     private function buildPrerequisite(Feat $feat): ?string

@@ -4,10 +4,7 @@ namespace src\Factory\Controller;
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicFeat;
-use src\Controller\Public\PublicFeatCombat;
-use src\Controller\Public\PublicFeatEpic;
-use src\Controller\Public\PublicFeatGeneral;
-use src\Controller\Public\PublicFeatOrigin;
+use src\Controller\Public\PublicFeatCategory;
 use src\Domain\Criteria\FeatCriteria;
 use src\Domain\Entity\Feat;
 use src\Factory\ReaderFactory;
@@ -25,13 +22,6 @@ use src\Service\Page\FeatPageService;
 
 final class FeatControllerFactory
 {
-    private const CATEGORY_CONTROLLERS = [
-        C::COMBAT  => PublicFeatCombat::class,
-        C::EPIC    => PublicFeatEpic::class,
-        C::GENERAL => PublicFeatGeneral::class,
-        C::ORIGIN  => PublicFeatOrigin::class,
-    ];
-
     public function __construct(
         private ReaderFactory $readerFactory,
         private ServiceFactory $serviceFactory,
@@ -40,16 +30,21 @@ final class FeatControllerFactory
 
     public function createCategoryController(string $slug): ?PublicBase
     {
-        $controllerClass = self::CATEGORY_CONTROLLERS[$slug] ?? null;
-        if (! $controllerClass) {
+        $featType = $this->readerFactory
+            ->featType()
+            ->featTypeBySlug($slug);
+
+        if ($featType === null) {
             return null;
         }
 
         $featReader = $this->readerFactory->feat();
+        $featTypeReader = $this->readerFactory->featType();
+
         $presenter  = new FeatListPresenter(
             $this->readerFactory->origin(),
             $this->serviceFactory->featPreRequis(),
-            $this->readerFactory->featType(),
+            $featTypeReader,
             $this->readerFactory->reference(),
             $this->readerFactory->featAbility(),
             $this->readerFactory->ability()
@@ -62,15 +57,13 @@ final class FeatControllerFactory
             PageRegistry::getInstance()->all(),
             C::FEATS
         );
-        $featType = $this->readerFactory
-            ->featType()
-            ->featTypeBySlug($slug);
 
         $criteria = new FeatCriteria();
         $criteria->featTypeId = $featType->id;
 
-        return new $controllerClass(
+        return new PublicFeatCategory(
             $featReader,
+            $featTypeReader,
             $presenter,
             $page,
             $menu,
@@ -87,6 +80,7 @@ final class FeatControllerFactory
                 $this->readerFactory->origin()
             ),
             new FeatDetailPresenter(
+                $this->readerFactory->featType(),
                 $this->serviceFactory->featPreRequis()
             ),
             new FeatDetailContentBuilder(),

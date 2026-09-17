@@ -40,10 +40,7 @@ final class FeatListPresenter
         $grouped = [];
         foreach ($feats as $feat) {
             /** @var Feat $feat */
-            $grouped[$feat->featTypeId][] = $this->buildRow(
-                $feat,
-                $featTypes[$feat->featTypeId] ?? null
-            );
+            $grouped[$feat->featTypeId][] = $this->buildRow($feat);
         }
 
         $collection = new Collection();
@@ -76,7 +73,7 @@ final class FeatListPresenter
         return $collection;
     }
 
-    private function buildRow(Feat $feat, ?FeatType $featType): FeatRow
+    private function buildRow(Feat $feat): FeatRow
     {
         $preRequis = $this->featPrerequisiteService->preRequisForFeat($feat);
         $source = $this->sourceReader->referenceById($feat->sourceId);
@@ -89,7 +86,7 @@ final class FeatListPresenter
             sourceName: $source->name ?? $feat->sourceId,
             sourceId: $source->id ?? $feat->sourceId,
             sourceCode: strtolower($source->code ?? ''),
-            origins: $this->buildOrigins($feat, $featType),
+            origins: $this->buildOrigins($feat),
             abilities: $this->buildAbilities($feat),
             prerequisite: $this->formatPrerequisites($preRequis),
             preRequisId: $preRequis->id ?? 0,
@@ -120,12 +117,8 @@ final class FeatListPresenter
         return $result;
     }
 
-    private function buildOrigins(Feat $feat, ?FeatType $featType): array
+    private function buildOrigins(Feat $feat): array
     {
-        if ($featType?->slug !== C::ORIGIN) {
-            return [];
-        }
-
         $result = [];
 
         foreach ($this->originReader->originsByFeat($feat) as $origin) {
