@@ -9,6 +9,8 @@ final class OriginRow
         public string $abilities,
         public string $originFeat,
         public string $skills,
-        public string $tool
+        public string $tool,
+        public string $sourceName,
+        public string $sourceCode,
     ) {}
 }

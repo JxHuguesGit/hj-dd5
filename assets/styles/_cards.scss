@@ -317,7 +317,7 @@
 
 .data-card {
     @include card;
-    
+
     h3 {
         @include card-title;
 
@@ -349,7 +349,7 @@
         text-align: center;
         letter-spacing: 0.05em;
 
-        transform: rotate(45deg);        
+        transform: rotate(45deg);
     }
 
     &.source-phb24::after {
@@ -380,14 +380,14 @@
     .badge {
         &.disabled {
             opacity: 0.4;
-        }        
+        }
     }
 }
 .source-filters {
     .badge {
         &.disabled {
             opacity: 0.4;
-        }        
+        }
         &[data-source="hf"] {
             background: $color-hf;
         }
@@ -410,6 +410,51 @@
 
 .data-detail {
     @include detail-panel;
+
+    &.source {
+        position: relative;
+        overflow: hidden;
+    }
+
+    &.source::after {
+        position: absolute;
+        top: 14px;
+        right: -35px;
+
+        width: 130px;
+        padding: 4px 0;
+
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.05em;
+
+        transform: rotate(45deg);
+    }
+
+    &.source-phb24::after {
+        content: "PHB24";
+        background: $color-phb;
+        color: $color-surface;
+    }
+
+    &.source-hf::after {
+        content: "HF";
+        background: $color-hf;
+        color: $color-surface;
+    }
+
+    &.source-rhw::after {
+        content: "RHW";
+        background: $color-rhw;
+        color: $color-surface;
+    }
+
+    &.source-au::after {
+        content: "AU";
+        background: $color-au;
+        color: $color-text;
+    }
 }
 
 /* =============================

@@ -7,13 +7,16 @@ use src\Domain\Entity\Origin;
 use src\Presenter\ViewModel\OriginGroup;
 use src\Presenter\ViewModel\OriginRow;
 use src\Service\Domain\OriginService;
+use src\Service\Reader\ReferenceReader;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
 final class OriginListPresenter
 {
-    public function __construct(private OriginService $originService)
-    {}
+    public function __construct(
+        private ReferenceReader $sourceReader,
+        private OriginService $originService
+    ) {}
 
     public function present(iterable $origins): Collection
     {
@@ -29,13 +32,17 @@ final class OriginListPresenter
 
     private function buildRow(Origin $origin): OriginRow
     {
+        $source = $this->sourceReader->referenceById($origin->sourceId);
+
         return new OriginRow(
             name: $origin->name,
             url: UrlGenerator::origin($origin->slug),
             abilities: $this->buildAbilities($origin),
             skills: $this->buildSkills($origin),
             originFeat: $this->originFeatLink($origin),
-            tool: $this->originToolLink($origin)
+            tool: $this->originToolLink($origin),
+            sourceName: $source->name ?? $origin->sourceId,
+            sourceCode: strtolower($source->code ?? ''),
         );
     }
 
@@ -47,7 +54,7 @@ final class OriginListPresenter
                 fn($skill) => Html::getLink(
                     $skill->name,
                     UrlGenerator::skill($skill->slug),
-                    B::TEXT_DARK
+                    B::TEXT_DARK . ' ' . B::TEXT_DECO_NONE
                 ),
                 $this->originService->getSkills($origin)->toArray()
             )
@@ -68,12 +75,24 @@ final class OriginListPresenter
     private function originFeatLink(Origin $origin): string
     {
         $feat = $this->originService->getFeat($origin);
-        return $feat ? Html::getLink($feat->name, UrlGenerator::feat($feat->getSlug()), B::TEXT_DARK) : '-';
+        return $feat
+            ? Html::getLink(
+                $feat->name,
+                UrlGenerator::feat($feat->getSlug()),
+                B::TEXT_DARK . ' ' . B::TEXT_DECO_NONE
+            )
+            : '-';
     }
 
     private function originToolLink(Origin $origin): string
     {
         $tool = $this->originService->getTool($origin);
-        return $tool ? Html::getLink($tool->name, UrlGenerator::item($tool->getSlug()), B::TEXT_DARK) : '-';
+        return $tool
+            ? Html::getLink(
+                $tool->name,
+                UrlGenerator::item($tool->getSlug()),
+                B::TEXT_DARK . ' ' . B::TEXT_DECO_NONE
+            )
+            : '-';
     }
 }

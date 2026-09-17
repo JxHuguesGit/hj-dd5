@@ -18,7 +18,14 @@ class SkillRouter
         if (!preg_match(Routes::SKILL_PATTERN, $path, $matches)) {
             return null;
         }
+        ////////////////////////////////////////////////////////////
+        // --- Vérification de l'existence ---
+        $skillReader = $this->factory->getReaderFactory()->skill();
+        $skill = $skillReader->skillBySlug($matches[1]);
+        if ($skill === null) {
+            return null;
+        }
 
-        return $this->factory->createDetailController($matches[1]);
+        return $this->factory->createDetailController($skill);
     }
 }

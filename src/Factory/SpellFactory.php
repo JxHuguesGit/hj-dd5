@@ -20,6 +20,8 @@ class SpellFactory
             F::NIVEAU             => get_field(F::NIVEAU, $post->ID),
             F::SCHOOL             => get_field(F::SCHOOL, $post->ID),
             F::CLASSES            => get_field(F::CLASSES, $post->ID),
+            F::WPPOSTID    => $post->ID,
+            F::SOURCEID    => 2,
             'composantes'             => get_field('composantes', $post->ID),
             'composanteMaterielle'    => get_field('composante_materielle', $post->ID),
             'concentration'           => !empty(get_field('concentration', $post->ID)),

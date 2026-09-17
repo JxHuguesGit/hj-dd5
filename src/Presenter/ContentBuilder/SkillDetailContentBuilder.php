@@ -18,7 +18,7 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
     {
         return $this->renderHeader(
             $view->name,
-            htmlspecialchars($view->ability)
+            $this->renderType($view)
         );
     }
 
@@ -35,6 +35,23 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
             . $this->renderOrigins($view)
             . $this->renderSubSkills($view)
         ;
+    }
+
+    private function renderType(SkillDetailView $view): string
+    {
+        return htmlspecialchars($view->ability);
+/*
+        $type = Html::getLink(
+            htmlspecialchars($view->type->label),
+            UrlGenerator::feats(L::DASH . $view->type->slug)
+        );
+
+        if ($view->type->prerequisite) {
+            $type .= htmlspecialchars($view->type->prerequisite);
+        }
+
+        return $type;
+*/
     }
 
     private function renderDescription(SkillDetailView $view): string
@@ -86,7 +103,7 @@ final class SkillDetailContentBuilder extends AbstractDetailContentBuilder
                     Html::getLink(
                         htmlspecialchars($subSkill->name),
                         UrlGenerator::skill($subSkill->slug),
-                        B::TEXT_DARK
+                        B::TEXT_DARK . ' ' . B::TEXT_DECO_NONE
                     )
                 )
                 . Html::getBalise(

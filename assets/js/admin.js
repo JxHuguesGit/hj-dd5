@@ -272,7 +272,25 @@ function fdmToolsManagment(obj) {
 }
 
 
+function filtrerDons() {
+    const recherche = $('#filtreNom').val().toLowerCase();
+    const prerequis = $('#filtrePrerequis').val();
+    const source = $('#filtreSource').val();
 
+    $('#featTable tbody tr').each(function() {
+        if ($(this).data('nom')==undefined) { return; }
+        const nom = $(this).data('nom').toLowerCase();
+        const matchNom = nom.includes(recherche);
+
+        const donPrerequis = $(this).data('prerequis');
+        const matchPrerequis = !prerequis || donPrerequis == prerequis;
+
+        const donSource = $(this).data('source');
+        const matchSource = !source || donSource == source;
+
+        $(this).toggle(matchNom && matchPrerequis && matchSource);
+    });
+}
 
 
 

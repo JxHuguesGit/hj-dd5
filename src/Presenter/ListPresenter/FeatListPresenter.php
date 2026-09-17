@@ -56,12 +56,21 @@ final class FeatListPresenter
                 ? $this->featPrerequisiteService->preRequisForFeatType($featType)
                 : null;
 
-            $collection->add(new FeatGroup(
-                label: $this->getTypeLabel($featType),
-                slug: $featType ? '-' . $featType->slug : '',
-                extraPrerequis: $preRequis?->name ?? '',
-                rows: $rows
-            ));
+            if (count($grouped)>1) {
+                $collection->add(new FeatGroup(
+                    label: $this->getTypeLabel($featType),
+                    slug: $featType ? '-' . $featType->slug : '',
+                    extraPrerequis: $preRequis?->name ?? '',
+                    rows: $rows
+                ));
+            } else {
+                $collection->add(new FeatGroup(
+                    label: '',
+                    slug: '',
+                    extraPrerequis: '',
+                    rows: $rows
+                ));
+            }
         }
 
         return $collection;

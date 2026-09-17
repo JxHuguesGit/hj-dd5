@@ -18,7 +18,14 @@ class SpecieRouter
         if (!preg_match(Routes::SPECIE_PATTERN, $path, $matches)) {
             return null;
         }
+        ////////////////////////////////////////////////////////////
+        // --- Vérification de l'existence ---
+        $specieReader = $this->factory->getReaderFactory()->species();
+        $specie = $specieReader->speciesBySlug($matches[1]);
+        if ($specie === null) {
+            return null;
+        }
 
-        return $this->factory->createDetailController($matches[1]);
+        return $this->factory->createDetailController($specie);
     }
 }

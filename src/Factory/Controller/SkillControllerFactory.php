@@ -3,6 +3,7 @@ namespace src\Factory\Controller;
 
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicSkill;
+use src\Domain\Entity\Skill;
 use src\Factory\{ReaderFactory, ServiceFactory};
 use src\Model\PageRegistry;
 use src\Page\Renderer\PageSkill;
@@ -20,15 +21,13 @@ class SkillControllerFactory
         private TemplateRenderer $renderer
     ) {}
 
-    public function createDetailController(string $slug): PublicSkill
+    public function createDetailController(Skill $skill): PublicSkill
     {
-        $skillReader = $this->readerFactory->skill();
         return new PublicSkill(
-            $slug,
-            $skillReader,
+            $skill,
             new SkillPageService(
                 $this->serviceFactory->skill(),
-                $skillReader,
+                $this->readerFactory->skill(),
                 $this->readerFactory->ability()
             ),
             new SkillDetailPresenter(),
@@ -36,5 +35,10 @@ class SkillControllerFactory
             new PageSkill($this->renderer),
             new MenuPresenter(PageRegistry::getInstance()->all(), C::SKILLS)
         );
+    }
+
+    public function getReaderFactory(): ReaderFactory
+    {
+        return $this->readerFactory;
     }
 }

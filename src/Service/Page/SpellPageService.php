@@ -14,9 +14,13 @@ final class SpellPageService
         private SpellDetailPresenter $presenter,
     ) {}
 
-    public function build(Spell $spell): SpellPageView
+    public function build(?Spell $spell): SpellPageView
     {
-        $nav = $this->spellService->getPreviousAndNext($spell);
+        if ($spell === null) {
+            $nav = [C::PREV => null, C::NEXT => null];
+        } else {
+            $nav = $this->spellService->getPreviousAndNext($spell);
+        }
 
         return new SpellPageView(
             $this->presenter->present($spell),

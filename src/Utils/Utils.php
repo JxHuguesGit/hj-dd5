@@ -122,9 +122,9 @@ class Utils
 
         $str = preg_replace('/<!--.*?-->/s', '', $str);
 
-        $search = ['[b]', '[/b]', '[i]', '[/i]', '[u]', '[/u]', '[br]', "\n"];
-        $replace = ['<strong>', '</strong>', '<em>', '</em>', '<u>', '</u>', '<br/>', '<br/>'];
-        
+        $search = ['[b]', '[/b]', '[i]', '[/i]', '[u]', '[/u]', '[br]'];//, "\n"
+        $replace = ['<strong>', '</strong>', '<em>', '</em>', '<u>', '</u>', '<br/>'];//, '<br/>'
+
         return str_ireplace($search, $replace, $str);
     }
 

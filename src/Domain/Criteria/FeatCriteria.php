@@ -22,6 +22,9 @@ final class FeatCriteria extends BaseCriteria
     #[Equals(F::FEATTYPEID)]
     public ?int $featTypeId = null;
 
+    #[Equals(F::SOURCEID)]
+    public ?int $sourceId = null;
+
     #[Compare(field: 'post_title', operator: Compare::LT, alias: self::WPPOST_ALIAS)]
     public ?string $nameLt = null;
 

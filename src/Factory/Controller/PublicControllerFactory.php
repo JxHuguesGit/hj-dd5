@@ -44,17 +44,12 @@ final class PublicControllerFactory
             C::ORIGINES  => new PublicOrigines(
                 $this->readerFactory->origin(),
                 new OriginListPresenter(
+                    $this->readerFactory->reference(),
                     $this->serviceFactory->origin()
                 ),
                 new PageList(
                     $this->renderer,
                     new OriginCardContentBuilder()
-                    /*
-                    new OriginTableBuilder(
-                        $this->serviceFactory->origin(),
-                        $this->readerFactory->origin()
-                    )
-                    */
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::ORIGINES)
             ),
@@ -62,6 +57,7 @@ final class PublicControllerFactory
             C::SPECIES   => new PublicSpecies(
                 $this->readerFactory->species(),
                 new SpeciesListPresenter(
+                    $this->readerFactory->reference(),
                     $this->serviceFactory->wordPress()
                 ),
                 new PageList(
@@ -105,15 +101,17 @@ final class PublicControllerFactory
                     $this->serviceFactory->wordPress()
                 ),
                 new SpellListPresenter(
-                    $this->readerFactory->spell(),
-                    $this->serviceFactory->wordPress()
+                    $this->readerFactory->reference(),
                 ),
                 new PageList(
                     $this->renderer,
                     new SpellCardContentBuilder()
                 ),
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
-                new SpellFilterModalPresenter($this->renderer)
+                new SpellFilterModalPresenter(
+                    $this->readerFactory->reference(),
+                    $this->renderer
+                )
             ),
 
             C::ITEMS => new PublicItems(

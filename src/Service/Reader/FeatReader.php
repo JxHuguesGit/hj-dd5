@@ -78,6 +78,7 @@ final class FeatReader
             function (string $operand, string $order) use ($feat) {
                 $criteria = new FeatCriteria();
                 $criteria->featTypeId = $feat->featTypeId;
+                $criteria->sourceId   = $feat->sourceId;
                 if ($operand === '&lt;') {
                     $criteria->nameLt = $feat->name;
                 } else {

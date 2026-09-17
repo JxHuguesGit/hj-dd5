@@ -9,6 +9,7 @@ use src\Presenter\ViewModel\FeatPageView;
 use src\Presenter\ViewModel\FeatTypeView;
 use src\Presenter\ViewModel\LinkView;
 use src\Service\Domain\FeatPreRequisService;
+use src\Utils\Utils;
 
 class FeatDetailPresenter
 {
@@ -22,12 +23,22 @@ class FeatDetailPresenter
         return new FeatDetailView(
             name: $viewData->feat->name,
             slug: $viewData->feat->slug,
-            description: $this->cleanContent($viewData->feat->description ?? ''),
+            description: Utils::formatBBCode($viewData->feat->description ?? ''),
+            sourceCode: $this->getCode($viewData),
             type: $this->buildType($viewData),
             origins: $this->buildOrigins($viewData),
             previous: $this->buildLink($viewData->previous),
             next: $this->buildLink($viewData->next)
         );
+    }
+
+    private function getCode(FeatPageView $viewData): string
+    {
+        $reference = $this->featPreRequisService->getReferenceForFeat($viewData->feat);
+        if ($reference === null) {
+            return '';
+        }
+        return strtolower($reference->code);
     }
 
     private function buildOrigins(FeatPageView $viewData): array
@@ -99,10 +110,5 @@ class FeatDetailPresenter
         }
 
         return implode(', ', $names);
-    }
-
-    private function cleanContent(string $content): string
-    {
-        return preg_replace('/<p>|<\/p>/', '', $content);
     }
 }

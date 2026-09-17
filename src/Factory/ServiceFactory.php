@@ -101,10 +101,11 @@ final class ServiceFactory
     {
         return new FeatPreRequisService(
             $this->readerFactory->featType(),
-            $this->readerFactory->preRequis()
+            $this->readerFactory->preRequis(),
+            $this->readerFactory->reference()
         );
     }
-    
+
     public function get(string $className): object
     {
         return match ($className) {
@@ -120,5 +121,5 @@ final class ServiceFactory
             ),
         };
     }
-    
+
 }

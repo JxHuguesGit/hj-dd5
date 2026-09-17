@@ -9,7 +9,6 @@ use src\Constant\Language as L;
 use src\Domain\Entity\Skill;
 use src\Presenter\ViewModel\LinkView;
 use src\Presenter\ViewModel\OriginDetailView;
-use src\Presenter\ViewModel\SkillPageView;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
@@ -105,7 +104,7 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
             $parts[] = Html::getLink(
                 $skill->name,
                 UrlGenerator::skill($skill->getSlug()),
-                B::TEXT_DARK
+                B::TEXT_DARK . ' ' . B::TEXT_DECO_NONE
             );
         }
 
@@ -123,7 +122,7 @@ final class OriginDetailContentBuilder extends AbstractDetailContentBuilder
         return Html::getLink(
             htmlspecialchars($entityData->name),
             $urlGenerator($entityData->slug),
-            B::TEXT_DARK
+            B::TEXT_DARK . ' ' . B::TEXT_DECO_NONE
         );
     }
 

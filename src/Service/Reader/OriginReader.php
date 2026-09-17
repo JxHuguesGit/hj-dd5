@@ -72,10 +72,12 @@ final class OriginReader
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($origin) {
                 $criteria = new OriginCriteria();
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $origin->name
-                    : $criteria->nameGt = $origin->name
-                ;
+                $criteria->sourceId = $origin->sourceId;
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $origin->name;
+                } else {
+                    $criteria->nameGt = $origin->name;
+                }
                 $criteria->orderBy = [F::NAME => $order];
                 return $this->originRepository->findAllWithCriteria($criteria);
             }

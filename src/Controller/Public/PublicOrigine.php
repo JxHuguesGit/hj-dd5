@@ -26,9 +26,17 @@ class PublicOrigine extends PublicBase
         $this->title = $this->origin->name;
     }
 
+    public function getTitle(): string
+    {
+        return $this->title ?? '';
+    }
+
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render();
+        if ($this->origin->id === null) {
+            return $this->page->render($menu, '');
+        }
         $pageView = $this->pageService->build($this->origin);
         $viewData = $this->presenter->present($pageView);
         $contentHtml = $this->contentBuilder->build($viewData);

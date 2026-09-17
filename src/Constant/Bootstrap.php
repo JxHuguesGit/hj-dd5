@@ -208,6 +208,7 @@ class Bootstrap
     public const TEXT_END    = self::TEXT . '-' . self::END;
     public const TEXT_NOWRAP = self::TEXT . '-' . self::NOWRAP;
     public const TEXT_WHITE  = self::TEXT . '-' . self::WHITE;
+    public const TEXT_DECO_NONE = self::TEXT . '-decoration-none';
 
     public const BORDER_END   = self::BORDER . '-' . self::END;
     public const BORDER_START = self::BORDER . '-' . self::START;

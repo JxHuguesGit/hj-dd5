@@ -11,6 +11,11 @@ use src\Utils\Html;
 
 final class OriginCardContentBuilder extends AbstractCardContentBuilder
 {
+    public function build(object $groups): string
+    {
+        return $this->getSourceFilters($groups) . parent::build($groups);
+    }
+
     /** @param OriginRow $row */
     protected function renderItem(object $row): string
     {
@@ -24,7 +29,7 @@ final class OriginCardContentBuilder extends AbstractCardContentBuilder
         $content .= $this->renderInfo(L::SKILLS, $row->skills);
         $content .= $this->renderInfo(L::TOOL, $row->tool);
 
-        return $this->renderCard($content, B::ORIGIN_CARD);
+        return $this->renderCard($content, B::ORIGIN_CARD . ' source source-' . strtolower($row->sourceCode));
     }
 
     /** @param OriginGroup $group */

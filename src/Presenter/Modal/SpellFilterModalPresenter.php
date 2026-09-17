@@ -6,11 +6,13 @@ use src\Constant\Template;
 use src\Enum\ClassEnum;
 use src\Enum\MagicSchoolEnum;
 use src\Renderer\TemplateRenderer;
+use src\Service\Reader\ReferenceReader;
 use src\Utils\Html;
 
 class SpellFilterModalPresenter implements ModalPresenter
 {
     public function __construct(
+        private ReferenceReader $referenceReader,
         private TemplateRenderer $renderer,
     ) {}
 
@@ -61,6 +63,23 @@ class SpellFilterModalPresenter implements ModalPresenter
             }
         }
 
+        // Liste des sources
+        $sourceOptions = '';
+        $nbSourceOptions = 0;
+        $strAllSourceSelected = ' '.C::CHECKED;
+        $sources = $this->referenceReader->allReferences();
+        $defaultSourceSelection = array_map(fn($case) => $case->code, $sources->toArray());
+        $selectedSources = $defaultSourceSelection;
+        foreach ($sources as $source) {
+            $value = $source->code;
+            if (in_array($value, $selectedSources)) {
+                ++$nbSourceOptions;
+                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value], true);
+            } else {
+                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value]);
+            }
+        }
+
         // Rituels
         $onlyRituels = false;
         $strRituels = $onlyRituels ? ' '.C::CHECKED : '';
@@ -85,6 +104,10 @@ class SpellFilterModalPresenter implements ModalPresenter
             $strRituels,
             // Concentration
             $strConcentration,
+            // Sources
+            $strAllSourceSelected,
+            $nbSourceOptions,
+            $sourceOptions,
         ];
 
         $modalContent = $this->renderer->render(

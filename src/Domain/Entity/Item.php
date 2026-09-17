@@ -24,6 +24,8 @@ class Item extends Entity
         F::GOLDPRICE,
         F::TYPE,
         F::TOOLID,
+        F::WPPOSTID,
+        F::SOURCEID,
 
         F::BUILDNAME,
         F::BUILDSLUG,
@@ -37,7 +39,9 @@ class Item extends Entity
         F::GOLDPRICE,
         F::TYPE,
         F::TOOLID,
-        
+        F::WPPOSTID,
+        F::SOURCEID,
+
         F::BUILDNAME,
         F::BUILDSLUG,
     ];
@@ -50,6 +54,8 @@ class Item extends Entity
         F::GOLDPRICE =>   FieldType::FLOAT,
         F::TYPE =>        FieldType::STRING,
         F::TOOLID =>      FieldType::INTNULLABLE,
+        F::WPPOSTID =>    FieldType::INTNULLABLE,
+        F::SOURCEID =>    FieldType::INTPOSITIVE,
         F::BUILDNAME =>   FieldType::STRINGNULLABLE,
         F::BUILDSLUG =>   FieldType::STRINGNULLABLE,
     ];
@@ -62,6 +68,8 @@ class Item extends Entity
         F::GOLDPRICE =>   FieldType::FLOAT,
         F::TYPE =>        FieldType::STRING,
         F::TOOLID =>      FieldType::INTNULLABLE,
+        F::WPPOSTID =>    FieldType::INTNULLABLE,
+        F::SOURCEID =>    FieldType::INTPOSITIVE,
         F::BUILDNAME =>   FieldType::STRINGNULLABLE,
         F::BUILDSLUG =>   FieldType::STRINGNULLABLE,
     ];
@@ -72,6 +80,8 @@ class Item extends Entity
         F::GOLDPRICE,
         F::TYPE,
         F::TOOLID,
+        F::WPPOSTID,
+        F::SOURCEID,
     ];
 
     public function stringify(): string

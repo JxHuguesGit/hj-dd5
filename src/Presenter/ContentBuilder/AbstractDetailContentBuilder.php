@@ -19,7 +19,7 @@ abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
         return Html::getBalise(
             H::BALISE_ARTICLE,
             $content,
-            [C::CSSCLASS => B::DATA_DETAIL]
+            [C::CSSCLASS => B::DATA_DETAIL . ' source source-' . $data->sourceCode]
         );
     }
 
@@ -65,7 +65,7 @@ abstract class AbstractDetailContentBuilder implements ContentBuilderInterface
 
         if ($subtitle !== '') {
             $headerClass .= ' has-subtitle';
-            
+
             $content .= Html::getBalise(
                 H::BALISE_SPAN,
                 $subtitle,

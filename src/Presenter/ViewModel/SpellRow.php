@@ -16,5 +16,6 @@ final class SpellRow
         public bool $concentration,
         public array $composantes,
         public string $composanteMaterielle,
+        public string $sourceCode,
     ) {}
 }

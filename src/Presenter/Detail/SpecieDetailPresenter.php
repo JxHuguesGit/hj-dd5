@@ -8,10 +8,12 @@ use src\Presenter\ViewModel\SpeciePageView;
 use src\Presenter\ViewModel\SpecieDetailView;
 use src\Service\Domain\WpPostService;
 use src\Service\Formatter\ShortcodeFormatter;
+use src\Service\Reader\ReferenceReader;
 
 class SpecieDetailPresenter
 {
     public function __construct(
+        private ReferenceReader $referenceReader,
         private WpPostService $wpPostService,
         private ShortcodeFormatter $shortcodeFormatter
     ) {}
@@ -23,9 +25,12 @@ class SpecieDetailPresenter
         $wpPost = $this->wpPostService
             ->getById($viewData->specie->postId);
 
+        $source = $this->referenceReader->referenceById($viewData->specie->sourceId);
+
         return new SpecieDetailView(
             name: $viewData->specie->name,
-            slug: $viewData->specie->getSlug(),
+            slug: $viewData->specie->slug,
+            sourceCode: strtolower($source->code),
 
             description:
                 $this->cleanContent($wpPost->post_content ?? ''),

@@ -9,15 +9,19 @@ use src\Controller\Public\PublicFeatEpic;
 use src\Controller\Public\PublicFeatGeneral;
 use src\Controller\Public\PublicFeatOrigin;
 use src\Domain\Criteria\FeatCriteria;
+use src\Domain\Entity\Feat;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageList;
+use src\Page\Renderer\PageFeat;
 use src\Presenter\ContentBuilder\FeatCardContentBuilder;
+use src\Presenter\ContentBuilder\FeatDetailContentBuilder;
+use src\Presenter\Detail\FeatDetailPresenter;
 use src\Presenter\ListPresenter\FeatListPresenter;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
-use src\Service\Domain\FeatPreRequisService;
+use src\Service\Page\FeatPageService;
 
 final class FeatControllerFactory
 {
@@ -74,21 +78,25 @@ final class FeatControllerFactory
         );
     }
 
-    public function createDetailController(string $slug): PublicFeat
+    public function createDetailController(Feat $feat): PublicFeat
     {
         return new PublicFeat(
-            $slug,
-            $this->readerFactory->feat(),
-            new \src\Service\Page\FeatPageService(
+            $feat,
+            new FeatPageService(
                 $this->readerFactory->feat(),
                 $this->readerFactory->origin()
             ),
-            new \src\Presenter\Detail\FeatDetailPresenter(
+            new FeatDetailPresenter(
                 $this->serviceFactory->featPreRequis()
             ),
-            new \src\Presenter\ContentBuilder\FeatDetailContentBuilder(),
-            new \src\Page\Renderer\PageFeat($this->renderer),
+            new FeatDetailContentBuilder(),
+            new PageFeat($this->renderer),
             new MenuPresenter(PageRegistry::getInstance()->all(), C::FEATS)
         );
+    }
+
+    public function getReaderFactory(): ReaderFactory
+    {
+        return $this->readerFactory;
     }
 }

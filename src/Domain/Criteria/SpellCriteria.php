@@ -15,6 +15,8 @@ final class SpellCriteria
     public ?int $maxLevel          = null;
     public array $classes          = [];
     public array $schools          = [];
+    public array $sources          = [];
+    public bool $allSources        = false;
     public bool $onlyRituel        = false;
     public bool $onlyConcentration = false;
 
@@ -74,6 +76,15 @@ final class SpellCriteria
             ];
         }
 
+        // Filtre sources
+        if (! empty($this->sources) && !$this->allSources) {
+            $args['meta_query'][] = [
+                'key'               => F::SOURCE,
+                C::VALUE => $this->sources,
+                'compare'           => 'IN',
+            ];
+        }
+
         // Filtre rituels
         if ($this->onlyRituel) {
             $args['meta_query'][] = [
@@ -107,6 +118,8 @@ final class SpellCriteria
         $criteria->maxLevel          = isset($request['levelMaxFilter']) ? (int) $request['levelMaxFilter'] : null;
         $criteria->classes           = $request['classFilter'] ?? [];
         $criteria->schools           = $request['schoolFilter'] ?? [];
+        $criteria->sources           = $request['sourceFilter'] ?? [];
+        $criteria->allSources        = $request['allSourceFilter'] ?? 0;
         $criteria->onlyRituel        = $request['onlyRituel'] ?? false;
         $criteria->onlyConcentration = $request['onlyConcentration'] ?? false;
 

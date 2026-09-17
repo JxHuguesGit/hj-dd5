@@ -39,10 +39,12 @@ final class WeaponReader
                 $criteria = new WeaponCriteria();
                 $criteria->weaponCategoryId = $weapon->weaponCategoryId;
                 $criteria->weaponRangeId = $weapon->weaponRangeId;
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $weapon->name
-                    : $criteria->nameGt = $weapon->name
-                ;
+                $criteria->sourceId      = $weapon->sourceId;
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $weapon->name;
+                } else {
+                    $criteria->nameGt = $weapon->name;
+                }
                 $criteria->orderBy = ['i.'.F::NAME => $order];
                 return $this->weaponRepository->findAllWithRelations($criteria);
             }

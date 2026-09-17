@@ -1,30 +1,30 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant as C;
 use src\Domain\Entity\Specie;
 use src\Page\Renderer\PageSpecie;
 use src\Presenter\ContentBuilder\SpecieDetailContentBuilder;
 use src\Presenter\Detail\SpecieDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\SpeciePageService;
-use src\Service\Reader\SpecieReader;
 
 class PublicSpecie extends PublicBase
 {
-    private ?Specie $species;
 
     public function __construct(
-        private string $slug,
-        private SpecieReader $specieReader,
+        private Specie $species,
         private SpeciePageService $pageService,
         private SpecieDetailPresenter $presenter,
         private SpecieDetailContentBuilder $contentBuilder,
         private PageSpecie $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->species = $this->specieReader->speciesBySlug($this->slug);
         $this->title = $this->species->name;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title ?? '';
     }
 
     public function getContentPage(): string

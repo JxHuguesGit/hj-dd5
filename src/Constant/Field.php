@@ -57,6 +57,7 @@ class Field
     public const SIZE        = 'size';
     public const SKILLS      = 'skills';
     public const SLUG        = 'slug';
+    public const SOURCE      = 'source';
     public const SPEED       = 'speed';
     public const STHDISADV   = 'stealthDisadvantage';
     public const STRPENALTY  = 'strengthPenalty';

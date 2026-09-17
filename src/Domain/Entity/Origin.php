@@ -22,6 +22,8 @@ final class Origin extends Entity
         F::TOOLID,
         F::SLUG,
         F::POSTID,
+        F::WPPOSTID,
+        F::SOURCEID,
     ];
     public const FIELD_TYPES = [
         F::NAME =>    FieldType::STRING,
@@ -29,6 +31,8 @@ final class Origin extends Entity
         F::TOOLID =>  FieldType::INTPOSITIVE,
         F::SLUG =>    FieldType::STRING,
         F::POSTID =>  FieldType::INTPOSITIVE,
+        F::WPPOSTID =>  FieldType::INTNULLABLE,
+        F::SOURCEID =>  FieldType::INTPOSITIVE,
     ];
 
     /**

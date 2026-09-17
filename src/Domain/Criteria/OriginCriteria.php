@@ -26,6 +26,9 @@ final class OriginCriteria extends BaseCriteria
     #[Equals(F::TOOLID)]
     public ?int $toolId = null;
 
+    #[Equals(F::SOURCEID)]
+    public ?int $sourceId = null;
+
     #[Compare(field: F::NAME, operator: Compare::LT)]
     public ?string $nameLt = null;
 

@@ -26,6 +26,9 @@ final class WeaponCriteria extends BaseCriteria
     #[Equals(field: F::WPNRANGEID)]
     public ?int $weaponRangeId = null;
 
+    #[Equals(field: F::SOURCEID)]
+    public ?int $sourceId = null;
+
     #[Compare(field: F::NAME, operator: Compare::LT, alias: 'i')]
     public ?string $nameLt = null;
 

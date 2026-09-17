@@ -41,10 +41,12 @@ final class ArmorReader
             function (string $operand, string $order) use ($armor) {
                 $criteria = new ArmorCriteria();
                 $criteria->armorTypeId = $armor->armorTypeId;
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $armor->name
-                    : $criteria->nameGt = $armor->name
-                ;
+                $criteria->sourceId   = $armor->sourceId;
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $armor->name;
+                } else {
+                    $criteria->nameGt = $armor->name;
+                }
                 $criteria->orderBy = [F::NAME => $order];
                 return $this->armorRepository->findAllWithRelations($criteria);
             }

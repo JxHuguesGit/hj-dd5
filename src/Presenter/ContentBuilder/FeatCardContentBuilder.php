@@ -51,37 +51,6 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
         );
     }
 
-    private function getSourceFilters(object $groups): string
-    {
-        $sources = [];
-        foreach ($groups as $group) {
-            foreach ($group->rows as $row) {
-                $sources[$row->sourceCode] = $row->sourceName;
-            }
-        }
-        if ($sources===[]) {
-            return '';
-        }
-
-        $content = '';
-        foreach ($sources as $code => $name) {
-            $content .= Html::getBalise(
-                H::BALISE_BUTTON,
-                htmlspecialchars($name),
-                [
-                    C::CSSCLASS => 'badge source-filter active',
-                    'type' => 'button',
-                    'data-source' => $code,
-                ]
-            ) . ' ';
-        }
-
-        return Html::getDiv(
-            $content,
-            [C::CSSCLASS => 'source-filters mb-2']
-        );
-    }
-
     protected function getGroupId (object $group): string
     {
         return 'feat' . parent::getGroupId($group);
@@ -149,5 +118,5 @@ final class FeatCardContentBuilder extends AbstractCardContentBuilder
             [C::CSSCLASS => C::FEAT_ORIGINS]
         );
     }
-    
+
 }

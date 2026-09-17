@@ -58,10 +58,12 @@ final class ItemReader
         return Navigation::getPrevNext(
             function (string $operand, string $order) use ($item) {
                 $criteria = new ItemCriteria();
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $item->name
-                    : $criteria->nameGt = $item->name
-                ;
+                $criteria->sourceId = $item->sourceId;
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $item->name;
+                } else {
+                    $criteria->nameGt = $item->name;
+                }
                 $criteria->orderBy = [F::NAME => $order];
                 return $this->itemRepository->findAllWithRelations($criteria);
             }

@@ -7,11 +7,15 @@ use src\Domain\Entity\Specie;
 use src\Presenter\ViewModel\SpecieGroup;
 use src\Presenter\ViewModel\SpecieRow;
 use src\Service\Domain\WpPostService;
+use src\Service\Reader\ReferenceReader;
 use src\Utils\UrlGenerator;
 
 final class SpeciesListPresenter
 {
-    public function __construct(private WpPostService $wpPostService) {}
+    public function __construct(
+        private ReferenceReader $referenceReader,
+        private WpPostService $wpPostService
+    ) {}
 
     public function present(iterable $species): Collection
     {
@@ -35,13 +39,16 @@ final class SpeciesListPresenter
     private function buildRow(Specie $specie): SpecieRow
     {
         $this->wpPostService->getById($specie->postId);
+        $source = $this->referenceReader->referenceById($specie->sourceId);
 
         return new SpecieRow(
             name: $specie->name,
             url: UrlGenerator::specie($specie->getSlug()),
             creatureType: (string)$this->wpPostService->getField(C::CREATURE_TYPE),
             sizeCategory: (string)$this->wpPostService->getField(C::SIZE_CATEGORY),
-            speed: (string)$this->wpPostService->getField(C::SPEED)
+            speed: (string)$this->wpPostService->getField(C::SPEED),
+            sourceCode: $source->code,
+            sourceName: $source->name,
         );
     }
 }

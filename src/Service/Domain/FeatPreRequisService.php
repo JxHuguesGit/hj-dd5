@@ -5,15 +5,23 @@ use src\Collection\Collection;
 use src\Domain\Entity\Feat;
 use src\Domain\Entity\FeatType;
 use src\Domain\Entity\PreRequis;
+use src\Domain\Entity\Reference;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\PreRequisReader;
+use src\Service\Reader\ReferenceReader;
 
 final class FeatPreRequisService
 {
     public function __construct(
         private FeatTypeReader $featTypeReader,
         private PreRequisReader $preRequisReader,
+        private ReferenceReader $referenceReader,
     ) {}
+
+    public function getReferenceForFeat(Feat $feat): ?Reference
+    {
+        return $this->referenceReader->referenceById($feat->sourceId);
+    }
 
     /**
      * @return Collection<PreRequis>

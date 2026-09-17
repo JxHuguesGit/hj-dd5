@@ -107,7 +107,10 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
         return Html::getBalise(
             H::BALISE_ARTICLE,
             $content,
-            [C::CSSCLASS => B::DATA_CARD . L::SPACE . B::SPELL_CARD]
+            [C::CSSCLASS => implode(
+                L::SPACE,
+                [B::DATA_CARD, B::SPELL_CARD, 'source', 'source-'.strtolower($row->sourceCode)]
+            )]
         );
     }
 

@@ -5,8 +5,12 @@ use src\Constant\Constant as C;
 use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ContentBuilder\SpellCardContentBuilder;
 use src\Presenter\ListPresenter\SpellListPresenter;
+use src\Query\QueryBuilder;
+use src\Query\QueryExecutor;
+use src\Repository\ReferenceRepository;
 use src\Service\Domain\SpellService;
 use src\Service\Domain\WpPostService;
+use src\Service\Reader\ReferenceReader;
 use src\Utils\Session;
 
 class SpellAjax
@@ -14,7 +18,14 @@ class SpellAjax
     public static function loadMoreSpells(): array
     {
         $spellService        = new SpellService(new WpPostService());
-        $spellListePresenter = new SpellListPresenter();
+        $spellListePresenter = new SpellListPresenter(
+            new ReferenceReader(
+                new ReferenceRepository(
+                    new QueryBuilder(),
+                    new QueryExecutor(),
+                )
+            )
+        );
         $spellContentBuilder = new SpellCardContentBuilder();
 
         parse_str(html_entity_decode(Session::fromPost(C::SPELL_FILTER)), $fromPost);

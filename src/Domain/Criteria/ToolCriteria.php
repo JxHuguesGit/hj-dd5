@@ -23,6 +23,9 @@ final class ToolCriteria extends BaseCriteria
     #[Equals(F::PARENTID)]
     public ?int $parentId = null;
 
+    #[Equals(F::SOURCEID)]
+    public ?int $sourceId = null;
+
     #[Compare(field: F::NAME, operator: Compare::LT, alias: 'i')]
     public ?string $nameLt = null;
 

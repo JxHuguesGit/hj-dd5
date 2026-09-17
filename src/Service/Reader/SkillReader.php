@@ -69,12 +69,12 @@ final class SkillReader
             function (string $operand, string $order) use ($skill) {
                 $criteria = new SkillCriteria();
                 $criteria->abilityId = $skill->abilityId;
+                $criteria->parentId = $skill->parentId;
                 if ($operand === '&lt;') {
                     $criteria->nameLt = $skill->name;
                 } else {
                     $criteria->nameGt = $skill->name;
                 }
-                ;
                 $criteria->orderBy = [F::NAME => $order];
                 return $this->skillRepository->findAllWithRelations($criteria);
             }

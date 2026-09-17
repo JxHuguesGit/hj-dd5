@@ -36,7 +36,8 @@ class FeatCompendiumFactory extends AbstractCompendiumFactory
             $this->reader(ReferenceReader::class, ReferenceRepository::class),
             new FeatPreRequisService(
                 $this->reader(FeatTypeReader::class, FeatTypeRepository::class),
-                $this->reader(PreRequisReader::class, PreRequisRepository::class)
+                $this->reader(PreRequisReader::class, PreRequisRepository::class),
+                $this->reader(ReferenceReader::class, ReferenceRepository::class)
             ),
             $this->reader(PreRequisReader::class, PreRequisRepository::class),
             new ToastBuilder($this->renderer),

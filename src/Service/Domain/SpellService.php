@@ -48,13 +48,13 @@ final class SpellService
         );
     }
 
-    public function spellBySlug(string $slug): Spell
+    public function spellBySlug(string $slug): ?Spell
     {
         $spellResult = $this->allSpells([C::NAME => $slug]);
         return ($spellResult->collection)->first();
     }
 
-    public function getPreviousAndNext(Spell $spell): array
+    public function getPreviousAndNext(?Spell $spell): array
     {
         $allSpells = $this->allSpells(['posts_per_page' => -1]);
         $idx       = $allSpells->collection->findKey(fn($post) => $post->slug === $spell->slug);

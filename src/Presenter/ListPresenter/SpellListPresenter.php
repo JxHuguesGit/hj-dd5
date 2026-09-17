@@ -4,10 +4,15 @@ namespace src\Presenter\ListPresenter;
 use src\Collection\Collection;
 use src\Domain\Entity\Spell;
 use src\Presenter\ViewModel\SpellRow;
+use src\Service\Reader\ReferenceReader;
 use src\Utils\UrlGenerator;
 
 final class SpellListPresenter
 {
+    public function __construct(
+        private ReferenceReader $referenceReader,
+    ) {}
+
     /** @param Collection<Spell> $spells */
     public function present(iterable $spells): Collection
     {
@@ -21,6 +26,8 @@ final class SpellListPresenter
 
     private function buildRow(Spell $spell): SpellRow
     {
+        $source = $this->referenceReader->referenceById($spell->sourceId);
+
         return new SpellRow(
             name: $spell->name,
             url: UrlGenerator::spell($spell->slug),
@@ -33,7 +40,8 @@ final class SpellListPresenter
             duree: $spell->duree,
             concentration: $spell->concentration,
             composantes: $spell->composantes,
-            composanteMaterielle: $spell->composanteMaterielle
+            composanteMaterielle: $spell->composanteMaterielle,
+            sourceCode: $source->code,
         );
     }
 }

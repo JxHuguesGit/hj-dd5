@@ -1,40 +1,37 @@
 <?php
 namespace src\Controller\Public;
 
-use src\Constant\Constant as C;
 use src\Domain\Entity\Feat;
 use src\Page\Renderer\PageFeat;
 use src\Presenter\ContentBuilder\FeatDetailContentBuilder;
 use src\Presenter\Detail\FeatDetailPresenter;
 use src\Presenter\MenuPresenter;
 use src\Service\Page\FeatPageService;
-use src\Service\Reader\FeatReader;
 
 class PublicFeat extends PublicBase
 {
-    private ?Feat $feat;
-
     public function __construct(
-        private string $slug,
-        private FeatReader $featReader,
+        private Feat $feat,
         private FeatPageService $pageService,
         private FeatDetailPresenter $presenter,
         private FeatDetailContentBuilder $contentBuilder,
         private PageFeat $page,
         private MenuPresenter $menuPresenter,
     ) {
-        $this->feat = $this->featReader->featBySlug($this->slug);
         $this->title = $this->feat->name;
     }
 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->title ?? '';
     }
 
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render();
+        if ($this->feat->id === null) {
+            return $this->page->render($menu, '');
+        }
         $pageView = $this->pageService->build($this->feat);
         $viewData = $this->presenter->present($pageView);
         $content = $this->contentBuilder->build($viewData);

@@ -20,12 +20,16 @@ final class Specie extends Entity
         F::SLUG,
         F::PARENTID,
         F::POSTID,
+        F::WPPOSTID,
+        F::SOURCEID,
     ];
     public const FIELD_TYPES = [
         F::NAME =>     FieldType::STRING,
         F::SLUG =>     FieldType::STRING,
         F::PARENTID => FieldType::INTPOSITIVE,
         F::POSTID =>   FieldType::INTPOSITIVE,
+        F::WPPOSTID => FieldType::INTNULLABLE,
+        F::SOURCEID => FieldType::INTPOSITIVE,
     ];
 
     /**

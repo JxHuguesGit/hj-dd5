@@ -63,10 +63,12 @@ final class SpecieReader
             function (string $operand, string $order) use ($species) {
                 $criteria = new SpeciesCriteria();
                 $criteria->parentId = $species->parentId;
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $species->name
-                    : $criteria->nameGt = $species->name
-                ;
+                $criteria->sourceId = $species->sourceId;
+                if ($operand === '&lt;' ) {
+                    $criteria->nameLt = $species->name;
+                } else {
+                    $criteria->nameGt = $species->name;
+                }
                 $criteria->orderBy = [F::NAME => $order];
                 return $this->speciesRepository->findAllWithCriteria($criteria);
             }

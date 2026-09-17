@@ -23,6 +23,9 @@ final class ItemCriteria extends BaseCriteria
     #[Equals(F::TOOLID, alias: 'i')]
     public ?int $toolId = null;
 
+    #[Equals(F::SOURCEID, alias: 'i')]
+    public ?int $sourceId = null;
+
     #[Compare(field: F::NAME, alias: 'i', operator: Compare::LT)]
     public ?string $nameLt = null;
 

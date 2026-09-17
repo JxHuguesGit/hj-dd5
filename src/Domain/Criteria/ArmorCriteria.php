@@ -26,6 +26,9 @@ final class ArmorCriteria extends BaseCriteria
     #[Equals(F::ARMORCLASS)]
     public ?int $armorClass = null;
 
+    #[Equals(F::SOURCEID)]
+    public ?int $sourceId = null;
+
     #[Compare(field: F::NAME, operator: Compare::LT)]
     public ?string $nameLt = null;
 

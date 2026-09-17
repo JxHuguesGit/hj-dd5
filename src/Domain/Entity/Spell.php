@@ -29,6 +29,8 @@ final class Spell extends Entity
         'rituel',
         'typeAmelioration',
         'ameliorationDescription',
+        F::WPPOSTID,
+        F::SOURCEID,
     ];
     public const FIELD_TYPES = [
         F::NAME               => FieldType::STRING,
@@ -36,6 +38,8 @@ final class Spell extends Entity
         F::NIVEAU              => FieldType::STRING,
         F::SCHOOL             => FieldType::STRING,
         F::CLASSES            => FieldType::ARRAY,
+        F::WPPOSTID               => FieldType::INTNULLABLE,
+        F::SOURCEID               => FieldType::INTPOSITIVE,
 
         C::CONTENT     => FieldType::STRING,
         'tempsIncantation'        => FieldType::STRING,

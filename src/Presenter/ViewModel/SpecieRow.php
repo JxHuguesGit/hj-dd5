@@ -8,6 +8,8 @@ final class SpecieRow
         public string $url,
         public string $creatureType,
         public string $sizeCategory,
-        public string $speed
+        public string $speed,
+        public string $sourceCode,
+        public string $sourceName,
     ) {}
 }

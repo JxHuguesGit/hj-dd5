@@ -20,6 +20,12 @@ class PublicSpell extends PublicBase
         private SpellPageService $pageService,
     ) {
         $this->spell = $this->spellService->spellBySlug($this->slug);
+        $this->title = 'Sort';
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title ?? '';
     }
 
     public function getContentPage(): string

@@ -10,6 +10,9 @@ class SpellFormatter
 {
     public static function formatEcole(string $schoolSlug, int $level): string
     {
+        if ($schoolSlug == '') {
+            return '';
+        }
         return MagicSchoolEnum::from($schoolSlug)->label() .
         (
             $level == 0

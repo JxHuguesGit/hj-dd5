@@ -20,7 +20,14 @@ class FeatRouter
 
         // Don individuel
         if ($slug = $this->matchPattern($path, Routes::FEAT_PATTERN)) {
-            return $this->factory->createDetailController($slug);
+            ////////////////////////////////////////////////////////////
+            // --- Vérification de l'existence ---
+            $featReader = $this->factory->getReaderFactory()->feat();
+            $feat = $featReader->featBySlug($slug);
+            if ($feat === null) {
+                return null;
+            }
+            return $this->factory->createDetailController($feat);
         }
 
         return null;

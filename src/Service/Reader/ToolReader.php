@@ -46,10 +46,12 @@ final class ToolReader
             function (string $operand, string $order) use ($tool) {
                 $criteria = new ToolCriteria();
                 $criteria->parentId = $tool->parentId;
-                $operand === '&lt;'
-                    ? $criteria->nameLt = $tool->name
-                    : $criteria->nameGt = $tool->name
-                ;
+                $criteria->sourceId   = $tool->sourceId;
+                if ($operand === '&lt;') {
+                    $criteria->nameLt = $tool->name;
+                } else {
+                    $criteria->nameGt = $tool->name;
+                }
                 $criteria->orderBy = [F::NAME => $order];
                 return $this->toolRepository->findAllWithRelations($criteria);
             }

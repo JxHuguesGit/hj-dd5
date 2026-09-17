@@ -11,13 +11,13 @@ use src\Service\Reader\OriginReader;
 final class FeatPageService
 {
     public function __construct(
-        private FeatReader $queryService,
+        private FeatReader $featReader,
         private OriginReader $originReader,
     ) {}
 
     public function build(Feat $feat): FeatPageView
     {
-        $nav = $this->queryService->getPreviousAndNext($feat);
+        $nav = $this->featReader->getPreviousAndNext($feat);
 
         return new FeatPageView(
             $feat,
