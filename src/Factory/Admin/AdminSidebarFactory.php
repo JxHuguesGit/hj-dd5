@@ -1,8 +1,6 @@
 <?php
 namespace src\Factory\Admin;
 
-
-use src\Constant\Constant as C;
 use src\Controller\Admin\AdminSidebar;
 use src\Factory\ReaderFactory;
 use src\Presenter\MenuPresenter\CharacterMenuPresenter;

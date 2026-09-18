@@ -2,7 +2,6 @@
 namespace src\Action\Ajax;
 
 use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
 use src\Service\Ajax\MonsterAjax;
 

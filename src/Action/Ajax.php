@@ -73,10 +73,13 @@ class Ajax
                 $router                = new AjaxRouter(
                     new AjaxActionFactory(
                         $reader,
-                        new ServiceFactory($reader, $writer, $repository),
+                        new ServiceFactory($reader, $writer),
                         $writer,
                         new TemplateRenderer(),
-                        new PresenterFactory()
+                        new PresenterFactory(
+                            new TemplateRenderer(),
+                            $reader
+                        )
                     )
                 );
                 $response              = $router->dispatch(

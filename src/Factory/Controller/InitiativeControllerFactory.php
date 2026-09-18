@@ -4,7 +4,6 @@ namespace src\Factory\Controller;
 
 use src\Controller\Public\PublicInitiative;
 use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
 use src\Page\Renderer\PageInitiative;
 use src\Presenter\ContentBuilder\InitiativeContentBuilder;
 use src\Presenter\ListPresenter\InitiativeListPresenter;
@@ -15,7 +14,6 @@ class InitiativeControllerFactory
 {
     public function __construct(
         private ReaderFactory $readerFactory,
-        private ServiceFactory $serviceFactory,
         private TemplateRenderer $renderer
     ) {}
 

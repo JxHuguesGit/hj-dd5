@@ -43,9 +43,9 @@ class SpecieControllerFactory
         );
     }
 
-    public function getReaderFactory(): ReaderFactory
+    public function findBySlug(string $slug): ?Specie
     {
-        return $this->readerFactory;
+        return $this->readerFactory->specie()->speciesBySlug($slug);
     }
 }
 

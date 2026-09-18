@@ -9,6 +9,7 @@ use src\Service\Domain\MapTokenService;
 use src\Service\Domain\OriginService;
 use src\Service\Domain\SkillService;
 use src\Service\Domain\SpecieService;
+use src\Service\Domain\SpellService;
 use src\Service\Domain\WpPostService;
 use src\Service\Formatter\WeaponFormatter;
 use src\Service\Formatter\WeaponPropertiesFormatter;
@@ -18,7 +19,6 @@ final class ServiceFactory
     public function __construct(
         private ReaderFactory $readerFactory,
         private WriterFactory $writerFactory,
-        private RepositoryFactory $repositoryFactory
     ) {}
 
     public function wordPress(): WpPostService
@@ -55,6 +55,13 @@ final class ServiceFactory
         );
     }
 
+    public function spell(): SpellService
+    {
+        return new SpellService(
+            $this->wordPress()
+        );
+    }
+
     public function weaponFormatter(): WeaponFormatter
     {
         return new WeaponFormatter(
@@ -84,7 +91,7 @@ final class ServiceFactory
     {
         return new MapService(
             $this->readerFactory->map(),
-            new WriterFactory($this->repositoryFactory),
+            $this->writerFactory,
             $this->readerFactory->mapToken(),
         );
     }

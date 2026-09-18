@@ -43,20 +43,26 @@ class DD5Admin
         $repositoryFactory = new RepositoryFactory($qb, $qe);
         $readerFactory = new ReaderFactory($repositoryFactory);
         $writerFactory = new WriterFactory($repositoryFactory);
+        $serviceFactory = new ServiceFactory($readerFactory, $writerFactory);
+        $templateRenderer = new TemplateRenderer();
 
         $adminPage = new AdminPage(
             $arrUri,
             new AdminSidebarFactory($readerFactory),
             new AdminContentFactory(
                 new CompendiumFactory(
-                    $qb,
-                    $qe,
-                    new TemplateRenderer()
+                    $templateRenderer,
+                    $readerFactory,
+                    $writerFactory,
+                    $serviceFactory
                 ),
-                new ServiceFactory($readerFactory, $writerFactory, $repositoryFactory),
+                $serviceFactory,
                 $readerFactory,
                 $writerFactory,
-                new PresenterFactory()
+                new PresenterFactory(
+                    $templateRenderer,
+                    $readerFactory
+                )
             ),
         );
         echo $adminPage->getAdminContentPage();

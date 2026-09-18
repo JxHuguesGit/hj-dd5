@@ -14,7 +14,10 @@ final class WriterFactory
         C::MAPTOKEN               => [C::WRITER => 'MapTokenWriter',              C::REPO => C::MAPTOKEN],
         C::TOKEN                  => [C::WRITER => 'TokenWriter',                 C::REPO => C::TOKEN],
         C::COMBAT                 => [C::WRITER => 'CombatWriter',                C::REPO => C::COMBAT],
-        C::COMBAT_PARTICIPANT      => [C::WRITER => 'CombatParticipantWriter',     C::REPO => C::COMBAT_PARTICIPANT],
+        C::COMBAT_PARTICIPANT     => [C::WRITER => 'CombatParticipantWriter',     C::REPO => C::COMBAT_PARTICIPANT],
+        C::FEAT                   => [C::WRITER => 'FeatWriter',                  C::REPO => C::FEAT],
+        C::FEAT_ABILITY           => [C::WRITER => 'FeatAbilityWriter',           C::REPO => C::FEAT_ABILITY],
+        C::FEAT_PREREQUIS         => [C::WRITER => 'FeatPreRequisWriter',         C::REPO => C::FEAT_PREREQUIS],
     ];
 
     public function __construct(

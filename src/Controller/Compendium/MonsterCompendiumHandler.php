@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller\Compendium;
 
+use src\Factory\ReaderFactory;
 use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\MonsterFormBuilder;
@@ -20,7 +21,8 @@ class MonsterCompendiumHandler extends AbstractCompendiumHandler implements Comp
         private PageList $page,
         private MonsterFilterModalPresenter $modalPresenter,
         private ToastBuilder $toastBuilder,
-        private TemplateRenderer $templateRenderer
+        private TemplateRenderer $templateRenderer,
+        private ReaderFactory $readerFactory,
     ) {}
 
     protected function handleEditSubmit(string $slug): string
@@ -36,7 +38,7 @@ class MonsterCompendiumHandler extends AbstractCompendiumHandler implements Comp
 
         $page = new PageForm(
             $this->templateRenderer,
-            new MonsterFormBuilder(),
+            new MonsterFormBuilder($this->readerFactory),
             $this->toastContent
         );
         return $page->renderAdmin('', $monster);

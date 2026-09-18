@@ -23,59 +23,104 @@ use src\Factory\Compendium\{
     ToolCompendiumFactory,
     WeaponCompendiumFactory
 };
-use src\Query\{QueryBuilder, QueryExecutor};
 use src\Renderer\TemplateRenderer;
 
 final class CompendiumFactory
 {
     public function __construct(
-        private QueryBuilder $qb,
-        private QueryExecutor $qe,
-        private TemplateRenderer $renderer
+        private TemplateRenderer $renderer,
+        private ReaderFactory $readerFactory,
+        private WriterFactory $writerFactory,
+        private ServiceFactory $serviceFactory,
     ) {}
 
     public function armor(): ArmorCompendiumHandler
     {
-        return (new ArmorCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new ArmorCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function feat(): FeatCompendiumHandler
     {
-        return (new FeatCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new FeatCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function gear(): GearCompendiumHandler
     {
-        return (new GearCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new GearCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function monster(): MonsterCompendiumHandler
     {
-        return (new MonsterCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new MonsterCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function origin(): OriginCompendiumHandler
     {
-        return (new OriginCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new OriginCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function skill(): SkillCompendiumHandler
     {
-        return (new SkillCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new SkillCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function spell(): SpellCompendiumHandler
     {
-        return (new SpellCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new SpellCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function tool(): ToolCompendiumHandler
     {
-        return (new ToolCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new ToolCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 
     public function weapon(): WeaponCompendiumHandler
     {
-        return (new WeaponCompendiumFactory($this->qb, $this->qe, $this->renderer))->create();
+        return (new WeaponCompendiumFactory(
+            $this->renderer,
+            $this->readerFactory,
+            $this->writerFactory,
+            $this->serviceFactory
+        ))->create();
     }
 }

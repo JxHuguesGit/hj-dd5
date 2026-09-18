@@ -20,8 +20,7 @@ class SpecieRouter
         }
         ////////////////////////////////////////////////////////////
         // --- Vérification de l'existence ---
-        $specieReader = $this->factory->getReaderFactory()->species();
-        $specie = $specieReader->speciesBySlug($matches[1]);
+        $specie = $this->factory->findBySlug($matches[1]);
         if ($specie === null) {
             return null;
         }

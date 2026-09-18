@@ -20,8 +20,7 @@ class SkillRouter
         }
         ////////////////////////////////////////////////////////////
         // --- Vérification de l'existence ---
-        $skillReader = $this->factory->getReaderFactory()->skill();
-        $skill = $skillReader->skillBySlug($matches[1]);
+        $skill = $this->factory->findBySlug($matches[1]);
         if ($skill === null) {
             return null;
         }

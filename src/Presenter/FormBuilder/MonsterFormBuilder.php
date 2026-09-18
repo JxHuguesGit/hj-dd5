@@ -4,9 +4,6 @@ namespace src\Presenter\FormBuilder;
 use src\Constant\Constant as C;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
-use src\Factory\RepositoryFactory;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;
 
@@ -17,6 +14,10 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
         MonsterCombatFormBuilder::class => 'Combat',
         MonsterClassificationFormBuilder::class => 'Classification',
     ];
+
+    public function __construct(
+        private ReaderFactory $readerFactory
+    ) {}
 
     public function build(object $entity, array $params = []): Form
     {
@@ -32,14 +33,7 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
 
         foreach ($this->sections as $sectionClass => $title) {
             $fieldset = new FieldsetField($title, true);
-            $section = new $sectionClass(
-                new ReaderFactory(
-                    new RepositoryFactory(
-                        new QueryBuilder(),
-                        new QueryExecutor()
-                    )
-                ),
-            );
+            $section = new $sectionClass($this->readerFactory);
             $section->addFields($fieldset, $entity);
             $form->addField($fieldset);
         }

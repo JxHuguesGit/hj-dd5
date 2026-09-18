@@ -89,8 +89,8 @@ final class FeatControllerFactory
         );
     }
 
-    public function getReaderFactory(): ReaderFactory
+    public function findBySlug(string $slug): ?Feat
     {
-        return $this->readerFactory;
+        return $this->readerFactory->feat()->featBySlug($slug);
     }
 }

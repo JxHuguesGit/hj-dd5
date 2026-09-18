@@ -27,7 +27,6 @@ use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\MenuPresenter;
 use src\Presenter\Modal\SpellFilterModalPresenter;
 use src\Renderer\TemplateRenderer;
-use src\Service\Domain\SpellService;
 
 final class PublicControllerFactory
 {
@@ -97,9 +96,7 @@ final class PublicControllerFactory
             ),
 
             C::SPELLS    => new PublicSpells(
-                new SpellService(
-                    $this->serviceFactory->wordPress()
-                ),
+                $this->serviceFactory->spell(),
                 new SpellListPresenter(
                     $this->readerFactory->reference(),
                 ),

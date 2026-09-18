@@ -22,8 +22,7 @@ class FeatRouter
         if ($slug = $this->matchPattern($path, Routes::FEAT_PATTERN)) {
             ////////////////////////////////////////////////////////////
             // --- Vérification de l'existence ---
-            $featReader = $this->factory->getReaderFactory()->feat();
-            $feat = $featReader->featBySlug($slug);
+            $feat = $this->factory->findBySlug($slug);
             if ($feat !== null) {
                 return $this->factory->createDetailController($feat);
             }

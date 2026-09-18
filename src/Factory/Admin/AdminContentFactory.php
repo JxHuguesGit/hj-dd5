@@ -16,11 +16,7 @@ use src\Factory\PresenterFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory;
-use src\Presenter\Admin\MapAdminPresenter;
-use src\Presenter\Admin\MapTokenAdminPresenter;
-use src\Presenter\Admin\TokenAdminPresenter;
 use src\Presenter\FormBuilder\MapFormBuilder;
-use src\Renderer\TemplateRenderer;
 
 final class AdminContentFactory
 {
@@ -61,7 +57,7 @@ final class AdminContentFactory
                     $this->readerFactory->map()
                 ),
                 new AdminMapView(
-                    new TemplateRenderer()
+                    $this->presenterFactory->renderer()
                 ),
                 new AdminMapEditContent(
                     new MapFormBuilder()

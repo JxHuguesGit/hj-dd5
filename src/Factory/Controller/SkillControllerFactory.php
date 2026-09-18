@@ -37,8 +37,8 @@ class SkillControllerFactory
         );
     }
 
-    public function getReaderFactory(): ReaderFactory
+    public function findBySlug(string $slug): ?Skill
     {
-        return $this->readerFactory;
+        return $this->readerFactory->skill()->skillBySlug($slug);
     }
 }

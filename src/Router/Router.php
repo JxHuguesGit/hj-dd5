@@ -34,13 +34,13 @@ class Router
         $this->handlers = new Collection([
             new OriginRouter(new OriginControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new SpecieRouter(new SpecieControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new SpellRouter(new SpellControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new SpellRouter(new SpellControllerFactory($this->serviceFactory, $this->renderer)),
             new SkillRouter(new SkillControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new FeatRouter(new FeatControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new ItemRouter(new ItemControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new MapRouter(new MapControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
             new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new InitiativeRouter(new InitiativeControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
+            new InitiativeRouter(new InitiativeControllerFactory($this->readerFactory, $this->renderer)),
         ]);
     }
 

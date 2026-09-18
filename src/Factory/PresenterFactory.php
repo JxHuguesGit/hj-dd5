@@ -7,57 +7,60 @@ use src\Presenter\Admin\InitiativeAdminPresenter;
 use src\Presenter\Admin\MapAdminPresenter;
 use src\Presenter\Admin\MapTokenAdminPresenter;
 use src\Presenter\Admin\TokenAdminPresenter;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 
 final class PresenterFactory
 {
+    public function __construct(
+        private TemplateRenderer $renderer,
+        private ReaderFactory $readerFactory,
+    ) {}
+
+    public function renderer(): TemplateRenderer
+    {
+        return $this->renderer;
+    }
+
     public function token(): TokenAdminPresenter
     {
         return new TokenAdminPresenter(
-            new TemplateRenderer()
+            $this->renderer
         );
     }
 
     public function map(): MapAdminPresenter
     {
         return new MapAdminPresenter(
-            new TemplateRenderer()
+            $this->renderer
         );
     }
 
     public function mapToken(): MapTokenAdminPresenter
     {
         return new MapTokenAdminPresenter(
-            new TemplateRenderer()
+            $this->renderer
         );
     }
 
     public function initiative(): InitiativeAdminPresenter
     {
         return new InitiativeAdminPresenter(
-            new TemplateRenderer()
+            $this->renderer
         );
     }
 
     public function combat(): CombatPresenter
     {
         return new CombatPresenter(
-            new ReaderFactory(
-                new RepositoryFactory(
-                    new QueryBuilder(),
-                    new QueryExecutor()
-                )
-            ),
-            new TemplateRenderer()
+            $this->readerFactory,
+            $this->renderer
         );
     }
 
     public function combatParticipant(): CombatParticipantPresenter
     {
         return new CombatParticipantPresenter(
-            new TemplateRenderer()
+            $this->renderer
         );
     }
 }
