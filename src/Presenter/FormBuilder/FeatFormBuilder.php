@@ -11,6 +11,7 @@ use src\Domain\Criteria\FeatAbilityCriteria;
 use src\Domain\Entity\Feat;
 use src\Enum\AbilityEnum;
 use src\Presenter\ViewModel\FeatAbilityView;
+use src\Service\Domain\FeatPreRequisService;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
@@ -28,7 +29,8 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         private AbilityReader $abilityReader,
         private FeatAbilityReader $featAbilityReader,
         private ReferenceReader $referenceReader,
-        private PreRequisReader $preRequisReader
+        private PreRequisReader $preRequisReader,
+        private FeatPreRequisService $featPreRequisService,
     ) {}
 
     public function build(object $entity, array $params = []): Form
@@ -57,6 +59,11 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             $preRequis->toArray()
         );
         array_unshift($selectPreRequis, [C::VALUE => 0, C::LABEL => 'Aucun']);
+
+        $preRequisIds = [];
+        foreach ($this->featPreRequisService->preRequisForFeat($entity) as $preRequis) {
+            $preRequisIds[] = $preRequis->id;
+        }
 
         $sources       = $this->referenceReader->allReferences();
         $selectSources = array_map(
@@ -100,8 +107,11 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ))
             ->addField(new FillerField())
             ->addField(new SelectField(
-                F::PREREQUISID, L::PREQUISITE, $entity->preRequisId, $selectPreRequis,
-                [C::OUTERDIVCLASS => B::COL_MD_4]
+                F::PREREQUISID,
+                L::PREQUISITE,
+                $preRequisIds,
+                $selectPreRequis,
+                [C::OUTERDIVCLASS => B::COL_MD_4, C::MULTIPLE => true, C::SIZE => 4]
             ))
             ->addField(new CheckboxGroupField(
                 'ability',

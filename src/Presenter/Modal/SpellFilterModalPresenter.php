@@ -32,20 +32,7 @@ class SpellFilterModalPresenter implements ModalPresenter
         $classOptions = '';
         $nbClassOptions = 0;
         $strAllClassSelected = ' '.C::CHECKED;
-        $defaultClassSelection = array_map(fn($case) => $case->value, array_filter(ClassEnum::cases(), fn($case) => !in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])));
-        $selectedClasses = $defaultClassSelection;
-        foreach (ClassEnum::cases() as $case) {
-            if (in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])) {
-                continue;
-            }
-            $value = $case->value;
-            if (in_array($value, $selectedClasses)) {
-                ++$nbClassOptions;
-                $classOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value], true);
-            } else {
-                $classOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value]);
-            }
-        }
+        $this->dealWithSchools($classOptions, $nbClassOptions);
 
         // Liste des écoles
         $schoolOptions = '';
@@ -126,5 +113,27 @@ class SpellFilterModalPresenter implements ModalPresenter
             Template::MAIN_MODAL,
             $attributes
         );
+    }
+
+    private function dealWithSchools(string &$classOptions, int &$nbClassOptions): void
+    {
+        // Liste des classes
+        $defaultClassSelection = array_map(
+            fn($case) => $case->value,
+            array_filter(ClassEnum::cases(), fn($case) => !in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou]))
+        );
+        $selectedClasses = $defaultClassSelection;
+        foreach (ClassEnum::cases() as $case) {
+            if (in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])) {
+                continue;
+            }
+            $value = $case->value;
+            if (in_array($value, $selectedClasses)) {
+                ++$nbClassOptions;
+                $classOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value], true);
+            } else {
+                $classOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value]);
+            }
+        }
     }
 }

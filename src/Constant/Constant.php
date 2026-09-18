@@ -59,6 +59,7 @@ class Constant
     public const EQUIPMENT              = 'equipement';
     public const EXTRA_PREREQUIS        = 'extraprerequis';
     public const FEAT_ABILITY           = 'featAbility';
+    public const FEAT_PREREQUIS         = 'featPreRequis';
     public const FEAT                   = 'feat';
     public const FEATS                  = 'feats';
     public const FEAT_TYPE              = 'featType';
@@ -96,6 +97,7 @@ class Constant
     public const MONSTER_SUB_TYPE       = 'monsterSubType';
     public const MONSTER_TYPE           = 'monsterType';
     public const MONSTER_VISION_TYPE    = 'monsterVisionType';
+    public const MULTIPLE               = 'multiple';
     public const MUSIC                  = 'music';
     public const NAME                   = 'name';
     public const NEXT                   = 'next';
@@ -128,6 +130,7 @@ class Constant
     public const SELECTED               = 'selected';
     public const SHIELD                 = 'shield';
     public const SIMPLE                 = 'simple';
+    public const SIZE                   = 'size';
     public const SKILL                  = 'skill';
     public const SKILLS                 = 'skills';
     public const SLUG                   = 'slug';

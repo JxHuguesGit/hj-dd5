@@ -24,19 +24,30 @@ class SelectField extends FormField
 
     public function renderInput(): string
     {
+        $size = $this->params[C::SIZE] ?? 5;
+
+        $multiple = $this->params[C::MULTIPLE] ?? false;
+        $values = $multiple
+            ? (array) $this->value
+            : [$this->value];
+
         $strOptions = '';
         foreach ($this->options as $option) {
             $strOptions .= Html::getOption(
                 $option[C::LABEL],
                 [C::VALUE => $option[C::VALUE]],
-                $this->value == $option[C::VALUE]
+                in_array($option[C::VALUE], $values)
             );
         }
         $attrs = [
             C::ID    => $this->getId(),
-            C::NAME  => $this->name,
+            C::NAME  => $multiple ? $this->name . '[]' : $this->name,
             C::CSSCLASS => 'form-select',
         ];
+        if ($multiple) {
+            $attrs['multiple'] = 'multiple';
+            $attrs[C::SIZE] = $size;
+        }
         if ($this->readonly) {
             $attrs['readonly'] = 'readonly';
         }

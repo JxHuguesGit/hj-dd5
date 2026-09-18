@@ -16,6 +16,7 @@ class Table
     public const DAMAGETYPE     = 'rpgDamageType';
     public const FEAT           = 'rpgFeat';
     public const FEATABILITY    = 'rpgFeatAbility';
+    public const FEATPREREQUIS  = 'rpgFeatPreRequis';
     public const FEATTYPE       = 'rpgFeatType';
     public const INITIATIVE     = 'rpgInitiative';
     public const ITEM           = 'rpgItem';

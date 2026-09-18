@@ -2,6 +2,7 @@
 namespace src\Controller\Compendium;
 
 use src\Collection\Collection;
+use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Entity\Feat;
 use src\Page\PageForm;
@@ -21,6 +22,7 @@ use src\Service\Reader\OriginReader;
 use src\Service\Reader\PreRequisReader;
 use src\Service\Reader\ReferenceReader;
 use src\Service\Writer\FeatAbilityWriter;
+use src\Service\Writer\FeatPreRequisWriter;
 use src\Service\Writer\FeatWriter;
 use src\Utils\Session;
 
@@ -39,9 +41,11 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         private ReferenceReader $referenceReader,
         private FeatPrerequisService $featPrerequisiteService,
         private PreRequisReader $preRequisReader,
+        private FeatPreRequisWriter $featPreRequisWriter,
         private ToastBuilder $toastBuilder,
-        private TemplateRenderer $templateRenderer
+        private TemplateRenderer $templateRenderer,
     ) {}
+                
 
     protected function handleEditSubmit(int $id): string
     {
@@ -66,13 +70,23 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
 
         $selectedAbilities = new Collection();
         $abilitiesId = $this->getSelectedAbilities($selectedAbilities);
-
         $currentFeatAbilities = $this->featAbilityReader->featAbilitiesByFeatId($id);
         $currentAbilities = new Collection();
         foreach ($currentFeatAbilities as $featAbility) {
             $currentAbilities->add($this->abilityReader->abilityById($featAbility->abilityId));
         }
         if (!$currentAbilities->equals($selectedAbilities)) {
+            $hasChanged = true;
+        }
+
+        $selectedPreRequis = new Collection();
+        $preRequisId = $this->getSelectedPreRequis($selectedPreRequis);
+        $currentFeatPreRequis = $this->featPrerequisiteService->getFeatPreRequisReader()->featPreRequisByFeatId($id);
+        $currentPreRequis = new Collection();
+        foreach ($currentFeatPreRequis as $featPreRequis) {
+            $currentPreRequis->add($this->preRequisReader->preRequisById($featPreRequis->preRequisId));
+        }
+        if (!$currentPreRequis->equals($selectedPreRequis)) {
             $hasChanged = true;
         }
 
@@ -92,6 +106,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         }
 
         $this->featAbilityWriter->replaceFeatAbilities($id, $abilitiesId);
+        $this->featPreRequisWriter->replaceFeatPreRequis($id, $preRequisId);
         $this->featWriter->updatePartial($feat, $changedFields);
         $this->toastContent = $this->toastBuilder->success("Le don <strong>" . $feat->name . "</strong> a été correctement mis à jour.");
         return $this->renderList();
@@ -109,6 +124,25 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
             }
         }
         return $abilitiesId;
+    }
+
+    private function getSelectedPreRequis(Collection $selectedPreRequis): array
+    {
+        $selectedIds = Session::fromPost(F::PREREQUISID, []);
+
+        if (!is_array($selectedIds)) {
+            return [];
+        }
+
+        $selectedIds = array_map('intval', $selectedIds);
+
+        foreach ($this->preRequisReader->allPreRequis() as $preRequis) {
+            if (in_array($preRequis->id, $selectedIds, true)) {
+                $selectedPreRequis->add($preRequis);
+            }
+        }
+
+        return $selectedIds;
     }
 
     protected function handleNewSubmit(): string
@@ -146,7 +180,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 $this->abilityReader,
                 $this->featAbilityReader,
                 $this->referenceReader,
-                $this->preRequisReader
+                $this->preRequisReader,
+                $this->featPrerequisiteService,
             ),
             $this->toastContent
         );
@@ -166,7 +201,8 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
                 $this->abilityReader,
                 $this->featAbilityReader,
                 $this->referenceReader,
-                $this->preRequisReader
+                $this->preRequisReader,
+                $this->featPrerequisiteService,
             ),
             $this->toastContent
         );

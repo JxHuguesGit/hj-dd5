@@ -89,7 +89,6 @@ final class FeatListPresenter
             origins: $this->buildOrigins($feat),
             abilities: $this->buildAbilities($feat),
             prerequisite: $this->formatPrerequisites($preRequis),
-            preRequisId: $preRequis->id ?? 0,
         );
     }
 
@@ -147,7 +146,7 @@ final class FeatListPresenter
             $names[] = $preRequisItem->name;
         }
 
-        return implode(', ', $names);
+        return implode(' ou ', $names);
     }
 
     private function getTypeLabel(?FeatType $featType): string

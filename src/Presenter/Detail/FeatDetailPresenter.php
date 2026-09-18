@@ -2,6 +2,7 @@
 namespace src\Presenter\Detail;
 
 use src\Domain\Entity\Feat;
+use src\Domain\Entity\PreRequis;
 use src\Presenter\ViewModel\FeatDetailView;
 use src\Presenter\ViewModel\FeatPageView;
 use src\Presenter\ViewModel\FeatTypeView;
@@ -75,18 +76,25 @@ class FeatDetailPresenter
 
     private function buildPrerequisite(Feat $feat): ?string
     {
-        $preRequis = $this->featPreRequisService->preRequisForFeatWithType($feat);
+        $result = $this->featPreRequisService->preRequisForFeatWithType($feat);
+        $prerequisites = [];
 
-        if ($preRequis->isEmpty()) {
-            return null;
+        if ($result->featType !== null) {
+            $prerequisites[] = $result->featType->name;
         }
 
-        $names = [];
-
-        foreach ($preRequis as $preRequisItem) {
-            $names[] = $preRequisItem->name;
+        if (!$result->feat->isEmpty()) {
+            $prerequisites[] = implode(
+                ' ou ',
+                array_map(
+                    fn (PreRequis $preRequis) => $preRequis->name,
+                    $result->feat->toArray()
+                )
+            );
         }
 
-        return implode(', ', $names);
+        return empty($prerequisites)
+            ? null
+            : implode(', ', $prerequisites);
     }
 }

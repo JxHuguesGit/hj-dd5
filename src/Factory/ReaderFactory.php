@@ -15,6 +15,7 @@ final class ReaderFactory
 
         C::FEAT                  => [C::READER => 'FeatReader',                 C::REPO => C::FEAT],
         C::FEAT_ABILITY          => [C::READER => 'FeatAbilityReader',          C::REPO => C::FEAT_ABILITY],
+        C::FEAT_PREREQUIS        => [C::READER => 'FeatPreRequisReader',        C::REPO => C::FEAT_PREREQUIS],
         C::FEAT_TYPE             => [C::READER => 'FeatTypeReader',             C::REPO => C::FEAT_TYPE],
         C::PRE_REQUIS            => [C::READER => 'PreRequisReader',            C::REPO => C::PRE_REQUIS],
 

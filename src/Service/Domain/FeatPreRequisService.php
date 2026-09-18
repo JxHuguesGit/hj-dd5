@@ -6,6 +6,8 @@ use src\Domain\Entity\Feat;
 use src\Domain\Entity\FeatType;
 use src\Domain\Entity\PreRequis;
 use src\Domain\Entity\Reference;
+use src\Presenter\ViewModel\FeatPreRequisResult;
+use src\Service\Reader\FeatPreRequisReader;
 use src\Service\Reader\FeatTypeReader;
 use src\Service\Reader\PreRequisReader;
 use src\Service\Reader\ReferenceReader;
@@ -15,8 +17,14 @@ final class FeatPreRequisService
     public function __construct(
         private FeatTypeReader $featTypeReader,
         private PreRequisReader $preRequisReader,
+        private FeatPreRequisReader $featPreRequisReader,
         private ReferenceReader $referenceReader,
     ) {}
+
+    public function getFeatPreRequisReader(): FeatPreRequisReader
+    {
+        return $this->featPreRequisReader;
+    }
 
     public function getReferenceForFeat(Feat $feat): ?Reference
     {
@@ -24,27 +32,37 @@ final class FeatPreRequisService
     }
 
     /**
-     * @return Collection<PreRequis>
+     * @return FeatPreRequisResult
      */
-    public function preRequisForFeatWithType(Feat $feat): Collection
+    public function preRequisForFeatWithType(Feat $feat): FeatPreRequisResult
     {
-        $preRequis = new Collection();
+        $featTypePreRequis = null;
 
         $featType = $this->featTypeReader->featTypeById($feat->featTypeId);
 
-        if ($featType?->preRequisId !== null) {
-            $preRequisItem = $this->preRequisReader->preRequisById(
-                $featType->preRequisId
-            );
-
-            if ($preRequisItem !== null) {
-                $preRequis->add($preRequisItem);
-            }
+        if ($featType !== null) {
+            $featTypePreRequis = $this->preRequisForFeatType($featType);
         }
 
-        if ($feat->preRequisId !== null) {
+        return new FeatPreRequisResult(
+            featType: $featTypePreRequis,
+            feat: $this->preRequisForFeat($feat),
+        );
+    }
+
+    /**
+     * @return Collection<PreRequis>
+     */
+    public function preRequisForFeat(Feat $feat): Collection
+    {
+        $preRequis = new Collection();
+
+        foreach (
+            $this->featPreRequisReader->featPreRequisByFeatId($feat->id)
+            as $featPreRequis
+        ) {
             $preRequisItem = $this->preRequisReader->preRequisById(
-                $feat->preRequisId
+                $featPreRequis->preRequisId
             );
 
             if ($preRequisItem !== null) {
@@ -53,15 +71,6 @@ final class FeatPreRequisService
         }
 
         return $preRequis;
-    }
-
-    public function preRequisForFeat(Feat $feat): ?PreRequis
-    {
-        if ($feat->preRequisId === null) {
-            return null;
-        }
-
-        return $this->preRequisReader->preRequisById($feat->preRequisId);
     }
 
     public function preRequisForFeatType(FeatType $featType): ?PreRequis

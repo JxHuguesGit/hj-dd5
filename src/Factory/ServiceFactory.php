@@ -102,6 +102,7 @@ final class ServiceFactory
         return new FeatPreRequisService(
             $this->readerFactory->featType(),
             $this->readerFactory->preRequis(),
+            $this->readerFactory->featPreRequis(),
             $this->readerFactory->reference()
         );
     }

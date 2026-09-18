@@ -59,9 +59,11 @@ class FeatTableBuilder extends AbstractTableBuilder
         );
         switch ($group->slug) {
             case '-origin':
+            case '-dark-gift':
                 $this->intermediateLabel = L::ORIGINS;
                 break;
             case '-general':
+            case '-epic':
                 $this->intermediateLabel = L::ABILITIES;
                 break;
             default:
@@ -94,7 +96,7 @@ class FeatTableBuilder extends AbstractTableBuilder
         $rowAttributes = [
             C::DATA => [
                 'nom' => strtolower($row->name),
-                'prerequis' => $row->preRequisId,
+                'prerequis' => '',
                 'source' => $row->sourceId
             ]
         ];

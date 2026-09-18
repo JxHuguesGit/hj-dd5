@@ -24,10 +24,9 @@ class FeatRouter
             // --- Vérification de l'existence ---
             $featReader = $this->factory->getReaderFactory()->feat();
             $feat = $featReader->featBySlug($slug);
-            if ($feat === null) {
-                return null;
+            if ($feat !== null) {
+                return $this->factory->createDetailController($feat);
             }
-            return $this->factory->createDetailController($feat);
         }
 
         return null;

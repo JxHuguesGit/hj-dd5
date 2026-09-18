@@ -12,7 +12,6 @@ use src\Utils\Utils;
  * @property int $wpPostId
  * @property ?string $slug
  * @property int $sourceId
- * @property ?int $preRequisId
  * @property ?string $description
  */
 final class Feat extends Entity
@@ -27,7 +26,6 @@ final class Feat extends Entity
         F::FEATTYPEID,
         F::WPPOSTID,
         F::SOURCEID,
-        F::PREREQUISID,
     ];
 
     public const RELATION_FIELDS = [
@@ -40,7 +38,6 @@ final class Feat extends Entity
         F::FEATTYPEID  => FieldType::INTPOSITIVE,
         F::WPPOSTID    => FieldType::INTNULLABLE,
         F::SOURCEID    => FieldType::INTPOSITIVE,
-        F::PREREQUISID => FieldType::INTNULLABLE,
 
         F::NAME        => FieldType::STRINGNULLABLE,
         F::SLUG        => FieldType::STRINGNULLABLE,
@@ -51,7 +48,6 @@ final class Feat extends Entity
         F::FEATTYPEID,
         F::WPPOSTID,
         F::SOURCEID,
-        F::PREREQUISID,
     ];
 
     /**
@@ -60,10 +56,9 @@ final class Feat extends Entity
     public function stringify(): string
     {
         return sprintf(
-            "%s - Slug : %s - (FeatType: %s, PostID: %d)",
+            "%s - Slug : %s - (PostID: %d)",
             $this->name,
-            $this->getSlug(),
-            $this->featTypeId,
+            $this->slug,
             $this->wpPostId,
         );
     }
