@@ -85,7 +85,6 @@ final class Template
     public const FORM_CARD           = self::FORM_PATH.'formCard.tpl';
     public const FILTER_MONSTER      = self::FORM_PATH.'monsterFilter.tpl';
     public const FILTER_SPELL        = self::FORM_PATH.'spellFilter.tpl';
-    public const FORM_FEAT           = self::FORM_PATH.'RpgFeat.tpl';
     public const FORM_MONSTERABILITY = self::FORM_PATH.'RpgMonster.tpl';
     public const FORM_MAP_EDIT       = self::FORM_PATH.'formMap.tpl';
 

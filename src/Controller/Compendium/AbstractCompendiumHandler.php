@@ -17,8 +17,8 @@ abstract class AbstractCompendiumHandler
 
         return match (true) {
             $action === C::EDIT && $slug !== '' => $this->renderEdit((int)$slug),
-        //TODO : $action === C::NEW => $this->renderCreate(new Item()),
-            default                                    => $this->renderList(),
+            $action === C::NEW && $slug !== ''  => $this->renderNew(),
+            default                             => $this->renderList(),
         };
     }
 
@@ -26,9 +26,33 @@ abstract class AbstractCompendiumHandler
     {
         return match ($action) {
             C::EDIT => $this->handleEditSubmit((int)$slug),
-        //TODO : C::NEW  => $this->handleNewSubmit(),
-            default        => $this->renderList(),
+            C::NEW  => $this->handleNewSubmit(),
+            default => $this->renderList(),
         };
     }
 
+    protected function renderEdit(int $slug): string
+    {
+        return '';
+    }
+
+    protected function renderNew(): string
+    {
+        return '';
+    }
+
+    protected function renderList(): string
+    {
+        return '';
+    }
+
+    protected function handleEditSubmit(int $slug): string
+    {
+        return '';
+    }
+
+    protected function handleNewSubmit(): string
+    {
+        return '';
+    }
 }

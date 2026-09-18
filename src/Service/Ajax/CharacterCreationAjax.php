@@ -46,9 +46,3 @@ class CharacterCreationAjax
     }
 
 }
-/*
-        case 'feat' :
-            $obj = new RepositoryRpgFeat(Entity::$qb, Entity::$qe);
-            $origin = $obj->find($id);
-            $returned = $origin->getController()->getDescription();
-*/

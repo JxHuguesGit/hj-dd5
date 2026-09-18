@@ -13,14 +13,10 @@ use src\Presenter\TableBuilder\FeatTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Domain\FeatPrerequisService;
-use src\Service\Domain\WpPostService;
 use src\Service\Reader\AbilityReader;
 use src\Service\Reader\FeatAbilityReader;
 use src\Service\Reader\FeatReader;
-use src\Service\Reader\FeatTypeReader;
-use src\Service\Reader\OriginReader;
 use src\Service\Reader\PreRequisReader;
-use src\Service\Reader\ReferenceReader;
 use src\Service\Writer\FeatAbilityWriter;
 use src\Service\Writer\FeatPreRequisWriter;
 use src\Service\Writer\FeatWriter;
@@ -34,16 +30,15 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         private FeatWriter $featWriter,
         private FeatAbilityWriter $featAbilityWriter,
         private FeatReader $featReader,
-        private FeatTypeReader $featTypeReader,
-        private OriginReader $originReader,
         private FeatAbilityReader $featAbilityReader,
         private AbilityReader $abilityReader,
-        private ReferenceReader $referenceReader,
         private FeatPrerequisService $featPrerequisiteService,
         private PreRequisReader $preRequisReader,
         private FeatPreRequisWriter $featPreRequisWriter,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer,
+        private FeatFormBuilder $featFormBuilder,
+        private FeatListPresenter $featListPresenter
     ) {}
                 
 
@@ -174,15 +169,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
     {
         $page = new PageForm(
             $this->templateRenderer,
-            new FeatFormBuilder(
-                new WpPostService(),
-                $this->featTypeReader,
-                $this->abilityReader,
-                $this->featAbilityReader,
-                $this->referenceReader,
-                $this->preRequisReader,
-                $this->featPrerequisiteService,
-            ),
+            $this->featFormBuilder,
             $this->toastContent
         );
 
@@ -195,15 +182,7 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
 
         $page = new PageForm(
             $this->templateRenderer,
-            new FeatFormBuilder(
-                new WpPostService(),
-                $this->featTypeReader,
-                $this->abilityReader,
-                $this->featAbilityReader,
-                $this->referenceReader,
-                $this->preRequisReader,
-                $this->featPrerequisiteService,
-            ),
+            $this->featFormBuilder,
             $this->toastContent
         );
 
@@ -212,20 +191,14 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
 
     protected function renderList(): string
     {
-        $feats     = $this->featReader->allFeatsWithRelations();
-        $presenter = new FeatListPresenter(
-            $this->originReader,
-            $this->featPrerequisiteService,
-            $this->featTypeReader,
-            $this->referenceReader,
-            $this->featAbilityReader,
-            $this->abilityReader
-        );
-        $presentContent = $presenter->present($feats);
-        $page           = new PageList(
+        $feats = $this->featReader->allFeatsWithRelations();
+        $presentContent = $this->featListPresenter->present($feats);
+
+        $page = new PageList(
             $this->templateRenderer,
             new FeatTableBuilder(true)
         );
+
         return $page->renderAdmin('', $presentContent, $this->toastContent);
     }
 }

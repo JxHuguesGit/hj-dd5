@@ -375,6 +375,12 @@
         background: $color-au;
         color: $color-text;
     }
+
+    &.source-efa::after {
+        content: "EFA";
+        background: $color-efa;
+        color: $color-text;
+    }
 }
 .type-filters {
     .badge {
@@ -399,6 +405,10 @@
         }
         &[data-source="au"] {
             background: $color-au;
+            color: $color-text;
+        }
+        &[data-source="efa"] {
+            background: $color-efa;
             color: $color-text;
         }
     }

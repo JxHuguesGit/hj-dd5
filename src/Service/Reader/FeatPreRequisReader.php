@@ -15,7 +15,7 @@ final class FeatPreRequisReader
     /**
      * @return Collection<FeatPreRequis>
      */
-    public function featPreRequisByFeatId(int $featId): Collection
+    public function featPreRequisByFeatId(?int $featId): Collection
     {
         $criteria         = new FeatPreRequisCriteria();
         $criteria->featId = $featId;

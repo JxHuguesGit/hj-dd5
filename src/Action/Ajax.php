@@ -33,7 +33,6 @@ class Ajax
         $actions = [
             'downloadFile'    => fn()    => DownloadFile::start(),
             'loadCasteDetail' => fn() => LoadCasteDetail::build(),
-            'modalFeatCard'   => fn()   => FeatCard::build(),
             'modalSpellCard'  => fn()  => SpellCard::build(),
         ];
         try {
