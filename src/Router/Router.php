@@ -5,44 +5,14 @@ use src\Collection\Collection;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicHome;
 use src\Controller\Public\PublicNotFound;
-use src\Factory\Controller\FeatControllerFactory;
-use src\Factory\Controller\InitiativeControllerFactory;
-use src\Factory\Controller\ItemControllerFactory;
-use src\Factory\Controller\MapControllerFactory;
-use src\Factory\Controller\OriginControllerFactory;
-use src\Factory\Controller\PublicControllerFactory;
-use src\Factory\Controller\SkillControllerFactory;
-use src\Factory\Controller\SpecieControllerFactory;
-use src\Factory\Controller\SpellControllerFactory;
-use src\Factory\ReaderFactory;
-use src\Factory\ServiceFactory;
-use src\Model\PageRegistry;
-use src\Page\Renderer\PageNotFound;
-use src\Presenter\MenuPresenter;
-use src\Renderer\TemplateRenderer;
 use src\Utils\Session;
 
 class Router
 {
-    private Collection $handlers;
-
     public function __construct(
-        private ReaderFactory $readerFactory,
-        private ServiceFactory $serviceFactory,
-        private TemplateRenderer $renderer
-    ) {
-        $this->handlers = new Collection([
-            new OriginRouter(new OriginControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new SpecieRouter(new SpecieControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new SpellRouter(new SpellControllerFactory($this->serviceFactory, $this->renderer)),
-            new SkillRouter(new SkillControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new FeatRouter(new FeatControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new ItemRouter(new ItemControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new MapRouter(new MapControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new RegistryRouter(new PublicControllerFactory($this->readerFactory, $this->serviceFactory, $this->renderer)),
-            new InitiativeRouter(new InitiativeControllerFactory($this->readerFactory, $this->renderer)),
-        ]);
-    }
+        private Collection $handlers,
+        private PublicNotFound $notFound
+    ) {}
 
     public function fromHome(string $path): ?PublicBase
     {
@@ -82,10 +52,6 @@ class Router
             }
         }
 
-        return $this->fromHome($path)
-            ?? new PublicNotFound(
-                new PageNotFound($this->renderer),
-                new MenuPresenter(PageRegistry::getInstance()->all(), '')
-            );
+        return $this->fromHome($path) ?? $this->notFound;
     }
 }
