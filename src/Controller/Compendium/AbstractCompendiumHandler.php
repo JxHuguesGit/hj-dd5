@@ -17,7 +17,7 @@ abstract class AbstractCompendiumHandler
 
         return match (true) {
             $action === C::EDIT && $slug !== '' => $this->renderEdit((int)$slug),
-            $action === C::NEW && $slug !== ''  => $this->renderNew(),
+            $action === C::NEW                  => $this->renderEdit(),
             default                             => $this->renderList(),
         };
     }
@@ -31,7 +31,7 @@ abstract class AbstractCompendiumHandler
         };
     }
 
-    protected function renderEdit(int $slug): string
+    protected function renderEdit(?int $slug = 0): string
     {
         return '';
     }

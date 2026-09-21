@@ -176,9 +176,13 @@ class FeatCompendiumHandler extends AbstractCompendiumHandler implements Compend
         return $page->renderAdmin('', new Feat());
     }
 
-    protected function renderEdit(int $slug): string
+    protected function renderEdit(?int $slug = 0): string
     {
-        $feat = $this->featReader->featById($slug);
+        if ($slug===0) {
+            $feat = new Feat();
+        } else {
+            $feat = $this->featReader->featById($slug);
+        }
 
         $page = new PageForm(
             $this->templateRenderer,
