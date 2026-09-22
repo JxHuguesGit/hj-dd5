@@ -6,6 +6,18 @@ define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
 
+if (false) {
+    // Activer l'affichage des erreurs
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    // Pour voir la stack complète lors d'une exception
+    set_exception_handler(function ($e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+        echo $e->getTraceAsString();
+    });
+}
+
 /**
  * Plugin Name: HJ - DD5
  * Description: DD5
@@ -16,29 +28,30 @@ class DD5
 {
     public function __construct()
     {
-        add_filter('template_include', array($this,'templateLoader'));
+        add_filter('template_include', [$this, 'templateLoader']);
     }
 
     public function templateLoader()
     {
         wp_enqueue_script('jquery');
-        return PLUGIN_PATH.'templates/base.php';
+        return PLUGIN_PATH . 'templates/base.php';
     }
 }
 $objDD5 = new DD5();
 
-set_exception_handler(function($e) {
+set_exception_handler(function ($e) {
     ExceptionRenderer::handle($e);
 });
 
 spl_autoload_register(function ($className) {
     // Définir le répertoire principal du plugin
     $prefix = 'src\\';
-    $baseDir = plugin_dir_path(__FILE__) . 'src/';
-
-    if (!str_starts_with($className, $prefix)) {
+    // Vérifie que la classe appartient à ton namespace
+    if (strncmp($prefix, $className, strlen($prefix)) !== 0) {
         return;
     }
+    // Base directory
+    $baseDir = plugin_dir_path(__FILE__) . 'src/';
 
     // Supprime le préfixe src\
     $relativeClass = substr($className, strlen($prefix));
@@ -46,25 +59,32 @@ spl_autoload_register(function ($className) {
     // Namespace → chemin de fichier
     $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
 
-    if (file_exists($file)) {
+    // Normalisation du chemin (important sous Windows)
+    $file = realpath($file) ?: $file;
+
+    if (is_readable($file)) {
         require_once $file;
     }
 });
+// Préchargement des entités Domain pour éviter les erreurs de covariance PHP 8+
+foreach (glob(__DIR__ . '/src/Domain/Entity/*.php') as $file) {
+    require_once $file;
+}
 
 function dd5Menu()
 {
     $urlRoot = 'hj-dd5/admin_manage.php';
     if (function_exists('add_menu_page')) {
         $uploadFiles = 'upload_files';
-        $pluginName = 'DD5';
-        $urlIcon = plugins_url('/hj-dd5/assets/images/favicon-24x24.svg');
+        $pluginName  = 'DD5';
+        $urlIcon     = plugins_url('/hj-dd5/assets/images/favicon-24x24.svg');
         add_menu_page($pluginName, $pluginName, $uploadFiles, $urlRoot, '', $urlIcon);
         if (function_exists('add_submenu_page')) {
-            $arrUrlSubMenu = array(
-                'home'     => 'Accueil',
-            );
+            $arrUrlSubMenu = [
+                'home' => 'Accueil',
+            ];
             foreach ($arrUrlSubMenu as $key => $value) {
-                $urlSubMenu = $urlRoot.'&amp;onglet='.$key;
+                $urlSubMenu = $urlRoot . '&amp;onglet=' . $key;
                 add_submenu_page($urlRoot, $value, $value, $uploadFiles, $urlSubMenu, $key);
             }
         }
@@ -83,8 +103,8 @@ function dealWithAjaxCallback()
         // En cas d'erreur, on retourne un message formaté
         wp_send_json_error([
             'message' => $e->getMessage(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
+            'file'    => $e->getFile(),
+            'line'    => $e->getLine(),
         ]);
     }
 }
@@ -102,6 +122,6 @@ function redirect_if_not_logged_in() {
 add_action('init', 'redirect_if_not_logged_in');
 */
 
-if ( file_exists( __DIR__ . '/acf-stubs.php' ) ) {
+if (file_exists(__DIR__ . '/acf-stubs.php')) {
     require_once __DIR__ . '/acf-stubs.php';
 }

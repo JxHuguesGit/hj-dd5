@@ -36,11 +36,6 @@ abstract class AbstractCompendiumHandler
         return '';
     }
 
-    protected function renderNew(): string
-    {
-        return '';
-    }
-
     protected function renderList(): string
     {
         return '';
