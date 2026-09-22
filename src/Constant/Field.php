@@ -14,6 +14,7 @@ class Field
     public const CHASCORE    = 'chaScore';
     public const CODE        = 'code';
     public const COLUMN      = 'column';
+    public const COMPONENTS  = 'components';
     public const CONSCORE    = 'conScore';
     public const SCORECR     = 'cr';
     public const CREATESTEP  = 'createStep';
@@ -38,6 +39,7 @@ class Field
     public const INTSCORE    = 'intScore';
     public const LASTUPDATE  = 'lastUpdate';
     public const LEGENDARY   = 'legendary';
+    public const LEVEL       = 'level';
     public const LOCKED      = 'locked';
     public const MAPCOLUMNS  = 'mapColumns';
     public const MAPROWS     = 'mapRows';
@@ -59,6 +61,7 @@ class Field
     public const SLUG        = 'slug';
     public const SOURCE      = 'source';
     public const SPEED       = 'speed';
+    public const SPELLCLASSES = 'spellClasses';
     public const STHDISADV   = 'stealthDisadvantage';
     public const STRPENALTY  = 'strengthPenalty';
     public const STRSCORE    = 'strScore';
@@ -129,6 +132,7 @@ class Field
     public const MAPROW       = 'mapRow';
     public const MAPTOKENID   = 'mapTokenId';
     public const MSTPROFID    = 'masteryProficiencyId';
+    public const MATERIALCOMPID = 'materialComponentId';
     public const MONSTERID    = 'monsterId';
     public const MSTSSTYPID   = 'monsterSubTypeId';
     public const MSTTYPEID    = 'monstreTypeId';
@@ -139,6 +143,7 @@ class Field
     public const POWERID      = 'powerId';
     public const PREREQUISID  = 'preRequisId';
     public const REFID        = 'referenceId';
+    public const SCHOOLID     = 'schoolId';
     public const SKILLID      = 'skillId';
     public const SOURCEID     = 'sourceId';
     public const SPECIESID    = 'speciesId';

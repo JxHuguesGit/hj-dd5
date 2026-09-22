@@ -39,6 +39,7 @@ class Language
     public const COMPENDIUM      = 'Compendium';
     public const SKILLS          = 'Compétences';
     public const COMPONENTS      = 'Composantes';
+    public const MATERIALCOMP    = 'Composante matérielle';
     public const CONSTITUTION    = 'Constitution';
     public const DAMAGES         = 'Dégâts';
     public const DISADVANTAGE    = 'Désavantage';
