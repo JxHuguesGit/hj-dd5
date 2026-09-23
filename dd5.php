@@ -6,17 +6,6 @@ define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
 
-if (false) {
-    // Activer l'affichage des erreurs
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-    // Pour voir la stack complète lors d'une exception
-    set_exception_handler(function ($e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-        echo $e->getTraceAsString();
-    });
-}
 
 /**
  * Plugin Name: HJ - DD5
