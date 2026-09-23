@@ -3,12 +3,15 @@ namespace src\Constant;
 
 class Table
 {
+    public const LEFTJOIN       = 'LEFT JOIN ';
+
     public const ABILITY        = 'rpgAbility';
     public const ALIGNMENT      = 'rpgAlignement';
     public const AMMOTYPE       = 'rpgAmmunitionType';
     public const ARMOR          = 'rpgArmor';
     public const CHARACTER      = 'rpgCharacter';
     public const CHARACTERSKILL = 'rpgCharacterSkill';
+    public const RPGCLASSE      = 'rpgClasse';
     public const COMBAT         = 'rpgCombat';
     public const COMBAT_PARTICIPANT = 'rpgCombatParticipant';
     public const CONDITION      = 'rpgCondition';
@@ -25,6 +28,7 @@ class Table
     public const MAPFOG         = 'rpgMapFog';
     public const MAPTOKEN       = 'rpgMapToken';
     public const MSTPROFCY      = 'rpgMasteryProficiency';
+    public const MATERIALCOMPONENT = 'rpgMaterialComponent';
     public const MONSTER        = 'rpgMonster';
     public const MSTABILITY     = 'rpgMonsterAbility';
     public const MSTCONDITION   = 'rpgMonsterCondition';
@@ -47,6 +51,11 @@ class Table
     public const SPECIEPOWER    = 'rpgSpeciesPower';
     public const SPEEDTYPE      = 'rpgSpeedType';
     public const SPELL          = 'rpgSpell';
+    public const SPELLCASTINGTIME = 'rpgSpellCastingTime';
+    public const SPELLCLASSE    = 'rpgSpellClasse';
+    public const SPELLDURATION  = 'rpgSpellDuration';
+    public const SPELLRANGE     = 'rpgSpellRange';
+    public const SPELLSCHOOL    = 'rpgSpellSchool';
     public const TOKEN          = 'rpgToken';
     public const TOOL           = 'rpgTool';
     public const VISIONTYPE     = 'rpgVisionType';

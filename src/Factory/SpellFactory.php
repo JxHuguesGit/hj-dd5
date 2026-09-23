@@ -1,42 +1,22 @@
 <?php
 namespace src\Factory;
 
-use src\Constant\Constant as C;
-use src\Constant\Field as F;
 use src\Domain\Entity\Spell;
+use src\Service\Reader\SpellReader;
 
 class SpellFactory
 {
-    public static function fromWpPost(\WP_Post $post): Spell
+    public static function fromWpPost(
+        SpellReader $spellReader,
+        \WP_Post $post
+    ): Spell
     {
-        return new Spell([
-            C::ID          => $post->ID,
-            C::NAME        => $post->post_title,
-            C::SLUG        => $post->post_name,
-            C::CONTENT     => apply_filters('the_content', $post->post_content),
-            'tempsIncantation'        => get_field('temps_dincantation', $post->ID),
-            'portee'                  => get_field('portee', $post->ID),
-            'duree'                   => get_field('duree', $post->ID),
-            F::NIVEAU             => get_field(F::NIVEAU, $post->ID),
-            F::SCHOOL             => get_field(F::SCHOOL, $post->ID),
-            F::CLASSES            => get_field(F::CLASSES, $post->ID),
-            F::WPPOSTID    => $post->ID,
-            F::SOURCEID    => 2,
-            'composantes'             => get_field('composantes', $post->ID),
-            'composanteMaterielle'    => get_field('composante_materielle', $post->ID),
-            'concentration'           => !empty(get_field('concentration', $post->ID)),
-            'rituel'                  => !empty(get_field('rituel', $post->ID)),
-            'typeAmelioration'        => self::sanitizeImprovementType(get_field('type_damelioration', $post->ID)),
-            'ameliorationDescription' => get_field('amelioration_description', $post->ID)
-        ]);
-    }
+        $spell = $spellReader->spellByWpPostId($post->ID);
+        // Ajout des éléments relatifs au post WordPress
+        $spell->name = $post->post_title;
+        $spell->slug = $post->post_name;
+        $spell->description = apply_filters('the_content', $post->post_content);
 
-    private static function sanitizeImprovementType($acfField): ?string
-    {
-        if (empty($acfField)) {
-            return null;
-        }
-        // ACF peut parfois renvoyer un tableau
-        return is_array($acfField) ? $acfField[0] : $acfField;
+        return $spell;
     }
 }

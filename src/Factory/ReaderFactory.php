@@ -21,6 +21,7 @@ final class ReaderFactory
 
         C::ITEM                  => [C::READER => 'ItemReader',                 C::REPO => C::ITEM],
         C::LANGUAGE              => [C::READER => 'LanguageReader',             C::REPO => C::LANGUAGE],
+        C::CLASSE                => [C::READER => 'ClasseReader',               C::REPO => C::CLASSE],
 
         C::CHARACTER             => [C::READER => 'CharacterReader',            C::REPO => C::CHARACTER],
         C::INITIATIVE            => [C::READER => 'InitiativeReader',           C::REPO => C::INITIATIVE],
@@ -51,7 +52,9 @@ final class ReaderFactory
         C::SPECIES               => [C::READER => 'SpecieReader',               C::REPO => C::SPECIES],
         C::SPECIE_POWER          => [C::READER => 'SpeciePowerReader',          C::REPO => C::SPECIE_POWER],
         C::SPEED_TYPE            => [C::READER => 'SpeedTypeReader',            C::REPO => C::SPEED_TYPE],
+
         C::SPELL                 => [C::READER => 'SpellReader',                C::REPO => C::SPELL],
+        C::SPELLSCHOOL           => [C::READER => 'SpellSchoolReader',          C::REPO => C::SPELLSCHOOL],
 
         C::TOOL                  => [C::READER => 'ToolReader',                 C::REPO => C::TOOL],
         C::VISION_TYPE           => [C::READER => 'VisionTypeReader',           C::REPO => C::VISION_TYPE],

@@ -2,6 +2,7 @@
 namespace src\Query;
 
 use src\Constant\Constant as C;
+use src\Domain\Criteria\Attributes\Compare;
 
 class QueryBuilder
 {
@@ -106,8 +107,18 @@ class QueryBuilder
                 $field = "`{$cond['field']}`";
             }
 
-            if (in_array($cond['operand'], ['IS NULL', 'IS NOT NULL'], true)) {
+            if (in_array($cond['operand'], [Compare::IS_NULL, Compare::IS_NOT_NULL], true)) {
                 $this->strWhere .= " AND $field {$cond['operand']}";
+            } elseif ($cond['operand'] === Compare::IN) {
+                $values = $cond[C::VALUE];
+                if (empty($values)) {
+                    continue;
+                }
+                $placeholders = implode(', ', array_fill(0, count($values), '%s'));
+                $this->strWhere .= " AND $field IN ($placeholders)";
+                foreach ($values as $value) {
+                    $this->params[] = $value;
+                }
             } else {
                 $this->strWhere .= " AND $field {$cond['operand']} %s";
                 $this->params[] = $cond[C::VALUE];
@@ -118,7 +129,7 @@ class QueryBuilder
 
     public function joinTable(string $strJoin): self
     {
-        $this->strJoin = $strJoin;
+        $this->strJoin .= $strJoin;
         return $this;
     }
 

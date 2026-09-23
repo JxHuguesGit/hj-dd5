@@ -97,16 +97,14 @@ final class PublicControllerFactory
 
             C::SPELLS    => new PublicSpells(
                 $this->serviceFactory->spell(),
-                new SpellListPresenter(
-                    $this->readerFactory->reference(),
-                ),
-                new PageList(
-                    $this->renderer,
-                    new SpellCardContentBuilder()
-                ),
+                new SpellListPresenter(),
+                new SpellCardContentBuilder(),
+                $this->renderer,
                 new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
                 new SpellFilterModalPresenter(
                     $this->readerFactory->reference(),
+                    $this->readerFactory->spellSchool(),
+                    $this->readerFactory->classe(),
                     $this->renderer
                 )
             ),

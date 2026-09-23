@@ -1,69 +1,90 @@
 <?php
 namespace src\Service\Domain;
 
-use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Domain\Criteria\SpellCriteria;
 use src\Domain\Entity\Spell;
 use src\Domain\Result\SpellResult;
-use src\Factory\SpellFactory;
+use src\Service\Reader\SpellReader;
 
 final class SpellService
 {
     public function __construct(
-        private WpPostService $wpService,
+        private SpellReader $spellReader,
     ) {}
 
-    public function allSpells(array $criteria = []): SpellResult
+    public function allSpells(?SpellCriteria $criteria = null): SpellResult
     {
-        $collection = new Collection();
-
-        $args = array_merge(
-            [
-                'post_type'      => 'post',
-                'posts_per_page' => SpellCriteria::DEFAULT_PAGE_SIZE,
-                'category_name'  => 'sort',
-                'orderby'        => C::TITLE,
-                'order'          => C::ASC,
-            ],
-            $criteria
-        );
-
-        $query = $this->wpService->query($args);
-        if ($query->have_posts()) {
-            while ($query->have_posts()) {
-                $query->the_post();
-                $post     = $this->wpService->getPost();
-                $rpgSpell = SpellFactory::fromWpPost($post);
-                $collection->add($rpgSpell);
-            }
-            $this->wpService->resetPostdata();
+        if (!$criteria) {
+            $criteria = new SpellCriteria();
+        }
+        $criteria->limit = SpellCriteria::DEFAULT_PAGE_SIZE + 1;
+        $spells = $this->spellReader->allSpells($criteria);
+        $hasMore = $spells->count() > SpellCriteria::DEFAULT_PAGE_SIZE;
+        if ($hasMore) {
+            $spells = $spells->slice(0, SpellCriteria::DEFAULT_PAGE_SIZE);
         }
 
         return new SpellResult(
-            collection: $collection,
-            foundPosts: $query->found_posts,
-            maxNumPages: $query->max_num_pages,
-            currentPage: $args['paged'] ?? 1,
+            collection: $spells,
+            hasMore: $hasMore,
         );
+
     }
 
     public function spellBySlug(string $slug): ?Spell
     {
-        $spellResult = $this->allSpells([C::NAME => $slug]);
-        return ($spellResult->collection)->first();
+        $spell = $this->spellReader->spellBySlug($slug);
+
+        if ($spell === null) {
+            return null;
+        }
+
+        $spell->classes = $this->spellReader->classesBySpellId($spell->id);
+
+        return $spell;
     }
 
     public function getPreviousAndNext(?Spell $spell): array
     {
-        $allSpells = $this->allSpells(['posts_per_page' => -1]);
-        $idx       = $allSpells->collection->findKey(fn($post) => $post->slug === $spell->slug);
+        if ($spell === null) {
+            return [
+                C::PREV => null,
+                C::NEXT => null,
+            ];
+        }
 
-        $idxPrev = $idx == 0 ? $allSpells->collection->count() : $idx - 1;
-        $idxNext = $idx == $allSpells->collection->count() ? 0 : $idx + 1;
+        $criteria = new SpellCriteria();
+        $criteria->limit = -1;
 
-        $prev = $allSpells->collection->slice($idxPrev, 1)->first();
-        $next = $allSpells->collection->slice($idxNext, 1)->first();
-        return [C::PREV => $prev, C::NEXT => $next];
+        $allSpells = $this->spellReader->allSpells($criteria);
+
+        $idx = $allSpells->findKey(
+            fn(Spell $item) => $item->slug === $spell->slug
+        );
+
+        if ($idx === null) {
+            return [
+                C::PREV => null,
+                C::NEXT => null,
+            ];
+        }
+
+        $count = $allSpells->count();
+
+        $prev = $allSpells
+            ->slice(($idx - 1 + $count) % $count, 1)
+            ->first();
+        $prev->classes = [];
+
+        $next = $allSpells
+            ->slice(($idx + 1) % $count, 1)
+            ->first();
+        $next->classes = [];
+
+        return [
+            C::PREV => $prev,
+            C::NEXT => $next,
+        ];
     }
 }

@@ -138,6 +138,7 @@ class Constant
     public const SPECIES                = 'species';
     public const SPECIE_POWER           = 'speciePower';
     public const SPELL                  = 'spell';
+    public const SPELLSCHOOL            = 'spellSchool';
     public const SPELLLOADMORE          = 'spell-load-more';
     public const SPELL_FILTER           = 'spellFilter';
     public const SPELLFILTER            = 'spell-filter';

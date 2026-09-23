@@ -14,8 +14,9 @@ final class AdminCompendiumContent implements AdminContentInterface
     public function getContent(): string
     {
         return match ($this->currentId) {
+            C::FEATS  => $this->compendiumFactory->feat()->render(),
             C::SKILLS => $this->compendiumFactory->skill()->render(),
-            C::FEATS => $this->compendiumFactory->feat()->render(),
+            C::SPELLS => $this->compendiumFactory->spell()->render(),
             default => 'Hello Compendium !',
         };
     }

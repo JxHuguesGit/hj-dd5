@@ -20,7 +20,7 @@ function ajaxActionClick(obj, e) {
 
 function dispatchAjaxAction(action, obj, e) {
     const handlers = {
-        loadMoreSpells: () => handleLoadMoreSpells('append', e),
+        loadMoreSpells: () => handleLoadMoreSpells('append', obj, e),
         loadMoreMonsters: () => handleLoadMoreMonsters('append', e),
         toggleCheckbox: () => handleToggleCheckbox(obj),
         collapse: () => handleCollapse(obj),
@@ -119,7 +119,7 @@ function handleOpenModal(obj, e) {
     openModal(target);
     $('#'+target+' button.btn-primary').unbind().on('click', function() {
         if (target=='spellFilter') {
-            handleLoadMoreSpells('replace');
+            handleLoadMoreSpells('replace', obj);
         }
         closeModal(target);
     });
@@ -267,8 +267,8 @@ function handleCollapse(obj) {
 
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des sorts.
 // Présent côté admin et public.
-function handleLoadMoreSpells(type, e) {
-    const page = $('.spell-grid .spell-card').length / 12 + (type == 'append' ? 1 : 0);
+function handleLoadMoreSpells(type, obj, e) {
+    const page = obj.attr('data-next-page');
     const data = {
         'action': 'dealWithAjax',
         'ajaxAction': 'loadMoreSpells',
@@ -296,8 +296,12 @@ function handleLoadMoreSpells(type, e) {
                 }
 
                 const hasMore = obj.data.hasMore;
+                console.log(hasMore);
                 if (hasMore) {
-                    $('.spell-load-more').show();
+                    const $loadMore = $('.spell-load-more');
+                    $loadMore
+                        .attr('data-next-page', obj.data.nextPage)
+                        .show();
                 } else {
                     $('.spell-load-more').hide();
                 }

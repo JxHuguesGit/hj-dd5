@@ -31,9 +31,9 @@ class Ajax
         $mapId = (int)Session::fromPost(C::MAPID);
 
         $actions = [
-            'downloadFile'    => fn()    => DownloadFile::start(),
+            'downloadFile'    => fn() => DownloadFile::start(),
             'loadCasteDetail' => fn() => LoadCasteDetail::build(),
-            'modalSpellCard'  => fn()  => SpellCard::build(),
+            'modalSpellCard'  => fn() => SpellCard::build(),
         ];
         try {
             if (in_array(

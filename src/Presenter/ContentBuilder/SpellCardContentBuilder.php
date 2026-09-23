@@ -7,13 +7,14 @@ use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Icon;
 use src\Constant\Language as L;
+use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ViewModel\SpellRow;
 use src\Service\Formatter\SpellFormatter;
 use src\Utils\Html;
 
-final class SpellCardContentBuilder implements ContentBuilderInterface
+final class SpellCardContentBuilder
 {
-    public function build(object $rows): string
+    public function build(object $rows, bool $hasMore = false): string
     {
         $contentFilter = Html::getDiv(
             Html::getDiv(
@@ -41,18 +42,22 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
             [C::CSSCLASS => B::DATA_GRID . L::SPACE . B::SPELL_GRID]
         );
 
-        $strIcon = Html::getIcon(Icon::CIRCLEPLUS);
-
-        $contentSpellList .= Html::getDiv(
-            $strIcon,
-            [
-                C::CSSCLASS => C::AJAXACTION . L::SPACE . C::SPELLLOADMORE,
-                C::DATA     => [
-                    C::TRIGGER => C::CLICK,
-                    C::ACTION  => C::LOADMORESPELLS,
-                ],
-            ]
-        );
+        if ($hasMore) {
+            $strIcon = Html::getIcon(Icon::CIRCLEPLUS);
+            $nextPage = 2;
+            $contentSpellList .= Html::getDiv(
+                $strIcon,
+                [
+                    C::CSSCLASS => C::AJAXACTION . L::SPACE . C::SPELLLOADMORE,
+                    C::DATA     => [
+                        C::TRIGGER => C::CLICK,
+                        C::ACTION  => C::LOADMORESPELLS,
+                        'next-page' => $nextPage,
+                        'per-page' => SpellCriteria::DEFAULT_PAGE_SIZE,
+                    ],
+                ]
+            );
+        }
 
         return Html::getDiv(
             $contentFilter . $contentSpellList,
@@ -84,7 +89,7 @@ final class SpellCardContentBuilder implements ContentBuilderInterface
 
         $content .= $this->renderInfo(
             L::RANGE,
-            SpellFormatter::formatPortee($row->portee)
+            $row->portee
         );
 
         $content .= $this->renderInfo(

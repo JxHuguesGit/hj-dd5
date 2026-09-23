@@ -13,12 +13,12 @@ class SpellCompendiumFactory extends AbstractCompendiumFactory
         $referenceReader = $this->readerFactory->reference();
         return new SpellCompendiumHandler(
             $this->serviceFactory->spell(),
-            new SpellListPresenter(
-                $referenceReader
-            ),
+            new SpellListPresenter(),
             $this->page(new SpellTableBuilder()),
             new SpellFilterModalPresenter(
                 $referenceReader,
+                $this->readerFactory->spellSchool(),
+                $this->readerFactory->classe(),
                 $this->renderer
             )
         );

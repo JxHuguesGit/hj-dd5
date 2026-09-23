@@ -79,7 +79,7 @@ final class SpellDetailContentBuilder extends AbstractDetailContentBuilder
 
         $content .= $this->renderInfo(
             L::RANGE,
-            SpellFormatter::formatPortee($spell->portee)
+            $spell->portee
         );
 
         $content .= $this->renderInfo(

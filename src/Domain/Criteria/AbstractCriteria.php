@@ -33,6 +33,11 @@ abstract class AbstractCriteria implements CriteriaInterface
             $qb->limit($this->limit, $this->offset ?? 0);
         }
     }
+    
+    public function join(QueryBuilder $qb): void
+    {
+        // Rien par défaut
+    }
 
     private function applyAttribute(QueryBuilder $qb, mixed $attr, mixed $value): void
     {

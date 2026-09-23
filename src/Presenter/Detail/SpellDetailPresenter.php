@@ -13,19 +13,18 @@ class SpellDetailPresenter
         return new SpellDetail(
             name: $spell->name ?? '',
             url: $spell ? UrlGenerator::spell($spell->slug) : '#',
-            niveau: $spell->niveau ?? 0,
-            ecole: $spell->ecole ?? '',
+            niveau: $spell->level ?? 0,
+            ecole: $spell->schoolName ?? '',
             classes: $spell->classes ?? [],
             rituel: $spell->rituel ?? false,
-            tpsInc: $spell->tempsIncantation ?? '',
-            portee: $spell->portee ?? '',
-            duree: $spell->duree ?? '',
+            tpsInc: $spell->castingTimeName ?? '',
+            portee: $spell->rangeName ?? '',
+            duree: $spell->durationName ?? '',
             concentration: $spell->concentration ?? false,
-            composantes: $spell->composantes ?? [],
-            composanteMaterielle: $spell->composanteMaterielle ?? '',
-            description: $spell->content ?? '',
-            // Source n'existe pas encore dans le moteur Wordpress
-            source: '',
+            composantes: $spell->components ?? '',
+            composanteMaterielle: $spell->materialComponentName ?? '',
+            description: $spell->description ?? '',
+            source: $spell->sourceName ?? '',
         );
     }
 }

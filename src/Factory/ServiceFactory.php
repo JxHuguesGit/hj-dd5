@@ -58,7 +58,7 @@ final class ServiceFactory
     public function spell(): SpellService
     {
         return new SpellService(
-            $this->wordPress()
+            $this->readerFactory->spell()
         );
     }
 

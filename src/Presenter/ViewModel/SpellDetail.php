@@ -14,7 +14,7 @@ final class SpellDetail
         public string $portee,
         public string $duree,
         public bool $concentration,
-        public array $composantes,
+        public string $composantes,
         public ?string $composanteMaterielle,
         public string $description,
         public string $source

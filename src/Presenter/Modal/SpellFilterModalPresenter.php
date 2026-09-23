@@ -3,16 +3,18 @@ namespace src\Presenter\Modal;
 
 use src\Constant\Constant as C;
 use src\Constant\Template;
-use src\Enum\ClassEnum;
-use src\Enum\MagicSchoolEnum;
 use src\Renderer\TemplateRenderer;
+use src\Service\Reader\ClasseReader;
 use src\Service\Reader\ReferenceReader;
+use src\Service\Reader\SpellSchoolReader;
 use src\Utils\Html;
 
 class SpellFilterModalPresenter implements ModalPresenter
 {
     public function __construct(
         private ReferenceReader $referenceReader,
+        private SpellSchoolReader $spellSchoolReader,
+        private ClasseReader $classeReader,
         private TemplateRenderer $renderer,
     ) {}
 
@@ -32,40 +34,19 @@ class SpellFilterModalPresenter implements ModalPresenter
         $classOptions = '';
         $nbClassOptions = 0;
         $strAllClassSelected = ' '.C::CHECKED;
-        $this->dealWithSchools($classOptions, $nbClassOptions);
+        $this->dealWithClasses($classOptions, $nbClassOptions);
 
         // Liste des écoles
         $schoolOptions = '';
         $nbSchoolOptions = 0;
         $strAllSchoolSelected = ' '.C::CHECKED;
-        $defaultSchoolSelection = array_map(fn($case) => $case->value, MagicSchoolEnum::cases());
-        $selectedSchools = $defaultSchoolSelection;
-        foreach (MagicSchoolEnum::cases() as $case) {
-            $value = $case->value;
-            if (in_array($value, $selectedSchools)) {
-                ++$nbSchoolOptions;
-                $schoolOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value], true);
-            } else {
-                $schoolOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value]);
-            }
-        }
+        $this->dealWithSchools($schoolOptions, $nbSchoolOptions);
 
         // Liste des sources
         $sourceOptions = '';
         $nbSourceOptions = 0;
         $strAllSourceSelected = ' '.C::CHECKED;
-        $sources = $this->referenceReader->allReferences();
-        $defaultSourceSelection = array_map(fn($case) => $case->code, $sources->toArray());
-        $selectedSources = $defaultSourceSelection;
-        foreach ($sources as $source) {
-            $value = $source->code;
-            if (in_array($value, $selectedSources)) {
-                ++$nbSourceOptions;
-                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value], true);
-            } else {
-                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value]);
-            }
-        }
+        $this->dealWithSources($sourceOptions, $nbSourceOptions);
 
         // Rituels
         $onlyRituels = false;
@@ -115,24 +96,51 @@ class SpellFilterModalPresenter implements ModalPresenter
         );
     }
 
-    private function dealWithSchools(string &$classOptions, int &$nbClassOptions): void
+    private function dealWithClasses(string &$classOptions, int &$nbClassOptions): void
     {
+        $classes = $this->classeReader->allSpellCastingClasses();
         // Liste des classes
-        $defaultClassSelection = array_map(
-            fn($case) => $case->value,
-            array_filter(ClassEnum::cases(), fn($case) => !in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou]))
-        );
+        $defaultClassSelection = array_map(fn($case) => $case->id, $classes->toArray());
         $selectedClasses = $defaultClassSelection;
-        foreach (ClassEnum::cases() as $case) {
-            if (in_array($case, [ClassEnum::Bab, ClassEnum::Gue, ClassEnum::Moi, ClassEnum::Rou])) {
-                continue;
-            }
-            $value = $case->value;
+        foreach ($classes as $classe) {
+            $value = $classe->id;
             if (in_array($value, $selectedClasses)) {
                 ++$nbClassOptions;
-                $classOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value], true);
+                $classOptions .= Html::getOption(ucfirst($classe->name), [C::VALUE=>$value], true);
             } else {
-                $classOptions .= Html::getOption(ucfirst($case->label()), [C::VALUE=>$value]);
+                $classOptions .= Html::getOption(ucfirst($classe->name), [C::VALUE=>$value]);
+            }
+        }
+    }
+
+    private function dealWithSchools(string &$schoolOptions, int &$nbSchoolOptions): void
+    {
+        $spellSchools = $this->spellSchoolReader->allSpellSchools();
+        $defaultSchoolSelection = array_map(fn($case) => $case->id, $spellSchools->toArray());
+        $selectedSchools = $defaultSchoolSelection;
+        foreach ($spellSchools as $spellSchool) {
+            $value = $spellSchool->id;
+            if (in_array($value, $selectedSchools)) {
+                ++$nbSchoolOptions;
+                $schoolOptions .= Html::getOption($spellSchool->name, [C::VALUE=>$value], true);
+            } else {
+                $schoolOptions .= Html::getOption($spellSchool->name, [C::VALUE=>$value]);
+            }
+        }
+    }
+
+    private function dealWithSources(string &$sourceOptions, int &$nbSourceOptions): void
+    {
+        $sources = $this->referenceReader->allReferences();
+        $defaultSourceSelection = array_map(fn($case) => $case->id, $sources->toArray());
+        $selectedSources = $defaultSourceSelection;
+        foreach ($sources as $source) {
+            $value = $source->id;
+            if (in_array($value, $selectedSources)) {
+                ++$nbSourceOptions;
+                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value], true);
+            } else {
+                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value]);
             }
         }
     }

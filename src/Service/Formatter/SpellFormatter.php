@@ -3,28 +3,29 @@ namespace src\Service\Formatter;
 
 use src\Constant\Constant as C;
 use src\Constant\Language as L;
-use src\Enum\ClassEnum;
-use src\Enum\MagicSchoolEnum;
+use src\Domain\Entity\Reference;
 
 class SpellFormatter
 {
-    public static function formatEcole(string $schoolSlug, int $level): string
+    public static function formatEcole(string $schoolName, int $level): string
     {
-        if ($schoolSlug == '') {
+        if ($schoolName === '') {
             return '';
         }
-        return MagicSchoolEnum::from($schoolSlug)->label() .
-        (
-            $level == 0
-                ? L::SORT_MINEUR
-                : sprintf(L::SORT_NIVEAU_X, $level)
-        );
+
+        return $schoolName .
+            (
+                $level === 0
+                    ? L::SORT_MINEUR
+                    : sprintf(L::SORT_NIVEAU_X, $level)
+            );
     }
 
-    public static function formatComposantes(array $composantes, string $composanteMaterielle = '', bool $detail = true): string
+    public static function formatComposantes(string $composantes, string $composanteMaterielle = '', bool $detail = true): string
     {
-        $str = implode(',', $composantes);
-        if (! in_array('M', $composantes)) {
+        $arrComposantes = str_split($composantes);
+        $str = implode(', ', $arrComposantes);
+        if (! in_array('M', $arrComposantes)) {
             return $str;
         }
 
@@ -62,13 +63,22 @@ class SpellFormatter
         };
     }
 
-    public static function formatClasses(array $value, bool $parenthesis = true): string
+    public static function formatClasses(array $classes, bool $parenthesis = true): string
+    {
+        $value = implode(', ', $classes);
+
+        return $parenthesis
+            ? '(' . $value . ')'
+            : $value;
+    }
+
+    public static function oldformatClasses(array $value, bool $parenthesis = true): string
     {
         $classes = array_map(
-            fn(string $value) => ClassEnum::from($value)->label(),
+            fn(Reference $value) => $value->name,
             $value
         );
-        return $parenthesis ? '(' . implode(', ', $classes) . ')' : implode(', ', $classes);
+        return $parenthesis ? '(' . implode(', ', $value) . ')' : implode(', ', $classes);
     }
 
     public static function formatIncantation(string $value, bool $isRituel): string

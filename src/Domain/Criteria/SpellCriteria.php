@@ -1,128 +1,104 @@
 <?php
 namespace src\Domain\Criteria;
 
-use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
+use src\Constant\Table as T;
+use src\Domain\Criteria\Attributes\Compare;
+use src\Domain\Criteria\Attributes\Equals;
+use src\Query\QueryBuilder;
 
-final class SpellCriteria
+final class SpellCriteria extends BaseCriteria
 {
-    const DEFAULT_PAGE_SIZE = 12;
+    public const DEFAULT_PAGE_SIZE = 12;
+    public const WPPOST_ALIAS = 'wp';
 
-    public int $page               = 1;
-    public string $type            = 'append';
-    public ?int $minLevel          = null;
-    public ?int $maxLevel          = null;
-    public array $classes          = [];
-    public array $schools          = [];
-    public array $sources          = [];
-    public bool $allSources        = false;
-    public bool $onlyRituel        = false;
-    public bool $onlyConcentration = false;
+    #[Equals(field: F::ID, alias : 's')]
+    public ?int $id = null;
 
-    /**
-     * Transforme l'objet en array compatible WP_Query
-     */
-    public function toWpQueryArgs(): array
-    {
-        $args = [
-            'post_type'      => 'post',
-            'posts_per_page' => self::DEFAULT_PAGE_SIZE,
-            'category_name'  => 'sort',
-            'orderby'        => B::TITLE,
-            'order'          => C::ASC,
-            'paged'          => $this->page,
-            'meta_query'     => ['relation' => 'AND'],
-        ];
+    #[Equals(field: 'post_title', alias: self::WPPOST_ALIAS)]
+    public ?string $name = null;
 
-        // Gestion du type "replace"
-        if ($this->type === 'replace') {
-            $args['posts_per_page'] = self::DEFAULT_PAGE_SIZE * $this->page;
-            $args['paged']          = 1;
-        }
+    #[Equals(field: 'post_name', alias: self::WPPOST_ALIAS)]
+    public ?string $slug = null;
 
-        // Filtre niveau
-        if ($this->minLevel !== null && $this->maxLevel !== null) {
-            $args['meta_query'][] = [
-                'key'               => F::NIVEAU,
-                C::VALUE => [$this->minLevel, $this->maxLevel],
-                C::TYPE  => 'NUMERIC',
-                'compare'           => 'BETWEEN',
-            ];
-        }
+    #[Equals(field: F::WPPOSTID)]
+    public ?int $wpPostId = null;
 
-        // Filtre classes
-        if (! empty($this->classes) && count($this->classes) < 8) {
-            $classConditions = [];
-            foreach ($this->classes as $class) {
-                $classConditions[] = [
-                    'key'               => F::CLASSES,
-                    C::VALUE => '"' . $class . '"',
-                    'compare'           => 'LIKE',
-                ];
-            }
-            $args['meta_query'][] = [
-                'relation' => 'OR',
-                ...$classConditions,
-            ];
-        }
+    #[Compare(field: F::LEVEL, operator: Compare::GTE, alias: 's')]
+    public ?string $levelMin = null;
 
-        // Filtre écoles
-        if (! empty($this->schools) && count($this->schools) < 8) {
-            $args['meta_query'][] = [
-                'key'               => F::SCHOOL,
-                C::VALUE => $this->schools,
-                'compare'           => 'IN',
-            ];
-        }
+    #[Compare(field: F::LEVEL, operator: Compare::LTE, alias: 's')]
+    public ?string $levelMax = null;
 
-        // Filtre sources
-        if (! empty($this->sources) && !$this->allSources) {
-            $args['meta_query'][] = [
-                'key'               => F::SOURCE,
-                C::VALUE => $this->sources,
-                'compare'           => 'IN',
-            ];
-        }
+    #[Compare(field: F::SCHOOLID, operator: Compare::IN, alias: 's')]
+    public ?array $schoolIds = null;
 
-        // Filtre rituels
-        if ($this->onlyRituel) {
-            $args['meta_query'][] = [
-                'key'               => 'rituel',
-                C::VALUE => '"r"',
-                'compare'           => 'LIKE',
-            ];
-        }
+    #[Compare(field: F::SOURCEID, operator: Compare::IN, alias: 's')]
+    public array $sourceIds = [];
 
-        // Filtre concentration
-        if ($this->onlyConcentration) {
-            $args['meta_query'][] = [
-                'key'               => 'concentration',
-                C::VALUE => '"c"',
-                'compare'           => 'LIKE',
-            ];
-        }
+    #[Compare(field: F::CLASSEID, operator: Compare::IN, alias: 'rsc')]
+    public array $classeIds = [];
 
-        return $args;
-    }
+    #[Equals(field: F::RITUEL, alias: 's')]
+    public ?bool $ritual = null;
 
-    /**
-     * Instancie SpellCriteria depuis $_POST ou un tableau
-     */
+    #[Equals(field: F::CONCENTRATION, alias: 's')]
+    public ?bool $concentration = null;
+
+    #[Compare(field: 'post_title', operator: Compare::LT, alias: self::WPPOST_ALIAS)]
+    public ?string $nameLt = null;
+
+    #[Compare(field: 'post_title', operator: Compare::GT, alias: self::WPPOST_ALIAS)]
+    public ?string $nameGt = null;
+
+    public array $orderBy = [
+        self::WPPOST_ALIAS . '.post_title' => C::ASC
+    ];
+
     public static function fromRequest(array $request): self
     {
-        $criteria                    = new self();
-        $criteria->page              = (int) ($request['page'] ?? 1);
-        $criteria->type              = $request[C::TYPE] ?? 'append';
-        $criteria->minLevel          = isset($request['levelMinFilter']) ? (int) $request['levelMinFilter'] : null;
-        $criteria->maxLevel          = isset($request['levelMaxFilter']) ? (int) $request['levelMaxFilter'] : null;
-        $criteria->classes           = $request['classFilter'] ?? [];
-        $criteria->schools           = $request['schoolFilter'] ?? [];
-        $criteria->sources           = $request['sourceFilter'] ?? [];
-        $criteria->allSources        = $request['allSourceFilter'] ?? 0;
-        $criteria->onlyRituel        = $request['onlyRituel'] ?? false;
-        $criteria->onlyConcentration = $request['onlyConcentration'] ?? false;
+        $criteria = new self();
+
+        $criteria->levelMin = isset($request['levelMinFilter'])
+            ? (int) $request['levelMinFilter']
+            : null;
+
+        $criteria->levelMax = isset($request['levelMaxFilter'])
+            ? (int) $request['levelMaxFilter']
+            : null;
+
+        $criteria->schoolIds = array_map(
+            'intval',
+            $request['schoolFilter'] ?? []
+        );
+
+        $criteria->sourceIds = array_map(
+            'intval',
+            $request['sourceFilter'] ?? []
+        );
+
+        $criteria->classeIds = array_map(
+            'intval',
+            $request['classFilter'] ?? []
+        );
+
+        $criteria->ritual = isset($request['onlyRituel'])
+            ? true
+            : null;
+
+        $criteria->concentration = isset($request['onlyConcentration'])
+            ? true
+            : null;
 
         return $criteria;
+    }
+
+    public function join(QueryBuilder $qb): void
+    {
+        if ($this->classeIds !== []) {
+            $qb->joinTable(' INNER JOIN ' . T::SPELLCLASSE . ' AS rsc ON rsc.' . F::SPELLID . ' = s.' . F::ID)
+                ->joinTable(' INNER JOIN ' . T::RPGCLASSE . ' AS rc ON rc.' . F::ID . ' = rsc.' . F::CLASSEID);
+        }
     }
 }

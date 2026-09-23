@@ -12,11 +12,11 @@ class PageSpells extends PageMetadata
     {
         return [
             C::SLUG        => C::SPELLS,
-            'icon'                    => I::SPARKLES,
+            'icon'         => I::SCROLL,
             C::TITLE       => L::SPELLS_TITLE,
             C::DESCRIPTION => 'Les sorts auxquels ont accès les différentes classes.',
-            'url'                     => Routes::SPELLS_PREFIX,
-            'order'                   => 60,
+            'url'          => Routes::SPELLS_PREFIX,
+            'order'        => 60,
             C::PARENT      => C::HOME,
         ];
     }
