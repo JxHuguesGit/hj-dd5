@@ -2,10 +2,8 @@
 namespace src\Repository;
 
 use src\Collection\Collection;
-use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Table as T;
-use src\Constant\Table;
 use src\Domain\Criteria\SpellCriteria;
 use src\Domain\Entity\Classe;
 use src\Domain\Entity\Spell;
@@ -20,9 +18,15 @@ class SpellRepository extends Repository implements SpellRepositoryInterface
         return Spell::class;
     }
 
+    /**
+     * @return ?Spell
+     * @SuppressWarnings("php:S1185")
+     */
     public function find(int $id): ?Spell
     {
-        throw new \Exception('find Not implemented');
+        $criteria = new SpellCriteria();
+        $criteria->id = $id;
+        return $this->findAllWithRelations($criteria)->first() ?? null;
     }
 
     /**
