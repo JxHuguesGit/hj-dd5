@@ -1,3 +1,32 @@
+/* ----- BASE ----- */
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: #f9f9f9 url(../images/background_texture.png) repeat;
+    color: #212529;
+}
+
+.container {
+    width: min(1200px, 90%);
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .builder-sections-large {
     left: 0;
     margin-bottom: 20px;
@@ -242,19 +271,6 @@ dd {
 
 
 
-/* ----- BASE ----- */
-body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: #f9f9f9 url(../images/background_texture.png) repeat;
-    color: #212529;
-}
-
-.container {
-    width: min(1200px, 90%);
-    margin: 0 auto;
-}
-
 /* =============================
    HEADER TOP
    ============================= */
@@ -313,7 +329,7 @@ body {
     border: 0 solid #CCCCCC;
     border-bottom-width: 3px;
 }
- 
+
 .navbar-nav .nav-item {
     position: relative;
 }
@@ -837,7 +853,7 @@ footer a:hover {
 .table-responsive > .table-bordered {
   border: 0;
 }
-   
+
 .table .row-dark-striped > td {
   background-color: rgb(0, 0, 0) !important;
   color: #ffffff;

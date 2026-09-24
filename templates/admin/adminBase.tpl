@@ -1,12 +1,12 @@
-  <link rel='stylesheet' href='%4$sassets/styles/dd5.css' type="text/css" media='all' />
-  <link rel='stylesheet' href='%4$sassets/styles/adminReset.css' type="text/css" media='all' />
-  <link rel='stylesheet' href='%4$sassets/styles/adminBase.css' type="text/css" media='all' />
+  <link rel='stylesheet' href='%4$sassets/styles/adminReset.css?v=%6$s' type="text/css" media='all' />
+  <link rel='stylesheet' href='%4$sassets/styles/adminDashboard.css?v=%6$s' type="text/css" media='all' />
+
+  <link rel='stylesheet' href='%4$sassets/styles/dd5.css?v=%6$s' type="text/css" media='all' />
+  <link rel='stylesheet' href='%4$sassets/styles/adminBase.css?v=%6$s' type="text/css" media='all' />
+
   <!--
   <link rel='stylesheet' href='%4$sassets/styles/characterSheet.css' type="text/css" media='all' />
-  -->
-  <link rel='stylesheet' href='%4$sassets/styles/adminDashboard.css' type="text/css" media='all' />
   <link rel='stylesheet' id='monster-card-css' href='%4$sassets/styles/monsterCard.css' media='all' />
-  <!--
   <link rel='stylesheet' id='map-css' href='%4$sassets/styles/map.css?v=%6$s' media='all' />
   -->
 

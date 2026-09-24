@@ -1,11 +1,18 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html, html.wp-toolbar {padding-top: 0;}
-#adminmenumain {display: none;}
 #wpadminbar {display: none;}
+#adminmenumain {display: none;}
 #wpfooter {display: none;}
 #wpcontent {margin-left: 0; padding-left:0;}
 
+/*
 body.sidebar-collapse #wpbody-content > nav {margin-left: 250px;}
 .ml-auto {margin-left: auto !important;}
 .main-header .navbar-nav .nav-item {margin: 0;}
-
+*/
 
