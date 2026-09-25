@@ -1,25 +1,43 @@
 <?php
 namespace src\Controller\Compendium;
 
+use src\Domain\Criteria\SpellCriteria;
 use src\Page\PageList;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\Modal\SpellFilterModalPresenter;
+use src\Presenter\TableBuilder\SpellTableBuilder;
+use src\Presenter\ToastBuilder;
+use src\Renderer\TemplateRenderer;
 use src\Service\Domain\SpellService;
+use src\Service\Reader\SpellReader;
 
-class SpellCompendiumHandler implements CompendiumHandlerInterface
+final class SpellCompendiumHandler
+    extends AbstractCompendiumHandler
+    implements CompendiumHandlerInterface
 {
+    private string $toastContent = '';
+
     public function __construct(
-        private SpellService $reader,
-        private SpellListPresenter $presenter,
-        private PageList $page,
-        private SpellFilterModalPresenter $modalPresenter
+        private SpellService $spellService,
+        private SpellListPresenter $spellListPresenter,
+        private TemplateRenderer $templateRenderer,
     ) {}
 
-    public function render(): string
+    protected function renderList(): string
     {
-        $spells         = ($this->reader->allSpells())->collection;
-        $presentContent = $this->presenter->present($spells);
-        $modalContent   = $this->modalPresenter->render();
-        return $this->page->renderAdmin('', $presentContent, $modalContent);
+        $criteria = new SpellCriteria();
+        $result   = $this->spellService->allSpells($criteria);
+        $presentContent = $this->spellListPresenter->present($result->collection);
+
+        $page = new PageList(
+            $this->templateRenderer,
+            new SpellTableBuilder(true)
+        );
+
+        return $page->renderAdmin(
+            '',
+            $presentContent,
+            $this->toastContent
+        );
     }
 }

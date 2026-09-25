@@ -41,7 +41,7 @@ class SpellTableBuilder extends AbstractTableBuilder
                 ->addBodyCell([C::CONTENT => $row->ecole])
                 ->addBodyCell([C::CONTENT => SpellFormatter::formatClasses($row->classes, false)])
                 ->addBodyCell([C::CONTENT => SpellFormatter::formatIncantation($row->tpsInc, $row->rituel)])
-                ->addBodyCell([C::CONTENT => SpellFormatter::formatPortee($row->portee)])
+                ->addBodyCell([C::CONTENT => $row->portee])
                 ->addBodyCell([C::CONTENT => SpellFormatter::formatDuree($row->duree, $row->concentration)])
                 ->addBodyCell([C::CONTENT => SpellFormatter::formatComposantes($row->composantes, $row->composanteMaterielle, false)])
             ;
@@ -55,7 +55,7 @@ class SpellTableBuilder extends AbstractTableBuilder
         ])
             ->addFootRow()
             ->addFootCell([
-                C::CONTENT    => '<div class="ajaxAction" data-trigger="click" data-action="loadMoreSpells" style="cursor:pointer;"><i class="fa-solid fa-circle-plus"></i></div>',
+                C::CONTENT    => '<div class="ajaxAction" data-trigger="click" data-action="loadMoreSpells" data-next-page="2" data-per-page="12" data-view="table" style="cursor:pointer;"><i class="fa-solid fa-circle-plus"></i></div>',
                 C::ATTRIBUTES => [C::COLSPAN => 8],
             ]);
 

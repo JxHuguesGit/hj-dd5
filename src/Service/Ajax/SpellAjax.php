@@ -1,6 +1,7 @@
 <?php
 namespace src\Service\Ajax;
 
+use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ContentBuilder\SpellCardContentBuilder;
@@ -32,17 +33,31 @@ class SpellAjax
         $criteria->offset = ($page - 1) * SpellCriteria::DEFAULT_PAGE_SIZE;
         $result = $spellService->allSpells($criteria);
 
-        $spellListPresenter = new SpellListPresenter();
-        $viewData = $spellListPresenter->present($result->collection);
-
-        $spellContentBuilder = new SpellCardContentBuilder();
-        $contentHtml = $spellContentBuilder->build($viewData);
+        $view = Session::fromPost(C::VIEW, 'grid');
+        $contentHtml = match ($view) {
+            'table' => static::buildTable($result->collection),
+            default => static::buildGrid($result->collection),
+        };
 
         return [
             'html' => $contentHtml,
             'hasMore' => $result->hasMore,
             'nextPage' => $result->hasMore ? $page + 1 : null,
         ];
+    }
+
+    public static function buildGrid(Collection $spells): string
+    {
+        $spellListPresenter = new SpellListPresenter();
+        $viewData = $spellListPresenter->present($spells);
+
+        $spellContentBuilder = new SpellCardContentBuilder();
+        return $spellContentBuilder->build($viewData);
+    }
+
+    public static function buildTable(Collection $spells): string
+    {
+        return '<tr><td colspan="8">Wip Admin</td></tr>';
     }
 
 }

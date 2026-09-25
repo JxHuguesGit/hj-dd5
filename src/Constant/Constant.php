@@ -161,6 +161,7 @@ class Constant
     public const USER                   = 'user';
     public const USERS                  = 'users';
     public const VALUE                  = 'value';
+    public const VIEW                   = 'view';
     public const VISION_TYPE            = 'visionType';
     public const VUE                    = 'vue';
     public const WEAPON                 = 'weapon';

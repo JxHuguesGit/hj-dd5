@@ -269,11 +269,13 @@ function handleCollapse(obj) {
 // Présent côté admin et public.
 function handleLoadMoreSpells(type, obj, e) {
     const page = obj.attr('data-next-page');
+    const view = obj.attr('data-view');
     const data = {
         'action': 'dealWithAjax',
         'ajaxAction': 'loadMoreSpells',
         'type': type,
         'page': page,
+        'view': view,
         'spellFilter': $('#formSpellFilter').serialize()
     };
     const baseUrl = globalThis.location.origin;
@@ -287,16 +289,24 @@ function handleLoadMoreSpells(type, obj, e) {
                 let obj = JSON.parse(response.data);
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(obj.data.html, "text/html");
-                const gridContent = doc.querySelector(".spell-grid").innerHTML;
 
-                if (type=='append') {
-                    $('.spell-grid').append(gridContent);
+                if (view=='grid') {
+                    const gridContent = doc.querySelector(".spell-grid").innerHTML;
+                    if (type=='append') {
+                        $('.spell-grid').append(gridContent);
+                    } else {
+                        $('.spell-grid').html(gridContent);
+                    }
                 } else {
-                    $('.spell-grid').html(gridContent);
+                    const tableContent = doc.querySelector("#spellTable tbody").innerHTML;
+                    if (type=='append') {
+                        $('#spellTable tbody').append(tableContent);
+                    } else {
+                        $('#spellTable tbody').html(tableContent);
+                    }
                 }
 
                 const hasMore = obj.data.hasMore;
-                console.log(hasMore);
                 if (hasMore) {
                     const $loadMore = $('.spell-load-more');
                     $loadMore
