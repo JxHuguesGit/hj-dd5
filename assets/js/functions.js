@@ -195,7 +195,7 @@ function handleGetAddTokenModal(e) {
                 console.error(response);
             }
         }
-    );    
+    );
 }
 
 function sendAjaxAction(ajaxAction, data, onSuccess) {
@@ -269,7 +269,8 @@ function handleCollapse(obj) {
 // Présent côté admin et public.
 function handleLoadMoreSpells(type, obj, e) {
     const page = obj.attr('data-next-page');
-    const view = obj.attr('data-view');
+    const view = obj.attr('data-view') || 'grid';
+
     const data = {
         'action': 'dealWithAjax',
         'ajaxAction': 'loadMoreSpells',
@@ -287,23 +288,25 @@ function handleLoadMoreSpells(type, obj, e) {
         function(response) {
             try {
                 let obj = JSON.parse(response.data);
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(obj.data.html, "text/html");
+                let html = $('<textarea></textarea>').html(obj.data.html).text();
+                let $html = $(html);
 
                 if (view=='grid') {
-                    const gridContent = doc.querySelector(".spell-grid").innerHTML;
+                    let gridContent = $html.find('.spell-grid article');
                     if (type=='append') {
                         $('.spell-grid').append(gridContent);
                     } else {
                         $('.spell-grid').html(gridContent);
                     }
                 } else {
+                    /*
                     const tableContent = doc.querySelector("#spellTable tbody").innerHTML;
                     if (type=='append') {
                         $('#spellTable tbody').append(tableContent);
                     } else {
                         $('#spellTable tbody').html(tableContent);
                     }
+                    */
                 }
 
                 const hasMore = obj.data.hasMore;

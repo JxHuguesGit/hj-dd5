@@ -2,8 +2,10 @@
 namespace src\Service\Formatter;
 
 use src\Constant\Constant as C;
+use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Domain\Entity\Reference;
+use src\Utils\Html;
 
 class SpellFormatter
 {
@@ -83,7 +85,12 @@ class SpellFormatter
 
     public static function formatIncantation(string $value, bool $isRituel): string
     {
-        return static::formatDureeConvertie($value) . ($isRituel ? ' ou Rituel' : '');
+        if ($isRituel) {
+            $extra = Html::getIcon(I::REGISTERED, I::SOLID, [C::TITLE=>'Rituel']);
+            return static::formatDureeConvertie($value) . ' ' . $extra;
+        } else {
+            return static::formatDureeConvertie($value);
+        }
     }
 
     public static function formatDureeConvertie(string $value): string

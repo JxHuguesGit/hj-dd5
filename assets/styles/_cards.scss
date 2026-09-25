@@ -320,6 +320,10 @@
 
     h3 {
         @include card-title;
+        margin-right: 2rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
 
         a {
             color: inherit;
