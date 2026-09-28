@@ -37,7 +37,7 @@ final class SpellCriteria extends BaseCriteria
     #[Compare(field: F::SOURCEID, operator: Compare::IN, alias: 's')]
     public array $sourceIds = [];
 
-    #[Compare(field: F::CLASSEID, operator: Compare::IN, alias: 'rsc')]
+//    #[Compare(field: F::CLASSEID, operator: Compare::IN, alias: 'rsc')]
     public array $classeIds = [];
 
     #[Equals(field: F::RITUEL, alias: 's')]
@@ -97,8 +97,20 @@ final class SpellCriteria extends BaseCriteria
     public function join(QueryBuilder $qb): void
     {
         if ($this->classeIds !== []) {
-            $qb->joinTable(' INNER JOIN ' . T::SPELLCLASSE . ' AS rsc ON rsc.' . F::SPELLID . ' = s.' . F::ID)
-                ->joinTable(' INNER JOIN ' . T::RPGCLASSE . ' AS rc ON rc.' . F::ID . ' = rsc.' . F::CLASSEID);
+            $placeholders = implode(
+                ', ',
+                array_fill(0, count($this->classeIds), '%s')
+            );
+
+            $qb->whereRaw(
+                'EXISTS (
+                    SELECT 1
+                    FROM ' . T::SPELLCLASSE . ' AS rsc
+                    WHERE rsc.' . F::SPELLID . ' = s.' . F::ID . '
+                    AND rsc.' . F::CLASSEID . ' IN (' . $placeholders . ')
+                )',
+                $this->classeIds
+            );
         }
     }
 }

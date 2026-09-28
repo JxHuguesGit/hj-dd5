@@ -127,6 +127,18 @@ class QueryBuilder
         return $this;
     }
 
+    public function whereRaw(string $condition, array $params = []): self
+    {
+        if ($this->strWhere === '') {
+            $this->strWhere = ' WHERE 1=1';
+        }
+
+        $this->strWhere .= ' AND (' . $condition . ')';
+        array_push($this->params, ...$params);
+
+        return $this;
+    }
+    
     public function joinTable(string $strJoin): self
     {
         $this->strJoin .= $strJoin;
