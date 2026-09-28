@@ -185,6 +185,7 @@ class Bootstrap
     public const COL_MD_3  = 'col-md-3';
     public const COL_MD_4  = 'col-md-4';
     public const COL_MD_5  = 'col-md-5';
+    public const COL_MD_6  = 'col-md-6';
     public const COL_MD_8  = 'col-md-8';
     public const COL_MD_12 = 'col-md-12';
 

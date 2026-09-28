@@ -15,7 +15,7 @@ class SelectField extends FormField
         array $options = [],
         protected array $params = [],
     ) {
-        parent::__construct($name, $label, $value, false, $params);
+        parent::__construct($name, $label, $value, $params['readonly'] ?? false, $params);
         $this->options = $options;
     }
 

@@ -27,10 +27,16 @@ class CheckboxGroupField extends FormField
             } else {
                 unset($params[C::CHECKED]);
             }
-            $checkboxField  = new CheckboxField($choice->slug->value, $choice->label, $choice->id, false, $params);
+            if (is_string($choice->slug)) {
+                $checkboxField  = new CheckboxField($choice->slug, $choice->label, $choice->id, false, $params);
+            } elseif ($choice instanceof CheckboxField) {
+                $checkboxField  = $choice;
+            } else {
+                $checkboxField  = new CheckboxField($choice->slug->value, $choice->label, $choice->id, false, $params);
+            }
             $content       .= Html::getDiv(
                 $checkboxField->display(),
-                [C::CSSCLASS => 'col-4' . ($i >= 3 ? ' mt-2' : '')]
+                [C::CSSCLASS => $this->params[C::CSSCLASS] ?? 'col-4' . ($i >= 3 ? ' mt-2' : '')]
             );
             $i++;
         }

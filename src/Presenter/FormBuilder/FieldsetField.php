@@ -10,11 +10,11 @@ class FieldsetField extends FormField
     private array $innerFields = [];
     private bool $collapsible;
 
-    public function __construct(string $title, bool $collapsible = false)
+    public function __construct(string $title, bool $collapsible = false, array $params = [])
     {
         $this->title       = $title;
         $this->collapsible = $collapsible;
-        parent::__construct('', '', null, false, []);
+        parent::__construct('', '', null, false, $params);
     }
 
     public function addField(FormField $field): self
@@ -31,15 +31,19 @@ class FieldsetField extends FormField
             $content .= $field->display();
         }
 
-        $legend = Html::getBalise('legend', htmlspecialchars($this->title), [
-            C::CSSCLASS => C::AJAXACTION,
-            C::DATA  => [
-                C::TRIGGER => C::CLICK,
-                C::ACTION  => 'collapse',
-            ],
-        ]);
+        if ($this->params['hasLegend'] ?? true) {
+            $legend = Html::getBalise('legend', htmlspecialchars($this->title), [
+                C::CSSCLASS => C::AJAXACTION,
+                C::DATA  => [
+                    C::TRIGGER => C::CLICK,
+                    C::ACTION  => 'collapse',
+                ],
+            ]);
+        } else {
+            $legend = '';
+        }
 
-        $attrs = [C::CSSCLASS => 'monster-fieldset row mb-4'];
+        $attrs = $this->params[C::CSSCLASS] ?? [C::CSSCLASS => 'monster-fieldset row mb-4'];
         if ($this->collapsible) {
             $attrs[C::CSSCLASS] .= ' collapsible';
         }

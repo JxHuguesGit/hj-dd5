@@ -6,18 +6,10 @@ use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
-use src\Domain\Criteria\AbilityCriteria;
-use src\Domain\Criteria\FeatAbilityCriteria;
-use src\Domain\Entity\Feat;
 use src\Domain\Entity\Spell;
-use src\Enum\AbilityEnum;
-use src\Presenter\ViewModel\FeatAbilityView;
-use src\Service\Domain\FeatPreRequisService;
+use src\Presenter\ViewModel\ClasseView;
 use src\Service\Domain\WpPostService;
-use src\Service\Reader\AbilityReader;
-use src\Service\Reader\FeatAbilityReader;
-use src\Service\Reader\FeatTypeReader;
-use src\Service\Reader\PreRequisReader;
+use src\Service\Reader\ClasseReader;
 use src\Service\Reader\ReferenceReader;
 use src\Service\Reader\SpellReader;
 use src\Service\Reader\SpellSchoolReader;
@@ -29,6 +21,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
     public function __construct(
         private SpellReader $spellReader,
         private SpellSchoolReader $spellSchoolReader,
+        private ClasseReader $classeReader,
         private ReferenceReader $referenceReader,
         private WpPostService $wpPostService,
     ) {}
@@ -48,13 +41,12 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         $selectSchools = $this->buildSpellSchools();
         $selectLevels  = $this->buildLevels();
         $selectSources = $this->buildSources();
-        $selectWordpress = $this->buildWordpress();
+        $selectWordpress = $this->buildWordpress($entityWpPostId);
         $spellClassesSel = $this->buildClasses();
+        $vsCheckBoxes = $this->buildVSCheckboxes();
 
         $mockArray = [];
-/*
-        $selectMaterialComps = [];
-*/
+
         $fieldset = new FieldsetField('');
         $fieldset
             ->addField(new NumberField(
@@ -73,14 +65,61 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
                 F::SOURCEID, L::SOURCE, $entity->sourceId, $selectSources,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
-            ->addField(new CheckboxGroupField(
-                F::SPELLCLASSES . '[]',
-                $spellClassesSel,
-                [C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3]
+            ->addField(new SelectField(
+                F::SPELLCLASSES . '[]', L::CLASSES, [], $spellClassesSel,
+                [
+                    C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3,
+                    'multiple'  => true,
+                    'rows'      => 5,
+                ]
+            ))
+            ;
+        $params = [
+            C::CSSCLASS => [C::CSSCLASS => 'col-md-8 row mx-0'],
+            'hasLegend' => false,
+        ];
+        $fieldsetInterne = new FieldsetField('', false, $params);
+        $fieldsetInterne
+            ->addField(new SelectField(
+                F::CASTINGTIMEID, "Temps d'incantation", $entity->castingTimeId, $mockArray,
+                [C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
-                F::WPPOSTID, 'Nom du sort', $entity->wpPostId, $selectWordpress,
-                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                F::RANGEID, "Portée", $entity->rangeId, $mockArray,
+                [C::OUTERDIVCLASS => B::COL_MD_6]
+            ))
+            ->addField(new SelectField(
+                F::DURATIONID, "Durée", $entity->durationId, $mockArray,
+                [C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3]
+            ))
+            ->addField(new CheckboxGroupField(
+                F::COMPONENTS,
+                $vsCheckBoxes,
+                [
+                    C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3,
+                    C::CSSCLASS      => B::COL_MD_6
+                ]
+            ))
+            ;
+        $fieldset
+            ->addField($fieldsetInterne);
+        if ($entityWpPostId == -1) {
+            $fieldset
+                ->addField(new SelectField(
+                    F::WPPOSTID, 'Nom du sort', $entity->wpPostId, $selectWordpress,
+                    [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                ));
+        } else {
+            $fieldset
+                ->addField(new TextField(
+                    F::WPPOSTID, 'Nom du sort', $entity->name, true,
+                    [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+                ));
+        }
+        $fieldset
+            ->addField(new SelectField(
+                F::MATERIALCOMPID, "Composante matérielle", $entity->materialComponentId, $mockArray,
+                [C::OUTERDIVCLASS => B::COL_MD_8]
             ))
             ->addField(new TextareaField(
                 F::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
@@ -90,38 +129,38 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
                 ]
             ))
             ->addField(new SelectField(
-                F::CASTINGTIMEID, "Temps d'incantation", $entity->castingTimeId, $mockArray,
-                [C::OUTERDIVCLASS => B::COL_MD_4]
+                F::SPELLENHANCEMENTID, "Amélioration", $entity->spellEnhancementId, $mockArray,
+                [C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
-                F::RANGEID, "Portée", $entity->rangeId, $mockArray,
-                [C::OUTERDIVCLASS => B::COL_MD_4]
+                F::SPELLTRIGGERID, "Déclenchement", $entity->spellTriggerId, $mockArray,
+                [C::OUTERDIVCLASS => B::COL_MD_6]
             ))
-            ->addField(new SelectField(
-                F::DURATIONID, "Durée", $entity->durationId, $mockArray,
-                [C::OUTERDIVCLASS => B::COL_MD_4]
-            ))
-            ->addField(new CheckboxGroupField(
-                F::COMPONENTS,
-                new Collection(),//['V', 'S', 'M']
-                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
-            ))
-
-            /*
-            ->addField(new SelectField(
-                F::MATERIALCOMPID, L::MATERIALCOMP, $entity->materialComponentId, $selectMaterialComps,
-                [C::OUTERDIVCLASS => B::COL_MD_8]
-            ))
-            ->addField(new FillerField())
-        */
         ;
         $form->addField($fieldset);
         return $form;
     }
 
-    private function buildClasses(): Collection
+    private function buildVSCheckboxes(): Collection
     {
-        return new Collection();
+        $collection = new Collection();
+        $collection
+            ->add(new CheckboxField('vs', 'V', 'v', false, [C::OUTERDIVCLASS => '']))
+            ->add(new CheckboxField('vs', 'S', 's', false, [C::OUTERDIVCLASS => '']))
+        ;
+        return $collection;
+    }
+
+    private function buildClasses(): array
+    {
+        $classes = $this->classeReader->allSpellCastingClasses();
+        return array_map(
+            fn($t) => [
+                C::VALUE => $t->id,
+                C::LABEL => $t->name,
+            ],
+            $classes->toArray()
+        );
     }
     private function buildSources(): array
     {
@@ -156,7 +195,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
             $schools->toArray()
         );
     }
-    private function buildWordpress(): array
+    private function buildWordpress(int $wpPostId): array
     {
         $spells = $this->spellReader->allSpells();
         $existingWpPostIds = [];
@@ -175,7 +214,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
 
         $options = [];
         foreach ($posts as $post) {
-            if (in_array($post->ID, $existingWpPostIds, true)) {
+            if (in_array($post->ID, $existingWpPostIds, true) && $wpPostId == -1) {
                 continue;
             }
             $options[] = [

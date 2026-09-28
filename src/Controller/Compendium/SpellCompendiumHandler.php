@@ -32,7 +32,9 @@ final class SpellCompendiumHandler
         if ($slug===0) {
             $spell = new Spell();
         } else {
-            //$spell = $this->featReader->featById($slug);
+            $criteria = new SpellCriteria();
+            $criteria->id = $slug;
+            $spell = $this->spellService->allSpells($criteria)->collection?->first() ?? new Spell();
         }
 
         $page = new PageForm(
