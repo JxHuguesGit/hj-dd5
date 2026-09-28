@@ -115,7 +115,7 @@ class Language
 
     public const SORT_MINEUR   = ' - Sort mineur';
     public const SORT_NIVEAU_X = ' - Sort de niveau %d';
-    public const CONC_UNTIL_X  = 'Concentration, jusqu\'à %s';
+    public const CONC_UNTIL_X  = '<i class="fa-solid fa-copyright" title="Concentration"></i> jusqu\'à %s';
 
     public const UNKNOWN_ENTRY         = "L'entrée n'existe pas.";
     public const SUCCESS_EDIT_ENTRY    = "L'entrée <strong>%s</strong> a été correctement mise à jour.";

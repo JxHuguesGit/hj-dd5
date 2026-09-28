@@ -29,6 +29,7 @@ class Icon
     public const STAR     = 'star';
     public const BOOK     = 'book';
     public const PLUS     = 'plus';
+    public const REGISTERED = 'registered';
     public const USERS    = 'users';
     public const SEARCH   = 'search';
     public const SWORDS   = 'swords';
