@@ -59,7 +59,8 @@ final class SpellCriteria extends BaseCriteria
     public static function fromRequest(array $request): self
     {
         $criteria = new self();
-
+        ///////////////////////////////////
+        // Critère sur les niveaux
         $criteria->levelMin = isset($request['levelMinFilter'])
             ? (int) $request['levelMinFilter']
             : null;
@@ -67,21 +68,40 @@ final class SpellCriteria extends BaseCriteria
         $criteria->levelMax = isset($request['levelMaxFilter'])
             ? (int) $request['levelMaxFilter']
             : null;
+        ///////////////////////////////////
 
-        $criteria->schoolIds = array_map(
-            'intval',
-            $request['schoolFilter'] ?? []
-        );
+        ///////////////////////////////////
+        // Critère sur les écoles.
+        $allSchools = (int) $request['selectAllSchool'];
+        if ($allSchools!=1) {
+            $criteria->schoolIds = array_map(
+                'intval',
+                $request['schoolFilter'] ?? []
+            );
+        }
+        ///////////////////////////////////
 
-        $criteria->sourceIds = array_map(
-            'intval',
-            $request['sourceFilter'] ?? []
-        );
+        ///////////////////////////////////
+        // Critère sur les sources.
+        $allSources = (int) $request['selectAllSource'];
+        if ($allSources!=1) {
+            $criteria->sourceIds = array_map(
+                'intval',
+                $request['sourceFilter'] ?? []
+            );
+        }
+        ///////////////////////////////////
 
-        $criteria->classeIds = array_map(
-            'intval',
-            $request['classFilter'] ?? []
-        );
+        ///////////////////////////////////
+        // Critère sur les classes.
+        $allClasses = (int) $request['selectAllClass'];
+        if ($allClasses!=1) {
+            $criteria->classeIds = array_map(
+                'intval',
+                $request['classFilter'] ?? []
+            );
+        }
+        ///////////////////////////////////
 
         $criteria->ritual = isset($request['onlyRituel'])
             ? true

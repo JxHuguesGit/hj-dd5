@@ -18,6 +18,7 @@ abstract class AbstractTableBuilder implements TableBuilderInterface
                 B::TABLE_STRIPED,
                 $withMarginTop ? B::MT5 : '',
             ]),
+            'colCount' => $colCount,
         ];
         if (isset($params[C::ID])) {
             $tableAttributes[C::ID] = $params[C::ID];

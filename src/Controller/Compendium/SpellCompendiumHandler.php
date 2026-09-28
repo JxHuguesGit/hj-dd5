@@ -2,7 +2,10 @@
 namespace src\Controller\Compendium;
 
 use src\Domain\Criteria\SpellCriteria;
+use src\Domain\Entity\Spell;
+use src\Page\PageForm;
 use src\Page\PageList;
+use src\Presenter\FormBuilder\SpellFormBuilder;
 use src\Presenter\ListPresenter\SpellListPresenter;
 use src\Presenter\Modal\SpellFilterModalPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;
@@ -21,7 +24,25 @@ final class SpellCompendiumHandler
         private SpellService $spellService,
         private SpellListPresenter $spellListPresenter,
         private TemplateRenderer $templateRenderer,
+        private SpellFormBuilder $spellFormBuilder,
     ) {}
+
+    protected function renderEdit(?int $slug = 0): string
+    {
+        if ($slug===0) {
+            $spell = new Spell();
+        } else {
+            //$spell = $this->featReader->featById($slug);
+        }
+
+        $page = new PageForm(
+            $this->templateRenderer,
+            $this->spellFormBuilder,
+            $this->toastContent
+        );
+
+        return $page->renderAdmin('', $spell);
+    }
 
     protected function renderList(): string
     {

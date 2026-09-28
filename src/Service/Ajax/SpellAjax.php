@@ -6,6 +6,7 @@ use src\Constant\Constant as C;
 use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ContentBuilder\SpellCardContentBuilder;
 use src\Presenter\ListPresenter\SpellListPresenter;
+use src\Presenter\TableBuilder\SpellTableBuilder;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Repository\SpellRepository;
@@ -57,7 +58,11 @@ class SpellAjax
 
     public static function buildTable(Collection $spells): string
     {
-        return '<tr><td colspan="8">Wip Admin</td></tr>';
+        $spellListPresenter = new SpellListPresenter();
+        $presentContent = $spellListPresenter->present($spells);
+
+        $spellTableBuilder = new SpellTableBuilder();
+        return $spellTableBuilder->build($presentContent)->display();
     }
 
 }

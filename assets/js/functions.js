@@ -21,7 +21,7 @@ function ajaxActionClick(obj, e) {
 function dispatchAjaxAction(action, obj, e) {
     const handlers = {
         loadMoreSpells: () => handleLoadMoreSpells('append', obj, e),
-        loadMoreMonsters: () => handleLoadMoreMonsters('append', e),
+        loadMoreMonsters: () => handleLoadMoreMonsters('append', obj, e),
         toggleCheckbox: () => handleToggleCheckbox(obj),
         collapse: () => handleCollapse(obj),
         openModal: () => handleOpenModal(obj, e),
@@ -44,7 +44,6 @@ function dispatchAjaxAction(action, obj, e) {
     };
 
     const handler = handlers[action];
-
     if (handler) {
         handler();
     } else {
@@ -299,14 +298,12 @@ function handleLoadMoreSpells(type, obj, e) {
                         $('.spell-grid').html(gridContent);
                     }
                 } else {
-                    /*
-                    const tableContent = doc.querySelector("#spellTable tbody").innerHTML;
+                    let tableContent = $html.find('tbody tr');
                     if (type=='append') {
                         $('#spellTable tbody').append(tableContent);
                     } else {
                         $('#spellTable tbody').html(tableContent);
                     }
-                    */
                 }
 
                 const hasMore = obj.data.hasMore;
@@ -329,7 +326,7 @@ function handleLoadMoreSpells(type, obj, e) {
 }
 
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des monstres
-function handleLoadMoreMonsters(type, e) {
+function handleLoadMoreMonsters(type, obj, e) {
     const page = $('#spellMonster tbody tr').length/10 + 1;
     const data = {
         'action': 'dealWithAjax',
@@ -350,13 +347,14 @@ function handleLoadMoreMonsters(type, e) {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(obj.data.html, "text/html");
                 const tbodyContent = doc.querySelector("tbody").innerHTML;
+                const hasMore = obj.data.hasMore;
+
                 if (type=='append') {
                     $('#spellMonster tbody').append(tbodyContent);
                 } else {
                     $('#spellMonster tbody').html(tbodyContent);
                 }
 
-                const hasMore = obj.data.hasMore;
                 if (hasMore) {
                     $('div[data-action="loadMoreMonsters"] i').show();
                 } else {
@@ -437,4 +435,28 @@ $('.type-filter').on('click', function () {
 
     $filter.toggleClass('disabled', !disabled);
     $('#' + type).toggleClass('d-none', !disabled);
+});
+
+$(function () {
+    // Clic sur "Tout sélectionner"
+    $('input[type="checkbox"][data-target]').on('change', function () {
+
+        var target = $(this).data('target');
+        var checked = $(this).prop('checked');
+
+        $('#' + target + ' option').prop('selected', checked);
+    });
+
+    // Modification d'un select multiple
+    $('select[multiple]').on('change', function () {
+
+        var id = $(this).attr('id');
+
+        var nbOptions = $(this).find('option').length;
+        var nbSelected = $(this).find('option:selected').length;
+
+        $('input[type="checkbox"][data-target="' + id + '"]')
+            .prop('checked', nbOptions > 0 && nbSelected === nbOptions);
+    });
+
 });

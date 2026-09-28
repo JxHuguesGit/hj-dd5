@@ -4,6 +4,7 @@ namespace src\Presenter\ViewModel;
 final class SpellRow
 {
     public function __construct(
+        public string $id,
         public string $name,
         public string $url,
         public string $niveau,

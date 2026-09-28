@@ -22,6 +22,7 @@ final class SpellListPresenter
     private function buildRow(Spell $spell): SpellRow
     {
         return new SpellRow(
+            id: $spell->id,
             name: $spell->name,
             url: UrlGenerator::spell($spell->slug),
             niveau: $spell->level,
