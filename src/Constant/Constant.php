@@ -139,6 +139,10 @@ class Constant
     public const SPECIE_POWER           = 'speciePower';
     public const SPELL                  = 'spell';
     public const SPELLSCHOOL            = 'spellSchool';
+    public const SPELLCASTINGTIME       = 'spellCastingTime';
+    public const SPELLCOMPONENT         = 'spellComponent';
+    public const SPELLDURATION          = 'spellDuration';
+    public const SPELLRANGE             = 'spellRange';
     public const SPELLLOADMORE          = 'spell-load-more';
     public const SPELL_FILTER           = 'spellFilter';
     public const SPELLFILTER            = 'spell-filter';

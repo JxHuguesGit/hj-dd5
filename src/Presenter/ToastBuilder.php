@@ -27,6 +27,11 @@ final class ToastBuilder
         return $this->build('success', $title, $message);
     }
 
+    public function warning(string $message, string $title = 'Avertissement'): string
+    {
+        return $this->build('warning', $title, $message);
+    }
+
     public function error(string $message, string $title = 'Échec'): string
     {
         return $this->build(B::DANGER, $title, $message);

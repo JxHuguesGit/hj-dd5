@@ -90,6 +90,22 @@ final class Spell extends Entity
         F::CLASSES                => FieldType::ARRAY,
     ];
 
+    public const EDITABLE_FIELDS = [
+        F::WPPOSTID,
+        F::SOURCEID,
+        F::SCHOOLID,
+        F::CASTINGTIMEID,
+        F::RANGEID,
+        F::DURATIONID,
+        F::SPELLENHANCEMENTID,
+        F::SPELLTRIGGERID,
+        F::MATERIALCOMPID,
+        F::LEVEL,
+        F::RITUEL,
+        F::CONCENTRATION,
+        F::COMPONENTS,
+    ];
+
     public function stringify(): string
     {
         return $this->name;

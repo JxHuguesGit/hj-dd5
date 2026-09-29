@@ -55,6 +55,10 @@ final class ReaderFactory
 
         C::SPELL                 => [C::READER => 'SpellReader',                C::REPO => C::SPELL],
         C::SPELLSCHOOL           => [C::READER => 'SpellSchoolReader',          C::REPO => C::SPELLSCHOOL],
+        C::SPELLCASTINGTIME      => [C::READER => 'SpellCastingTimeReader',     C::REPO => C::SPELLCASTINGTIME],
+        C::SPELLRANGE            => [C::READER => 'SpellRangeReader',           C::REPO => C::SPELLRANGE],
+        C::SPELLDURATION         => [C::READER => 'SpellDurationReader',        C::REPO => C::SPELLDURATION],
+        C::SPELLCOMPONENT        => [C::READER => 'SpellComponentReader',       C::REPO => C::SPELLCOMPONENT],
 
         C::TOOL                  => [C::READER => 'ToolReader',                 C::REPO => C::TOOL],
         C::VISION_TYPE           => [C::READER => 'VisionTypeReader',           C::REPO => C::VISION_TYPE],

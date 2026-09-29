@@ -228,6 +228,7 @@ abstract class Entity
         if ($value === null) {
             return 0;
         }
+        $value = (int) $value;
         if ($value < 0) {
             throw new \InvalidArgumentException("Le champ '$field' doit être un entier strictement positif.");
         }
