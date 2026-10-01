@@ -34,9 +34,10 @@ class SpellAjax
         $criteria->offset = ($page - 1) * SpellCriteria::DEFAULT_PAGE_SIZE;
         $result = $spellService->allSpells($criteria);
 
+        $admin = Session::fromPost('admin', 'false');
         $view = Session::fromPost(C::VIEW, 'grid');
         $contentHtml = match ($view) {
-            'table' => static::buildTable($result->collection),
+            'table' => static::buildTable($result->collection, $admin),
             default => static::buildGrid($result->collection),
         };
 
@@ -56,12 +57,12 @@ class SpellAjax
         return $spellContentBuilder->build($viewData);
     }
 
-    public static function buildTable(Collection $spells): string
+    public static function buildTable(Collection $spells, string $isAdmin = 'false'): string
     {
         $spellListPresenter = new SpellListPresenter();
         $presentContent = $spellListPresenter->present($spells);
 
-        $spellTableBuilder = new SpellTableBuilder();
+        $spellTableBuilder = new SpellTableBuilder($isAdmin=='true');
         return $spellTableBuilder->build($presentContent)->display();
     }
 

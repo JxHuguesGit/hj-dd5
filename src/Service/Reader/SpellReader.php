@@ -23,7 +23,7 @@ final class SpellReader
             ->findAllWithRelations($criteria)
             ?->first() ?? null;
     }
-    
+
     /**
      * @return Collection<Spell>
      */
@@ -47,13 +47,20 @@ final class SpellReader
             ->first();
     }
 
-    public function classesBySpellId(int $spellId): array
+    public function classesBySpellId(int $spellId, ?string $format = ''): array
     {
         $classes = $this->spellRepository->classesBySpellId($spellId);
-
-        return $classes
-            ->map(fn ($classe) => $classe->name)
-            ->toArray();
+        if ($format == 'names') {
+            return $classes
+                ->map(fn ($classe) => $classe->name)
+                ->toArray();
+        } elseif ($format == 'ids') {
+            return $classes
+                ->map(fn ($classe) => $classe->id)
+                ->toArray();
+        } else {
+            return $classes->toArray();
+        }
     }
-    
+
 }

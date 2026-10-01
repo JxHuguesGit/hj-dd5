@@ -29,7 +29,6 @@ final class SpellRangeReader
     {
         if (!$criteria) {
             $criteria = new SpellRangeCriteria();
-            $criteria->orderBy = [F::NAME => C::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
     }

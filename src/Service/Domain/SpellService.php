@@ -40,7 +40,7 @@ final class SpellService
             return null;
         }
 
-        $spell->classes = $this->spellReader->classesBySpellId($spell->id);
+        $spell->classes = $this->spellReader->classesBySpellId($spell->id, 'names');
 
         return $spell;
     }

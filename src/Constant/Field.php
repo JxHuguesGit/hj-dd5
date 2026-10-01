@@ -174,6 +174,7 @@ class Field
     public const WPNPROPID    = 'weaponPropertyId';
     public const WPNRANGEID   = 'weaponRangeId';
     public const WPPOSTID     = 'wpPostId';
+    public const WPPOSTNAME   = 'wpPostName';
     public const WPUSERID     = 'wpUserId';
 
     // Existantes, non déclarées

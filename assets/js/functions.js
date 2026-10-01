@@ -269,6 +269,7 @@ function handleCollapse(obj) {
 function handleLoadMoreSpells(type, obj, e) {
     const page = obj.attr('data-next-page');
     const view = obj.attr('data-view') || 'grid';
+    const admin = obj.attr('data-admin') || 'false';
 
     const data = {
         'action': 'dealWithAjax',
@@ -276,6 +277,7 @@ function handleLoadMoreSpells(type, obj, e) {
         'type': type,
         'page': page,
         'view': view,
+        'admin': admin,
         'spellFilter': $('#formSpellFilter').serialize()
     };
     const baseUrl = globalThis.location.origin;

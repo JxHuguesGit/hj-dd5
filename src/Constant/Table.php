@@ -54,8 +54,10 @@ class Table
     public const SPELLCASTINGTIME = 'rpgSpellCastingTime';
     public const SPELLCLASSE    = 'rpgSpellClasse';
     public const SPELLDURATION  = 'rpgSpellDuration';
+    public const SPELLENHANCEMENT = 'rpgSpellEnhancement';
     public const SPELLRANGE     = 'rpgSpellRange';
     public const SPELLSCHOOL    = 'rpgSpellSchool';
+    public const SPELLTRIGGER   = 'rpgSpellTrigger';
     public const TOKEN          = 'rpgToken';
     public const TOOL           = 'rpgTool';
     public const VISIONTYPE     = 'rpgVisionType';

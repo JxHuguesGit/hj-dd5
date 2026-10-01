@@ -12,7 +12,7 @@ use src\Query\QueryBuilder;
 class SpellRepository extends Repository implements SpellRepositoryInterface
 {
     public const TABLE = T::SPELL;
-    
+
     public function getEntityClass(): string
     {
         return Spell::class;
@@ -76,7 +76,7 @@ class SpellRepository extends Repository implements SpellRepositoryInterface
     public function classesBySpellId(int $spellId): Collection
     {
         $baseQuery = "
-            SELECT " . F::NAME . ", " . F::SKILLS . ", " . F::CODE . "
+            SELECT c." . F::ID . " AS " . F::ID . ", " . F::NAME . ", " . F::SKILLS . ", " . F::CODE . "
             FROM " . T::RPGCLASSE . " c
                 LEFT JOIN " . T::SPELLCLASSE . " rsc ON c.id = rsc." . F::CLASSEID . "
             WHERE `" . F::SPELLID . "` = " . $spellId . "

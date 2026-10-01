@@ -142,7 +142,9 @@ class Constant
     public const SPELLCASTINGTIME       = 'spellCastingTime';
     public const SPELLCOMPONENT         = 'spellComponent';
     public const SPELLDURATION          = 'spellDuration';
+    public const SPELLENHANCEMENT       = 'spellEnhancement';
     public const SPELLRANGE             = 'spellRange';
+    public const SPELLTRIGGER           = 'spellTrigger';
     public const SPELLLOADMORE          = 'spell-load-more';
     public const SPELL_FILTER           = 'spellFilter';
     public const SPELLFILTER            = 'spell-filter';

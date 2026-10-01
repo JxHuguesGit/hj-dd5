@@ -7,16 +7,17 @@ use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
 use src\Domain\Entity\Spell;
-use src\Presenter\ViewModel\ClasseView;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\SpellCastingTimeReader;
 use src\Service\Reader\ClasseReader;
 use src\Service\Reader\ReferenceReader;
 use src\Service\Reader\SpellComponentReader;
 use src\Service\Reader\SpellDurationReader;
+use src\Service\Reader\SpellEnhancementReader;
 use src\Service\Reader\SpellRangeReader;
 use src\Service\Reader\SpellReader;
 use src\Service\Reader\SpellSchoolReader;
+use src\Service\Reader\SpellTriggerReader;
 use src\Utils\Form;
 use src\Utils\UrlGenerator;
 
@@ -31,6 +32,8 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         private SpellRangeReader $spellRangeReader,
         private SpellDurationReader $spellDurationReader,
         private SpellComponentReader $spellComponentReader,
+        private SpellEnhancementReader $spellEnhancementReader,
+        private SpellTriggerReader $spellTriggerReader,
         private WpPostService $wpPostService,
     ) {}
 
@@ -53,14 +56,15 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         $selectLevels  = $this->buildLevels();
         $selectSources = $this->buildSources();
         $selectWordpress = $this->buildWordpress($entityWpPostId);
-        $spellClassesSel = $this->buildClasses();
+        $spellClassesSelection = $this->buildClassesSelection($entity);
+        $spellClasses = $this->buildClasses();
         $vsCheckBoxes = $this->buildVSCheckboxes($entity);
         $castingTimes = $this->buildCastingTimes();
         $spellRanges = $this->buildRanges();
         $spellDurations = $this->buildDurations();
         $spellComponents = $this->buildComponents();
-
-        $mockArray = [[C::VALUE => 0, C::LABEL => '']];
+        $spellEnhancements = $this->buildEnhancements();
+        $spellTriggers = $this->buildTriggers();
 
         ///////////////////////////
         // Fieldset Interne (TI, Portée, Durée,)
@@ -95,13 +99,18 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         //////////////////////////
         // FieldForm Nom du sort
         if ($newEntity) {
+            $fieldSpellWpPostId = null;
             $fieldSpellName = new SelectField(
                 F::WPPOSTID, 'Nom du sort', $entity->wpPostId, $selectWordpress,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             );
         } else {
+            $fieldSpellWpPostId = new HiddenField(
+                F::WPPOSTID, '', $entity->wpPostId, false,
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
+            );
             $fieldSpellName = new TextField(
-                F::WPPOSTID, 'Nom du sort', $entityName, true,
+                F::WPPOSTNAME, 'Nom du sort', $entityName, false,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             );
         }
@@ -127,7 +136,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
-                F::SPELLCLASSES . '[]', L::CLASSES, [], $spellClassesSel,
+                F::SPELLCLASSES . '[]', L::CLASSES, $spellClassesSelection, $spellClasses,
                 [
                     C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3,
                     'multiple'  => true,
@@ -149,19 +158,52 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
                 ]
             ))
             ->addField(new SelectField(
-                F::SPELLENHANCEMENTID, "Amélioration", $entity->spellEnhancementId, $mockArray,
+                F::SPELLENHANCEMENTID, "Amélioration", $entity->spellEnhancementId, $spellEnhancements,
                 [C::OUTERDIVCLASS => B::COL_MD_5 . ' ' . B::MB3]
             ))
             ->addField(new EmptyField([C::CSSCLASS => B::COL_MD_2]))
             ->addField(new SelectField(
-                F::SPELLTRIGGERID, "Déclenchement", $entity->spellTriggerId, $mockArray,
+                F::SPELLTRIGGERID, "Déclenchement", $entity->spellTriggerId, $spellTriggers,
                 [C::OUTERDIVCLASS => B::COL_MD_5]
             ))
         ;
+        if ($fieldSpellWpPostId!==null) {
+            $fieldset->addField($fieldSpellWpPostId);
+        }
         $form->addField($fieldset);
         return $form;
     }
 
+    private function buildClassesSelection(Spell $spell): array
+    {
+        return $this->spellReader->classesBySpellId($spell->id, 'ids');
+    }
+    private function buildTriggers(): array
+    {
+        $triggers = $this->spellTriggerReader->allSpellTriggers();
+        $buildArray = array_map(
+            fn($t) => [
+                C::VALUE => $t->id,
+                C::LABEL => $t->stringify(),
+            ],
+            $triggers->toArray()
+        );
+        array_unshift($buildArray, [C::VALUE => 0, C::LABEL => '']);
+        return $buildArray;
+    }
+    private function buildEnhancements(): array
+    {
+        $enhancements = $this->spellEnhancementReader->allSpellEnhancements();
+        $buildArray = array_map(
+            fn($t) => [
+                C::VALUE => $t->id,
+                C::LABEL => $t->stringify(),
+            ],
+            $enhancements->toArray()
+        );
+        array_unshift($buildArray, [C::VALUE => 0, C::LABEL => '']);
+        return $buildArray;
+    }
     private function buildComponents(): array
     {
         $components = $this->spellComponentReader->allSpellComponents();
@@ -217,7 +259,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
     private function buildVSCheckboxes(Spell $spell): Collection
     {
         $components = $spell->components ?? '';
-        
+
         $vParams = [C::OUTERDIVCLASS => ''];
         if (strpos($components, 'V')!==false) {
             $vParams[C::CHECKED] = true;

@@ -8,12 +8,10 @@ use src\Page\PageForm;
 use src\Page\PageList;
 use src\Presenter\FormBuilder\SpellFormBuilder;
 use src\Presenter\ListPresenter\SpellListPresenter;
-use src\Presenter\Modal\SpellFilterModalPresenter;
 use src\Presenter\TableBuilder\SpellTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Domain\SpellService;
-use src\Service\Reader\SpellReader;
 use src\Utils\Session;
 
 final class SpellCompendiumHandler

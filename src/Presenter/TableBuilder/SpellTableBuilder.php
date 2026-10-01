@@ -88,6 +88,16 @@ class SpellTableBuilder extends AbstractTableBuilder
         if ($this->isAdmin) {
             ++$colCount;
         }
+        $loadMoreSpellsAttributes = [
+            C::TRIGGER => 'click',
+            C::ACTION  => 'loadMoreSpells',
+            'next-page' => 2,
+            'per-page'  => SpellCriteria::DEFAULT_PAGE_SIZE,
+            C::VIEW     => 'table',
+        ];
+        if ($this->isAdmin) {
+            $loadMoreSpellsAttributes['admin'] = 'true';
+        }
         $table->addFooter([
             C::CSSCLASS => implode(' ', [
                 B::TABLE_DARK,
@@ -100,13 +110,7 @@ class SpellTableBuilder extends AbstractTableBuilder
                     Html::getIcon(I::CIRCLEPLUS),
                     [
                         C::CSSCLASS => 'ajaxAction spell-load-more',
-                        C::DATA     => [
-                            C::TRIGGER => 'click',
-                            C::ACTION  => 'loadMoreSpells',
-                            'next-page' => 2,
-                            'per-page'  => SpellCriteria::DEFAULT_PAGE_SIZE,
-                            C::VIEW     => 'table',
-                        ],
+                        C::DATA     => $loadMoreSpellsAttributes,
                         C::STYLE    => 'cursor:pointer;'
                     ]
                 ),

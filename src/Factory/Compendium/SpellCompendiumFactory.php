@@ -27,6 +27,8 @@ class SpellCompendiumFactory extends AbstractCompendiumFactory
                 $this->readerFactory->spellRange(),
                 $this->readerFactory->spellDuration(),
                 $this->readerFactory->spellComponent(),
+                $this->readerFactory->spellEnhancement(),
+                $this->readerFactory->spellTrigger(),
                 new WpPostService()
             )
         );
