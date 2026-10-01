@@ -54,7 +54,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         $selectSources = $this->buildSources();
         $selectWordpress = $this->buildWordpress($entityWpPostId);
         $spellClassesSel = $this->buildClasses();
-        $vsCheckBoxes = $this->buildVSCheckboxes($entity->components);
+        $vsCheckBoxes = $this->buildVSCheckboxes($entity);
         $castingTimes = $this->buildCastingTimes();
         $spellRanges = $this->buildRanges();
         $spellDurations = $this->buildDurations();
@@ -214,8 +214,10 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         array_unshift($castingTimeArray, [C::VALUE => 0, C::LABEL => '']);
         return $castingTimeArray;
     }
-    private function buildVSCheckboxes(string $components): Collection
+    private function buildVSCheckboxes(Spell $spell): Collection
     {
+        $components = $spell->components ?? '';
+        
         $vParams = [C::OUTERDIVCLASS => ''];
         if (strpos($components, 'V')!==false) {
             $vParams[C::CHECKED] = true;
