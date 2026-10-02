@@ -442,20 +442,17 @@ $('.type-filter').on('click', function () {
 $(function () {
     // Clic sur "Tout sélectionner"
     $('input[type="checkbox"][data-target]').on('change', function () {
-
-        var target = $(this).data('target');
-        var checked = $(this).prop('checked');
+        const target = $(this).data('target');
+        const checked = $(this).prop('checked');
 
         $('#' + target + ' option').prop('selected', checked);
     });
 
     // Modification d'un select multiple
     $('select[multiple]').on('change', function () {
-
-        var id = $(this).attr('id');
-
-        var nbOptions = $(this).find('option').length;
-        var nbSelected = $(this).find('option:selected').length;
+        const id = $(this).attr('id');
+        const nbOptions = $(this).find('option').length;
+        const nbSelected = $(this).find('option:selected').length;
 
         $('input[type="checkbox"][data-target="' + id + '"]')
             .prop('checked', nbOptions > 0 && nbSelected === nbOptions);

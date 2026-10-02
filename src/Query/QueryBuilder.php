@@ -6,6 +6,8 @@ use src\Domain\Criteria\Attributes\Compare;
 
 class QueryBuilder
 {
+    public const BASEWHERE = " WHERE 1=1";
+
     private string $baseQuery = '';
     private string $strWhere = '';
     private string $strJoin = '';
@@ -81,7 +83,7 @@ class QueryBuilder
     public function where(array $criteria): self
     {
         if ($this->strWhere=='') {
-            $this->strWhere = " WHERE 1=1";
+            $this->strWhere = self::BASEWHERE;
         }
         foreach ($criteria as $key => $value) {
             if (strpos($key, '.')!==false) {
@@ -98,7 +100,7 @@ class QueryBuilder
     public function whereComplex(array $conditions): self
     {
         if ($this->strWhere=='') {
-            $this->strWhere = " WHERE 1=1";
+            $this->strWhere = self::BASEWHERE;
         }
         foreach ($conditions as $cond) {
             if (strpos($cond['field'], '.')!==false) {
@@ -130,7 +132,7 @@ class QueryBuilder
     public function whereRaw(string $condition, array $params = []): self
     {
         if ($this->strWhere === '') {
-            $this->strWhere = ' WHERE 1=1';
+            $this->strWhere = self::BASEWHERE;
         }
 
         $this->strWhere .= ' AND (' . $condition . ')';
@@ -138,7 +140,7 @@ class QueryBuilder
 
         return $this;
     }
-    
+
     public function joinTable(string $strJoin): self
     {
         $this->strJoin .= $strJoin;
