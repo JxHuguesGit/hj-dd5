@@ -3,6 +3,7 @@ namespace src\Factory\Controller;
 
 
 use src\Controller\Public\PublicInitiative;
+use src\Domain\Entity\Combat;
 use src\Factory\ReaderFactory;
 use src\Page\Renderer\PageInitiative;
 use src\Presenter\ContentBuilder\InitiativeContentBuilder;
@@ -22,6 +23,9 @@ class InitiativeControllerFactory
     {
         $combatId = (int) Session::fromGet('combatId');
         $combat = $this->readerFactory->combat()->combatById($combatId);
+        if ($combat==null) {
+            $combat = new Combat();
+        }
 
         return new PublicInitiative(
             new PageInitiative(

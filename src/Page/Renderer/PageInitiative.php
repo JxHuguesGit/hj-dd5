@@ -24,7 +24,7 @@ class PageInitiative
         $contentHeader = $this->contentBuilder->buildHeader($this->combat);
 
         $participants = $this->participantReader
-            ->participantsByCombat($this->combat->id);
+            ->participantsByCombat($this->combat->id ?? 0);
 
         $viewData = $this->presenter->present(
             $this->combat,
