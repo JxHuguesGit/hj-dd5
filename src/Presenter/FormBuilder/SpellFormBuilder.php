@@ -52,48 +52,65 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         $form                = $this->createForm($params);
         $entityName          = $newEntity ? '' : $entity->name;
 
-        $selectSchools = $this->buildSpellSchools();
-        $selectLevels  = $this->buildLevels();
-        $selectSources = $this->buildSources();
-        $selectWordpress = $this->buildWordpress($entityWpPostId);
+        $selectSchools         = $this->buildSpellSchools();
+        $selectLevels          = $this->buildLevels();
+        $selectSources         = $this->buildSources();
+        $selectWordpress       = $this->buildWordpress($entityWpPostId);
         $spellClassesSelection = $this->buildClassesSelection($entity);
-        $spellClasses = $this->buildClasses();
-        $vsCheckBoxes = $this->buildVSCheckboxes($entity);
-        $castingTimes = $this->buildCastingTimes();
-        $spellRanges = $this->buildRanges();
-        $spellDurations = $this->buildDurations();
-        $spellComponents = $this->buildComponents();
-        $spellEnhancements = $this->buildEnhancements();
-        $spellTriggers = $this->buildTriggers();
+        $spellClasses          = $this->buildClasses();
+        $castingTimes          = $this->buildCastingTimes();
+        $spellRanges           = $this->buildRanges();
+        $spellDurations        = $this->buildDurations();
+        $spellComponents       = $this->buildComponents();
+        $spellEnhancements     = $this->buildEnhancements();
+        $spellTriggers         = $this->buildTriggers();
 
+        $rituelParams = [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
+        if ($entity->rituel) {
+            $rituelParams[C::CHECKED] = true;
+        }
+        $concentrationParams = [C::OUTERDIVCLASS => B::COL_MD_3];
+        if ($entity->concentration) {
+            $concentrationParams[C::CHECKED] = true;
+        }
+        $vParams = [C::OUTERDIVCLASS => B::COL_MD_3];
+        if (strpos($entity->components, 'V')!==false) {
+            $vParams[C::CHECKED] = true;
+        }
+        $sParams = [C::OUTERDIVCLASS => B::COL_MD_3];
+        if (strpos($entity->components, 'S')!==false) {
+            $sParams[C::CHECKED] = true;
+        }
         ///////////////////////////
         // Fieldset Interne (TI, Portée, Durée,)
         $paramsFieldsetInterne = [
-            C::CSSCLASS => [C::CSSCLASS => 'col-md-8 row mx-0'],
+            C::CSSCLASS => [C::CSSCLASS => 'col-md-10 row mx-0'],
             'hasLegend' => false,
         ];
         $fieldsetInterne = new FieldsetField('', false, $paramsFieldsetInterne);
         $fieldsetInterne
             ->addField(new SelectField(
                 F::CASTINGTIMEID, "Temps d'incantation", $entity->castingTimeId, $castingTimes,
-                [C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3]
-            ))
-            ->addField(new SelectField(
-                F::RANGEID, L::RANGE, $entity->rangeId, $spellRanges,
-                [C::OUTERDIVCLASS => B::COL_MD_6]
+                [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
                 F::DURATIONID, L::DURATION, $entity->durationId, $spellDurations,
-                [C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3]
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
-            ->addField(new CheckboxGroupField(
-                F::COMPONENTS,
-                $vsCheckBoxes,
-                [
-                    C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::MB3,
-                    C::CSSCLASS      => B::COL_MD_6
-                ]
+            ->addField(new SelectField(
+                F::RANGEID, L::RANGE, $entity->rangeId, $spellRanges,
+                [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
+            ->addField(new CheckboxField(
+                F::RITUEL, 'Rituel', 'rituel', false,
+                $rituelParams
+            ))
+            ->addField(new CheckboxField(
+                F::CONCENTRATION, 'Concentration', 'concentration', false,
+                $concentrationParams
+            ))
+            ->addField(new CheckboxField('cm_v', 'V', 'v', false, $vParams))
+            ->addField(new CheckboxField('cm_s', 'S', 's', false, $sParams))
         ;
 
         //////////////////////////
@@ -136,9 +153,9 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
-                F::SPELLCLASSES . '[]', L::CLASSES, $spellClassesSelection, $spellClasses,
+                F::SPELLCLASSES, L::CLASSES, $spellClassesSelection, $spellClasses,
                 [
-                    C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3,
+                    C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3,
                     'multiple'  => true,
                     'rows'      => 5,
                 ]
@@ -176,7 +193,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
 
     private function buildClassesSelection(Spell $spell): array
     {
-        return $this->spellReader->classesBySpellId($spell->id, 'ids');
+        return $this->spellReader->classesBySpellId($spell->id ?? 0, 'ids');
     }
     private function buildTriggers(): array
     {
@@ -255,25 +272,6 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         );
         array_unshift($castingTimeArray, [C::VALUE => 0, C::LABEL => '']);
         return $castingTimeArray;
-    }
-    private function buildVSCheckboxes(Spell $spell): Collection
-    {
-        $components = $spell->components ?? '';
-
-        $vParams = [C::OUTERDIVCLASS => ''];
-        if (strpos($components, 'V')!==false) {
-            $vParams[C::CHECKED] = true;
-        }
-        $sParams = [C::OUTERDIVCLASS => ''];
-        if (strpos($components, 'S')!==false) {
-            $sParams[C::CHECKED] = true;
-        }
-        $collection = new Collection();
-        $collection
-            ->add(new CheckboxField('vs[]', 'V', 'v', false, $vParams))
-            ->add(new CheckboxField('vs[]', 'S', 's', false, $sParams))
-        ;
-        return $collection;
     }
     private function buildClasses(): array
     {

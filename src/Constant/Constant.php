@@ -138,6 +138,7 @@ class Constant
     public const SPECIES                = 'species';
     public const SPECIE_POWER           = 'speciePower';
     public const SPELL                  = 'spell';
+    public const SPELL_CLASSE           = 'spellClasse';
     public const SPELLSCHOOL            = 'spellSchool';
     public const SPELLCASTINGTIME       = 'spellCastingTime';
     public const SPELLCOMPONENT         = 'spellComponent';

@@ -18,6 +18,8 @@ final class WriterFactory
         C::FEAT                   => [C::WRITER => 'FeatWriter',                  C::REPO => C::FEAT],
         C::FEAT_ABILITY           => [C::WRITER => 'FeatAbilityWriter',           C::REPO => C::FEAT_ABILITY],
         C::FEAT_PREREQUIS         => [C::WRITER => 'FeatPreRequisWriter',         C::REPO => C::FEAT_PREREQUIS],
+        C::SPELL                  => [C::WRITER => 'SpellWriter',                 C::REPO => C::SPELL],
+        C::SPELL_CLASSE           => [C::WRITER => 'SpellClasseWriter',           C::REPO => C::SPELL_CLASSE],
     ];
 
     public function __construct(

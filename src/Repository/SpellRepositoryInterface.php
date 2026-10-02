@@ -8,6 +8,13 @@ use src\Domain\Entity\Classe;
 
 interface SpellRepositoryInterface
 {
+    public function beginTransaction(): void;
+    public function commit(): void;
+    public function rollBack(): void;
+
+    public function insert(Spell $spell): void;
+    public function updatePartial(Spell $spell, array $changedFields): void;
+
     /**
      * @return Collection<Spell>
      */

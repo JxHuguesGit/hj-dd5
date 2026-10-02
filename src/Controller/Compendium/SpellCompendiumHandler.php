@@ -2,6 +2,7 @@
 namespace src\Controller\Compendium;
 
 use src\Constant\Constant as C;
+use src\Constant\Field as F;
 use src\Domain\Criteria\SpellCriteria;
 use src\Domain\Entity\Spell;
 use src\Page\PageForm;
@@ -12,6 +13,8 @@ use src\Presenter\TableBuilder\SpellTableBuilder;
 use src\Presenter\ToastBuilder;
 use src\Renderer\TemplateRenderer;
 use src\Service\Domain\SpellService;
+use src\Service\Writer\SpellClasseWriter;
+use src\Service\Writer\SpellWriter;
 use src\Utils\Session;
 
 final class SpellCompendiumHandler
@@ -20,11 +23,13 @@ final class SpellCompendiumHandler
     private string $toastContent = '';
 
     public function __construct(
+        private SpellWriter $spellWriter,
         private SpellService $spellService,
         private SpellListPresenter $spellListPresenter,
         private ToastBuilder $toastBuilder,
         private TemplateRenderer $templateRenderer,
         private SpellFormBuilder $spellFormBuilder,
+        private SpellClasseWriter $spellClasseWriter,
     ) {}
 
     public function render(): string
@@ -90,44 +95,82 @@ final class SpellCompendiumHandler
     {
         foreach (Spell::EDITABLE_FIELDS as $field) {
             $value = Session::fromPost($field, 'err');
-            if ($value != 'err' && $spell->$field != $value) {
+            if (in_array($field, [F::RITUEL, F::CONCENTRATION])) {
+                $spell->$field = ($value===$field);
+            }  elseif ($value != 'err' && $spell->$field != $value) {
                 $spell->$field    = $value;
                 if ($changedFields !== null) {
                     $changedFields[] = $field;
                 }
             }
         }
+        ////////////////////////////////////////
+        // Composantes V & S
+        $components = '';
+        if (Session::fromPost('cm_v', '')!='') {
+            $components .= 'V';
+        }
+        if (Session::fromPost('cm_s', '')!='') {
+            $components .= 'S';
+        }
+        if ($spell->materialComponentId != 0 && $spell->materialComponentId != null) {
+            $components .= 'M';
+        }
+        if ($spell->components!=$components) {
+            $spell->components = $components;
+            $changedFields[] = 'components';
+        }
+        ////////////////////////////////////////
     }
 
     protected function handleEditSubmit(Spell $spell): string
     {
-        $blnOk = true;
         $changedFields = [];
         $this->initEntity($spell, $changedFields);
-        if ($changedFields == []) {
-            $this->toastContent .= $this->toastBuilder->error("Aucune nouvelle modification.");
-            $blnOk = false;
-        } elseif (!$this->controlEntity($spell)) {
-            $this->toastContent .= $this->toastBuilder->error("Un champ obligatoire n'a pas été saisi ou a une valeur erronnée.");
-            $blnOk = false;
+
+        ////////////////////////////////////////
+        // Gestion des classes
+        $classesId = Session::fromPost('spellClasses');
+        if (empty($classesId)) {
+            $this->toastContent = $this->toastBuilder->info("Au moins une classe doit être sélectionnée pour un sort.");
+            return $this->renderEdit($spell);
         }
-        if (!$blnOk) {
+        ////////////////////////////////////////
+
+        if (!$this->controlEntity($spell)) {
+            $this->toastContent .= $this->toastBuilder->error("Un champ obligatoire n'a pas été saisi ou a une valeur erronnée.");
             return $this->renderEdit($spell);
         }
 
-        $this->toastContent = $this->toastBuilder->success("Mise à jour du sort en cours de développement.");
+        $this->spellWriter->updatePartial($spell, $changedFields);
+        $this->spellClasseWriter->replaceSpellClasses($spell->id, $classesId);
+        $this->toastContent = $this->toastBuilder->success("Le sort a été correctement mis à jour.");
         return $this->renderEdit($spell);
     }
 
     protected function handleNewSubmit(Spell $spell): string
     {
         $this->initEntity($spell);
+        $spell->name = '';
+        $spell->slug = '';
+        $spell->description = '';
+
+        ////////////////////////////////////////
+        // Gestion des classes
+        $classesId = Session::fromPost('spellClasses');
+        if (empty($classesId)) {
+            $this->toastContent = $this->toastBuilder->info("Au moins une classe doit être sélectionnée pour un sort.");
+            return $this->renderEdit($spell);
+        }
+        ////////////////////////////////////////
 
         if (!$this->controlEntity($spell)) {
-            $this->toastContent .= $this->toastBuilder->error("Erreur lors de la création du sort.");
+            $this->toastContent .= $this->toastBuilder->error("Un champ obligatoire n'a pas été saisi ou a une valeur erronnée.");
             return $this->renderEdit($spell);
         }
 
+        $this->spellWriter->insert($spell);
+        $this->spellClasseWriter->replaceSpellClasses($spell->id, $classesId);
         $this->toastContent = $this->toastBuilder->success("Le nouveau sort a été correctement créé.");
         return $this->renderEdit($spell);
     }

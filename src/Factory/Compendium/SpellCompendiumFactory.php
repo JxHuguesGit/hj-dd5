@@ -12,6 +12,7 @@ class SpellCompendiumFactory extends AbstractCompendiumFactory
     public function create(): SpellCompendiumHandler
     {
         return new SpellCompendiumHandler(
+            $this->writerFactory->spell(),
             $this->serviceFactory->spell(),
             new SpellListPresenter(),
             new ToastBuilder(
@@ -30,7 +31,8 @@ class SpellCompendiumFactory extends AbstractCompendiumFactory
                 $this->readerFactory->spellEnhancement(),
                 $this->readerFactory->spellTrigger(),
                 new WpPostService()
-            )
+            ),
+            $this->writerFactory->spellClasse(),
         );
     }
 }

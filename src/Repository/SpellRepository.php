@@ -35,7 +35,7 @@ class SpellRepository extends Repository implements SpellRepositoryInterface
     public function findAllWithRelations(SpellCriteria $criteria): Collection
     {
         $baseQuery = "
-            SELECT s." . F::ID . ", s." . F::WPPOSTID . ", s." . F::SOURCEID . ", s." . F::SCHOOLID . ", s." . F::CASTINGTIMEID . ",
+            SELECT s." . F::ID . " AS " . F::ID . ", s." . F::WPPOSTID . ", s." . F::SOURCEID . ", s." . F::SCHOOLID . ", s." . F::CASTINGTIMEID . ",
                 s." . F::RANGEID . ", s." . F::DURATIONID . ", s." . F::SPELLENHANCEMENTID . ", s." . F::SPELLTRIGGERID . ", s." . F::MATERIALCOMPID . ",
                 s." . F::LEVEL . ", s." . F::RITUEL . ", s." . F::CONCENTRATION . ", s." . F::COMPONENTS . ",
                 wp.post_title AS " . F::NAME . ", wp.post_name AS " . F::SLUG . ", wp.post_content AS " . F::DESCRIPTION . ",

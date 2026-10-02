@@ -15,7 +15,7 @@ class Session
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
-    
+
     public static function getPost(): array
     {
         $result = [];
@@ -32,7 +32,7 @@ class Session
         }
 
         $data = $_POST[$field];
-        
+
         if (is_array($data)) {
             return array_map(fn($item) =>
                 self::sanitizeValue($item, $sanitize),
@@ -51,7 +51,7 @@ class Session
         }
 
         $data = $_GET[$field];
-        
+
         if (is_array($data)) {
             return array_map(fn($item) =>
                 self::sanitizeValue($item, $sanitize),
@@ -62,8 +62,8 @@ class Session
         $data = htmlentities((string) $data, ENT_QUOTES, 'UTF-8');
         return self::sanitizeValue($data, $sanitize);
     }
-    
-    private static function sanitizeValue(mixed $value, bool $sanitize): string
+
+    private static function sanitizeValue(mixed $value, bool $sanitize): array|string
     {
         if ($sanitize) {
             $value = filter_var($value, FILTER_SANITIZE_URL);
@@ -100,7 +100,7 @@ class Session
     {
         $_SESSION[$key] = $value;
     }
-    
+
     public static function fromSession(string $key): mixed
     {
         return $_SESSION[$key] ?? '';
