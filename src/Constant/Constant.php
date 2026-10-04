@@ -157,6 +157,7 @@ class Constant
     public const SUB_SKILL              = 'subSkill';
     public const SUB_SKILLS             = 'subSkills';
     public const TARGET                 = 'target';
+    public const TIMELINE               = 'timeline';
     public const TITLE                  = 'title';
     public const TOOL                   = 'tool';
     public const TOOLS                  = 'outils';

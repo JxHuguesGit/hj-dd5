@@ -1,0 +1,223 @@
+@use "variables" as *;
+
+.initiative-header {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    padding: .75rem 1.5rem;
+
+    background-color: $color-bg-header;
+    color: $color-text-app;
+
+    border-bottom: 1px solid $color-border-header;
+
+    & > i {
+        display: block;
+        width: 25px;
+
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 20px;
+
+        text-align: center;
+    }
+
+    & > h1 {
+        display: block;
+        margin-left: .75rem;
+
+        color: $color-accent-gold;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: .3em;
+        line-height: 20px;
+        text-transform: uppercase;
+    }
+
+    & > .session {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        margin-left: 1.5rem;
+        padding: .375rem .75rem;
+
+        background-color: $color-header-session-bg;
+        border: 1px solid $color-header-session-border;
+        border-radius: .5rem;
+
+        color: $color-text-app;
+
+        & > .label {
+            display: block;
+
+            color: $color-header-session-label;
+            font-size: 12px;
+            letter-spacing: .1em;
+            line-height: 16px;
+            text-transform: uppercase;
+        }
+
+        & > .name {
+            display: block;
+            max-width: 120px;
+            overflow: hidden;
+
+            color: $color-header-session-name;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        & > .value {
+            color: $color-header-title;
+            font-weight: 900;
+            letter-spacing: .2em;
+            line-height: 24px;
+        }
+
+        & > button {
+            margin-left: .25rem;
+            padding: 2px;
+
+            background-color: transparent;
+            border: 0;
+            border-radius: .25rem;
+
+            color: $color-header-session-label;
+
+            transition: color .15s ease;
+
+            &:hover {
+                color: $color-header-title;
+            }
+
+            &.copied {
+                color: $color-accent-green;
+            }
+
+            & > i {
+                display: inline-block;
+                width: 17.5px;
+
+                font-size: 14px;
+                font-weight: 900;
+                line-height: 14px;
+
+                text-align: center;
+            }
+        }
+    }
+
+    & > .header-actions {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        margin-left: auto;
+
+        .clock {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            color: $color-header-clock;
+            font-size: 12px;
+            line-height: 16px;
+
+            & > span {
+                font-family: monospace;
+                font-variant-numeric: tabular-nums;
+            }
+        }
+
+        > div {
+            position: relative;
+
+            > button {
+                display: flex;
+                align-items: center;
+
+                padding: .375rem;
+
+                background-color: $color-header-button-bg;
+                border: 1px solid $color-header-session-border;
+                border-radius: .25rem;
+
+                color: $color-header-clock;
+
+                transition: color .15s ease, border-color .15s ease;
+                
+                &:hover {
+                    border-color: $color-header-session-name;
+                    color: $color-header-session-name;
+                }
+                
+                > i {
+                    display: block;
+                    width: 20px;
+
+                    font-size: 16px;
+                    font-weight: 900;
+                    line-height: 16px;
+
+                    text-align: center;
+                }
+            }            
+        }
+    }
+
+}
+
+.initiative-menu {
+    position: fixed;
+    top: 56px;
+    right: 8px;
+    z-index: 50;
+
+    width: 208px;
+    max-height: 370px;
+    overflow-y: auto;
+
+    padding: 0;
+
+    background-color: $color-header-button-bg;
+    border: 1px solid $color-header-session-border;
+    border-radius: .75rem;
+
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .25);
+
+    color: $color-text-app;
+
+    &.hidden {
+        display: none;
+    }
+
+    > a {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+
+        padding: .625rem 1rem;
+
+        border-top: 1px solid $color-header-session-border;
+
+        color: $color-text-secondary;
+
+        font-size: 14px;
+        line-height: 20px;
+        text-decoration: none;
+
+        transition: color .15s ease;
+        
+        &:hover {
+            background-color: $color-menu-link-hover-bg;
+            color: $color-menu-link-hover;
+        }        
+    }
+
+}

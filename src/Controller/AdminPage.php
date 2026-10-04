@@ -2,6 +2,7 @@
 namespace src\Controller;
 
 
+use src\Constant\Constant as C;
 use src\Constant\Template as T;
 use src\Controller\Admin\AdminNav;
 use src\Factory\Admin\AdminContentFactory;
@@ -22,12 +23,15 @@ final class AdminPage extends Utilities
     public function getAdminContentPage(): string
     {
         $renderer = new TemplateRenderer();
-        $nav = new AdminNav();
-
         $content = $this->contentFactory
             ->create($this->arrParams)
             ->getContent();
 
+        if ($this->isFullPage()) {
+            return $content;
+        }
+
+        $nav = new AdminNav();
         $sidebar = $this->sidebarFactory->create(
             $this->arrParams,
             fn(string $template, array $attributes): string =>
@@ -47,5 +51,10 @@ final class AdminPage extends Utilities
             T::ADMINBASE,
             $attributes
         );
+    }
+
+    private function isFullPage(): bool
+    {
+        return $this->arrParams[C::ONGLET] === C::TIMELINE;
     }
 }

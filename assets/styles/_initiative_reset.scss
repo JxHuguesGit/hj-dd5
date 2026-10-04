@@ -1,0 +1,56 @@
+@use "variables" as *;
+
+html.wp-toolbar {
+    padding-top: 0;
+}
+
+#wpadminbar,
+#adminmenumain,
+#wpfooter {
+    display: none;
+}
+#wpcontent {
+    margin-left: 0;
+    padding-left: 0;
+}
+#wpbody-content {
+    display: flex;
+    flex-direction: column;
+
+    padding-bottom: 0;
+
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+#wrap {
+    display: contents;
+}
+
+#wpbody {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100vh;
+
+    background-color: $color-bg-app;
+    color: $color-text-app;
+
+    overflow: hidden;
+}
+///////// Fin du reset
+
+html,
+body {
+    line-height: 1.5rem;
+
+    scrollbar-color: $color-scrollbar-thumb $color-scrollbar-track;
+    scrollbar-width: thin;
+
+    tab-size: 4;
+}
+
+body {
+    background-color: $color-bg-body;
+    font-family: $font-body;
+}

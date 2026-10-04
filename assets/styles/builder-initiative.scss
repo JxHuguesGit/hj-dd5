@@ -2,6 +2,5 @@
 // Pour compiler les scss :
 // ouvrir un powershell
 // cd .\assets\styles\ 
-// sass --watch .\initiative.scss .\initiative.css
-@use "combat";
-@use "initiative";
+// sass --watch .\builder-initiative.scss .\initiative-v0.1.css
+@use "initiative.scss";
