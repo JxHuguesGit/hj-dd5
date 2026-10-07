@@ -3,6 +3,7 @@
 use src\Collection\Collection;
 use src\Constant\Template;
 use src\Controller\Public\PublicNotFound;
+use src\Factory\Controller\AoeControllerFactory;
 use src\Factory\Controller\FeatControllerFactory;
 use src\Factory\Controller\InitiativeControllerFactory;
 use src\Factory\Controller\ItemControllerFactory;
@@ -22,6 +23,7 @@ use src\Presenter\MenuPresenter;
 use src\Query\QueryBuilder;
 use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
+use src\Router\AoeRouter;
 use src\Router\FeatRouter;
 use src\Router\InitiativeRouter;
 use src\Router\ItemRouter;
@@ -87,6 +89,9 @@ class DD5Base
                 new InitiativeRouter(
                     new InitiativeControllerFactory($reader, $renderer)
                 ),
+                new AoeRouter(
+                    new AoeControllerFactory($renderer)
+                ),
             ]),
             new PublicNotFound(
                 new PageNotFound($renderer),
@@ -105,7 +110,9 @@ class DD5Base
 
         $baseTemplate = $controller->getBaseTemplate();
 
-        if ($baseTemplate === Template::BASE_MAP || $baseTemplate === Template::BASE_INITIATIVE) {
+        if ($baseTemplate === Template::BASE_MAP
+            || $baseTemplate === Template::BASE_INITIATIVE
+            || $baseTemplate === Template::BASE_AOE) {
             $attributes = [
                 $controller->getTitle(),
                 $srcCssFilesTpl,

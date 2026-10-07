@@ -18,6 +18,7 @@ final class Routes
     public const SPELL_PREFIX   = '/spell-';
     public const SPELLS_PREFIX  = '/spells';
 
+    public const AOE_PATTERN    = '#^aoe$#';
     public const FEAT_PATTERN   = '#^feat-(.+)$#';
     public const FEATS_PATTERN  = '#^feats-(.+)$#';
     public const INITIATIVE_PATTERN = '#^initiative(?:/([^/]+))?$#';
