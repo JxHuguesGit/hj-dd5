@@ -58,4 +58,18 @@ final class WpPostService
 
         return $query->posts[0] ?? null;
     }
+
+    public function getPostsByCategory(string $category): array
+    {
+        $query = $this->query([
+            'post_type'      => 'post',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'category_name'  => $category,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+        ]);
+
+        return $query->posts ?? [];
+    }
 }

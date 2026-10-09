@@ -15,7 +15,9 @@ class SpellClasseWriter
     public function deleteSpellClasses(Collection $spellClasses): void
     {
         foreach ($spellClasses as $spellClasse) {
-            $this->repository->delete($spellClasse);
+            $obj = new SpellClasseCriteria();
+            $obj->spellId = $spellClasse->spellId;
+            $this->repository->deleteByCriteria($obj);
         }
     }
 

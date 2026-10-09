@@ -73,6 +73,7 @@ class Language
     public const ARMORS_TITLE    = 'Les Armures';
     public const SKILLS_TITLE    = 'Les Compétences';
     public const FEATS_TITLE     = 'Les Dons';
+    public const GLOSSARY_TITLE  = 'Glossaire';
     public const HISTO_TITLE     = 'Les Historiques';
     public const MONSTERS_TITLE  = 'Les Monstres';
     public const TOOLS_TITLE     = 'Les Outils';

@@ -5,6 +5,7 @@ use src\Constant\Template;
 use src\Controller\Public\PublicNotFound;
 use src\Factory\Controller\AoeControllerFactory;
 use src\Factory\Controller\FeatControllerFactory;
+use src\Factory\Controller\GlossaireControllerFactory;
 use src\Factory\Controller\InitiativeControllerFactory;
 use src\Factory\Controller\ItemControllerFactory;
 use src\Factory\Controller\MapControllerFactory;
@@ -25,6 +26,7 @@ use src\Query\QueryExecutor;
 use src\Renderer\TemplateRenderer;
 use src\Router\AoeRouter;
 use src\Router\FeatRouter;
+use src\Router\GlossaireRouter;
 use src\Router\InitiativeRouter;
 use src\Router\ItemRouter;
 use src\Router\MapRouter;
@@ -91,6 +93,9 @@ class DD5Base
                 ),
                 new AoeRouter(
                     new AoeControllerFactory($renderer)
+                ),
+                new GlossaireRouter(
+                    new GlossaireControllerFactory($reader, $service, $renderer)
                 ),
             ]),
             new PublicNotFound(

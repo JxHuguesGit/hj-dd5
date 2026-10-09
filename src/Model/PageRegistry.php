@@ -8,6 +8,7 @@ use src\Page\Metadata\{
     PageFeatsEpic,
     PageFeatsGeneral,
     PageFeatsOrigin,
+    PageGlossaire,
     PageHome,
     PageOrigines,
     PageSkills,
@@ -75,6 +76,10 @@ class PageRegistry
         // Page Spells (liste)
         $spellsPage = (new PageSpells())->getPageElement();
         $this->register($spellsPage);
+
+        // Page Glossaire (liste)
+        $glossairePage = (new PageGlossaire())->getPageElement();
+        $this->register($glossairePage);
 
     }
 

@@ -66,6 +66,7 @@ class Constant
     public const GAMES                  = 'games';
     public const GEAR                   = 'gear';
     public const GENERAL                = 'general';
+    public const GLOSSARY               = 'glossary';
     public const GOLDPRICE              = 'goldPrice';
     public const HEAVY                  = 'heavy';
     public const HOME                   = 'home';

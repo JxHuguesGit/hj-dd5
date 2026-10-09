@@ -4,6 +4,7 @@ namespace src\Factory\Controller;
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicFeats;
+use src\Controller\Public\PublicGlossaire;
 use src\Controller\Public\PublicItems;
 use src\Controller\Public\PublicOrigines;
 use src\Controller\Public\PublicSkills;
@@ -14,12 +15,15 @@ use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\PageList;
 use src\Presenter\ContentBuilder\FeatCardContentBuilder;
+use src\Presenter\ContentBuilder\GlossaireCardContentBuilder;
+use src\Presenter\ContentBuilder\GlossaryCardContentBuilder;
 use src\Presenter\ContentBuilder\ItemCategoryContentBuilder;
 use src\Presenter\ContentBuilder\OriginCardContentBuilder;
 use src\Presenter\ContentBuilder\SkillCardContentBuilder;
 use src\Presenter\ContentBuilder\SpecieCardContentBuilder;
 use src\Presenter\ContentBuilder\SpellCardContentBuilder;
 use src\Presenter\ListPresenter\FeatListPresenter;
+use src\Presenter\ListPresenter\GlossaireListPresenter;
 use src\Presenter\ListPresenter\OriginListPresenter;
 use src\Presenter\ListPresenter\SkillListPresenter;
 use src\Presenter\ListPresenter\SpeciesListPresenter;
@@ -107,6 +111,16 @@ final class PublicControllerFactory
                     $this->readerFactory->classe(),
                     $this->renderer
                 )
+            ),
+
+            C::GLOSSARY  => new PublicGlossaire(
+                $this->serviceFactory->wordPress(),
+                new GlossaireListPresenter(),
+                new PageList(
+                    $this->renderer,
+                    new GlossaireCardContentBuilder()
+                ),
+                new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
             ),
 
             C::ITEMS => new PublicItems(

@@ -14,6 +14,7 @@ final class Template
     public const BASE                = self::TEMPLATE_PATH.'base.tpl';
     public const BASE_AOE            = self::TEMPLATE_PATH.'baseAoe.tpl';
     public const BASE_MAP            = self::TEMPLATE_PATH.'baseMap.tpl';
+    public const BASE_GLOSSAIRE      = self::TEMPLATE_PATH.'baseGlossaire.tpl';
     public const BASE_INITIATIVE     = self::TEMPLATE_PATH.'baseInitiative.tpl';
     public const FOOTER              = self::TEMPLATE_PATH.'footer.tpl';
     public const HEADER              = self::TEMPLATE_PATH.'header.tpl';
@@ -124,5 +125,6 @@ final class Template
     public const MAP_PAGE_PJ          = self::PUBLIC_PATH.'map-pj.tpl';
     public const MAP_PAGE_MJ          = self::PUBLIC_PATH.'map-mj.tpl';
     public const AOE_PAGE             = self::PUBLIC_PATH.'aoe.tpl';
+    public const GLOSSAIRE_PAGE       = self::PUBLIC_PATH.'glossaire.tpl';
     public const INITIATIVE_PAGE      = self::PUBLIC_PATH.'initiative.tpl';
 }

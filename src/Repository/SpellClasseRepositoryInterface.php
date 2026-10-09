@@ -13,6 +13,7 @@ interface SpellClasseRepositoryInterface
 
     public function insert(SpellClasse $spellClasse): void;
     public function delete(SpellClasse $spellClasse): void;
+    public function deleteByCriteria(SpellClasseCriteria $criteria): void;
 
     /**
      * @return Collection<SpellClasse>
