@@ -1,5 +1,4 @@
-import { GRID_SIZE } from "./aoe-config.js";
-import { CELL_METERS } from "./aoe-config.js";
+import { GRID_SIZE, CELL_METERS } from "./aoe-config.js";
 import { getCell } from "./aoe-grid.js";
 
 export function clearCoverResult() {

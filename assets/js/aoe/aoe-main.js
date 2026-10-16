@@ -1,17 +1,10 @@
-import { CELL_METERS } from "./aoe-config.js";
-import { BOARD_MOVEMENTS } from "./aoe-config.js";
-import { getSelectedDistance } from "./aoe-config.js";
-import { setSelectedDistance } from "./aoe-config.js";
-import { updateGridSize } from "./aoe-svg.js";
-import { updateInterface } from "./aoe-ui.js";
+import { CELL_METERS, BOARD_MOVEMENTS, getSelectedDistance, setSelectedDistance } from "./aoe-config.js";
+import { updateGridSize, clearCoverResult } from "./aoe-svg.js";
+import { updateInterface, displayDistance } from "./aoe-ui.js";
 import { colorDistanceGrid } from "./aoe-distance.js";
 import { updateAoe } from "./aoe-aoe.js";
 import { updateCover } from "./aoe-cover.js";
-import { clearCoverResult } from "./aoe-svg.js";
-import { getCellCoordinates } from "./aoe-grid.js";
-import { setCurrentPosition } from "./aoe-grid.js";
-import { translateBoard } from "./aoe-grid.js";
-import { displayDistance } from "./aoe-ui.js";
+import { getCellCoordinates, setCurrentPosition, translateBoard } from "./aoe-grid.js";
 
 $(function () {
     updateGridSize();

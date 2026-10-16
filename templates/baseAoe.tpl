@@ -11,6 +11,6 @@
     <body>
         %4$s
         %5$s
-        <script src="%3$sassets/js/aoe.js?v=%6$s"></script>
+        <script type="module" src="%3$sassets/js/aoe/aoe-main.js?v=%6$s"></script>
     </body>
 </html>

@@ -1,10 +1,7 @@
 import { CELL_METERS } from "./aoe-config.js";
-import { getCellCoordinates } from "./aoe-grid.js";
-import { getCurrentPosition } from "./aoe-grid.js";
+import { getCellCoordinates, getCurrentPosition } from "./aoe-grid.js";
 import { drawAoeResult } from "./aoe-svg.js";
-import { getCellCoverage } from "./aoe-geometry.js";
-import { isPointInsideTriangle } from "./aoe-geometry.js";
-import { isPointInsideLine } from "./aoe-geometry.js";
+import { getCellCoverage, isPointInsideTriangle, isPointInsideLine } from "./aoe-geometry.js";
 
 export function updateAoe() {
     $("#grid .cell").removeClass("aoe");

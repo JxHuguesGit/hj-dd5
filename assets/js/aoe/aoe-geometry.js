@@ -1,5 +1,4 @@
-import { AOE_SAMPLES } from "./aoe-config.js";
-import { EPSILON } from "./aoe-config.js";
+import { AOE_SAMPLES, EPSILON } from "./aoe-config.js";
 
 export function doesSegmentCrossCell(
     x1,

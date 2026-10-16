@@ -1,13 +1,8 @@
 import { COVER_BY_BLOCKED_RAYS } from "./aoe-config.js";
-import { clearCoverResult } from "./aoe-svg.js";
-import { getCellCoordinates } from "./aoe-grid.js";
-import { getCurrentPosition } from "./aoe-grid.js";
-import { getCellVertices } from "./aoe-geometry.js";
-import { doesSegmentCrossCell } from "./aoe-geometry.js";
-import { doesSegmentOverlapEdge } from "./aoe-geometry.js";
-import { drawCoverResult } from "./aoe-svg.js";
+import { clearCoverResult, drawCoverResult } from "./aoe-svg.js";
+import { getCellCoordinates, getCurrentPosition, getCell } from "./aoe-grid.js";
+import { getCellVertices, doesSegmentCrossCell, doesSegmentOverlapEdge } from "./aoe-geometry.js";
 import { displayCoverResult } from "./aoe-ui.js";
-import { getCell } from "./aoe-grid.js";
 
 export function updateCover() {
     if ($("#mode").val() !== "cover") {

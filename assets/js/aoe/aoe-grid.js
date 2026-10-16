@@ -1,7 +1,4 @@
-import { GRID_MIN } from "./aoe-config.js";
-import { GRID_MAX } from "./aoe-config.js";
-import { setSelectedDistance } from "./aoe-config.js";
-
+import { GRID_MIN, GRID_MAX, setSelectedDistance } from "./aoe-config.js";
 import { updateAoe } from "./aoe-aoe.js";
 import { updateCover } from "./aoe-cover.js";
 import { displayDistance } from "./aoe-ui.js";

@@ -18,15 +18,12 @@ final class HomebrewCardContentBuilder
     public function build(object $groups): string
     {
         // Id du post Homebrew
-        /*
-        $wpPost = $this->wpPostServices->getById(1676);
+        $wpPost = $this->wpPostServices->getById(2135);
         $contentHtml = $this->renderCard(
                 apply_filters('the_content', $wpPost->post_content),
                 B::GLOSSAIRE_CARD
             ) .
             $this->getSidebar();
-        */
-        $contentHtml = '';
 
         foreach ($groups as $group) {
             $contentHtml .= $this->renderGroup($group);
@@ -42,7 +39,7 @@ final class HomebrewCardContentBuilder
     {
         return '';
     }
-    
+
     protected function renderItem(object $row): string
     {
         $htmlContent = Html::getBalise('hr', '', [C::CSSCLASS => 'separator']);

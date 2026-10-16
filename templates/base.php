@@ -99,10 +99,10 @@ class DD5Base
                     new AoeControllerFactory($renderer)
                 ),
                 new GlossaireRouter(
-                    new GlossaireControllerFactory($reader, $service, $renderer)
+                    new GlossaireControllerFactory($service, $renderer)
                 ),
                 new HomebrewRouter(
-                    new HomebrewControllerFactory($reader, $service, $renderer)
+                    new HomebrewControllerFactory($service, $renderer)
                 ),
                 new RulesRouter(
                     new RuleControllerFactory($reader, $service, $renderer)
