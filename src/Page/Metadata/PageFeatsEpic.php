@@ -18,6 +18,7 @@ class PageFeatsEpic extends PageMetadata
             'url'                     => Routes::FEAT_PREFIX . '-' . C::EPIC,
             'order'                   => 44,
             C::PARENT      => C::FEATS,
+            'adminOnly'    => true,
         ];
     }
 }

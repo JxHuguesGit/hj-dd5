@@ -70,6 +70,7 @@ class Constant
     public const GOLDPRICE              = 'goldPrice';
     public const HEAVY                  = 'heavy';
     public const HOME                   = 'home';
+    public const HOMEBREW               = 'homebrew';
     public const ID                     = 'id';
     public const ILLIM                  = 'illim';
     public const INITIATIVE             = 'initiative';

@@ -18,6 +18,7 @@ class PageItems extends PageMetadata
             'url'                     => Routes::ITEMS_PREFIX,
             'order'                   => 50,
             C::PARENT      => C::HOME,
+            'adminOnly'    => true,
         ];
     }
 }

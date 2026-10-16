@@ -18,6 +18,7 @@ class PageSpecies extends PageMetadata
             'url'                     => Routes::SPECIES_PREFIX,
             'order'                   => 30,
             C::PARENT      => C::HOME,
+            'adminOnly'    => true,
         ];
     }
 

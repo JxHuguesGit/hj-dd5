@@ -18,6 +18,7 @@ class PageOrigines extends PageMetadata
             'url'                     => Routes::ORIGINS_PREFIX,
             'order'                   => 40,
             C::PARENT      => C::HOME,
+            'adminOnly'    => true,
         ];
     }
 }

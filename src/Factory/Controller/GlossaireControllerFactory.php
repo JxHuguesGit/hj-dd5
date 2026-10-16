@@ -30,7 +30,9 @@ class GlossaireControllerFactory
             new GlossaireListPresenter(),
             new PageList(
                 $this->renderer,
-                new GlossaireCardContentBuilder()
+                new GlossaireCardContentBuilder(
+                    $this->serviceFactory->wordpress()
+                )
             ),
             new MenuPresenter (
                 PageRegistry::getInstance()->all(),

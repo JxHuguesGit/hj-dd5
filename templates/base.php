@@ -6,11 +6,13 @@ use src\Controller\Public\PublicNotFound;
 use src\Factory\Controller\AoeControllerFactory;
 use src\Factory\Controller\FeatControllerFactory;
 use src\Factory\Controller\GlossaireControllerFactory;
+use src\Factory\Controller\HomebrewControllerFactory;
 use src\Factory\Controller\InitiativeControllerFactory;
 use src\Factory\Controller\ItemControllerFactory;
 use src\Factory\Controller\MapControllerFactory;
 use src\Factory\Controller\OriginControllerFactory;
 use src\Factory\Controller\PublicControllerFactory;
+use src\Factory\Controller\RuleControllerFactory;
 use src\Factory\Controller\SkillControllerFactory;
 use src\Factory\Controller\SpecieControllerFactory;
 use src\Factory\Controller\SpellControllerFactory;
@@ -27,12 +29,14 @@ use src\Renderer\TemplateRenderer;
 use src\Router\AoeRouter;
 use src\Router\FeatRouter;
 use src\Router\GlossaireRouter;
+use src\Router\HomebrewRouter;
 use src\Router\InitiativeRouter;
 use src\Router\ItemRouter;
 use src\Router\MapRouter;
 use src\Router\OriginRouter;
 use src\Router\RegistryRouter;
 use src\Router\Router;
+use src\Router\RulesRouter;
 use src\Router\SkillRouter;
 use src\Router\SpecieRouter;
 use src\Router\SpellRouter;
@@ -96,6 +100,12 @@ class DD5Base
                 ),
                 new GlossaireRouter(
                     new GlossaireControllerFactory($reader, $service, $renderer)
+                ),
+                new HomebrewRouter(
+                    new HomebrewControllerFactory($reader, $service, $renderer)
+                ),
+                new RulesRouter(
+                    new RuleControllerFactory($reader, $service, $renderer)
                 ),
             ]),
             new PublicNotFound(

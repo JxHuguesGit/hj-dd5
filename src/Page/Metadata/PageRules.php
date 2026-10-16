@@ -18,6 +18,7 @@ class PageRules extends PageMetadata
             'url'                     => Routes::RULES_PREFIX,
             'order'                   => 70,
             C::PARENT      => C::HOME,
+            'adminOnly'    => true,
         ];
     }
 }

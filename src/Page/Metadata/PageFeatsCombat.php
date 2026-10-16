@@ -18,6 +18,7 @@ class PageFeatsCombat extends PageMetadata
             'url'                     => Routes::FEAT_PREFIX . '-' . C::COMBAT,
             'order'                   => 43,
             C::PARENT      => C::FEATS,
+            'adminOnly'    => true,
         ];
     }
 }

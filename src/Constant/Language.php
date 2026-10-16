@@ -65,6 +65,7 @@ class Language
     public const CHAR_CLASSE_TITLE = 'Classe du personnage';
     public const CHAR_HIST_TITLE = 'Historique du personnage';
     public const HISTORIQUES     = 'Historiques';
+    public const HOMEBREW_TITLE  = 'Règles maison';
     public const UNLIMITED       = 'Illimitée';
     public const INITIATIVE      = 'Initiative';
     public const INTELLIGENCE    = 'Intelligence';
@@ -97,7 +98,7 @@ class Language
     public const PROPERTIES      = 'Propriétés';
     public const PV              = 'PV';
     public const REFERENCE       = 'Référence';
-    public const RULES           = 'Règles';
+    public const RULES           = 'Les Règles';
     public const SOURCE          = 'Source';
     public const SPECIALES       = 'Spéciales';
     public const SAGESSE         = 'Sagesse';

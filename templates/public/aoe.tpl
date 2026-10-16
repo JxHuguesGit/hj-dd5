@@ -73,7 +73,7 @@
 <div class="grid-container">
     %2$s
     <svg
-        id="cover-overlay"
+        id="overlay"
         viewBox="0 0 49 49"
         preserveAspectRatio="none"
     ></svg>

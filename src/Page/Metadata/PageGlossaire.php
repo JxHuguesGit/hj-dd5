@@ -16,9 +16,10 @@ class PageGlossaire extends PageMetadata
             'icon'         => I::BOOK,
             C::TITLE       => L::GLOSSARY_TITLE,
             C::DESCRIPTION => 'Glossaire des termes de DD5.',
-            'url'          => Routes::GLOSSARY_PREFIX,
-            'order'        => 70,
-            C::PARENT      => C::HOME,
+            'url'          => Routes::RULES_PREFIX . Routes::GLOSSARY_PREFIX,
+            'order'        => 71,
+            C::PARENT      => C::RULES,
+            'adminOnly'    => true,
         ];
     }
 }

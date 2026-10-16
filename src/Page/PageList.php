@@ -55,8 +55,7 @@ class PageList
     {
         // Construire le tableau
         $contentHtml = $this->contentBuilder->build(
-            $viewData,
-            [B::WITH_MRGNTOP => false]
+            $viewData
         );
 
         // Section centrale (titre + tableau)

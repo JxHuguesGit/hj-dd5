@@ -10,7 +10,10 @@ use src\Page\Metadata\{
     PageFeatsOrigin,
     PageGlossaire,
     PageHome,
+    PageHomebrew,
+    PageMetadata,
     PageOrigines,
+    PageRules,
     PageSkills,
     PageSpecies,
     PageSpells
@@ -39,51 +42,54 @@ class PageRegistry
 
     private function loadStaticPages(): void
     {
-        // Page Home
-        $homePage = (new PageHome())->getPageElement();
-        $this->register($homePage);
+        $pages = [
+            // Page Home
+            new PageHome(),
+            // Page Origines (liste)
+            new PageOrigines(),
+            // Page Espèces (liste)
+            new PageSpecies(),
+            // Page Dons (liste)
+            new PageFeats(),
+                // Catégories de Dons (liste)
+                new PageFeatsCombat(),
+                new PageFeatsEpic(),
+                new PageFeatsGeneral(),
+                new PageFeatsOrigin(),
+            // Page Items (liste)
+            new PageItems(),
+            // Page Skills (liste)
+            new PageSkills(),
+            // Page Spells (liste)
+            new PageSpells(),
+            // Page Règles (lite)
+            new PageRules(),
+                // Page Glossaire (liste)
+                new PageGlossaire(),
+                // Page Homebrew (liste)
+                new PageHomebrew(),
+        ];
 
-        // Page Origines (liste)
-        $originesPage = (new PageOrigines())->getPageElement();
-        $this->register($originesPage);
-
-        // Page Espèces (liste)
-        $speciesPage = (new PageSpecies())->getPageElement();
-        $this->register($speciesPage);
-
-        // Page Dons (liste)
-        $featsPage = (new PageFeats())->getPageElement();
-        $this->register($featsPage);
-
-        // Catégories de Dons (liste)
-        $subFeatsPage = (new PageFeatsCombat())->getPageElement();
-        $this->register($subFeatsPage);
-        $subFeatsPage = (new PageFeatsEpic())->getPageElement();
-        $this->register($subFeatsPage);
-        $subFeatsPage = (new PageFeatsGeneral())->getPageElement();
-        $this->register($subFeatsPage);
-        $subFeatsPage = (new PageFeatsOrigin())->getPageElement();
-        $this->register($subFeatsPage);
-
-        // Page Items (liste)
-        $itemsPage = (new PageItems())->getPageElement();
-        $this->register($itemsPage);
-
-        // Page Skills (liste)
-        $skillsPage = (new PageSkills())->getPageElement();
-        $this->register($skillsPage);
-
-        // Page Spells (liste)
-        $spellsPage = (new PageSpells())->getPageElement();
-        $this->register($spellsPage);
-
-        // Page Glossaire (liste)
-        $glossairePage = (new PageGlossaire())->getPageElement();
-        $this->register($glossairePage);
-
+        foreach ($pages as $page) {
+            $this->registerPage($page);
+        }
     }
 
-    public function register($elements): void
+    private function registerPage(PageMetadata $page): void
+    {
+        $config = $page->getConfig();
+
+        if (
+            ($config['adminOnly'] ?? false)
+            && !current_user_can('manage_options')
+        ) {
+            return;
+        }
+
+        $this->register($page->getPageElement());
+    }
+
+    public function register(PageElement $elements): void
     {
         if (is_array($elements)) {
             foreach ($elements as $el) {

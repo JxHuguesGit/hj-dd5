@@ -18,6 +18,7 @@ class PageFeatsGeneral extends PageMetadata
             'url'                     => Routes::FEAT_PREFIX . '-' . C::GENERAL,
             'order'                   => 42,
             C::PARENT      => C::FEATS,
+            'adminOnly'    => true,
         ];
     }
 }

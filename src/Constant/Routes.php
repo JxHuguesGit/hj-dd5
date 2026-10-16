@@ -7,6 +7,7 @@ final class Routes
     public const FEAT_PREFIX    = '/feat-';
     public const FEATS_PREFIX   = '/feats';
     public const GLOSSARY_PREFIX = '/glossary';
+    public const HOMEBREW_PREFIX = '/homebrew';
     public const ITEM_PREFIX    = '/item-';
     public const ITEMS_PREFIX   = '/items';
     public const ORIGIN_PREFIX  = '/origine-';
@@ -22,7 +23,10 @@ final class Routes
     public const AOE_PATTERN    = '#^aoe$#';
     public const FEAT_PATTERN   = '#^feat-(.+)$#';
     public const FEATS_PATTERN  = '#^feats-(.+)$#';
+    public const RULES_PATTERN  = '#^rules/(.*)?#';
+    public const RULE_PATTERN   = '#^rules/(.*)-(.*)?#';
     public const GLOSSAIRE_PATTERN  = '#^glossary-(.*)?#';
+    public const HOMEBREW_PATTERN  = '#^homebrew-(.*)?#';
     public const INITIATIVE_PATTERN = '#^initiative(?:/([^/]+))?$#';
     public const ITEM_PATTERN   = '#^item-(.+)$#';
     public const ITEMS_PATTERN  = '#^items-(.+)$#';

@@ -18,6 +18,7 @@ class PageFeatsOrigin extends PageMetadata
             'url'                     => Routes::FEAT_PREFIX . '-' . C::ORIGIN,
             'order'                   => 41,
             C::PARENT      => C::FEATS,
+            'adminOnly'    => true,
         ];
     }
 }
