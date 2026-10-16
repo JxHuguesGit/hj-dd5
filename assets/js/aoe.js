@@ -1,7 +1,7 @@
 // config.js
-const GRID_MIN = -24;
-const GRID_MAX = 24;
 const GRID_SIZE = 49;
+const GRID_MIN = -(GRID_SIZE - 1) / 2;
+const GRID_MAX = (GRID_SIZE - 1) / 2;
 
 const CELL_METERS = 1.5;
 const AOE_SAMPLES = 10;
@@ -34,8 +34,8 @@ let selectedDistance = null;
 // grid.js
 function getCellCoordinates($cell) {
     return {
-        cellX: parseInt($cell.data("x"), 10),
-        cellY: parseInt($cell.data("y"), 10)
+        cellX: Number.parseInt($cell.data("x"), 10),
+        cellY: Number.parseInt($cell.data("y"), 10)
     };
 }
 
@@ -47,8 +47,8 @@ function getCell(x, y) {
 
 function getCurrentPosition() {
     return {
-        x: parseInt($("#x").val(), 10),
-        y: parseInt($("#y").val(), 10)
+        x: Number.parseInt($("#x").val(), 10),
+        y: Number.parseInt($("#y").val(), 10)
     };
 }
 
@@ -376,6 +376,7 @@ function colorDistanceGrid() {
 // aoe.js
 function updateAoe() {
     $("#grid .cell").removeClass("aoe");
+    //clearAoeResult();
     if ($("#mode").val() !== "aoe") {
         return;
     }
@@ -399,11 +400,12 @@ function updateAoe() {
             drawCubeAoe(x, y);
             break;
     }
+    drawAoeResult();
 }
 
 function drawCubeAoe(originX, originY) {
     const size = Math.round(
-        parseFloat($("#size").val()) /
+        Number.parseFloat($("#size").val()) /
         CELL_METERS
     );
     if (
@@ -458,7 +460,7 @@ function drawConeAoe(targetX, targetY) {
 
 function drawRadiusAoe(centerX, centerY) {
     const radius =
-        parseFloat($("#size").val()) /
+        Number.parseFloat($("#size").val()) /
         CELL_METERS;
     if (
         Number.isNaN(centerX) ||
@@ -478,7 +480,7 @@ function drawRadiusAoe(centerX, centerY) {
 
 function drawLineAoe(targetX, targetY) {
     const width =
-        parseFloat($("#size").val()) /
+        Number.parseFloat($("#size").val()) /
         CELL_METERS;
     if (
         Number.isNaN(targetX) ||
@@ -563,7 +565,7 @@ function updateCover() {
         return;
     }
     const { x, y } = getCurrentPosition();
-    const size = parseInt(
+    const size = Number.parseInt(
         $("#creature-size").val(),
         10
     );
@@ -842,6 +844,14 @@ function doesRayFollowSharedObstacleEdge(
 }
 
 
+// svg.js
+function updateGridSize() {
+    $("#overlay").attr(
+        "viewBox",
+        `0 0 ${GRID_SIZE} ${GRID_SIZE}`
+    );
+}
+
 // cover-svg.js
 function gridToSvg(point) {
     const offset = (GRID_SIZE / 2);
@@ -863,7 +873,7 @@ function createSvgElement(name, attributes = {}) {
 }
 
 function drawCoverResult(result) {
-    const svg = document.querySelector("#cover-overlay");
+    const svg = document.querySelector("#overlay");
     svg.replaceChildren();
     $("#grid .cell").removeClass("cover-selected");
     if (!result) {
@@ -899,11 +909,247 @@ function drawCoverResult(result) {
 }
 
 function clearCoverResult() {
-    const svg = document.querySelector("#cover-overlay");
+    const svg = document.querySelector("#overlay");
     if (svg) {
         svg.replaceChildren();
     }
     $("#grid .cell").removeClass("cover-selected");
+}
+
+
+// aoe-svg.js
+function drawAoeResult() {
+    console.log("DRAW AOE RESULT");
+    const $svg = $("#overlay");
+console.log("SVG :", $svg.length);
+    $svg.empty();
+
+    if ($("#mode").val() !== "aoe") {
+        return;
+    }
+
+    $svg.append(`
+        <circle
+            cx="24.5"
+            cy="24.5"
+            r="5"
+            fill="none"
+            stroke="red"
+            stroke-width="0.5"
+        />
+    `);
+    console.log("SVG HTML :", $svg.html());
+}
+
+function drawAoeCircle(svg, centerX, centerY) {
+    const radius =
+        Number.parseFloat($("#size").val()) /
+        CELL_METERS;
+
+    if (
+        Number.isNaN(centerX) ||
+        Number.isNaN(centerY) ||
+        Number.isNaN(radius) ||
+        radius <= 0
+    ) {
+        return;
+    }
+
+    const center = gridToSvg({
+        x: centerX,
+        y: centerY
+    });
+
+    const circle = createSvgElement("circle", {
+        cx: center.x,
+        cy: center.y,
+        r: radius,
+        class: "aoe-outline"
+    });
+
+    svg.appendChild(circle);
+}
+
+function drawAoeCube(svg, originX, originY) {
+    const size = Math.round(
+        Number.parseFloat($("#size").val()) /
+        CELL_METERS
+    );
+
+    if (
+        Number.isNaN(originX) ||
+        Number.isNaN(originY) ||
+        Number.isNaN(size) ||
+        size <= 0
+    ) {
+        return;
+    }
+
+    const topLeft = gridToSvg({
+        x: originX - 0.5,
+        y: originY - 0.5
+    });
+
+    const rectangle = createSvgElement("rect", {
+        x: topLeft.x,
+        y: topLeft.y,
+        width: size,
+        height: size,
+        class: "aoe-outline"
+    });
+
+    svg.appendChild(rectangle);
+}
+
+function drawAoeCone(svg, targetX, targetY) {
+    if (
+        Number.isNaN(targetX) ||
+        Number.isNaN(targetY) ||
+        (targetX === 0 && targetY === 0)
+    ) {
+        return;
+    }
+
+    const length = Math.hypot(
+        targetX,
+        targetY
+    );
+
+    const perpendicularX =
+        -targetY / length;
+
+    const perpendicularY =
+        targetX / length;
+
+    const halfWidth = length / 2;
+
+    const left = {
+        x:
+            targetX +
+            perpendicularX * halfWidth,
+        y:
+            targetY +
+            perpendicularY * halfWidth
+    };
+
+    const right = {
+        x:
+            targetX -
+            perpendicularX * halfWidth,
+        y:
+            targetY -
+            perpendicularY * halfWidth
+    };
+
+    const origin = gridToSvg({
+        x: 0,
+        y: 0
+    });
+
+    const leftSvg = gridToSvg(left);
+    const rightSvg = gridToSvg(right);
+
+    const polygon = createSvgElement("polygon", {
+        points: [
+            `${origin.x},${origin.y}`,
+            `${leftSvg.x},${leftSvg.y}`,
+            `${rightSvg.x},${rightSvg.y}`
+        ].join(" "),
+        class: "aoe-outline"
+    });
+
+    svg.appendChild(polygon);
+}
+
+function drawAoeLine(svg, targetX, targetY) {
+    const width =
+        Number.parseFloat($("#size").val()) /
+        CELL_METERS;
+
+    if (
+        Number.isNaN(targetX) ||
+        Number.isNaN(targetY) ||
+        Number.isNaN(width) ||
+        width <= 0
+    ) {
+        return;
+    }
+
+    const length = Math.hypot(
+        targetX,
+        targetY
+    );
+
+    if (length === 0) {
+        return;
+    }
+
+    const halfWidth = width / 2;
+
+    const perpendicularX =
+        -targetY / length;
+
+    const perpendicularY =
+        targetX / length;
+
+    const origin = {
+        x: 0,
+        y: 0
+    };
+
+    const leftStart = {
+        x: origin.x + perpendicularX * halfWidth,
+        y: origin.y + perpendicularY * halfWidth
+    };
+
+    const rightStart = {
+        x: origin.x - perpendicularX * halfWidth,
+        y: origin.y - perpendicularY * halfWidth
+    };
+
+    const leftEnd = {
+        x: targetX + perpendicularX * halfWidth,
+        y: targetY + perpendicularY * halfWidth
+    };
+
+    const rightEnd = {
+        x: targetX - perpendicularX * halfWidth,
+        y: targetY - perpendicularY * halfWidth
+    };
+
+    const start = gridToSvg(origin);
+    const leftStartSvg = gridToSvg(leftStart);
+    const rightStartSvg = gridToSvg(rightStart);
+    const leftEndSvg = gridToSvg(leftEnd);
+    const rightEndSvg = gridToSvg(rightEnd);
+
+    const path = createSvgElement("path", {
+        d: [
+            `M ${leftStartSvg.x} ${leftStartSvg.y}`,
+            `L ${leftEndSvg.x} ${leftEndSvg.y}`,
+
+            `A ${halfWidth} ${halfWidth} 0 0 1 ` +
+            `${rightEndSvg.x} ${rightEndSvg.y}`,
+
+            `L ${rightStartSvg.x} ${rightStartSvg.y}`,
+
+            `A ${halfWidth} ${halfWidth} 0 0 1 ` +
+            `${leftStartSvg.x} ${leftStartSvg.y}`,
+
+            "Z"
+        ].join(" "),
+        class: "aoe-outline"
+    });
+
+    svg.appendChild(path);
+}
+
+function clearAoeResult() {
+    const svg = document.querySelector("#overlay");
+
+    if (svg) {
+        svg.replaceChildren();
+    }
 }
 
 
@@ -993,6 +1239,7 @@ function displayCoverResult(result) {
 
 // app.js
 $(function () {
+    updateGridSize();
     updateInterface();
     colorDistanceGrid();
 
@@ -1097,7 +1344,7 @@ $(function () {
             event.preventDefault();
             const $size = $("#size");
             const currentSize =
-                parseFloat($size.val()) || CELL_METERS;
+                Number.parseFloat($size.val()) || CELL_METERS;
             let steps =
                 Math.round(currentSize / CELL_METERS);
             if (event.originalEvent.deltaY < 0) {
