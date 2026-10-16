@@ -5,7 +5,6 @@ import { getCellCoverage, isPointInsideTriangle, isPointInsideLine } from "./aoe
 
 export function updateAoe() {
     $("#grid .cell").removeClass("aoe");
-    //clearAoeResult();
     if ($("#mode").val() !== "aoe") {
         return;
     }

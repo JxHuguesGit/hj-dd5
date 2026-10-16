@@ -208,23 +208,23 @@ function calculateCover(
     return bestResult;
 }
 
+function distanceToRange(min, max) {
+    if (min>0) {
+        return min;
+    }
+    if (max<0) {
+        return -max;
+    }
+    return 0;
+}
+
 function isTargetAdjacentToSource(x, y, size) {
     const minX = x;
     const maxX = x + size - 1;
     const minY = y;
     const maxY = y + size - 1;
-    const distanceX =
-        0 < minX
-            ? minX
-            : 0 > maxX
-                ? -maxX
-                : 0;
-    const distanceY =
-        0 < minY
-            ? minY
-            : 0 > maxY
-                ? -maxY
-                : 0;
+    const distanceX = distanceToRange(minX, maxX);
+    const distanceY = distanceToRange(minY, maxY);
     return distanceX <= 1 && distanceY <= 1;
 }
 
@@ -248,14 +248,8 @@ function doesRayFollowSharedObstacleEdge(
             const edgeX = obstacle.x + 0.5;
             if (
                 doesSegmentOverlapEdge(
-                    source.x,
-                    source.y,
-                    target.x,
-                    target.y,
-                    edgeX,
-                    obstacle.y - 0.5,
-                    edgeX,
-                    obstacle.y + 0.5
+                    {start: source, end: target},
+                    {start: {x: edgeX, y: obstacle.y - 0.5}, end: {x: edgeX,y: obstacle.y + 0.5}}
                 )
             ) {
                 return true;
@@ -270,14 +264,8 @@ function doesRayFollowSharedObstacleEdge(
             const edgeY = obstacle.y + 0.5;
             if (
                 doesSegmentOverlapEdge(
-                    source.x,
-                    source.y,
-                    target.x,
-                    target.y,
-                    obstacle.x - 0.5,
-                    edgeY,
-                    obstacle.x + 0.5,
-                    edgeY
+                    {start: source, end: target},
+                    {start: {x: obstacle.x - 0.5, y: edgeY}, end: {x: obstacle.x + 0.5, y: edgeY}}
                 )
             ) {
                 return true;

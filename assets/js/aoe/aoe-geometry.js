@@ -53,49 +53,48 @@ export function doesSegmentCrossCell(
     return tMax - tMin > EPSILON;
 }
 
-export function doesSegmentOverlapEdge(
-    x1,
-    y1,
-    x2,
-    y2,
-    edgeX1,
-    edgeY1,
-    edgeX2,
-    edgeY2
-) {
-    if (Math.abs(edgeX1 - edgeX2) < EPSILON) {
+export function doesSegmentOverlapEdge(segment, edge) {
+    const { start, end } = segment;
+    const { start: edgeStart, end: edgeEnd } = edge;
+
+    if (Math.abs(edgeStart.x - edgeEnd.x) < EPSILON) {
         if (
-            Math.abs(x1 - x2) >= EPSILON ||
-            Math.abs(x1 - edgeX1) >= EPSILON
+            Math.abs(start.x - end.x) >= EPSILON ||
+            Math.abs(start.x - edgeStart.x) >= EPSILON
         ) {
             return false;
         }
-        const segmentMin = Math.min(y1, y2);
-        const segmentMax = Math.max(y1, y2);
-        const edgeMin = Math.min(edgeY1, edgeY2);
-        const edgeMax = Math.max(edgeY1, edgeY2);
+
+        const segmentMin = Math.min(start.y, end.y);
+        const segmentMax = Math.max(start.y, end.y);
+        const edgeMin = Math.min(edgeStart.y, edgeEnd.y);
+        const edgeMax = Math.max(edgeStart.y, edgeEnd.y);
+
         return (
             Math.min(segmentMax, edgeMax) -
             Math.max(segmentMin, edgeMin)
         ) > EPSILON;
     }
 
-    if (Math.abs(edgeY1 - edgeY2) < EPSILON) {
+    if (Math.abs(edgeStart.y - edgeEnd.y) < EPSILON) {
         if (
-            Math.abs(y1 - y2) >= EPSILON ||
-            Math.abs(y1 - edgeY1) >= EPSILON
+            Math.abs(start.y - end.y) >= EPSILON ||
+            Math.abs(start.y - edgeStart.y) >= EPSILON
         ) {
             return false;
         }
-        const segmentMin = Math.min(x1, x2);
-        const segmentMax = Math.max(x1, x2);
-        const edgeMin = Math.min(edgeX1, edgeX2);
-        const edgeMax = Math.max(edgeX1, edgeX2);
+
+        const segmentMin = Math.min(start.x, end.x);
+        const segmentMax = Math.max(start.x, end.x);
+        const edgeMin = Math.min(edgeStart.x, edgeEnd.x);
+        const edgeMax = Math.max(edgeStart.x, edgeEnd.x);
+
         return (
             Math.min(segmentMax, edgeMax) -
             Math.max(segmentMin, edgeMin)
         ) > EPSILON;
     }
+
     return false;
 }
 

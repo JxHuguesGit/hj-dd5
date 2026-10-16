@@ -99,7 +99,6 @@ $(function () {
             if (mode === "cover") {
                 setCurrentPosition(cellX, cellY);
                 updateCover();
-                return;
             }
         })
         .on("wheel", function (event) {

@@ -16,14 +16,6 @@ export function updateGridSize() {
     );
 }
 
-function clearAoeResult() {
-    const svg = document.querySelector("#overlay");
-
-    if (svg) {
-        svg.replaceChildren();
-    }
-}
-
 function createSvgElement(name, attributes = {}) {
     const element = document.createElementNS(
         "http://www.w3.org/2000/svg",
@@ -270,7 +262,6 @@ function drawAoeLine(svg, targetX, targetY) {
         y: targetY - perpendicularY * halfWidth
     };
 
-    const start = gridToSvg(origin);
     const leftStartSvg = gridToSvg(leftStart);
     const rightStartSvg = gridToSvg(rightStart);
     const leftEndSvg = gridToSvg(leftEnd);
