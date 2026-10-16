@@ -1,10 +1,17 @@
 import { CELL_METERS } from "./aoe-config.js";
 import { getCellCoordinates, getCurrentPosition } from "./aoe-grid.js";
 import { drawAoeResult } from "./aoe-svg.js";
-import { getCellCoverage, isPointInsideTriangle, isPointInsideLine } from "./aoe-geometry.js";
+import { isRayBlocked, getObstacles } from "./aoe-cover.js";
+import { getCellCoverage, getCellVertices, isPointInsideTriangle, isPointInsideLine } from "./aoe-geometry.js";
 
 export function updateAoe() {
-    $("#grid .cell").removeClass("aoe");
+    $("#grid .cell").removeClass(
+        "aoe " +
+        "aoe-cover-none " +
+        "aoe-cover-half " +
+        "aoe-cover-three-quarters " +
+        "aoe-cover-total"
+    );
     if ($("#mode").val() !== "aoe") {
         return;
     }
@@ -137,6 +144,7 @@ function drawLineAoe(targetX, targetY) {
             width
         );
     });
+    updateLineCover();
 }
 
 function isCellCoveredByCone(
@@ -147,23 +155,23 @@ function isCellCoveredByCone(
     rightX,
     rightY
 ) {
+    const triangle = {
+        a: { x: 0, y: 0 },
+        b: { x: leftX, y: leftY },
+        c: { x: rightX, y: rightY }
+    };
+
     return getCellCoverage(
         cellX,
         cellY,
-        function (px, py) {
-            return isPointInsideTriangle(
-                px,
-                py,
-                0,
-                0,
-                leftX,
-                leftY,
-                rightX,
-                rightY
-            );
-        }
+        (px, py) =>
+            isPointInsideTriangle(
+                { x: px, y: py },
+                triangle
+            )
     ) >= 0.5;
 }
+
 
 function isCellCoveredByLine(
     cellX,
@@ -185,4 +193,109 @@ function isCellCoveredByLine(
             );
         }
     ) >= 0.5;
+}
+
+function calculateAoeCover(
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    obstacles
+) {
+    const sourceVertices =
+        getCellVertices(sourceX, sourceY);
+
+    const targetVertices =
+        getCellVertices(targetX, targetY);
+
+    let minVisible = 4;
+
+    sourceVertices.forEach(function (source) {
+
+        let visible = 0;
+
+        targetVertices.forEach(function (target) {
+
+            if (
+                !isRayBlocked(
+                    source,
+                    target,
+                    obstacles
+                )
+            ) {
+                visible++;
+            }
+
+        });
+
+        minVisible = Math.min(
+            minVisible,
+            visible
+        );
+    });
+
+    switch (minVisible) {
+
+        case 0:
+            return 100;
+
+        case 1:
+            return 75;
+
+        case 2:
+            return 50;
+
+        default:
+            return 0;
+    }
+}
+
+function updateLineCover() {
+
+    const obstacles = getObstacles();
+
+    $("#grid .cell.aoe").each(function () {
+
+        const $cell = $(this);
+
+        const {
+            cellX,
+            cellY
+        } = getCellCoordinates($cell);
+
+        const cover = calculateAoeCover(
+            0,
+            0,
+            cellX,
+            cellY,
+            obstacles
+        );
+
+        $cell.removeClass(
+            "aoe-cover-none " +
+            "aoe-cover-half " +
+            "aoe-cover-three-quarters " +
+            "aoe-cover-total"
+        );
+        switch (cover) {
+            case 100:
+                $cell.addClass("aoe-cover-total");
+                break;
+
+            case 75:
+                $cell.addClass("aoe-cover-three-quarters");
+                break;
+
+            case 50:
+                $cell.addClass("aoe-cover-half");
+                break;
+
+            default:
+                $cell.addClass("aoe-cover-none");
+        }
+        $cell.attr(
+            "data-cover",
+            cover
+        );
+    });
 }

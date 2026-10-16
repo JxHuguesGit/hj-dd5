@@ -172,4 +172,13 @@ $(function () {
             movement.dy
         );
     });
+
+    const $helpPanel = $("#help-panel");
+    $("#help-toggle").on("click", function () {
+        $helpPanel.toggleClass("open");
+    });
+    $("#help-close").on("click", function () {
+        $helpPanel.removeClass("open");
+    });
+
 });

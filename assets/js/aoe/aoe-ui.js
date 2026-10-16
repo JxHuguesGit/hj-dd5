@@ -2,8 +2,14 @@ import { getDistanceMeters } from "./aoe-distance.js";
 
 export function displayDistance(x, y) {
     const distance = getDistanceMeters(x, y);
-    const formattedDistance =
-        distance.toLocaleString("fr-FR");
+    let formattedDistance =
+        distance.toLocaleString("fr-FR", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+        });
+    if (distance < 10) {
+        formattedDistance = ` ${formattedDistance}`;
+    }
     $("#distance-info").text(
         `Distance : ${formattedDistance} m`
     );

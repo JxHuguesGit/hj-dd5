@@ -157,52 +157,31 @@ export function isPointInsideLine(
         halfWidth * halfWidth;
 }
 
-export function isPointInsideTriangle(
-    px,
-    py,
-    ax,
-    ay,
-    bx,
-    by,
-    cx,
-    cy
-) {
-    const d1 = triangleSign(
-        px, py,
-        ax, ay,
-        bx, by
-    );
-    const d2 = triangleSign(
-        px, py,
-        bx, by,
-        cx, cy
-    );
-    const d3 = triangleSign(
-        px, py,
-        cx, cy,
-        ax, ay
-    );
+export function isPointInsideTriangle(point, triangle) {
+    const { a, b, c } = triangle;
+
+    const d1 = triangleSign(point, a, b);
+    const d2 = triangleSign(point, b, c);
+    const d3 = triangleSign(point, c, a);
+
     const hasNegative =
         d1 < 0 ||
         d2 < 0 ||
         d3 < 0;
+
     const hasPositive =
         d1 > 0 ||
         d2 > 0 ||
         d3 > 0;
+
     return !(hasNegative && hasPositive);
 }
 
-function triangleSign(
-    px,
-    py,
-    ax,
-    ay,
-    bx,
-    by
-) {
+
+function triangleSign(p1, p2, p3) {
     return (
-        (px - bx) * (ay - by) -
-        (ax - bx) * (py - by)
+        (p1.x - p3.x) * (p2.y - p3.y) -
+        (p2.x - p3.x) * (p1.y - p3.y)
     );
 }
+

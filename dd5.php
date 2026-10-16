@@ -1,11 +1,32 @@
 <?php
 use src\Action\Ajax;
 use src\Exception\ExceptionRenderer;
+use src\Model\PageRegistry;
 
 define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
 
+if (false) {
+    // Activer l'affichage des erreurs
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    // Pour voir la stack complète lors d'une exception
+    set_exception_handler(function ($e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+        echo $e->getTraceAsString();
+    });
+}
+
+add_filter('redirect_canonical', function ($redirect_url, $requested_url) {
+    $path = trim(parse_url($requested_url, PHP_URL_PATH), '/');
+    $page = PageRegistry::getInstance()->get($path);
+    if ($path !== null) {
+        return false;
+    }
+    return $redirect_url;
+}, 10, 2);
 
 /**
  * Plugin Name: HJ - DD5

@@ -86,7 +86,7 @@ function getTargetGeometry(originX, originY, size) {
     };
 }
 
-function getObstacles() {
+export function getObstacles() {
     const obstacles = [];
     $("#grid .cell.obstacle")
         .not(".target")
@@ -104,7 +104,7 @@ function getObstacles() {
     return obstacles;
 }
 
-function isRayBlocked(source, target, obstacles) {
+export function isRayBlocked(source, target, obstacles) {
     for (const obstacle of obstacles) {
         if (
             doesSegmentCrossCell(
