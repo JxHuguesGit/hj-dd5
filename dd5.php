@@ -7,7 +7,7 @@ define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
 
-if (false) {
+if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
     // Activer l'affichage des erreurs
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -22,7 +22,7 @@ if (false) {
 add_filter('redirect_canonical', function ($redirect_url, $requested_url) {
     $path = trim(parse_url($requested_url, PHP_URL_PATH), '/');
     $page = PageRegistry::getInstance()->get($path);
-    if ($path !== null) {
+    if ($page !== null) {
         return false;
     }
     return $redirect_url;
