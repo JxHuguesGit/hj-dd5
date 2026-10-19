@@ -1,0 +1,1706 @@
+@use "variables" as *;
+@use "initiative_reset.scss";
+@use "initiative_header.scss";
+
+@mixin state-colors {
+    &.advfor {
+        background-color: oklch(0.508 0.118 165.612);
+        color: oklch(0.95 0.052 163.051);
+    }
+
+    &.advagainst {
+        background-color: oklch(0.455 0.188 13.697);
+        color: oklch(0.892 0.058 10.001);
+    }
+
+    &.disadvfor {
+        background-color: oklch(0.47 0.157 37.304);
+        color: oklch(0.901 0.076 70.697);
+    }
+
+    &.disadvagainst {
+        background-color: oklch(0.511 0.096 186.391);
+        color: oklch(0.953 0.051 180.801);
+    }
+
+    &.blinded {
+        background-color: oklch(0.446 0.03 256.802);
+        color: oklch(0.928 0.006 264.531);
+    }
+
+    &.charmed {
+        background-color: oklch(0.459 0.187 3.815);
+        color: oklch(0.899 0.061 343.231);
+    }
+
+    &.concentrating {
+        background-color: oklch(0.45 0.085 224.283);
+        color: oklch(0.917 0.08 205.041);
+    }
+
+    &.deafened {
+        background-color: oklch(0.476 0.114 61.907);
+        color: oklch(0.945 0.129 101.54);
+    }
+
+    &.frightened {
+        background-color: oklch(0.438 0.218 303.724);
+        color: oklch(0.902 0.063 306.703);
+    }
+
+    &.incapacitated {
+        background-color: oklch(0.444 0.177 26.899);
+        color: oklch(0.885 0.062 18.334);
+    }
+
+    &.paralyzed {
+        background-color: oklch(0.396 0.141 25.723);
+        color: oklch(0.808 0.114 19.571);
+    }
+
+    &.petrified {
+        background-color: oklch(0.374 0.01 67.558);
+        color: oklch(0.923 0.003 48.717);
+    }
+
+    &.poisoned {
+        background-color: oklch(0.448 0.119 151.328);
+        color: oklch(0.925 0.084 155.995);
+    }
+
+    &.prone {
+        background-color: oklch(0.421 0.095 57.708);
+        color: oklch(0.905 0.182 98.111);
+    }
+
+    &.restrained {
+        background-color: oklch(0.473 0.137 46.201);
+        color: oklch(0.924 0.12 95.746);
+    }
+
+    &.stunned {
+        background-color: oklch(0.554 0.135 66.442);
+        color: oklch(0.973 0.071 103.193);
+    }
+
+    &.grappled {
+        background-color: oklch(0.553 0.195 38.402);
+        color: oklch(0.954 0.038 75.164);
+    }
+
+    &.nonvisible {
+        background-color: oklch(0.424 0.199 265.638);
+        color: oklch(0.882 0.059 254.128);
+    }
+
+    &.default {
+        background-color: oklab(0.401 0.140289 -0.096015 / 0.6);
+        color: oklch(0.903 0.076 319.62);
+    }
+}
+
+.initiative-body {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: row;
+    min-height: 0;
+    overflow: hidden;
+    background-color: $color-bg-app;
+    color: $color-text-app;
+
+    > aside {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: relative;
+        width: 300px;
+        padding: 1rem;
+        background-color: oklab(0.21 -0.0032 -0.0339 / 0.5);
+        color: $color-text-app;
+
+        > .resize-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 12px;
+
+            cursor: col-resize;
+            touch-action: none;
+            user-select: none;
+
+            transition: background-color .15s ease;
+
+            &:hover {
+                background-color: oklab(0.623 -0.0378 -0.2106 / 0.3);
+            }
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+
+                pointer-events: none;
+
+                cursor: col-resize;
+
+                > div {
+                    width: 3px;
+                    height: 3px;
+
+                    background-color: $color-header-session-label;
+                    border-radius: $radius-pill;
+
+                    pointer-events: none;
+                }
+            }
+
+        }
+
+        > .aside-content {
+            display: flex;
+            flex: 1 1 0;
+            flex-direction: column;
+            gap: .75rem;
+            min-height: 0;
+        }
+
+        &.party {
+            border-right: 1px solid $color-bg-header;
+
+            > .resize-handle {
+                right: 0;
+            }
+
+            > .aside-content {
+                > h2 {
+                    margin: 0;
+
+                    color: $color-header-title;
+                    font-size: 18px;
+                    font-weight: 700;
+                    letter-spacing: .45px;
+                    line-height: 28px;
+                }
+
+                > button {
+                    padding: .375rem .75rem;
+
+                    border: 0;
+                    border-radius: 4px;
+
+                    color: $color-text-app;
+
+                    font-size: 14px;
+                    font-weight: 600;
+                    line-height: 20px;
+
+                    transition: .15s ease;
+
+                    &.primary {
+                        background-color: $color-button-primary;
+                    }
+
+                    &.secondary {
+                        background-color: $color-button-secondary;
+                    }
+                    &.secondary.disabled {
+                        cursor: not-allowed;
+                        opacity: .4;
+                    }
+                }
+
+                > .character-list {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    flex-basis: 0;
+
+                    gap: .5rem;
+
+                    overflow-y: auto;
+
+                    > .empty {
+                        padding: 1rem 0;
+
+                        color: oklch(0.446 0.03 256.802);
+
+                        font-size: 14px;
+                        line-height: 20px;
+                        text-align: center;
+                    }
+                    &:has(.character) > .empty {
+                        display: none;
+                    }
+
+                    > .character {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        padding: 10px;
+
+                        background-color: $color-header-button-bg;
+                        border: 1px solid $color-header-session-border;
+                        border-radius: 8px;
+
+                        color: #fff;
+                        line-height: 24px;
+
+                        &.benched {
+                            opacity: 0.6;
+
+                            .character-name > .isBenched {
+                                display: inline-block !important;
+                            }
+
+                            .btn-add {
+                                display: inline-block !important;
+                            }
+                        }
+
+                        > .emblem-container {
+                            position: relative;
+                            flex-shrink: 0;
+
+                            > button {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                width: 36px;
+                                height: 36px;
+                                overflow: hidden;
+
+                                background-color: $color-header-session-border;
+                                border: 2px solid oklch(0.446 0.03 256.802);
+                                border-radius: $radius-pill;
+
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+
+                                transition: .15s ease;
+
+                                &:hover {
+                                    border-color: oklch(0.623 0.214 259.815);
+                                }
+
+                                > i {
+                                    display: block;
+                                    position: relative;
+
+                                    width: 20px;
+
+                                    color: #fff;
+                                    font-size: 16px;
+                                    font-weight: 900;
+                                    line-height: 16px;
+
+                                    text-align: center;
+                                }
+                            }
+                        }
+
+                        > .character-details {
+                            flex: 1 1 0;
+                            min-width: 0;
+
+                            > .character-name {
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                min-width: 0;
+
+                                > .character-name-text {
+                                    overflow: hidden;
+
+                                    color: #fff;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    line-height: 20px;
+
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
+
+                                > .isBenched {
+                                    flex-shrink: 0;
+
+                                    display: none;
+
+                                    padding: 2px 4px;
+
+                                    background-color: $color-header-session-border;
+                                    border-radius: 4px;
+
+                                    color: $color-header-session-label;
+                                    font-size: 12px;
+                                    line-height: 16px;
+                                }
+
+                                > button {
+                                    flex-shrink: 0;
+
+                                    padding: 2px;
+
+                                    background-color: transparent;
+                                    border: 0;
+                                    border-radius: 4px;
+
+                                    color: oklch(0.446 0.03 256.802);
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    line-height: 24px;
+
+                                    transition: .15s ease;
+
+                                    &:hover {
+                                        color: $color-header-title;
+                                    }
+
+                                    > i {
+                                        display: inline-block;
+                                        position: relative;
+
+                                        width: 15px;
+
+                                        color: inherit;
+                                        font-size: 12px;
+                                        font-weight: 900;
+                                        line-height: 12px;
+
+                                        text-align: center;
+                                    }
+
+
+                                }
+
+
+                            }
+
+                            > .character-stats {
+                                color: $color-header-clock;
+                                font-size: 12px;
+                                line-height: 16px;
+                            }
+                        }
+
+                        > .buttons {
+                            display: flex;
+                            flex-direction: column;
+                            flex-shrink: 0;
+                            gap: 4px;
+
+                            > button {
+                                padding: 4px;
+
+                                background-color: transparent;
+                                border: 0;
+                                border-radius: 4px;
+
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+
+                                transition: .15s ease;
+
+                                &:hover {
+                                    background-color: rgba(255, 255, 255, .1);
+                                }
+
+                                &.btn-add {
+                                    background-color: transparent;
+                                    color: oklch(0.792 0.209 151.711);
+
+                                    display: none;
+
+                                    &:hover {
+                                        background-color: oklab(0.792 -0.1840 0.0990 / 0.2);
+                                        color: oklab(0.792 -0.1840 0.0990);
+                                    }
+                                }
+
+                                &.btn-edit {
+                                    color: $color-header-clock;
+
+                                    > i {
+                                        color: $color-header-clock;
+                                    }
+
+                                    &:hover {
+                                        > i {
+                                            color: #fff;
+                                        }
+                                    }
+                                }
+
+                                &.btn-delete {
+                                    color: $color-menu-link-hover;
+
+                                    &:hover {
+                                        background-color: oklab(0.396 0.1270 0.0612 / 0.4);
+                                        color: oklch(0.808 0.114 19.571);
+                                    }
+
+                                    > i {
+                                        color: inherit;
+                                    }
+                                }
+
+                                > i {
+                                    display: inline-block;
+                                    position: relative;
+
+                                    width: 17.5px;
+
+                                    font-size: 14px;
+                                    font-weight: 900;
+                                    line-height: 14px;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.ennemies {
+            border-left: 1px solid $color-bg-header;
+
+            > .resize-handle {
+                left: 0;
+            }
+
+            > .aside-content {
+                > .panel-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    > h2 {
+                        margin: 0;
+
+                        color: $color-menu-link-hover;
+
+                        font-size: 18px;
+                        font-weight: 700;
+                        letter-spacing: .45px;
+                        line-height: 28px;
+                    }
+                    > div {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+                }
+
+                > .panel-filters {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    > input {
+                        padding: 4px 8px;
+
+                        background-color: $color-bg-header;
+                        border: 1px solid oklch(0.446 0.03 256.802);
+                        border-radius: 4px;
+
+                        color: $color-text-app;
+
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 20px;
+
+                        &:focus {
+                            border-color: oklch(0.637 0.237 25.331);
+                            outline: none;
+                        }
+                    }
+                }
+
+                > .monster-list {
+                    flex: 1 1 0;
+
+                    overflow-y: auto;
+
+                    border: 1px solid $color-header-session-border;
+                    border-radius: .5rem;
+
+                    color: $color-text-app;
+
+                    > .monster {
+                        display: flex;
+                        align-items: center;
+
+                        background-color: $color-header-button-bg;
+                        border-bottom: 1px solid $color-header-session-border;
+
+                        color: oklch(0.872 0.01 258.338);
+
+                        > button.details {
+                            display: flex;
+                            align-items: center;
+                            flex: 1 1 0;
+
+                            min-width: 0;
+                            gap: 8px;
+
+                            padding: 8px 12px;
+
+                            background-color: transparent;
+                            border: 0;
+
+                            color: oklch(0.872 0.01 258.338);
+
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+
+                            text-align: left;
+
+                            transition: .15s ease;
+
+                            > .monster-info {
+                                flex: 1 1 0;
+                                min-width: 0;
+
+                                color: $color-monster-text;
+
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+
+                                text-align: left;
+
+                                > .monster-name {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+
+                                    overflow: hidden;
+
+                                    color: $color-monster-text;
+
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    line-height: 24px;
+
+                                    text-align: left;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+
+                                    > span {
+                                        overflow: hidden;
+
+                                        color: $color-monster-text;
+
+                                        font-size: 14px;
+                                        font-weight: 500;
+                                        line-height: 20px;
+
+                                        text-align: left;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                    }
+                                }
+
+                                > .monster-type {
+                                    color: $color-header-session-label;
+
+                                    font-size: 12px;
+                                    font-weight: 400;
+                                    line-height: 16px;
+
+                                    text-align: left;
+                                }
+                            }
+
+                            > .monster-stats {
+                                flex-shrink: 0;
+
+                                color: $color-header-clock;
+
+                                font-size: 12px;
+                                font-weight: 400;
+                                line-height: 16px;
+
+                                > div {
+                                    text-align: right;
+                                }
+                            }
+
+
+
+                        }
+
+                        > button.info {
+                            flex-shrink: 0;
+
+                            padding: 8px;
+
+                            background-color: transparent;
+                            border: 0;
+
+                            color: oklch(0.446 0.03 256.802);
+
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+
+                            transition: .15s ease;
+
+                            &:hover {
+                                color: oklch(0.707 0.165 254.624);
+                            }
+
+                            > i {
+                                display: inline-block;
+                                position: relative;
+
+                                width: 17.5px;
+
+                                font-size: 14px;
+                                line-height: 14px;
+                                text-align: center;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .initiative-main {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0;
+
+        min-width: 0;
+
+        padding: 1rem;
+
+        color: $color-text-app;
+
+        > .active-combatants {
+            display: flex;
+            flex: 1 1 0;
+            flex-direction: column;
+            gap: .75rem;
+            min-height: 0;
+
+            > .panel-header {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+
+                gap: .5rem;
+
+                > h2 {
+                    margin: 0 .5rem 0 0;
+
+                    font-size: 18px;
+                    font-weight: 700;
+                    letter-spacing: .45px;
+                    line-height: 28px;
+                }
+
+                .round {
+                    padding: 2px 8px;
+
+                    display: none;
+
+                    background-color: oklab(0.414 0.0779 0.0804 / 0.5);
+                    border: 0;
+                    border-radius: 4px;
+
+                    color: $color-header-session-name;
+
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 16px;
+                }
+
+                > div {
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: .5rem;
+
+                    margin-left: auto;
+
+                    justify-content: flex-end;
+
+                    line-height: 24px;
+
+                    > button {
+                        align-items: center;
+                        gap: 6px;
+                        padding: 4px 8px;
+                        display: none;
+
+                        border: 0;
+                        border-radius: 4px;
+
+                        color: $color-monster-text;
+
+                        font-size: 12px;
+                        font-weight: 400;
+                        line-height: 16px;
+
+                        transition: .15s ease;
+
+                        &.previous-turn {
+                            background-color: $color-header-session-border;
+
+                            &:hover {
+                                background-color: oklch(0.446 0.03 256.802);
+                            }
+                        }
+                        &.start-combat,
+                        &.next-turn {
+                            font-weight: 700;
+                            background-color: $color-button-primary;
+
+                            &:hover {
+                                background-color: oklch(0.769 0.188 70.08);
+                            }
+                        }
+
+                        &.end-combat {
+                            background-color: $color-header-session-border;
+
+                            &:hover {
+                                background-color: oklch(0.446 0.03 256.802);
+                            }
+                        }
+                    }
+
+                    > .separator {
+                        width: 1px;
+                        height: 16px;
+
+                        background-color: $color-header-session-border;
+                    }
+
+                    > .initiative-menu-container {
+                        position: relative;
+
+                        > button {
+                            padding: 4px 8px;
+
+                            background-color: $color-header-session-border;
+                            border: 0;
+                            border-radius: 4px;
+
+                            color: $color-header-button-text;
+
+                            font-size: 12px;
+                            line-height: 16px;
+
+                            transition:
+                                color .15s ease,
+                                background-color .15s ease,
+                                border-color .15s ease;
+
+                            > i {
+                                display: inline-block;
+                                position: relative;
+
+                                width: 15px;
+
+                                color: #fff;
+                                font-size: 12px;
+                                font-weight: 900;
+                                line-height: 12px;
+
+                                text-align: center;
+                            }
+
+                            &:hover {
+                                > i {
+                                    color: #fff;
+                                }
+                            }
+                        }
+
+                        .initiative-menu {
+                            position: absolute;
+                            top: calc(100% + 4px);
+                            right: 0;
+                            z-index: 20;
+
+                            width: 240px;
+                            padding: 4px 0;
+
+                            background-color: $color-header-button-bg;
+                            border: 1px solid $color-header-session-border;
+                            border-radius: .5rem;
+
+                            box-shadow:
+                                0 20px 25px -5px rgba(0, 0, 0, .1),
+                                0 8px 10px -6px rgba(0, 0, 0, .1);
+
+                            color: $color-text-app;
+
+                            .separator {
+                                margin: 4px 0;
+                                border-top: 1px solid $color-header-session-border;
+                            }
+
+                            > button {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+
+                                width: 100%;
+                                padding: 8px 12px;
+
+                                background-color: transparent;
+                                border: 0;
+
+                                color: oklch(0.872 0.01 258.338);
+
+                                font-size: 14px;
+                                font-weight: 400;
+                                line-height: 20px;
+
+                                text-align: left;
+
+                                transition: .15s ease;
+
+                                &.disabled {
+                                    color: $color-monster-text;
+                                    cursor: not-allowed;
+                                    opacity: .3;
+                                }
+
+                                &:hover {
+                                    background-color: $color-header-session-border;
+                                    color: $color-monster-text;
+                                }
+
+                                > i {
+                                    display: block;
+                                    position: relative;
+
+                                    width: 17.5px;
+
+                                    color: oklch(0.837 0.128 66.29);
+
+                                    font-size: 14px;
+                                    font-weight: 300;
+                                    line-height: 14px;
+
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.has-combatants {
+                    .start-combat {
+                        display: flex;
+                    }
+                }
+                &.combat-in-progress {
+                    .round,
+                    .previous-turn,
+                    .next-turn,
+                    .end-combat {
+                        display: inline-block;
+                    }
+                    .start-combat {
+                        display: none;
+                    }
+                }
+
+            }
+
+            .initiative-main-content {
+                display: flex;
+                flex: 1 1 0;
+                align-items: center;
+                justify-content: center;
+                min-width: 0;
+                padding: 0;
+
+                > p {
+                    margin: 0;
+                    color: $color-text-app;
+                    font-size: 14px;
+                    line-height: 20px;
+                    text-align: center;
+                }
+
+                &:has(.combatant) {
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: column;
+                    gap: 20px;
+                    overflow-y: auto;
+                    padding-right: 8px;
+
+                    > p {
+                        display: none;
+                    }
+                }
+
+                > .combatant {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    position: relative;
+
+                    padding: 8px 12px;
+
+                    background-color: $color-header-button-bg;
+                    border: 1px solid $color-header-button-bg;
+                    border-radius: 8px;
+
+                    color: #fff;
+
+                    transition: all .15s ease;
+                    width: 100%;
+
+                    > .bordure {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+
+                        width: 4px;
+                        border-radius: 8px 0 0 8px;
+                    }
+
+                    > .name-actions {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        position: relative;
+                        z-index: 1;
+
+                        > .initiative-order {
+                            display: flex;
+                            flex-direction: column;
+                            flex-shrink: 0;
+                            > button {
+                                padding: 0;
+
+                                appearance: button;
+                                background-color: transparent;
+                                border: 0;
+
+                                color: oklch(0.872 0.01 258.338);
+                                font-size: 12px;
+                                line-height: 12px;
+
+                                cursor: default;
+                                transition: color .15s ease;
+
+                                &.inactive {
+                                    opacity: 0;
+
+                                    &:hover {
+                                        opacity: .2;
+                                        color: oklab(0.446 -0.00684951 -0.0292076);
+                                    }
+                                }
+                            }
+                        }
+
+                        > .emblem {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-shrink: 0;
+
+                            width: 24px;
+                            height: 24px;
+
+                            border-radius: 4px;
+
+                            transition: .15s ease;
+
+                            > i {
+                                font-size: 14px;
+                                line-height: 14px;
+                            }
+                        }
+
+                        > .combatant-name {
+                            flex: 1 1 0;
+                            min-width: 0;
+
+                            overflow: hidden;
+
+                            color: #fff;
+                            font-size: 14px;
+                            font-weight: 600;
+                            line-height: 20px;
+
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+
+                        > button {
+                            padding: 8px;
+
+                            appearance: button;
+                            background-color: transparent;
+                            border: 0;
+                            border-radius: 4px;
+
+                            color: oklch(0.446 0.03 256.802);
+
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+
+                            opacity: 1;
+
+                            transition: .15s ease;
+
+                            &.lair:hover {
+                                border-color: oklch(0.714 0.203 305.504);
+                                color: oklch(0.714 0.203 305.504);
+                            }
+                            &.polymorph {
+                                .fa-arrow-rotate-left {
+                                    display: none;
+                                }
+                            }
+                            &.polymorph.active {
+                                .fa-paw {
+                                    display: none;
+                                }
+                                .fa-arrow-rotate-left {
+                                    display: inline-block;
+                                }
+                            }
+                            &.polymorph.active,
+                            &.polymorph:hover {
+                                border-color: oklch(0.765 0.177 163.223);
+                                color: oklch(0.765 0.177 163.223);
+                            }
+                            &.reaction.active,
+                            &.reaction:hover {
+                                border-color: oklch(0.746 0.16 232.661);
+                                color: oklch(0.746 0.16 232.661);
+                            }
+                            &.ready.active,
+                            &.ready:hover {
+                                border-color: oklch(0.702 0.183 293.541);
+                                color: oklch(0.702 0.183 293.541);
+                            }
+                            &.surprise.active,
+                            &.surprise:hover {
+                                border-color: oklch(0.718 0.202 349.761);
+                                color: oklch(0.718 0.202 349.761);
+                            }
+                            &.inspiration.active,
+                            &.inspiration:hover {
+                                border-color: oklch(0.828 0.189 84.429);
+                                color: oklch(0.828 0.189 84.429);
+                            }
+                            &.notes.active,
+                            &.notes:hover {
+                                border-color: oklch(0.879 0.169 91.605);
+                                color: oklch(0.879 0.169 91.605);
+                            }
+                            &.bench:hover {
+                                background-color: oklab(0.396 0.127027 0.0611969 / 0.4);
+                                border-color: oklch(0.704 0.191 22.216);
+                                color: oklch(0.704 0.191 22.216);
+                            }
+
+                        }
+                    }
+
+                    > .hit-points {
+                        display: grid;
+                        align-items: flex-start;
+
+                        grid-template-columns: 64px 1fr 48px;
+
+                        column-gap: 12px;
+                        row-gap: 12px;
+
+                        color: #fff;
+
+                        > .initiative {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            gap: 2px;
+
+                            > .title {
+                                color: $color-header-session-label;
+
+                                font-size: 12px;
+                                line-height: 16px;
+                                letter-spacing: .3px;
+                                text-transform: uppercase;
+                            }
+
+                            > input {
+                                appearance: textfield;
+
+                                width: 64px;
+                                height: 44px;
+
+                                padding: 0;
+
+                                background-color: $color-bg-header;
+                                border: 1px solid oklch(0.446 0.03 256.802);
+                                border-radius: 4px;
+
+                                color: $color-header-session-name;
+
+                                font-size: 20px;
+                                font-weight: 700;
+                                line-height: 28px;
+                                text-align: center;
+                            }
+                        }
+
+                        > .hit-points-bar {
+                            display: flex;
+                            flex-direction: column;
+
+                            gap: 6px;
+
+                            padding-top: 20px;
+
+                            color: #fff;
+
+                            > .hit-points-controls {
+                                display: flex;
+                                align-items: center;
+
+                                gap: 6px;
+
+                                > .current-hp {
+                                    color: $color-hp-high;
+
+                                    font-size: 16px;
+                                    font-weight: 700;
+                                    line-height: 24px;
+                                }
+                                > .hp-separator {
+                                    color: oklch(0.446 0.03 256.802);
+
+                                    font-size: 12px;
+                                    line-height: 16px;
+                                }
+                                > .max-hp {
+                                    color: $color-header-clock;
+
+                                    font-size: 14px;
+                                    line-height: 20px;
+                                }
+                                > .edit-button {
+                                    display: flex;
+                                    align-items: center;
+
+                                    padding: 0;
+
+                                    appearance: button;
+                                    background-color: transparent;
+                                    border: 0;
+
+                                    color: oklch(0.446 0.03 256.802);
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    line-height: 16px;
+
+                                    transition: color .15s ease;
+
+                                    &:hover {
+                                        color: $color-header-title;
+                                    }
+                                }
+                                > .temporary-hp {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 2px;
+
+                                    padding: 2px 6px;
+
+                                    background-color: oklab(0.476 0.0536831 0.100569 / 0.7);
+                                    border-radius: 4px;
+
+                                    color: oklch(0.905 0.182 98.111);
+
+                                    font-size: 12px;
+                                    font-weight: 700;
+                                    line-height: 16px;
+
+                                    > .temporary-hp-remove {
+                                        margin-left: 2px;
+
+                                        padding: 0;
+
+                                        appearance: button;
+                                        background-color: transparent;
+                                        border: 0;
+
+                                        color: oklch(0.905 0.182 98.111);
+
+                                        font-size: 12px;
+                                        font-weight: 700;
+                                        line-height: 16px;
+
+                                        opacity: .5;
+
+                                        transition: .15s ease;
+
+                                        &:hover {
+                                            opacity: 1;
+                                        }
+                                    }
+                                }
+                            }
+
+                            > .hit-points-bar-visual {
+                                position: relative;
+                                width: 100%;
+                                height: 8px;
+
+                                background-color: $color-header-session-border;
+                                border-radius: $radius-pill;
+
+                                > .hit-points-current {
+                                    height: 8px;
+                                    width: 100%;
+
+                                    background-color: oklch(0.627 0.194 149.214);
+                                    border-radius: $radius-pill;
+
+                                    transition: all .15s ease;
+                                }
+                                > .hit-points-temporary {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0; // valeur calculée dynamiquement
+
+                                    width: 100%; // valeur calculée dynamiquement
+                                    height: 8px;
+
+                                    background-color: oklch(0.852 0.199 91.936);
+                                    border-radius: $radius-pill;
+
+                                    transition: all .15s ease;
+                                }
+                            }
+                        }
+
+                        > .armor-class {
+                            position: relative;
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            width: 48px;
+                            height: 54px;
+
+                            > svg {
+                                position: absolute;
+                                inset: 0;
+
+                                display: block;
+
+                                width: 48px;
+                                height: 54px;
+
+                                fill: none;
+
+                                alignment-baseline: middle;
+                            }
+
+                            > .armor-class-content {
+                                position: relative;
+
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+
+                                margin-top: 2px;
+
+                                line-height: 16px;
+
+                                > .armor-class-label {
+                                    color: oklch(0.704 0.04 256.788);
+
+                                    font-size: 9px;
+                                    font-weight: 700;
+                                    letter-spacing: .9px;
+                                    line-height: 9px;
+                                    text-transform: uppercase;
+                                }
+
+                                > .armor-class-value {
+                                    color: oklch(0.968 0.007 247.896);
+
+                                    font-size: 18px;
+                                    font-weight: 700;
+                                    line-height: 18px;
+                                }
+                            }
+                        }
+                    }
+
+                    > .hit-points-edit {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: #fff;
+
+                        > input {
+                            appearance: textfield;
+                            width: 64px;
+                            height: 44px;
+                            padding: 0 8px;
+
+                            background-color: $color-bg-header;
+                            border: 1px solid oklch(0.446 0.03 256.802);
+                            border-radius: 4px;
+
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 20px;
+                            text-align: center;
+                        }
+
+                        > button {
+                            flex: 1;
+                            height: 44px;
+                            padding: 0;
+
+                            appearance: button;
+                            border: 0;
+                            border-radius: 4px;
+
+                            font-size: 14px;
+                            font-weight: 700;
+                            line-height: 20px;
+
+                            transition: background-color .15s ease;
+
+                            &.damage {
+                                background-color: oklab(0.396 0.127027 0.0611969 / 0.6);
+                                color: oklch(0.808 0.114 19.571);
+
+                                &:hover {
+                                    background-color: oklch(0.444 0.177 26.899);
+                                }
+                            }
+
+                            &.heal {
+                                background-color: oklab(0.393 -0.0842928 0.0438146 / 0.6);
+                                color: oklch(0.871 0.15 154.449);
+
+                                &:hover {
+                                    background-color: oklch(0.448 0.119 151.328);
+                                }
+                            }
+
+                            &.thp {
+                                background-color: oklab(0.476 0.0536831 0.100569 / 0.5);
+                                color: oklch(0.905 0.182 98.111);
+
+                                &:hover {
+                                    background-color: oklab(0.554 0.0539564 0.123749 / 0.6);
+                                }
+                            }
+                        }
+                    }
+
+                    > .states {
+                        position: relative;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: flex-start;
+                        column-gap: 6px;
+                        row-gap: 6px;
+                        color: #fff;
+
+                        > .state {
+                            display: flex;
+                            align-items: center;
+                            padding: 0;
+                            border: 0;
+                            border-radius: 4px;
+                            font-size: 12px;
+                            font-weight: 500;
+                            line-height: 16px;
+
+                            @include state-colors;
+
+                            > .state-label {
+                                padding: 6px 8px;
+                                background-color: transparent;
+                                color: inherit;
+                                border: 0;
+                                font-size: 12px;
+                                font-weight: 500;
+                                line-height: 16px;
+                                transition: opacity .15s ease;
+
+                                &:hover {
+                                    opacity: .7;
+                                }
+                            }
+                            > .state-info {
+                                padding: 6px;
+                                background-color: transparent;
+                                color: inherit;
+                                border: 0;
+                                border-left: 1px solid oklab(1 0 5.96046e-8 / 0.1);
+                                font-size: 12px;
+                                font-weight: 500;
+                                line-height: 16px;
+                                opacity: .4;
+                                transition: opacity .15s ease;
+
+                                &:hover {
+                                    opacity: 1;
+                                }
+                            }
+                        }
+
+                        > .add-state {
+                            padding: 6px 8px;
+                            background-color: transparent;
+                            border: 1px solid oklch(0.446 0.03 256.802);
+                            border-radius: 4px;
+                            color: $color-header-session-label;
+                            font-size: 12px;
+                            font-weight: 400;
+                            line-height: 16px;
+                            transition: color .15s ease, border-color .15s ease;
+
+                            &:hover {
+                                border-color: $color-header-session-label;
+                                color: $color-monster-text;
+                            }
+                        }
+
+                        .state-menu {
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            z-index: 20;
+
+                            width: 14rem;
+                            max-height: 24rem;
+                            margin-top: .25rem;
+                            padding: .5rem;
+
+                            overflow-y: auto;
+
+                            background-color: #111827;
+                            border: 1px solid #4b5563;
+                            border-radius: .5rem;
+                            box-shadow: 0 1rem 2rem rgba(0, 0, 0, .25);
+
+                            > .grid-states > button,
+                            > .grid-states-single > button {
+                                padding: 4px 8px;
+
+                                background-color: transparent;
+                                border: 0;
+                                border-radius: 4px;
+
+                                color: $color-header-clock;
+                                font-size: 12px;
+                                font-weight: 400;
+                                line-height: 16px;
+                                text-align: left;
+
+                                transition: color .15s ease, background-color .15s ease;
+
+                                &:hover {
+                                    background-color: $color-header-button-bg;
+                                    color: $color-text-app;
+                                }
+
+                                &.selected {
+                                    @include state-colors;
+                                }
+                            }
+
+                            > .grid-states {
+                                display: grid;
+                                grid-template-columns: 101px 101px;
+                                gap: 4px;
+                            }
+                            > .grid-title {
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+
+                                margin: 6px 0;
+                                padding-top: 6px;
+
+                                border-top: 1px solid $color-header-session-border;
+                            }
+                            > .grid-states-single {
+                                display: grid;
+                                grid-template-columns: 206px;
+                                gap: 4px;
+                            }
+                            > .grid-states-single > input.state-input {
+                                display: flex;
+                                flex: 1 1 0;
+                                height: 32px;
+
+                                padding: 0 8px;
+
+                                background-color: $color-header-button-bg;
+                                border: 1px solid oklab(0.518 0.204549 -0.148892 / 0.6);
+                                border-radius: 4px;
+
+                                color: oklch(0.952 0.037 318.852);
+                                font-size: 12px;
+                                line-height: 16px;
+                            }
+                            > .grid-states-single > button.state-input-button {
+                                padding: 4px 8px;
+
+                                background-color: oklab(0.452 0.171973 -0.122255 / 0.6);
+                                border: 0;
+                                border-radius: 4px;
+
+                                color: oklch(0.903 0.076 319.62);
+                                font-size: 12px;
+                                font-weight: 600;
+                                line-height: 16px;
+                                text-align: center;
+                            }
+                        }
+                    }
+
+                    > .exhaustion {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: #fff;
+
+                        > .exhaustion-label {
+                            flex-shrink: 0;
+                            color: oklab(0.837 0.0514698 0.117196 / 0.7);
+                            font-size: 12px;
+                            font-weight: 600;
+                            line-height: 16px;
+                        }
+                        > .exhaustion-value {
+                            display: flex;
+                            align-items: center;
+                            gap: 4px;
+
+                            > .exhaustion-level {
+                                width: 16px;
+                                height: 16px;
+                                padding: 0;
+                                background-color: transparent;
+                                border: 2px solid oklch(0.47 0.157 37.304);
+                                border-radius: 50%;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                transition: background-color .15s ease;
+
+                                &:hover {
+                                    background-color: oklab(0.408 0.0966976 0.076017 / 0.3);
+                                }
+
+                                &.active {
+                                    background-color: oklch(0.705 0.213 47.604);
+
+                                    &:hover {
+                                        background-color: oklch(0.75 0.183 55.934);
+                                    }
+                                }
+                            }
+                        }
+                        > .exhaustion-count {
+                            color: oklch(0.837 0.128 66.29);
+                            font-size: 12px;
+                            font-weight: 700;
+                            line-height: 16px;
+                        }
+                        > .exhaustion-button {
+                            padding: 4px;
+                            background-color: transparent;
+                            border: 0;
+                            border-radius: 4px;
+                            color: oklch(0.446 0.03 256.802);
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+                            transition: color .15s ease;
+                        }
+                        > .exhaustion-delete {
+                            &:hover {
+                                color: $color-menu-link-hover;
+                            }
+                        }
+                        > .exhaustion-info {
+                            &:hover {
+                                color: oklch(0.707 0.165 254.624);
+                            }
+                        }
+                    }
+
+                    &.character {
+                        > .bordure {
+                            background-color: oklch(0.623 0.214 259.815);
+                        }
+                        .emblem {
+                            background-color: oklab(0.379 -0.0113992 -0.145554 / 0.6);
+                            color: oklch(0.809 0.105 251.813);
+
+                            .fa-sword {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &.monster {
+                        > .bordure {
+                            background-color: oklch(0.637 0.237 25.331)
+                        }
+                        .emblem {
+                            background-color: oklab(0.396 0.127027 0.0611969 / 0.6);
+                            color: oklch(0.808 0.114 19.571);
+
+                            .fa-shield-halved {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+

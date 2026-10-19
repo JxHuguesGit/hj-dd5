@@ -1,6 +1,7 @@
 <?php
 namespace src\Presenter\Admin;
 
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Html as H;
 use src\Constant\Icon as I;
@@ -24,19 +25,99 @@ final class InitiativeAdminPresenter
             'combatId',
             FILTER_VALIDATE_INT
         );
+        echo "[$combatId]";
+        // Vérification existence d'un rpgInitiativeTracker avec id=combatId.
+        // Si pas de correspondance, on renvoie à la liste des IT disponibles.
+        $initiativeTracker = new \object();
 
         return $this->renderer->render(
             T::ADMININITIATIVEPANEL,
             [
                 PLUGINS_DD5,
                 date('YmdHis'),
-                $combatId,
-                '',
+                $this->buildITHeader($initiativeTracker),
+                $this->buildITPartyAside($initiativeTracker),
+                $this->buildITEnnemyAside($initiativeTracker),
+                // Présence de combattants ? Combat en cours ?
+                true ? 'has-combatants active-combat' : '',
+                $this->buildITHeaderPanel($initiativeTracker),
+                $this->buildIdContentPanel($initiativeTracker),
+            ]
+        );
+    }
+
+    private function buildITHeader(object $initiativeTracker): string
+    {
+        return $this->renderer->render(
+            T::ADMIN_IT_HEADER,
+            [
+                $initiativeTracker->name,
+                $initiativeTracker->ITCode,
+                date('H:i'),
+            ]
+        );
+    }
+
+    private function buildITPartyAside(object $initiativeTracker): string
+    {
+        $partyMembers = new Collection();
+
+        return $this->renderer->render(
+            T::ADMIN_IT_PARTY_ASIDE,
+            [
+                // Si aucun personnage listé, on ne peut pas monter de niveau.
+                $partyMembers->isEmpty() ? C::DISABLED : '',
+                // Si aucun personnage listé, on affiche le message "Pas de participants".
+                $partyMembers->isEmpty() ? '' : B::DNONE,
+                // On affiche la liste des personnages listés
                 '',
             ]
         );
     }
-       
+
+    private function buildITEnnemyAside(object $initiativeTracker): string
+    {
+        $ennemyMembers = new Collection();
+
+        return $this->renderer->render(
+            T::ADMIN_IT_ENNEMY_ASIDE,
+            [
+                // On affiche la liste des ennemis disponibles
+                '',
+            ]
+        );
+
+    }
+
+    private function buildITHeaderPanel(object $initiativeTracker): string
+    {
+        return $this->renderer->render(
+            T::ADMIN_IT_HEADER_PANEL,
+            [
+                // Numéro du round
+                $initiativeTracker->round,
+            ]
+        );
+    }
+
+    private function buildIdContentPanel(object $initiativeTracker): string
+    {
+        return $this->renderer->render(
+            T::ADMIN_IT_CONTENT_PANEL,
+            [
+
+            ]
+        );
+    }
+
+
+
+
+
+
+
+
+
     public function present(Map $map, Collection $mapTokens, Collection $initiatives): string
     {
         $mapTokensFormatted = $this->presentMapTokens($mapTokens, $initiatives);

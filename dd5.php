@@ -21,6 +21,9 @@ if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
 
 add_filter('redirect_canonical', function ($redirect_url, $requested_url) {
     $path = trim(parse_url($requested_url, PHP_URL_PATH), '/');
+    if (in_array($path, ['initiative'])) {
+        return false;
+    }
     $page = PageRegistry::getInstance()->get($path);
     if ($page !== null) {
         return false;

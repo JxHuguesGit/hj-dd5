@@ -127,4 +127,11 @@ final class Template
     public const AOE_PAGE             = self::PUBLIC_PATH.'aoe.tpl';
     public const GLOSSAIRE_PAGE       = self::PUBLIC_PATH.'glossaire.tpl';
     public const INITIATIVE_PAGE      = self::PUBLIC_PATH.'initiative.tpl';
+
+    public const IT_PATH              = self::TEMPLATE_PATH . 'initiativeTracker.tpl';
+    public const ADMIN_IT_HEADER      = self::IT_PATH . 'ITHeader.tpl';
+    public const ADMIN_IT_PARTY_ASIDE = self::IT_PATH . 'ITPartyAside.tpl';
+    public const ADMIN_IT_ENNEMY_ASIDE = self::IT_PATH . 'ITEnnemyAside.tpl';
+    public const ADMIN_IT_HEADER_PANEL = self::IT_PATH . 'ITMainPanelHeader.tpl';
+    public const ADMIN_IT_CONTENT_PANEL = self::IT_PATH . 'ITMainPanelContent.tpl';
 }

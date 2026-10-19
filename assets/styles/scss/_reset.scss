@@ -1,0 +1,33 @@
+// Neutralise l'habillage visuel de WordPress
+html.wp-toolbar {
+    padding-top: 0;
+}
+
+#wpadminbar,
+#adminmenumain,
+#wpfooter {
+    display: none;
+}
+
+#wpcontent {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+// Évite que le wrapper WordPress ajoute son propre espace
+#wpbody-content {
+    padding-bottom: 0;
+}
+
+// Standardisation du box model
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@media only screen and (width <= 960px) {
+  .auto-fold #wpcontent, .auto-fold #wpfooter {
+    margin-left: 0;
+  }
+}

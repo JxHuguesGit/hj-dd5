@@ -134,6 +134,7 @@ class Field
     public const FEATID       = 'featId';
     public const FEATTYPEID   = 'featTypeId';
     public const HEROSID      = 'herosId';
+    public const ITCODE       = 'ITCode';
     public const ITEMID       = 'itemId';
     public const LANGUAGEID   = 'languageId';
     public const MAPID        = 'mapId';
