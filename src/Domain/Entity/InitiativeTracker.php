@@ -18,6 +18,11 @@ final class InitiativeTracker extends Entity
         F::ACTIVE,
     ];
 
+    public const RELATION_FIELDS = [
+        'partyMembers',
+        'ennemyMembers'
+    ];
+
     public const FIELD_TYPES = [
         F::WPUSERID             => FieldType::INTPOSITIVE,
         F::ITCODE               => FieldType::STRING,
@@ -26,6 +31,9 @@ final class InitiativeTracker extends Entity
         F::ROUND                => FieldType::INTPOSITIVE,
         F::CURRENTPARTICIPANTID => FieldType::INTNULLABLE,
         F::ACTIVE               => FieldType::INTPOSITIVE,
+
+        'partyMembers'          => FieldType::COLLECTION,
+        'ennemyMembers'         => FieldType::COLLECTION,
     ];
 
     public const EDITABLE_FIELDS = [

@@ -65,8 +65,8 @@
 }
 
 body.is-resizing {
-    cursor: col-resize !important;
-    user-select: none !important;
+    //cursor: col-resize !important;
+    //user-select: none !important;
 
     .resize-handle::after {
         height: 72px;
@@ -381,6 +381,7 @@ h1, h2, h3, h4 {
 
 input,
 select {
+    /*
     font-family: var(--font-body) !important;
 
     background-color: var(--color-bg-input) !important;
@@ -398,15 +399,18 @@ select {
     outline: none !important;
 
     font-size: .875rem !important;
+    */
 }
 
 input:focus,
 select:focus {
+    /*
     border-color: var(--color-accent-gold) !important;
 
     box-shadow:
         0 0 0 3px var(--color-accent-gold-muted),
         0 0 8px #c9a2671a !important;
+        */
 }
 
 input::placeholder {
@@ -576,7 +580,7 @@ input.hp-input {
   text-align: center;
   flex-shrink: 0;
   width: 44px;
-  padding: 3px 4px !important;
+//  padding: 3px 4px !important;
   font-size: .78rem;
   min-height: inherit;
 }

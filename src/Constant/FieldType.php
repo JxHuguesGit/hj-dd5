@@ -13,4 +13,5 @@ class FieldType
     public const JSONNULLABLE   = 'jsonNullable';
     public const STRING         = 'string';
     public const STRINGNULLABLE = 'stringNullable';
+    public const COLLECTION     = 'collection';
 }

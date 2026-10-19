@@ -7,7 +7,7 @@
         <div></div>
     </div>
 </div>
-<!-- /-->
+<!-- / -->
 
 <!-- Listing des membres du groupe -->
 <div class="aside-content">
@@ -21,8 +21,8 @@
         <div class="character benched">
             <div class="emblem-container">
                 <button title="Upload avatar">
-                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i><!---->
-                </button> <!---->
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                </button>
             </div>
             <div class="character-details">
                 <div class="character-name">
@@ -75,7 +75,7 @@
         </div>
     </div>
 </div>
-<!-- /-->
+<!-- / -->
 
 <!-- Popup d'ajout d'un personnage -->
 <div role="dialog" aria-modal="true" aria-label="Ajouter un Personnage"
@@ -120,4 +120,4 @@
         </div>
     </div>
 </div>
-<!-- /-->
+<!-- / -->

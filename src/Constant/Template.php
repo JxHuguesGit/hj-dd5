@@ -128,7 +128,7 @@ final class Template
     public const GLOSSAIRE_PAGE       = self::PUBLIC_PATH.'glossaire.tpl';
     public const INITIATIVE_PAGE      = self::PUBLIC_PATH.'initiative.tpl';
 
-    public const IT_PATH              = self::TEMPLATE_PATH . 'initiativeTracker.tpl';
+    public const IT_PATH              = self::TEMPLATE_PATH . 'initiativeTracker/';
     public const ADMIN_IT_HEADER      = self::IT_PATH . 'ITHeader.tpl';
     public const ADMIN_IT_PARTY_ASIDE = self::IT_PATH . 'ITPartyAside.tpl';
     public const ADMIN_IT_ENNEMY_ASIDE = self::IT_PATH . 'ITEnnemyAside.tpl';
