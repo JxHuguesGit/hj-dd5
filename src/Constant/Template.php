@@ -131,6 +131,7 @@ final class Template
     public const IT_PATH              = self::TEMPLATE_PATH . 'initiativeTracker/';
     public const ADMIN_IT_HEADER      = self::IT_PATH . 'ITHeader.tpl';
     public const ADMIN_IT_PARTY_ASIDE = self::IT_PATH . 'ITPartyAside.tpl';
+    public const ADMIN_IT_PARTY_MEMBER = self::IT_PATH . 'ITPartyMember.tpl';
     public const ADMIN_IT_ENNEMY_ASIDE = self::IT_PATH . 'ITEnnemyAside.tpl';
     public const ADMIN_IT_HEADER_PANEL = self::IT_PATH . 'ITMainPanelHeader.tpl';
     public const ADMIN_IT_CONTENT_PANEL = self::IT_PATH . 'ITMainPanelContent.tpl';

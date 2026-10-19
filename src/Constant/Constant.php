@@ -74,6 +74,8 @@ class Constant
     public const ID                     = 'id';
     public const ILLIM                  = 'illim';
     public const INITIATIVE             = 'initiative';
+    public const INITTRACKER            = 'initiativeTracker';
+    public const ITCHARACTER            = 'initTrackCharacter';
     public const ITEM                   = 'item';
     public const ITEMS                  = 'items';
     public const LABEL                  = 'label';

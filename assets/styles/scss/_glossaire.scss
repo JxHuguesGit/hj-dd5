@@ -1,0 +1,106 @@
+.secondary-content {
+  position: static;
+  float: none;
+  max-width: 300px;
+  min-width: 300px;
+  margin-right: 30px;
+  margin-left: 0;
+  padding: 0;
+  width: 300px;
+}
+
+.data-list {
+    row-gap: 8px;
+}
+.max-width-850 {
+    max-width: 850px;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.wp-block-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    align-items: flex-start;
+}
+
+.wp-block-column {
+    flex: 1 1 0;
+    min-width: 0;
+}    
+
+@media (max-width: 781px) {
+    .wp-block-columns {
+        flex-direction: column;
+    }
+
+    .wp-block-column {
+        width: 100%;
+        flex-basis: 100%;
+    }
+}
+
+    table {
+        width: 100%;
+    }
+
+    .is-style-stripes table tbody tr:nth-child(odd) {
+        background-color: #DFEBF7;
+    }
+
+    .is-style-stripes table tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+
+.glossary-grid {
+
+    hr.separator {
+        background-image: url(../svg/dnd-sep.svg);
+        min-height: 40px;
+        border: none;
+
+        background-repeat: no-repeat;
+        background-size: auto auto;
+        opacity: .07;
+        width: 100%;
+        max-width: 850px;
+    }
+
+}
+
+.glossaire-card {
+    border: 0;
+    margin-bottom: 2rem;
+
+    h3 {
+        margin: 0;
+        padding-bottom: 0;
+        border: 0;
+
+        &::after {
+            content: '';
+            background-color: #d1a347;
+            display: block;
+            width: 100%;
+            margin: 5px auto 20px;
+            height: 1px;
+        }    
+    }
+
+    h6 {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .table-equal-width table {
+        table-layout: fixed;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+}
+

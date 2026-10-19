@@ -2,7 +2,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" crossorigin="" href="%1$sassets/styles/initiative-v0.1.css?v=%2$s">
+<link rel="stylesheet" crossorigin="" href="%1$sassets/styles/initiative.css?v=%2$s">
 <link rel="stylesheet" crossorigin="" href="%1$sassets/styles/draft.css?v=%2$s">
 
 %3$s
@@ -47,6 +47,7 @@
     integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script type="module" src="%1$sassets/js/initiative/init-main.js?v=%2$s"></script>
 <script src="%1$sassets/js/initiative.js?v=%2$s"></script>
 <script src="%1$sassets/js/combat.js?v=%2$s"></script>
 <script src="%1$sassets/js/draft.js?v=%2$s"></script>

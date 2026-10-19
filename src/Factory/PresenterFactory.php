@@ -45,6 +45,7 @@ final class PresenterFactory
     public function initiative(): InitiativeAdminPresenter
     {
         return new InitiativeAdminPresenter(
+            $this->readerFactory,
             $this->renderer
         );
     }

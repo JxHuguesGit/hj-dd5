@@ -66,6 +66,9 @@ final class ReaderFactory
         C::VISION_TYPE           => [C::READER => 'VisionTypeReader',           C::REPO => C::VISION_TYPE],
         C::WEAPON                => [C::READER => 'WeaponReader',               C::REPO => C::WEAPON],
         C::WEAPON_PROPERTY_VALUE => [C::READER => 'WeaponPropertyValueReader',  C::REPO => C::WEAPON_PROPERTY_VALUE],
+
+        C::INITTRACKER           => [C::READER => 'InitiativeTrackerReader',    C::REPO => C::INITTRACKER],
+        C::ITCHARACTER           => [C::READER => 'InitTrackCharacterReader',   C::REPO => C::ITCHARACTER],
     ];
 
     public function __construct(

@@ -20,6 +20,8 @@ final class WriterFactory
         C::FEAT_PREREQUIS         => [C::WRITER => 'FeatPreRequisWriter',         C::REPO => C::FEAT_PREREQUIS],
         C::SPELL                  => [C::WRITER => 'SpellWriter',                 C::REPO => C::SPELL],
         C::SPELL_CLASSE           => [C::WRITER => 'SpellClasseWriter',           C::REPO => C::SPELL_CLASSE],
+
+        C::ITCHARACTER            => [C::WRITER => 'InitTrackCharacterWriter',    C::REPO => C::ITCHARACTER],
     ];
 
     public function __construct(

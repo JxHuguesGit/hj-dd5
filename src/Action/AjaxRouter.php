@@ -9,6 +9,7 @@ use src\Action\Ajax\AddTokenAction;
 use src\Action\Ajax\DeleteMapAction;
 use src\Action\Ajax\DeleteMapTokenAction;
 use src\Action\Ajax\DuplicateMapAction;
+use src\Action\Ajax\InitiativeTracker\DealWithInitTracker;
 use src\Action\Ajax\LoadCombatAction;
 use src\Action\Ajax\LoadCombatMonstersAction;
 use src\Action\Ajax\LoadCreationStepSide;
@@ -54,6 +55,8 @@ class AjaxRouter
         'addCreatureToCombat'  => AddCreatureToCombatAction::class,
         'removeCreatureFromCombat' => RemoveCreatureFromCombatAction::class,
         'rerollCombatParticipantInitiative' => UpdateCombatParticipantAction::class,
+        'addInitChar'                       => DealWithInitTracker::class,
+        'delInitChar'                       => DealWithInitTracker::class,
     ];
 
     public function __construct(

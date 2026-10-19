@@ -22,6 +22,8 @@ class Table
     public const FEATPREREQUIS  = 'rpgFeatPreRequis';
     public const FEATTYPE       = 'rpgFeatType';
     public const INITIATIVE     = 'rpgInitiative';
+    public const INITIATIVETRACKER = 'rpgInitiativeTracker';
+    public const ITCHARACTER    = 'rpgInitTrackCharacter';
     public const ITEM           = 'rpgItem';
     public const LANGUAGE       = 'rpgLanguage';
     public const MAP            = 'rpgMap';

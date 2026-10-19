@@ -36,6 +36,7 @@ class Field
     public const IMAGE       = 'image';
     public const INCOMPLET   = 'incomplet';
     public const INITIATIVE  = 'initiative';
+    public const ITID        = 'initiativeTrackerId';
     public const INTSCORE    = 'intScore';
     public const LASTUPDATE  = 'lastUpdate';
     public const LEGENDARY   = 'legendary';
@@ -46,6 +47,7 @@ class Field
     public const MAXHP       = 'maxHp';
     public const MAXRANGE    = 'maxRange';
     public const MINRANGE    = 'minRange';
+    public const MODDEX      = 'modDex';
     public const MSTSIZE     = 'monsterSize';
     public const NAME        = 'name';
     public const NIVEAU      = 'niveau';
@@ -134,7 +136,7 @@ class Field
     public const FEATID       = 'featId';
     public const FEATTYPEID   = 'featTypeId';
     public const HEROSID      = 'herosId';
-    public const ITCODE       = 'ITCode';
+    public const ITCODE       = 'iTCode';
     public const ITEMID       = 'itemId';
     public const LANGUAGEID   = 'languageId';
     public const MAPID        = 'mapId';

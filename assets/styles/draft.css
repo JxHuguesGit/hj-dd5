@@ -1,0 +1,142 @@
+
+input.input {
+    padding: 4px 8px;
+
+    color: #fff;
+    background: oklch(0.21 0.034 264.665);
+
+    border: 1px solid oklch(0.446 0.03 256.802);
+    border-radius: 4px;
+
+    font-size: 14px;
+    line-height: 20px;
+    box-shadow: 0 0 0 2px oklch(0.769 0.188 70.08 / 0.3);
+}
+
+.field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.field-label {
+    color: oklch(0.707 0.022 261.325);
+    cursor: help;
+
+    font-size: 12px;
+    line-height: 16px;
+}
+
+input.field-input {
+    width: 100%;
+
+    padding: 4px 8px;
+
+    color: #fff;
+    background: oklch(0.21 0.034 264.665);
+
+    border: 1px solid oklch(0.446 0.03 256.802);
+    border-radius: 4px;
+
+    font-size: 14px;
+    line-height: 20px;
+
+}
+input.field-input:focus {
+    outline: none;
+    border-color: oklch(0.769 0.188 70.08);
+    box-shadow: 0 0 0 2px oklch(0.769 0.188 70.08 / 0.3);
+}
+
+.fields-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+input[type="number"] {
+  appearance: textfield;
+  min-height: inherit;
+}
+
+.button.action {
+    padding: 6px 12px;
+
+    color: #fff;
+    background: rgb(180 83 9);
+
+    border: 0;
+    border-radius: 4px;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+
+    transition:
+        background-color 150ms ease,
+        color 150ms ease,
+        box-shadow 150ms ease;
+}
+
+.button.action:hover, .button.action:active, .button.action:focus {
+    border-color: #92400e;
+    background-color: #92400e;
+    color: #fff;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 8px;
+}
+.buttons-container > .button.primary {
+    flex: 1;
+
+    padding: 4px 8px;
+
+    color: #fff;
+    background: rgb(180 83 9);
+
+    border: 0;
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    min-height: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background-color 150ms ease,
+        box-shadow 150ms ease;
+}
+.buttons-container > .button.primary:hover {
+    background-color: #92400e;
+}
+.button-cancel {
+    flex: 1;
+
+    padding: 4px 8px;
+
+    color: oklch(0.872 0.01 258.338);
+    background: oklch(0.373 0.034 259.733);
+
+    border: 0;
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    min-height: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background-color 150ms ease,
+        color 150ms ease,
+        box-shadow 150ms ease;
+}
+.button-cancel:hover {
+    background-color: oklch(0.446 0.03 256.802);
+}

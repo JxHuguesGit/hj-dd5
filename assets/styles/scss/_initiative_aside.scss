@@ -1,0 +1,591 @@
+@use "variables" as *;
+
+.initiative-body {
+    > aside {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: relative;
+        width: 300px;
+        padding: 1rem;
+
+        background-color: oklab(0.21 -0.0032 -0.0339 / 0.5);
+        color: $color-text-app;
+
+        > .resize-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 12px;
+
+            cursor: col-resize;
+            touch-action: none;
+            user-select: none;
+
+            transition: background-color .15s ease;
+
+            &:hover {
+                background-color: oklab(0.623 -0.0378 -0.2106 / 0.3);
+            }
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                pointer-events: none;
+
+                > div {
+                    width: 3px;
+                    height: 3px;
+
+                    background-color: $color-header-session-label;
+                    border-radius: $radius-pill;
+                }
+            }
+        }
+
+        > .aside-content {
+            display: flex;
+            flex: 1 1 0;
+            flex-direction: column;
+            gap: .75rem;
+            min-height: 0;
+        }
+
+        &.party {
+            border-right: 1px solid $color-bg-header;
+
+            > .resize-handle {
+                right: 0;
+            }
+
+            > .aside-content {
+                > h2 {
+                    margin: 0;
+
+                    color: $color-header-title;
+                    font-size: 18px;
+                    font-weight: 700;
+                    letter-spacing: .45px;
+                    line-height: 28px;
+                }
+
+                > button {
+                    padding: .375rem .75rem;
+
+                    border: 0;
+                    border-radius: 4px;
+
+                    color: $color-text-app;
+                    font-size: 14px;
+                    font-weight: 600;
+                    line-height: 20px;
+
+                    transition: .15s ease;
+
+                    &.primary {
+                        background-color: $color-button-primary;
+                    }
+
+                    &.secondary {
+                        background-color: $color-button-secondary;
+
+                        &.disabled {
+                            cursor: not-allowed;
+                            opacity: .4;
+                        }
+                    }
+                }
+
+                > .character-list {
+                    display: flex;
+                    flex: 1 1 0;
+                    flex-direction: column;
+                    gap: .5rem;
+
+                    overflow-y: auto;
+
+                    > .empty {
+                        padding: 1rem 0;
+
+                        color: oklch(0.446 0.03 256.802);
+                        font-size: 14px;
+                        line-height: 20px;
+                        text-align: center;
+                    }
+
+                    &:has(.character) > .empty {
+                        display: none;
+                    }
+
+                    > .character {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        padding: 10px;
+
+                        background-color: $color-header-button-bg;
+                        border: 1px solid $color-header-session-border;
+                        border-radius: 8px;
+
+                        color: $color-text-app;
+                        line-height: 24px;
+
+                        &.benched {
+                            opacity: .6;
+
+                            .btn-add {
+                                display: inline-flex;
+                            }
+                        }
+
+                        > .emblem-container {
+                            position: relative;
+                            flex-shrink: 0;
+
+                            > button {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                width: 36px;
+                                height: 36px;
+                                overflow: hidden;
+
+                                background-color: $color-header-session-border;
+                                border: 2px solid oklch(0.446 0.03 256.802);
+                                border-radius: $radius-pill;
+
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+
+                                transition: .15s ease;
+
+                                &:hover {
+                                    border-color: oklch(0.623 0.214 259.815);
+                                }
+
+                                > i {
+                                    position: relative;
+                                    display: block;
+                                    width: 20px;
+
+                                    color: $color-text-app;
+                                    font-size: 16px;
+                                    font-weight: 900;
+                                    line-height: 16px;
+                                    text-align: center;
+                                }
+                            }
+                        }
+
+                        > .character-details {
+                            flex: 1 1 0;
+                            min-width: 0;
+
+                            > .character-name {
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                min-width: 0;
+
+                                > .character-name-text {
+                                    overflow: hidden;
+
+                                    color: $color-text-app;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    line-height: 20px;
+
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
+
+                                > .isBenched {
+                                    padding: 2px 4px;
+
+                                    background-color: $color-header-session-border;
+                                    border-radius: 4px;
+
+                                    color: $color-header-session-label;
+                                    font-size: 12px;
+                                    line-height: 16px;
+                                }
+
+                                > button {
+                                    flex-shrink: 0;
+                                    padding: 2px;
+
+                                    background-color: transparent;
+                                    border: 0;
+                                    border-radius: 4px;
+
+                                    color: oklch(0.446 0.03 256.802);
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    line-height: 24px;
+
+                                    transition: .15s ease;
+
+                                    &:hover {
+                                        color: $color-header-title;
+                                    }
+
+                                    > i {
+                                        position: relative;
+                                        display: inline-block;
+                                        width: 15px;
+
+                                        color: inherit;
+                                        font-size: 12px;
+                                        font-weight: 900;
+                                        line-height: 12px;
+                                        text-align: center;
+                                    }
+                                }
+                            }
+
+                            > .character-stats {
+                                color: $color-header-clock;
+                                font-size: 12px;
+                                line-height: 16px;
+                            }
+                        }
+
+                        > .buttons {
+                            display: flex;
+                            flex: 0 0 auto;
+                            flex-direction: column;
+                            gap: 4px;
+
+                            button {
+                                padding: 4px;
+
+                                background-color: transparent;
+                                border: 0;
+                                border-radius: 4px;
+
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+
+                                transition: .15s ease;
+
+                                &:hover {
+                                    background-color: rgba(255, 255, 255, .1);
+                                }
+
+                                &.btn-add {
+                                    color: oklch(0.792 0.209 151.711);
+
+                                    &:hover {
+                                        background-color: oklab(0.792 -0.1840 0.0990 / 0.2);
+                                        color: oklab(0.792 -0.1840 0.0990);
+                                    }
+                                }
+
+
+                                &.btn-edit {
+                                    color: $color-header-clock;
+
+                                    > i {
+                                        color: inherit;
+                                    }
+
+                                    &:hover > i {
+                                        color: $color-text-app;
+                                    }
+                                }
+
+                                &.btn-delete {
+                                    color: $color-menu-link-hover;
+
+                                    &:hover {
+                                        background-color: oklab(0.396 0.1270 0.0612 / 0.4);
+                                        color: oklch(0.808 0.114 19.571);
+                                    }
+
+                                    > i {
+                                        color: inherit;
+                                    }                                 
+                                }
+
+                                > i {
+                                    position: relative;
+                                    display: inline-block;
+                                    width: 17.5px;
+
+                                    font-size: 14px;
+                                    font-weight: 900;
+                                    line-height: 14px;
+                                    text-align: center;
+                                }
+                            }
+
+                                .confirm-actions {
+                                    display: none;
+                                    align-items: center;
+                                    gap: 4px;
+
+
+                                    .status-yes {
+                                        padding: 2px 6px;
+
+                                        background-color: oklab(0.444 0.15785 0.0800782 / 0.7);
+                                        border-radius: 4px;
+
+                                        color: oklch(0.885 0.062 18.334);
+                                        font-size: 10px;
+                                        font-weight: 700;
+                                        line-height: 15px;
+
+                                        transition: .15s ease;
+
+                                        &:hover {
+                                            background-color: oklch(50.5% .213 27.518);
+                                        }
+                                    }
+                                    .status-cancel {
+                                        padding: 2px 6px;
+
+                                        appearance: button;
+                                        background-color: oklch(0.373 0.034 259.733);
+                                        border: 0;
+                                        border-radius: 4px;
+
+                                        color: oklch(0.872 0.01 258.338);
+                                        font-size: 10px;
+                                        font-weight: 400;
+                                        line-height: 15px;
+                                    }   
+                                }
+
+                            .ask {
+                                .btn-delete {
+                                    display: none;
+                                }
+                                .confirm-actions {
+                                    display: flex;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.ennemies {
+            border-left: 1px solid $color-bg-header;
+
+            > .resize-handle {
+                left: 0;
+            }
+
+            > .aside-content {
+                > .panel-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    > h2 {
+                        margin: 0;
+
+                        color: $color-menu-link-hover;
+                        font-size: 18px;
+                        font-weight: 700;
+                        letter-spacing: .45px;
+                        line-height: 28px;
+                    }
+
+                    > div {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+                }
+
+                > .panel-filters {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    > input {
+                        padding: 4px 8px;
+
+                        background-color: $color-bg-header;
+                        border: 1px solid oklch(0.446 0.03 256.802);
+                        border-radius: 4px;
+
+                        color: $color-text-app;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 20px;
+
+                        &:focus {
+                            border-color: oklch(0.637 0.237 25.331);
+                            outline: none;
+                        }
+                    }
+                }
+
+                > .monster-list {
+                    flex: 1 1 0;
+                    overflow-y: auto;
+
+                    border: 1px solid $color-header-session-border;
+                    border-radius: .5rem;
+
+                    color: $color-text-app;
+
+                    > .monster {
+                        display: flex;
+                        align-items: center;
+
+                        background-color: $color-header-button-bg;
+                        border-bottom: 1px solid $color-header-session-border;
+
+                        color: $color-monster-text;
+
+                        > button.details {
+                            display: flex;
+                            align-items: center;
+                            flex: 1 1 0;
+                            gap: 8px;
+                            min-width: 0;
+
+                            padding: 8px 12px;
+
+                            background-color: transparent;
+                            border: 0;
+
+                            color: $color-monster-text;
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+                            text-align: left;
+
+                            transition: .15s ease;
+
+                            > .monster-info {
+                                flex: 1 1 0;
+                                min-width: 0;
+
+                                color: $color-monster-text;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+
+                                > .monster-name {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    overflow: hidden;
+
+                                    color: $color-monster-text;
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    line-height: 24px;
+                                    text-align: left;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+
+                                    > span {
+                                        overflow: hidden;
+
+                                        color: $color-monster-text;
+                                        font-size: 14px;
+                                        font-weight: 500;
+                                        line-height: 20px;
+                                        text-align: left;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                    }
+                                }
+
+                                > .monster-type {
+                                    color: $color-header-session-label;
+                                    font-size: 12px;
+                                    font-weight: 400;
+                                    line-height: 16px;
+                                    text-align: left;
+                                }
+                            }
+
+                            > .monster-stats {
+                                flex-shrink: 0;
+
+                                color: $color-header-clock;
+                                font-size: 12px;
+                                font-weight: 400;
+                                line-height: 16px;
+
+                                > div {
+                                    text-align: right;
+                                }
+                            }
+                        }
+
+                        > button.info {
+                            flex-shrink: 0;
+                            padding: 8px;
+
+                            background-color: transparent;
+                            border: 0;
+
+                            color: oklch(0.446 0.03 256.802);
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+
+                            transition: .15s ease;
+
+                            &:hover {
+                                color: oklch(0.707 0.165 254.624);
+                            }
+
+                            > i {
+                                position: relative;
+                                display: inline-block;
+                                width: 17.5px;
+
+                                font-size: 14px;
+                                line-height: 14px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .edit-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px;
+
+            color: $color-text-app;
+
+            .edit-section {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px;
+
+                background-color: $color-header-button-bg;
+                border: 1px solid $color-header-session-border;
+                border-radius: 8px;
+
+                color: $color-text-app;
+            }
+        }
+    }
+}
