@@ -10,6 +10,11 @@ class DownloadFile
         $source = Session::fromPost('source');
         $uktag = Session::fromPost('uktag');
 
+        $allowedSources = ['aidedd'];
+        if (!in_array($source, $allowedSources, true)) {
+            return 'Source invalide';
+        }
+
         if (substr($uktag, 0, 3)=='fr-') {
             $urlSource = 'https://www.' . $source . '.org/monster/fr/' . substr($uktag, 0, 3);
         } else {

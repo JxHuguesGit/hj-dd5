@@ -13,7 +13,8 @@ $(document).ready(function(e) {
                 const parsedData = JSON.parse(response.data);
                 $('.modal-header').hide()
                 $('.modal-footer').hide()
-                $('#modalBody').html(parsedData.modalFeatCard);
+                const cleanHtml = DOMPurify.sanitize(parsedData.modalFeatCard);
+                $('#modalBody').html(cleanHtml);
                 $('#infoModal').modal('show');
             },
             error: function () {
@@ -36,7 +37,8 @@ $(document).ready(function(e) {
                 const parsedData = JSON.parse(response.data);
                 $('.modal-header').hide()
                 $('.modal-footer').hide()
-                $('#modalBody').html(parsedData.modalSpellCard);
+                const cleanHtml = DOMPurify.sanitize(parsedData.modalSpellCard);
+                $('#modalBody').html(cleanHtml);
                 $('#infoModal').modal('show');
             },
             error: function () {
@@ -59,7 +61,8 @@ $(document).ready(function(e) {
             data: data,
             success: function (response) {
                 $.get(filePath, function(html) {
-                    const $div = $('<div>').html(html); // on parse la chaîne HTML
+                    const cleanHtml = DOMPurify.sanitize(html);
+                    const $div = $('<div>').html(cleanHtml); // on parse la chaîne HTML
                     const $content = $div.find('div.col'); // on cible le contenu voulu
 
                     $('#modalBody').html($content);
