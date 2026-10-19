@@ -14,6 +14,10 @@ class DownloadFile
         if (!in_array($source, $allowedSources, true)) {
             return 'Source invalide';
         }
+        $pattern = '#^\d-$#';
+        if (!preg_match($pattern, $uktag)) {
+            return 'Source invalide';
+        }
 
         if (substr($uktag, 0, 3)=='fr-') {
             $urlSource = 'https://www.' . $source . '.org/monster/fr/' . substr($uktag, 0, 3);
