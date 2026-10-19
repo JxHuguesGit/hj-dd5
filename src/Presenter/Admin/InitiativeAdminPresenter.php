@@ -7,6 +7,7 @@ use src\Constant\Html as H;
 use src\Constant\Icon as I;
 use src\Constant\Template as T;
 use src\Collection\Collection;
+use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\Map;
 use src\Renderer\TemplateRenderer;
 use src\Utils\Html;
@@ -25,10 +26,10 @@ final class InitiativeAdminPresenter
             'combatId',
             FILTER_VALIDATE_INT
         );
-        echo "[$combatId]";
+
         // Vérification existence d'un rpgInitiativeTracker avec id=combatId.
         // Si pas de correspondance, on renvoie à la liste des IT disponibles.
-        $initiativeTracker = new \object();
+        $initiativeTracker = $this->mock();
 
         return $this->renderer->render(
             T::ADMININITIATIVEPANEL,
@@ -39,14 +40,25 @@ final class InitiativeAdminPresenter
                 $this->buildITPartyAside($initiativeTracker),
                 $this->buildITEnnemyAside($initiativeTracker),
                 // Présence de combattants ? Combat en cours ?
-                true ? 'has-combatants active-combat' : '',
+                !$initiativeTracker->partyMembers->isEmpty() ? 'has-combatants active-combat' : '',
                 $this->buildITHeaderPanel($initiativeTracker),
                 $this->buildIdContentPanel($initiativeTracker),
             ]
         );
     }
 
-    private function buildITHeader(object $initiativeTracker): string
+    private function mock(): InitiativeTracker
+    {
+        $mock = new InitiativeTracker();
+        $mock->name = 'MockName';
+        $mock->ITCode = 'AZERTY';
+        $mock->round = 0;
+        $mock->partyMembers = new Collection();
+        $mock->ennemyMembers = new Collection();
+        return $mock;
+    }
+
+    private function buildITHeader(InitiativeTracker $initiativeTracker): string
     {
         return $this->renderer->render(
             T::ADMIN_IT_HEADER,
@@ -58,27 +70,23 @@ final class InitiativeAdminPresenter
         );
     }
 
-    private function buildITPartyAside(object $initiativeTracker): string
+    private function buildITPartyAside(InitiativeTracker $initiativeTracker): string
     {
-        $partyMembers = new Collection();
-
         return $this->renderer->render(
             T::ADMIN_IT_PARTY_ASIDE,
             [
                 // Si aucun personnage listé, on ne peut pas monter de niveau.
-                $partyMembers->isEmpty() ? C::DISABLED : '',
+                $initiativeTracker->partyMembers->isEmpty() ? C::DISABLED : '',
                 // Si aucun personnage listé, on affiche le message "Pas de participants".
-                $partyMembers->isEmpty() ? '' : B::DNONE,
+                $initiativeTracker->partyMembers->isEmpty() ? '' : B::DNONE,
                 // On affiche la liste des personnages listés
                 '',
             ]
         );
     }
 
-    private function buildITEnnemyAside(object $initiativeTracker): string
+    private function buildITEnnemyAside(InitiativeTracker $initiativeTracker): string
     {
-        $ennemyMembers = new Collection();
-
         return $this->renderer->render(
             T::ADMIN_IT_ENNEMY_ASIDE,
             [
@@ -89,7 +97,7 @@ final class InitiativeAdminPresenter
 
     }
 
-    private function buildITHeaderPanel(object $initiativeTracker): string
+    private function buildITHeaderPanel(InitiativeTracker $initiativeTracker): string
     {
         return $this->renderer->render(
             T::ADMIN_IT_HEADER_PANEL,
@@ -100,7 +108,7 @@ final class InitiativeAdminPresenter
         );
     }
 
-    private function buildIdContentPanel(object $initiativeTracker): string
+    private function buildIdContentPanel(InitiativeTracker $initiativeTracker): string
     {
         return $this->renderer->render(
             T::ADMIN_IT_CONTENT_PANEL,
