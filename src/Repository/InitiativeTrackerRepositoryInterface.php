@@ -11,6 +11,8 @@ interface InitiativeTrackerRepositoryInterface
     public function commit(): void;
     public function rollBack(): void;
 
+    public function updatePartial(InitiativeTracker $initTracker, array $changedFields): void;
+
     /**
      * @return Collection<InitiativeTracker>
      */

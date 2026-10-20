@@ -13,7 +13,7 @@
 <div class="aside-content">
     <h2>Personnages</h2>
     <button type="button" class="primary" data-action="show-add-modal">Ajouter un Personnage</button>
-    <button type="button" class="secondary %1$s">Monter de niveau</button>
+    <button type="button" class="secondary %1$s" data-action="show-lvlup-modal">Monter de niveau</button>
     <div class="character-list">
         <div class="empty %2$s">Aucun personnage pour le moment</div>
         %3$s
@@ -86,6 +86,64 @@
                     Ajouter un Personnage
                 </button>
             </form>
+        </div>
+    </div>
+</div>
+<!-- / -->
+
+<!-- Popup montée de niveau du groupe -->
+<div role="dialog" aria-modal="true" aria-label="Monter de niveau"
+    class="overlay d-none" tabindex="-1" data-target="lvlUp-modal">
+    <div class="modal-box violet">
+        <div class="modal-header">
+            <div>
+                <h3 class="modal-title">Monter de niveau</h3>
+                <p class="subtitle">Tintin • Personnage 1 sur 2</p>
+            </div>
+            <button class="modal-close" aria-label="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="panel-info">
+                <div class="emblem-container">
+                    <button><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></button>
+                </div>
+                <div class="character-name" style="display:block;">
+                    <div class="character-name-text">Tintin</div>
+                    <div class="character-stats" title="CA — Classe d'armure PV — Points de vie" data-abbr-auto="">Avant : Niveau 1 • CA 10 • 10 PV</div>
+                </div>
+            </div>
+            <label class="field">
+                <span class="field-label">Niveau</span>
+                <input type="number" min="1" max="20" class="field-input">
+            </label>
+            <div class="fields-container grid2">
+                <label class="field">
+                    <span class="field-label" title="CA — Classe d'armure" data-abbr-auto="">CA</span>
+                    <input type="number" min="1" max="30" class="field-input">
+                </label>
+                <label class="field">
+                    <span class="field-label" title="Max PV — Maximum Points de vie" data-abbr-auto="">Max PV</span>
+                    <input type="number" min="1" class="field-input">
+                </label>
+            </div>
+            <div class="fields-container grid2">
+                <label class="field">
+                    <span class="field-label" title="DEX — Dexterité" data-abbr-auto="">DEX</span>
+                    <input type="number" min="-10" max="10" class="field-input">
+                </label>
+                <label class="field">
+                    <span class="field-label">Passive</span>
+                    <input type="number" min="1" max="30" class="field-input">
+                </label>
+            </div>
+        </div>
+        <div class="flex items-center justify-between gap-2 border-t border-gray-700 px-5 py-3">
+            <button class="rounded bg-gray-700 px-3 py-1.5 text-sm text-gray-300 transition hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-30" disabled="">
+                <i class="fa-duotone fa-light fa-arrow-left" aria-hidden="true"></i> Back
+            </button>
+            <button class="rounded bg-violet-600 px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-violet-500 active:bg-violet-700">
+                Save &amp; Next <i class="fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
 </div>

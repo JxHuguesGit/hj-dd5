@@ -141,122 +141,13 @@
                             opacity: .6;
 
                             .btn-add {
-                                display: inline-flex;
+                                display: inline-block;
                             }
                         }
 
-                        > .emblem-container {
-                            position: relative;
-                            flex-shrink: 0;
-
-                            > button {
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-
-                                width: 36px;
-                                height: 36px;
-                                overflow: hidden;
-
-                                background-color: $color-header-session-border;
-                                border: 2px solid oklch(0.446 0.03 256.802);
-                                border-radius: $radius-pill;
-
-                                font-size: 16px;
-                                font-weight: 400;
-                                line-height: 24px;
-
-                                transition: .15s ease;
-
-                                &:hover {
-                                    border-color: oklch(0.623 0.214 259.815);
-                                }
-
-                                > i {
-                                    position: relative;
-                                    display: block;
-                                    width: 20px;
-
-                                    color: $color-text-app;
-                                    font-size: 16px;
-                                    font-weight: 900;
-                                    line-height: 16px;
-                                    text-align: center;
-                                }
-                            }
-                        }
-
-                        > .character-details {
-                            flex: 1 1 0;
-                            min-width: 0;
-
-                            > .character-name {
-                                display: flex;
-                                align-items: center;
-                                gap: 6px;
-                                min-width: 0;
-
-                                > .character-name-text {
-                                    overflow: hidden;
-
-                                    color: $color-text-app;
-                                    font-size: 14px;
-                                    font-weight: 500;
-                                    line-height: 20px;
-
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                }
-
-                                > .isBenched {
-                                    padding: 2px 4px;
-
-                                    background-color: $color-header-session-border;
-                                    border-radius: 4px;
-
-                                    color: $color-header-session-label;
-                                    font-size: 12px;
-                                    line-height: 16px;
-                                }
-
-                                > button {
-                                    flex-shrink: 0;
-                                    padding: 2px;
-
-                                    background-color: transparent;
-                                    border: 0;
-                                    border-radius: 4px;
-
-                                    color: oklch(0.446 0.03 256.802);
-                                    font-size: 16px;
-                                    font-weight: 400;
-                                    line-height: 24px;
-
-                                    transition: .15s ease;
-
-                                    &:hover {
-                                        color: $color-header-title;
-                                    }
-
-                                    > i {
-                                        position: relative;
-                                        display: inline-block;
-                                        width: 15px;
-
-                                        color: inherit;
-                                        font-size: 12px;
-                                        font-weight: 900;
-                                        line-height: 12px;
-                                        text-align: center;
-                                    }
-                                }
-                            }
-
-                            > .character-stats {
-                                color: $color-header-clock;
-                                font-size: 12px;
-                                line-height: 16px;
-                            }
+                        :not(.benched) .isBenched,
+                        :not(.benched) .btn-add {
+                            display: none;
                         }
 
                         > .buttons {
@@ -314,7 +205,7 @@
 
                                     > i {
                                         color: inherit;
-                                    }                                 
+                                    }
                                 }
 
                                 > i {
@@ -364,7 +255,7 @@
                                         font-size: 10px;
                                         font-weight: 400;
                                         line-height: 15px;
-                                    }   
+                                    }
                                 }
 
                             .ask {
@@ -378,6 +269,141 @@
                         }
                     }
                 }
+            }
+
+            .character-details {
+                flex: 1 1 0;
+                min-width: 0;
+
+                > .character-name {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    min-width: 0;
+
+                    > .character-name-text {
+                        overflow: hidden;
+
+                        color: $color-text-app;
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 20px;
+
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    > .isBenched {
+                        padding: 2px 4px;
+
+                        background-color: $color-header-session-border;
+                        border-radius: 4px;
+
+                        color: $color-header-session-label;
+                        font-size: 12px;
+                        line-height: 16px;
+                    }
+
+                    > button {
+                        flex-shrink: 0;
+                        padding: 2px;
+
+                        background-color: transparent;
+                        border: 0;
+                        border-radius: 4px;
+
+                        color: oklch(0.446 0.03 256.802);
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 24px;
+
+                        transition: .15s ease;
+
+                        &:hover {
+                            color: $color-header-title;
+                        }
+
+                        > i {
+                            position: relative;
+                            display: inline-block;
+                            width: 15px;
+
+                            color: inherit;
+                            font-size: 12px;
+                            font-weight: 900;
+                            line-height: 12px;
+                            text-align: center;
+                        }
+                    }
+                }
+
+            }
+
+            .character-stats {
+                color: $color-header-clock;
+                font-size: 12px;
+                line-height: 16px;
+            }
+
+            .emblem-container {
+                position: relative;
+                flex-shrink: 0;
+
+                > button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: 36px;
+                    height: 36px;
+                    overflow: hidden;
+
+                    background-color: $color-header-session-border;
+                    border: 2px solid oklch(0.446 0.03 256.802);
+                    border-radius: $radius-pill;
+
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 12px;
+
+                    transition: .15s ease;
+
+                    &:hover {
+                        border-color: oklch(0.623 0.214 259.815);
+                    }
+
+                    > i {
+                        position: relative;
+                        display: block;
+                        width: 20px;
+
+                        color: $color-text-app;
+                        font-size: 16px;
+                        font-weight: 900;
+                        line-height: 16px;
+                        text-align: center;
+                    }
+                }
+            }
+
+            .edit-section {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                padding: 12px;
+                margin: 4px 0;
+
+                border: 1px solid oklch(0.707 0.022 261.325);
+                border-radius: 8px;
+
+                background: oklch(0.24 0.02 261);
+                color: oklch(0.95 0.01 261);
+
+                font-size: 12px;
+                line-height: 16px;
+
+                box-sizing: border-box;
             }
         }
 
@@ -563,28 +589,6 @@
                         }
                     }
                 }
-            }
-        }
-
-        .edit-body {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 20px;
-
-            color: $color-text-app;
-
-            .edit-section {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                padding: 12px;
-
-                background-color: $color-header-button-bg;
-                border: 1px solid $color-header-session-border;
-                border-radius: 8px;
-
-                color: $color-text-app;
             }
         }
     }

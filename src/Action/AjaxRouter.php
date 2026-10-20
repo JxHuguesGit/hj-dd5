@@ -56,7 +56,9 @@ class AjaxRouter
         'removeCreatureFromCombat' => RemoveCreatureFromCombatAction::class,
         'rerollCombatParticipantInitiative' => UpdateCombatParticipantAction::class,
         'addInitChar'                       => DealWithInitTracker::class,
+        'addInitCharToCombat'               => DealWithInitTracker::class,
         'delInitChar'                       => DealWithInitTracker::class,
+        'updateInitChar'                    => DealWithInitTracker::class,
     ];
 
     public function __construct(

@@ -54,6 +54,11 @@ input.field-input:focus {
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
 }
+.fields-container.grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
 
 input[type="number"] {
   appearance: textfield;

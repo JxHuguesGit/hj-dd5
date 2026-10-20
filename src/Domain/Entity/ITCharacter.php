@@ -15,6 +15,7 @@ use src\Renderer\TemplateRenderer;
  * @property int $modDex
  * @property int $percPassive
  * @property int $initiativeTrackerId
+ * @property int $active
  */
 
 final class ITCharacter extends Entity
@@ -28,6 +29,7 @@ final class ITCharacter extends Entity
         F::MODDEX,
         F::PERCPASSIVE,
         F::ITID,
+        F::ACTIVE,
     ];
 
     public const FIELD_TYPES = [
@@ -38,6 +40,7 @@ final class ITCharacter extends Entity
         F::MODDEX      => FieldType::INT,
         F::PERCPASSIVE => FieldType::INTPOSITIVE,
         F::ITID        => FieldType::INTPOSITIVE,
+        F::ACTIVE      => FieldType::INTPOSITIVE,
     ];
 
     public const EDITABLE_FIELDS = [
@@ -47,6 +50,7 @@ final class ITCharacter extends Entity
         F::MAXHP,
         F::MODDEX,
         F::PERCPASSIVE,
+        F::ACTIVE,
     ];
 
     public function getCharacterStats(): string
@@ -69,7 +73,8 @@ final class ITCharacter extends Entity
             [
                 $this->name,
                 $this->getCharacterStats(),
-                $this->id
+                $this->id,
+                $this->active==1 ? '' : 'benched',
             ]
         );
     }

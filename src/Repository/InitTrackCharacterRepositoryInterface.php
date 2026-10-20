@@ -13,6 +13,7 @@ interface InitTrackCharacterRepositoryInterface
 
     public function insert(ITCharacter $itCharacter): void;
     public function delete(ITCharacter $itCharacter): void;
+    public function updatePartial(ITCharacter $itCharacter, array $changedFields): void;
 
     /**
      * @return Collection<ITCharacter>

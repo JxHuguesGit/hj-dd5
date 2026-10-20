@@ -1154,6 +1154,9 @@
             background: oklch(0.21 0.034 264.665);
 
             border: 1px solid oklab(0.555 0.106942 0.123014 / 0.6);
+            &.violet {
+                border: 1px solid oklab(0.491 0.103677 -0.249301 / 0.6);
+            }
             border-radius: 12px;
 
             box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
@@ -1224,7 +1227,7 @@
                     border-radius: 8px;
                 }
             }
-            
+
         }
 
     }

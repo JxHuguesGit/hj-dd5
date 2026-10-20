@@ -63,7 +63,9 @@ class Ajax
                     'removeCreatureFromCombat',
                     'rerollCombatParticipantInitiative',
                     'addInitChar',
+                    'addInitCharToCombat',
                     'delInitChar',
+                    'updateInitChar',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();

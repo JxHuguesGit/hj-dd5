@@ -22,6 +22,18 @@ final class InitTrackCharacterWriter
         }
     }
 
+    public function updatePartial(ITCharacter $itCharacter, array $changedFields): void
+    {
+        $this->repository->beginTransaction();
+        try {
+            $this->repository->updatePartial($itCharacter, $changedFields);
+            $this->repository->commit();
+        } catch (\Throwable $e) {
+            $this->repository->rollBack();
+            throw $e;
+        }
+    }
+
     public function delete(ITCharacter $itCharacter): void
     {
         $this->repository->beginTransaction();

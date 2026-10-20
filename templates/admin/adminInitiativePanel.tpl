@@ -49,5 +49,7 @@
 
 <script type="module" src="%1$sassets/js/initiative/init-main.js?v=%2$s"></script>
 <script src="%1$sassets/js/initiative.js?v=%2$s"></script>
+<!--
 <script src="%1$sassets/js/combat.js?v=%2$s"></script>
+-->
 <script src="%1$sassets/js/draft.js?v=%2$s"></script>

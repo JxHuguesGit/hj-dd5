@@ -22,6 +22,7 @@ final class WriterFactory
         C::SPELL_CLASSE           => [C::WRITER => 'SpellClasseWriter',           C::REPO => C::SPELL_CLASSE],
 
         C::ITCHARACTER            => [C::WRITER => 'InitTrackCharacterWriter',    C::REPO => C::ITCHARACTER],
+        C::INITTRACKER            => [C::WRITER => 'InitiativeTrackerWriter',     C::REPO => C::INITTRACKER],
     ];
 
     public function __construct(

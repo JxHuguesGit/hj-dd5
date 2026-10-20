@@ -1,4 +1,4 @@
-<div class="character benched" id="character-%3$s">
+<div class="character %4$s" id="character-%3$s">
     <div class="emblem-container">
         <button title="Upload avatar">
             <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
