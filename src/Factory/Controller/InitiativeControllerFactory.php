@@ -21,19 +21,10 @@ class InitiativeControllerFactory
 
     public function createController(): PublicInitiative
     {
-        $combatId = (int) Session::fromGet('combatId');
-        $combat = $this->readerFactory->combat()->combatById($combatId);
-        if ($combat==null) {
-            $combat = new Combat();
-        }
-
         return new PublicInitiative(
             new PageInitiative(
-                $combat,
+                $this->readerFactory->initiativeTracker(),
                 $this->renderer,
-                $this->readerFactory->combatParticipant(),
-                new InitiativeListPresenter(),
-                new InitiativeContentBuilder(),
             )
         );
     }

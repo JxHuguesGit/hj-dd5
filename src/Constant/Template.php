@@ -135,4 +135,7 @@ final class Template
     public const ADMIN_IT_ENNEMY_ASIDE = self::IT_PATH . 'ITEnnemyAside.tpl';
     public const ADMIN_IT_HEADER_PANEL = self::IT_PATH . 'ITMainPanelHeader.tpl';
     public const ADMIN_IT_CONTENT_PANEL = self::IT_PATH . 'ITMainPanelContent.tpl';
+    public const PUBLIC_JOIN_LOGIN      = self::IT_PATH . 'ITJoinLogin.tpl';
+    public const PUBLIC_PLAYER_VIEW     = self::IT_PATH . 'ITPlayerView.tpl';
+
 }
