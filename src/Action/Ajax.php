@@ -66,6 +66,12 @@ class Ajax
                     'addInitCharToCombat',
                     'delInitChar',
                     'updateInitChar',
+                    'refreshPlayerView',
+                    'endCombat',
+                    'nextCombatChar',
+                    'prevCombatChar',
+                    'setInitChar',
+                    'startCombat',
                 ]
             )) {
                 $queryBuilder          = new QueryBuilder();
@@ -73,16 +79,15 @@ class Ajax
                 $repository            = new RepositoryFactory($queryBuilder, $queryExecutor);
                 $reader                = new ReaderFactory($repository);
                 $writer                = new WF($repository);
+                $renderer              = new TemplateRenderer();
+                $service               = new ServiceFactory($reader, $writer, $renderer);
                 $router                = new AjaxRouter(
                     new AjaxActionFactory(
                         $reader,
-                        new ServiceFactory($reader, $writer),
+                        $service,
                         $writer,
-                        new TemplateRenderer(),
-                        new PresenterFactory(
-                            new TemplateRenderer(),
-                            $reader
-                        )
+                        $renderer,
+                        new PresenterFactory($renderer, $reader, $service)
                     )
                 );
                 $response              = $router->dispatch(

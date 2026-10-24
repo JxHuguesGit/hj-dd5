@@ -10,6 +10,12 @@ final class ITCharacterCriteria extends BaseCriteria
     #[Equals(F::ITID)]
     public ?int $initiativeTrackerId = null;
 
+    #[Equals(F::ACTIVE)]
+    public ?int $active = null;
+
+    #[Equals(F::CHARACTERTYPE)]
+    public ?string $characterType = null;
+
     public array $orderBy = [
         F::NAME => C::ASC
     ];

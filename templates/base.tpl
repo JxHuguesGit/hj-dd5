@@ -27,6 +27,6 @@
         %8$s
         <!-- DD5 scripts -->
         <script src='%3$sassets/js/dd5.js?v=%9$s'></script>
-        <script src='%3$sassets/js/functions.js?v=%9$s'></script>            
+        <script src='%3$sassets/js/functions.js?v=%9$s'></script>
     </body>
 </html>

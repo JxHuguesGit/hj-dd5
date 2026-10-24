@@ -16,6 +16,15 @@ final class InitiativeTrackerRepository extends Repository implements Initiative
     }
 
     /**
+     * @return ?InitiativeTracker
+     * @SuppressWarnings("php:S1185")
+     */
+    public function find(int $id): ?InitiativeTracker
+    {
+        return parent::find($id);
+    }
+
+    /**
      * @return Collection<InitiativeTracker>
      */
     public function findAllWithCriteria(InitiativeTrackerCriteria $criteria): Collection

@@ -1,0 +1,31 @@
+@use "../variables" as *;
+
+html,
+body {
+    line-height: 1.5rem;
+    scrollbar-color: $color-scrollbar-thumb $color-scrollbar-track;
+    scrollbar-width: thin;
+    tab-size: 4;
+}
+
+body {
+    background-color: $color-bg-body;
+    font-family: $font-body;
+}
+
+#wpbody {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: $color-bg-app;
+    color: $color-text-app;
+    overflow: hidden;
+}
+
+#wpbody-content {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+}

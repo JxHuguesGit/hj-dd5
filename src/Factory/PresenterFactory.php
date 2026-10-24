@@ -14,6 +14,7 @@ final class PresenterFactory
     public function __construct(
         private TemplateRenderer $renderer,
         private ReaderFactory $readerFactory,
+        private ServiceFactory $serviceFactory,
     ) {}
 
     public function renderer(): TemplateRenderer
@@ -46,6 +47,7 @@ final class PresenterFactory
     {
         return new InitiativeAdminPresenter(
             $this->readerFactory,
+            $this->serviceFactory,
             $this->renderer
         );
     }

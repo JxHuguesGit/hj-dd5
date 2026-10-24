@@ -11,6 +11,7 @@ class Field
     public const ARMORCLASS  = 'armorClass';
     public const SCORECA     = 'ca';
     public const CELLSIZE    = 'cellSize';
+    public const CHARACTERTYPE = 'characterType';
     public const CHASCORE    = 'chaScore';
     public const CODE        = 'code';
     public const COLUMN      = 'column';
@@ -18,6 +19,7 @@ class Field
     public const CONSCORE    = 'conScore';
     public const SCORECR     = 'cr';
     public const CREATESTEP  = 'createStep';
+    public const CURHP       = 'curHp';
     public const CURRENTPARTICIPANTID = 'currentParticipantId';
     public const DESCRIPTION = 'description';
     public const DEXSCORE    = 'dexScore';

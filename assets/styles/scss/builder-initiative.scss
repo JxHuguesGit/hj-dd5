@@ -2,5 +2,16 @@
 // Pour compiler les scss :
 // ouvrir un powershell
 // cd .\assets\styles\scss\ 
-// sass --watch .\builder-initiative.scss .\..\initiative.css
-@use "initiative.scss";
+// sass --watch --verbose .\builder-initiative.scss:.\..\initiative.css
+@use "variables";
+@use "base/reset";
+@use "base/global";
+@use "initiative/main";
+@use "initiative/layout";
+@use "initiative/states";
+@use "initiative/overlay";
+@use "initiative/header";
+@use "initiative/aside_party";
+@use "initiative/aside_ennemies";
+@use "initiative/forms";
+@use "initiative/public";

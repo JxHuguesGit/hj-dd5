@@ -137,12 +137,12 @@
                 </label>
             </div>
         </div>
-        <div class="flex items-center justify-between gap-2 border-t border-gray-700 px-5 py-3">
-            <button class="rounded bg-gray-700 px-3 py-1.5 text-sm text-gray-300 transition hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-30" disabled="">
-                <i class="fa-duotone fa-light fa-arrow-left" aria-hidden="true"></i> Back
+        <div class="modal-footer">
+            <button class="button-back" disabled="">
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back
             </button>
-            <button class="rounded bg-violet-600 px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-violet-500 active:bg-violet-700">
-                Save &amp; Next <i class="fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+            <button class="button-next">
+                Save &amp; Next <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </button>
         </div>
     </div>

@@ -1,0 +1,245 @@
+@use "../variables" as *;
+
+.initiative-body {
+    > aside {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: relative;
+        width: 300px;
+        padding: 1rem;
+
+        background-color: oklab(0.21 -0.0032 -0.0339 / 0.5);
+        color: $color-text-app;
+
+        > .resize-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 12px;
+
+            cursor: col-resize;
+            touch-action: none;
+            user-select: none;
+
+            transition: background-color .15s ease;
+
+            &:hover {
+                background-color: oklab(0.623 -0.0378 -0.2106 / 0.3);
+            }
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                pointer-events: none;
+
+                > div {
+                    width: 3px;
+                    height: 3px;
+
+                    background-color: $color-header-session-label;
+                    border-radius: $radius-pill;
+                }
+            }
+        }
+
+        > .aside-content {
+            display: flex;
+            flex: 1 1 0;
+            flex-direction: column;
+            gap: .75rem;
+            min-height: 0;
+        }
+
+        &.ennemies {
+            border-left: 1px solid $color-bg-header;
+
+            > .resize-handle {
+                left: 0;
+            }
+
+            > .aside-content {
+                > .panel-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    > h2 {
+                        margin: 0;
+
+                        color: $color-menu-link-hover;
+                        font-size: 18px;
+                        font-weight: 700;
+                        letter-spacing: .45px;
+                        line-height: 28px;
+                    }
+
+                    > div {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+                }
+
+                > .panel-filters {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    > input {
+                        padding: 4px 8px;
+
+                        background-color: $color-bg-header;
+                        border: 1px solid oklch(0.446 0.03 256.802);
+                        border-radius: 4px;
+
+                        color: $color-text-app;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 20px;
+
+                        &:focus {
+                            border-color: oklch(0.637 0.237 25.331);
+                            outline: none;
+                        }
+                    }
+                }
+
+                > .monster-list {
+                    flex: 1 1 0;
+                    overflow-y: auto;
+
+                    border: 1px solid $color-header-session-border;
+                    border-radius: .5rem;
+
+                    color: $color-text-app;
+
+                    > .monster {
+                        display: flex;
+                        align-items: center;
+
+                        background-color: $color-header-button-bg;
+                        border-bottom: 1px solid $color-header-session-border;
+
+                        color: $color-monster-text;
+
+                        > button.details {
+                            display: flex;
+                            align-items: center;
+                            flex: 1 1 0;
+                            gap: 8px;
+                            min-width: 0;
+
+                            padding: 8px 12px;
+
+                            background-color: transparent;
+                            border: 0;
+
+                            color: $color-monster-text;
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+                            text-align: left;
+
+                            transition: .15s ease;
+
+                            > .monster-info {
+                                flex: 1 1 0;
+                                min-width: 0;
+
+                                color: $color-monster-text;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+
+                                > .monster-name {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    overflow: hidden;
+
+                                    color: $color-monster-text;
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    line-height: 24px;
+                                    text-align: left;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+
+                                    > span {
+                                        overflow: hidden;
+
+                                        color: $color-monster-text;
+                                        font-size: 14px;
+                                        font-weight: 500;
+                                        line-height: 20px;
+                                        text-align: left;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                    }
+                                }
+
+                                > .monster-type {
+                                    color: $color-header-session-label;
+                                    font-size: 12px;
+                                    font-weight: 400;
+                                    line-height: 16px;
+                                    text-align: left;
+                                }
+                            }
+
+                            > .monster-stats {
+                                flex-shrink: 0;
+
+                                color: $color-header-clock;
+                                font-size: 12px;
+                                font-weight: 400;
+                                line-height: 16px;
+
+                                > div {
+                                    text-align: right;
+                                }
+                            }
+                        }
+
+                        > button.info {
+                            flex-shrink: 0;
+                            padding: 8px;
+
+                            background-color: transparent;
+                            border: 0;
+
+                            color: oklch(0.446 0.03 256.802);
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+
+                            transition: .15s ease;
+
+                            &:hover {
+                                color: oklch(0.707 0.165 254.624);
+                            }
+
+                            > i {
+                                position: relative;
+                                display: inline-block;
+                                width: 17.5px;
+
+                                font-size: 14px;
+                                line-height: 14px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

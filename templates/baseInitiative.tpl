@@ -12,5 +12,6 @@
         <div id="root">%4$s</div>
         %5$s
         <script src="%3$sassets/js/combatPJ.js?v=%6$s"></script>
+        <script src='%3$sassets/js/initiative/init-tracker-player-view.js?v=%6$s'></script>
     </body>
 </html>

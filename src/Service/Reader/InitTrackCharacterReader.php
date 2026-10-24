@@ -23,10 +23,20 @@ final class InitTrackCharacterReader
     /**
      * @return Collection<ITCharacter>
      */
-    public function charactersByCode(string $itCode): ?Collection
+    public function charactersByCode(string $itCode, ?ITCharacterCriteria $criteria = null): ?Collection
     {
-        $criteria = new ITCharacterCriteria();
-        $criteria->initiativeTrackerId = $itCode;
+        if (null==$criteria) {
+            $criteria = new ITCharacterCriteria();
+            $criteria->initiativeTrackerId = $itCode;
+        }
+        return $this->repository->findAllWithCriteria($criteria);
+    }
+
+    /**
+     * @return Collection<ITCharacter>
+     */
+    public function allItCharacters(ITCharacterCriteria $criteria): ?Collection
+    {
         return $this->repository->findAllWithCriteria($criteria);
     }
 

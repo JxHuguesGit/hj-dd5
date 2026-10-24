@@ -1,8 +1,11 @@
 <?php
 namespace src\Factory;
 
+use src\Renderer\TemplateRenderer;
 use src\Service\Domain\CombatService;
 use src\Service\Domain\FeatPreRequisService;
+use src\Service\Domain\InitiativeTrackerService;
+use src\Service\Domain\InitTrackCharacterService;
 use src\Service\Domain\MapService;
 use src\Service\Domain\MapFogService;
 use src\Service\Domain\MapTokenService;
@@ -19,6 +22,7 @@ final class ServiceFactory
     public function __construct(
         private ReaderFactory $readerFactory,
         private WriterFactory $writerFactory,
+        private TemplateRenderer $renderer,
     ) {}
 
     public function wordPress(): WpPostService
@@ -114,6 +118,24 @@ final class ServiceFactory
         );
     }
 
+    public function initTrackCharacter(): InitTrackCharacterService
+    {
+        return new InitTrackCharacterService(
+            $this->readerFactory->initTrackCharacter(),
+            $this->writerFactory->initTrackCharacter(),
+            $this->renderer
+        );
+    }
+
+    public function initiativeTracker(): InitiativeTrackerService
+    {
+        return new InitiativeTrackerService(
+            $this->readerFactory->initTrackCharacter(),
+            $this->writerFactory->initTrackCharacter(),
+            $this->renderer
+        );
+    }
+
     public function get(string $className): object
     {
         return match ($className) {
@@ -129,5 +151,6 @@ final class ServiceFactory
             ),
         };
     }
+
 
 }

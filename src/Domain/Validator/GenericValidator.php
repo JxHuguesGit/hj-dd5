@@ -9,6 +9,7 @@ final class GenericValidator
     private static array $rules = [
         FieldType::STRING => 'validateString',
         FieldType::FLOAT => 'validateFloat',
+        FieldType::FLOATNULLABLE => 'validateFloatNullable',
         FieldType::INTPOSITIVE => 'validateIntPositive',
         FieldType::ARRAY => 'validateArray',
         FieldType::BOOL => 'validateBool',
@@ -39,6 +40,9 @@ final class GenericValidator
     }
     private static function validateFloat(string $field, $value): ?string {
         return (!is_numeric($value)) ? "Le champ $field doit être un nombre." : null;
+    }
+    private static function validateFloatNullable(string $field, $value): ?string {
+        return ($value !== null && !is_numeric($value)) ? "Le champ $field doit être un nombre ou null." : null;
     }
     private static function validateIntPositive(string $field, $value): ?string {
         return (!is_numeric($value) || (int)$value < 0) ? "Le champ $field doit être un entier positif." : null;

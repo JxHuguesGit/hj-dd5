@@ -14,6 +14,14 @@ final class InitiativeTrackerReader
     /**
      * @return ?InitiativeTracker
      */
+    public function initiativeTrackerById(int $id): ?InitiativeTracker
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
+     * @return ?InitiativeTracker
+     */
     public function initiativeTrackerByCode(string $itCode): ?InitiativeTracker
     {
         $criteria = new InitiativeTrackerCriteria();

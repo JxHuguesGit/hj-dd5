@@ -64,6 +64,11 @@ class Collection implements \IteratorAggregate, \Countable
         return reset($this->items) ?: null;
     }
 
+    public function last(): mixed
+    {
+        return array_last($this->items) ?: null;
+    }
+
     public function toArray(): array
     {
         return $this->items;

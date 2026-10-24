@@ -2,16 +2,17 @@
 namespace src\Domain\Entity;
 
 use src\Constant\Field as F;
-use src\Constant\Template as T;
 use src\Constant\FieldType;
 use src\Domain\Entity;
-use src\Renderer\TemplateRenderer;
 
 /**
  * @property string $name
+ * @property int $initiative
+ * @property string $characterType
  * @property int $level
  * @property int $ac
  * @property int $maxHp
+ * @property int $curHp
  * @property int $modDex
  * @property int $percPassive
  * @property int $initiativeTrackerId
@@ -23,9 +24,12 @@ final class ITCharacter extends Entity
     public const FIELDS = [
         F::ID,
         F::NAME,
+        F::INITIATIVE,
+        F::CHARACTERTYPE,
         F::LEVEL,
         F::SCOREAC,
         F::MAXHP,
+        F::CURHP,
         F::MODDEX,
         F::PERCPASSIVE,
         F::ITID,
@@ -33,21 +37,27 @@ final class ITCharacter extends Entity
     ];
 
     public const FIELD_TYPES = [
-        F::NAME        => FieldType::STRING,
-        F::LEVEL       => FieldType::INTPOSITIVE,
-        F::SCOREAC     => FieldType::INTPOSITIVE,
-        F::MAXHP       => FieldType::INTPOSITIVE,
-        F::MODDEX      => FieldType::INT,
-        F::PERCPASSIVE => FieldType::INTPOSITIVE,
-        F::ITID        => FieldType::INTPOSITIVE,
-        F::ACTIVE      => FieldType::INTPOSITIVE,
+        F::NAME          => FieldType::STRING,
+        F::INITIATIVE    => FieldType::FLOATNULLABLE,
+        F::CHARACTERTYPE => FieldType::STRING,
+        F::LEVEL         => FieldType::INTPOSITIVE,
+        F::SCOREAC       => FieldType::INTPOSITIVE,
+        F::MAXHP         => FieldType::INTPOSITIVE,
+        F::CURHP         => FieldType::INTPOSITIVE,
+        F::MODDEX        => FieldType::INT,
+        F::PERCPASSIVE   => FieldType::INTPOSITIVE,
+        F::ITID          => FieldType::INTPOSITIVE,
+        F::ACTIVE        => FieldType::INTPOSITIVE,
     ];
 
     public const EDITABLE_FIELDS = [
         F::NAME,
+        F::INITIATIVE,
+        F::CHARACTERTYPE,
         F::LEVEL,
         F::SCOREAC,
         F::MAXHP,
+        F::CURHP,
         F::MODDEX,
         F::PERCPASSIVE,
         F::ACTIVE,
@@ -62,20 +72,6 @@ final class ITCharacter extends Entity
             $this->maxHp,
             ($this->modDex>0 ? '+' : '') . $this->modDex,
             $this->percPassive
-        );
-    }
-
-
-    public function buildAside(TemplateRenderer $renderer): string
-    {
-        return $renderer->render(
-            T::ADMIN_IT_PARTY_MEMBER,
-            [
-                $this->name,
-                $this->getCharacterStats(),
-                $this->id,
-                $this->active==1 ? '' : 'benched',
-            ]
         );
     }
 }

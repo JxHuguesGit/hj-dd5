@@ -1,124 +1,15 @@
-@use "variables" as *;
-@use "initiative_reset.scss";
-@use "initiative_header.scss";
-@use "initiative_aside.scss";
+@use "../variables" as *;
 
-@mixin state-colors {
-    &.advfor {
-        background-color: oklch(0.508 0.118 165.612);
-        color: oklch(0.95 0.052 163.051);
-    }
-
-    &.advagainst {
-        background-color: oklch(0.455 0.188 13.697);
-        color: oklch(0.892 0.058 10.001);
-    }
-
-    &.disadvfor {
-        background-color: oklch(0.47 0.157 37.304);
-        color: oklch(0.901 0.076 70.697);
-    }
-
-    &.disadvagainst {
-        background-color: oklch(0.511 0.096 186.391);
-        color: oklch(0.953 0.051 180.801);
-    }
-
-    &.blinded {
-        background-color: oklch(0.446 0.03 256.802);
-        color: oklch(0.928 0.006 264.531);
-    }
-
-    &.charmed {
-        background-color: oklch(0.459 0.187 3.815);
-        color: oklch(0.899 0.061 343.231);
-    }
-
-    &.concentrating {
-        background-color: oklch(0.45 0.085 224.283);
-        color: oklch(0.917 0.08 205.041);
-    }
-
-    &.deafened {
-        background-color: oklch(0.476 0.114 61.907);
-        color: oklch(0.945 0.129 101.54);
-    }
-
-    &.frightened {
-        background-color: oklch(0.438 0.218 303.724);
-        color: oklch(0.902 0.063 306.703);
-    }
-
-    &.incapacitated {
-        background-color: oklch(0.444 0.177 26.899);
-        color: oklch(0.885 0.062 18.334);
-    }
-
-    &.paralyzed {
-        background-color: oklch(0.396 0.141 25.723);
-        color: oklch(0.808 0.114 19.571);
-    }
-
-    &.petrified {
-        background-color: oklch(0.374 0.01 67.558);
-        color: oklch(0.923 0.003 48.717);
-    }
-
-    &.poisoned {
-        background-color: oklch(0.448 0.119 151.328);
-        color: oklch(0.925 0.084 155.995);
-    }
-
-    &.prone {
-        background-color: oklch(0.421 0.095 57.708);
-        color: oklch(0.905 0.182 98.111);
-    }
-
-    &.restrained {
-        background-color: oklch(0.473 0.137 46.201);
-        color: oklch(0.924 0.12 95.746);
-    }
-
-    &.stunned {
-        background-color: oklch(0.554 0.135 66.442);
-        color: oklch(0.973 0.071 103.193);
-    }
-
-    &.grappled {
-        background-color: oklch(0.553 0.195 38.402);
-        color: oklch(0.954 0.038 75.164);
-    }
-
-    &.nonvisible {
-        background-color: oklch(0.424 0.199 265.638);
-        color: oklch(0.882 0.059 254.128);
-    }
-
-    &.default {
-        background-color: oklab(0.401 0.140289 -0.096015 / 0.6);
-        color: oklch(0.903 0.076 319.62);
-    }
-}
+@use "states";
 
 .initiative-body {
-    display: flex;
-    flex: 1 1 0;
-    flex-direction: row;
-    min-height: 0;
-    overflow: hidden;
-    background-color: $color-bg-app;
-    color: $color-text-app;
-
     .initiative-main {
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 0;
-
-        min-width: 0;
-
-        padding: 1rem;
-
         color: $color-text-app;
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        min-width: 0;
+        padding: 1rem;
 
         > .active-combatants {
             display: flex;
@@ -126,6 +17,12 @@
             flex-direction: column;
             gap: .75rem;
             min-height: 0;
+
+            &.has-combatants {
+                .start-combat {
+                    display: flex;
+                }
+            }
 
             > .panel-header {
                 display: flex;
@@ -337,11 +234,6 @@
                     }
                 }
 
-                &.has-combatants {
-                    .start-combat {
-                        display: flex;
-                    }
-                }
                 &.combat-in-progress {
                     .round,
                     .previous-turn,
@@ -809,10 +701,18 @@
                             border: 1px solid oklch(0.446 0.03 256.802);
                             border-radius: 4px;
 
-                            font-size: 14px;
-                            font-weight: 400;
-                            line-height: 20px;
+                            color: $color-header-session-name;
+
+                            font-size: 20px;
+                            font-weight: 700;
+                            line-height: 28px;
                             text-align: center;
+
+                            &::placeholder {
+                                font-size: 14px;
+                                font-weight: 400;
+                                line-height: 20px;
+                            }
                         }
 
                         > button {
@@ -878,7 +778,7 @@
                             font-weight: 500;
                             line-height: 16px;
 
-                            @include state-colors;
+                            @include states.state-colors;
 
                             > .state-label {
                                 padding: 6px 8px;
@@ -969,7 +869,7 @@
                                 }
 
                                 &.selected {
-                                    @include state-colors;
+                                    @include states.state-colors;
                                 }
                             }
 
@@ -1112,7 +1012,7 @@
 
                     &.monster {
                         > .bordure {
-                            background-color: oklch(0.637 0.237 25.331)
+                            background-color: oklch(0.637 0.237 25.331);
                         }
                         .emblem {
                             background-color: oklab(0.396 0.127027 0.0611969 / 0.6);
@@ -1122,120 +1022,18 @@
                                 display: none;
                             }
                         }
+                        .thp {
+                            display: none;
+                        }
+                    }
+
+                    &.active {
+                        > .bordure {
+                            background-color: oklch(82.8% .189 84.429);
+                        }
                     }
                 }
             }
         }
-    }
-
-    .overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 50;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        padding: 1rem;
-
-        color: #fff;
-        background: rgb(0 0 0 / 70%);
-        backdrop-filter: blur(8px);
-
-        .modal-box {
-            display: flex;
-            flex-direction: column;
-
-            width: 448px;
-            max-width: 448px;
-
-            color: #fff;
-            background: oklch(0.21 0.034 264.665);
-
-            border: 1px solid oklab(0.555 0.106942 0.123014 / 0.6);
-            &.violet {
-                border: 1px solid oklab(0.491 0.103677 -0.249301 / 0.6);
-            }
-            border-radius: 12px;
-
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
-
-            .modal-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                padding: 1rem 1.25rem;
-
-                color: #fff;
-
-                border-bottom: 1px solid oklch(0.373 0.034 259.733);
-
-                .modal-title {
-                    color: oklch(0.828 0.189 84.429);
-
-                    font-size: 16px;
-                    font-weight: 700;
-                    letter-spacing: 0.4px;
-                    line-height: 24px;
-                }
-
-                .modal-close {
-                    padding: 0;
-
-                    color: rgb(148 155 171);
-                    background: transparent;
-                    border: 0;
-
-                    font-size: 16px;
-                    line-height: 24px;
-
-                    transition:
-                        color 0.15s,
-                        background-color 0.15s,
-                        opacity 0.15s;
-
-                    &:hover {
-                        color: #fff;
-                    }
-
-                }
-
-            }
-
-            .modal-body {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-
-                padding: 20px;
-
-                color: #fff;
-
-                .modal-section {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-
-                    padding: 12px;
-
-                    color: #fff;
-                    background: oklch(0.278 0.033 256.848);
-
-                    border: 1px solid oklch(0.373 0.034 259.733);
-                    border-radius: 8px;
-                }
-            }
-
-        }
-
-    }
-
+    }    
 }
-
-
-
-
-
-

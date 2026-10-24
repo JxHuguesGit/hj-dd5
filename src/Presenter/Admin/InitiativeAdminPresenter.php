@@ -3,15 +3,18 @@ namespace src\Presenter\Admin;
 
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
-use src\Constant\Html as H;
+use src\Constant\Field as F;
 use src\Constant\Icon as I;
 use src\Constant\Template as T;
 use src\Collection\Collection;
+use src\Domain\Criteria\ITCharacterCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\ITCharacter;
 use src\Domain\Entity\Map;
 use src\Factory\ReaderFactory;
+use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
+use src\Service\Domain\InitiativeTrackerService;
 use src\Utils\Html;
 use src\Utils\UrlGenerator;
 
@@ -19,6 +22,7 @@ final class InitiativeAdminPresenter
 {
     public function __construct(
         private ReaderFactory $readerFactory,
+        private ServiceFactory $serviceFactory,
         private TemplateRenderer $renderer
     ) {}
 
@@ -30,6 +34,13 @@ final class InitiativeAdminPresenter
         );
 
         $initiativeTracker = $this->readerFactory->initiativeTracker()->initiativeTrackerByCode($combatId);
+        $criteria = new ITCharacterCriteria();
+        $criteria->initiativeTrackerId = $initiativeTracker->id;
+        $criteria->orderBy = [F::INITIATIVE => C::DESC];
+        $allCombattants = $this->readerFactory->initTrackCharacter()->allItCharacters($criteria);
+        $criteria->characterType = 'player';
+        $criteria->orderBy = [F::NAME => C::ASC];
+        $partyMembers = $this->readerFactory->initTrackCharacter()->allItCharacters($criteria);
 
         return $this->renderer->render(
             T::ADMININITIATIVEPANEL,
@@ -37,12 +48,13 @@ final class InitiativeAdminPresenter
                 PLUGINS_DD5,
                 date('YmdHis'),
                 $this->buildITHeader($initiativeTracker),
-                $this->buildITPartyAside($initiativeTracker),
+                $this->buildITPartyAside($partyMembers),
                 '',//$this->buildITEnnemyAside($initiativeTracker),
                 // Présence de combattants ? Combat en cours ?
-                '',//!$initiativeTracker->partyMembers->isEmpty() ? 'has-combatants active-combat' : '',
-                '',//$this->buildITHeaderPanel($initiativeTracker),
-                '',//$this->buildIdContentPanel($initiativeTracker),
+                !$partyMembers->isEmpty() ? 'has-combatants'/* active-combat'*/ : '',
+                $this->buildITHeaderPanel($initiativeTracker),
+                $this->serviceFactory->initiativeTracker()->buildIdContentPanel($allCombattants, $initiativeTracker),
+                $initiativeTracker->active ? 'combat-in-progress' : '',
             ]
         );
     }
@@ -59,12 +71,11 @@ final class InitiativeAdminPresenter
         );
     }
 
-    private function buildITPartyAside(InitiativeTracker $initiativeTracker): string
+    private function buildITPartyAside(Collection $partyMembers): string
     {
-        $partyMembers = $this->readerFactory->initTrackCharacter()->charactersByCode($initiativeTracker->id);
         $listPartyMembers = '';
         foreach ($partyMembers as $partyMember) {
-            $listPartyMembers .= $partyMember->buildAside($this->renderer);
+            $listPartyMembers .= $this->buildITPartyMember($partyMember);
         }
 
         return $this->renderer->render(
@@ -76,6 +87,19 @@ final class InitiativeAdminPresenter
                 $partyMembers->isEmpty() ? '' : B::DNONE,
                 // On affiche la liste des personnages listés
                 $listPartyMembers,
+            ]
+        );
+    }
+
+    private function buildITPartyMember(ITCharacter $partyMember): string
+    {
+        return $this->renderer->render(
+            T::ADMIN_IT_PARTY_MEMBER,
+            [
+                $partyMember->name,
+                $partyMember->getCharacterStats(),
+                $partyMember->id,
+                $partyMember->active == 1 ? '' : 'benched',
             ]
         );
     }
@@ -103,99 +127,36 @@ final class InitiativeAdminPresenter
         );
     }
 
-    private function buildIdContentPanel(InitiativeTracker $initiativeTracker): string
+    private function buildIdContentPanel(Collection $members, InitiativeTracker $initiativeTracker): string
     {
+        $content = '';
+        foreach ($members as $member) {
+            if ($member->active==0) {
+                continue;
+            }
+            $content .= $this->buildCombatMember($member, $initiativeTracker->currentParticipantId==$member->id);
+        }
+        return $content;
+    }
+
+    private function buildCombatMember(ITCharacter $member, bool $active): string
+    {
+        $classMember  = $member->characterType == 'player' ? 'character' : $member->characterType;
+        $classMember .= $active ? ' active' : '';
+        
         return $this->renderer->render(
             T::ADMIN_IT_CONTENT_PANEL,
             [
-
+                $member->id,
+                $classMember,
+                $member->name,
+                $member->maxHp,
+                $member->ac,
+                $member->initiative == null ? '-' : floor($member->initiative),
+                $member->initiative == null ? '' : floor($member->initiative),
+                $member->curHp,
             ]
         );
     }
 
-
-
-
-
-
-
-
-
-    public function present(Map $map, Collection $mapTokens, Collection $initiatives): string
-    {
-        $mapTokensFormatted = $this->presentMapTokens($mapTokens, $initiatives);
-        $initiativesFormatted = 'wip initiativesFormatted';
-
-        return $this->renderer->render(
-            T::ADMINTIMELINE,
-            [
-                htmlspecialchars($map->name, ENT_QUOTES),
-                UrlGenerator::admin('map', 'maps'),
-                UrlGenerator::admin('map', 'maps', '', '', ['mapId' => $map->id]),
-                $mapTokensFormatted,
-                $initiativesFormatted
-            ]
-        );
-    }
-
-    private function presentMapTokens(
-        Collection $mapTokens,
-        Collection $initiatives
-    ): string {
-        $initiativeTokenIds = [];
-
-        foreach ($initiatives as $initiative) {
-            $initiativeTokenIds[] = $initiative->mapTokenId;
-        }
-
-        $html = '';
-
-        foreach ($mapTokens as $mapToken) {
-            $isInInitiative = in_array(
-                $mapToken->id,
-                $initiativeTokenIds,
-                true
-            );
-
-            $html .= '<tr>' .
-            // Visuel du token
-            Html::getBalise(
-                H::BALISE_TD,
-                Html::getBalise(
-                    H::BALISE_IMG,
-                    '',
-                    [
-                        C::CSSCLASS => 'map-token-image',
-                        'src' => PLUGINS_DD5 . 'assets/map/tokens/' . htmlspecialchars($mapToken->image, ENT_QUOTES)
-                    ]
-                )
-            ) .
-            // Position
-            Html::getBalise(
-                H::BALISE_TD,
-                $mapToken->column . ', ' . $mapToken->row
-            ) .
-            // Numéro
-            Html::getBalise(
-                H::BALISE_TD,
-                $mapToken->number
-            ) .
-            // Action
-            Html::getBalise(
-                H::BALISE_TD,
-                Html::getButton(
-                    Html::getIcon(I::MINUS) . Html::getIcon(I::PLUS),
-                    [
-                        C::CSSCLASS => 'btn btn-sm ' . ($isInInitiative ? 'btn-danger' : 'btn-success'),
-                        C::TITLE => ($isInInitiative ? 'Retirer' : 'Ajouter') . ' de l\'initiative',
-                    ]
-                ),
-                [
-                    C::CSSCLASS => 'map-token' . ($isInInitiative ? ' inactive' : '')
-                ]
-            );
-        }
-
-        return $html;
-    }
 }

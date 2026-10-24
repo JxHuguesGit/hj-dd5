@@ -63,8 +63,8 @@ class DD5Base
         $repository      = new RepositoryFactory($queryBuilder, $queryExecutor);
         $reader          = new ReaderFactory($repository);
         $writer          = new WriterFactory($repository);
-        $service         = new ServiceFactory($reader, $writer);
         $renderer        = new TemplateRenderer();
+        $service         = new ServiceFactory($reader, $writer, $renderer);
 
         $router          = $router = new Router(
             new Collection([
@@ -93,7 +93,7 @@ class DD5Base
                     new PublicControllerFactory($reader, $service, $renderer)
                 ),
                 new InitiativeRouter(
-                    new InitiativeControllerFactory($reader, $renderer)
+                    new InitiativeControllerFactory($reader, $service, $renderer)
                 ),
                 new AoeRouter(
                     new AoeControllerFactory($renderer)

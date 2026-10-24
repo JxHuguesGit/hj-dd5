@@ -16,6 +16,15 @@ final class InitTrackCharacterRepository extends Repository implements InitTrack
     }
 
     /**
+     * @return ?ITCharacter
+     * @SuppressWarnings("php:S1185")
+     */
+    public function find(int $id): ?ITCharacter
+    {
+        return parent::find($id);
+    }
+
+    /**
      * @return Collection<ITCharacter>
      */
     public function findAllWithCriteria(ITCharacterCriteria $criteria): Collection

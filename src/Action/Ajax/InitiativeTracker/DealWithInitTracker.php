@@ -3,6 +3,7 @@ namespace src\Action\Ajax\InitiativeTracker;
 
 use src\Constant\Constant as C;
 use src\Factory\ReaderFactory;
+use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory;
 use src\Utils\Session;
 
@@ -10,7 +11,8 @@ final class DealWithInitTracker
 {
     public function __construct(
         private ReaderFactory $readerFactory,
-        private WriterFactory $writerFactory
+        private WriterFactory $writerFactory,
+        private ServiceFactory $serviceFactory,
     ) {}
 
     public function execute(): array
@@ -38,6 +40,21 @@ final class DealWithInitTracker
             $returnedArray = (new ITMajCharacter(
                 Session::fromPost(C::CHARACTER),
                 $this->writerFactory->initTrackCharacter()
+            ))->execute();
+        } elseif ($ajaxAction=='setInitChar') {
+            $returnedArray = (new ITSetCharCombatInitiative(
+                (int) Session::fromPost('characterId'),
+                (int) Session::fromPost('initiative'),
+                $this->readerFactory,
+                $this->serviceFactory,
+                $this->writerFactory
+            ))->execute();
+        } elseif ($ajaxAction=='nextCombatChar') {
+            $returnedArray = (new ITNextCombatCharacter(
+                Session::fromPost('itCode'),
+                $this->readerFactory,
+                $this->serviceFactory,
+                $this->writerFactory
             ))->execute();
         } else {
             $returnedArray = [

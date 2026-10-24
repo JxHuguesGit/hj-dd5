@@ -14,6 +14,11 @@ interface InitiativeTrackerRepositoryInterface
     public function updatePartial(InitiativeTracker $initTracker, array $changedFields): void;
 
     /**
+     * @return ?InitiativeTracker
+     */
+    public function find(int $id): ?InitiativeTracker;
+
+    /**
      * @return Collection<InitiativeTracker>
      */
     public function findAllWithCriteria(InitiativeTrackerCriteria $criteria): Collection;

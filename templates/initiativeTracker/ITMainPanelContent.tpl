@@ -1,7 +1,7 @@
-<div id="combatant-24081421-9545-4fdb-aeec-18dff933cb1d" class="combatant character">
+<div id="combatant-%1$s" class="combatant %2$s">
     <div class="bordure"></div>
     <div class="name-actions">
-        <div class="initiative-order">
+        <div class="initiative-order d-none">
             <button title="Move up" class="inactive">▲</button>
             <button title="Move down">▼</button>
         </div>
@@ -9,7 +9,8 @@
             <i aria-hidden="true" class="fa-solid fa-shield-halved"></i>
             <i aria-hidden="true" class="fa-solid fa-sword"></i>
         </span>
-        <span class="combatant-name">Aaron</span>
+        <span class="combatant-name">%3$s</span>
+    <!--
         <button title="Add Lair Actions to initiative" class="lair">
             <i class="fa-solid fa-building" aria-hidden="true"></i>
         </button>
@@ -32,6 +33,7 @@
         <button title="Notes" class="notes">
             <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
         </button>
+    -->
         <button class="bench" title="Remove from combat (keeps in party)">
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
@@ -39,17 +41,17 @@
     <div class="hit-points">
         <div class="initiative">
             <span class="title">Init</span>
-            <input type="number" data-init-input="" placeholder="—">
+            <input type="number" data-init-input="" placeholder="%6$s" value="%7$s">
         </div>
         <div class="hit-points-bar">
             <div class="hit-points-controls">
-                <span class="current-hp">34</span>
+                <span class="current-hp">%8$s</span>
                 <span class="hp-separator">/</span>
-                <span class="max-hp">34</span>
+                <span class="max-hp">%4$s</span>
                 <button title="Edit max HP" class="edit-button">
                     <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
                 </button>
-                <span class="temporary-hp">+5 THP
+                <span class="temporary-hp d-none">+5 THP
                     <button class="temporary-hp-remove" title="Clear temp HP">
                         <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                     </button>
@@ -57,19 +59,19 @@
             </div>
             <div class="hit-points-bar-visual">
                 <div class="hit-points-current" style="width: 743px;"></div>
-                <div class="hit-points-temporary" style="left: 743px; width: 128px;"></div>
+                <div class="hit-points-temporary d-none" style="left: 743px; width: 128px;"></div>
             </div>
         </div>
-        <div class="armor-class"">
+        <div class="armor-class">
             <svg viewBox="0 0 48 54" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full svelte-1j4i4ba"><path d="M24 2 L44 10 L44 28 C44 40 34 50 24 52 C14 50 4 40 4 28 L4 10 Z" fill="#1e293b" stroke="#475569" stroke-width="2" class="svelte-1j4i4ba"></path></svg>
             <div class="armor-class-content">
-                <span class="armor-class-label">AC</span>
-                <span class="armor-class-value">15</span>
+                <span class="armor-class-label">CA</span>
+                <span class="armor-class-value">%5$s</span>
             </div>
         </div>
     </div>
     <div class="hit-points-edit">
-        <input type="number" placeholder="amt" min="1">
+        <input type="number" placeholder="mtt" min="1">
         <button title="Deal damage" class="damage">
             <i class="fa-solid fa-minus" aria-hidden="true"></i> Dégâts
         </button>
@@ -81,34 +83,35 @@
         </button>
     </div>
     <div class="states">
+    <!--
         <div class="state advfor">
             <button class="state-label" title="Remove Advantage For">Advantage For <span>(3)</span></button>
             <button class="state-info" title="What is Advantage For?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button>
         </div>
-        <div class="state advagainst"><button class="state-label" title="Remove Advantage Against">Advantage Against <span>(1)</span><!----></button> <button class="state-info" title="What is Advantage Against?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state disadvfor"><button class="state-label" title="Remove Disadvantage For">Disadvantage For <span>(1)</span><!----></button> <button class="state-info" title="What is Disadvantage For?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state disadvagainst"><button class="state-label" title="Remove Disadvantage Against">Disadvantage Against <span>(1)</span><!----></button> <button class="state-info" title="What is Disadvantage Against?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state blinded"><button class="state-label" title="Remove Blinded">Blinded <span>(1)</span><!----></button> <button class="state-info" title="What is Blinded?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state concentrating"><button class="state-label" title="Remove Concentrating">Concentrating <span>(1)</span><!----></button> <button class="state-info" title="What is Concentrating?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state grappled"><button class="state-label" title="Remove Grappled">Grappled <span>(1)</span><!----></button> <button class="state-info" title="What is Grappled?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state nonvisible"><button class="state-label" title="Remove Invisible">Invisible <span>(1)</span><!----></button> <button class="state-info" title="What is Invisible?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state charmed"><button class="state-label" title="Remove Charmed">Charmed <span>(1)</span><!----></button> <button class="state-info" title="What is Charmed?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state deafened"><button class="state-label" title="Remove Deafened">Deafened <span>(1)</span><!----></button> <button class="state-info" title="What is Deafened?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state frightened"><button class="state-label" title="Remove Frightened">Frightened <span>(1)</span><!----></button> <button class="state-info" title="What is Frightened?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state incapacitated"><button class="state-label" title="Remove Incapacitated">Incapacitated <span>(1)</span><!----></button> <button class="state-info" title="What is Incapacitated?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state paralyzed"><button class="state-label" title="Remove Paralyzed">Paralyzed <span>(1)</span><!----></button> <button class="state-info" title="What is Paralyzed?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state petrified"><button class="state-label" title="Remove Petrified">Petrified <span>(1)</span><!----></button> <button class="state-info" title="What is Petrified?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state poisoned"><button class="state-label" title="Remove Poisoned">Poisoned <span>(1)</span><!----></button> <button class="state-info" title="What is Poisoned?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state prone"><button class="state-label" title="Remove Prone">Prone <span>(1)</span><!----></button> <button class="state-info" title="What is Prone?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state restrained"><button class="state-label" title="Remove Restrained">Restrained <span>(1)</span><!----></button> <button class="state-info" title="What is Restrained?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state stunned"><button class="state-label" title="Remove Stunned">Stunned <span>(1)</span><!----></button> <button class="state-info" title="What is Stunned?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state default"><button class="state-label" title="Remove Aid">Aid <span>(1)</span><!----></button> <button class="state-info" title="What is Aid?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state default"><button class="state-label" title="Remove Bane">Bane <span>(1)</span><!----></button> <button class="state-info" title="What is Bane?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state default"><button class="state-label" title="Remove Barkskin">Barkskin <span>(1)</span><!----></button> <button class="state-info" title="What is Barkskin?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state default"><button class="state-label" title="Remove Bestow Curse">Bestow Curse <span>(1)</span><!----></button> <button class="state-info" title="What is Bestow Curse?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <div class="state default"><button class="state-label" title="Remove Test">Test <span>(1)</span><!----></button> <button class="state-info" title="What is Test?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
-        <!---->
-        <button class="add-state"><i class="fa-solid fa-plus" aria-hidden="true"></i> Etat / Effet d'un sort</button>
+        <div class="state advagainst"><button class="state-label" title="Remove Advantage Against">Advantage Against <span>(1)</span></button> <button class="state-info" title="What is Advantage Against?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state disadvfor"><button class="state-label" title="Remove Disadvantage For">Disadvantage For <span>(1)</span></button> <button class="state-info" title="What is Disadvantage For?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state disadvagainst"><button class="state-label" title="Remove Disadvantage Against">Disadvantage Against <span>(1)</span></button> <button class="state-info" title="What is Disadvantage Against?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state blinded"><button class="state-label" title="Remove Blinded">Blinded <span>(1)</span></button> <button class="state-info" title="What is Blinded?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state concentrating"><button class="state-label" title="Remove Concentrating">Concentrating <span>(1)</span></button> <button class="state-info" title="What is Concentrating?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state grappled"><button class="state-label" title="Remove Grappled">Grappled <span>(1)</span></button> <button class="state-info" title="What is Grappled?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state nonvisible"><button class="state-label" title="Remove Invisible">Invisible <span>(1)</span></button> <button class="state-info" title="What is Invisible?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state charmed"><button class="state-label" title="Remove Charmed">Charmed <span>(1)</span></button> <button class="state-info" title="What is Charmed?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state deafened"><button class="state-label" title="Remove Deafened">Deafened <span>(1)</span></button> <button class="state-info" title="What is Deafened?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state frightened"><button class="state-label" title="Remove Frightened">Frightened <span>(1)</span></button> <button class="state-info" title="What is Frightened?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state incapacitated"><button class="state-label" title="Remove Incapacitated">Incapacitated <span>(1)</span></button> <button class="state-info" title="What is Incapacitated?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state paralyzed"><button class="state-label" title="Remove Paralyzed">Paralyzed <span>(1)</span></button> <button class="state-info" title="What is Paralyzed?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state petrified"><button class="state-label" title="Remove Petrified">Petrified <span>(1)</span></button> <button class="state-info" title="What is Petrified?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state poisoned"><button class="state-label" title="Remove Poisoned">Poisoned <span>(1)</span></button> <button class="state-info" title="What is Poisoned?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state prone"><button class="state-label" title="Remove Prone">Prone <span>(1)</span></button> <button class="state-info" title="What is Prone?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state restrained"><button class="state-label" title="Remove Restrained">Restrained <span>(1)</span></button> <button class="state-info" title="What is Restrained?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state stunned"><button class="state-label" title="Remove Stunned">Stunned <span>(1)</span></button> <button class="state-info" title="What is Stunned?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state default"><button class="state-label" title="Remove Aid">Aid <span>(1)</span></button> <button class="state-info" title="What is Aid?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state default"><button class="state-label" title="Remove Bane">Bane <span>(1)</span></button> <button class="state-info" title="What is Bane?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state default"><button class="state-label" title="Remove Barkskin">Barkskin <span>(1)</span></button> <button class="state-info" title="What is Barkskin?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state default"><button class="state-label" title="Remove Bestow Curse">Bestow Curse <span>(1)</span></button> <button class="state-info" title="What is Bestow Curse?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        <div class="state default"><button class="state-label" title="Remove Test">Test <span>(1)</span></button> <button class="state-info" title="What is Test?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+    -->
+        <button class="add-state d-none"><i class="fa-solid fa-plus" aria-hidden="true"></i> Etat / Effet d'un sort</button>
         <div class="state-menu d-none">
             <div class="grid-states">
                 <button class="blinded selected">Blinded</button>
@@ -174,7 +177,7 @@
             </div>
         </div>
     </div>
-    <div class="exhaustion">
+    <div class="exhaustion d-none">
         <span class="exhaustion-label">Exhaustion:</span>
         <div class="exhaustion-value">
             <button title="Set exhaustion to level 1" class="exhaustion-level active"></button>

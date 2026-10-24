@@ -31,7 +31,7 @@ final class AdminContentFactory
     public function create(array $arrUri): object
     {
         $onglet = $arrUri[C::ONGLET];
-        $id     = $arrUri[C::ID];
+        $id     = $arrUri[C::ID] ?? null;
         $mapId  = $arrUri[C::MAPID] ?? null;
 
         return match ($onglet) {

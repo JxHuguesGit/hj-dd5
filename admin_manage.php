@@ -43,8 +43,8 @@ class DD5Admin
         $repositoryFactory = new RepositoryFactory($qb, $qe);
         $readerFactory = new ReaderFactory($repositoryFactory);
         $writerFactory = new WriterFactory($repositoryFactory);
-        $serviceFactory = new ServiceFactory($readerFactory, $writerFactory);
         $templateRenderer = new TemplateRenderer();
+        $serviceFactory = new ServiceFactory($readerFactory, $writerFactory, $templateRenderer);
 
         $adminPage = new AdminPage(
             $arrUri,
@@ -61,7 +61,8 @@ class DD5Admin
                 $writerFactory,
                 new PresenterFactory(
                     $templateRenderer,
-                    $readerFactory
+                    $readerFactory,
+                    $serviceFactory
                 )
             ),
         );

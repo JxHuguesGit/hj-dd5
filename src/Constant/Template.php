@@ -137,5 +137,7 @@ final class Template
     public const ADMIN_IT_CONTENT_PANEL = self::IT_PATH . 'ITMainPanelContent.tpl';
     public const PUBLIC_JOIN_LOGIN      = self::IT_PATH . 'ITJoinLogin.tpl';
     public const PUBLIC_PLAYER_VIEW     = self::IT_PATH . 'ITPlayerView.tpl';
-
+    public const PUBLIC_FRONT_ITCHAR    = self::IT_PATH . 'ITFrontCharacter.tpl';
+    public const PUBLIC_QUEUED_ITCHAR   = self::IT_PATH . 'ITFooterCharacter.tpl';
+    public const PUBLIC_QUEUED_NEWROUND = self::IT_PATH . 'ITQueuedNewRound.tpl';
 }

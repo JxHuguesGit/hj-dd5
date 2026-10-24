@@ -1,0 +1,186 @@
+@use "../variables" as *;
+
+.initiative-body {
+    
+    .overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 1rem;
+
+        color: #fff;
+        background: rgb(0 0 0 / 70%);
+        backdrop-filter: blur(8px);
+
+        .modal-box {
+            display: flex;
+            flex-direction: column;
+            width: 448px;
+            max-width: 448px;
+            color: #fff;
+            background: oklch(0.21 0.034 264.665);
+            border: 1px solid oklab(0.555 0.106942 0.123014 / 0.6);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
+
+            .modal-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                padding: 1rem 1.25rem;
+
+                color: #fff;
+
+                border-bottom: 1px solid oklch(0.373 0.034 259.733);
+
+                .modal-title {
+                    color: oklch(0.828 0.189 84.429);
+
+                    font-size: 16px;
+                    font-weight: 700;
+                    letter-spacing: 0.4px;
+                    line-height: 24px;
+                }
+
+                .modal-close {
+                    padding: 0;
+
+                    color: rgb(148 155 171);
+                    background: transparent;
+                    border: 0;
+
+                    font-size: 16px;
+                    line-height: 24px;
+
+                    transition:
+                        color 0.15s,
+                        background-color 0.15s,
+                        opacity 0.15s;
+
+                    &:hover {
+                        color: #fff;
+                    }
+
+                }
+
+            }
+
+            .modal-body {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                padding: 20px;
+
+                color: #fff;
+
+                .modal-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    padding: 12px;
+
+                    color: #fff;
+                    background: oklch(0.278 0.033 256.848);
+
+                    border: 1px solid oklch(0.373 0.034 259.733);
+                    border-radius: 8px;
+                }
+
+                .panel-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 10px;
+                    background: oklch(0.278 0.033 256.848);
+                    color: white;
+                    border: 1px solid oklch(0.373 0.034 259.733);
+                    border-radius: 8px;
+                }                
+            }
+
+            .modal-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 12px 20px;
+
+                color: $color-text-app;
+                border-top: 1px solid $color-header-session-border;
+
+                .button-back {
+                    padding: 6px 12px;
+
+                    color: $color-header-button-text;
+                    background-color: $color-header-session-border;
+
+                    border: 0;
+                    border-radius: 4px;
+
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 20px;
+
+                    transition: color 150ms ease, background-color 150ms ease, opacity 150ms ease;
+
+                    &:disabled {
+                        cursor: not-allowed;
+                        opacity: 0.3;
+                    }
+                    &:hover {
+                        background-color: oklch(0.446 0.03 256.802);
+                    }                    
+                }
+                .button-next {
+                    padding: 6px 16px;
+
+                    color: $color-text-app;
+                    background-color: oklch(0.541 0.281 293.009);
+
+                    border: 0;
+                    border-radius: 4px;
+
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 20px;
+
+                    transition: background-color 150ms ease, opacity 150ms ease;
+                    &:hover {
+                        background-color: oklch(0.606 0.25 292.717);
+                    }
+                }
+            }
+
+            &.violet {
+                border: 1px solid oklab(0.491 0.103677 -0.249301 / 0.6);
+
+                .modal-header {
+                    border-color: oklch(0.811 0.111 293.571);
+
+                    .modal-title {
+                        color: oklch(0.811 0.111 293.571);
+                    }
+
+                    .subtitle {
+                        color: rgb(148, 155, 171);
+                        font-size: 12px;
+                        line-height: 16px;
+                    }
+                }
+                .modal-footer {
+                    border-color: oklch(0.811 0.111 293.571);
+                }
+            }
+
+        }
+
+    }
+}

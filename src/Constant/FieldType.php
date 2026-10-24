@@ -7,6 +7,7 @@ class FieldType
     public const BOOL           = 'bool';
     public const DATETIME       = 'datetime';
     public const FLOAT          = 'float';
+    public const FLOATNULLABLE  = 'floatNullable';
     public const INT            = 'int';
     public const INTNULLABLE    = 'intNullable';
     public const INTPOSITIVE    = 'intPositive';

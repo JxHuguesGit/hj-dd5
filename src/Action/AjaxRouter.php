@@ -10,6 +10,7 @@ use src\Action\Ajax\DeleteMapAction;
 use src\Action\Ajax\DeleteMapTokenAction;
 use src\Action\Ajax\DuplicateMapAction;
 use src\Action\Ajax\InitiativeTracker\DealWithInitTracker;
+use src\Action\Ajax\InitiativeTracker\ITRefreshPlayerView;
 use src\Action\Ajax\LoadCombatAction;
 use src\Action\Ajax\LoadCombatMonstersAction;
 use src\Action\Ajax\LoadCreationStepSide;
@@ -32,33 +33,36 @@ use src\Factory\AjaxActionFactory;
 class AjaxRouter
 {
     private array $actions = [
-        'loadMoreSpells'       => LoadMoreSpellsAction::class,
-        'loadMoreMonsters'     => LoadMoreMonstersAction::class,
-        'modalMonsterCard'     => ModalMonsterCard::class,
-        'loadCreationStepSide' => LoadCreationStepSide::class,
-        'loadMapTokens'        => LoadMapTokensAction::class,
-        'updateMapTokens'      => UpdateMapTokensAction::class,
-        'getAddMapTokenModal'  => LoadMapTokenModal::class,
-        'getAddTokenModal'     => LoadTokenModal::class,
-        'addMapToken'          => AddMapTokenAction::class,
-        'toggleMapToken'       => ToggleMapTokenAction::class,
-        'addToken'             => AddTokenAction::class,
-        'deleteMapToken'       => DeleteMapTokenAction::class,
-        'activateMap'          => ActivateMapAction::class,
-        'lockMap'              => LockMapAction::class,
-        'unlockMap'            => UnlockMapAction::class,
-        'duplicateMap'         => DuplicateMapAction::class,
-        'deleteMap'            => DeleteMapAction::class,
-        'resetMapFog'          => ResetMapFogAction::class,
-        'loadCombatMonsters'   => LoadCombatMonstersAction::class,
-        'loadCombat'           => LoadCombatAction::class,
-        'addCreatureToCombat'  => AddCreatureToCombatAction::class,
-        'removeCreatureFromCombat' => RemoveCreatureFromCombatAction::class,
+        'loadMoreSpells'                    => LoadMoreSpellsAction::class,
+        'loadMoreMonsters'                  => LoadMoreMonstersAction::class,
+        'modalMonsterCard'                  => ModalMonsterCard::class,
+        'loadCreationStepSide'              => LoadCreationStepSide::class,
+        'loadMapTokens'                     => LoadMapTokensAction::class,
+        'updateMapTokens'                   => UpdateMapTokensAction::class,
+        'getAddMapTokenModal'               => LoadMapTokenModal::class,
+        'getAddTokenModal'                  => LoadTokenModal::class,
+        'addMapToken'                       => AddMapTokenAction::class,
+        'toggleMapToken'                    => ToggleMapTokenAction::class,
+        'addToken'                          => AddTokenAction::class,
+        'deleteMapToken'                    => DeleteMapTokenAction::class,
+        'activateMap'                       => ActivateMapAction::class,
+        'lockMap'                           => LockMapAction::class,
+        'unlockMap'                         => UnlockMapAction::class,
+        'duplicateMap'                      => DuplicateMapAction::class,
+        'deleteMap'                         => DeleteMapAction::class,
+        'resetMapFog'                       => ResetMapFogAction::class,
+        'loadCombatMonsters'                => LoadCombatMonstersAction::class,
+        'loadCombat'                        => LoadCombatAction::class,
+        'addCreatureToCombat'               => AddCreatureToCombatAction::class,
+        'removeCreatureFromCombat'          => RemoveCreatureFromCombatAction::class,
         'rerollCombatParticipantInitiative' => UpdateCombatParticipantAction::class,
         'addInitChar'                       => DealWithInitTracker::class,
         'addInitCharToCombat'               => DealWithInitTracker::class,
         'delInitChar'                       => DealWithInitTracker::class,
         'updateInitChar'                    => DealWithInitTracker::class,
+        'refreshPlayerView'                 => ITRefreshPlayerView::class,
+        'setInitChar'                       => DealWithInitTracker::class,
+        'nextCombatChar'                    => DealWithInitTracker::class,
     ];
 
     public function __construct(

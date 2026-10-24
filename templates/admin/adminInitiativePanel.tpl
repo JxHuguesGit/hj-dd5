@@ -4,7 +4,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" crossorigin="" href="%1$sassets/styles/initiative.css?v=%2$s">
 <link rel="stylesheet" crossorigin="" href="%1$sassets/styles/draft.css?v=%2$s">
-
+    <!--
+    -->
 %3$s
 <div class="initiative-menu initiative-tracker-menu hidden">
 <!--
@@ -28,7 +29,7 @@
     <aside class="party">%4$s</aside>
     <main class="initiative-main">
         <div class="active-combatants %6$s">
-            <div class="panel-header">%7$s</div>
+            <div class="panel-header %9$s">%7$s</div>
 
             <div class="initiative-main-content">
                 %8$s
@@ -48,8 +49,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script type="module" src="%1$sassets/js/initiative/init-main.js?v=%2$s"></script>
-<script src="%1$sassets/js/initiative.js?v=%2$s"></script>
 <!--
+<script src="%1$sassets/js/initiative.js?v=%2$s"></script>
 <script src="%1$sassets/js/combat.js?v=%2$s"></script>
--->
 <script src="%1$sassets/js/draft.js?v=%2$s"></script>
+-->

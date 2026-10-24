@@ -16,6 +16,11 @@ interface InitTrackCharacterRepositoryInterface
     public function updatePartial(ITCharacter $itCharacter, array $changedFields): void;
 
     /**
+     * @return ?ITCharacter
+     */
+    public function find(int $id): ?ITCharacter;
+
+    /**
      * @return Collection<ITCharacter>
      */
     public function findAllWithCriteria(ITCharacterCriteria $criteria): Collection;
