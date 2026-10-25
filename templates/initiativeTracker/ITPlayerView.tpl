@@ -27,6 +27,11 @@
             </div>
         </div>
     </header>
+    <div class="initiative-menu initiative-tracker-menu hidden">
+        <button type="button" class="sound-on"><i class="fa-solid fa-volume-high" aria-hidden="true"></i> Sound On</button>
+        <button type="button" class="sound-off"><i class="fa-solid fa-volume-xmark" aria-hidden="true"></i> Sound Off</button>
+    </div>
+
     <section id="waiting-panel" class="waiting-panel-container">
         <div class="idle-glow" aria-hidden="true"></div>
         <i class="fa-solid fa-khanda swords icon" aria-hidden="true"></i>
@@ -49,5 +54,5 @@
 
 </div>
 <audio id="combat-audio" loop preload="auto">
-    <source src="%6$sassets/audio/warfare.mp3" type="audio/mpeg">
+    <source src="%6$sassets/audio/01-Test.mp3" type="audio/mpeg">
 </audio>

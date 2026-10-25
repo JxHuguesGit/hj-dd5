@@ -57,7 +57,7 @@ final class InitTrackCharacterService
         $characterType = $character->characterType;
         $isPlayer      = $characterType == 'player';
         $libelleType   = $isPlayer ? 'Allié' : 'Ennemi';
-        $initiative    = $character->initiative;
+        $initiative    = floor($character->initiative);
         $classeArmure  = $character->ac;
 
         return $this->renderer->render(
@@ -132,7 +132,7 @@ final class InitTrackCharacterService
         }
 
         $libelleType   = $character->name;
-        $initiative    = $character->initiative;
+        $initiative    = floor($character->initiative);
 
         return $this->renderer->render(
             T::PUBLIC_QUEUED_ITCHAR,

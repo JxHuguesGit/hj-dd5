@@ -23,7 +23,7 @@ const SELECTORS = {
     round: ".round-container .value",
     main: ".fighting-panel-container main",
     footer: ".initiative-footer .footer-main",
-    mainContent: "#main-content"
+    mainContent: "#main-content",
 };
 
 let refreshTimer = null;
@@ -67,6 +67,7 @@ function refreshPlayerView() {
         $(SELECTORS.main).replaceWith(data.mainHtml);
         $(SELECTORS.footer).html(data.footerHtml);
         updateCombatState(data.combatState);
+        updateCombatAudio();
     })
     .fail(function (xhr, status, error) {
         console.log(error);
@@ -102,6 +103,100 @@ function stopPlayerRefresh() {
     if (refreshTimer !== null) {
         clearInterval(refreshTimer);
         refreshTimer = null;
+    }
+}
+
+const $menuButton = $("#hamburger-tracker-btn");
+const $menuIcon = $menuButton.find("i");
+const $menu = $(".initiative-tracker-menu");
+
+function closeMenu() {
+    $menu.addClass("hidden");
+
+    $menuIcon
+        .removeClass("fa-xmark")
+        .addClass("fa-bars");
+
+    $menuButton.attr("aria-label", "Open menu");
+}
+$menuButton.on("click", function (event) {
+    event.stopPropagation();
+
+    if (!$menu.hasClass("hidden")) {
+        closeMenu();
+        return;
+    }
+
+    $menu.removeClass("hidden");
+
+    $menuIcon
+        .removeClass("fa-bars")
+        .addClass("fa-xmark");
+
+    $menuButton.attr("aria-label", "Close menu");
+});
+$(document).on("click", function (event) {
+    if ($menu.hasClass("hidden")) {
+        return;
+    }
+
+    if (!$(event.target).closest(".initiative-tracker-menu").length) {
+        closeMenu();
+    }
+});
+
+let soundEnabled = false;
+function getCombatAudio() {
+    return $("#combat-audio").get(0);
+}
+$(document).on("click", ".sound-on", function () {
+    const audio = getCombatAudio();
+
+    if (!audio) {
+        console.error("Élément audio #combat-audio introuvable.");
+        return;
+    }
+
+    soundEnabled = true;
+
+    // Le clic utilisateur autorise la tentative de lecture.
+    audio.play()
+        .then(() => {
+            updateCombatAudio();
+        })
+        .catch((error) => {
+            soundEnabled = false;
+            console.warn("Impossible de démarrer le son :", error);
+        });
+});
+$(document).on("click", ".sound-off", function () {
+    soundEnabled = false;
+
+    const audio = getCombatAudio();
+
+    if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+    }
+});
+function updateCombatAudio() {
+    const audio = getCombatAudio();
+
+    if (!audio || !soundEnabled) {
+        return;
+    }
+
+    const combatStarted = $("#main-content").hasClass("combatStarted");
+
+    if (combatStarted) {
+        if (audio.paused) {
+            audio.play().catch((error) => {
+                console.warn("Lecture audio impossible :", error);
+            });
+        }
+    } else {
+        audio.pause();
+        audio.currentTime = 0;
     }
 }
 
