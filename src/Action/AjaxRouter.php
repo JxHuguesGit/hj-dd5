@@ -63,6 +63,10 @@ class AjaxRouter
         'refreshPlayerView'                 => ITRefreshPlayerView::class,
         'setInitChar'                       => DealWithInitTracker::class,
         'nextCombatChar'                    => DealWithInitTracker::class,
+        'prevCombatChar'                    => DealWithInitTracker::class,
+        'endCombat'                         => DealWithInitTracker::class,
+        'startCombat'                       => DealWithInitTracker::class,
+        
     ];
 
     public function __construct(

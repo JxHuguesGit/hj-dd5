@@ -100,12 +100,16 @@ final class InitTrackCharacterService
         $max = -10;
         $curCharId = -1;
         foreach ($iTCharacters as $character) {
-            $initiative = rand(1, 20) + $character->modDex;
-            if ($initiative>$max) {
-                $max = $initiative;
-                $curCharId = $character->id;
+            if ($character->characterType=='monster') {
+                $initiative = rand(1, 20) + $character->modDex;
+                if ($initiative>$max) {
+                    $max = $initiative;
+                    $curCharId = $character->id;
+                }
+                $character->initiative = $initiative;
+            } else {
+                $character->initiative = -10;
             }
-            $character->initiative = $initiative;
             $this->writerITChar->updatePartial($character, [F::INITIATIVE]);
         }
         return $curCharId;

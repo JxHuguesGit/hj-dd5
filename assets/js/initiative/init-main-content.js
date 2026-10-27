@@ -66,6 +66,107 @@ export function initMainContent() {
                 const data = payload.data;
                 $('.initiative-main-content .combatant').remove();
                 $('.initiative-main-content').append(data.panel);
+                $('.initiative-main .round').text(data.round);
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur Ajax :", status, error);
+            },
+        });
+    });    
+
+    $(".previous-turn").on("click", function () {
+        $.ajax({
+            url: ajaxUrl,
+            method: "POST",
+            dataType: "json",
+            data: {
+                action: "dealWithAjax",
+                ajaxAction: 'prevCombatChar',
+                itCode: initTrackerId,
+            },
+            success: function (response) {
+                if (!response || response.success !== true) {
+                    console.error("Échec de la mise à jour de l'initiative :", response);
+                    return;
+                }
+                const payload = typeof response.data === "string"
+                    ? JSON.parse(response.data)
+                    : response.data;
+                if (payload.status !== "success") {
+                    console.error("Échec du traitement :", payload);
+                    return;
+                }
+                const data = payload.data;
+                $('.initiative-main-content .combatant').remove();
+                $('.initiative-main-content').append(data.panel);
+                $('.initiative-main .round').text(data.round);
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur Ajax :", status, error);
+            },
+        });
+    });    
+
+    $(".end-combat").on("click", function () {
+        $.ajax({
+            url: ajaxUrl,
+            method: "POST",
+            dataType: "json",
+            data: {
+                action: "dealWithAjax",
+                ajaxAction: 'endCombat',
+                itCode: initTrackerId,
+            },
+            success: function (response) {
+                if (!response || response.success !== true) {
+                    console.error("Échec de la mise à jour de lu combat :", response);
+                    return;
+                }
+                const payload = typeof response.data === "string"
+                    ? JSON.parse(response.data)
+                    : response.data;
+                if (payload.status !== "success") {
+                    console.error("Échec du traitement :", payload);
+                    return;
+                }
+                const data = payload.data;
+                $('.initiative-main-content .combatant').remove();
+                $('.initiative-main-content').append(data.panel);
+                $('.initiative-main .panel-header').removeClass('combat-in-progress');
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur Ajax :", status, error);
+            },
+        });
+    });
+
+    $(".start-combat").on("click", function () {
+        $.ajax({
+            url: ajaxUrl,
+            method: "POST",
+            dataType: "json",
+            data: {
+                action: "dealWithAjax",
+                ajaxAction: 'startCombat',
+                itCode: initTrackerId,
+            },
+            success: function (response) {
+                if (!response || response.success !== true) {
+                    console.error("Échec de la mise à jour de lu combat :", response);
+                    return;
+                }
+                const payload = typeof response.data === "string"
+                    ? JSON.parse(response.data)
+                    : response.data;
+                if (payload.status !== "success") {
+                    console.error("Échec du traitement :", payload);
+                    return;
+                }
+                const data = payload.data;
+                $('.initiative-main-content .combatant').remove();
+                $('.initiative-main-content').append(data.panel);
+                $('.initiative-main .round').text('Round 1');
+                $('.initiative-main .panel-header').addClass('combat-in-progress');
             },
             error: function (xhr, status, error) {
                 console.error("Erreur Ajax :", status, error);

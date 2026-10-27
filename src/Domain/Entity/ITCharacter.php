@@ -7,7 +7,7 @@ use src\Domain\Entity;
 
 /**
  * @property string $name
- * @property int $initiative
+ * @property float $initiative
  * @property string $characterType
  * @property int $level
  * @property int $ac
