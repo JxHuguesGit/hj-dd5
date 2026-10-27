@@ -7,9 +7,6 @@ use src\Domain\Criteria\ITCharacterCriteria;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory;
-use src\Service\Domain\InitTrackCharacterService;
-use src\Service\Reader\InitiativeTrackerReader;
-use src\Service\Writer\InitiativeTrackerWriter;
 
 final class ITNextCombatCharacter
 {
@@ -29,6 +26,12 @@ final class ITNextCombatCharacter
         $actual = $orderedQueue->first();
         // On récupère le prochain personnage à jouer
         $character = $orderedQueue->slice(1, 1)->first();
+        // On récupère l'ordre du tour pour la partie Admin. On commence à chaque fois par la plus haute initiative.
+        $criteria = new ITCharacterCriteria();
+        $criteria->initiativeTrackerId = $initiativeTracker->id;
+        $criteria->active = 1;
+        $criteria->orderBy = [F::INITIATIVE => C::DESC];
+        $adminOrderedQueue = $this->readerFactory->initTrackCharacter()->allItCharacters($criteria);
 
         $initiativeTracker->currentParticipantId = $character->id;
         $changedFields = [F::CURRENTPARTICIPANTID];
@@ -43,9 +46,10 @@ final class ITNextCombatCharacter
 
         return [
             'status' => 'success',
+            'round' => 'Round ' . $initiativeTracker->round,
             'panel'  => $this->serviceFactory
                 ->initiativeTracker()
-                ->buildIdContentPanel($orderedQueue, $initiativeTracker)
+                ->buildIdContentPanel($adminOrderedQueue, $initiativeTracker)
         ];
     }
 }
