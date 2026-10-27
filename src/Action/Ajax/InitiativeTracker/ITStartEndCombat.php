@@ -8,13 +8,14 @@ use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory;
 
-final class ITStartCombat
+final class ITStartEndCombat
 {
     public function __construct(
         private string $itCode,
         private ReaderFactory $readerFactory,
         private ServiceFactory $serviceFactory,
         private WriterFactory $writerFactory,
+        private string $type,
     ) {}
 
     public function execute(): array
@@ -22,13 +23,19 @@ final class ITStartCombat
         // On récupère la table associée
         $initiativeTracker = $this->readerFactory->initiativeTracker()->initiativeTrackerByCode($this->itCode);
 
-        $initiativeTracker->active = 1;
-        $initiativeTracker->round  = 1;
-        $initiativeTracker->currentParticipantId = $this->serviceFactory
-            ->initTrackCharacter()
-            ->rollInitiative($initiativeTracker->id);
-        $changedFields = [F::ACTIVE, F::ROUND, F::CURRENTPARTICIPANTID];
+        if ($this->type==='end') {
+            $initiativeTracker->active = 0;
+            $initiativeTracker->round  = 0;
+            $initiativeTracker->currentParticipantId = 0;
+        } else {
+            $initiativeTracker->active = 1;
+            $initiativeTracker->round  = 1;
+            $initiativeTracker->currentParticipantId = $this->serviceFactory
+                ->initTrackCharacter()
+                ->rollInitiative($initiativeTracker->id);
+        }
 
+        $changedFields = [F::ACTIVE, F::ROUND, F::CURRENTPARTICIPANTID];
         // On met à jour
         $this->writerFactory->initiativeTracker()->updatePartial($initiativeTracker, $changedFields);
 

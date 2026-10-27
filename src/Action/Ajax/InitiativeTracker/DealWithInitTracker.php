@@ -57,17 +57,19 @@ final class DealWithInitTracker
                     $this->serviceFactory,
                     $this->writerFactory
                 ))->execute(),
-            'endCombat' => (new ITEndCombat(
+            'endCombat' => (new ITStartEndCombat(
                     Session::fromPost('itCode'),
                     $this->readerFactory,
                     $this->serviceFactory,
-                    $this->writerFactory
+                    $this->writerFactory,
+                    'end'
                 ))->execute(),
-            'startCombat' => (new ITStartCombat(
+            'startCombat' => (new ITStartEndCombat(
                     Session::fromPost('itCode'),
                     $this->readerFactory,
                     $this->serviceFactory,
-                    $this->writerFactory
+                    $this->writerFactory,
+                    'start'
                 ))->execute(),
             default => [
                 'status' => 'error',
