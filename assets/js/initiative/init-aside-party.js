@@ -150,7 +150,10 @@ export function initAsideParty() {
         const name = $character.find(".character-name-text").text().trim();
         const stats = $character.find(".character-stats").text();
         const ca = stats.match(/CA (\d+)/)?.[1] ?? "";
-        const pv = stats.match(/(\d+) PV/)?.[1] ?? "";
+        const pvIndex = stats.indexOf(" PV");
+        const pv = pvIndex === -1
+            ? ""
+            : stats.slice(0, pvIndex).match(/\d+$/)?.[0] ?? "";        
         const dex = stats.match(/DEX ([+-]?\d+)/)?.[1] ?? "";
         const passive = stats.match(/Passive (\d+)/)?.[1] ?? "";
 

@@ -277,6 +277,52 @@
         justify-content: center;
         align-items: center;
         padding: 0 48px 16px;
+
+        &.player {
+            .section-title {
+                border: 1px solid oklch(0.546 0.245 262.881);
+                background: oklab(0.282 -0.00327904 -0.0909409 / 0.6);
+                color: oklch(0.809 0.105 251.813);
+            }            
+        }
+
+        .character-name {
+            margin-bottom: 8px;
+            color: oklch(0.971 0.013 17.38);
+            font: 900 60px/60px ui-sans-serif, system-ui, sans-serif;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            text-align: center;
+            text-shadow: 0 0 40px rgb(248 113 113 / 40%);
+        }
+
+        /* =========================
+           STATS
+        ========================= */
+        .initiative-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-top: 24px;
+
+            .text-center {
+                text-align: center;
+            }
+
+            .stat-label {
+                color: rgb(148 155 171);
+                font-size: 12px;
+                line-height: 16px;
+                letter-spacing: 1.2px;
+                text-transform: uppercase;
+            }
+
+            .stat-value {
+                color: $color-header-title;
+                font: 900 36px/40px ui-sans-serif, system-ui, sans-serif;
+                text-align: center;
+            }
+        }
     }
 
     /* =========================
@@ -319,15 +365,6 @@
             text-transform: uppercase;
         }
     }
-    main {
-        &.player {
-            .section-title {
-                border: 1px solid oklch(0.546 0.245 262.881);
-                background: oklab(0.282 -0.00327904 -0.0909409 / 0.6);
-                color: oklch(0.809 0.105 251.813);
-            }            
-        }
-    }
     
     /* =========================
        CHARACTER
@@ -357,54 +394,12 @@
         }
     }
 
-    main {
-        .character-name {
-            margin-bottom: 8px;
-            color: oklch(0.971 0.013 17.38);
-            font: 900 60px/60px ui-sans-serif, system-ui, sans-serif;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            text-align: center;
-            text-shadow: 0 0 40px rgb(248 113 113 / 40%);
-        }
-
-        /* =========================
-           STATS
-        ========================= */
-        .initiative-container {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            margin-top: 24px;
-
-            .text-center {
-                text-align: center;
-            }
-
-            .stat-label {
-                color: rgb(148 155 171);
-                font-size: 12px;
-                line-height: 16px;
-                letter-spacing: 1.2px;
-                text-transform: uppercase;
-            }
-
-            .stat-value {
-                color: $color-header-title;
-                font: 900 36px/40px ui-sans-serif, system-ui, sans-serif;
-                text-align: center;
-            }
-        }
-    }
-
     .separator-vertical {
         width: 1px;
         height: 32px;
         background: oklab(0.373 -0.00606001 -0.0334556 / 0.6);
     }
-}
 
-.fighting-panel-container {
     .initiative-footer {
         display: none;
         position: relative;
@@ -667,12 +662,18 @@
             width:min(65vw,700px);
             height:min(65vw,700px);
             animation:orb-drift-1 24s ease-in-out infinite;
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
         }
 
         &.orb-2 {
             width:min(55vw,620px);
             height:min(55vw,620px);
             animation:orb-drift-2 30s ease-in-out infinite;
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
         }
 
         &.orb-3 {
@@ -680,12 +681,18 @@
             height:min(45vw,520px);
             transform:translate(-50%,-50%);
             animation:orb-drift-3 20s ease-in-out infinite;
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
         }
 
         &.orb-4 {
             width:min(38vw,440px);
             height:min(38vw,440px);
             animation:orb-drift-4 26s ease-in-out infinite;
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
         }
     }
 

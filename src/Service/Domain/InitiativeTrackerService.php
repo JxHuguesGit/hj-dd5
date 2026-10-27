@@ -2,22 +2,14 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap as B;
-use src\Constant\Constant as C;
-use src\Constant\Field as F;
 use src\Constant\Template as T;
-use src\Domain\Criteria\ITCharacterCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\ITCharacter;
 use src\Renderer\TemplateRenderer;
-use src\Service\Reader\InitTrackCharacterReader;
-use src\Service\Writer\InitTrackCharacterWriter;
 
 final class InitiativeTrackerService
 {
     public function __construct(
-        private InitTrackCharacterReader $itCharacterReader,
-        private InitTrackCharacterWriter $writerITChar,
         private TemplateRenderer $renderer,
     ) {}
 

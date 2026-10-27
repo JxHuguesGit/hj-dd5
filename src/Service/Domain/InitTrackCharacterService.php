@@ -101,7 +101,7 @@ final class InitTrackCharacterService
         $curCharId = -1;
         foreach ($iTCharacters as $character) {
             if ($character->characterType=='monster') {
-                $initiative = rand(1, 20) + $character->modDex;
+                $initiative = random_int(1, 20) + $character->modDex;
                 if ($initiative>$max) {
                     $max = $initiative;
                     $curCharId = $character->id;
