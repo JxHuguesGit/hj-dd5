@@ -606,24 +606,17 @@
 
                                 > .hit-points-current {
                                     height: 8px;
-                                    width: 100%;
-
                                     background-color: oklch(0.627 0.194 149.214);
                                     border-radius: $radius-pill;
-
                                     transition: all .15s ease;
+                                    @include states.state-colors;
                                 }
                                 > .hit-points-temporary {
                                     position: absolute;
                                     top: 0;
-                                    left: 0; // valeur calculée dynamiquement
-
-                                    width: 100%; // valeur calculée dynamiquement
                                     height: 8px;
-
                                     background-color: oklch(0.852 0.199 91.936);
                                     border-radius: $radius-pill;
-
                                     transition: all .15s ease;
                                 }
                             }
@@ -1035,5 +1028,5 @@
                 }
             }
         }
-    }    
+    }
 }

@@ -93,4 +93,39 @@
         background-color: oklab(0.401 0.140289 -0.096015 / 0.6);
         color: oklch(0.903 0.076 319.62);
     }
+
+    &.fullHealth {
+        background-color: oklch(0.627 0.194 149.214);
+        color: oklch(0.95 0.052 163.051);
+    }
+
+    &.grazed {
+        background-color: oklch(0.640 0.170 120);
+        color: oklch(0.96 0.040 120);
+    }
+
+    &.injured {
+        background-color: oklch(0.670 0.160 95);
+        color: oklch(0.97 0.035 95);
+    }
+
+    &.bloodied {
+        background-color: oklch(0.720 0.160 85);
+        color: oklch(0.300 0.040 85);
+    }
+
+    &.critical {
+        background-color: oklch(0.590 0.180 55);
+        color: oklch(0.950 0.060 55);
+    }
+
+    &.agonizing {
+        background-color: oklch(0.500 0.170 35);
+        color: oklch(0.900 0.090 30);
+    }
+
+    &.dying {
+        background-color: oklch(0.396 0.141 25.723);
+        color: oklch(0.808 0.114 19.571);
+    }
 }

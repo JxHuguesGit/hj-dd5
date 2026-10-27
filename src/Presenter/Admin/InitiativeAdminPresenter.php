@@ -4,19 +4,14 @@ namespace src\Presenter\Admin;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Constant\Icon as I;
 use src\Constant\Template as T;
 use src\Collection\Collection;
 use src\Domain\Criteria\ITCharacterCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\ITCharacter;
-use src\Domain\Entity\Map;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
-use src\Service\Domain\InitiativeTrackerService;
-use src\Utils\Html;
-use src\Utils\UrlGenerator;
 
 final class InitiativeAdminPresenter
 {
@@ -143,7 +138,30 @@ final class InitiativeAdminPresenter
     {
         $classMember  = $member->characterType == 'player' ? 'character' : $member->characterType;
         $classMember .= $active ? ' active' : '';
-        
+        $tmpHp = 0;
+
+        $baseLength = $member->curHp / $member->maxHp; // => 0.8;
+        if ($tmpHp!=0) {
+            $sum = $member->curHp + $tmpHp; // => 100;
+            $ratio = $member->curHp / $sum; // => 0.8;
+
+            $coloredLength = $ratio * $baseLength; // => 0.64;
+            $tmpHpLength = $ratio * (1 - $baseLength); // => 0.16;
+        } else {
+            $coloredLength = $baseLength;
+            $tmpHpLength = 0;
+        }
+
+        $colorCode = match (true) {
+            $coloredLength === 100 => 'fullHealth',
+            $coloredLength >= 80   => 'grazed',
+            $coloredLength >= 50   => 'injured',
+            $coloredLength >= 30   => 'bloodied',
+            $coloredLength >= 10   => 'critical',
+            $coloredLength > 0     => 'mortallyWounded',
+            default                => 'dying',
+        };
+
         return $this->renderer->render(
             T::ADMIN_IT_CONTENT_PANEL,
             [
@@ -155,6 +173,9 @@ final class InitiativeAdminPresenter
                 $member->initiative == null ? '-' : floor($member->initiative),
                 $member->initiative == null ? '' : floor($member->initiative),
                 $member->curHp,
+                $coloredLength . '%', // Longueur en pourcent de la barre de vie
+                $tmpHpLength . '%', // Longueur en pourcent de la barre de vie temporaire
+                $colorCode, // Couleur associé avec l'état actuel de la barre de vie.
             ]
         );
     }

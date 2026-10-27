@@ -16,9 +16,14 @@ final class ITMajCharacter extends Entity
 
     public function execute(): array
     {
+        $allowedFields = [F::NAME, F::SCOREAC, F::MAXHP, F::MODDEX, F::PERCPASSIVE];
+        $changedFields = [];
         // On instancie
-        $itCharacter = new ITCharacter($this->character);
-        $changedFields = [F::NAME, F::SCOREAC, F::MAXHP, F::MODDEX, F::PERCPASSIVE];
+        $itCharacter = new ITCharacter();
+        foreach ($allowedFields as $field) {
+            $itCharacter->{$field} = $this->character[$field];
+            $changedFields[] = $field;
+        }
         // Si ça n'explose pas, on met à jour
         $this->writer->updatePartial($itCharacter, $changedFields);
         // On formate et on renvoie pour affichage.

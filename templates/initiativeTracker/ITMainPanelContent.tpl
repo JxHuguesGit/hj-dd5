@@ -58,8 +58,8 @@
                 </span>
             </div>
             <div class="hit-points-bar-visual">
-                <div class="hit-points-current" style="width: 743px;"></div>
-                <div class="hit-points-temporary d-none" style="left: 743px; width: 128px;"></div>
+                <div class="hit-points-current %11$s" style="width: %9$s;"></div>
+                <div class="hit-points-temporary" style="left: %9$s; width: %10$s;"></div>
             </div>
         </div>
         <div class="armor-class">
