@@ -44,7 +44,7 @@ final class InitiativeAdminPresenter
                 date('YmdHis'),
                 $this->buildITHeader($initiativeTracker),
                 $this->buildITPartyAside($partyMembers),
-                '',//$this->buildITEnnemyAside($initiativeTracker),
+                $this->buildITEnnemyAside($initiativeTracker),
                 // Présence de combattants ? Combat en cours ?
                 !$partyMembers->isEmpty() ? 'has-combatants'/* active-combat'*/ : '',
                 $this->buildITHeaderPanel($initiativeTracker),
@@ -101,6 +101,8 @@ final class InitiativeAdminPresenter
 
     private function buildITEnnemyAside(InitiativeTracker $initiativeTracker): string
     {
+        // TODO : à développer.
+        var_dump($initiativeTracker);
         return $this->renderer->render(
             T::ADMIN_IT_ENNEMY_ASIDE,
             [

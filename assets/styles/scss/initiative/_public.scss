@@ -754,15 +754,18 @@
 
 
 .idle-glow.svelte-1rcvu9v {
-  top:50%;
-  left:50%;
-  width:min(50vw,480px);
-  height:min(50vw,480px);
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(180,130,40,.14) 0%,transparent 70%);
-  filter:blur(20px);
-  animation:idle-glow-pulse 5s ease-in-out infinite
+    top:50%;
+    left:50%;
+    width:min(50vw,480px);
+    height:min(50vw,480px);
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(180,130,40,.14) 0%,transparent 70%);
+    filter:blur(20px);
+    animation:idle-glow-pulse 5s ease-in-out infinite;
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
 }
 @keyframes idle-glow-pulse {
   0%,

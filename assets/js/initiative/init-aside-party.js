@@ -151,9 +151,15 @@ export function initAsideParty() {
         const stats = $character.find(".character-stats").text();
         const ca = stats.match(/CA (\d+)/)?.[1] ?? "";
         const pvIndex = stats.indexOf(" PV");
-        const pv = pvIndex === -1
-            ? ""
-            : stats.slice(0, pvIndex).match(/\d+$/)?.[0] ?? "";        
+        let pv = "";
+        if (pvIndex !== -1) {
+            const beforePV = stats.slice(0, pvIndex).trimEnd();
+            const lastSpace = beforePV.lastIndexOf(" ");
+            const candidate = beforePV.slice(lastSpace + 1);
+            if (candidate !== "" && [...candidate].every(char => char >= "0" && char <= "9")) {
+                pv = candidate;
+            }
+        }
         const dex = stats.match(/DEX ([+-]?\d+)/)?.[1] ?? "";
         const passive = stats.match(/Passive (\d+)/)?.[1] ?? "";
 
