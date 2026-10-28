@@ -116,8 +116,6 @@ function dealWithAjaxCallback()
         // En cas d'erreur, on retourne un message formaté
         wp_send_json_error([
             'message' => $e->getMessage(),
-            'file'    => $e->getFile(),
-            'line'    => $e->getLine(),
         ]);
     }
 }

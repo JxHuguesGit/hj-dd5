@@ -43,6 +43,7 @@ export function initAsideParty() {
             maxHp: Number($form.find('[name="itCharMaxPV"]').val()),
             modDex: Number($form.find('[name="itCharModDex"]').val()),
             percPassive: Number($form.find('[name="itCharPassive"]').val()),
+            characterType: 'player',
             initiativeTrackerId: $('.session .value').html()
         };
 
@@ -60,10 +61,7 @@ export function initAsideParty() {
                     console.error(response.data);
                     return;
                 }
-                const data = JSON.parse(response.data);
-                const panel = data.addInitChar.panel;
-
-                $('.character-list > .edit-section').before(panel);
+                $('.character-list > .edit-section').before(response.data.asideCard);
             },
             error: function (xhr, status, error) {
                 console.error("Erreur Ajax :", error);
@@ -119,14 +117,15 @@ export function initAsideParty() {
                 initiativeTrackerId: $('.session .value').html()
             },
             success: function (response) {
-                if (response.success) {
-                    // TODO : on va devoir afficher dans la partie centrale la card du personnage.
-                } else {
+                if (!response.success) {
                     console.error(
                         "Impossible d'ajouter le personnage au combat :",
                         response.data
                     );
+                    return;
                 }
+                $(".initiative-main-content .combatant").remove();
+                $(".initiative-main-content").append(response.data.panel);
             },
             error: function (xhr, status, error) {
                 console.error("Erreur Ajax :", error);
@@ -160,7 +159,8 @@ export function initAsideParty() {
                 pv = candidate;
             }
         }
-        const dex = stats.match(/DEX ([+-]?\d+)/)?.[1] ?? "";
+        const dexMatch = stats.match(/DEX ([+-]?\d+)/)?.[1] ?? "";
+        const dex = dexMatch ? String(Number(dexMatch[1])) : "";
         const passive = stats.match(/Passive (\d+)/)?.[1] ?? "";
 
         // Remplissage du formulaire
@@ -200,7 +200,7 @@ export function initAsideParty() {
             ac: Number($editSection.find(".field-input").eq(0).val()),
             maxHp: Number($editSection.find(".field-input").eq(1).val()),
             modDex: Number($editSection.find(".field-input").eq(2).val()),
-            percPassive: Number($editSection.find(".field-input").eq(3).val())
+            percPassive: Number($editSection.find(".field-input").eq(3).val()),
         };
 
         $.ajax({
@@ -214,10 +214,9 @@ export function initAsideParty() {
             success: function (response) {
                 if (response.success) {
                     const characterId = $(".edit-section").data("characterId");
-
-                    const result = JSON.parse(response.data);
-                    $("#character-" + characterId)
-                        .replaceWith(result.data.asideCard);
+                    $("#character-" + characterId).replaceWith(response.data.asideCard);
+                    $(".initiative-main-content .combatant").remove();
+                    $(".initiative-main-content").append(response.data.panel);
                 } else {
                     console.error(
                         "Impossible de modifier le personnage :",
@@ -264,6 +263,8 @@ export function initAsideParty() {
             success: function (response) {
                 if (response.success) {
                     $character.remove();
+                    $(".initiative-main-content .combatant").remove();
+                    $(".initiative-main-content").append(response.data.panel);
                 } else {
                     console.error(
                         "Impossible de supprimer le personnage :",

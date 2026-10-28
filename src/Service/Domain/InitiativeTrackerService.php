@@ -2,10 +2,15 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
+use src\Constant\Constant as C;
+use src\Constant\Field as F;
 use src\Constant\Template as T;
+use src\Domain\Criteria\ITCharacterCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\ITCharacter;
+use src\Factory\ReaderFactory;
 use src\Renderer\TemplateRenderer;
+use src\Service\Reader\InitTrackCharacterReader;
 
 final class InitiativeTrackerService
 {
@@ -25,10 +30,33 @@ final class InitiativeTrackerService
         return $content;
     }
 
-    private function buildCombatMember(ITCharacter $member, bool $active): string
+    public function buildCombatMember(ITCharacter $member, bool $active): string
     {
         $classMember  = $member->characterType == 'player' ? 'character' : $member->characterType;
         $classMember .= $active ? ' active' : '';
+        $tmpHp = $member->tmpHp;
+
+        $baseLength = $member->curHp / $member->maxHp;
+        if ($tmpHp!=0) {
+            $sum = $member->curHp + $tmpHp;
+            $coloredLength = $member->curHp * $baseLength / $sum;
+            $tmpHpLength = $tmpHp * $baseLength / $sum;
+        } else {
+            $coloredLength = $baseLength;
+            $tmpHpLength = 0;
+        }
+        $coloredLength *= 100;
+        $tmpHpLength *= 100;
+
+        $colorCode = match (true) {
+            $coloredLength === 100 => 'fullHealth',
+            $coloredLength >= 80   => 'grazed',
+            $coloredLength >= 50   => 'injured',
+            $coloredLength >= 30   => 'bloodied',
+            $coloredLength >= 10   => 'critical',
+            $coloredLength > 0     => 'agonizing',
+            default                => 'dying',
+        };
         
         return $this->renderer->render(
             T::ADMIN_IT_CONTENT_PANEL,
@@ -41,11 +69,26 @@ final class InitiativeTrackerService
                 $member->initiative == null ? '-' : floor($member->initiative),
                 $member->initiative == null ? '' : floor($member->initiative),
                 $member->curHp,
+                $coloredLength . '%',
+                $tmpHpLength . '%',
+                $colorCode,
             ]
         );
     }
 
+    public function buildActiveCombatPanel(
+        InitiativeTracker $initiativeTracker,
+        InitTrackCharacterReader $itcReader,
+    ): string {
+        $criteria = new ITCharacterCriteria();
+        $criteria->initiativeTrackerId = $initiativeTracker->id;
+        $criteria->active = 1;
+        $criteria->orderBy = [F::INITIATIVE => C::DESC];
 
+        $members = $itcReader->allItCharacters($criteria);
+
+        return $this->buildIdContentPanel($members, $initiativeTracker);
+    }
 
 
 }

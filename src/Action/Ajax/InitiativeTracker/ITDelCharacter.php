@@ -1,30 +1,34 @@
 <?php
 namespace src\Action\Ajax\InitiativeTracker;
 
-use src\Domain\Entity;
-use src\Domain\Entity\ITCharacter;
+use src\Service\Domain\InitiativeTrackerService;
+use src\Service\Reader\InitiativeTrackerReader;
+use src\Service\Reader\InitTrackCharacterReader;
 use src\Service\Writer\InitTrackCharacterWriter;
+use src\Utils\Session;
 
-final class ITDelCharacter extends Entity
+final class ITDelCharacter
 {
     public function __construct(
         private InitTrackCharacterWriter $writer,
+        private InitiativeTrackerReader $itReader,
+        private InitTrackCharacterReader $itcReader,
+        private InitiativeTrackerService $service
     ) {}
 
     public function execute(): array
     {
-        $id = (int) filter_input(
-            INPUT_POST,
-            'character_id',
-            FILTER_VALIDATE_INT
-        );
+        $id = (int) Session::fromPost('character_id');
+        $character = $this->itcReader->itCharacterById($id);
+        $initiativeTrackerId = $character->initiativeTrackerId;
 
-        $itCharacter = new ITCharacter();
-        $itCharacter->id = $id;
-        $this->writer->delete($itCharacter);
+        // On supprime
+        $this->writer->delete($character);
+
+        $initiativeTracker = $this->itReader->initiativeTrackerById($initiativeTrackerId);
 
         return [
-            'status' => 'success'
+            'panel' => $this->service->buildActiveCombatPanel($initiativeTracker, $this->itcReader),
         ];
     }
 

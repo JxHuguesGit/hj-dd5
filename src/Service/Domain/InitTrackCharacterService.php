@@ -115,6 +115,19 @@ final class InitTrackCharacterService
         return $curCharId;
     }
 
+    public function buildAsidePartyMember(ITCharacter $partyMember): string
+    {
+        return $this->renderer->render(
+            T::ADMIN_IT_PARTY_MEMBER,
+            [
+                $partyMember->name,
+                $partyMember->getCharacterStats(),
+                $partyMember->id,
+                $partyMember->active == 1 ? '' : 'benched',
+            ]
+        );
+    }
+
     private function addNewRound(): string
     {
         return $this->renderer->render(

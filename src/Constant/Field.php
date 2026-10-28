@@ -70,6 +70,7 @@ class Field
     public const STRPENALTY  = 'strengthPenalty';
     public const STRSCORE    = 'strScore';
     public const SWARMSIZE   = 'swarmSize';
+    public const TMPHP       = 'tmpHp';
     public const TYPE        = 'type';
     public const UKTAG       = 'ukTag';
     public const VALUE       = 'value';

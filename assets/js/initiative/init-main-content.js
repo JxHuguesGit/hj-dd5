@@ -24,22 +24,9 @@ export function initMainContent() {
                     );
                     return;
                 }
-
-                const payload = typeof response.data === "string"
-                    ? JSON.parse(response.data)
-                    : response.data;
-
-                if (!payload || payload.status !== "success") {
-                    console.error("Échec du traitement :", payload);
-                    return;
-                }
-
-                const data = payload.data;
-
                 $(".initiative-main-content .combatant").remove();
-                $(".initiative-main-content").append(data.panel);
-
-                onSuccess(data);
+                $(".initiative-main-content").append(response.data.panel);
+                onSuccess(response.data);
             },
             error: function (xhr, status, error) {
                 console.error("Erreur Ajax :", status, error);
@@ -78,4 +65,89 @@ export function initMainContent() {
         });
     });
 
+    // Changement de l'initiative
+    $(".initiative-main").on(
+        "change",
+        ".combatant .initiative > input",
+        function () {
+            const $combatant = $(this).closest(".combatant");
+            const combatantId = $combatant.attr("id").replace("combatant-", "");
+            const initiative = Number($(this).val());
+
+            if ($(this).val() === "" || !Number.isFinite(initiative)) {
+                return;
+            }
+
+            $.ajax({
+                url: ajaxUrl,
+                method: "POST",
+                dataType: "json",
+                data: {
+                    action: "dealWithAjax",
+                    ajaxAction: "updateInitChar",
+                    character: {
+                        id: combatantId,
+                        initiative: initiative
+                    }
+                },
+                success: function (response) {
+                    if (!response || response.success !== true) {
+                        console.error(
+                            "Échec de la mise à jour de l'initiative :",
+                            response
+                        );
+                        return;
+                    }
+
+                    $(".initiative-main-content .combatant").remove();
+                    $(".initiative-main-content").append(response.data.panel);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur Ajax :", status, error);
+                },
+            });
+        }
+    );
+
+    // Ajout, suppression points de vie (temporaires)
+    $(".initiative-main-content").on("click", ".combatant .damage, .combatant .heal, .combatant .thp", function () {
+        const $combatant = $(this).closest(".combatant");
+        const combatantId = $combatant.attr("id").replace("combatant-", "");
+        const number = $combatant.find(".hit-points-edit input[type='number']").val();
+
+        const ajaxAction = $(this).hasClass("damage")
+            ? "dealDamage"
+            : $(this).hasClass("heal")
+                ? "heal"
+                : "setTempHP";
+
+        if (number === "" || !Number.isFinite(Number(number)) || Number(number) < 1) {
+            return;
+        }
+
+        $.ajax({
+            url: ajaxUrl,
+            method: "POST",
+            dataType: "json",
+            data: {
+                action: "dealWithAjax",
+                ajaxAction: ajaxAction,
+                combatantId: combatantId,
+                amount: Number(number),
+            },
+            success: function (response) {
+                if (!response || response.success !== true) {
+                    console.error(
+                        "Échec de la mise à jour du combattant :",
+                        response
+                    );
+                    return;
+                }
+                $("#combatant-"+combatantId).replaceWith(response.data.panel);
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur Ajax :", status, error);
+            },
+        });
+    });
 }

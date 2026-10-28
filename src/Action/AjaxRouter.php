@@ -56,22 +56,29 @@ class AjaxRouter
         'addCreatureToCombat'               => AddCreatureToCombatAction::class,
         'removeCreatureFromCombat'          => RemoveCreatureFromCombatAction::class,
         'rerollCombatParticipantInitiative' => UpdateCombatParticipantAction::class,
+        'refreshPlayerView'                 => ITRefreshPlayerView::class,
         'addInitChar'                       => DealWithInitTracker::class,
         'addInitCharToCombat'               => DealWithInitTracker::class,
         'delInitChar'                       => DealWithInitTracker::class,
         'updateInitChar'                    => DealWithInitTracker::class,
-        'refreshPlayerView'                 => ITRefreshPlayerView::class,
         'setInitChar'                       => DealWithInitTracker::class,
         'nextCombatChar'                    => DealWithInitTracker::class,
         'prevCombatChar'                    => DealWithInitTracker::class,
         'endCombat'                         => DealWithInitTracker::class,
         'startCombat'                       => DealWithInitTracker::class,
-        
+        'dealDamage'                        => DealWithInitTracker::class,
+        'heal'                              => DealWithInitTracker::class,
+        'setTempHP'                         => DealWithInitTracker::class,
     ];
 
     public function __construct(
         private AjaxActionFactory $actionFactory,
     ) {}
+
+    public function supports(string $ajaxAction): bool
+    {
+        return isset($this->actions[$ajaxAction]);
+    }
 
     public function dispatch(string $ajaxAction, ?array $params): array
     {
@@ -85,10 +92,6 @@ class AjaxRouter
 
         $action = $this->actionFactory->make($this->actions[$ajaxAction]);
 
-        return [
-            'status'  => 'success',
-            C::ACTION => $ajaxAction,
-            C::DATA   => $action->execute($params),
-        ];
+        return array_merge([C::ACTION => $ajaxAction], $action->execute($params));
     }
 }

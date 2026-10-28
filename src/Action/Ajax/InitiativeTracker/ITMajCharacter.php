@@ -1,36 +1,51 @@
 <?php
 namespace src\Action\Ajax\InitiativeTracker;
 
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Domain\Entity;
-use src\Domain\Entity\ITCharacter;
-use src\Renderer\TemplateRenderer;
+use src\Service\Domain\InitiativeTrackerService;
+use src\Service\Domain\InitTrackCharacterService;
+use src\Service\Reader\InitiativeTrackerReader;
+use src\Service\Reader\InitTrackCharacterReader;
 use src\Service\Writer\InitTrackCharacterWriter;
+use src\Utils\Session;
 
-final class ITMajCharacter extends Entity
+final class ITMajCharacter
 {
     public function __construct(
-        private array $character,
         private InitTrackCharacterWriter $writer,
+        private InitiativeTrackerReader $itReader,
+        private InitiativeTrackerService $itService,
+        private InitTrackCharacterReader $itcReader,
+        private InitTrackCharacterService $itcService
     ) {}
 
     public function execute(): array
     {
-        $allowedFields = [F::NAME, F::SCOREAC, F::MAXHP, F::MODDEX, F::PERCPASSIVE];
+        $character = Session::fromPost(C::CHARACTER);
+
+        $allowedFields = [F::NAME, F::SCOREAC, F::MAXHP, F::MODDEX, F::PERCPASSIVE, F::INITIATIVE];
         $changedFields = [];
         // On instancie
-        $itCharacter = new ITCharacter();
+        $itCharacter = $this->itcReader->itCharacterById($character['id']);
         foreach ($allowedFields as $field) {
-            $itCharacter->{$field} = $this->character[$field];
-            $changedFields[] = $field;
+            if (isset($character[$field])) {
+                $itCharacter->{$field} = $character[$field];
+                $changedFields[] = $field;
+            }
         }
+
         // Si ça n'explose pas, on met à jour
-        $this->writer->updatePartial($itCharacter, $changedFields);
-        // On formate et on renvoie pour affichage.
+        if (!empty($changedFields)) {
+            $this->writer->updatePartial($itCharacter, $changedFields);
+        }
+
+        // On récupère la table associée
+        $initiativeTracker = $this->itReader->initiativeTrackerById($itCharacter->initiativeTrackerId);
 
         return [
-            'status'    => 'success',
-            'asideCard' => $itCharacter->buildAside(new TemplateRenderer())
+            'asideCard' => $this->itcService->buildAsidePartyMember($itCharacter),
+            'panel' => $this->itService->buildActiveCombatPanel($initiativeTracker, $this->itcReader),
         ];
     }
 

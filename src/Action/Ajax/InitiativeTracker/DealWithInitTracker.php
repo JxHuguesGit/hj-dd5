@@ -21,60 +21,66 @@ final class DealWithInitTracker
 
         return match ($ajaxAction) {
             'addInitChar' => (new ITAddCharacter(
-                    Session::fromPost(C::CHARACTER),
-                    $this->writerFactory->initTrackCharacter()
+                    $this->writerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initTrackCharacter()
                 ))->execute(),
             'addInitCharToCombat' => (new ITAddCharacterToCombat(
-                    Session::fromPost('character_id'),
-                    Session::fromPost('initiativeTrackerId'),
-                    $this->readerFactory->initTrackCharacter(),
                     $this->readerFactory->initiativeTracker(),
-                    $this->writerFactory->initTrackCharacter()
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->writerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->serviceFactory->initTrackCharacter()
                 ))->execute(),
             'delInitChar' => (new ITDelCharacter(
-                    $this->writerFactory->initTrackCharacter()
+                    $this->writerFactory->initTrackCharacter(),
+                    $this->readerFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initiativeTracker()
                 ))->execute(),
             'updateInitChar' => (new ITMajCharacter(
-                    Session::fromPost(C::CHARACTER),
-                    $this->writerFactory->initTrackCharacter()
+                    $this->writerFactory->initTrackCharacter(),
+                    $this->readerFactory->initiativeTracker(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initTrackCharacter()
                 ))->execute(),
             'setInitChar' => (new ITSetCharCombatInitiative(
-                    (int) Session::fromPost('characterId'),
-                    (float) Session::fromPost('initiative'),
-                    $this->readerFactory,
-                    $this->serviceFactory,
-                    $this->writerFactory
+                    $this->readerFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->writerFactory->initTrackCharacter()
                 ))->execute(),
             'nextCombatChar' => (new ITNextCombatCharacter(
-                    Session::fromPost('itCode'),
-                    $this->readerFactory,
-                    $this->serviceFactory,
-                    $this->writerFactory
+                    $this->readerFactory->initiativeTracker(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initTrackCharacter(),
+                    $this->writerFactory->initiativeTracker()
                 ))->execute(),
             'prevCombatChar' => (new ITPrevCombatCharacter(
-                    Session::fromPost('itCode'),
-                    $this->readerFactory,
-                    $this->serviceFactory,
-                    $this->writerFactory
+                    $this->readerFactory->initiativeTracker(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initTrackCharacter(),
+                    $this->writerFactory->initiativeTracker()
                 ))->execute(),
-            'endCombat' => (new ITStartEndCombat(
-                    Session::fromPost('itCode'),
-                    $this->readerFactory,
-                    $this->serviceFactory,
-                    $this->writerFactory,
-                    'end'
+            'endCombat', 'startCombat' => (new ITStartEndCombat(
+                    $this->readerFactory->initiativeTracker(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initTrackCharacter(),
+                    $this->writerFactory->initiativeTracker(),
+                    $ajaxAction
                 ))->execute(),
-            'startCombat' => (new ITStartEndCombat(
-                    Session::fromPost('itCode'),
-                    $this->readerFactory,
-                    $this->serviceFactory,
-                    $this->writerFactory,
-                    'start'
+            'dealDamage', 'heal', 'setTempHP' => (new ITDealWithHp(
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->writerFactory->initTrackCharacter(),
+                    $ajaxAction
                 ))->execute(),
-            default => [
-                'status' => 'error',
-                'message' => 'Action non identifiée.',
-            ],
+            default => throw new \InvalidArgumentException(
+                'Action non identifiée.'
+            ),
         };
     }
 

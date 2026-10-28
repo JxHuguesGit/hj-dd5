@@ -36,68 +36,8 @@ class Ajax
             'modalSpellCard'  => fn() => SpellCard::build(),
         ];
         try {
-            if (in_array(
-                $ajaxAction,
-                [
-                    'loadMoreSpells',
-                    'loadMoreMonsters',
-                    'modalMonsterCard',
-                    'loadCreationStepSide',
-                    'loadMapTokens',
-                    'updateMapTokens',
-                    'getAddMapTokenModal',
-                    'addMapToken',
-                    'deleteMapToken',
-                    'activateMap',
-                    'lockMap',
-                    'unlockMap',
-                    'duplicateMap',
-                    'deleteMap',
-                    'getAddTokenModal',
-                    'addToken',
-                    'toggleMapToken',
-                    'resetMapFog',
-                    'loadCombat',
-                    'loadCombatMonsters',
-                    'addCreatureToCombat',
-                    'removeCreatureFromCombat',
-                    'rerollCombatParticipantInitiative',
-                    'addInitChar',
-                    'addInitCharToCombat',
-                    'delInitChar',
-                    'updateInitChar',
-                    'refreshPlayerView',
-                    'endCombat',
-                    'nextCombatChar',
-                    'prevCombatChar',
-                    'setInitChar',
-                    'startCombat',
-                ]
-            )) {
-                $queryBuilder          = new QueryBuilder();
-                $queryExecutor         = new QueryExecutor();
-                $repository            = new RepositoryFactory($queryBuilder, $queryExecutor);
-                $reader                = new ReaderFactory($repository);
-                $writer                = new WF($repository);
-                $renderer              = new TemplateRenderer();
-                $service               = new ServiceFactory($reader, $writer, $renderer);
-                $router                = new AjaxRouter(
-                    new AjaxActionFactory(
-                        $reader,
-                        $service,
-                        $writer,
-                        $renderer,
-                        new PresenterFactory($renderer, $reader, $service)
-                    )
-                );
-                $response              = $router->dispatch(
-                    $ajaxAction,
-                    [C::MAPID => $mapId]
-                );
-                $response[$ajaxAction] = $response[C::DATA];
-            } elseif (isset($actions[$ajaxAction])) {
-                $returnedValue = $actions[$ajaxAction];
-
+            if (isset($actions[$ajaxAction])) {
+                $returnedValue = $actions[$ajaxAction]();
                 $response = [
                     // A terme, supprimer cet élément
                     $ajaxAction          => $returnedValue,
@@ -107,24 +47,50 @@ class Ajax
                     C::DATA   => $returnedValue,
                 ];
             } else {
-                $response = [
-                    $ajaxAction          => 'default',
-                    'status'             => 'error',
-                    C::ACTION => $ajaxAction,
-                    'message'            => 'default',
-                ];
+                $router   = self::createAjaxRouter();
+                if ($router->supports($ajaxAction)) {
+                    $response = $router->dispatch(
+                        $ajaxAction,
+                        [C::MAPID => $mapId]
+                    );
+                } else {
+                    $response = [
+                        'status'  => 'error',
+                        C::ACTION => $ajaxAction,
+                        'message' => 'Les paramètres passés pour l\'appel Ajax n\'étaient pas corrects.',
+                    ];
+                }
             }
         } catch (\Throwable $e) {
             $response = [
-                // A terme, supprimer cet élément
-                $ajaxAction          => 'default',
-                // Fin suppression
-                'status'             => 'error',
+                'status'  => 'error',
                 C::ACTION => $ajaxAction,
-                'message'            => $e->getMessage(),
+                'message' => $e->getMessage(),
             ];
         }
 
-        return json_encode($response);
+        return $response;
+    }
+
+    private static function createAjaxRouter(): AjaxRouter
+    {
+        $queryBuilder  = new QueryBuilder();
+        $queryExecutor = new QueryExecutor();
+        $repository    = new RepositoryFactory($queryBuilder, $queryExecutor);
+        $reader        = new ReaderFactory($repository);
+        $writer        = new WF($repository);
+        $renderer      = new TemplateRenderer();
+        $service       = new ServiceFactory($reader, $writer, $renderer);
+        $presenter     = new PresenterFactory($renderer, $reader, $service);
+
+        return new AjaxRouter(
+            new AjaxActionFactory(
+                $reader,
+                $service,
+                $writer,
+                $renderer,
+                $presenter
+            )
+        );
     }
 }

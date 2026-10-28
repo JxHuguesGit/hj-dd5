@@ -70,7 +70,7 @@ final class InitiativeAdminPresenter
     {
         $listPartyMembers = '';
         foreach ($partyMembers as $partyMember) {
-            $listPartyMembers .= $this->buildITPartyMember($partyMember);
+            $listPartyMembers .= $this->serviceFactory->initTrackCharacter()->buildAsidePartyMember($partyMember);
         }
 
         return $this->renderer->render(
@@ -102,7 +102,9 @@ final class InitiativeAdminPresenter
     private function buildITEnnemyAside(InitiativeTracker $initiativeTracker): string
     {
         // TODO : à développer.
-        var_dump($initiativeTracker);
+        if (null===$initiativeTracker) {
+            echo 'Erreur';
+        }
         return $this->renderer->render(
             T::ADMIN_IT_ENNEMY_ASIDE,
             [
@@ -123,63 +125,4 @@ final class InitiativeAdminPresenter
             ]
         );
     }
-
-    private function buildIdContentPanel(Collection $members, InitiativeTracker $initiativeTracker): string
-    {
-        $content = '';
-        foreach ($members as $member) {
-            if ($member->active==0) {
-                continue;
-            }
-            $content .= $this->buildCombatMember($member, $initiativeTracker->currentParticipantId==$member->id);
-        }
-        return $content;
-    }
-
-    private function buildCombatMember(ITCharacter $member, bool $active): string
-    {
-        $classMember  = $member->characterType == 'player' ? 'character' : $member->characterType;
-        $classMember .= $active ? ' active' : '';
-        $tmpHp = 0;
-
-        $baseLength = $member->curHp / $member->maxHp; // => 0.8;
-        if ($tmpHp!=0) {
-            $sum = $member->curHp + $tmpHp; // => 100;
-            $ratio = $member->curHp / $sum; // => 0.8;
-
-            $coloredLength = $ratio * $baseLength; // => 0.64;
-            $tmpHpLength = $ratio * (1 - $baseLength); // => 0.16;
-        } else {
-            $coloredLength = $baseLength;
-            $tmpHpLength = 0;
-        }
-
-        $colorCode = match (true) {
-            $coloredLength === 100 => 'fullHealth',
-            $coloredLength >= 80   => 'grazed',
-            $coloredLength >= 50   => 'injured',
-            $coloredLength >= 30   => 'bloodied',
-            $coloredLength >= 10   => 'critical',
-            $coloredLength > 0     => 'mortallyWounded',
-            default                => 'dying',
-        };
-
-        return $this->renderer->render(
-            T::ADMIN_IT_CONTENT_PANEL,
-            [
-                $member->id,
-                $classMember,
-                $member->name,
-                $member->maxHp,
-                $member->ac,
-                $member->initiative == null ? '-' : floor($member->initiative),
-                $member->initiative == null ? '' : floor($member->initiative),
-                $member->curHp,
-                $coloredLength . '%', // Longueur en pourcent de la barre de vie
-                $tmpHpLength . '%', // Longueur en pourcent de la barre de vie temporaire
-                $colorCode, // Couleur associé avec l'état actuel de la barre de vie.
-            ]
-        );
-    }
-
 }
