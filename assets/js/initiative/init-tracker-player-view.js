@@ -54,19 +54,11 @@ function refreshPlayerView() {
             console.error("Réponse Ajax invalide :", response);
             return;
         }
-        const payload = typeof response.data === "string"
-            ? JSON.parse(response.data)
-            : response.data;
-        if (payload.status !== "success") {
-            console.error("Échec du traitement :", payload);
-            return;
-        }
-        const data = payload.data;
 
-        $(SELECTORS.round).text(data.round);
-        $(SELECTORS.main).replaceWith(data.mainHtml);
-        $(SELECTORS.footer).html(data.footerHtml);
-        updateCombatState(data.combatState);
+        $(SELECTORS.round).text(response.data.round);
+        $(SELECTORS.main).replaceWith(response.data.mainHtml);
+        $(SELECTORS.footer).html(response.data.footerHtml);
+        updateCombatState(response.data.combatState);
         updateCombatAudio();
     })
     .fail(function (xhr, status, error) {

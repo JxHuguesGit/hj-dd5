@@ -316,4 +316,20 @@ final class Monster extends Entity
     {
         return ($this->getField(F::INCOMPLET) ?? 0) === 0;
     }
+
+    public function getITData(): array
+    {
+        $name = $this->identity()->getFrenchName();
+        if ($name==='') {
+            $name = $this->identity()->getName();
+        }
+        return [
+            $name,
+            $this->type()->getName(),
+            $this->combat()->getChallengeRating(),
+            $this->combat()->getArmorClass(),
+            $this->combat()->getHitPoints(),
+            $this->identity()->getId()
+        ];
+    }
 }

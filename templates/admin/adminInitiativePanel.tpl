@@ -26,7 +26,7 @@
 </div>
 
 <div class="initiative-body">
-    <aside class="party">%4$s</aside>
+    <aside class="party" aria-label="">%4$s</aside>
     <main class="initiative-main">
         <div class="active-combatants %6$s">
             <div class="panel-header %9$s">%7$s</div>
@@ -34,10 +34,31 @@
             <div class="initiative-main-content">
                 %8$s
                 <p>Add players and enemies, then enter initiative rolls to begin.</p>
+                <div role="dialog" aria-modal="true" aria-label="Edit max HP"
+                    class="d-none overlay" tabindex="-1" data-target="edit-maxHp-monster">
+                    <div class="edit-maxHp-monster">
+                        <div class="panel-header">
+                            <div>
+                                <h3 title="Max HP — Maximum Hit Points" data-abbr-auto="">Edit Max HP</h3>
+                                <p>Zombie 1</p>
+                            </div>
+                            <button aria-label="Close" class="close-button">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="panel-body">
+                            <label for="edit-max-hp" title="Maximum de Points de Vie" data-abbr-auto="">PV max</label>
+                            <input id="edit-max-hp" type="number" min="1" class="input-field">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="confirm-button">Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-    <aside class="ennemies">%5$s</aside>
+    <aside class="ennemies" aria-label="">%5$s</aside>
 </div>
 
 

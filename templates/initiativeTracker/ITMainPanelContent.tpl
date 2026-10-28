@@ -18,12 +18,14 @@
             <i class="fa-solid fa-paw" aria-hidden="true"></i>
             <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
         </button>
-        <button title="Reaction available — click to mark used" class="reaction">
+    -->
+        <button title="Réaction disponible ou non" class="reaction %12$s">
             <i aria-hidden="true" class="fa-solid fa-bolt"></i>
         </button>
-        <button title="Mark as holding a readied action" class="ready">
+        <button title="Action Intention utilisée" class="ready %13$s">
             <i aria-hidden="true" class="fa-solid fa-stopwatch"></i>
         </button>
+    <!--
         <button title="Mark as surprised" class="surprise">
             <i aria-hidden="true" class="fa-solid fa-triangle-exclamation"></i>
         </button>

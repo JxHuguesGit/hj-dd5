@@ -21,6 +21,7 @@ final class DealWithInitTracker
 
         return match ($ajaxAction) {
             'addInitChar' => (new ITAddCharacter(
+                    $this->readerFactory->initiativeTracker(),
                     $this->writerFactory->initTrackCharacter(),
                     $this->serviceFactory->initTrackCharacter()
                 ))->execute(),
@@ -31,13 +32,28 @@ final class DealWithInitTracker
                     $this->serviceFactory->initiativeTracker(),
                     $this->serviceFactory->initTrackCharacter()
                 ))->execute(),
+            'rmvInitCharToCombat' => (new ITRmvCharacterToCombat(
+                    $this->readerFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->writerFactory->initiativeTracker(),
+                    $this->writerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->serviceFactory->initTrackCharacter()
+                ))->execute(),
+            'addMonsterToCombat' => (new ITAddMonsterToCombat(
+                    $this->readerFactory->initiativeTracker(),
+                    $this->readerFactory->initTrackCharacter(),
+                    $this->writerFactory->initTrackCharacter(),
+                    $this->serviceFactory->initiativeTracker(),
+                    $this->readerFactory->monster()
+                ))->execute(),
             'delInitChar' => (new ITDelCharacter(
                     $this->writerFactory->initTrackCharacter(),
                     $this->readerFactory->initiativeTracker(),
                     $this->readerFactory->initTrackCharacter(),
                     $this->serviceFactory->initiativeTracker()
                 ))->execute(),
-            'updateInitChar' => (new ITMajCharacter(
+            'updateInitChar', 'toggleReaction', 'toggleReady' => (new ITMajCharacter(
                     $this->writerFactory->initTrackCharacter(),
                     $this->readerFactory->initiativeTracker(),
                     $this->serviceFactory->initiativeTracker(),
@@ -55,7 +71,8 @@ final class DealWithInitTracker
                     $this->serviceFactory->initiativeTracker(),
                     $this->readerFactory->initTrackCharacter(),
                     $this->serviceFactory->initTrackCharacter(),
-                    $this->writerFactory->initiativeTracker()
+                    $this->writerFactory->initiativeTracker(),
+                    $this->writerFactory->initTrackCharacter()
                 ))->execute(),
             'prevCombatChar' => (new ITPrevCombatCharacter(
                     $this->readerFactory->initiativeTracker(),
@@ -68,7 +85,6 @@ final class DealWithInitTracker
                     $this->readerFactory->initiativeTracker(),
                     $this->serviceFactory->initiativeTracker(),
                     $this->readerFactory->initTrackCharacter(),
-                    $this->serviceFactory->initTrackCharacter(),
                     $this->writerFactory->initiativeTracker(),
                     $ajaxAction
                 ))->execute(),

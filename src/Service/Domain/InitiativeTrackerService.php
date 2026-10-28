@@ -2,19 +2,20 @@
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
+use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Template as T;
 use src\Domain\Criteria\ITCharacterCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\ITCharacter;
-use src\Factory\ReaderFactory;
 use src\Renderer\TemplateRenderer;
 use src\Service\Reader\InitTrackCharacterReader;
 
 final class InitiativeTrackerService
 {
     public function __construct(
+        private InitTrackCharacterService $service,
         private TemplateRenderer $renderer,
     ) {}
 
@@ -22,10 +23,10 @@ final class InitiativeTrackerService
     {
         $content = '';
         foreach ($members as $member) {
-            if ($member->active==0) {
+            if ($member->active == 0) {
                 continue;
             }
-            $content .= $this->buildCombatMember($member, $initiativeTracker->currentParticipantId==$member->id);
+            $content .= $this->buildCombatMember($member, $initiativeTracker->currentParticipantId == $member->id);
         }
         return $content;
     }
@@ -72,6 +73,8 @@ final class InitiativeTrackerService
                 $coloredLength . '%',
                 $tmpHpLength . '%',
                 $colorCode,
+                $member->reactionAvailable == 1 ? 'active' : 'disabled',
+                $member->readyActive == 1 ? 'active' : 'disabled',
             ]
         );
     }
@@ -90,5 +93,24 @@ final class InitiativeTrackerService
         return $this->buildIdContentPanel($members, $initiativeTracker);
     }
 
+    public function buildITPartyAside(Collection $partyMembers): string
+    {
+        $listPartyMembers = '';
+        foreach ($partyMembers as $partyMember) {
+            $listPartyMembers .= $this->service->buildAsidePartyMember($partyMember);
+        }
+
+        return $this->renderer->render(
+            T::ADMIN_IT_PARTY_ASIDE,
+            [
+                // Si aucun personnage listé, on ne peut pas monter de niveau.
+                $partyMembers->isEmpty() ? C::DISABLED : '',
+                // Si aucun personnage listé, on affiche le message "Pas de participants".
+                $partyMembers->isEmpty() ? '' : B::DNONE,
+                // On affiche la liste des personnages listés
+                $listPartyMembers,
+            ]
+        );
+    }
 
 }

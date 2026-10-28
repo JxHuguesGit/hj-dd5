@@ -1,9 +1,10 @@
 <?php
 namespace src\Action\Ajax\InitiativeTracker;
 
+use src\Constant\Constant as C;
 use src\Constant\Field as F;
+use src\Domain\Criteria\ITCharacterCriteria;
 use src\Service\Domain\InitiativeTrackerService;
-use src\Service\Domain\InitTrackCharacterService;
 use src\Service\Reader\InitiativeTrackerReader;
 use src\Service\Reader\InitTrackCharacterReader;
 use src\Service\Writer\InitiativeTrackerWriter;
@@ -15,14 +16,13 @@ final class ITStartEndCombat
         private InitiativeTrackerReader $itReader,
         private InitiativeTrackerService $itService,
         private InitTrackCharacterReader $itcReader,
-        private InitTrackCharacterService $itcService,
         private InitiativeTrackerWriter $writer,
         private string $type,
     ) {}
 
     public function execute(): array
     {
-        $itCode = Session::fromPost(F::ITID);
+        $itCode = Session::fromPost('itCode');
 
         // On récupère la table associée
         $initiativeTracker = $this->itReader->initiativeTrackerByCode($itCode);
@@ -34,7 +34,14 @@ final class ITStartEndCombat
         } else {
             $initiativeTracker->active = 1;
             $initiativeTracker->round  = 1;
-            $initiativeTracker->currentParticipantId = $this->itcService->rollInitiative($initiativeTracker->id);
+
+            $criteria = new ITCharacterCriteria();
+            $criteria->initiativeTrackerId = $initiativeTracker->id;
+            $criteria->active = 1;
+            $criteria->orderBy = [F::INITIATIVE => C::DESC];
+            $members = $this->itcReader->allItCharacters($criteria);
+            $first = $members->first();
+            $initiativeTracker->currentParticipantId = $first->id;
         }
 
         $changedFields = [F::ACTIVE, F::ROUND, F::CURRENTPARTICIPANTID];

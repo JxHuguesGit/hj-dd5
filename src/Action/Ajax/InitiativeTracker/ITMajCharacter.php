@@ -24,10 +24,26 @@ final class ITMajCharacter
     {
         $character = Session::fromPost(C::CHARACTER);
 
-        $allowedFields = [F::NAME, F::SCOREAC, F::MAXHP, F::MODDEX, F::PERCPASSIVE, F::INITIATIVE];
+        $allowedFields = [
+            F::NAME,
+            F::SCOREAC,
+            F::MAXHP,
+            F::MODDEX,
+            F::PERCPASSIVE,
+            F::INITIATIVE,
+            F::REACTIONAVAIL,
+            F::READYACTIVE,
+        ];
         $changedFields = [];
         // On instancie
         $itCharacter = $this->itcReader->itCharacterById($character['id']);
+
+        // Si maxHp est défini, curHp ne peut pas être au-dessus
+        if (isset($character[F::MAXHP]) && $itCharacter->curHp > $character[F::MAXHP]) {
+            $itCharacter->curHp = $character[F::MAXHP];
+            $changedFields[] = F::CURHP;
+        }
+
         foreach ($allowedFields as $field) {
             if (isset($character[$field])) {
                 $itCharacter->{$field} = $character[$field];

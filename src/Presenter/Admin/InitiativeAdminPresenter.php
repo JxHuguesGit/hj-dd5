@@ -7,11 +7,13 @@ use src\Constant\Field as F;
 use src\Constant\Template as T;
 use src\Collection\Collection;
 use src\Domain\Criteria\ITCharacterCriteria;
+use src\Domain\Criteria\MonsterCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Domain\Entity\ITCharacter;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
+use src\Utils\Session;
 
 final class InitiativeAdminPresenter
 {
@@ -23,10 +25,7 @@ final class InitiativeAdminPresenter
 
     public function presentInitiativePanel(): string
     {
-        $combatId = filter_input(
-            INPUT_GET,
-            'combatId',
-        );
+        $combatId = Session::fromGet('combatId');
 
         $initiativeTracker = $this->readerFactory->initiativeTracker()->initiativeTrackerByCode($combatId);
         $criteria = new ITCharacterCriteria();
@@ -44,7 +43,7 @@ final class InitiativeAdminPresenter
                 date('YmdHis'),
                 $this->buildITHeader($initiativeTracker),
                 $this->buildITPartyAside($partyMembers),
-                $this->buildITEnnemyAside($initiativeTracker),
+                $this->buildITEnnemyAside(),
                 // Présence de combattants ? Combat en cours ?
                 !$partyMembers->isEmpty() ? 'has-combatants'/* active-combat'*/ : '',
                 $this->buildITHeaderPanel($initiativeTracker),
@@ -86,30 +85,23 @@ final class InitiativeAdminPresenter
         );
     }
 
-    private function buildITPartyMember(ITCharacter $partyMember): string
+    private function buildITEnnemyAside(): string
     {
-        return $this->renderer->render(
-            T::ADMIN_IT_PARTY_MEMBER,
-            [
-                $partyMember->name,
-                $partyMember->getCharacterStats(),
-                $partyMember->id,
-                $partyMember->active == 1 ? '' : 'benched',
-            ]
-        );
-    }
+        $monsterCriteria = new MonsterCriteria();
+        $monsterCriteria->limit = -1;
+        $monsters = $this->readerFactory->monster()->allMonsters($monsterCriteria);
 
-    private function buildITEnnemyAside(InitiativeTracker $initiativeTracker): string
-    {
-        // TODO : à développer.
-        if (null===$initiativeTracker) {
-            echo 'Erreur';
+        $content = '';
+        foreach ($monsters as $monster) {
+            $content .= $this->renderer->render(
+                T::ADMIN_IT_ENNEMY_MEMBER,
+                $monster->getITData()
+            );
         }
         return $this->renderer->render(
             T::ADMIN_IT_ENNEMY_ASIDE,
             [
-                // On affiche la liste des ennemis disponibles
-                '',
+                $content,
             ]
         );
 

@@ -84,6 +84,35 @@
                         display: flex;
                         align-items: center;
                         gap: 6px;
+
+                        button {
+                            display: flex;
+                            align-items: center;
+                            column-gap: 4px;
+                            row-gap: 4px;
+
+                            margin: 0;
+                            padding: 4px 8px;
+
+                            color: oklch(0.707 0.022 261.325);
+                            background-color: oklch(0.278 0.033 256.848);
+
+                            border: 1px solid oklch(0.373 0.034 259.733);
+                            border-radius: 4px;
+
+                            font-size: 12px;
+                            font-weight: 400;
+                            line-height: 16px;
+
+                            transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                                        background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                                        border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+                            &:hover {
+                                color: oklch(0.879 0.169 91.605);
+                                border-color: oklch(0.666 0.179 58.318);
+                            }
+                        }
                     }
                 }
 
@@ -239,7 +268,134 @@
                         }
                     }
                 }
+
+                > .panel-add-monsters {
+                    margin: 0;
+                    padding: 12px;
+                    color: #fff;
+                    background-color: oklab(0.396 0.127027 0.0611969 / 0.2);
+                    border: 1px solid oklch(0.505 0.213 27.518);
+                    border-radius: 8px;
+
+                    > .panel-header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        column-gap: 6px;
+                        margin: 0 0 8px;
+                        padding: 0;
+
+                        .title {
+                            display: flex;
+                            align-items: center;
+                            column-gap: 6px;
+                            margin: 0;
+                            padding: 0;
+                            color: oklch(0.808 0.114 19.571);
+                            font-size: 14px;
+                            font-weight: 600;
+                            line-height: 20px;
+                        }
+
+                        > button {
+                            margin: 0;
+                            padding: 2px;
+                            color: oklch(0.505 0.213 27.518);
+                            background-color: transparent;
+                            border: none;
+                            border-radius: 4px;
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: oklch(0.808 0.114 19.571);
+                            }
+                        }
+                    }
+
+
+                    > .panel-body {
+                        display: flex;
+                        align-items: center;
+                        column-gap: 8px;
+
+                        margin: 0 0 12px;
+                        padding: 0;
+
+                        .label {
+                            margin: 0;
+                            padding: 0;
+                            color: oklch(0.707 0.022 261.325);
+                            font-size: 12px;
+                            line-height: 16px;
+                        }
+
+                        button {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 28px;
+                            height: 28px;
+                            margin: 0;
+                            padding: 0;
+                            color: #fff;
+                            background-color: oklch(0.373 0.034 259.733);
+                            border: none;
+                            border-radius: 4px;
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 24px;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: oklch(0.446 0.03 256.802);
+                            }
+                        }
+
+                        input {
+                            width: 56px;
+                            margin: 0;
+                            padding: 4px 8px;
+                            color: #fff;
+                            background-color: oklch(0.21 0.034 264.665);
+                            border: 1px solid oklch(0.446 0.03 256.802);
+                            border-radius: 4px;
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 20px;
+                            text-align: center;
+                        }
+                    }
+
+                    .submit-button {
+                        margin: 0;
+                        padding: 6px 12px;
+                        color: #fff;
+                        background-color: oklch(0.505 0.213 27.518);
+                        border: none;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 20px;
+                        width: 100%;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: oklch(0.455 0.19 27.518);
+                        }
+
+                        &:disabled {
+                            opacity: 0.5;
+                            cursor: not-allowed;
+                        }
+                    }
+
+                }
+
             }
         }
+
     }
 }

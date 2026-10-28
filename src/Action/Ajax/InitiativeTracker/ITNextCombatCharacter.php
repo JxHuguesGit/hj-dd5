@@ -7,6 +7,7 @@ use src\Service\Domain\InitTrackCharacterService;
 use src\Service\Reader\InitiativeTrackerReader;
 use src\Service\Reader\InitTrackCharacterReader;
 use src\Service\Writer\InitiativeTrackerWriter;
+use src\Service\Writer\InitTrackCharacterWriter;
 use src\Utils\Session;
 
 final class ITNextCombatCharacter
@@ -16,7 +17,8 @@ final class ITNextCombatCharacter
         private InitiativeTrackerService $itService,
         private InitTrackCharacterReader $itcReader,
         private InitTrackCharacterService $itcService,
-        private InitiativeTrackerWriter $writer,
+        private InitiativeTrackerWriter $itWriter,
+        private InitTrackCharacterWriter $itcWriter,
     ) {}
 
     public function execute(): array
@@ -39,7 +41,11 @@ final class ITNextCombatCharacter
         }
 
         // On met à jour
-        $this->writer->updatePartial($initiativeTracker, $changedFields);
+        $this->itWriter->updatePartial($initiativeTracker, $changedFields);
+
+        $character->reactionAvailable = 1;
+        $character->readyActive = 0;
+        $this->itcWriter->updatePartial($character, [F::REACTIONAVAIL, F::READYACTIVE]);
 
         return [
             'round' => 'Round ' . $initiativeTracker->round,

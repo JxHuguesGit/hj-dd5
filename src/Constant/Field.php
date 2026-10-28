@@ -58,6 +58,8 @@ class Field
     public const PROFBONUS   = 'profBonus';
     public const QUANTITY    = 'quantity';
     public const RANK        = 'rank';
+    public const REACTIONAVAIL = 'reactionAvailable';
+    public const READYACTIVE = 'readyActive';
     public const ROUND       = 'round';
     public const ROW         = 'row';
     public const SIZE        = 'size';

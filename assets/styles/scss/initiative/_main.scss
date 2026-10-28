@@ -394,6 +394,37 @@
 
                             transition: .15s ease;
 
+                            &.bench:hover {
+                                background-color: oklab(0.396 0.127027 0.0611969 / 0.4);
+                                border-color: oklch(0.704 0.191 22.216);
+                                color: oklch(0.704 0.191 22.216);
+                            }
+
+                            &.reaction.active {
+                                color: oklch(0.746 0.16 232.661);
+                            }
+                            &.reaction:hover {
+                                border-color: oklch(0.828 0.111 230.318);
+                                color: oklch(0.828 0.111 230.318);
+                            }
+                            &.ready.active {
+                                border-color: oklch(0.702 0.183 293.541);
+                                color: oklch(0.702 0.183 293.541);
+                            }
+                            &.ready:hover {
+                                border-color: oklch(0.811 0.111 293.571);
+                                color: oklch(0.811 0.111 293.571);
+                            }
+
+
+                            &.disabled {
+                                opacity: 0.3;
+                                color: tan;
+                            }
+
+
+
+
                             &.lair:hover {
                                 border-color: oklch(0.714 0.203 305.504);
                                 color: oklch(0.714 0.203 305.504);
@@ -416,16 +447,6 @@
                                 border-color: oklch(0.765 0.177 163.223);
                                 color: oklch(0.765 0.177 163.223);
                             }
-                            &.reaction.active,
-                            &.reaction:hover {
-                                border-color: oklch(0.746 0.16 232.661);
-                                color: oklch(0.746 0.16 232.661);
-                            }
-                            &.ready.active,
-                            &.ready:hover {
-                                border-color: oklch(0.702 0.183 293.541);
-                                color: oklch(0.702 0.183 293.541);
-                            }
                             &.surprise.active,
                             &.surprise:hover {
                                 border-color: oklch(0.718 0.202 349.761);
@@ -440,11 +461,6 @@
                             &.notes:hover {
                                 border-color: oklch(0.879 0.169 91.605);
                                 color: oklch(0.879 0.169 91.605);
-                            }
-                            &.bench:hover {
-                                background-color: oklab(0.396 0.127027 0.0611969 / 0.4);
-                                border-color: oklch(0.704 0.191 22.216);
-                                color: oklch(0.704 0.191 22.216);
                             }
 
                         }
@@ -1001,6 +1017,9 @@
                                 display: none;
                             }
                         }
+                        > .hit-points > .hit-points-bar > .hit-points-controls > .edit-button {
+                            display: none;
+                        }
                     }
 
                     &.monster {
@@ -1025,6 +1044,135 @@
                             background-color: oklch(82.8% .189 84.429);
                         }
                     }
+                }
+
+                .edit-maxHp-monster {
+                    display: flex;
+                    flex-direction: column;
+                    width: 320px;
+                    max-width: 320px;
+                    padding: 0;
+                    color: #fff;
+                    background-color: oklch(0.21 0.034 264.665);
+                    border: 1px solid oklch(0.373 0.034 259.733);
+                    border-radius: 12px;
+                    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+                    > .panel-header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 16px 20px;
+                        border-bottom: 1px solid oklch(0.373 0.034 259.733);
+
+                        h3 {
+                            margin: 0;
+                            padding: 0;
+                            color: oklch(0.928 0.006 264.531);
+                            font-size: 16px;
+                            font-weight: 700;
+                            letter-spacing: 0.4px;
+                            line-height: 24px;
+                        }
+
+                        p {
+                            margin: 0;
+                            padding: 0;
+                            color: rgb(148, 155, 171);
+                            font-size: 12px;
+                            font-style: italic;
+                            line-height: 16px;
+                        }
+
+                        .close-button {
+                            padding: 0;
+                            margin: 0;
+                            color: rgb(148, 155, 171);
+                            font-family: "Font Awesome 7 Duotone";
+                            font-size: 18px;
+                            font-weight: 300;
+                            line-height: 18px;
+                            text-align: center;
+                            border: none;
+                            background: transparent;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: #fff;
+                            }
+                        }
+
+                    }
+
+                    > .panel-body {
+                        margin: 0;
+                        padding: 20px;
+                        color: #fff;
+                        line-height: 24px;
+                    }
+
+                    > .panel-footer {
+                        display: flex;
+                        justify-content: flex-end;
+                        column-gap: 8px;
+                        margin: 0;
+                        padding: 12px 20px;
+                        border-top: 1px solid oklch(0.373 0.034 259.733);
+
+                        .confirm-button {
+                            margin: 0;
+                            padding: 6px 16px;
+                            color: #fff;
+                            background-color: rgb(180, 83, 9);
+                            border: none;
+                            border-radius: 4px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            line-height: 20px;
+                            cursor: pointer;
+                            transition: color 0.15s, background-color 0.15s, opacity 0.15s;
+
+                            &:hover {
+                                background-color: rgb(146, 64, 14);
+                            }
+
+                            &:disabled {
+                                opacity: 0.5;
+                                cursor: not-allowed;
+                            }
+                        }
+                    }
+
+                    label {
+                        display: block;
+                        margin: 0 0 4px;
+                        padding: 0;
+                        color: rgb(148, 155, 171);
+                        font-size: 12px;
+                        line-height: 16px;
+                        letter-spacing: 0.6px;
+                        text-transform: uppercase;
+                    }
+
+                    .input-field {
+                        width: 278px;
+                        margin: 0;
+                        padding: 8px 12px;
+                        color: #fff;
+                        background-color: oklch(0.21 0.034 264.665);
+                        border: 1px solid oklch(0.446 0.03 256.802);
+                        border-radius: 4px;
+                        font-size: 18px;
+                        font-weight: 700;
+                        line-height: 28px;
+                        text-align: center;
+
+                        &:focus {
+                            outline: 2px solid oklch(0.623 0.214 259.815);
+                            outline-offset: 1px;
+                        }
+                    }
+
                 }
             }
         }

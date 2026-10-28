@@ -3,6 +3,7 @@ export function initAsideParty() {
     const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
     const $overlayAddModal = $('.overlay[data-target="add-modal"]');
     const $overlayLvlUpModal = $('.overlay[data-target="lvlUp-modal"]');
+    const initTrackerId = $('.session .value').text().trim();
 
     //////////////////////////////////////////////
     // Action sur le bouton ajouter un personnage
@@ -44,7 +45,7 @@ export function initAsideParty() {
             modDex: Number($form.find('[name="itCharModDex"]').val()),
             percPassive: Number($form.find('[name="itCharPassive"]').val()),
             characterType: 'player',
-            initiativeTrackerId: $('.session .value').html()
+            initiativeTrackerId: initTrackerId
         };
 
         $.ajax({
@@ -114,7 +115,7 @@ export function initAsideParty() {
                 action: "dealWithAjax",
                 ajaxAction: 'addInitCharToCombat',
                 character_id: characterId,
-                initiativeTrackerId: $('.session .value').html()
+                initiativeTrackerId: initTrackerId
             },
             success: function (response) {
                 if (!response.success) {

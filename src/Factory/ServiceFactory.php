@@ -130,6 +130,7 @@ final class ServiceFactory
     public function initiativeTracker(): InitiativeTrackerService
     {
         return new InitiativeTrackerService(
+            $this->initTrackCharacter(),
             $this->renderer
         );
     }
