@@ -73,10 +73,13 @@ console.log("SVG :", $svg.length);
         return;
     }
 
+    const cx = (GRID_MAX_X - GRID_MIN_X + 1) / 2;
+    const cy = (GRID_MAX_Y - GRID_MIN_Y + 1) / 2;
+
     $svg.append(`
         <circle
-            cx="24.5"
-            cy="24.5"
+            cx="${cx}"
+            cy="${cy}"
             r="5"
             fill="none"
             stroke="red"

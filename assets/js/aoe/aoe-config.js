@@ -1,6 +1,14 @@
-export const GRID_SIZE = 49;
-export const GRID_MIN = -(GRID_SIZE - 1) / 2;
-export const GRID_MAX = (GRID_SIZE - 1) / 2;
+const $grid = $("#grid");
+
+export const GRID_MIN_X = Number($grid.data("min-x"));
+export const GRID_MAX_X = Number($grid.data("max-x"));
+export const GRID_MIN_Y = Number($grid.data("min-y"));
+export const GRID_MAX_Y = Number($grid.data("max-y"));
+
+export const GRID_WIDTH = GRID_MAX_X - GRID_MIN_X + 1;
+export const GRID_HEIGHT = GRID_MAX_Y - GRID_MIN_Y + 1;
+
+export const GRID_SIZE = 1 + GRID_MAX_X - GRID_MIN_X;
 
 export const CELL_METERS = 1.5;
 export const AOE_SAMPLES = 10;

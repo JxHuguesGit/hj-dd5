@@ -1,4 +1,4 @@
-import { GRID_MIN, GRID_MAX, setSelectedDistance } from "./aoe-config.js";
+import { setSelectedDistance, GRID_MAX_X, GRID_MIN_Y, GRID_MAX_Y, GRID_MIN_X } from "./aoe-config.js";
 import { updateAoe } from "./aoe-aoe.js";
 import { updateCover } from "./aoe-cover.js";
 import { displayDistance } from "./aoe-ui.js";
@@ -87,10 +87,10 @@ function translateObstacles(dx, dy) {
     $("#grid .cell").removeClass("obstacle");
     obstacles.forEach(function (obstacle) {
         if (
-            obstacle.x < GRID_MIN ||
-            obstacle.x > GRID_MAX ||
-            obstacle.y < GRID_MIN ||
-            obstacle.y > GRID_MAX
+            obstacle.x < GRID_MIN_X ||
+            obstacle.x > GRID_MAX_X ||
+            obstacle.y < GRID_MIN_Y ||
+            obstacle.y > GRID_MAX_Y
         ) {
             return;
         }

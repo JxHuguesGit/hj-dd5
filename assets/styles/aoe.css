@@ -218,12 +218,10 @@ body {
 /* ===== GRILLE ===== */
 
 #grid {
-    --grid-size: 49;
-
     display: grid;
 
-    grid-template-columns: repeat(var(--grid-size), 1fr);
-    grid-template-rows: repeat(var(--grid-size), 1fr);
+    grid-template-columns: repeat(var(--grid-size), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--grid-size), minmax(0, 1fr));
 
     height: 100%;
     width: 100%;
@@ -327,7 +325,7 @@ body {
 
 /* ===== SVG ===== */
 
-#cover-overlay {
+#overlay {
     position: absolute;
 
     inset: 0;
@@ -360,4 +358,8 @@ body {
 
 
 
-
+.aoe-outline {
+    fill: none;
+    stroke: red;
+    stroke-width: .5;
+}
