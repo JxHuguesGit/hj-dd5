@@ -3,36 +3,262 @@ export function initMainContent() {
     const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
     const initTrackerId = $('.session .value').html();
 
-    /**
-     * Exécute une action de combat et traite sa réponse.
-     */
-    function executeCombatAction(ajaxAction, onSuccess) {
+    function getCombatantData(element) {
+        const $combatant = $(element).closest('.combatant');
+
+        return {
+            $combatant,
+            id: $combatant.attr('id').replace('combatant-', ''),
+            name: $combatant.find('.combatant-name').text().trim()
+        };
+    }
+
+    function refreshCombatants(panel) {
+        $('.initiative-main-content .combatant').remove();
+        $('.initiative-main-content').append(panel);
+    }
+
+    function ajaxAction(actionName, data = {}, onSuccess = null) {
         $.ajax({
             url: ajaxUrl,
-            method: "POST",
-            dataType: "json",
+            type: 'POST',
+            dataType: 'json',
             data: {
-                action: "dealWithAjax",
-                ajaxAction: ajaxAction,
-                itCode: initTrackerId,
+                action: 'dealWithAjax',
+                ajaxAction: actionName,
+                ...data
             },
-            success: function (response) {
-                if (!response || response.success !== true) {
-                    console.error(
-                        "Échec de la mise à jour du combat :",
-                        response
-                    );
+            success(response) {
+                if (!response?.success) {
+                    console.error(`Erreur sur ${actionName}`, response);
                     return;
                 }
-                $(".initiative-main-content .combatant").remove();
-                $(".initiative-main-content").append(response.data.panel);
-                onSuccess(response.data);
+
+                if (onSuccess) {
+                    onSuccess(response);
+                }
             },
-            error: function (xhr, status, error) {
-                console.error("Erreur Ajax :", status, error);
-            },
+            error(xhr, status, error) {
+                console.error(`AJAX error on ${actionName}:`, error);
+            }
         });
     }
+
+    function openModal(target) {
+        $(`.overlay[data-target="${target}"]`)
+            .removeClass('d-none')
+            .trigger('focus');
+    }
+
+    function closeModal(target) {
+        $(`.overlay[data-target="${target}"]`)
+            .addClass('d-none');
+    }
+
+    function executeCombatAction(actionName, onSuccess) {
+        ajaxAction(
+            actionName,
+            {
+                itCode: initTrackerId
+            },
+            response => {
+                refreshCombatants(response.data.panel);
+
+                if (onSuccess) {
+                    onSuccess(response.data);
+                }
+            }
+        );
+    }
+
+    function getModal(target) {
+        return $(`.overlay[data-target="${target}"]`);
+    }
+
+    function openConditionModal(combatant, condition, label) {
+        $('#condition-label').text(label);
+        $('#target-label').text(combatant.name);
+
+        const $modal = getModal('edit-conditions');
+
+        $modal.data('condition', condition);
+        $modal.data('combatant-id', combatant.id);
+
+        $('#condition-rounds-input').val(1);
+        $('#condition-duration').text('1 round');
+
+        openModal('edit-conditions');
+    }
+
+    function addCondition(rounds = null) {
+        const $modal = getModal('edit-conditions');
+
+        ajaxAction(
+            'addConditionToCharacter',
+            {
+                character: {
+                    id: $modal.data('combatant-id'),
+                    condition: $modal.data('condition'),
+                    rounds
+                }
+            },
+            response => {
+                refreshCombatants(response.data.panel);
+                closeModal('edit-conditions');
+            }
+        );
+    }
+
+    $(document)
+        .on('click', '.combatant .reaction', function () {
+        // Toggle reaction
+            const $button = $(this);
+            const combatant = getCombatantData(this);
+
+            ajaxAction(
+                'toggleReaction',
+                {
+                    character: {
+                        id: combatant.id,
+                        reactionAvailable: $button.hasClass('disabled') ? 1 : 0
+                    }
+                },
+                () => {
+                    $button.toggleClass('active disabled');
+                }
+            );
+        })
+        .on('click', '.combatant .ready', function () {
+        // Toggle ready
+            const $button = $(this);
+            const combatant = getCombatantData(this);
+
+            ajaxAction(
+                'toggleReady',
+                {
+                    character: {
+                        id: combatant.id,
+                        readyActive: $button.hasClass('disabled') ? 1 : 0
+                    }
+                },
+                () => {
+                    $button.toggleClass('active disabled');
+                }
+            );
+        })
+        .on('click', '.combatant .bench', function () {
+        // Retirer un combattant du combat
+            const combatant = getCombatantData(this);
+
+            ajaxAction(
+                'rmvInitCharToCombat',
+                {
+                    combatantId: combatant.id
+                },
+                response => {
+                    refreshCombatants(response.data.panel);
+
+                    if (response.data.aside !== null) {
+                        $(`.character-list > #character-${combatant.id}`).remove();
+                        $('.character-list > .edit-section')
+                            .before(response.data.aside);
+                    }
+                }
+            );
+        })
+        .on('click', '.combatant .edit-button', function () {
+            const combatant = getCombatantData(this);
+            const maxHp = combatant.$combatant.find('.max-hp').text().trim();
+
+            const $modal = getModal('edit-maxHp-monster');
+
+            $modal.find('.input-field').val(maxHp);
+            $modal.data('combatant-id', combatant.id);
+
+            openModal('edit-maxHp-monster');
+        })
+        .on('click', '[data-target="edit-maxHp-monster"]', function (event) {
+            if (event.target === this) {
+                closeModal('edit-maxHp-monster');
+            }
+        })
+        .on('click', '[data-target="edit-maxHp-monster"] .panel-header > button', function () {
+            closeModal('edit-maxHp-monster');
+        })
+        .on('click', '[data-target="edit-maxHp-monster"] .confirm-button', function () {
+        // Validation
+            const $modal = $(this).closest('[data-target="edit-maxHp-monster"]');
+            const maxHp = Number($modal.find('.input-field').val());
+
+            if (!Number.isInteger(maxHp) || maxHp < 1) {
+                $modal.find('.input-field').trigger('focus');
+                return;
+            }
+
+            const combatantId = $modal.data('combatant-id');
+
+            ajaxAction(
+                'updateInitChar',
+                {
+                    character: {
+                        id: combatantId,
+                        maxHp: maxHp
+                    }
+                },
+                response => {
+                    refreshCombatants(response.data.panel);
+                    closeModal('edit-maxHp-monster');
+                }
+            );
+        })
+        .on('click', '.add-state', function (e) {
+        // Gestion des conditions
+            e.stopPropagation();
+            const $menu = $(this).next('.state-menu');
+            // Fermeture des autres menus
+            $('.state-menu').not($menu).addClass('d-none');
+            // Toggle du menu courant
+            $menu.toggleClass('d-none');
+        })
+        .on('click', '.state-menu', function (e) {
+            e.stopPropagation();
+        })
+        .on('click', '.state-menu button', function () {
+            openConditionModal(
+                getCombatantData(this),
+                $(this).data('condition'),
+                $(this).text().trim()
+            );
+        })
+        .on('click', '.close-condition-modal', function () {
+            closeModal('edit-conditions');
+        })
+        .on('click', '.overlay', function () {
+            closeModal($(this).data('target'));
+        })
+        .on('click', '.overlay > *', function (e) {
+            e.stopPropagation();
+        })
+        .on('click', function () {
+            $('.state-menu').addClass('d-none');
+        })
+        .on('click', '#condition-submit', function () {
+            addCondition($('#condition-rounds-input').val());
+        })
+        .on('click', '#condition-no-limit', function () {
+            addCondition(null);
+        });
+
+    $(document).on('input', '#condition-rounds-input', function () {
+        const rounds = parseInt($(this).val(), 10) || 1;
+
+        $('#condition-duration').text(
+            rounds === 1
+                ? '1 round'
+                : `${rounds} rounds`
+        );
+    });
+
 
     // Tour suivant
     $(".next-turn").on("click", function () {
@@ -69,260 +295,61 @@ export function initMainContent() {
     });
 
     // Changement de l'initiative
-    $(".initiative-main").on(
-        "change",
-        ".combatant .initiative > input",
-        function () {
-            const $combatant = $(this).closest(".combatant");
-            const combatantId = $combatant.attr("id").replace("combatant-", "");
-            const initiative = Number($(this).val());
+    $(".initiative-main").on("change", ".combatant .initiative > input", function () {
+        const combatant = getCombatantData(this);
+        const initiative = Number($(this).val());
 
-            if ($(this).val() === "" || !Number.isFinite(initiative)) {
-                return;
-            }
-
-            $.ajax({
-                url: ajaxUrl,
-                method: "POST",
-                dataType: "json",
-                data: {
-                    action: "dealWithAjax",
-                    ajaxAction: "updateInitChar",
-                    character: {
-                        id: combatantId,
-                        initiative: initiative
-                    }
-                },
-                success: function (response) {
-                    if (!response || response.success !== true) {
-                        console.error(
-                            "Échec de la mise à jour de l'initiative :",
-                            response
-                        );
-                        return;
-                    }
-
-                    $(".initiative-main-content .combatant").remove();
-                    $(".initiative-main-content").append(response.data.panel);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Erreur Ajax :", status, error);
-                },
-            });
+        if ($(this).val() === "" || !Number.isFinite(initiative)) {
+            return;
         }
-    );
+
+        ajaxAction(
+            'updateInitChar',
+            {
+                character: {
+                    id: combatant.id,
+                    initiative
+                }
+            },
+            response => {
+                refreshCombatants(response.data.panel);
+            }
+        );
+    });
 
     // Ajout, suppression points de vie (temporaires)
     $(".initiative-main-content").on("click", ".combatant .damage, .combatant .heal, .combatant .thp", function () {
-        const $combatant = $(this).closest(".combatant");
-        const combatantId = $combatant.attr("id").replace("combatant-", "");
-        const number = $combatant.find(".hit-points-edit input[type='number']").val();
-        let ajaxAction = '';
+        const combatant = getCombatantData(this);
+        const number = combatant.$combatant
+            .find(".hit-points-edit input[type='number']")
+            .val();
+        let actionName = '';
 
         if ($(this).hasClass("damage")) {
-            ajaxAction = "dealDamage";
+            actionName = "dealDamage";
         } else if ($(this).hasClass("heal")) {
-            ajaxAction = "heal";
+            actionName = "heal";
         } else {
-            ajaxAction = "setTempHP";
+            actionName = "setTempHP";
         }
 
         if (number === "" || !Number.isFinite(Number(number)) || Number(number) < 1) {
             return;
         }
 
-        $.ajax({
-            url: ajaxUrl,
-            method: "POST",
-            dataType: "json",
-            data: {
-                action: "dealWithAjax",
-                ajaxAction: ajaxAction,
-                combatantId: combatantId,
-                amount: Number(number),
+        ajaxAction(
+            actionName,
+            {
+                combatantId: combatant.id,
+                amount: Number(number)
             },
-            success: function (response) {
-                if (!response || response.success !== true) {
-                    console.error(
-                        "Échec de la mise à jour du combattant :",
-                        response
-                    );
-                    return;
-                }
-                $("#combatant-"+combatantId).replaceWith(response.data.panel);
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur Ajax :", status, error);
-            },
-        });
-    });
-
-    // Toggle reaction
-    $(document).on('click', '.combatant .reaction', function () {
-        const $button = $(this);
-        const $combatant = $button.closest('.combatant');
-        const combatantId = $combatant.attr('id').replace('combatant-', '');
-        const isDisabled = $button.hasClass('disabled');
-
-        $.ajax({
-            url: ajaxUrl,
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'dealWithAjax',
-                ajaxAction: 'toggleReaction',
-                character: {
-                    id: combatantId,
-                    reactionAvailable: isDisabled ? 1 : 0
-                }
-            },
-            success: function (response) {
-                if (!response.success) {
-                    console.error('Impossible de modifier la réaction.', response);
-                    return;
-                }
-
-                $button.toggleClass('active, disabled');
-            },
-            error: function (xhr, status, error) {
-                console.error('Erreur Ajax lors de la modification de la réaction :', error);
+            response => {
+                $(`#combatant-${combatant.id}`)
+                    .replaceWith(response.data.panel);
             }
-        });
+        );
     });
 
-    // Toggle ready
-    $(document).on('click', '.combatant .ready', function () {
-        const $button = $(this);
-        const $combatant = $button.closest('.combatant');
-        const combatantId = $combatant.attr('id').replace('combatant-', '');
-        const isDisabled = $button.hasClass('disabled');
 
-        $.ajax({
-            url: ajaxUrl,
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'dealWithAjax',
-                ajaxAction: 'toggleReady',
-                character: {
-                    id: combatantId,
-                    readyActive: isDisabled ? 1 : 0
-                }
-            },
-            success: function (response) {
-                if (!response.success) {
-                    console.error('Impossible de modifier l\'intention.', response);
-                    return;
-                }
 
-                $button.toggleClass('active, disabled');
-            },
-            error: function (xhr, status, error) {
-                console.error('Erreur Ajax lors de la modification de la réaction :', error);
-            }
-        });
-    });
-
-    // Retirer un combattant du combat
-    $(document).on('click', '.combatant .bench', function () {
-        const $combatant = $(this).closest('.combatant');
-        const combatantId = $combatant.attr('id').replace('combatant-', '');
-
-        $.ajax({
-            url: ajaxUrl,
-            method: "POST",
-            dataType: "json",
-            data: {
-                action: "dealWithAjax",
-                ajaxAction: 'rmvInitCharToCombat',
-                combatantId: combatantId,
-            },
-            success: function (response) {
-                if (!response || response.success !== true) {
-                    console.error(
-                        "Échec de la mise à jour du combattant :",
-                        response
-                    );
-                    return;
-                }
-                $(".initiative-main-content .combatant").remove();
-                $(".initiative-main-content").append(response.data.panel);
-                if (response.data.aside !== null) {
-                    $(".character-list > #character-"+combatantId).remove();
-                    $('.character-list > .edit-section').before(response.data.aside);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur Ajax :", status, error);
-            },
-        });
-    });
-
-    // Editer le nombre maximal de points de vie d'un monstre.
-
-    // Ouverture de la modale
-    $(document).on('click', '.combatant .edit-button', function () {
-        const $combatant = $(this).closest('.combatant');
-        const combatantId = $combatant.attr('id').replace('combatant-', '');
-        const maxHp = $combatant.find('.max-hp').text().trim();
-
-        const $modal = $('[data-target="edit-maxHp-monster"]');
-
-        $modal.find('.input-field').val(maxHp);
-        $modal.data('combatant-id', combatantId);
-
-        $modal.removeClass('d-none').trigger('focus');
-    });
-
-    // Fermeture par clic sur l'overlay
-    $(document).on('click', '[data-target="edit-maxHp-monster"]', function (event) {
-        if (event.target === this) {
-            $(this).addClass('d-none');
-        }
-    });
-
-    // Fermeture par bouton Close
-    $(document).on('click', '[data-target="edit-maxHp-monster"] .panel-header > button', function () {
-        $(this).closest('[data-target="edit-maxHp-monster"]').addClass('d-none');
-    });
-
-    // Validation
-    $(document).on('click', '[data-target="edit-maxHp-monster"] .confirm-button', function () {
-        const $modal = $(this).closest('[data-target="edit-maxHp-monster"]');
-        const combatantId = $modal.data('combatant-id');
-        const maxHp = Number($modal.find('.input-field').val());
-
-        if (!Number.isInteger(maxHp) || maxHp < 1) {
-            $modal.find('.input-field').trigger('focus');
-            return;
-        }
-
-        $.ajax({
-            url: ajaxUrl,
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'dealWithAjax',
-                ajaxAction: 'updateInitChar',
-                character: {
-                    id: combatantId,
-                    maxHp: maxHp
-                }
-            },
-            success: function (response) {
-                if (!response.success) {
-                    console.error('Unable to update max HP.', response);
-                    return;
-                }
-
-                $(".initiative-main-content .combatant").remove();
-                $(".initiative-main-content").append(response.data.panel);
-
-                $modal.addClass('d-none');
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX error while updating max HP:', error);
-            }
-        });
-    });    
 }

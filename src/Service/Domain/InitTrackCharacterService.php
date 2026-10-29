@@ -67,12 +67,37 @@ final class InitTrackCharacterService
                 $libelleType,
                 $isPlayer ? B::DNONE : '',
                 'Image représentant ' . $characterName,
-                '',//https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/71/1000/1000/636252733510786769.jpeg
+                'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/71/1000/1000/636252733510786769.jpeg',
                 $characterName,
                 $initiative,
                 $classeArmure,
+                $this->getStatus($character),
+                $this->getConditions($character),
             ]
         );
+    }
+
+    private function getConditions(ITCharacter $character): string
+    {
+        return '
+            <div class="badge concentrating"><span>Concentré</span> <button class="info-tooltip" title="Concentré ?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+            <div class="badge deafened"><span>Assourdi</span> <button class="info-tooltip" title="Assourdi ?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
+        ';
+    }
+
+    private function getStatus(ITCharacter $character): string
+    {
+        $status = '';
+        if ($character->curHp < $character->maxHp / 2) {
+            $status .= '<div class="badge bloodied"><i aria-hidden="true" class="fa-solid fa-droplet"></i> <span>En péril</span></div>';
+        }
+        if (true || $character->readyActive === 1) {
+            $status .= '<div class="badge readied"><i aria-hidden="true" class="fa-solid fa-stopwatch"></i> <span>Prêt</span></div>';
+        }
+        if (true) {
+            $status .= '<div class="badge surprised"><i aria-hidden="true" class="fa-solid fa-triangle-exclamation"></i> <span>Surpris</span></div>';
+        }
+        return $status;
     }
 
     public function displayQueuedCharacters(Collection $queuedCharacters): string

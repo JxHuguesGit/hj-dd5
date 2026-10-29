@@ -34,6 +34,7 @@
             <div class="initiative-main-content">
                 %8$s
                 <p>Add players and enemies, then enter initiative rolls to begin.</p>
+
                 <div role="dialog" aria-modal="true" aria-label="Edit max HP"
                     class="d-none overlay" tabindex="-1" data-target="edit-maxHp-monster">
                     <div class="edit-maxHp-monster">
@@ -52,6 +53,30 @@
                         </div>
                         <div class="panel-footer">
                             <button class="confirm-button">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div role="presentation" class="d-none overlay" data-target="edit-conditions">
+                    <div class="edit-condition">
+                        <div class="edit-condition-header">
+                            <i class="fa-solid fa-stopwatch" aria-hidden="true"></i>
+                            <span class="edit-condition-header-title">Ajouter un Etat</span>
+                        </div>
+                        <div class="edit-condition-body">
+                            <p class="edit-condition-description">Ajouter <span class="condition-name" id="condition-label">Grappled</span> à <span class="target-name" title="Animated Armor 1" data-clip-auto="" id="target-label">Animated Armor 1</span></p>
+                            <p class="edit-condition-help">Combien de temps cet état doit-il durer ?</p>
+                            <div class="duration-container">
+                                <label for="condition-rounds-input" class="duration-label">Rounds</label>
+                                <input id="condition-rounds-input" type="number" min="1" max="99" class="condition-rounds-input">
+                            </div>
+                        </div>
+                        <div class="edit-condition-footer">
+                            <button id="condition-submit" class="condition-btn-add">Ajouter (<span id="condition-duration">1 round</span>)</button>
+                            <button id="condition-no-limit" class="condition-btn-unlimited">Aucune limite</button>
+                            <button aria-label="Annuler" class="close-condition-modal">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,11 @@
+// Pour analyser les scss : npx stylelint "assets/styles/scss/*.scss"
+// Pour compiler les scss :
+// ouvrir un powershell
+// cd .\assets\styles\scss\
+// sass --watch --verbose .\builder-wiki.scss:.\..\wiki.css
+@use "variables";
+@use "base/reset";
+@use "base/global";
+@use "wiki/base";
+@use "wiki/header";
+@use "wiki/footer";

@@ -1,3 +1,5 @@
+<link rel="stylesheet" media="all" href="https://dd5.jhugues.fr/wp-content/plugins/hj-dd5/assets/styles/draft.css">
+
 <div id="main-content" tabindex="-1" class="playerView %1$s">
     <div class="glow-container">
         <div class="orb orb-1"></div>

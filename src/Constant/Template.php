@@ -128,17 +128,17 @@ final class Template
     public const GLOSSAIRE_PAGE       = self::PUBLIC_PATH.'glossaire.tpl';
     public const INITIATIVE_PAGE      = self::PUBLIC_PATH.'initiative.tpl';
 
-    public const IT_PATH              = self::TEMPLATE_PATH . 'initiativeTracker/';
-    public const ADMIN_IT_HEADER      = self::IT_PATH . 'ITHeader.tpl';
-    public const ADMIN_IT_PARTY_ASIDE = self::IT_PATH . 'ITPartyAside.tpl';
-    public const ADMIN_IT_PARTY_MEMBER = self::IT_PATH . 'ITPartyMember.tpl';
-    public const ADMIN_IT_ENNEMY_ASIDE = self::IT_PATH . 'ITEnnemyAside.tpl';
-    public const ADMIN_IT_ENNEMY_MEMBER = self::IT_PATH . 'ITEnnemyMember.tpl';
-    public const ADMIN_IT_HEADER_PANEL = self::IT_PATH . 'ITMainPanelHeader.tpl';
-    public const ADMIN_IT_CONTENT_PANEL = self::IT_PATH . 'ITMainPanelContent.tpl';
-    public const PUBLIC_JOIN_LOGIN      = self::IT_PATH . 'ITJoinLogin.tpl';
+    public const IT_PATH                = self::TEMPLATE_PATH . 'initiativeTracker/';
+    public const ADMIN_IT_HEADER        = self::IT_PATH . 'ITAdminHeader.tpl';
+    public const ADMIN_IT_PARTY_ASIDE   = self::IT_PATH . 'ITAdminAsideParty.tpl';
+    public const ADMIN_IT_ENNEMY_ASIDE  = self::IT_PATH . 'ITAdminAsideEnnemies.tpl';
+    public const ADMIN_IT_PARTY_MEMBER  = self::IT_PATH . 'ITAdminAsidePartyMember.tpl';
+    public const ADMIN_IT_ENNEMY_MEMBER = self::IT_PATH . 'ITAdminAsideEnnemy.tpl';
+    public const ADMIN_IT_HEADER_PANEL  = self::IT_PATH . 'ITAdminMainHeaderPanel.tpl';
+    public const ADMIN_IT_CONTENT_PANEL = self::IT_PATH . 'ITAdminMainCombatantPanel.tpl';
     public const PUBLIC_PLAYER_VIEW     = self::IT_PATH . 'ITPlayerView.tpl';
-    public const PUBLIC_FRONT_ITCHAR    = self::IT_PATH . 'ITFrontCharacter.tpl';
-    public const PUBLIC_QUEUED_ITCHAR   = self::IT_PATH . 'ITFooterCharacter.tpl';
-    public const PUBLIC_QUEUED_NEWROUND = self::IT_PATH . 'ITQueuedNewRound.tpl';
+    public const PUBLIC_JOIN_LOGIN      = self::IT_PATH . 'ITPlayerViewJoinLogin.tpl';
+    public const PUBLIC_FRONT_ITCHAR    = self::IT_PATH . 'ITPlayerViewFrontCharacter.tpl';
+    public const PUBLIC_QUEUED_ITCHAR   = self::IT_PATH . 'ITPlayerViewQueuedCharacter.tpl';
+    public const PUBLIC_QUEUED_NEWROUND = self::IT_PATH . 'ITPlayerViewQueuedNewRound.tpl';
 }

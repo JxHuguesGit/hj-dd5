@@ -113,38 +113,38 @@
         <div class="state default"><button class="state-label" title="Remove Bestow Curse">Bestow Curse <span>(1)</span></button> <button class="state-info" title="What is Bestow Curse?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
         <div class="state default"><button class="state-label" title="Remove Test">Test <span>(1)</span></button> <button class="state-info" title="What is Test?"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button></div>
     -->
-        <button class="add-state d-none"><i class="fa-solid fa-plus" aria-hidden="true"></i> Etat / Effet d'un sort</button>
+        <button class="add-state"><i class="fa-solid fa-plus" aria-hidden="true"></i> Etat / Effet d'un sort</button>
         <div class="state-menu d-none">
             <div class="grid-states">
-                <button class="blinded selected">Blinded</button>
-                <button class="">Charmed</button>
-                <button class="">Concentrating</button>
-                <button class="">Deafened</button>
-                <button class="">Exhausted</button>
-                <button class="">Frightened</button>
-                <button class="">Grappled</button>
-                <button class="incapacitated selected">Incapacitated</button>
-                <button class="">Invisible</button>
-                <button class="">Paralyzed</button>
-                <button class="">Petrified</button>
-                <button class="">Poisoned</button>
-                <button class="">Prone</button>
-                <button class="">Restrained</button>
-                <button class="">Stunned</button>
+                <button class="prone" data-condition="prone">À terre</button>
+                <button class="grappled" data-condition="grappled">Agrippé</button>
+                <button class="deafened" data-condition="deafened">Assourdi</button>
+                <button class="blinded selected" data-condition="blinded">Aveuglé</button>
+                <button class="charmed" data-condition="charmed">Charmé</button>
+                <button class="concentrating" data-condition="concentrating">Concentré</button>
+                <button class="frightened" data-condition="frightened">Effrayé</button>
+                <button class="poisoned" data-condition="poisoned">Empoisonné</button>
+                <button class="restrained" data-condition="restrained">Entravé</button>
+                <button class="exhausted" data-condition="exhausted">Épuisement</button>
+                <button class="stunned" data-condition="stunned">Étourdi</button>
+                <button class="nonvisible" data-condition="nonvisible">Invisible</button>
+                <button class="incapacitated selected" data-condition="incapacitated">Neutralisé</button>
+                <button class="paralyzed" data-condition="paralyzed">Paralysé</button>
+                <button class="petrified" data-condition="petrified">Pétrifié</button>
             </div>
-            <div class="grid-title">
+            <div class="grid-title d-none">
                 <span class="text-[10px] font-semibold tracking-wider text-gray-600 uppercase svelte-1j4i4ba">Adv / Disadv</span>
             </div>
-            <div class="grid-states-single">
+            <div class="grid-states-single d-none">
                 <button class="rounded px-2 py-1 text-left text-xs transition text-gray-400 hover:bg-gray-800 hover:text-white svelte-1j4i4ba">Advantage For</button>
                 <button class="rounded px-2 py-1 text-left text-xs transition text-gray-400 hover:bg-gray-800 hover:text-white svelte-1j4i4ba">Advantage Against</button>
                 <button class="rounded px-2 py-1 text-left text-xs transition text-gray-400 hover:bg-gray-800 hover:text-white svelte-1j4i4ba">Disadvantage For</button>
                 <button class="rounded px-2 py-1 text-left text-xs transition text-gray-400 hover:bg-gray-800 hover:text-white svelte-1j4i4ba">Disadvantage Against</button>
             </div>
-            <div class="grid-title">
+            <div class="grid-title d-none">
                 <span class="text-[10px] font-semibold tracking-wider text-gray-600 uppercase svelte-1j4i4ba">Spell Effects</span>
             </div>
-            <div class="grid-states">
+            <div class="grid-states d-none">
                 <button class="">Aid</button>
                 <button class="">Bane</button>
                 <button class="">Barkskin</button>
@@ -170,10 +170,10 @@
                 <button class="">Stoneskin</button>
                 <button class="">Warding Bond</button>
             </div>
-            <div class="grid-title">
+            <div class="grid-title d-none">
                 <span class="text-[10px] font-semibold tracking-wider text-gray-600 uppercase svelte-1j4i4ba">Custom</span>
             </div>
-            <div class="grid-states-single">
+            <div class="grid-states-single d-none">
                 <input type="text" placeholder="Other spell / effect…" maxlength="50" class="state-input" id="spell-effect-input-fe276f6f-b670-4699-9fee-1c67838f78ee">
                 <button class="state-input-button">Add</button>
             </div>

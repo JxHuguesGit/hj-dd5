@@ -1,131 +1,123 @@
 @mixin state-colors {
-    &.advfor {
-        background-color: oklch(0.508 0.118 165.612);
-        color: oklch(0.95 0.052 163.051);
-    }
-
     &.advagainst {
         background-color: oklch(0.455 0.188 13.697);
         color: oklch(0.892 0.058 10.001);
     }
-
-    &.disadvfor {
-        background-color: oklch(0.47 0.157 37.304);
-        color: oklch(0.901 0.076 70.697);
+    &.advfor {
+        background-color: oklch(0.508 0.118 165.612);
+        color: oklch(0.95 0.052 163.051);
     }
-
-    &.disadvagainst {
-        background-color: oklch(0.511 0.096 186.391);
-        color: oklch(0.953 0.051 180.801);
+    &.agonizing {
+        background-color: oklch(0.500 0.170 35);
+        color: oklch(0.900 0.090 30);
     }
-
     &.blinded {
         background-color: oklch(0.446 0.03 256.802);
         color: oklch(0.928 0.006 264.531);
     }
-
+    &.bloodied {
+        background-color: oklab(0.258 0.0826595 0.0403908 / 60%);
+        border-color: oklab(0.505 0.188902 0.0984118 / 60%);
+        color: oklch(0.704 0.191 22.216);
+    }
     &.charmed {
         background-color: oklch(0.459 0.187 3.815);
         color: oklch(0.899 0.061 343.231);
     }
-
     &.concentrating {
         background-color: oklch(0.45 0.085 224.283);
         color: oklch(0.917 0.08 205.041);
     }
-
+    &.critical {
+        background-color: oklch(0.590 0.180 55);
+        color: oklch(0.950 0.060 55);
+    }
     &.deafened {
         background-color: oklch(0.476 0.114 61.907);
         color: oklch(0.945 0.129 101.54);
     }
-
+    &.disadvagainst {
+        background-color: oklch(0.511 0.096 186.391);
+        color: oklch(0.953 0.051 180.801);
+    }
+    &.disadvfor {
+        background-color: oklch(0.47 0.157 37.304);
+        color: oklch(0.901 0.076 70.697);
+    }
+    &.dying {
+        background-color: oklch(0.396 0.141 25.723);
+        color: oklch(0.808 0.114 19.571);
+    }
+    &.exhausted {
+        background-color: oklch(0.408 0.123 38.172);
+        border-color: oklch(0.901 0.076 70.697);
+        color: oklch(0.901 0.076 70.697);
+    }
     &.frightened {
         background-color: oklch(0.438 0.218 303.724);
         color: oklch(0.902 0.063 306.703);
     }
-
-    &.incapacitated {
-        background-color: oklch(0.444 0.177 26.899);
-        color: oklch(0.885 0.062 18.334);
+    &.fullHealth {
+        background-color: oklch(0.627 0.194 149.214);
+        color: oklch(0.95 0.052 163.051);
     }
-
-    &.paralyzed {
-        background-color: oklch(0.396 0.141 25.723);
-        color: oklch(0.808 0.114 19.571);
-    }
-
-    &.petrified {
-        background-color: oklch(0.374 0.01 67.558);
-        color: oklch(0.923 0.003 48.717);
-    }
-
-    &.poisoned {
-        background-color: oklch(0.448 0.119 151.328);
-        color: oklch(0.925 0.084 155.995);
-    }
-
-    &.prone {
-        background-color: oklch(0.421 0.095 57.708);
-        color: oklch(0.905 0.182 98.111);
-    }
-
-    &.restrained {
-        background-color: oklch(0.473 0.137 46.201);
-        color: oklch(0.924 0.12 95.746);
-    }
-
-    &.stunned {
-        background-color: oklch(0.554 0.135 66.442);
-        color: oklch(0.973 0.071 103.193);
-    }
-
     &.grappled {
         background-color: oklch(0.553 0.195 38.402);
         color: oklch(0.954 0.038 75.164);
     }
-
+    &.grazed {
+        background-color: oklch(0.640 0.170 120);
+        color: oklch(0.96 0.040 120);
+    }
+    &.incapacitated {
+        background-color: oklch(0.444 0.177 26.899);
+        color: oklch(0.885 0.062 18.334);
+    }
+    &.injured {
+        background-color: oklch(0.670 0.160 95);
+        color: oklch(0.97 0.035 95);
+    }
     &.nonvisible {
         background-color: oklch(0.424 0.199 265.638);
         color: oklch(0.882 0.059 254.128);
+    }
+    &.paralyzed {
+        background-color: oklch(0.396 0.141 25.723);
+        color: oklch(0.808 0.114 19.571);
+    }
+    &.petrified {
+        background-color: oklch(0.374 0.01 67.558);
+        color: oklch(0.923 0.003 48.717);
+    }
+    &.poisoned {
+        background-color: oklch(0.448 0.119 151.328);
+        color: oklch(0.925 0.084 155.995);
+    }
+    &.prone {
+        background-color: oklch(0.421 0.095 57.708);
+        color: oklch(0.905 0.182 98.111);
+    }
+    &.readied {
+        background-color: oklab(0.283 0.0507342 -0.131556 / 60%);
+        border-color: oklab(0.491 0.103677 -0.249301 / 60%);
+        color: oklch(0.811 0.111 293.571);
+    }
+    &.restrained {
+        background-color: oklch(0.473 0.137 46.201);
+        color: oklch(0.924 0.12 95.746);
+    }
+    &.stunned {
+        background-color: oklch(0.554 0.135 66.442);
+        color: oklch(0.973 0.071 103.193);
+    }
+    &.surprised {
+        background-color: oklab(0.284 0.108747 0.00742695 / 60%);
+        border-color: oklab(0.525 0.222468 0.0153926 / 60%);
+        color: oklch(0.823 0.12 346.018);
     }
 
     &.default {
         background-color: oklab(0.401 0.140289 -0.096015 / 0.6);
         color: oklch(0.903 0.076 319.62);
-    }
-
-    &.fullHealth {
-        background-color: oklch(0.627 0.194 149.214);
-        color: oklch(0.95 0.052 163.051);
-    }
-
-    &.grazed {
-        background-color: oklch(0.640 0.170 120);
-        color: oklch(0.96 0.040 120);
-    }
-
-    &.injured {
-        background-color: oklch(0.670 0.160 95);
-        color: oklch(0.97 0.035 95);
-    }
-
-    &.bloodied {
-        background-color: oklch(0.720 0.160 85);
-        color: oklch(0.300 0.040 85);
-    }
-
-    &.critical {
-        background-color: oklch(0.590 0.180 55);
-        color: oklch(0.950 0.060 55);
-    }
-
-    &.agonizing {
-        background-color: oklch(0.500 0.170 35);
-        color: oklch(0.900 0.090 30);
-    }
-
-    &.dying {
-        background-color: oklch(0.396 0.141 25.723);
-        color: oklch(0.808 0.114 19.571);
     }
 }

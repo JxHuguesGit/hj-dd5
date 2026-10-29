@@ -7,7 +7,6 @@
         <div></div>
     </div>
 </div>
-<!-- / -->
 
 <!-- Listing des membres du groupe -->
 <div class="aside-content">
@@ -44,7 +43,6 @@
         </div>
     </div>
 </div>
-<!-- / -->
 
 <!-- Popup d'ajout d'un personnage -->
 <div role="dialog" aria-modal="true" aria-label="Ajouter un Personnage"
@@ -89,7 +87,7 @@
         </div>
     </div>
 </div>
-<!-- / -->
+
 
 <!-- Popup montée de niveau du groupe -->
 <div role="dialog" aria-modal="true" aria-label="Monter de niveau"
@@ -147,4 +145,4 @@
         </div>
     </div>
 </div>
-<!-- / -->
+
