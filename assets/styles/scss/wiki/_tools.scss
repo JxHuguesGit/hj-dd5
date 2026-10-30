@@ -1,9 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .tool-card {
 
@@ -26,10 +22,6 @@
         }
     }    
 }
-
-/* =============================
-   DETAIL
-   ============================= */
 
 .tool-detail-description {
     margin: 0 0 1.5rem;
@@ -98,11 +90,7 @@
     }
 }
 
-/* =============================
-   TABLET
-   ============================= */
-
-@media (min-width: $breakpoint-tablet) {
+@media (width >= $breakpoint-tablet) {
     .tool-detail-infos {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }

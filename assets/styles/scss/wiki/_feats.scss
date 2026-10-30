@@ -1,15 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
-
-// Rien de spécifique
-
-/* =============================
-   ORIGINS
-   ============================= */
 
 .feat-origins {
     @include badge-list;

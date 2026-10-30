@@ -1,18 +1,11 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
 
-/* =============================
-   LISTING
-   ============================= */
 .armor-card {
     p {
         @include card-info;
     }
 }
-
-/* =============================
-   DETAIL
-   ============================= */
 
 .armor-detail-infos {
     @include detail-info;
@@ -29,7 +22,7 @@
     }
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media (width >= $breakpoint-tablet) {
     .armor-detail-infos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

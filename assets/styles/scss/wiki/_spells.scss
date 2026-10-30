@@ -1,9 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .spell-list {
     gap: 0;
@@ -33,10 +29,6 @@
     }
 }
 
-/* =============================
-   LOAD MORE
-   ============================= */
-
 .spell-load-more {
     display: flex;
     justify-content: center;
@@ -65,10 +57,6 @@
         }
     }
 }
-
- /* =============================
-    FILTER
-    ============================= */
 
 .spell-filter {
     display: flex;

@@ -3,7 +3,7 @@
 // ouvrir un powershell
 // cd .\assets\styles\scss\
 // sass --watch --verbose .\builder-wiki.scss:.\..\wiki.css
-@use "variables";
+@use "base/variables";
 @use "base/reset";
 @use "base/global";
 @use "wiki/base";

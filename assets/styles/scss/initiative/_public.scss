@@ -1,8 +1,5 @@
-@use "../variables" as *;
+@use "../base/variables" as *;
 
-/* =========================
-   LAYOUT
-   ========================= */
 #main-content {
     display: flex;
     flex-direction: column;
@@ -18,10 +15,8 @@
 
     .initiative-header {
         width: 100%;
+        position: relative;
 
-        /* =========================
-           COMBAT ROUND
-        ========================= */
         .round-container {
             display: none;
             align-items: center;
@@ -80,9 +75,7 @@
         }
 
     }
-    /* =========================
-       COMBAT STARTED
-       ========================= */
+
     &.combatStarted {
         .waiting-panel-container {
             display: none;
@@ -94,9 +87,6 @@
             display: flex;
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
         .initiative-footer {
             display: block;
         }
@@ -216,9 +206,7 @@
 
     }
 }
-/* =========================
-   WAITING PANEL
-   ========================= */
+
 .waiting-panel-container {
     position: relative;
     z-index: 10;
@@ -258,9 +246,7 @@
         }
     }
 }
-/* =========================
-   FIGHTING PANEL
-   ========================= */
+
 .fighting-panel-container {
     position: relative;
     z-index: 10;
@@ -269,14 +255,17 @@
     flex-direction: column;
     width: 100%;
     overflow: hidden;
+    min-height: 0;
 
     main {
         display: flex;
         flex: 1;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         padding: 0 48px 16px;
+        min-height: 0;
+        overflow: auto;
+        justify-content: flex-start !important;
 
         &.player {
             .section-title {
@@ -296,9 +285,123 @@
             text-shadow: 0 0 40px rgb(248 113 113 / 40%);
         }
 
-        /* =========================
-           STATS
-        ========================= */
+        .bloc-status {
+            color: #fff;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            line-height: 24px;
+            margin: 0 0 12px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            .badge {
+                padding: 4px 16px;
+                color: #fff;
+                border: 0.8px solid transparent;
+                border-radius: 9999px;
+                font-family: ui-sans-serif, system-ui, sans-serif;
+                line-height: 24px;
+                flex-direction: 0 0 auto;
+                text-transform: uppercase;
+
+                &.bloodied {
+                    background-color: oklab(0.258 0.0826595 0.0403908 / 60%);
+                    border-color: oklab(0.505 0.188902 0.0984118 / 60%);
+                    color: oklch(0.704 0.191 22.216);
+                }
+                &.readied {
+                    background-color: oklab(0.283 0.0507342 -0.131556 / 60%);
+                    border-color: oklab(0.491 0.103677 -0.249301 / 60%);
+                    color: oklch(0.811 0.111 293.571);
+                }
+                &.surprised {
+                    background-color: oklab(0.284 0.108747 0.00742695 / 60%);
+                    border-color: oklab(0.525 0.222468 0.0153926 / 60%);
+                    color: oklch(0.823 0.12 346.018);
+                }
+
+                i {
+                    color: #fff;
+                }
+            }
+        }
+
+        .bloc-conditions {
+            color: #fff;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            line-height: 24px;
+            margin: 6px 0 12px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            .badge {
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                border-radius: 9999px;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 20px;
+                letter-spacing: 0.35px;
+
+                span {
+                    padding: 4px 8px 4px 12px;
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    padding: 4px 8px 4px 0;
+
+                    background: transparent;
+                    border: none;
+
+                    font-size: 14px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    letter-spacing: 0.35px;
+
+                    opacity: 0.5;
+                    cursor: pointer;
+
+                    transition:
+                        color 0.15s ease,
+                        opacity 0.15s ease,
+                        transform 0.15s ease;
+
+                    i {
+                        display: inline-block;
+                        width: 20px;
+                        font-size: 16px;
+                        line-height: 16px;
+                        text-align: center;
+
+                        &:hover {
+                            color: #fff;
+                        }
+                    }
+                }
+
+                &.concentrating {
+                    background-color: oklch(0.45 0.085 224.283);
+                    color: oklch(0.917 0.08 205.041);
+                }
+
+                &.deafened {
+                    background-color: oklch(0.476 0.114 61.907);
+                    color: oklch(0.945 0.129 101.54);
+                }
+            }
+
+        }
+
         .initiative-container {
             display: flex;
             align-items: center;
@@ -325,9 +428,6 @@
         }
     }
 
-    /* =========================
-       TITLE
-    ========================= */
     .title-container {
         display: flex;
         align-items: center;
@@ -366,9 +466,6 @@
         }
     }
     
-    /* =========================
-       CHARACTER
-    ========================= */
     .visual-container {
         position: relative;
 
@@ -382,7 +479,8 @@
             border-radius: 50%;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 0 48px -8px $color-header-session-label;
+            box-shadow: rgba(206, 34, 34, 0.934) 0 0 66.7466 2.46577,
+                rgba(232, 56, 56, 0.912) 0 0 0 4;
 
             img {
                 display: block;
@@ -443,9 +541,6 @@
                 gap: 12px;
                 overflow: hidden;
 
-                /* =========================
-                   FOOTER PANELS
-                ========================= */
                 .footer-panel {
                     display: flex;
                     flex: 1;
@@ -456,9 +551,6 @@
                     padding: 10px 12px;
                     border-radius: 8px;
 
-                    /* =========================
-                       PANEL TEXT
-                    ========================= */
                     .text-content {
                         flex: 1;
                         min-width: 0;
@@ -502,9 +594,6 @@
                         }
                     }
 
-                    /* =========================
-                        PANEL ICONS
-                    ========================= */
                     .icon-button {
                         display: flex;
                         align-items: center;
@@ -565,9 +654,6 @@
                     }
                 }
 
-                /* =========================
-                   ROUND CHANGE
-                ========================= */
                 .round-change {
                     display: flex;
                     align-items: center;
@@ -589,9 +675,6 @@
     }
 }
 
-/* =========================
-   ORBS
-   ========================= */
 .player {
     .orb-1 {
         background: rgba(88, 28, 135, 0.45);

@@ -1,19 +1,11 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .origin-card {
     p {
         @include card-text;
     }
 }
-
-/* =============================
-   ORIGIN DETAIL
-   ============================= */
 
 .origin-description {
 
@@ -51,11 +43,7 @@
     }
 }
 
-/* =============================
-   TABLET
-   ============================= */
-
-@media (min-width: $breakpoint-tablet) {
+@media (width >= $breakpoint-tablet) {
     .origin-properties {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));

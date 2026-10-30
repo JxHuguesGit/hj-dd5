@@ -1,3 +1,5 @@
+@use "../base/variables" as *;
+
 .secondary-content {
   position: static;
   float: none;
@@ -31,7 +33,7 @@
     min-width: 0;
 }    
 
-@media (max-width: 781px) {
+@media (width <= 781px) {
     .wp-block-columns {
         flex-direction: column;
     }

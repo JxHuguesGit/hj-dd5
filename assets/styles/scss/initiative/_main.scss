@@ -1,5 +1,4 @@
-@use "../variables" as *;
-
+@use "../base/variables" as *;
 @use "states";
 
 .initiative-body {
@@ -1174,6 +1173,164 @@
                     }
 
                 }
+
+                .edit-condition {
+                    width: 384px;
+                    max-width: 384px;
+                    margin: 0 16px;
+                    background-color: rgb(15, 20, 35);
+                    color: #fff;
+                    border: 1px solid oklab(0.491 0.103677 -0.249301 / 60%);
+                    border-radius: 12px;
+                    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
+
+                    .edit-condition-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 12px 20px;
+                        color: #fff;
+                        border-bottom: 1px solid oklab(0.38 0.076104 -0.173001 / 40%);
+
+                        i {
+                            display: block;
+                            width: 20px;
+                            color: oklch(0.702 0.183 293.541);
+                            font-size: 16px;
+                            line-height: 16px;
+                            text-align: center;
+                        }
+                        .edit-condition-header-title {
+                            color: oklch(0.811 0.111 293.571);
+                            font-size: 14px;
+                            font-weight: 700;
+                            line-height: 20px;
+                            letter-spacing: 1.4px;
+                            text-transform: uppercase;
+                        }
+                    }
+
+                    .edit-condition-body {
+                        padding: 16px 20px;
+                        color: #fff;
+
+                        .edit-condition-description {
+                            margin-bottom: 4px;
+                            color: rgb(180 189 212);
+                            font-size: 14px;
+                            line-height: 20px;
+
+                            .condition-name {
+                                color: #fff;
+                                font-weight: 700;
+                            }
+
+                            .target-name {
+                                color: oklch(0.811 0.111 293.571);
+                                font-weight: 700;
+                            }
+                        }
+
+                        .edit-condition-help {
+                            margin-bottom: 16px;
+                            color: rgb(148 155 171);
+                            font-size: 12px;
+                            line-height: 16px;
+                        }
+
+                        .duration-container {
+                            display: flex;
+                            gap: 12px;
+                            align-items: center;
+
+                            .duration-label {
+                                color: rgb(143 155 184);
+                                font-size: 12px;
+                                font-weight: 600;
+                                line-height: 16px;
+                                letter-spacing: 0.6px;
+                                text-transform: uppercase;
+                            }
+
+                            .condition-rounds-input {
+                                width: 80px;
+                                height: 36px;
+                                padding: 0 8px;
+                                background-color: rgb(24 32 54);
+                                color: oklch(0.894 0.057 293.283);
+                                border: 1px solid oklab(0.491 0.103677 -0.249301 / 60%);
+                                border-radius: 4px;
+                                font-size: 14px;
+                                font-weight: 700;
+                                line-height: 20px;
+                                text-align: center;
+
+                                &:focus {
+                                    outline: none;
+                                }
+                            }
+                        }
+
+                    }
+
+                    .edit-condition-footer {
+                        display: flex;
+                        gap: 8px;
+                        padding: 12px 20px;
+                        color: #fff;
+                        border-top: 1px solid rgb(24 32 54);
+
+                        .condition-btn-add {
+                            flex: 1;
+                            padding: 8px 0;
+                            background-color: oklab(0.432 0.0897506 -0.213937 / 60%);
+                            color: oklch(0.894 0.057 293.283);
+                            border: 0;
+                            border-radius: 4px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            line-height: 20px;
+                            transition: all 0.15s ease;
+
+                            &:hover {
+                                filter: brightness(1.1);
+                            }
+                        }
+
+                        .condition-btn-unlimited {
+                            flex: 1;
+                            padding: 8px 0;
+                            background-color: oklab(0.316861 -0.00120389 -0.0466341 / 50%);
+                            color: rgb(180 189 212);
+                            border: 0;
+                            border-radius: 4px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            line-height: 20px;
+                            transition: all 0.15s ease;
+
+                            &:hover {
+                                filter: brightness(1.1);
+                            }
+                        }
+
+                        .close-condition-modal {
+                            padding: 8px 12px;
+                            background-color: oklab(0.247606 -0.00155149 -0.0436165 / 50%);
+                            color: rgb(148 155 171);
+                            border: 0;
+                            border-radius: 4px;
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 20px;
+                            transition: all 0.15s ease;
+
+                            &:hover {
+                                filter: brightness(1.1);
+                            }
+                        }
+                    }
+                }                
             }
         }
     }

@@ -1,8 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 
-/* =============================
-   FOOTER
-   ============================= */
 .site-footer {
     margin-top: 3rem;
     padding: 2rem 0;
@@ -32,7 +29,7 @@
     font-size: .9rem;
 }
 
-@media (min-width: $breakpoint-desktop) {
+@media (width >= $breakpoint-desktop) {
     .footer-inner {
         flex-direction: row;
         justify-content: space-between;

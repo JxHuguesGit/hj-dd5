@@ -1,9 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .weapon-card {
 
@@ -34,10 +30,6 @@
     }
 }
 
-/* =============================
-   WEAPON NAVIGATION
-   ============================= */
-
 .weapon-detail-infos {
     @include detail-info;
 
@@ -57,7 +49,7 @@
     }
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media (width >= $breakpoint-tablet) {
     .weapon-detail-infos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

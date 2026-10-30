@@ -1,9 +1,6 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 
-header{
-    /* =============================
-       TOPBAR
-    ============================= */
+header {
     &.topbar {
         backdrop-filter: blur(4px);
         background: $color-topbar;
@@ -27,9 +24,6 @@ header{
         }
     }
 
-    /* =============================
-       NAV HEADER
-    ============================= */
     &.nav-header {
         backdrop-filter: blur(4px);
         background: $color-navbar;
@@ -100,9 +94,6 @@ header{
     }
 }
 
-/* =============================
-   PAGE HEADER
-   ============================= */
 .page-header {
     padding: 1.5rem 0;
 
@@ -123,10 +114,7 @@ header{
     }
 }
 
-/* =============================
-   DESKTOP
-   ============================= */
-@media (min-width: $breakpoint-desktop) {
+@media (width >= $breakpoint-desktop) {
     .page-header {
         padding: 3rem 0 2rem;
 

@@ -1,19 +1,15 @@
-@use "variables" as *;
-
-/* =============================
-   SHARED CARD MIXINS
-   ============================= */
+@use "../base/variables" as *;
 
 @mixin card-grid($desktop-columns: 3) {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
 
-    @media (min-width: $breakpoint-tablet) {
+    @media (width >= $breakpoint-tablet) {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (min-width: $breakpoint-desktop) {
+    @media (width >= $breakpoint-desktop) {
         grid-template-columns: repeat($desktop-columns, 1fr);
     }
 }
@@ -49,7 +45,7 @@
         width: 100%;
     }
 
-    @media (min-width: $breakpoint-tablet) {
+    @media (width >= $breakpoint-tablet) {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -145,11 +141,11 @@
 
     box-shadow: $shadow-detail;
 
-    @media (min-width: $breakpoint-tablet) {
+    @media (width >= $breakpoint-tablet) {
         padding: 1.5rem;
     }
 
-    @media (min-width: $breakpoint-desktop) {
+    @media (width >= $breakpoint-desktop) {
         padding: 2rem;
     }
 }
@@ -167,7 +163,7 @@
     line-height: 1.2;
     font-weight: 700;
 
-    @media (min-width: $breakpoint-tablet) {
+    @media (width >= $breakpoint-tablet) {
         font-size: 2rem;
     }
 }
@@ -224,13 +220,8 @@
     }
 }
 
-
-
-/* =============================
-   GENERIC CARD GRID
-   ============================= */
-
 .card-grid {
+
     @include card-grid(4);
 
     max-width: $card-grid-width;
@@ -238,11 +229,6 @@
 
     gap: 1.5rem;
 }
-
-
-/* =============================
-   GENERIC CARD
-   ============================= */
 
 .card {
     @include card;
@@ -281,39 +267,17 @@
 
 
 
-
-
-
-/* =============================
-   DATA LIST
-   ============================= */
-
 .data-list {
     @include data-group;
 }
-
-
-/* =============================
-   DATA GROUP TITLE
-   ============================= */
 
 .data-group-title {
     @include group-title;
 }
 
-
-/* =============================
-   DATA GRID
-   ============================= */
-
 .data-grid {
     @include card-grid(3);
 }
-
-
-/* =============================
-   DATA CARD
-   ============================= */
 
 .data-card {
     @include card;
@@ -418,10 +382,6 @@
     }
 }
 
-/* =============================
-   DATA DETAIL
-   ============================= */
-
 .data-detail {
     @include detail-panel;
 
@@ -471,10 +431,6 @@
     }
 }
 
-/* =============================
-   DATA DETAIL HEADER
-   ============================= */
-
 .data-detail-header {
     margin-bottom: 1rem;
 
@@ -493,15 +449,11 @@
     }
 }
 
-/* =============================
-   DATA DETAIL NAVIGATION
-   ============================= */
-
 .data-detail-navigation {
     @include navigation;
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media (width >= $breakpoint-tablet) {
     .data-detail-navigation.only-prev  {
         justify-content: flex-start;
     }

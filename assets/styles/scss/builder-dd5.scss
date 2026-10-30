@@ -2,18 +2,22 @@
 // Pour compiler les scss :
 // ouvrir un powershell
 // cd .\assets\styles\
-// sass --watch .\dd5-v0.1.scss .\..\dd5-v0.1.css
-@use "base";
-@use "header";
-@use "cards";
-@use "skills";
-@use "feats";
-@use "species";
-@use "origins";
-@use "spells";
-@use "items";
-@use "armors";
-@use "weapons";
-@use "tools";
-@use "gear";
-@use "footer";
+// sass --watch --verbose .\builder-dd5.scss:.\..\dd5-v0.1.css
+@use "base/variables";
+@use "base/reset";
+@use "base/global";
+@use "wiki/base";
+@use "wiki/header";
+@use "wiki/footer";
+@use "wiki/cards";
+@use "wiki/skills";
+@use "wiki/feats";
+@use "wiki/species";
+@use "wiki/origins";
+@use "wiki/spells";
+@use "wiki/items";
+@use "wiki/armors";
+@use "wiki/weapons";
+@use "wiki/tools";
+@use "wiki/gear";
+@use "wiki/glossaire";

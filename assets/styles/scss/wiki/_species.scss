@@ -1,19 +1,11 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .specie-card {
     p {
         @include card-text;
     }
 }
-
-/* =============================
-   SPECIES DETAIL
-   ============================= */
 
 .specie-properties {
     @include detail-info;
@@ -49,10 +41,6 @@
     }
 }
 
-
-/* =============================
-   ABILITIES
-   ============================= */
 
 .specie-abilities {
 
@@ -100,11 +88,6 @@
     }
 }
 
-
-/* =============================
-   ABILITY OPTIONS
-   ============================= */
-
 .ability-options {
     display: flex;
     flex-direction: column;
@@ -145,11 +128,7 @@
     }
 }
 
-/* =============================
-   DESKTOP
-   ============================= */
-
-@media (min-width: $breakpoint-tablet) {
+@media (width >= $breakpoint-tablet) {
 
     .specie-detail {
 

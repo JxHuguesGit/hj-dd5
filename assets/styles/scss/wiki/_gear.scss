@@ -1,9 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .gear-grid {
     @include card-grid(4);
@@ -30,14 +26,6 @@
         }
     }
 }
-
-/* =============================
-   GEAR DETAIL
-   ============================= */
-
-/* =============================
-   DESCRIPTION
-   ============================= */
 
 .gear-detail-description {
     margin: 0 0 1.5rem;

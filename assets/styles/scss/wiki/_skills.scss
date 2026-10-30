@@ -1,9 +1,5 @@
-@use "variables" as *;
+@use "../base/variables" as *;
 @use "cards" as *;
-
-/* =============================
-   LISTING
-   ============================= */
 
 .skill-card {
     p {
@@ -11,10 +7,6 @@
     }
 }
 
-
-/* =============================
-   SUBSKILLS
-   ============================= */
 
 .subskills {
     @include badge-list;
@@ -31,11 +23,6 @@
         }
     }
 }
-
-
-/* =============================
-   SKILL DETAIL
-   ============================= */
 
 .skill-ability {
     display: inline-block;
