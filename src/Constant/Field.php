@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Constant;
 
 class Field
@@ -98,6 +99,7 @@ class Field
     public const SCHOOL  = 'ecole';   // Champ ACF de Wordpress
 
     /* Alias dans le code php */
+    public const ALIGNNAME     = 'alignmentName';
     public const AMMONAME      = 'ammunitionName';
     public const BUILDNAME     = 'buildName';
     public const BUILDSLUG     = 'buildSlug';
@@ -140,6 +142,7 @@ class Field
     public const ENTITYID     = 'entityId';
     public const FEATID       = 'featId';
     public const FEATTYPEID   = 'featTypeId';
+    public const HEROICINSPAVAIL = 'heroicInspirationAvailable';
     public const HEROSID      = 'herosId';
     public const ITCODE       = 'iTCode';
     public const ITEMID       = 'itemId';
@@ -169,6 +172,7 @@ class Field
     public const SPELLENHANCEMENTID = 'spellEnhancementId';
     public const SPELLID      = 'spellId';
     public const SPELLTRIGGERID = 'spellTriggerId';
+    public const SURPRISED    = 'surprised';
     public const TOKENID      = 'tokenId';
     public const TOOLID       = 'toolId';
     public const TYPEAMMID    = 'typeAmmunitionId';
@@ -189,5 +193,4 @@ class Field
     /*
     public const  = 'packageId';
     */
-
 }

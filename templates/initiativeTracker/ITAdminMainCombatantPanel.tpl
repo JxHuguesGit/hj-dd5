@@ -5,40 +5,13 @@
             <button title="Move up" class="inactive">▲</button>
             <button title="Move down">▼</button>
         </div>
+        <i class="fa-solid fa-square-caret-right" title="Personnage actif"></i>
         <span title="Player Character" class="emblem">
             <i aria-hidden="true" class="fa-solid fa-shield-halved"></i>
             <i aria-hidden="true" class="fa-solid fa-sword"></i>
         </span>
         <span class="combatant-name">%3$s</span>
-    <!--
-        <button title="Add Lair Actions to initiative" class="lair">
-            <i class="fa-solid fa-building" aria-hidden="true"></i>
-        </button>
-        <button title="Transform (Wild Shape, Polymorph, etc.)" class="polymorph">
-            <i class="fa-solid fa-paw" aria-hidden="true"></i>
-            <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
-        </button>
-    -->
-        <button title="Réaction disponible ou non" class="reaction %12$s">
-            <i aria-hidden="true" class="fa-solid fa-bolt"></i>
-        </button>
-        <button title="Action Intention utilisée" class="ready %13$s">
-            <i aria-hidden="true" class="fa-solid fa-stopwatch"></i>
-        </button>
-    <!--
-        <button title="Mark as surprised" class="surprise">
-            <i aria-hidden="true" class="fa-solid fa-triangle-exclamation"></i>
-        </button>
-        <button title="Grant Inspiration" class="inspiration">
-            <i aria-hidden="true" class="fa-regular fa-star"></i>
-        </button>
-        <button title="Notes" class="notes">
-            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
-        </button>
-    -->
-        <button class="bench" title="Remove from combat (keeps in party)">
-            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
+        %12$s
     </div>
     <div class="hit-points">
         <div class="initiative">
@@ -53,11 +26,7 @@
                 <button title="Edit max HP" class="edit-button">
                     <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
                 </button>
-                <span class="temporary-hp d-none">+5 THP
-                    <button class="temporary-hp-remove" title="Clear temp HP">
-                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                    </button>
-                </span>
+                <span class="temporary-hp %14$s">PVT +%15$s</span>
             </div>
             <div class="hit-points-bar-visual">
                 <div class="hit-points-current %11$s" style="width: %9$s;"></div>
@@ -65,7 +34,9 @@
             </div>
         </div>
         <div class="armor-class">
-            <svg viewBox="0 0 48 54" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full svelte-1j4i4ba"><path d="M24 2 L44 10 L44 28 C44 40 34 50 24 52 C14 50 4 40 4 28 L4 10 Z" fill="#1e293b" stroke="#475569" stroke-width="2" class="svelte-1j4i4ba"></path></svg>
+            <svg viewBox="0 0 48 54" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full svelte-1j4i4ba">
+                <path d="M24 2 L44 10 L44 28 C44 40 34 50 24 52 C14 50 4 40 4 28 L4 10 Z" fill="#1e293b" stroke="#475569" stroke-width="2" class="svelte-1j4i4ba"></path>
+            </svg>
             <div class="armor-class-content">
                 <span class="armor-class-label">CA</span>
                 <span class="armor-class-value">%5$s</span>

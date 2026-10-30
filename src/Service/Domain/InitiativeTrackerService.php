@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
@@ -38,7 +39,7 @@ final class InitiativeTrackerService
         $tmpHp = $member->tmpHp;
 
         $baseLength = $member->curHp / $member->maxHp;
-        if ($tmpHp!=0) {
+        if ($tmpHp != 0) {
             $sum = $member->curHp + $tmpHp;
             $coloredLength = $member->curHp * $baseLength / $sum;
             $tmpHpLength = $tmpHp * $baseLength / $sum;
@@ -46,19 +47,20 @@ final class InitiativeTrackerService
             $coloredLength = $baseLength;
             $tmpHpLength = 0;
         }
+        $baseRatio = $baseLength * 100;
         $coloredLength *= 100;
         $tmpHpLength *= 100;
 
         $colorCode = match (true) {
-            $coloredLength === 100 => 'fullHealth',
-            $coloredLength >= 80   => 'grazed',
-            $coloredLength >= 50   => 'injured',
-            $coloredLength >= 30   => 'bloodied',
-            $coloredLength >= 10   => 'critical',
-            $coloredLength > 0     => 'agonizing',
+            $baseRatio === 100 => 'fullHealth',
+            $baseRatio >= 80   => 'grazed',
+            $baseRatio >= 50   => 'injured',
+            $baseRatio >= 30   => 'bloodied',
+            $baseRatio >= 10   => 'critical',
+            $baseRatio > 0     => 'agonizing',
             default                => 'dying',
         };
-        
+
         return $this->renderer->render(
             T::ADMIN_IT_CONTENT_PANEL,
             [
@@ -73,8 +75,41 @@ final class InitiativeTrackerService
                 $coloredLength . '%',
                 $tmpHpLength . '%',
                 $colorCode,
-                $member->reactionAvailable == 1 ? 'active' : 'disabled',
-                $member->readyActive == 1 ? 'active' : 'disabled',
+                $this->buildCharacterStatus($member),
+                '',
+                $member->tmpHp == 0 ? B::DNONE : '',
+                $member->tmpHp,
+            ]
+        );
+    }
+
+    private function buildCharacterStatus(ITCharacter $member): string
+    {
+        $isPlayer = $member->characterType == 'player';
+
+        if ($isPlayer) {
+            $heroicInspi = $member->heroicInspirationAvailable ? C::ACTIVE : '';
+            $lair = B::DNONE;
+        } else {
+            $heroicInspi = B::DNONE;
+            // TODO
+            $lair = '';
+        }
+
+        return $this->renderer->render(
+            T::ADMIN_IT_CBT_STATUS,
+            [
+                $lair,
+                // Polymorph : tout le monde j'imagine. Mais pas encore géré
+                B::DNONE,
+                $member->reactionAvailable == 1 ? C::ACTIVE : '',
+                $member->readyActive == 1 ? C::ACTIVE : '',
+                $member->surprised == 1 ? C::ACTIVE : '',
+                $heroicInspi,
+                // Notes : tout le monde j'imagine, en valeur si une information est stockée. Mais pas encore géré
+                B::DNONE,
+                $isPlayer ? B::DNONE : '',
+                $member->id,
             ]
         );
     }
@@ -112,5 +147,4 @@ final class InitiativeTrackerService
             ]
         );
     }
-
 }

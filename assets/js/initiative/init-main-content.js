@@ -120,11 +120,47 @@ export function initMainContent() {
                 {
                     character: {
                         id: combatant.id,
-                        reactionAvailable: $button.hasClass('disabled') ? 1 : 0
+                        reactionAvailable: $button.hasClass('active') ? 0 : 1
                     }
                 },
                 () => {
-                    $button.toggleClass('active disabled');
+                    $button.toggleClass('active');
+                }
+            );
+        })
+        .on('click', '.combatant .surprise', function () {
+        // Toggle surprise
+            const $button = $(this);
+            const combatant = getCombatantData(this);
+
+            ajaxAction(
+                'toggleSurprise',
+                {
+                    character: {
+                        id: combatant.id,
+                        surprised: $button.hasClass('active') ? 0 : 1
+                    }
+                },
+                () => {
+                    $button.toggleClass('active');
+                }
+            );
+        })
+        .on('click', '.combatant .inspiration', function () {
+        // Toggle Inspiration héroïque
+            const $button = $(this);
+            const combatant = getCombatantData(this);
+
+            ajaxAction(
+                'toggleInspiration',
+                {
+                    character: {
+                        id: combatant.id,
+                        heroicInspirationAvailable: $button.hasClass('active') ? 0 : 1
+                    }
+                },
+                () => {
+                    $button.toggleClass('active');
                 }
             );
         })
@@ -138,11 +174,11 @@ export function initMainContent() {
                 {
                     character: {
                         id: combatant.id,
-                        readyActive: $button.hasClass('disabled') ? 1 : 0
+                        readyActive: $button.hasClass('active') ? 0 : 1
                     }
                 },
                 () => {
-                    $button.toggleClass('active disabled');
+                    $button.toggleClass('active');
                 }
             );
         })

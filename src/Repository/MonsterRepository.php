@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Repository;
 
 use src\Collection\Collection;
@@ -43,15 +44,16 @@ class MonsterRepository extends Repository implements MonsterRepositoryInterface
     {
         $baseQuery = "
             SELECT m.id, m." . F::NAME . " as " . F::NAME . ", " . F::FRNAME . ", " . F::FRTAG . ", " . F::UKTAG . ", "
-        . F::INCOMPLET . ", " . F::SCORECR . ", " . F::SWARMSIZE . ", " . F::MSTSIZE . ", "
-        . F::SCORECA . ", " . F::SCOREHP . ", " . F::INITIATIVE . ", " . F::LEGENDARY . ", "
-        . F::HABITAT . ", " . F::STRSCORE . ", " . F::DEXSCORE . ", " . F::CONSCORE . ", "
-        . F::INTSCORE . ", " . F::WISSCORE . ", " . F::CHASCORE . ", " . F::PROFBONUS . ", "
-        . F::PERCPASSIVE . ", " . F::EXTRA
-        . ", tm." . F::NAME . " AS " . F::TYPMSTNAME . ", " . F::ABBR . ", tm.id AS " . F::MSTTYPEID
-        . ", stm." . F::NAME . " AS " . F::SSTYPMSTNAME
-        . ", r." . F::NAME . " AS " . F::REFNAME
-        . " FROM " . Table::MONSTER . " m
+            . F::INCOMPLET . ", " . F::SCORECR . ", " . F::SWARMSIZE . ", " . F::MSTSIZE . ", "
+            . F::SCORECA . ", " . F::SCOREHP . ", " . F::INITIATIVE . ", " . F::LEGENDARY . ", "
+            . F::HABITAT . ", " . F::STRSCORE . ", " . F::DEXSCORE . ", " . F::CONSCORE . ", "
+            . F::INTSCORE . ", " . F::WISSCORE . ", " . F::CHASCORE . ", " . F::PROFBONUS . ", "
+            . F::PERCPASSIVE . ", " . F::EXTRA
+            . ", tm." . F::NAME . " AS " . F::TYPMSTNAME . ", " . F::ABBR . ", tm.id AS " . F::MSTTYPEID
+            . ", stm." . F::NAME . " AS " . F::SSTYPMSTNAME
+            . ", a." . F::NAME . " AS " . F::ALIGNNAME
+            . ", r." . F::NAME . " AS " . F::REFNAME
+            . " FROM " . Table::MONSTER . " m
             INNER JOIN " . Table::TYPEMONSTRE . " tm ON tm.id = " . F::MSTTYPEID . "
             LEFT JOIN " . Table::SSTYPEMONSTRE . " stm ON stm.id = " . F::MSTSSTYPID . "
             INNER JOIN " . Table::ALIGNMENT . " a ON a.id = " . F::ALGNID . "

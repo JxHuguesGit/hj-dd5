@@ -1,9 +1,11 @@
 <?php
+
 namespace src\Action\Ajax\InitiativeTracker;
 
 use src\Constant\Field as F;
 use src\Domain\Entity\ITCharacter;
 use src\Service\Domain\InitiativeTrackerService;
+use src\Service\Reader\InitiativeTrackerReader;
 use src\Service\Reader\InitTrackCharacterReader;
 use src\Service\Writer\InitTrackCharacterWriter;
 use src\Utils\Session;
@@ -13,7 +15,8 @@ final class ITDealWithHp
     private int $amount;
 
     public function __construct(
-        private InitTrackCharacterReader $reader,
+        private InitiativeTrackerReader $itReader,
+        private InitTrackCharacterReader $itcReader,
         private InitiativeTrackerService $service,
         private InitTrackCharacterWriter $writer,
         private string $type,
@@ -25,18 +28,18 @@ final class ITDealWithHp
         $this->amount = (int) Session::fromPost('amount');
 
         // On récupère le combattant concerné
-        $character = $this->reader->itCharacterById($characterId);
+        $character = $this->itcReader->itCharacterById($characterId);
         $changedFields = [];
         switch ($this->type) {
-            case 'dealDamage' :
+            case 'dealDamage':
                 $this->dealDamage($character, $changedFields);
-            break;
-            case 'heal' :
+                break;
+            case 'heal':
                 $this->heal($character, $changedFields);
-            break;
-            case 'setTempHP' :
+                break;
+            case 'setTempHP':
                 $this->setTempHp($character, $changedFields);
-            break;
+                break;
             default:
                 throw new \InvalidArgumentException(
                     'Type d’action invalide pour ITDealWithHp : ' . $this->type
@@ -46,15 +49,18 @@ final class ITDealWithHp
         if (!empty($changedFields)) {
             $this->writer->updatePartial($character, $changedFields);
         }
-        
+
+        $initiativeTracker = $this->itReader->initiativeTrackerById($character->initiativeTrackerId);
+        $isActive = $initiativeTracker->currentParticipantId == $character->id;
+
         return [
-            'panel'  => $this->service->buildCombatMember($character, false),
+            'panel'  => $this->service->buildCombatMember($character, $isActive),
         ];
     }
 
     private function setTempHp(ITCharacter $character, array &$changedFields): void
     {
-        if ($this->amount>$character->tmpHp) {
+        if ($this->amount > $character->tmpHp) {
             $character->tmpHp = $this->amount;
             $changedFields = [F::TMPHP];
         }
@@ -68,10 +74,10 @@ final class ITDealWithHp
 
     private function dealDamage(ITCharacter $character, array &$changedFields): void
     {
-        if ($character->tmpHp==0) {
+        if ($character->tmpHp == 0) {
             $character->curHp = max(0, $character->curHp - $this->amount);
             $changedFields = [F::CURHP];
-        } elseif ($character->tmpHp>=$this->amount) {
+        } elseif ($character->tmpHp >= $this->amount) {
             $character->tmpHp -= $this->amount;
             $changedFields = [F::TMPHP];
         } else {

@@ -9,7 +9,6 @@ use src\Collection\Collection;
 use src\Domain\Criteria\ITCharacterCriteria;
 use src\Domain\Criteria\MonsterCriteria;
 use src\Domain\Entity\InitiativeTracker;
-use src\Domain\Entity\ITCharacter;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Renderer\TemplateRenderer;
@@ -44,8 +43,7 @@ final class InitiativeAdminPresenter
                 $this->buildITHeader($initiativeTracker),
                 $this->buildITPartyAside($partyMembers),
                 $this->buildITEnnemyAside(),
-                // Présence de combattants ? Combat en cours ?
-                !$partyMembers->isEmpty() ? 'has-combatants'/* active-combat'*/ : '',
+                !$partyMembers->isEmpty() ? 'has-combatants' : '',
                 $this->buildITHeaderPanel($initiativeTracker),
                 $this->serviceFactory->initiativeTracker()->buildIdContentPanel($allCombattants, $initiativeTracker),
                 $initiativeTracker->active ? 'combat-in-progress' : '',

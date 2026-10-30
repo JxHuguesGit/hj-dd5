@@ -23,6 +23,7 @@ use src\Action\Ajax\LockMapAction;
 use src\Action\Ajax\ModalMonsterCard;
 use src\Action\Ajax\RemoveCreatureFromCombatAction;
 use src\Action\Ajax\ResetMapFogAction;
+use src\Action\Ajax\ShowModalMonsterAction;
 use src\Action\Ajax\ToggleMapTokenAction;
 use src\Action\Ajax\UnlockMapAction;
 use src\Action\Ajax\UpdateCombatParticipantAction;
@@ -33,29 +34,30 @@ use src\Factory\AjaxActionFactory;
 class AjaxRouter
 {
     private array $actions = [
-        'loadMoreSpells'                    => LoadMoreSpellsAction::class,
-        'loadMoreMonsters'                  => LoadMoreMonstersAction::class,
-        'modalMonsterCard'                  => ModalMonsterCard::class,
-        'loadCreationStepSide'              => LoadCreationStepSide::class,
-        'loadMapTokens'                     => LoadMapTokensAction::class,
-        'updateMapTokens'                   => UpdateMapTokensAction::class,
-        'getAddMapTokenModal'               => LoadMapTokenModal::class,
-        'getAddTokenModal'                  => LoadTokenModal::class,
-        'addMapToken'                       => AddMapTokenAction::class,
-        'toggleMapToken'                    => ToggleMapTokenAction::class,
-        'addToken'                          => AddTokenAction::class,
-        'deleteMapToken'                    => DeleteMapTokenAction::class,
         'activateMap'                       => ActivateMapAction::class,
-        'lockMap'                           => LockMapAction::class,
-        'unlockMap'                         => UnlockMapAction::class,
-        'duplicateMap'                      => DuplicateMapAction::class,
-        'deleteMap'                         => DeleteMapAction::class,
-        'resetMapFog'                       => ResetMapFogAction::class,
-        'loadCombatMonsters'                => LoadCombatMonstersAction::class,
-        'loadCombat'                        => LoadCombatAction::class,
         'addCreatureToCombat'               => AddCreatureToCombatAction::class,
+        'addMapToken'                       => AddMapTokenAction::class,
+        'addToken'                          => AddTokenAction::class,
+        'deleteMap'                         => DeleteMapAction::class,
+        'deleteMapToken'                    => DeleteMapTokenAction::class,
+        'duplicateMap'                      => DuplicateMapAction::class,
+        'loadCombat'                        => LoadCombatAction::class,
+        'loadCombatMonsters'                => LoadCombatMonstersAction::class,
+        'loadCreationStepSide'              => LoadCreationStepSide::class,
+        'getAddMapTokenModal'               => LoadMapTokenModal::class,
+        'loadMapTokens'                     => LoadMapTokensAction::class,
+        'loadMoreMonsters'                  => LoadMoreMonstersAction::class,
+        'loadMoreSpells'                    => LoadMoreSpellsAction::class,
+        'getAddTokenModal'                  => LoadTokenModal::class,
+        'lockMap'                           => LockMapAction::class,
+        'modalMonsterCard'                  => ModalMonsterCard::class,
         'removeCreatureFromCombat'          => RemoveCreatureFromCombatAction::class,
+        'resetMapFog'                       => ResetMapFogAction::class,
+        'showMonster'                       => ShowModalMonsterAction::class,
+        'toggleMapToken'                    => ToggleMapTokenAction::class,
+        'unlockMap'                         => UnlockMapAction::class,
         'rerollCombatParticipantInitiative' => UpdateCombatParticipantAction::class,
+        'updateMapTokens'                   => UpdateMapTokensAction::class,
         'refreshPlayerView'                 => ITRefreshPlayerView::class,
         'addInitChar'                       => DealWithInitTracker::class,
         'addInitCharToCombat'               => DealWithInitTracker::class,
@@ -64,6 +66,8 @@ class AjaxRouter
         'delInitChar'                       => DealWithInitTracker::class,
         'updateInitChar'                    => DealWithInitTracker::class,
         'toggleReaction'                    => DealWithInitTracker::class,
+        'toggleSurprise'                    => DealWithInitTracker::class,
+        'toggleInspiration'                 => DealWithInitTracker::class,
         'toggleReady'                       => DealWithInitTracker::class,
         'setInitChar'                       => DealWithInitTracker::class,
         'nextCombatChar'                    => DealWithInitTracker::class,
