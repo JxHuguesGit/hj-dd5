@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Monster;
 
 use src\Collection\Collection;
@@ -50,6 +51,8 @@ final class Monster extends Entity
         F::SSTYPMSTNAME,
 
         F::REFNAME,
+
+        F::ALIGNNAME,
     ];
     public const FIELD_TYPES = [
         F::FRNAME       => FieldType::STRING,
@@ -85,6 +88,8 @@ final class Monster extends Entity
         F::SSTYPMSTNAME => FieldType::STRINGNULLABLE,
 
         F::REFNAME      => FieldType::STRINGNULLABLE,
+
+        F::ALIGNNAME    => FieldType::STRINGNULLABLE,
     ];
 
     /**
@@ -110,6 +115,8 @@ final class Monster extends Entity
     private ?MonsterType $typeEntity           = null;
     private ?MonsterSubType $subTypeEntity     = null;
     private ?MonsterReference $referenceEntity = null;
+    private ?MonsterAlignment $alignmentEntity = null;
+
     // Relations 1-N
     private ?Collection $speedTypeEntities = null;
     private ?Collection $traits            = null;
@@ -188,6 +195,14 @@ final class Monster extends Entity
             $this->referenceEntity = new MonsterReference($this);
         }
         return $this->referenceEntity;
+    }
+
+    public function alignment(): MonsterAlignment
+    {
+        if ($this->alignmentEntity === null) {
+            $this->alignmentEntity = new MonsterAlignment($this);
+        }
+        return $this->alignmentEntity;
     }
 
     // -------------------------------------------------
@@ -320,7 +335,7 @@ final class Monster extends Entity
     public function getITData(): array
     {
         $name = $this->identity()->getFrenchName();
-        if ($name==='') {
+        if ($name === '') {
             $name = $this->identity()->getName();
         }
         return [

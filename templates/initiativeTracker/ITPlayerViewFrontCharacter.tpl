@@ -23,5 +23,4 @@
                 </div>
             </div>
             <div class="bloc-conditions">%10$s</div>
-
         </main>

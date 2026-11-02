@@ -82,6 +82,8 @@
                 </div>
             </div>
         </div>
+        <div role="dialog" aria-modal="true" aria-label="Fiche de monstre" class="panel-show-monster overlay d-none" tabindex="-1">
+        </div>
     </main>
     <aside class="ennemies" aria-label="">%5$s</aside>
 </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Monster;
 
 use src\Constant\Field as F;
@@ -12,16 +13,14 @@ final class MonsterAlignment
 
     public function getId(): int
     {
-        return $this->monster->getField(F::ALGNID);
+        return $this->monster->getField(F::ALGNID) ?? 0;
     }
 
     public function getEntity(): ?Alignement
     {
-        $id = $this->getId();
-        if ($id === 0) {
-            return null;
-        }
-        return new Alignement([F::ID => $id]);
+        return new Alignement([
+            F::ID => $this->monster->getField(F::ALGNID) ?? 0
+        ]);
     }
 
     public function getName(): string

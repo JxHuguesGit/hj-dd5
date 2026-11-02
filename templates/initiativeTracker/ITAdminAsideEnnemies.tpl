@@ -23,24 +23,29 @@
         -->
     </div>
     <div class="monster-list">%1$s</div>
+
     <div class="panel-add-monsters d-none">
         <div class="panel-header">
-            <span class="title"><!----> Adult Blue Dragon</span>
-            <button aria-label="Dismiss">
+            <span class="title"></span>
+            <button aria-label="Annuler">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
         <div class="panel-body">
-            <span class="label">Quantity</span>
-            <button aria-label="Decrease quantity">
+            <span class="label">Quantité</span>
+            <button aria-label="Diminuer le nombre">
                 <i class="fa-solid fa-minus" aria-hidden="true"></i>
             </button>
-            <input aria-label="Quantity" type="number" min="1" max="20">
-            <button aria-label="Increase quantity">
+            <input aria-label="Quantité" type="number" min="1" max="20">
+            <button aria-label="Augmenter le nombre">
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>
             </button>
         </div>
         <button class="submit-button">Ajouter au combat</button>
+    </div>
+
+    <div role="dialog" aria-modal="true" aria-label="Fiche de monstre" class="panel-show-monster overlay d-none" tabindex="-1">
+        <div class="monster-content"></div>
     </div>
 
 </div>

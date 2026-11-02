@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Entity;
 
 use src\Constant\Field as F;
@@ -21,6 +22,8 @@ use src\Domain\Entity;
  * @property int $active
  * @property bool $reactionAvailable
  * @property bool $readyActive
+ * @property bool $surprised
+ * @property bool $heroicInspirationAvailable
  */
 
 final class ITCharacter extends Entity
@@ -42,24 +45,28 @@ final class ITCharacter extends Entity
         F::ACTIVE,
         F::REACTIONAVAIL,
         F::READYACTIVE,
+        F::SURPRISED,
+        F::HEROICINSPAVAIL,
     ];
 
     public const FIELD_TYPES = [
-        F::NAME          => FieldType::STRING,
-        F::INITIATIVE    => FieldType::FLOATNULLABLE,
-        F::CHARACTERTYPE => FieldType::STRING,
-        F::MONSTERID     => FieldType::INTPOSITIVE,
-        F::LEVEL         => FieldType::INTPOSITIVE,
-        F::SCOREAC       => FieldType::INTPOSITIVE,
-        F::MAXHP         => FieldType::INTPOSITIVE,
-        F::CURHP         => FieldType::INTPOSITIVE,
-        F::TMPHP         => FieldType::INTPOSITIVE,
-        F::MODDEX        => FieldType::INT,
-        F::PERCPASSIVE   => FieldType::INTPOSITIVE,
-        F::ITID          => FieldType::INTPOSITIVE,
-        F::ACTIVE        => FieldType::INTPOSITIVE,
-        F::REACTIONAVAIL => FieldType::BOOL,
-        F::READYACTIVE   => FieldType::BOOL,
+        F::NAME            => FieldType::STRING,
+        F::INITIATIVE      => FieldType::FLOATNULLABLE,
+        F::CHARACTERTYPE   => FieldType::STRING,
+        F::MONSTERID       => FieldType::INTPOSITIVE,
+        F::LEVEL           => FieldType::INTPOSITIVE,
+        F::SCOREAC         => FieldType::INTPOSITIVE,
+        F::MAXHP           => FieldType::INTPOSITIVE,
+        F::CURHP           => FieldType::INTPOSITIVE,
+        F::TMPHP           => FieldType::INTPOSITIVE,
+        F::MODDEX          => FieldType::INT,
+        F::PERCPASSIVE     => FieldType::INTPOSITIVE,
+        F::ITID            => FieldType::INTPOSITIVE,
+        F::ACTIVE          => FieldType::INTPOSITIVE,
+        F::REACTIONAVAIL   => FieldType::BOOL,
+        F::READYACTIVE     => FieldType::BOOL,
+        F::SURPRISED       => FieldType::BOOL,
+        F::HEROICINSPAVAIL => FieldType::BOOL,
     ];
 
     public const EDITABLE_FIELDS = [
@@ -78,6 +85,8 @@ final class ITCharacter extends Entity
         F::ACTIVE,
         F::REACTIONAVAIL,
         F::READYACTIVE,
+        F::SURPRISED,
+        F::HEROICINSPAVAIL,
     ];
 
     public function getCharacterStats(): string
@@ -87,7 +96,7 @@ final class ITCharacter extends Entity
             $this->level,
             $this->ac,
             $this->maxHp,
-            ($this->modDex>0 ? '+' : '') . $this->modDex,
+            ($this->modDex > 0 ? '+' : '') . $this->modDex,
             $this->percPassive
         );
     }

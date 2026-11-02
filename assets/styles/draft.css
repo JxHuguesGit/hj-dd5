@@ -1,8 +1,337 @@
 /* =========================
-   29/10/2026
+   30/10/2026
    ========================= */
 
+    i.fa-square-caret-right {
+        display: none;
+        position: relative;
+        box-sizing: border-box;
+        color: oklch(0.828 0.189 84.429);
+        font-weight: 300;
+        font-style: normal;
+        line-height: 16px;
+        text-align: center;
+    }
+
+    .combatant.active i.fa-square-caret-right {
+        display: block;
+    }
+
+    .monster-modal {
+        display: flex;
+        flex-direction: column;
+        width: 672px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        color: #fff;
+        background-color: rgb(15, 20, 35);
+        border: 1px solid rgb(40, 49, 74);
+        border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        font-family:
+            ui-sans-serif,
+            system-ui,
+            sans-serif,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol",
+            "Noto Color Emoji";
+        line-height: 24px;
+        scrollbar-width: thin;
+        scrollbar-color: rgb(40, 49, 74) rgb(15, 20, 35);
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            padding: 16px 20px;
+            margin: 0;
+            color: white;
+            border-bottom: 1px solid rgb(40, 49, 74);
+            scrollbar-width: thin;
+            scrollbar-color: rgb(40, 49, 74) rgb(15, 20, 35);
+
+            .modal-title-group {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin: 0;
+                padding: 0;
+                color: white;
+
+                .modal-title {
+                    margin: 0;
+                    padding: 0;
+                    color: oklch(0.704 0.191 22.216);
+                    font-size: 18px;
+                    font-weight: 900;
+                    line-height: 28px;
+                    letter-spacing: 0.45px;
+                }
+            }
+
+            .modal-subtitle {
+                margin: 0;
+                padding: 0;
+                color: rgb(143, 155, 184);
+                font-size: 12px;
+                font-style: italic;
+                line-height: 16px;
+            }
+
+            .close-modal {
+                padding: 0;
+                margin: 0;
+                color: rgb(148, 155, 171);
+                background: transparent;
+                border: none;
+                font-size: 16px;
+                line-height: 24px;
+                opacity: 1;
+                transition:
+                    color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            color: rgb(214, 220, 234);
+            scrollbar-width: thin;
+            scrollbar-color: rgb(40, 49, 74) rgb(15, 20, 35);
+
+            .monster-overview {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+                margin-bottom: 16px;
+                padding-bottom: 16px;
+                color: rgb(214, 220, 234);
+                font-size: 14px;
+                line-height: 20px;
+                border-bottom: 1px solid rgb(40, 49, 74);
+
+                .monster-text {
+                    margin: 0;
+                    padding: 0;
+                    color: rgb(214, 220, 234);
+                    font-size: 14px;
+                    line-height: 20px;
+
+                    .stat-label {
+                        margin: 0;
+                        color: rgb(148, 155, 171);
+                        font-size: 14px;
+                        line-height: 20px;
+                    }
+
+                    .stat-value {
+                        margin: 0;
+                        color: rgb(214, 220, 234);
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 20px;
+                    }
+                }
+            }
+
+            .monster-section {
+                margin-bottom: 16px;
+                padding-bottom: 16px;
+                color: rgb(214, 220, 234);
+                border-bottom: 1px solid rgb(40, 49, 74);
+
+                h4 {
+                    margin: 0 0 8px;
+                    color: oklch(0.704 0.191 22.216);
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 16px;
+                    letter-spacing: 1.2px;
+                    text-transform: uppercase;
+                }
+
+                .ability-scores {
+                    display: grid;
+                    grid-template-columns: repeat(6, 1fr);
+                    gap: 8px;
+                    text-align: center;
+                    color: rgb(214, 220, 234);
+
+                    .ability-score {
+                        padding: 8px 4px;
+                        border: 0;
+                        background-color: rgb(24, 32, 54);
+                        border-radius: 4px;
+                        color: rgb(214, 220, 234);
+                        text-align: center;
+                        transition:
+                            background-color .15s ease,
+                            color .15s ease;
+
+                        &:active,
+                        &:hover {
+                            background: oklab(0.38 0.076104 -0.173001 / 0.5);
+                            box-shadow: 0 0 0 1px oklch(0.606 0.25 292.717);
+                        }
+
+                        .ability-label {
+                            margin: 0;
+                            color: oklch(0.704 0.191 22.216);
+                            font-size: 12px;
+                            font-weight: 700;
+                            line-height: 16px;
+                            letter-spacing: 0.6px;
+                            text-transform: uppercase;
+                            text-align: center;
+                        }
+
+                        .ability-value {
+                            margin: 0;
+                            color: white;
+                            font-size: 14px;
+                            font-weight: 700;
+                            line-height: 20px;
+                            text-align: center;
+                        }
+
+                        .ability-modifier {
+                            margin: 0;
+                            color: rgb(143, 155, 184);
+                            font-size: 12px;
+                            font-weight: 400;
+                            line-height: 16px;
+                            text-align: center;
+                        }
+
+                        .ability-extra {
+                            margin-top: 2px;
+                            color: oklch(0.702 0.183 293.541);
+                            font-size: 10px;
+                            font-weight: 400;
+                            line-height: 15px;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+
+            .monster-section-content {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                margin-bottom: 16px;
+                padding-bottom: 16px;
+                color: rgb(214, 220, 234);
+                font-size: 14px;
+                line-height: 20px;
+                border-bottom: 1px solid rgb(40, 49, 74);
+
+                .monster-ability {
+                    color: rgb(214, 220, 234);
+                    font-size: 14px;
+                    line-height: 20px;
+
+                    .monster-text-muted {
+                        margin: 0;
+                        color: rgb(148, 155, 171);
+                        font-size: 14px;
+                        line-height: 20px;
+                    }
+
+                    .monster-text {
+                        margin: 0;
+                        color: rgb(214, 220, 234);
+                        font-size: 14px;
+                        line-height: 20px;
+                    }
+                }
+            }
+
+            .monster-block {
+                margin-bottom: 16px;
+                color: rgb(214, 220, 234);
+
+                h4 {
+                    margin: 0 0 4px;
+                    color: oklch(0.828 0.189 84.429);
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 16px;
+                    letter-spacing: 1.2px;
+                    text-transform: uppercase;
+                }
+
+                .section-subtitle {
+                    margin: 0 0 8px;
+                    color: rgb(143, 155, 184);
+                    font-size: 14px;
+                    font-style: italic;
+                    line-height: 20px;
+                }
+            }
+
+            .section-content {
+                color: rgb(214, 220, 234);
+                line-height: 24px;
+
+                p {
+                    margin: 0 0 8px;
+                    color: rgb(214, 220, 234);
+                    font-size: 14px;
+                    line-height: 21px;
+                }
+            }
+    }
+
+    }
+
+    .roll-link.roll-atk {
+        margin: 0;
+        padding: 0;
+
+        color: rgb(196, 181, 253);
+
+        font-size: 14px;
+        line-height: 21px;
+
+        background: none;
+        border: none;
+
+        cursor: pointer;
+
+        transition: color .15s ease, opacity .15s ease;
+
+        &:hover {
+            opacity: .85;
+        }
+    }
+
+    .roll-link {
+        padding: 0;
+        margin: 0;
+        color: rgb(252, 211, 77);
+        background: transparent;
+        border: none;
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+        text-decoration: underline dotted;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
 
 /* =========================
-   FIN 29/10/2026
+   FIN 30/10/2026
    ========================= */

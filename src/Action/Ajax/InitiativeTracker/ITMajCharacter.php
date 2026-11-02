@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Action\Ajax\InitiativeTracker;
 
 use src\Constant\Constant as C;
@@ -33,6 +34,8 @@ final class ITMajCharacter
             F::INITIATIVE,
             F::REACTIONAVAIL,
             F::READYACTIVE,
+            F::SURPRISED,
+            F::HEROICINSPAVAIL,
         ];
         $changedFields = [];
         // On instancie
@@ -64,6 +67,4 @@ final class ITMajCharacter
             'panel' => $this->itService->buildActiveCombatPanel($initiativeTracker, $this->itcReader),
         ];
     }
-
-
 }

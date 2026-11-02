@@ -11,5 +11,7 @@
             <div>PV %5$s</div>
         </div>
     </button>
-    <button class="info" title="View Aarakocra Aeromancer stat block"><i class="fa-solid fa-circle-info text-sm" aria-hidden="true"></i></button>
+    <button class="info" title="Voir la fiche" data-monster-id="%6$s">
+        <i class="fa-solid fa-circle-info text-sm" aria-hidden="true"></i>
+    </button>
 </div>

@@ -96,4 +96,69 @@ export function initAsideMonsters() {
         });
     });
 
+    $(document).on('click', '.info', function () {
+        const $button = $(this);
+
+        const monsterId = $button.data('monster-id');
+
+        let $overlay;
+        let option ='';
+
+        if ($button.closest('.aside-content').length) {
+            $overlay = $('.aside-content .panel-show-monster.overlay');
+            option = 'aside';
+        } else {
+            $overlay = $('.initiative-main .panel-show-monster.overlay');
+            option = 'main';
+        }
+
+        const $content = $overlay.find('.monster-content');
+
+        $content.html(
+            '<div class="loading">Chargement...</div>'
+        );
+
+        $overlay.removeClass('d-none');
+
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'dealWithAjax',
+                ajaxAction: 'showMonster',
+                monsterId: monsterId,
+                option: option
+            },
+            success: function (response) {
+                if (!response.success) {
+                    console.error('Impossible d’afficher le monstre.', response);
+                    return;
+                }
+
+                $content.html(response.data.modal);
+            },
+            error: function () {
+                $content.html(
+                    '<div class="error">Impossible de charger la fiche.</div>'
+                );
+            }
+        });
+    });
+
+    $(document).on('click', '.close-modal', function () {
+        $(this)
+            .closest('.panel-show-monster')
+            .addClass('d-none');
+    });
+    $(document).on('click', '.panel-show-monster.overlay', function (e) {
+        if ($(e.target).is('.panel-show-monster.overlay')) {
+            $(this).addClass('d-none');
+        }
+    });
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+            $('.panel-show-monster.overlay')
+                .addClass('d-none');
+        }
+    });
 }
