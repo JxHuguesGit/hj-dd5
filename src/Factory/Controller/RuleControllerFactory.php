@@ -3,12 +3,15 @@ namespace src\Factory\Controller;
 
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
+use src\Controller\Public\PublicGlossaire;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
+use src\Presenter\ContentBuilder\GlossaireCardContentBuilder;
+use src\Presenter\ListPresenter\GlossaireListPresenter;
 
 final class RuleControllerFactory
 {
@@ -21,20 +24,29 @@ final class RuleControllerFactory
     public function createCategoryController(string $slug): ?PublicBase
     {
         $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::RULES);
-echo "[[$slug]]";
         return match($slug) {
-            C::GLOSSARY => new PublicGlossary(),
-            /*
-            C::ARMOR  => new PublicItemArmor(
-                $this->readerFactory->armor(),
-                new ArmorListPresenter(),
+            C::GLOSSARY => new PublicGlossaire(
+                $this->serviceFactory->wordpress(),
+                new GlossaireListPresenter(),
                 new PageList(
                     $this->renderer,
-                    new ArmorCardContentBuilder()
+                    new GlossaireCardContentBuilder(
+                        $this->serviceFactory->wordpress()
+                    )
                 ),
                 $menu
             ),
-            */
+            C::HOMEBREW => new PublicGlossaire(
+                $this->serviceFactory->wordpress(),
+                new GlossaireListPresenter(),
+                new PageList(
+                    $this->renderer,
+                    new GlossaireCardContentBuilder(
+                        $this->serviceFactory->wordpress()
+                    )
+                ),
+                $menu
+            ),
             default              => null,
         };
     }

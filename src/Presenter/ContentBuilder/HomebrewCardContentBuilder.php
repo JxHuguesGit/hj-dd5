@@ -75,6 +75,6 @@ final class HomebrewCardContentBuilder
     #[Override]
     protected function getGroupClass(): string
     {
-        return 'glossary-group max-width-850';
+        return 'glossary-group max-width-850 primary-content';
     }
 }

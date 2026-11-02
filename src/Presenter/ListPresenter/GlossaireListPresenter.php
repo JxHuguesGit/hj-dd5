@@ -20,6 +20,7 @@ final class GlossaireListPresenter
                 $post->post_content
             );
             $row->url = '/glossary#'.$post->post_name;
+            $row->anchor = $post->post_name;
 
             $rows[] = $row;
         }
@@ -37,7 +38,7 @@ final class GlossaireListPresenter
         if ($dependance instanceof \WP_Post) {
             $titleReturned .= sprintf(
                 ' [<a href="%s">%s</a>]',
-                esc_url(home_url('/rules/glossary-' . $dependance->post_name)),
+                esc_url(home_url('/rules/glossary#' . $dependance->post_name)),
                 esc_html($dependance->post_title)
             );
         }

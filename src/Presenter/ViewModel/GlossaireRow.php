@@ -6,5 +6,6 @@ final class GlossaireRow
     public string $title;
     public string $content;
     public string $url;
+    public string $anchor;
 }
 
