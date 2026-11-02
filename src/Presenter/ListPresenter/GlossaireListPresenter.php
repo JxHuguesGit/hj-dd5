@@ -1,6 +1,8 @@
 <?php
+
 namespace src\Presenter\ListPresenter;
 
+use src\Constant\Routes as R;
 use src\Collection\Collection;
 use src\Presenter\ViewModel\GlossaireGroup;
 use src\Presenter\ViewModel\GlossaireRow;
@@ -19,7 +21,7 @@ final class GlossaireListPresenter
                 'the_content',
                 $post->post_content
             );
-            $row->url = '/glossary#'.$post->post_name;
+            $row->url = R::GLOSSARY_PREFIX . '#' . $post->post_name;
             $row->anchor = $post->post_name;
 
             $rows[] = $row;
@@ -38,7 +40,7 @@ final class GlossaireListPresenter
         if ($dependance instanceof \WP_Post) {
             $titleReturned .= sprintf(
                 ' [<a href="%s">%s</a>]',
-                esc_url(home_url('/rules/glossary#' . $dependance->post_name)),
+                esc_url(home_url(R::RULES_PREFIX . R::GLOSSARY_PREFIX . '#' . $dependance->post_name)),
                 esc_html($dependance->post_title)
             );
         }

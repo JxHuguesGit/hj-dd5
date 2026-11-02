@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controller\Public;
 
 use src\Constant\Language as L;
@@ -20,7 +21,7 @@ class PublicHomebrew extends PublicBase
 
     public function getContentPage(): string
     {
-        $posts = $this->wordPress->getPostsByCategory('Homebrew');
+        $posts = $this->wordPress->getPostsByCategory('homebrew');
         $viewData = $this->presenter->present($posts);
 
         return $this->page->render(
@@ -29,5 +30,4 @@ class PublicHomebrew extends PublicBase
             $viewData
         );
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\ContentBuilder;
 
 use Override;
@@ -10,7 +11,7 @@ use src\Service\Domain\WpPostService;
 use src\Utils\Html;
 
 final class GlossaireCardContentBuilder
-    extends AbstractCardContentBuilder
+extends AbstractCardContentBuilder
 {
     private Collection $glossaireCollection;
 
@@ -38,13 +39,13 @@ final class GlossaireCardContentBuilder
             ),
             [C::CSSCLASS => $this->getGroupsClass()]
         ) .
-        Html::getDiv(
-            $contentHtml,
-            [
-                C::CSSCLASS => $this->getGroupsClass(),
-                C::STYLE    => 'flex-direction: row;'
-            ]
-        );
+            Html::getDiv(
+                $contentHtml,
+                [
+                    C::CSSCLASS => $this->getGroupsClass(),
+                    C::STYLE    => 'flex-direction: row;'
+                ]
+            );
     }
 
     protected function renderGroup(object $group): string
@@ -79,7 +80,7 @@ final class GlossaireCardContentBuilder
             ]
         );
     }
-    
+
     private function getSidebar(): string
     {
         $sidebar = '<section class="secondary-content" role="complementary">
@@ -117,14 +118,14 @@ final class GlossaireCardContentBuilder
 
         return $sidebar;
     }
-    
+
     protected function renderItem(object $row): string
     {
         $this->glossaireCollection->add($row);
 
         $htmlContent = Html::getBalise(
             'hr',
-            '', 
+            '',
             [
                 C::CSSCLASS => 'separator',
                 C::ID       => $row->anchor
@@ -148,7 +149,7 @@ final class GlossaireCardContentBuilder
             );
     }
 
-    protected function getGroupId (object $group): string
+    protected function getGroupId(object $group): string
     {
         return '';
     }

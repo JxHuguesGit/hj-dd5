@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Model;
 
 use src\Page\Metadata\{
@@ -51,11 +52,11 @@ class PageRegistry
             new PageSpecies(),
             // Page Dons (liste)
             new PageFeats(),
-                // Catégories de Dons (liste)
-                new PageFeatsCombat(),
-                new PageFeatsEpic(),
-                new PageFeatsGeneral(),
-                new PageFeatsOrigin(),
+            // Catégories de Dons (liste)
+            new PageFeatsCombat(),
+            new PageFeatsEpic(),
+            new PageFeatsGeneral(),
+            new PageFeatsOrigin(),
             // Page Items (liste)
             new PageItems(),
             // Page Skills (liste)
@@ -64,10 +65,10 @@ class PageRegistry
             new PageSpells(),
             // Page Règles (lite)
             new PageRules(),
-                // Page Glossaire (liste)
-                new PageGlossaire(),
-                // Page Homebrew (liste)
-                new PageHomebrew(),
+            // Page Glossaire (liste)
+            new PageGlossaire(),
+            // Page Homebrew (liste)
+            new PageHomebrew(),
         ];
 
         foreach ($pages as $page) {
@@ -112,4 +113,3 @@ class PageRegistry
         return $pages;
     }
 }
-

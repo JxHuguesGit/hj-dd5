@@ -1,4 +1,5 @@
 <?php
+
 use src\Action\Ajax;
 use src\Exception\ExceptionRenderer;
 use src\Model\PageRegistry;
@@ -7,7 +8,7 @@ define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
 session_start([]);
 
-if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
+if (strpos(PLUGIN_PATH, 'wamp64') !== false) {
     // Activer l'affichage des erreurs
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -24,7 +25,8 @@ add_filter('redirect_canonical', function ($redirect_url, $requested_url) {
     if (in_array($path, ['initiative'])) {
         return false;
     }
-    $page = PageRegistry::getInstance()->get($path);
+    $slug = basename($path);
+    $page = PageRegistry::getInstance()->get($slug);
     if ($page !== null) {
         return false;
     }

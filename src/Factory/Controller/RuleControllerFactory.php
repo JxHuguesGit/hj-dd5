@@ -1,9 +1,11 @@
 <?php
+
 namespace src\Factory\Controller;
 
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicGlossaire;
+use src\Controller\Public\PublicHomebrew;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
@@ -11,7 +13,9 @@ use src\Presenter\MenuPresenter;
 use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
 use src\Presenter\ContentBuilder\GlossaireCardContentBuilder;
+use src\Presenter\ContentBuilder\HomebrewCardContentBuilder;
 use src\Presenter\ListPresenter\GlossaireListPresenter;
+use src\Presenter\ListPresenter\HomebrewListPresenter;
 
 final class RuleControllerFactory
 {
@@ -24,7 +28,7 @@ final class RuleControllerFactory
     public function createCategoryController(string $slug): ?PublicBase
     {
         $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::RULES);
-        return match($slug) {
+        return match ($slug) {
             C::GLOSSARY => new PublicGlossaire(
                 $this->serviceFactory->wordpress(),
                 new GlossaireListPresenter(),
@@ -36,12 +40,12 @@ final class RuleControllerFactory
                 ),
                 $menu
             ),
-            C::HOMEBREW => new PublicGlossaire(
+            C::HOMEBREW => new PublicHomebrew(
                 $this->serviceFactory->wordpress(),
-                new GlossaireListPresenter(),
+                new HomebrewListPresenter(),
                 new PageList(
                     $this->renderer,
-                    new GlossaireCardContentBuilder(
+                    new HomebrewCardContentBuilder(
                         $this->serviceFactory->wordpress()
                     )
                 ),
