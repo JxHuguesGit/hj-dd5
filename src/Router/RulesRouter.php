@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Router;
 
 use src\Constant\Routes;
@@ -15,14 +16,16 @@ class RulesRouter
     {
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une règle individuelle ---
+        /*
         if (preg_match(Routes::RULE_PATTERN, $path, $matches)) {
             return $this->factory->createDetailController($matches[1], $matches[2]);
         }
+        */
 
         ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de règles ---
         if (preg_match(Routes::RULES_PATTERN, $path, $matches)) {
-            return $this->factory->createCategoryController($matches[1]);
+            return $this->factory->createCategoryController($matches[1], $matches[2]);
         }
 
         return null;

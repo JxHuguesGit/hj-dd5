@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Service\Domain;
 
 use WP_Post;
@@ -68,6 +69,29 @@ final class WpPostService
             'category_name'  => $category,
             'orderby'        => 'title',
             'order'          => 'ASC',
+        ]);
+
+        return $query->posts ?? [];
+    }
+
+    public function getPostsByCategoryWithNoChildren(string $category): array
+    {
+        $term = get_category_by_slug($category);
+
+        $query = $this->query([
+            'post_type'      => 'post',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'tax_query' => [
+                [
+                    'taxonomy' => 'category',
+                    'field' => 'term_id',
+                    'terms' => $term->term_id,
+                    'include_children' => false,
+                ],
+            ],
         ]);
 
         return $query->posts ?? [];

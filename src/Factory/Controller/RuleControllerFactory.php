@@ -6,6 +6,7 @@ use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
 use src\Controller\Public\PublicGlossaire;
 use src\Controller\Public\PublicHomebrew;
+use src\Controller\Public\PublicRule;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
@@ -25,33 +26,55 @@ final class RuleControllerFactory
         private TemplateRenderer $renderer
     ) {}
 
-    public function createCategoryController(string $slug): ?PublicBase
+    public function createCategoryController(string $slug, string $anchor): ?PublicBase
     {
         $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::RULES);
+
+        return new PublicRule(
+            $this->serviceFactory->wordpress(),
+            $this->getListPresenter($slug),
+            new PageList(
+                $this->renderer,
+                $this->getCardContentBuilder($slug)
+            ),
+            $menu,
+            $this->getCategoryTitle($slug)
+        );
+    }
+
+    private function getListPresenter(string $slug)
+    {
         return match ($slug) {
-            C::GLOSSARY => new PublicGlossaire(
-                $this->serviceFactory->wordpress(),
-                new GlossaireListPresenter(),
-                new PageList(
-                    $this->renderer,
-                    new GlossaireCardContentBuilder(
-                        $this->serviceFactory->wordpress()
-                    )
-                ),
-                $menu
+            C::GLOSSARY => new GlossaireListPresenter(),
+            C::HOMEBREW => new HomebrewListPresenter(),
+            C::WPNPROPERTIES => new HomebrewListPresenter(),
+            default     => null
+        };
+    }
+
+    private function getCardContentBuilder(string $slug)
+    {
+        return match ($slug) {
+            C::GLOSSARY => new GlossaireCardContentBuilder(
+                $this->serviceFactory->wordpress()
             ),
-            C::HOMEBREW => new PublicHomebrew(
-                $this->serviceFactory->wordpress(),
-                new HomebrewListPresenter(),
-                new PageList(
-                    $this->renderer,
-                    new HomebrewCardContentBuilder(
-                        $this->serviceFactory->wordpress()
-                    )
-                ),
-                $menu
+            C::HOMEBREW => new HomebrewCardContentBuilder(
+                $this->serviceFactory->wordpress()
             ),
-            default              => null,
+            C::WPNPROPERTIES => new HomebrewCardContentBuilder(
+                $this->serviceFactory->wordpress()
+            ),
+            default     => null
+        };
+    }
+
+    private function getCategoryTitle(string $slug): string
+    {
+        return match ($slug) {
+            C::GLOSSARY => 'Glossaire',
+            C::HOMEBREW => 'Homebrew',
+            C::WPNPROPERTIES => 'Propriétés d\'armes',
+            default     => null
         };
     }
 

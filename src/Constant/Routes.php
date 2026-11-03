@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Constant;
 
 final class Routes
@@ -12,6 +13,7 @@ final class Routes
     public const ITEMS_PREFIX   = '/items';
     public const ORIGIN_PREFIX  = '/origine-';
     public const ORIGINS_PREFIX = '/origines';
+    public const WPNPROPERTIES_PREFIX = '/proprietes-darmes';
     public const RULES_PREFIX   = '/rules';
     public const SKILL_PREFIX   = '/skill-';
     public const SKILLS_PREFIX  = '/skills';
@@ -23,7 +25,7 @@ final class Routes
     public const AOE_PATTERN    = '#^aoe$#';
     public const FEAT_PATTERN   = '#^feat-(.+)$#';
     public const FEATS_PATTERN  = '#^feats-(.+)$#';
-    public const RULES_PATTERN  = '#^rules/(.*)?#';
+    public const RULES_PATTERN  = '#^rules/(.*)\#?(.*)?#';
     public const RULE_PATTERN   = '#^rules/(.*)-(.*)?#';
     public const GLOSSAIRE_PATTERN  = '#^glossary-(.*)?#';
     public const HOMEBREW_PATTERN  = '#^homebrew-(.*)?#';
