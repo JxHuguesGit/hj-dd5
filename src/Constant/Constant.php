@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Constant;
 
 class Constant
@@ -126,6 +127,7 @@ class Constant
     public const PRE_REQUIS             = 'preRequis';
     public const PREREQUIS              = 'prerequis';
     public const PROPERTIES             = 'properties';
+    public const WPNPROPERTIES          = 'proprietes-darmes';
     public const RANGED                 = 'ranged';
     public const READER                 = 'reader';
     public const REFERENCE              = 'reference';

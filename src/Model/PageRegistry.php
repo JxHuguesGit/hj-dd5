@@ -17,7 +17,8 @@ use src\Page\Metadata\{
     PageRules,
     PageSkills,
     PageSpecies,
-    PageSpells
+    PageSpells,
+    PageWeaponProperties
 };
 
 class PageRegistry
@@ -69,6 +70,8 @@ class PageRegistry
             new PageGlossaire(),
             // Page Homebrew (liste)
             new PageHomebrew(),
+            // Page Propriétés d'armes (liste)
+            new PageWeaponProperties(),
         ];
 
         foreach ($pages as $page) {
