@@ -2,6 +2,7 @@
 namespace src\Controller\Public;
 
 use src\Constant\Constant as C;
+use src\Domain\Criteria\SpellCriteria;
 use src\Domain\Entity\Spell;
 use src\Page\Renderer\PageSpell;
 use src\Presenter\MenuPresenter;
@@ -14,6 +15,7 @@ class PublicSpell extends PublicBase
 
     public function __construct(
         private string $slug,
+        private ?SpellCriteria $criteria,
         private MenuPresenter $menuPresenter,
         private PageSpell $page,
         private SpellService $spellService,
@@ -31,7 +33,7 @@ class PublicSpell extends PublicBase
     public function getContentPage(): string
     {
         $menu = $this->menuPresenter->render();
-        $pageView = $this->pageService->build($this->spell);
+        $pageView = $this->pageService->build($this->spell, $this->criteria);
         return $this->page->render($menu, $pageView);
     }
 }

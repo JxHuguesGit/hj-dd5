@@ -16,6 +16,11 @@ class Session
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
+    public static function getQueryString(): string
+    {
+        return $_SERVER['REQUEST_METHOD'] === 'GET' ? $_SERVER['QUERY_STRING'] : '';
+    }
+
     public static function getPost(): array
     {
         $result = [];

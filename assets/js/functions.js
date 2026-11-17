@@ -288,8 +288,8 @@ function handleLoadMoreSpells(type, obj, e) {
         data,
         function(response) {
             try {
-                let obj = JSON.parse(response.data);
-                let html = $('<textarea></textarea>').html(obj.data.html).text();
+                let obj = response.data;
+                let html = $('<textarea></textarea>').html(obj.html).text();
                 let $html = $(html);
 
                 if (view=='grid') {
@@ -308,11 +308,11 @@ function handleLoadMoreSpells(type, obj, e) {
                     }
                 }
 
-                const hasMore = obj.data.hasMore;
+                const hasMore = obj.hasMore;
                 if (hasMore) {
                     const $loadMore = $('.spell-load-more');
                     $loadMore
-                        .attr('data-next-page', obj.data.nextPage)
+                        .attr('data-next-page', obj.nextPage)
                         .show();
                 } else {
                     $('.spell-load-more').hide();

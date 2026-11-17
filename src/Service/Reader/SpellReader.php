@@ -32,7 +32,6 @@ final class SpellReader
         if (!$criteria) {
             $criteria = new SpellCriteria();
         }
-
         return $this->spellRepository->findAllWithRelations($criteria);
     }
 

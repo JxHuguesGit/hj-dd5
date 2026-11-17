@@ -3,6 +3,7 @@ namespace src\Factory\Controller;
 
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicSpell;
+use src\Domain\Criteria\SpellCriteria;
 use src\Factory\ServiceFactory;
 use src\Model\PageRegistry;
 use src\Page\Renderer\PageSpell;
@@ -23,8 +24,10 @@ class SpellControllerFactory
     {
         $spellService = $this->serviceFactory->spell();
         $spellDetailPresenter = new SpellDetailPresenter();
+        $criteria = SpellCriteria::fromRequest($_GET);
         return new PublicSpell(
             $slug,
+            $criteria,
             new MenuPresenter(PageRegistry::getInstance()->all(), C::SPELLS),
             new PageSpell(
                 $this->renderer,

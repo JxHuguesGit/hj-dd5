@@ -2,6 +2,7 @@
 namespace src\Service\Page;
 
 use src\Constant\Constant as C;
+use src\Domain\Criteria\SpellCriteria;
 use src\Domain\Entity\Spell;
 use src\Presenter\Detail\SpellDetailPresenter;
 use src\Presenter\ViewModel\SpellPageView;
@@ -14,12 +15,12 @@ final class SpellPageService
         private SpellDetailPresenter $presenter,
     ) {}
 
-    public function build(?Spell $spell): SpellPageView
+    public function build(?Spell $spell, ?SpellCriteria $criteria = null): SpellPageView
     {
         if ($spell === null) {
             $nav = [C::PREV => null, C::NEXT => null];
         } else {
-            $nav = $this->spellService->getPreviousAndNext($spell);
+            $nav = $this->spellService->getPreviousAndNext($spell, $criteria);
         }
 
         return new SpellPageView(

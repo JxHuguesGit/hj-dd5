@@ -11,6 +11,7 @@ use src\Domain\Criteria\SpellCriteria;
 use src\Presenter\ViewModel\SpellRow;
 use src\Service\Formatter\SpellFormatter;
 use src\Utils\Html;
+use src\Utils\Session;
 
 final class SpellCardContentBuilder
 {
@@ -33,8 +34,9 @@ final class SpellCardContentBuilder
 
         $contentSpellGrid = '';
 
+        $extraUrlElements = $this->addExtraUrlElements();
         foreach ($rows as $row) {
-            $contentSpellGrid .= $this->renderItem($row);
+            $contentSpellGrid .= $this->renderItem($row, $extraUrlElements);
         }
 
         $contentSpellList = Html::getDiv(
@@ -65,11 +67,21 @@ final class SpellCardContentBuilder
         );
     }
 
-    private function renderItem(SpellRow $row): string
+    private function addExtraUrlElements(): string
+    {
+        $spellFilter = Session::fromPost(C::SPELL_FILTER, '');
+        if ($spellFilter === '') {
+            return '';
+        } else {
+            return '?' . $spellFilter;
+        }
+    }
+
+    private function renderItem(SpellRow $row, string $extraUrlElements): string
     {
         $content = Html::getBalise(
             H::BALISE_H3,
-            Html::getLink($row->name, $row->url)
+            Html::getLink($row->name, $row->url . $extraUrlElements)
         );
 
         $content .= $this->renderInfo(

@@ -10,6 +10,7 @@ use src\Presenter\ViewModel\SpellDetail;
 use src\Presenter\ViewModel\SpellPageView;
 use src\Service\Formatter\SpellFormatter;
 use src\Utils\Html;
+use src\Utils\Session;
 
 final class SpellDetailContentBuilder extends AbstractDetailContentBuilder
 {
@@ -35,10 +36,18 @@ final class SpellDetailContentBuilder extends AbstractDetailContentBuilder
     /** @param SpellPageView $view */
     protected function renderDetailNavigation(object $view): string
     {
+        $prevUrl = $view->previous?->url;
+        if (null !== $prevUrl && '' !== $prevUrl) {
+            $prevUrl .= '?' . Session::getQueryString();
+        }
+        $nextUrl = $view->next?->url;
+        if (null !== $nextUrl && '' !== $nextUrl) {
+            $nextUrl .= '?' . Session::getQueryString();
+        }
         return $this->renderNavigation(
-            $view->previous?->url,
+            $prevUrl,
             $view->previous?->name,
-            $view->next?->url,
+            $nextUrl,
             $view->next?->name
         );
     }

@@ -66,7 +66,7 @@ class DD5Base
         $renderer        = new TemplateRenderer();
         $service         = new ServiceFactory($reader, $writer, $renderer);
 
-        $router          = $router = new Router(
+        $router          = new Router(
             new Collection([
                 new OriginRouter(
                     new OriginControllerFactory($reader, $service, $renderer)

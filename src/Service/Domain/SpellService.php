@@ -45,7 +45,7 @@ final class SpellService
         return $spell;
     }
 
-    public function getPreviousAndNext(?Spell $spell): array
+    public function getPreviousAndNext(?Spell $spell, ?SpellCriteria $criteria = null): array
     {
         if ($spell === null) {
             return [
@@ -54,8 +54,10 @@ final class SpellService
             ];
         }
 
-        $criteria = new SpellCriteria();
-        $criteria->limit = -1;
+        if (null===$criteria) {
+            $criteria = new SpellCriteria();
+            $criteria->limit = -1;
+        }
 
         $allSpells = $this->spellReader->allSpells($criteria);
 
@@ -69,19 +71,23 @@ final class SpellService
                 C::NEXT => null,
             ];
         }
-
         $count = $allSpells->count();
-
-        $prev = $allSpells
-            ->slice(($idx - 1 + $count) % $count, 1)
-            ->first();
-        $prev->classes = [];
-
-        $next = $allSpells
-            ->slice(($idx + 1) % $count, 1)
-            ->first();
-        $next->classes = [];
-
+        if ($idx === 0) {
+            $prev = null;
+        } else {
+            $prev = $allSpells
+                ->slice(($idx - 1 + $count) % $count, 1)
+                ->first();
+            $prev->classes = [];
+        }
+        if ($idx === $count - 1) {
+            $next = null;
+        } else {
+            $next = $allSpells
+                ->slice(($idx + 1) % $count, 1)
+                ->first();
+            $next->classes = [];
+        }
         return [
             C::PREV => $prev,
             C::NEXT => $next,

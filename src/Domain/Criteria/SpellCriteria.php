@@ -72,7 +72,7 @@ final class SpellCriteria extends BaseCriteria
 
         ///////////////////////////////////
         // Critère sur les écoles.
-        $allSchools = (int) $request['selectAllSchool'];
+        $allSchools = (int) ($request['selectAllSchool'] ?? 0);
         if ($allSchools!=1) {
             $criteria->schoolIds = array_map(
                 'intval',
@@ -83,7 +83,7 @@ final class SpellCriteria extends BaseCriteria
 
         ///////////////////////////////////
         // Critère sur les sources.
-        $allSources = (int) $request['selectAllSource'];
+        $allSources = (int) ($request['selectAllSource'] ?? 0);
         if ($allSources!=1) {
             $criteria->sourceIds = array_map(
                 'intval',
@@ -94,7 +94,7 @@ final class SpellCriteria extends BaseCriteria
 
         ///////////////////////////////////
         // Critère sur les classes.
-        $allClasses = (int) $request['selectAllClass'];
+        $allClasses = (int) ($request['selectAllClass'] ?? 0);
         if ($allClasses!=1) {
             $criteria->classeIds = array_map(
                 'intval',
