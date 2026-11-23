@@ -1,6 +1,8 @@
 <?php
+
 namespace src\Service\Reader;
 
+use src\Collection\Collection;
 use src\Domain\Criteria\InitiativeTrackerCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Repository\InitiativeTrackerRepositoryInterface;
@@ -29,4 +31,14 @@ final class InitiativeTrackerReader
         return $this->repository->findAllWithCriteria($criteria)?->first();
     }
 
+    /**
+     * @return Collection<InitiativeTracker>
+     */
+    public function allInitiativeTrackers(?InitiativeTrackerCriteria $criteria = null): Collection
+    {
+        if (! $criteria) {
+            $criteria = new InitiativeTrackerCriteria();
+        }
+        return $this->repository->findAllWithCriteria($criteria);
+    }
 }

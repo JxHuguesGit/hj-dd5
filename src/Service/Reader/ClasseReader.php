@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Service\Reader;
 
 use src\Collection\Collection;
@@ -25,20 +26,12 @@ final class ClasseReader
     /**
      * @return Collection<Classe>
      */
-    public function allClasses(?ClasseCriteria $criteria=null): Collection
+    public function allClasses(?ClasseCriteria $criteria = null): Collection
     {
         if (!$criteria) {
             $criteria = new ClasseCriteria();
             $criteria->orderBy = [F::NAME => C::ASC];
         }
         return $this->repository->findAllWithCriteria($criteria);
-    }
-
-    /**
-     * @return Collection<Classe>
-     */
-    public function allSpellCastingClasses(): Collection
-    {
-        return $this->repository->allSpellCastingClasses();
     }
 }

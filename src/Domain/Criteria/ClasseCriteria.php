@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
@@ -13,6 +14,9 @@ final class ClasseCriteria extends BaseCriteria
 
     #[Equals(F::CODE)]
     public ?string $code = null;
+
+    #[Equals(field: F::SPELLS)]
+    public ?int $spells = null;
 
     #[Compare(field: F::NAME, operator: Compare::LT)]
     public ?string $nameLt = null;

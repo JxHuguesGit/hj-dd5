@@ -1,8 +1,8 @@
 <?php
+
 namespace src\Page;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap as B;
 use src\Constant\Template;
 use src\Presenter\TableBuilder\TableBuilderInterface;
 use src\Presenter\ContentBuilder\ContentBuilderInterface;
@@ -28,8 +28,7 @@ class PageList
         Collection $viewData,
         ?string $modalContent = null,
         ?string $toastContent = null,
-    ): string
-    {
+    ): string {
         // Page complète avec menu
         return $this->renderer->render(
             Template::MAIN_PAGE,
@@ -51,8 +50,7 @@ class PageList
         Collection $viewData,
         ?string $modalContent = null,
         ?string $toastContent = null
-    ): string
-    {
+    ): string {
         // Construire le tableau
         $contentHtml = $this->contentBuilder->build(
             $viewData

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Repository;
 
 use src\Collection\Collection;
@@ -16,9 +17,4 @@ interface ClasseRepositoryInterface
      * @return Collection<Classe>
      */
     public function findAllWithCriteria(ClasseCriteria $criteria): Collection;
-
-    /**
-     * @return Collection<Classe>
-     */
-    public function allSpellCastingClasses(): Collection;
 }

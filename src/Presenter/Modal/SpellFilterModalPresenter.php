@@ -1,8 +1,11 @@
 <?php
+
 namespace src\Presenter\Modal;
 
 use src\Constant\Constant as C;
 use src\Constant\Template;
+use src\Domain\Criteria\ClasseCriteria;
+use src\Domain\Criteria\ReferenceCriteria;
 use src\Renderer\TemplateRenderer;
 use src\Service\Reader\ClasseReader;
 use src\Service\Reader\ReferenceReader;
@@ -25,36 +28,36 @@ class SpellFilterModalPresenter implements ModalPresenter
         $maxOptions = '';
         $selectedMin = 0;
         $selectedMax = 9;
-        for ($i=0; $i<=9; $i++) {
-            $minOptions .= Html::getOption($i, [C::VALUE=>$i], $selectedMin==$i);
-            $maxOptions .= Html::getOption($i, [C::VALUE=>$i], $selectedMax==$i);
+        for ($i = 0; $i <= 9; $i++) {
+            $minOptions .= Html::getOption($i, [C::VALUE => $i], $selectedMin == $i);
+            $maxOptions .= Html::getOption($i, [C::VALUE => $i], $selectedMax == $i);
         }
 
         // Liste des classes
         $classOptions = '';
         $nbClassOptions = 0;
-        $strAllClassSelected = ' '.C::CHECKED;
+        $strAllClassSelected = ' ' . C::CHECKED;
         $this->dealWithClasses($classOptions, $nbClassOptions);
 
         // Liste des écoles
         $schoolOptions = '';
         $nbSchoolOptions = 0;
-        $strAllSchoolSelected = ' '.C::CHECKED;
+        $strAllSchoolSelected = ' ' . C::CHECKED;
         $this->dealWithSchools($schoolOptions, $nbSchoolOptions);
 
         // Liste des sources
         $sourceOptions = '';
         $nbSourceOptions = 0;
-        $strAllSourceSelected = ' '.C::CHECKED;
+        $strAllSourceSelected = ' ' . C::CHECKED;
         $this->dealWithSources($sourceOptions, $nbSourceOptions);
 
         // Rituels
         $onlyRituels = false;
-        $strRituels = $onlyRituels ? ' '.C::CHECKED : '';
+        $strRituels = $onlyRituels ? ' ' . C::CHECKED : '';
 
         // Concentration
         $onlyConcentrate = false;
-        $strConcentration = $onlyConcentrate ? ' '.C::CHECKED : '';
+        $strConcentration = $onlyConcentrate ? ' ' . C::CHECKED : '';
 
         $attrContent = [
             // Niveau
@@ -98,7 +101,9 @@ class SpellFilterModalPresenter implements ModalPresenter
 
     private function dealWithClasses(string &$classOptions, int &$nbClassOptions): void
     {
-        $classes = $this->classeReader->allSpellCastingClasses();
+        $criteria = new ClasseCriteria();
+        $criteria->spells = 1;
+        $classes = $this->classeReader->allClasses($criteria);
         // Liste des classes
         $defaultClassSelection = array_map(fn($case) => $case->id, $classes->toArray());
         $selectedClasses = $defaultClassSelection;
@@ -106,9 +111,9 @@ class SpellFilterModalPresenter implements ModalPresenter
             $value = $classe->id;
             if (in_array($value, $selectedClasses)) {
                 ++$nbClassOptions;
-                $classOptions .= Html::getOption(ucfirst($classe->name), [C::VALUE=>$value], true);
+                $classOptions .= Html::getOption(ucfirst($classe->name), [C::VALUE => $value], true);
             } else {
-                $classOptions .= Html::getOption(ucfirst($classe->name), [C::VALUE=>$value]);
+                $classOptions .= Html::getOption(ucfirst($classe->name), [C::VALUE => $value]);
             }
         }
     }
@@ -122,25 +127,27 @@ class SpellFilterModalPresenter implements ModalPresenter
             $value = $spellSchool->id;
             if (in_array($value, $selectedSchools)) {
                 ++$nbSchoolOptions;
-                $schoolOptions .= Html::getOption($spellSchool->name, [C::VALUE=>$value], true);
+                $schoolOptions .= Html::getOption($spellSchool->name, [C::VALUE => $value], true);
             } else {
-                $schoolOptions .= Html::getOption($spellSchool->name, [C::VALUE=>$value]);
+                $schoolOptions .= Html::getOption($spellSchool->name, [C::VALUE => $value]);
             }
         }
     }
 
     private function dealWithSources(string &$sourceOptions, int &$nbSourceOptions): void
     {
-        $sources = $this->referenceReader->allReferences();
+        $criteria = new ReferenceCriteria();
+        $criteria->spells = 0;
+        $sources = $this->referenceReader->allReferences($criteria);
         $defaultSourceSelection = array_map(fn($case) => $case->id, $sources->toArray());
         $selectedSources = $defaultSourceSelection;
         foreach ($sources as $source) {
             $value = $source->id;
             if (in_array($value, $selectedSources)) {
                 ++$nbSourceOptions;
-                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value], true);
+                $sourceOptions .= Html::getOption($source->name, [C::VALUE => $value], true);
             } else {
-                $sourceOptions .= Html::getOption($source->name, [C::VALUE=>$value]);
+                $sourceOptions .= Html::getOption($source->name, [C::VALUE => $value]);
             }
         }
     }

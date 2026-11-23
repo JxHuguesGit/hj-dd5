@@ -118,6 +118,7 @@ function handleOpenModal(obj, e) {
     openModal(target);
     $('#'+target+' button.btn-primary').unbind().on('click', function() {
         if (target=='spellFilter') {
+            spellFilter = $('#formSpellFilter').serialize();
             handleLoadMoreSpells('replace', obj);
         }
         closeModal(target);
@@ -264,6 +265,10 @@ function handleCollapse(obj) {
     obj.parent().toggleClass('collapsed');
 }
 
+let spellFilter = null;
+if ($('#formSpellFilter').length!=0) {
+    spellFilter = $('#formSpellFilter').serialize();
+}
 // Lance le script Ajax pour afficher plus de sorts dans la liste de présentation des sorts.
 // Présent côté admin et public.
 function handleLoadMoreSpells(type, obj, e) {
@@ -278,7 +283,7 @@ function handleLoadMoreSpells(type, obj, e) {
         'page': page,
         'view': view,
         'admin': admin,
-        'spellFilter': $('#formSpellFilter').serialize()
+        'spellFilter': spellFilter
     };
     const baseUrl = globalThis.location.origin;
     const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';

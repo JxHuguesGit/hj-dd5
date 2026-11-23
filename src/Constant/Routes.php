@@ -25,10 +25,11 @@ final class Routes
     public const AOE_PATTERN    = '#^aoe$#';
     public const FEAT_PATTERN   = '#^feat-(.+)$#';
     public const FEATS_PATTERN  = '#^feats-(.+)$#';
-    public const RULES_PATTERN  = '#^rules/(.*)\#?(.*)?#';
-    public const RULE_PATTERN   = '#^rules/(.*)-(.*)?#';
-    public const GLOSSAIRE_PATTERN  = '#^glossary-(.*)?#';
-    public const HOMEBREW_PATTERN  = '#^homebrew-(.*)?#';
+    public const RULES_HOME_PATTERN  = '#^rules$#';
+    public const RULES_PATTERN  = '#^rules/(.*)\#?(.*)?$#';
+    public const RULE_PATTERN   = '#^rules/(.*)-(.*)?$#';
+    public const GLOSSAIRE_PATTERN  = '#^glossary-(.*)?$#';
+    public const HOMEBREW_PATTERN  = '#^homebrew-(.*)?$#';
     public const INITIATIVE_PATTERN = '#^initiative(?:/([^/]+))?$#';
     public const ITEM_PATTERN   = '#^item-(.+)$#';
     public const ITEMS_PATTERN  = '#^items-(.+)$#';

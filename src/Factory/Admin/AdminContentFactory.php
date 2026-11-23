@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Factory\Admin;
 
 use src\Constant\Constant as C;
@@ -16,7 +17,10 @@ use src\Factory\PresenterFactory;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
 use src\Factory\WriterFactory;
+use src\Presenter\FormBuilder\InitiativeTrackerFormBuilder;
 use src\Presenter\FormBuilder\MapFormBuilder;
+use src\Presenter\ToastBuilder;
+use src\Renderer\TemplateRenderer;
 
 final class AdminContentFactory
 {
@@ -38,10 +42,14 @@ final class AdminContentFactory
             C::ONG_CHARACTER  => new AdminCharacterContent(),
             C::ONG_TIMELINE   => new AdminTimelineContent(
                 $mapId,
-                $this->readerFactory->map(),
-                $this->readerFactory->initiative(),
-                $this->readerFactory->mapToken(),
-                $this->presenterFactory->initiative()
+                $this->readerFactory,
+                $this->writerFactory->initiativeTracker(),
+                $this->presenterFactory->initiative(),
+                new InitiativeTrackerFormBuilder(),
+                new ToastBuilder(
+                    new TemplateRenderer()
+                ),
+                new TemplateRenderer(),
             ),
             C::ONG_MAP        => new AdminMapContent(
                 $id,

@@ -4,8 +4,6 @@ namespace src\Factory\Controller;
 
 use src\Constant\Constant as C;
 use src\Controller\Public\PublicBase;
-use src\Controller\Public\PublicGlossaire;
-use src\Controller\Public\PublicHomebrew;
 use src\Controller\Public\PublicRule;
 use src\Factory\ReaderFactory;
 use src\Factory\ServiceFactory;
@@ -15,8 +13,10 @@ use src\Renderer\TemplateRenderer;
 use src\Page\PageList;
 use src\Presenter\ContentBuilder\GlossaireCardContentBuilder;
 use src\Presenter\ContentBuilder\HomebrewCardContentBuilder;
+use src\Presenter\ContentBuilder\RuleCardContentBuilder;
 use src\Presenter\ListPresenter\GlossaireListPresenter;
 use src\Presenter\ListPresenter\HomebrewListPresenter;
+use src\Presenter\ListPresenter\RuleListPresenter;
 
 final class RuleControllerFactory
 {
@@ -26,7 +26,24 @@ final class RuleControllerFactory
         private TemplateRenderer $renderer
     ) {}
 
-    public function createCategoryController(string $slug, string $anchor): ?PublicBase
+    public function createRuleController(): ?PublicBase
+    {
+        $slug = C::HOME;
+        $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::RULES);
+
+        return new PublicRule(
+            $this->serviceFactory->wordpress(),
+            $this->getListPresenter($slug),
+            new PageList(
+                $this->renderer,
+                $this->getCardContentBuilder($slug)
+            ),
+            $menu,
+            $this->getCategoryTitle($slug)
+        );
+    }
+
+    public function createCategoryController(string $slug): ?PublicBase
     {
         $menu = new MenuPresenter(PageRegistry::getInstance()->all(), C::RULES);
 
@@ -45,10 +62,11 @@ final class RuleControllerFactory
     private function getListPresenter(string $slug)
     {
         return match ($slug) {
-            C::GLOSSARY => new GlossaireListPresenter(),
-            C::HOMEBREW => new HomebrewListPresenter(),
+            C::GLOSSARY      => new GlossaireListPresenter(),
+            C::HOMEBREW      => new HomebrewListPresenter(),
             C::WPNPROPERTIES => new HomebrewListPresenter(),
-            default     => null
+            C::HOME          => new RuleListPresenter(),
+            default          => null
         };
     }
 
@@ -64,6 +82,7 @@ final class RuleControllerFactory
             C::WPNPROPERTIES => new HomebrewCardContentBuilder(
                 $this->serviceFactory->wordpress()
             ),
+            C::HOME => new RuleCardContentBuilder(),
             default     => null
         };
     }
@@ -71,10 +90,11 @@ final class RuleControllerFactory
     private function getCategoryTitle(string $slug): string
     {
         return match ($slug) {
-            C::GLOSSARY => 'Glossaire',
-            C::HOMEBREW => 'Homebrew',
+            C::GLOSSARY      => 'Glossaire',
+            C::HOMEBREW      => 'Homebrew',
             C::WPNPROPERTIES => 'Propriétés d\'armes',
-            default     => null
+            C::HOME          => 'Les règles',
+            default          => null
         };
     }
 

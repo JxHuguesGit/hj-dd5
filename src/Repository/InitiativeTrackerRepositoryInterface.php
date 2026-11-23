@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Repository;
 
 use src\Collection\Collection;
@@ -11,6 +12,7 @@ interface InitiativeTrackerRepositoryInterface
     public function commit(): void;
     public function rollBack(): void;
 
+    public function insert(InitiativeTracker $initTracker): void;
     public function updatePartial(InitiativeTracker $initTracker, array $changedFields): void;
 
     /**
@@ -22,5 +24,4 @@ interface InitiativeTrackerRepositoryInterface
      * @return Collection<InitiativeTracker>
      */
     public function findAllWithCriteria(InitiativeTrackerCriteria $criteria): Collection;
-
 }

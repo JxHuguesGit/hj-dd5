@@ -1,11 +1,12 @@
 <?php
+
 namespace src\Presenter\FormBuilder;
 
-use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Constant\Language as L;
+use src\Domain\Criteria\ClasseCriteria;
 use src\Domain\Entity\Spell;
 use src\Service\Domain\WpPostService;
 use src\Service\Reader\SpellCastingTimeReader;
@@ -74,11 +75,11 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
             $concentrationParams[C::CHECKED] = true;
         }
         $vParams = [C::OUTERDIVCLASS => B::COL_MD_3];
-        if (strpos($entity->components, 'V')!==false) {
+        if (strpos($entity->components, 'V') !== false) {
             $vParams[C::CHECKED] = true;
         }
         $sParams = [C::OUTERDIVCLASS => B::COL_MD_3];
-        if (strpos($entity->components, 'S')!==false) {
+        if (strpos($entity->components, 'S') !== false) {
             $sParams[C::CHECKED] = true;
         }
         ///////////////////////////
@@ -90,23 +91,38 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         $fieldsetInterne = new FieldsetField('', false, $paramsFieldsetInterne);
         $fieldsetInterne
             ->addField(new SelectField(
-                F::CASTINGTIMEID, "Temps d'incantation", $entity->castingTimeId, $castingTimes,
+                F::CASTINGTIMEID,
+                "Temps d'incantation",
+                $entity->castingTimeId,
+                $castingTimes,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
-                F::DURATIONID, L::DURATION, $entity->durationId, $spellDurations,
+                F::DURATIONID,
+                L::DURATION,
+                $entity->durationId,
+                $spellDurations,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
-                F::RANGEID, L::RANGE, $entity->rangeId, $spellRanges,
+                F::RANGEID,
+                L::RANGE,
+                $entity->rangeId,
+                $spellRanges,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new CheckboxField(
-                F::RITUEL, 'Rituel', 'rituel', false,
+                F::RITUEL,
+                'Rituel',
+                'rituel',
+                false,
                 $rituelParams
             ))
             ->addField(new CheckboxField(
-                F::CONCENTRATION, 'Concentration', 'concentration', false,
+                F::CONCENTRATION,
+                'Concentration',
+                'concentration',
+                false,
                 $concentrationParams
             ))
             ->addField(new CheckboxField('cm_v', 'V', 'v', false, $vParams))
@@ -118,16 +134,25 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         if ($newEntity) {
             $fieldSpellWpPostId = null;
             $fieldSpellName = new SelectField(
-                F::WPPOSTID, 'Nom du sort', $entity->wpPostId, $selectWordpress,
+                F::WPPOSTID,
+                'Nom du sort',
+                $entity->wpPostId,
+                $selectWordpress,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             );
         } else {
             $fieldSpellWpPostId = new HiddenField(
-                F::WPPOSTID, '', $entity->wpPostId, false,
+                F::WPPOSTID,
+                '',
+                $entity->wpPostId,
+                false,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             );
             $fieldSpellName = new TextField(
-                F::WPPOSTNAME, 'Nom du sort', $entityName, false,
+                F::WPPOSTNAME,
+                'Nom du sort',
+                $entityName,
+                false,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             );
         }
@@ -137,23 +162,38 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         $fieldset = new FieldsetField('');
         $fieldset
             ->addField(new NumberField(
-                F::ID, 'ID', $entity->id, true,
+                F::ID,
+                'ID',
+                $entity->id,
+                true,
                 [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new SelectField(
-                F::SCHOOLID, L::SCHOOL, $entity->schoolId, $selectSchools,
+                F::SCHOOLID,
+                L::SCHOOL,
+                $entity->schoolId,
+                $selectSchools,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
-                F::LEVEL, L::LEVEL, $entity->level, $selectLevels,
+                F::LEVEL,
+                L::LEVEL,
+                $entity->level,
+                $selectLevels,
                 [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
             ->addField(new SelectField(
-                F::SOURCEID, L::SOURCE, $entity->sourceId, $selectSources,
+                F::SOURCEID,
+                L::SOURCE,
+                $entity->sourceId,
+                $selectSources,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
-                F::SPELLCLASSES, L::CLASSES, $spellClassesSelection, $spellClasses,
+                F::SPELLCLASSES,
+                L::CLASSES,
+                $spellClassesSelection,
+                $spellClasses,
                 [
                     C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3,
                     'multiple'  => true,
@@ -164,27 +204,39 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
             ->addField($fieldSpellName)
             ->addField(new EmptyField([C::CSSCLASS => B::COL_MD_3]))
             ->addField(new SelectField(
-                F::MATERIALCOMPID, L::MATERIALCOMP, $entity->materialComponentId, $spellComponents,
+                F::MATERIALCOMPID,
+                L::MATERIALCOMP,
+                $entity->materialComponentId,
+                $spellComponents,
                 [C::OUTERDIVCLASS => B::COL_MD_5]
             ))
             ->addField(new TextareaField(
-                F::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
+                F::DESCRIPTION,
+                L::DESCRIPTION,
+                $this->wpPostService->getPostContent(),
+                true,
                 [
                     C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3,
                     C::STYLE         => 'height: 100px',
                 ]
             ))
             ->addField(new SelectField(
-                F::SPELLENHANCEMENTID, "Amélioration", $entity->spellEnhancementId, $spellEnhancements,
+                F::SPELLENHANCEMENTID,
+                "Amélioration",
+                $entity->spellEnhancementId,
+                $spellEnhancements,
                 [C::OUTERDIVCLASS => B::COL_MD_5 . ' ' . B::MB3]
             ))
             ->addField(new EmptyField([C::CSSCLASS => B::COL_MD_2]))
             ->addField(new SelectField(
-                F::SPELLTRIGGERID, "Déclenchement", $entity->spellTriggerId, $spellTriggers,
+                F::SPELLTRIGGERID,
+                "Déclenchement",
+                $entity->spellTriggerId,
+                $spellTriggers,
                 [C::OUTERDIVCLASS => B::COL_MD_5]
             ))
         ;
-        if ($fieldSpellWpPostId!==null) {
+        if ($fieldSpellWpPostId !== null) {
             $fieldset->addField($fieldSpellWpPostId);
         }
         $form->addField($fieldset);
@@ -275,7 +327,9 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
     }
     private function buildClasses(): array
     {
-        $classes = $this->classeReader->allSpellCastingClasses();
+        $criteria = new ClasseCriteria();
+        $criteria->spells = 1;
+        $classes = $this->classeReader->allClasses($criteria);
         return array_map(
             fn($t) => [
                 C::VALUE => $t->id,
@@ -300,7 +354,7 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
     private function buildLevels(): array
     {
         $selectLevels  = [];
-        for ($i=0; $i<=9; $i++) {
+        for ($i = 0; $i <= 9; $i++) {
             $selectLevels[] = [
                 C::VALUE => $i,
                 C::LABEL => $i,
@@ -350,5 +404,4 @@ class SpellFormBuilder extends AbstractFormBuilder implements FormBuilderInterfa
         }
         return $options;
     }
-
 }

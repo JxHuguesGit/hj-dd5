@@ -69,6 +69,7 @@ class Field
     public const SOURCE      = 'source';
     public const SPEED       = 'speed';
     public const SPELLCLASSES = 'spellClasses';
+    public const SPELLS       = 'spells';
     public const STHDISADV   = 'stealthDisadvantage';
     public const STRPENALTY  = 'strengthPenalty';
     public const STRSCORE    = 'strScore';

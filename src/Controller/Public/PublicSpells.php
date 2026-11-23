@@ -1,8 +1,8 @@
 <?php
+
 namespace src\Controller\Public;
 
 use src\Collection\Collection;
-use src\Constant\Bootstrap as B;
 use src\Constant\Language as L;
 use src\Constant\Template;
 use src\Domain\Result\SpellResult;
@@ -42,8 +42,7 @@ class PublicSpells extends PublicBase
         string $title,
         Collection $viewData,
         string $modalContent
-    ): string
-    {
+    ): string {
         return $this->renderer->render(
             Template::MAIN_PAGE,
             [
@@ -63,8 +62,7 @@ class PublicSpells extends PublicBase
         Collection $viewData,
         ?string $modalContent = null,
         ?string $toastContent = null
-    ): string
-    {
+    ): string {
         // Construire le tableau
         $contentHtml = $this->spellCardContentBuilder->build(
             $viewData,

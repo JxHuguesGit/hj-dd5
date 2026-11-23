@@ -32,6 +32,8 @@
     <div class="initiative-menu initiative-tracker-menu hidden">
         <button type="button" class="sound-on"><i class="fa-solid fa-volume-high" aria-hidden="true"></i> Sound On</button>
         <button type="button" class="sound-off"><i class="fa-solid fa-volume-xmark" aria-hidden="true"></i> Sound Off</button>
+
+        <a href="https://dd5.jhugues.fr/initiative?action=logout" rel="noopener noreferrer" title="Déconnexion">Déconnexion</a>
     </div>
 
     <section id="waiting-panel" class="waiting-panel-container">

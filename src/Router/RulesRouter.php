@@ -23,9 +23,15 @@ class RulesRouter
         */
 
         ////////////////////////////////////////////////////////////
+        // --- Gestion de la page "mère" ---
+        if (preg_match(Routes::RULES_HOME_PATTERN, $path)) {
+            return $this->factory->createRuleController();
+        }
+
+        ////////////////////////////////////////////////////////////
         // --- Gestion d'une catégorie de règles ---
         if (preg_match(Routes::RULES_PATTERN, $path, $matches)) {
-            return $this->factory->createCategoryController($matches[1], $matches[2]);
+            return $this->factory->createCategoryController($matches[1]);
         }
 
         return null;

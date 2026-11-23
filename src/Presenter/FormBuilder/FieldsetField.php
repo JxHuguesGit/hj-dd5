@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Constant as C;
@@ -31,7 +32,7 @@ class FieldsetField extends FormField
             $content .= $field->display();
         }
 
-        if ($this->params['hasLegend'] ?? true) {
+        if ($this->params['hasLegend']) {
             $legend = Html::getBalise('legend', htmlspecialchars($this->title), [
                 C::CSSCLASS => C::AJAXACTION,
                 C::DATA  => [

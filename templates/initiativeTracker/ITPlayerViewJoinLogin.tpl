@@ -23,7 +23,7 @@
         </div>
         <div class="card">
             <p class="sous-titre">Saisir l'ID de session fourni par le MJ.</p>
-            <form method="post">
+            <form method="post" action="https://dd5.jhugues.fr/initiative">
                 <label for="sessionId">ID de Session</label>
                 <input id="sessionId" name="sessionId" type="text" maxlength="6" autocomplete="off" spellcheck="false"
                     placeholder="AB3X9K">

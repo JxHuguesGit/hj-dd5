@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
@@ -13,6 +14,9 @@ final class ReferenceCriteria extends BaseCriteria
 
     #[Equals(F::SLUG)]
     public ?string $slug = null;
+
+    #[Compare(F::SPELLS, operator: Compare::GT)]
+    public ?int $spells = null;
 
     #[Compare(field: F::NAME, operator: Compare::LT)]
     public ?string $nameLt = null;

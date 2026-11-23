@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\Admin;
 
 use src\Constant\Bootstrap as B;
@@ -22,10 +23,14 @@ final class InitiativeAdminPresenter
         private TemplateRenderer $renderer
     ) {}
 
+    public function getRendered(): TemplateRenderer
+    {
+        return $this->renderer;
+    }
+
     public function presentInitiativePanel(): string
     {
-        $combatId = Session::fromGet('combatId');
-
+        $combatId = Session::fromGet(C::COMBAT);
         $initiativeTracker = $this->readerFactory->initiativeTracker()->initiativeTrackerByCode($combatId);
         $criteria = new ITCharacterCriteria();
         $criteria->initiativeTrackerId = $initiativeTracker->id;
@@ -102,7 +107,6 @@ final class InitiativeAdminPresenter
                 $content,
             ]
         );
-
     }
 
     private function buildITHeaderPanel(InitiativeTracker $initiativeTracker): string
