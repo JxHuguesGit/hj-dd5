@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
@@ -19,33 +20,46 @@ class MonsterCombatFormBuilder
     {
         $fieldset
             ->addField(new ExtraNumberField(
-                F::SCORECA, L::CA, $monster->ca, false,
+                F::SCORECA,
+                L::CA,
+                $monster->ca,
+                false,
                 ['extraValue' => $monster->getExtra(F::SCORECA)]
             ))
             ->addField(new ExtraNumberField(
-                F::SCOREHP, L::PV, $monster->hp, false,
+                F::SCOREHP,
+                L::PV,
+                $monster->hp,
+                false,
                 ['extraValue' => $monster->getExtra(F::SCOREHP)]
             ))
             ->addField(new NumberField(
-                F::SCORECR, L::FP, $monster->cr, false,
+                F::SCORECR,
+                L::FP,
+                $monster->cr,
+                false,
                 [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
             ->addField(new NumberField(
-                F::INITIATIVE, L::INITIATIVE, $monster->initiative, false,
+                F::INITIATIVE,
+                L::INITIATIVE,
+                $monster->initiative,
+                false,
                 [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
             ))
         ;
-        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
+        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3];
         if ($monster->legendary) {
             $checkBoxAttributes[C::CHECKED] = C::CHECKED;
         }
         $fieldset
-            ->addField(new CheckboxField(F::LEGENDARY, 'Légendaire', 1, false, $checkBoxAttributes))
-            ->addField(new FillerField(
-                '', '', '', '',
-                [C::OUTERDIVCLASS => B::COL_MD_5 . ' ' . B::MB3]
-            ))
-        ;
+            ->addField(new CheckboxField(
+                F::LEGENDARY,
+                'Légendaire',
+                F::LEGENDARY,
+                false,
+                $checkBoxAttributes
+            ));
 
         // Ici on devrait récupérer les types de vitesse
         // et boucler dessus pour passer à chaque fois un objet TypeSpeed
@@ -63,27 +77,37 @@ class MonsterCombatFormBuilder
         $monsterSpeed = $monster->speed($speedType->id);
         $frTag        = $speedType->frTag;
 
-        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3];
+        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . B::PX0];
         if ($monsterSpeed->id) {
             $checkBoxAttributes[C::CHECKED] = C::CHECKED;
         }
 
-        $fieldset
+        $innerFieldSet = new GroupedFields('', '');
+
+        $innerFieldSet
             ->addField(new CheckboxField(
-                "speed_$frTag", ucfirst($frTag), $monsterSpeed->id, false, $checkBoxAttributes
+                "speed_$frTag",
+                ucfirst($frTag),
+                $monsterSpeed->id,
+                false,
+                $checkBoxAttributes
             ))
             ->addField(new TextField(
-                "value['$frTag']", 'Distance (m)', $monsterSpeed->value ?? '', false,
-                [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3]
+                "value['$frTag']",
+                'Distance (m)',
+                $monsterSpeed->value ?? '',
+                false,
+                [C::OUTERDIVCLASS => B::COL_MD_3 . B::PX0]
             ))
             ->addField(new TextField(
-                "extra['$frTag']", 'Complément', $monsterSpeed->extra ?? '', false,
-                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
-            ))
-            ->addField(new FillerField(
-                '', '', '', '',
-                [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::MB3]
+                "extra['$frTag']",
+                'Complément',
+                $monsterSpeed->extra ?? '',
+                false,
+                [C::OUTERDIVCLASS => B::COL_MD_6 . B::PX0]
             ))
         ;
+
+        $fieldset->addField($innerFieldSet);
     }
 }

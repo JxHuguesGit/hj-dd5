@@ -7,14 +7,13 @@ use src\Utils\Html;
 
 class FieldsetField extends FormField
 {
-    private string $title;
     private array $innerFields = [];
-    private bool $collapsible;
 
-    public function __construct(string $title, bool $collapsible = false, array $params = [])
-    {
-        $this->title       = $title;
-        $this->collapsible = $collapsible;
+    public function __construct(
+        private string $title,
+        private bool $collapsible = false,
+        array $params = []
+    ) {
         parent::__construct('', '', null, false, $params);
     }
 

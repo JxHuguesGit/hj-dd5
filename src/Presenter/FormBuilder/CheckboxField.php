@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
@@ -23,6 +24,22 @@ class CheckboxField extends FormField
     }
 
     public function display(): string
+    {
+        $strBalise = $this->renderInput();
+        $strLabel  = Html::getBalise(
+            C::LABEL,
+            htmlspecialchars($this->label),
+            [C::CSSCLASS => 'w-100 py-0', 'for' => $this->getId()]
+        );
+        $strCheck = '<i class="fa-regular fa-circle"></i><i class="fa-solid fa-circle-check"></i>';
+        $innerDiv = Html::getDiv($strBalise . $strLabel . $strCheck, [C::CSSCLASS => 'form-floating checkbox h-100']);
+        return Html::getDiv(
+            $innerDiv,
+            [C::CSSCLASS => ($this->params[C::OUTERDIVCLASS] ?? B::COL_12)]
+        );
+    }
+
+    public function olddisplay(): string
     {
         $strBalise = $this->renderInput();
         $strLabel  = Html::getBalise(

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Factory;
 
 use src\Constant\Constant as C;
@@ -23,6 +24,8 @@ final class WriterFactory
 
         C::ITCHARACTER            => [C::WRITER => 'InitTrackCharacterWriter',    C::REPO => C::ITCHARACTER],
         C::INITTRACKER            => [C::WRITER => 'InitiativeTrackerWriter',     C::REPO => C::INITTRACKER],
+
+        C::MONSTER                => [C::WRITER => 'MonsterWriter',               C::REPO => C::MONSTER],
     ];
 
     public function __construct(

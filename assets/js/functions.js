@@ -464,3 +464,34 @@ $(function () {
     });
 
 });
+
+$(function () {
+    const $fieldsets = $('.monster-fieldset');
+    let current = 0;
+
+    function displayStep(index) {
+
+        $fieldsets.removeClass('active');
+        $fieldsets.eq(index).addClass('active');
+
+        $('#btnPrev').prop('disabled', index === 0);
+        $('#btnNext').prop('disabled', index === $fieldsets.length - 1);
+    }
+
+    $('#btnNext').on('click', function () {
+        if (current < $fieldsets.length - 1) {
+            current++;
+            displayStep(current);
+        }
+    });
+
+    $('#btnPrev').on('click', function () {
+        if (current > 0) {
+            current--;
+            displayStep(current);
+        }
+    });
+
+    // Initialisation
+    displayStep(0);
+});

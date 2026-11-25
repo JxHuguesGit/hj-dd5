@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\FormBuilder;
 
 use src\Constant\Bootstrap as B;
@@ -20,7 +21,7 @@ class MonsterIdentityFormBuilder
         $references = $reader->allReferences();
         $options    = [];
         foreach ($references as $reference) {
-            $options[] = ['valeur' => $reference->id, C::LABEL => $reference->name];
+            $options[] = [C::VALUE => $reference->id, C::LABEL => $reference->name];
         }
         $fieldset
             ->addField(new NumberField(
@@ -54,7 +55,7 @@ class MonsterIdentityFormBuilder
             ->addField(new SelectField(
                 F::REFID,
                 L::REFERENCE,
-                $monster->ukTag,
+                $monster->reference()->getId(),
                 $options,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3]
             ))

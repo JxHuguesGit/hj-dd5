@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controller\Admin;
 
 use src\Constant\Constant as C;
@@ -14,10 +15,11 @@ final class AdminCompendiumContent implements AdminContentInterface
     public function getContent(): string
     {
         return match ($this->currentId) {
-            C::FEATS  => $this->compendiumFactory->feat()->render(),
-            C::SKILLS => $this->compendiumFactory->skill()->render(),
-            C::SPELLS => $this->compendiumFactory->spell()->render(),
-            default => 'Hello Compendium !',
+            C::FEATS    => $this->compendiumFactory->feat()->render(),
+            C::MONSTERS => $this->compendiumFactory->monster()->render(),
+            C::SKILLS   => $this->compendiumFactory->skill()->render(),
+            C::SPELLS   => $this->compendiumFactory->spell()->render(),
+            default     => 'Hello Compendium !',
         };
     }
 }

@@ -92,6 +92,16 @@ final class Monster extends Entity
         F::ALIGNNAME    => FieldType::STRINGNULLABLE,
     ];
 
+    public const EDITABLE_FIELDS = [
+        F::FRNAME,
+        F::REFID,
+        F::SCORECA,
+        F::SCOREHP,
+        F::SCORECR,
+        F::INITIATIVE,
+        F::LEGENDARY,
+    ];
+
     /**
      * @SuppressWarnings("php:S1068")
      */

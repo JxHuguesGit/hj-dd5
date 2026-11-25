@@ -1,9 +1,11 @@
 <?php
+
 namespace src\Presenter\ViewModel;
 
 final class MonsterRow
 {
     public function __construct(
+        public int $id,
         public string $name,
         public string $ukTag,
         public string $cr,

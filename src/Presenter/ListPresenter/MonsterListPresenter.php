@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\ListPresenter;
 
 use src\Collection\Collection;
@@ -26,6 +27,7 @@ final class MonsterListPresenter
     private function buildRow(): MonsterRow
     {
         return new MonsterRow(
+            id: $this->monster->id,
             name: $this->displayName(),
             ukTag: $this->monster->ukTag,
             cr: $this->monsterFormatter->formatCR($this->monster->cr),
@@ -59,6 +61,4 @@ final class MonsterListPresenter
             ? sprintf('%s (%s)', $typeName, $subTypeName)
             : $typeName;
     }
-
 }
-

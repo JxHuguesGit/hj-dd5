@@ -8,12 +8,21 @@ use src\Utils\Utils;
 final class MonsterIdentity
 {
     public function __construct(
-        private Monster $monster)
-    {}
+        private Monster $monster
+    ) {}
 
     public function getId(): int
     {
         return $this->monster->getField(F::ID);
+    }
+
+    public function getFullName(): string
+    {
+        if ('' === $this->getFrenchName()) {
+            return $this->getName();
+        } else {
+            return $this->getFrenchName();
+        }
     }
 
     public function getName(): string

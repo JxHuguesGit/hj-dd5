@@ -1,11 +1,11 @@
 <?php
+
 namespace src\Service\Formatter;
 
 use src\Collection\Collection;
 use src\Constant\Bootstrap as B;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
-use src\Constant\Icon as I;
 use src\Constant\Language as L;
 use src\Domain\Monster\Monster;
 use src\Enum\AbilityEnum;
@@ -32,8 +32,7 @@ class MonsterFormatter
         string $ukTag,
         string $frTag
     ): string {
-        $html = '<span class="modal-tooltip" data-modal="monster" data-uktag="' . $ukTag . '">'
-        . $name . ' ' . Html::getIcon(I::SEARCH) . '</span>';
+        $html = $name;
 
         if (! $isComplete) {
             $html .= '<i class="float-end">🇬🇧</i>';
@@ -212,7 +211,7 @@ class MonsterFormatter
         //////////////////////////////////////////////////////////////
         return Html::getDiv(
             Html::getBalise('strong', 'Sens') . ' ' . implode(', ', $senses) .
-            ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
+                ($comma ? ' ; ' : '') . 'Perception passive ' . $monster->percPassive,
             [C::CSSCLASS => B::COL_12]
         );
     }

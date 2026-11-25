@@ -1,7 +1,9 @@
 <?php
+
 namespace src\Constant;
 
 use src\Constant\Language as L;
+
 class Bootstrap
 {
     public const AUTO      = 'auto';
@@ -193,6 +195,8 @@ class Bootstrap
 
     public const MX_AUTO = self::MX . L::DASH . self::AUTO;
     public const MY4     = self::MY . '-4';
+
+    public const PX0     = 'px-0';
 
     public const NAV_ITEM       = self::NAV . L::DASH . self::ITEM;
     public const NAV_LINK       = self::NAV . L::DASH . self::LINK;

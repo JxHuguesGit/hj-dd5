@@ -16,15 +16,16 @@ use src\Service\Formatter\MonsterFormatter;
 class MonsterCompendiumFactory extends AbstractCompendiumFactory
 {
     public function __construct(
-        private TemplateRenderer $renderer,
-        private ReaderFactory $readerFactory,
-        private WriterFactory $writerFactory,
-        private ServiceFactory $serviceFactory
+        protected TemplateRenderer $renderer,
+        protected ReaderFactory $readerFactory,
+        protected WriterFactory $writerFactory,
+        protected ServiceFactory $serviceFactory
     ) {}
 
     public function create(): MonsterCompendiumHandler
     {
         return new MonsterCompendiumHandler(
+            $this->writerFactory->monster(),
             $this->readerFactory->monster(),
             new MonsterListPresenter(
                 new MonsterFormatter(
