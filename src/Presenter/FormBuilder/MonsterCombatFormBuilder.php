@@ -73,11 +73,10 @@ class MonsterCombatFormBuilder
     private function addSpeedSection(FieldsetField $fieldset, Monster $monster, SpeedType $speedType)
     {
         // Ici, on devrait récupérer un objet TypeSpeed et utiliser slug et nom.
-        // Où récupérer les données ?
         $monsterSpeed = $monster->speed($speedType->id);
         $frTag        = $speedType->frTag;
 
-        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . B::PX0];
+        $checkBoxAttributes = [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::PX0];
         if ($monsterSpeed->id) {
             $checkBoxAttributes[C::CHECKED] = C::CHECKED;
         }
@@ -86,9 +85,9 @@ class MonsterCombatFormBuilder
 
         $innerFieldSet
             ->addField(new CheckboxField(
-                "speed_$frTag",
+                "speed['$frTag']",
                 ucfirst($frTag),
-                $monsterSpeed->id,
+                $speedType->id,
                 false,
                 $checkBoxAttributes
             ))
@@ -97,14 +96,14 @@ class MonsterCombatFormBuilder
                 'Distance (m)',
                 $monsterSpeed->value ?? '',
                 false,
-                [C::OUTERDIVCLASS => B::COL_MD_3 . B::PX0]
+                [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::PX0]
             ))
             ->addField(new TextField(
-                "extra['$frTag']",
+                "comp['$frTag']",
                 'Complément',
                 $monsterSpeed->extra ?? '',
                 false,
-                [C::OUTERDIVCLASS => B::COL_MD_6 . B::PX0]
+                [C::OUTERDIVCLASS => B::COL_MD_6 . ' ' . B::PX0]
             ))
         ;
 

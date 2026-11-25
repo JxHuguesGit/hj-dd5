@@ -62,8 +62,8 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
     {
         foreach (Monster::EDITABLE_FIELDS as $field) {
             $value = Session::fromPost($field, 'err');
-            // Gestion des booléens
             if (in_array($field, [F::LEGENDARY])) {
+                // Gestion des booléens
                 $monster->$field = ($value === $field ? 1 : 0);
             } elseif ($value != 'err' && $monster->$field != $value) {
                 // Champ standard
@@ -73,6 +73,43 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
                 }
             }
         }
+
+        $this->initExtra($monster, $changedFields);
+        $this->initSpeed($monster, $changedFields);
+    }
+
+    private function initExtra(Monster $monster, array &$changedFields): void
+    {
+        $extra = Session::fromPost(F::EXTRA);
+        foreach ($extra as $key => $value) {
+            $stored = $monster->getExtra($key);
+            if ('' !== $value && $stored != $value) {
+                $monster->setExtra($key, $value);
+                if ($changedFields !== null && !isset($changedFields[$key])) {
+                    $changedFields[] = $key;
+                }
+            }
+        }
+    }
+
+    private function initSpeed(Monster $monster, array &$changedFields): void
+    {
+        $speed = Session::fromPost(F::SPEED);
+        // On a la liste des identifiants dans les value et les types de déplacement dans les key
+        // On va ainsi récupérer les value[$key] pour avoir les valeurs associées
+        // Et les comp[$key] pour les éventuels compléments.
+        var_dump($speed);
+        /*
+        foreach ($extra as $key => $value) {
+            $stored = $monster->getExtra($key);
+            if ('' !== $value && $stored != $value) {
+                $monster->setExtra($key, $value);
+                if ($changedFields !== null && !isset($changedFields[$key])) {
+                    $changedFields[] = $key;
+                }
+            }
+        }
+            */
     }
 
     private function controlEntity(Monster $monster): bool

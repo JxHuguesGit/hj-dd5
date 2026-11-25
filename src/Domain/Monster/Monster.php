@@ -328,13 +328,22 @@ final class Monster extends Entity
     // -----------------------
     // Extra
     // -----------------------
-    public function getExtra(string $field = ''): mixed
+    public function getExtra(?string $field = null): mixed
     {
-        if ($this->extra === null || $field === '') {
-            return [];
-        }
-        $tabExtra = json_decode($this->extra, true);
-        return $tabExtra[$field] ?? '';
+        $extra = json_decode($this->extra ?? '[]', true) ?: [];
+
+        return $field === null
+            ? $extra
+            : ($extra[$field] ?? null);
+    }
+
+    public function setExtra(string $field, mixed $value): void
+    {
+        $extra = json_decode($this->extra ?? '[]', true) ?: [];
+
+        $extra[$field] = $value;
+
+        $this->extra = json_encode($extra);
     }
 
     public function isComplete(): bool
