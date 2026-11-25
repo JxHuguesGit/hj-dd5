@@ -7,6 +7,7 @@ use src\Constant\Constant as C;
 use src\Constant\Icon as I;
 use src\Domain\Entity\InitiativeTracker;
 use src\Utils\Html;
+use src\Utils\Session;
 use src\Utils\Table;
 use src\Utils\UrlGenerator;
 
@@ -17,6 +18,7 @@ class InitiativeTrackerTableBuilder extends AbstractTableBuilder
     {
         $headers = [
             [C::LABEL => 'iTCode'],
+            [C::LABEL => 'Admin'],
             [C::LABEL => 'Nom'],
             [C::LABEL => 'Round'],
             [C::LABEL => 'Participant actif'],
@@ -27,6 +29,9 @@ class InitiativeTrackerTableBuilder extends AbstractTableBuilder
                 B::TEXT_WHITE
             )
         ];
+        if (!Session::isAdmin()) {
+            unset($headers[1]);
+        }
 
         $params[C::ID] = 'initiativeTrackerTable';
 
@@ -46,11 +51,18 @@ class InitiativeTrackerTableBuilder extends AbstractTableBuilder
             ->addBodyCell([
                 C::CONTENT => $tracker->iTCode,
                 C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER]
-            ])
-            ->addBodyCell([
-                C::CONTENT => $tracker->name,
-                C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_START]
-            ])
+            ]);
+        if (Session::isAdmin()) {
+            $user = get_user_by('id', $tracker->wpUserId);
+            $table->addBodyCell([
+                C::CONTENT => $user->first_name . ' ' . $user->last_name,
+                C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER]
+            ]);
+        }
+        $table->addBodyCell([
+            C::CONTENT => $tracker->name,
+            C::ATTRIBUTES => [C::CSSCLASS => B::BORDER_START]
+        ])
             ->addBodyCell([
                 C::CONTENT => $tracker->round,
                 C::ATTRIBUTES => [C::CSSCLASS => B::TEXT_CENTER . ' ' . B::BORDER_START]

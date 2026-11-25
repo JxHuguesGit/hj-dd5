@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controller;
 
 
@@ -35,11 +36,12 @@ final class AdminPage extends Utilities
         $sidebar = $this->sidebarFactory->create(
             $this->arrParams,
             fn(string $template, array $attributes): string =>
-                $renderer->render($template, $attributes)
+            $renderer->render($template, $attributes)
         );
 
+        $current_user = wp_get_current_user();
         $attributes = [
-            'Hugues Joneaux',
+            $current_user->first_name . ' ' . $current_user->last_name,
             $sidebar->getContent(),
             $content,
             PLUGINS_DD5,
@@ -55,6 +57,8 @@ final class AdminPage extends Utilities
 
     private function isFullPage(): bool
     {
-        return $this->arrParams[C::ONGLET] === C::TIMELINE;
+        return $this->arrParams[C::ONGLET] === C::TIMELINE
+            && isset($this->arrParams[C::COMBAT])
+            && $this->arrParams[C::COMBAT] !== '';
     }
 }

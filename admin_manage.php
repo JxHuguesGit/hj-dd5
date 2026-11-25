@@ -6,67 +6,68 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"
             integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
-<?php
-use src\Controller\AdminPage;
-use src\Factory\Admin\AdminSidebarFactory;
-use src\Factory\Admin\AdminContentFactory;
-use src\Factory\CompendiumFactory;
-use src\Factory\PresenterFactory;
-use src\Factory\ReaderFactory;
-use src\Factory\RepositoryFactory;
-use src\Factory\ServiceFactory;
-use src\Factory\WriterFactory;
-use src\Query\QueryBuilder;
-use src\Query\QueryExecutor;
-use src\Renderer\TemplateRenderer;
-use src\Utils\Session;
+        <?php
 
-if (strpos(PLUGIN_PATH, 'wamp64')!==false) {
-    define('DD5_SITE_URL', 'http://localhost/');
-} else {
-    define('DD5_SITE_URL', 'https://dd5.jhugues.fr/');
-}
-define('PLUGINS_DD5', DD5_SITE_URL.'wp-content/plugins/hj-dd5/');
-date_default_timezone_set('Europe/Paris');
+        use src\Controller\AdminPage;
+        use src\Factory\Admin\AdminSidebarFactory;
+        use src\Factory\Admin\AdminContentFactory;
+        use src\Factory\CompendiumFactory;
+        use src\Factory\PresenterFactory;
+        use src\Factory\ReaderFactory;
+        use src\Factory\RepositoryFactory;
+        use src\Factory\ServiceFactory;
+        use src\Factory\WriterFactory;
+        use src\Query\QueryBuilder;
+        use src\Query\QueryExecutor;
+        use src\Renderer\TemplateRenderer;
+        use src\Utils\Session;
 
-class DD5Admin
-{
-    public static function display(): void
-    {
-        /////////////////////////////////////////
-        // Analyse de l'url
-        $uri = Session::fromServer('REQUEST_URI');
-        $arrUri = explode('/', $uri);
+        if (strpos(PLUGIN_PATH, 'wamp64') !== false) {
+            define('DD5_SITE_URL', 'http://localhost/');
+        } else {
+            define('DD5_SITE_URL', 'https://dd5.jhugues.fr/');
+        }
+        define('PLUGINS_DD5', DD5_SITE_URL . 'wp-content/plugins/hj-dd5/');
+        date_default_timezone_set('Europe/Paris');
 
-        $qb       = new QueryBuilder();
-        $qe       = new QueryExecutor();
-        $repositoryFactory = new RepositoryFactory($qb, $qe);
-        $readerFactory = new ReaderFactory($repositoryFactory);
-        $writerFactory = new WriterFactory($repositoryFactory);
-        $templateRenderer = new TemplateRenderer();
-        $serviceFactory = new ServiceFactory($readerFactory, $writerFactory, $templateRenderer);
+        class DD5Admin
+        {
+            public static function display(): void
+            {
+                /////////////////////////////////////////
+                // Analyse de l'url
+                $uri = Session::fromServer('REQUEST_URI');
+                $arrUri = explode('/', $uri);
 
-        $adminPage = new AdminPage(
-            $arrUri,
-            new AdminSidebarFactory($readerFactory),
-            new AdminContentFactory(
-                new CompendiumFactory(
-                    $templateRenderer,
-                    $readerFactory,
-                    $writerFactory,
-                    $serviceFactory
-                ),
-                $serviceFactory,
-                $readerFactory,
-                $writerFactory,
-                new PresenterFactory(
-                    $templateRenderer,
-                    $readerFactory,
-                    $serviceFactory
-                )
-            ),
-        );
-        echo $adminPage->getAdminContentPage();
-    }
-}
-DD5Admin::display();
+                $qb       = new QueryBuilder();
+                $qe       = new QueryExecutor();
+                $repositoryFactory = new RepositoryFactory($qb, $qe);
+                $readerFactory     = new ReaderFactory($repositoryFactory);
+                $writerFactory     = new WriterFactory($repositoryFactory);
+                $templateRenderer  = new TemplateRenderer();
+                $serviceFactory    = new ServiceFactory($readerFactory, $writerFactory, $templateRenderer);
+
+                $adminPage = new AdminPage(
+                    $arrUri,
+                    new AdminSidebarFactory($readerFactory),
+                    new AdminContentFactory(
+                        new CompendiumFactory(
+                            $templateRenderer,
+                            $readerFactory,
+                            $writerFactory,
+                            $serviceFactory
+                        ),
+                        $serviceFactory,
+                        $readerFactory,
+                        $writerFactory,
+                        new PresenterFactory(
+                            $templateRenderer,
+                            $readerFactory,
+                            $serviceFactory
+                        )
+                    ),
+                );
+                echo $adminPage->getAdminContentPage();
+            }
+        }
+        DD5Admin::display();

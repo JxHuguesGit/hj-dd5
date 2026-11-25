@@ -59,7 +59,13 @@ class PageList
         // Section centrale (titre + tableau)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $contentHtml, $toastContent, $modalContent]
+            [
+                $title,
+                $contentHtml,
+                $toastContent,
+                $modalContent,
+                $title === '' ? 'd-none' : ''
+            ]
         );
     }
 }

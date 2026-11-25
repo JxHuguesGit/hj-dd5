@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Page;
 
 use src\Constant\Bootstrap as B;
@@ -35,7 +36,13 @@ class PageForm
         // Section centrale (titre + formulaire)
         return $this->renderer->render(
             Template::CATEGORY_PAGE,
-            [$title, $formHtml->display(), $this->toastContent, '']
+            [
+                $title,
+                $formHtml->display(),
+                $this->toastContent,
+                '',
+                $title == '' ? 'd-none' : ''
+            ]
         );
     }
 }

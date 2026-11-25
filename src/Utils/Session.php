@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils;
 
 use src\Constant\FieldType;
@@ -30,7 +31,7 @@ class Session
         return $result;
     }
 
-    public static function fromPost(string $field, array|string $default = '', bool $sanitize=false): array|string
+    public static function fromPost(string $field, array|string $default = '', bool $sanitize = false): array|string
     {
         if (!isset($_POST[$field])) {
             return $default;
@@ -39,7 +40,8 @@ class Session
         $data = $_POST[$field];
 
         if (is_array($data)) {
-            return array_map(fn($item) =>
+            return array_map(
+                fn($item) =>
                 self::sanitizeValue($item, $sanitize),
                 $data
             );
@@ -49,7 +51,7 @@ class Session
         return self::sanitizeValue($data, $sanitize);
     }
 
-    public static function fromGet(string $field, array|string $default = '', bool $sanitize=false): array|string
+    public static function fromGet(string $field, array|string $default = '', bool $sanitize = false): array|string
     {
         if (!isset($_GET[$field])) {
             return $default;
@@ -58,7 +60,8 @@ class Session
         $data = $_GET[$field];
 
         if (is_array($data)) {
-            return array_map(fn($item) =>
+            return array_map(
+                fn($item) =>
                 self::sanitizeValue($item, $sanitize),
                 $data
             );
@@ -140,5 +143,8 @@ class Session
         return $normalized;
     }
 
-
+    public static function isAdmin(): bool
+    {
+        return current_user_can('manage_options');
+    }
 }

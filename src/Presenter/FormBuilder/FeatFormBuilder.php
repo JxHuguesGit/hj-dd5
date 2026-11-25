@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter\FormBuilder;
 
 use src\Collection\Collection;
@@ -87,22 +88,34 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             $criteria->abilityId = $ability->id;
             $featAbilities       = $this->featAbilityReader->allFeatAbilities($criteria);
             $featAbilitiesSel->add(new FeatAbilityView(
-                $ability->id, AbilityEnum::fromLabel($ability->name), $ability->name, ! $featAbilities->isEmpty()
+                $ability->id,
+                AbilityEnum::fromLabel($ability->name),
+                $ability->name,
+                ! $featAbilities->isEmpty()
             ));
         }
 
         $fieldset = new FieldsetField('');
         $fieldset
             ->addField(new NumberField(
-                F::ID, 'ID', $entity->id, true,
+                F::ID,
+                'ID',
+                $entity->id,
+                true,
                 [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
             ->addField(new SelectField(
-                F::FEATTYPEID, L::FEAT_TYPE, $entity->featTypeId, $selectElements,
+                F::FEATTYPEID,
+                L::FEAT_TYPE,
+                $entity->featTypeId,
+                $selectElements,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new SelectField(
-                F::SOURCEID, L::SOURCE, $entity->sourceId, $selectSources,
+                F::SOURCEID,
+                L::SOURCE,
+                $entity->sourceId,
+                $selectSources,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new FillerField())
@@ -122,20 +135,34 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
             ))
             ->addField(new FillerField())
             ->addField(new NumberField(
-                F::WPPOSTID, 'Post ID', $entity->wpPostId, false,
+                F::WPPOSTID,
+                'Post ID',
+                $entity->wpPostId,
+                false,
                 [C::OUTERDIVCLASS => B::COL_MD_2]
             ))
             ->addField(new TextField(
-                F::NAME, C::NAME, $entityWpPostId == -1 ? '' : $entity->name, true,
+                F::NAME,
+                C::NAME,
+                $entityWpPostId == -1 ? '' : $entity->name,
+                true,
                 [C::OUTERDIVCLASS => B::COL_MD_4]
             ))
             ->addField(new TextField(
-                F::SLUG, C::SLUG, $entityWpPostId == -1 ? '' : $entity->slug, true,
-                [C::OUTERDIVCLASS => B::COL_MD_4,
-                ]))
+                F::SLUG,
+                C::SLUG,
+                $entityWpPostId == -1 ? '' : $entity->slug,
+                true,
+                [
+                    C::OUTERDIVCLASS => B::COL_MD_4,
+                ]
+            ))
             ->addField(new FillerField())
             ->addField(new TextareaField(
-                F::DESCRIPTION, L::DESCRIPTION, $this->wpPostService->getPostContent(), true,
+                F::DESCRIPTION,
+                L::DESCRIPTION,
+                $this->wpPostService->getPostContent(),
+                true,
                 [
                     C::OUTERDIVCLASS => B::COL_MD_12 . ' ' . B::MB3,
                     'style'                 => 'height: 100px',
@@ -145,5 +172,4 @@ class FeatFormBuilder extends AbstractFormBuilder implements FormBuilderInterfac
         $form->addField($fieldset);
         return $form;
     }
-
 }

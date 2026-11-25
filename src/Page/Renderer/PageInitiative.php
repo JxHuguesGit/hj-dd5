@@ -7,7 +7,6 @@ use src\Domain\Entity\InitiativeTracker;
 use src\Renderer\TemplateRenderer;
 use src\Service\Domain\InitTrackCharacterService;
 use src\Service\Reader\InitiativeTrackerReader;
-use src\Service\Reader\InitTrackCharacterReader;
 use src\Utils\Session;
 
 class PageInitiative
@@ -20,46 +19,55 @@ class PageInitiative
 
     public function render(): string
     {
-        $logout = Session::fromGet('action');
-        if (!Session::isPostSubmitted() && 'logout' === $logout) {
+        if (Session::fromGet('action') === 'logout') {
             Session::unsetSession('sessionId');
-            $returned = $this->renderLoginPage();
-        } else {
-            $returned = '';
-            $sessionId = Session::fromPost('sessionId', -1);
-            if ($sessionId == -1) {
-                // On arrive sur la page.
-                // A-t-on une sessionId en Session ?
-                $sessionId = Session::fromSession('sessionId');
-                if ($sessionId == '') {
-                    // On arrive tout neuf sur la page.
-                    $returned = $this->renderLoginPage();
-                } else {
-                    $initiativeTracker = $this->itReader->initiativeTrackerByCode($sessionId);
-                    if ($sessionId == 'HJO') {
-                        $initiativeTracker = new InitiativeTracker();
-                    }
-                    // On a une Session identifiée, on l'affiche
-                    $returned = $this->renderInitiativePage($initiativeTracker);
-                }
-            } else {
-                // Est-on sur une Session identifiée ?
-                $initiativeTracker = $this->itReader->initiativeTrackerByCode($sessionId);
-                if ($sessionId == 'HJO' || $initiativeTracker->id != '') {
-                    if ($sessionId == 'HJO') {
-                        $initiativeTracker = new InitiativeTracker();
-                    }
-                    Session::setSession('sessionId', $sessionId);
-                    // Si oui, on affiche la Session.
-                    $returned = $this->renderInitiativePage($initiativeTracker);
-                } else {
-                    // Si non, on affiche l'interface permettant de rejoindre une Session.
-                    // Avec un message éventuellement
-                    $returned = $this->renderLoginPage();
-                }
+            return $this->renderLoginPage();
+        }
+
+        $initiativeTracker = $this->getInitiativeTracker();
+        if (null === $initiativeTracker) {
+            return $this->renderLoginPage();
+        }
+
+        return $this->renderInitiativePage($initiativeTracker);
+    }
+
+    private function getInitiativeTracker(): ?InitiativeTracker
+    {
+        $sessionId = $this->resolveSessionId();
+
+        if ($sessionId === '') {
+            return null;
+        }
+
+        $initiativeTracker = $this->itReader->initiativeTrackerByCode($sessionId);
+
+        if (null === $initiativeTracker || $initiativeTracker->id === '') {
+            return null;
+        }
+
+        Session::setSession('sessionId', $sessionId);
+
+        return $initiativeTracker;
+    }
+
+    private function resolveSessionId(): string
+    {
+        if (Session::isPostSubmitted()) {
+            $sessionId = Session::fromPost('sessionId', '');
+
+            if ($sessionId !== '') {
+                return $sessionId;
             }
         }
-        return $returned;
+
+        $sessionId = Session::fromGet('combat');
+
+        if ($sessionId !== '') {
+            return $sessionId;
+        }
+
+        return Session::fromSession('sessionId');
     }
 
     private function renderInitiativePage(InitiativeTracker $initiativeTracker): string
@@ -76,7 +84,7 @@ class PageInitiative
                     '',
                     '',
                     '', //PLUGINS_DD5,
-                    date('His'),
+                    $initiativeTracker->iTCode,
                 ]
             );
         }
@@ -94,7 +102,7 @@ class PageInitiative
                 $this->initTrackCharService->displayCharacter($firstCharacter),
                 $this->initTrackCharService->displayQueuedCharacters($orderedQueue),
                 PLUGINS_DD5,
-                date('His'),
+                $initiativeTracker->iTCode,
             ]
         );
     }

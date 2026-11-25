@@ -3,6 +3,7 @@
 use src\Action\Ajax;
 use src\Exception\ExceptionRenderer;
 use src\Model\PageRegistry;
+use src\Security\Capabilities;
 
 define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'DD5');
@@ -88,19 +89,22 @@ foreach (glob(__DIR__ . '/src/Domain/Entity/*.php') as $file) {
 
 function dd5Menu()
 {
+    $user = get_user_by('email', 'jhugues@gmail.com');
+    $user->add_cap(Capabilities::ACCESS);
+    $user->add_cap(Capabilities::TIMELINE);
+
     $urlRoot = 'hj-dd5/admin_manage.php';
     if (function_exists('add_menu_page')) {
-        $uploadFiles = 'upload_files';
         $pluginName  = 'DD5';
         $urlIcon     = plugins_url('/hj-dd5/assets/images/favicon-24x24.svg');
-        add_menu_page($pluginName, $pluginName, $uploadFiles, $urlRoot, '', $urlIcon);
+        add_menu_page($pluginName, $pluginName, Capabilities::ACCESS, $urlRoot, '', $urlIcon);
         if (function_exists('add_submenu_page')) {
             $arrUrlSubMenu = [
                 'home' => 'Accueil',
             ];
             foreach ($arrUrlSubMenu as $key => $value) {
                 $urlSubMenu = $urlRoot . '&amp;onglet=' . $key;
-                add_submenu_page($urlRoot, $value, $value, $uploadFiles, $urlSubMenu, $key);
+                add_submenu_page($urlRoot, $value, $value, Capabilities::ACCESS, $urlSubMenu, $key);
             }
         }
     }

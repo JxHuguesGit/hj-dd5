@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
@@ -9,6 +10,9 @@ final class InitiativeTrackerCriteria extends BaseCriteria
 {
     #[Equals(F::ITCODE)]
     public ?string $iTCode = null;
+
+    #[Equals(F::WPUSERID)]
+    public ?int $wpUserId = null;
 
     public array $orderBy = [
         F::ID => C::ASC

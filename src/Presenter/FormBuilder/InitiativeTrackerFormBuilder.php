@@ -7,6 +7,7 @@ use src\Constant\Constant as C;
 use src\Constant\Field as F;
 use src\Domain\Entity\InitiativeTracker;
 use src\Utils\Form;
+use src\Utils\Session;
 use src\Utils\UrlGenerator;
 
 class InitiativeTrackerFormBuilder extends AbstractFormBuilder implements FormBuilderInterface
@@ -24,6 +25,21 @@ class InitiativeTrackerFormBuilder extends AbstractFormBuilder implements FormBu
         $params['cancelUrl'] = UrlGenerator::admin(C::ONG_TIMELINE, '');
         $form                = $this->createForm($params);
         $entityName          = $newEntity ? '' : $entity->name;
+
+        $users = Session::isAdmin()
+            ? get_users([
+                'orderby' => 'display_name',
+                'order'   => 'ASC',
+            ])
+            : [wp_get_current_user()];
+
+        $selectElements = array_map(
+            fn(\WP_User $u) => [
+                C::VALUE => $u->ID,
+                C::LABEL => $u->first_name . ' ' . $u->last_name,
+            ],
+            $users
+        );
 
         //////////////////////////
         // Fieldset principal
@@ -43,6 +59,13 @@ class InitiativeTrackerFormBuilder extends AbstractFormBuilder implements FormBu
                 false,
                 [C::OUTERDIVCLASS => B::COL_MD_2 . ' ' . B::MB3 . ' ' . B::MT5]
             ))
+            ->addField(new SelectField(
+                F::WPUSERID,
+                'Admin',
+                $entity->wpUserId,
+                $selectElements,
+                [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3 . ' ' . B::MT5]
+            ))
             ->addField(new TextField(
                 F::NAME,
                 'Nom du combat',
@@ -50,7 +73,6 @@ class InitiativeTrackerFormBuilder extends AbstractFormBuilder implements FormBu
                 false,
                 [C::OUTERDIVCLASS => B::COL_MD_4 . ' ' . B::MB3 . ' ' . B::MT5]
             ))
-            ->addField(new EmptyField([C::CSSCLASS => B::COL_MD_4]))
         ;
         $form->addField($fieldset);
         return $form;

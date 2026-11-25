@@ -1,5 +1,5 @@
 <!-- PAGE HEADER -->
-<section class="page-header">
+<section class="page-header %5$s">
     <div class="container page-header-inner">
         <h1>%1$s</h1>
     </div>

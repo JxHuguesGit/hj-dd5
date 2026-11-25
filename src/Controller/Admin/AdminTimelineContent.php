@@ -3,6 +3,7 @@
 namespace src\Controller\Admin;
 
 use src\Constant\Constant as C;
+use src\Domain\Criteria\InitiativeTrackerCriteria;
 use src\Domain\Entity\InitiativeTracker;
 use src\Factory\ReaderFactory;
 use src\Page\PageForm;
@@ -168,9 +169,13 @@ final class AdminTimelineContent implements AdminContentInterface
 
     private function renderCombatList(): string
     {
+        $criteria = new InitiativeTrackerCriteria();
+        if (!Session::isAdmin()) {
+            $criteria->wpUserId = Session::getWpUser()->ID;
+        }
         $trackers = $this->readerFactory
             ->initiativeTracker()
-            ->allInitiativeTrackers();
+            ->allInitiativeTrackers($criteria);
 
         $page = new PageList(
             $this->templateRenderer,
@@ -178,7 +183,7 @@ final class AdminTimelineContent implements AdminContentInterface
         );
 
         return $page->renderAdmin(
-            'Liste des combats',
+            '', //Liste des combats
             $trackers,
             ''
         );
