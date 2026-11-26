@@ -2,8 +2,10 @@
 
 namespace src\Controller\Compendium;
 
+use src\Collection\Collection;
 use src\Constant\Constant as C;
 use src\Constant\Field as F;
+use src\Domain\Entity\MonsterSpeedType;
 use src\Domain\Monster\Monster;
 use src\Factory\ReaderFactory;
 use src\Page\PageForm;
@@ -95,21 +97,37 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
     private function initSpeed(Monster $monster, array &$changedFields): void
     {
         $speed = Session::fromPost(F::SPEED);
+        $value = Session::fromPost(F::VALUE);
+        $comp  = Session::fromPost('comp');
         // On a la liste des identifiants dans les value et les types de déplacement dans les key
-        // On va ainsi récupérer les value[$key] pour avoir les valeurs associées
-        // Et les comp[$key] pour les éventuels compléments.
-        var_dump($speed);
-        /*
-        foreach ($extra as $key => $value) {
-            $stored = $monster->getExtra($key);
-            if ('' !== $value && $stored != $value) {
-                $monster->setExtra($key, $value);
-                if ($changedFields !== null && !isset($changedFields[$key])) {
-                    $changedFields[] = $key;
-                }
+        $speedTypes = $this->readerFactory->speedType()->allSpeedTypes();
+
+        $newMonsterTypeSpeeds = new Collection();
+        foreach ($speedTypes as $speedType) {
+            $monsterSpeedType = $monster->speed($speedType->id);
+            if ((
+                $value["'" . $speedType->frTag . "'"] != $monsterSpeedType->value ||
+                $comp["'" . $speedType->frTag . "'"] != $monsterSpeedType->extra
+            ) && !isset($changedFields['updateSpeed'])) {
+                $changedFields[] = 'updateSpeed';
             }
+            $attributes = [
+                F::MONSTERID   => $monster->id,
+                F::TYPESPEEDID => $speedType->id,
+                F::VALUE       => (float) $value["'" . $speedType->frTag . "'"],
+                F::EXTRA       => $comp["'" . $speedType->frTag . "'"]
+            ];
+            $newMonsterTypeSpeeds->add(new MonsterSpeedType($attributes));
         }
-            */
+
+        if (isset($changedFields['updateSpeed'])) {
+            $monster->setSpeedTypeEntities($newMonsterTypeSpeeds);
+        }
+    }
+
+    private function controlSpeed(Monster $monster): bool
+    {
+        return true;
     }
 
     private function controlEntity(Monster $monster): bool
@@ -135,9 +153,17 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
             $this->toastContent .= $this->toastBuilder->error("Un champ obligatoire n'a pas été saisi ou a une valeur erronnée.");
             return $this->renderEdit($monster);
         }
+        if (isset($changedFields['updateSpeed'])) {
+            unset($changedFields['updateSpeed']);
+            if (!$this->controlSpeed($monster)) {
+                $this->toastContent .= $this->toastBuilder->error("Une Vitesse a été mal saisie.");
+                return $this->renderEdit($monster);
+            }
+        }
 
-        $this->writer->updatePartial($monster, $changedFields);
-        $this->toastContent = $this->toastBuilder->success("Le monstre a été correctement mis à jour.");
+        var_dump($changedFields);
+        //$this->writer->updatePartial($monster, $changedFields);
+        $this->toastContent .= $this->toastBuilder->success("Le monstre a été correctement mis à jour.");
         return $this->renderEdit($monster);
     }
 

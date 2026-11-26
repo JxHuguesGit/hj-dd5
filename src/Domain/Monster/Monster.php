@@ -233,6 +233,10 @@ final class Monster extends Entity
         }
         return $this->speedTypeEntities->find(fn($item) => $item->typeSpeedId === $speedTypeId) ?? null;
     }
+    public function setSpeedTypeEntities(Collection $speedTypeEntities): void
+    {
+        $this->speedTypeEntities = $speedTypeEntities;
+    }
 
     public function traits(): Collection
     {

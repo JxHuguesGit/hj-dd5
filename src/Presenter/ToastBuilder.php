@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Presenter;
 
 use src\Constant\Bootstrap as B;
@@ -40,5 +41,10 @@ final class ToastBuilder
     public function info(string $message, string $title = 'Information'): string
     {
         return $this->build('info', $title, $message);
+    }
+
+    public function debug(string $message, string $title = 'Debug'): string
+    {
+        return $this->build('dark', $title, $message);
     }
 }
