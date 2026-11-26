@@ -12,6 +12,7 @@
         <div class="playerView-title">
             <i class="fa-solid fa-khanda swords" aria-hidden="true" style="font-size: 18px;"></i>
             <span class="title">Initiative Tracker</span>
+            <span class="d-none" id="iTCode">%7$s</span>
         </div>
         <div class="header-actions">
             <div class="round-container">

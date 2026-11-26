@@ -43,7 +43,9 @@ class FieldsetField extends FormField
             $legend = '';
         }
 
-        $attrs = $this->params[C::CSSCLASS] ?? [C::CSSCLASS => 'monster-fieldset row mb-4'];
+        $attrs = [
+            C::CSSCLASS => $this->params[C::CSSCLASS] ?? 'monster-fieldset row mb-4'
+        ];
         if ($this->collapsible) {
             $attrs[C::CSSCLASS] .= ' collapsible';
         }

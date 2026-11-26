@@ -28,7 +28,7 @@ const SELECTORS = {
 
 let refreshTimer = null;
 let requestInProgress = false;
-const initTrackerId = 'JPC4ZR';
+const initTrackerId = $('#iTCode').text();
 const baseUrl = globalThis.location.origin;
 const ajaxUrl = baseUrl + '/wp-admin/admin-ajax.php';
 

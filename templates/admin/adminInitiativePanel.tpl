@@ -33,7 +33,7 @@
 
             <div class="initiative-main-content">
                 %8$s
-                <p>Add players and enemies, then enter initiative rolls to begin.</p>
+                <p>Ajouter personnages et ennemis, puis entrer les jets d'initiative pour commencer.</p>
 
                 <div role="dialog" aria-modal="true" aria-label="Edit max HP"
                     class="d-none overlay" tabindex="-1" data-target="edit-maxHp-monster">

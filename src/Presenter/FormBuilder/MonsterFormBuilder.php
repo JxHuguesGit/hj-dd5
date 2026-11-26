@@ -40,10 +40,10 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
         foreach ($this->sections as $sectionClass => $title) {
             $fieldset = new FieldsetField(
                 $title,
-                true,
-                [[
+                false,
+                [
                     C::CSSCLASS => 'monster-fieldset row mb-4 ' . B::MT5 . ' ' . ($cpt == 1 ? 'active' : '')
-                ]]
+                ]
             );
             $section = new $sectionClass($this->readerFactory);
             $section->addFields($fieldset, $entity);
