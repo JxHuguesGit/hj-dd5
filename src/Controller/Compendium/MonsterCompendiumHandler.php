@@ -106,8 +106,8 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
         foreach ($speedTypes as $speedType) {
             $monsterSpeedType = $monster->speed($speedType->id);
             if ((
-                $value["'" . $speedType->frTag . "'"] != $monsterSpeedType->value ||
-                $comp["'" . $speedType->frTag . "'"] != $monsterSpeedType->extra
+                $value[$speedType->frTag] != $monsterSpeedType->value ||
+                $comp[$speedType->frTag] != $monsterSpeedType->extra
             ) && !isset($changedFields['updateSpeed'])) {
                 $changedFields[] = 'updateSpeed';
             }

@@ -85,21 +85,21 @@ class MonsterCombatFormBuilder
 
         $innerFieldSet
             ->addField(new CheckboxField(
-                "speed['$frTag']",
+                "speed[$frTag]",
                 ucfirst($frTag),
                 $speedType->id,
                 false,
                 $checkBoxAttributes
             ))
             ->addField(new TextField(
-                "value['$frTag']",
+                "value[$frTag]",
                 'Distance (m)',
                 $monsterSpeed->value ?? '',
                 false,
                 [C::OUTERDIVCLASS => B::COL_MD_3 . ' ' . B::PX0]
             ))
             ->addField(new TextField(
-                "comp['$frTag']",
+                "comp[$frTag]",
                 'Complément',
                 $monsterSpeed->extra ?? '',
                 false,
