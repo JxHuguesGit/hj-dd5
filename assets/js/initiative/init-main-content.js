@@ -286,7 +286,7 @@ export function initMainContent() {
         });
 
     $(document).on('input', '#condition-rounds-input', function () {
-        const rounds = parseInt($(this).val(), 10) || 1;
+        const rounds = Number.parseInt($(this).val(), 10) || 1;
 
         $('#condition-duration').text(
             rounds === 1

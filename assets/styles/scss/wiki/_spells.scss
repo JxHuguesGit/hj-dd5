@@ -47,8 +47,11 @@
         color: $color-text-muted;
         font-size: 1.1rem;
         cursor: pointer;
-        transition: .15s ease;
-
+        transition:
+            border-color 0.15s ease,
+            background-color 0.15s ease,
+            color 0.15s ease,
+            box-shadow 0.15s ease;
         &:hover {
             border-color: $color-border-hover;
             background: $color-surface-subtle;
@@ -74,8 +77,12 @@
         color: $color-text-muted;
         font-size: .9rem;
         cursor: pointer;
-        transition: .15s ease;
-
+        transition:
+            border-color 0.15s ease,
+            background-color 0.15s ease,
+            color 0.15s ease,
+            box-shadow 0.15s ease;
+            
         i {
             font-size: .85rem;
         }

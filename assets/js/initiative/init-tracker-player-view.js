@@ -50,7 +50,7 @@ function refreshPlayerView() {
         }
     })
     .done(function (response) {
-        if (!response || response.success !== true) {
+        if (response?.success !== true) {
             console.error("Réponse Ajax invalide :", response);
             return;
         }
