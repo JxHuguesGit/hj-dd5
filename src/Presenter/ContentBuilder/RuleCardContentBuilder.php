@@ -13,7 +13,10 @@ use src\Utils\Html;
 final class RuleCardContentBuilder
 extends AbstractCardContentBuilder
 {
-    public function __construct() {}
+    public function __construct()
+    {
+        // In progress
+    }
 
     public function build(object $groups): string
     {

@@ -31,7 +31,10 @@ class RuleListPresenter
         return new Collection([$group]);
     }
 
-    protected function addSpecifics(&$row, \WP_Post $post): void {}
+    protected function addSpecifics(&$row, \WP_Post $post): void
+    {
+        // In progress
+    }
 
     public function present(array $posts): Collection
     {

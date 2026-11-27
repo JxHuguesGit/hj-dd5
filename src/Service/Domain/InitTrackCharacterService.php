@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Service\Domain;
 
 use src\Collection\Collection;
@@ -23,13 +24,12 @@ final class InitTrackCharacterService
 
     public function getTurnOrder(
         InitiativeTracker $initiativeTracker
-    ): Collection
-    {
+    ): Collection {
         // On récupère la liste des personnages par initiative décroissante.
         $criteria = new ITCharacterCriteria();
         $criteria->initiativeTrackerId = $initiativeTracker->id;
         $criteria->active = 1;
-        $criteria->orderBy = [F::INITIATIVE=>C::DESC];
+        $criteria->orderBy = [F::INITIATIVE => C::DESC];
         $iTCharacters = $this->itCharacterReader->allItCharacters($criteria);
 
         $queue = false;
@@ -38,7 +38,7 @@ final class InitTrackCharacterService
         foreach ($iTCharacters as $itCharacter) {
             if ($queue) {
                 $orderedQueue->add($itCharacter);
-            } elseif ($itCharacter->id==$initiativeTracker->currentParticipantId) {
+            } elseif ($itCharacter->id == $initiativeTracker->currentParticipantId) {
                 $queue = true;
                 $orderedQueue->add($itCharacter);
             } else {
@@ -91,12 +91,12 @@ final class InitTrackCharacterService
         if ($character->curHp < $character->maxHp / 2) {
             $status .= '<div class="badge bloodied"><i aria-hidden="true" class="fa-solid fa-droplet"></i> <span>En péril</span></div>';
         }
-        if (true || $character->readyActive === 1) {
+        if ($character->readyActive === 1) {
             $status .= '<div class="badge readied"><i aria-hidden="true" class="fa-solid fa-stopwatch"></i> <span>Prêt</span></div>';
         }
-        if (true) {
-            $status .= '<div class="badge surprised"><i aria-hidden="true" class="fa-solid fa-triangle-exclamation"></i> <span>Surpris</span></div>';
-        }
+        /*
+        $status .= '<div class="badge surprised"><i aria-hidden="true" class="fa-solid fa-triangle-exclamation"></i> <span>Surpris</span></div>';
+        */
         return $status;
     }
 
@@ -108,7 +108,7 @@ final class InitTrackCharacterService
         $displayedCharacters = $queuedCharacters->slice(1, 4);
 
         foreach ($displayedCharacters as $character) {
-            if (null!==$previousInitiative && $character->initiative > $previousInitiative) {
+            if (null !== $previousInitiative && $character->initiative > $previousInitiative) {
                 $content .= $this->addNewRound();
             }
             $previousInitiative = $character->initiative;
@@ -125,9 +125,9 @@ final class InitTrackCharacterService
         $max = -10;
         $curCharId = -1;
         foreach ($iTCharacters as $character) {
-            if ($character->characterType=='monster') {
+            if ($character->characterType == 'monster') {
                 $initiative = random_int(1, 20) + $character->modDex;
-                if ($initiative>$max) {
+                if ($initiative > $max) {
                     $max = $initiative;
                     $curCharId = $character->id;
                 }
@@ -181,14 +181,11 @@ final class InitTrackCharacterService
             [
                 $characterType,
                 $libelleType,
-                '',//https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/71/1000/1000/636252733510786769.jpeg
+                '', //https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/71/1000/1000/636252733510786769.jpeg
                 $badgeTitle,
                 $badgeLabel,
                 $initiative,
             ]
         );
     }
-
-
-
 }
