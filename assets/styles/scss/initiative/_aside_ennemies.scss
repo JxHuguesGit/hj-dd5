@@ -176,8 +176,6 @@
                             line-height: 24px;
                             text-align: left;
 
-                            transition: .15s ease;
-
                             > .monster-info {
                                 flex: 1 1 0;
                                 min-width: 0;
@@ -250,7 +248,7 @@
                             font-weight: 400;
                             line-height: 24px;
 
-                            transition: .15s ease;
+                            transition: color .15s ease;
 
                             &:hover {
                                 color: oklch(0.707 0.165 254.624);

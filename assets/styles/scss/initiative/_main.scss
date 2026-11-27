@@ -82,7 +82,7 @@
                         font-weight: 400;
                         line-height: 16px;
 
-                        transition: .15s ease;
+                        transition: background-color 0.15s ease;
 
                         &.previous-turn {
                             background-color: $color-header-session-border;
@@ -201,7 +201,9 @@
 
                                 text-align: left;
 
-                                transition: .15s ease;
+                            transition:
+                                color .15s ease,
+                                background-color .15s ease;
 
                                 &.disabled {
                                     color: $color-monster-text;
@@ -290,8 +292,6 @@
                     border-radius: 8px;
 
                     color: #fff;
-
-                    transition: all .15s ease;
                     width: 100%;
 
                     > .bordure {
@@ -319,7 +319,6 @@
                             > button {
                                 padding: 0;
 
-                                appearance: button;
                                 background-color: transparent;
                                 border: 0;
 
@@ -352,8 +351,6 @@
 
                             border-radius: 4px;
 
-                            transition: .15s ease;
-
                             > i {
                                 font-size: 14px;
                                 line-height: 14px;
@@ -378,7 +375,6 @@
                         > button {
                             padding: 8px;
 
-                            appearance: button;
                             background-color: transparent;
                             border: 0;
                             border-radius: 4px;
@@ -391,7 +387,10 @@
 
                             opacity: 1;
 
-                            transition: .15s ease;
+                            transition:
+                                color .15s ease,
+                                background-color .15s ease,
+                                border-color .15s ease;
 
                             &.bench:hover {
                                 background-color: oklab(0.396 0.127027 0.0611969 / 0.4);
@@ -554,7 +553,6 @@
 
                                     padding: 0;
 
-                                    appearance: button;
                                     background-color: transparent;
                                     border: 0;
 
@@ -590,7 +588,6 @@
 
                                         padding: 0;
 
-                                        appearance: button;
                                         background-color: transparent;
                                         border: 0;
 
@@ -602,7 +599,7 @@
 
                                         opacity: .5;
 
-                                        transition: .15s ease;
+                                        transition: opacity 0.15s ease;
 
                                         &:hover {
                                             opacity: 1;
@@ -623,7 +620,10 @@
                                     height: 8px;
                                     background-color: oklch(0.627 0.194 149.214);
                                     border-radius: $radius-pill;
-                                    transition: all .15s ease;
+                                    transition:
+                                        background-color 0.15s ease,
+                                        border-color 0.15s ease,
+                                        color 0.15s ease;
                                     @include states.state-colors;
                                 }
                                 > .hit-points-temporary {
@@ -632,7 +632,10 @@
                                     height: 8px;
                                     background-color: oklch(0.45 0.085 224.283);
                                     border-radius: $radius-pill;
-                                    transition: all .15s ease;
+                                    transition:
+                                        background-color 0.15s ease,
+                                        border-color 0.15s ease,
+                                        color 0.15s ease;
                                 }
                             }
                         }
@@ -728,7 +731,6 @@
                             height: 44px;
                             padding: 0;
 
-                            appearance: button;
                             border: 0;
                             border-radius: 4px;
 
@@ -1290,7 +1292,6 @@
                             font-size: 14px;
                             font-weight: 600;
                             line-height: 20px;
-                            transition: all 0.15s ease;
 
                             &:hover {
                                 filter: brightness(1.1);
@@ -1307,7 +1308,6 @@
                             font-size: 14px;
                             font-weight: 600;
                             line-height: 20px;
-                            transition: all 0.15s ease;
 
                             &:hover {
                                 filter: brightness(1.1);
@@ -1323,14 +1323,13 @@
                             font-size: 14px;
                             font-weight: 400;
                             line-height: 20px;
-                            transition: all 0.15s ease;
 
                             &:hover {
                                 filter: brightness(1.1);
                             }
                         }
                     }
-                }                
+                }
             }
         }
     }
