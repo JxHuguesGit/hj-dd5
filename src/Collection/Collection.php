@@ -1,13 +1,15 @@
 <?php
+
 namespace src\Collection;
 
+use src\Constant\Constant as C;
 use src\Exception\KeyAlreadyUse;
 use src\Exception\KeyInvalid;
 
 class Collection implements \IteratorAggregate, \Countable
 {
     public function __construct(
-        private array $items=[]
+        private array $items = []
     ) {}
 
     public function add($obj, ?string $key = null): self
@@ -22,7 +24,8 @@ class Collection implements \IteratorAggregate, \Countable
         return $this;
     }
 
-    public function remove(string|int $key): void {
+    public function remove(string|int $key): void
+    {
         if (!isset($this->items[$key])) {
             throw new KeyInvalid("Clé '$key' invalide.");
         }
@@ -46,7 +49,7 @@ class Collection implements \IteratorAggregate, \Countable
 
     public function isEmpty(): bool
     {
-        return $this->count()==0;
+        return $this->count() == 0;
     }
 
     public function keys(): array
@@ -138,4 +141,16 @@ class Collection implements \IteratorAggregate, \Countable
         return $this->items == $collection->items;
     }
 
+    public function toOptions(
+        callable $value,
+        callable $label
+    ): array {
+        return array_map(
+            fn($item) => [
+                C::VALUE => $value($item),
+                C::LABEL => $label($item),
+            ],
+            $this->items
+        );
+    }
 }

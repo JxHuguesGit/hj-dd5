@@ -48,7 +48,7 @@ class MonsterRepository extends Repository implements MonsterRepositoryInterface
             . F::SCORECA . ", " . F::SCOREHP . ", " . F::INITIATIVE . ", " . F::LEGENDARY . ", "
             . F::HABITAT . ", " . F::STRSCORE . ", " . F::DEXSCORE . ", " . F::CONSCORE . ", "
             . F::INTSCORE . ", " . F::WISSCORE . ", " . F::CHASCORE . ", " . F::PROFBONUS . ", "
-            . F::PERCPASSIVE . ", " . F::EXTRA . ", " . F::REFID
+            . F::PERCPASSIVE . ", " . F::EXTRA . ", " . F::REFID . ", " . F::ALGNID
             . ", tm." . F::NAME . " AS " . F::TYPMSTNAME . ", " . F::ABBR . ", tm.id AS " . F::MSTTYPEID
             . ", stm." . F::NAME . " AS " . F::SSTYPMSTNAME
             . ", a." . F::NAME . " AS " . F::ALIGNNAME

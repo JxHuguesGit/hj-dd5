@@ -22,6 +22,7 @@ use src\Utils\Session;
 class MonsterCompendiumHandler implements CompendiumHandlerInterface
 {
     private string $toastContent = '';
+    private ?Collection $speedTypes = null;
 
     public function __construct(
         private MonsterWriter $writer,
@@ -60,74 +61,98 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
             default => $this->renderList(),
         };
     }
-    private function initEntity(Monster $monster, ?array &$changedFields = null): void
+
+    private function initEntity(Monster &$monster, bool &$hasChanged): void
     {
         foreach (Monster::EDITABLE_FIELDS as $field) {
             $value = Session::fromPost($field, 'err');
             if (in_array($field, [F::LEGENDARY])) {
                 // Gestion des booléens
                 $monster->$field = ($value === $field ? 1 : 0);
+                $hasChanged = true;
+            } elseif (F::MSTTYPEID === $field) {
+                [$typeId, $subTypeId] = explode('|', $value);
+                $monster->monstreTypeId = $typeId;
+                $monster->monsterSubTypeId = $subTypeId;
+                $hasChanged = true;
             } elseif ($value != 'err' && $monster->$field != $value) {
                 // Champ standard
                 $monster->$field    = $value;
-                if ($changedFields !== null) {
-                    $changedFields[] = $field;
-                }
+                $hasChanged = true;
             }
         }
 
-        $this->initExtra($monster, $changedFields);
-        $this->initSpeed($monster, $changedFields);
+        $this->initExtra($monster, $hasChanged);
+        $this->initSpeed($monster, $hasChanged);
     }
 
-    private function initExtra(Monster $monster, array &$changedFields): void
+    private function initExtra(Monster &$monster, bool &$hasChanged): void
     {
         $extra = Session::fromPost(F::EXTRA);
         foreach ($extra as $key => $value) {
             $stored = $monster->getExtra($key);
             if ('' !== $value && $stored != $value) {
                 $monster->setExtra($key, $value);
-                if ($changedFields !== null && !isset($changedFields[$key])) {
-                    $changedFields[] = $key;
-                }
+                $hasChanged = true;
             }
         }
     }
 
-    private function initSpeed(Monster $monster, array &$changedFields): void
+    private function initSpeed(Monster &$monster, bool &$hasChanged): void
     {
         $speed = Session::fromPost(F::SPEED);
         $value = Session::fromPost(F::VALUE);
         $comp  = Session::fromPost('comp');
         // On a la liste des identifiants dans les value et les types de déplacement dans les key
-        $speedTypes = $this->readerFactory->speedType()->allSpeedTypes();
+        $speedTypes = $this->speedTypes ?? $this->readerFactory->speedType()->allSpeedTypes();
 
+        $speedChanged = false;
         $newMonsterTypeSpeeds = new Collection();
         foreach ($speedTypes as $speedType) {
             $monsterSpeedType = $monster->speed($speedType->id);
             if ((
+                // Si elle existait et n'existe plus
+                $speed[$speedType->frTag] === null && $monsterSpeedType !== null ||
+                // Si elle n'existait pas et existe maintenant
+                $speed[$speedType->frTag] !== null && $monsterSpeedType === null ||
+                // Si elle existait mais a évolué
                 $value[$speedType->frTag] != $monsterSpeedType->value ||
                 $comp[$speedType->frTag] != $monsterSpeedType->extra
-            ) && !isset($changedFields['updateSpeed'])) {
-                $changedFields[] = 'updateSpeed';
+            )) {
+                $hasChanged = true;
+                $speedChanged = true;
+            }
+
+            if ($speed[$speedType->frTag] === null) {
+                // Si elle n'existe plus, on n'a pas besoin de l'ajouter à la liste des existantes
+                continue;
             }
             $attributes = [
                 F::MONSTERID   => $monster->id,
                 F::TYPESPEEDID => $speedType->id,
-                F::VALUE       => (float) $value["'" . $speedType->frTag . "'"],
-                F::EXTRA       => $comp["'" . $speedType->frTag . "'"]
+                F::VALUE       => (float) $value[$speedType->frTag],
+                F::EXTRA       => $comp[$speedType->frTag]
             ];
             $newMonsterTypeSpeeds->add(new MonsterSpeedType($attributes));
         }
 
-        if (isset($changedFields['updateSpeed'])) {
+        if ($speedChanged) {
             $monster->setSpeedTypeEntities($newMonsterTypeSpeeds);
         }
     }
 
     private function controlSpeed(Monster $monster): bool
     {
-        return true;
+        $blnOk = true;
+        $speedTypes = $this->speedTypes ?? $this->readerFactory->speedType()->allSpeedTypes();
+        foreach ($speedTypes as $speedType) {
+            $monsterSpeedType = $monster->speed($speedType->id);
+            if ($monsterSpeedType !== null && $monsterSpeedType->value == 0) {
+                $this->toastContent .= $this->toastBuilder->warning("La Vitesse ne peut pas être nulle.");
+                $blnOk = false;
+            }
+        }
+        return $blnOk;
     }
 
     private function controlEntity(Monster $monster): bool
@@ -146,23 +171,24 @@ class MonsterCompendiumHandler implements CompendiumHandlerInterface
 
     protected function handleEditSubmit(Monster $monster): string
     {
-        $changedFields = [];
-        $this->initEntity($monster, $changedFields);
+        $hasChanged = false;
+        $this->initEntity($monster, $hasChanged);
 
+        $doUpdate = true;
         if (!$this->controlEntity($monster)) {
             $this->toastContent .= $this->toastBuilder->error("Un champ obligatoire n'a pas été saisi ou a une valeur erronnée.");
-            return $this->renderEdit($monster);
+            $doUpdate = false;
         }
-        if (isset($changedFields['updateSpeed'])) {
-            unset($changedFields['updateSpeed']);
-            if (!$this->controlSpeed($monster)) {
-                $this->toastContent .= $this->toastBuilder->error("Une Vitesse a été mal saisie.");
-                return $this->renderEdit($monster);
-            }
+        if (!$this->controlSpeed($monster)) {
+            $this->toastContent .= $this->toastBuilder->error("Une Vitesse a été mal saisie.");
+            $doUpdate = false;
         }
 
-        var_dump($changedFields);
-        //$this->writer->updatePartial($monster, $changedFields);
+        if (!$doUpdate) {
+            return $this->renderEdit($monster);
+        }
+
+        $this->writer->updatePartial($monster, Monster::EDITABLE_FIELDS);
         $this->toastContent .= $this->toastBuilder->success("Le monstre a été correctement mis à jour.");
         return $this->renderEdit($monster);
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Criteria;
 
 use src\Constant\Constant as C;
@@ -11,7 +12,7 @@ final class MonsterTypeCriteria extends BaseCriteria
     #[Equals(F::ID)]
     public ?int $id = null;
 
-    #[Equals(F::ABBR)]
+    #[Compare(field: F::ABBR, operator: Compare::NEQ)]
     public ?string $abbr = null;
 
     #[Compare(field: F::NAME, operator: Compare::LT)]

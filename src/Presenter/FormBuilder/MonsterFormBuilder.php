@@ -15,9 +15,7 @@ class MonsterFormBuilder extends AbstractFormBuilder implements FormBuilderInter
     private array $sections = [
         MonsterIdentityFormBuilder::class => 'Identité',
         MonsterCombatFormBuilder::class => 'Combat',
-        /*
         MonsterClassificationFormBuilder::class => 'Classification',
-        */
     ];
 
     public function __construct(

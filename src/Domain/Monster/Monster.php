@@ -100,6 +100,11 @@ final class Monster extends Entity
         F::SCORECR,
         F::INITIATIVE,
         F::LEGENDARY,
+        F::SWARMSIZE,
+        F::MSTTYPEID,
+        F::MSTSIZE,
+        F::ALGNID,
+        F::EXTRA,
     ];
 
     /**

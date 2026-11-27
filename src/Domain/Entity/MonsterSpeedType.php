@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Domain\Entity;
 
 use src\Constant\Field as F;
@@ -19,6 +20,6 @@ class MonsterSpeedType extends Entity
         F::MONSTERID   => FieldType::INTPOSITIVE,
         F::TYPESPEEDID => FieldType::INTPOSITIVE,
         F::VALUE       => FieldType::FLOAT,
-        F::EXTRA       => FieldType::STRING,
+        F::EXTRA       => FieldType::STRINGNULLABLE,
     ];
 }
